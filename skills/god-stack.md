@@ -22,3 +22,11 @@ Spawn the **god-stack-selector** agent in a fresh context via Task tool.
 After god-stack-selector returns:
 1. Verify DECISION.md exists on disk
 2. Update `.godpowers/PROGRESS.md`: Stack status = done
+
+## On Completion
+
+```
+Stack decision complete: .godpowers/stack/DECISION.md
+
+Suggested next: /god-repo (scaffold the repo with the chosen stack)
+```

@@ -31,3 +31,14 @@ After god-launch-strategist returns:
 
 Relay any pauses from god-launch-strategist. Brand voice and final headline
 approval require human input.
+
+## On Completion
+
+```
+Launch complete: .godpowers/launch/STATE.md
+
+All Godpowers tiers done. Project is live.
+
+Suggested next: /god-audit (score all artifacts retrospectively)
+Or: /god-status (see the final state)
+```

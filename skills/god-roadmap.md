@@ -24,3 +24,12 @@ After god-roadmapper returns:
 1. Verify ROADMAP.md exists on disk
 2. Spawn god-auditor to verify have-nots pass
 3. Update `.godpowers/PROGRESS.md`: Roadmap status = done
+
+## On Completion
+
+```
+Roadmap complete: .godpowers/roadmap/ROADMAP.md
+
+Suggested next: /god-stack (pick the tech) if not already done,
+                otherwise /god-repo (scaffold the repo)
+```

@@ -71,3 +71,17 @@ Initialize the Godpowers project structure.
 ## Output
 
 `.godpowers/PROGRESS.md` created with initial state.
+
+## On Completion
+
+After init completes, print:
+
+```
+Godpowers initialized.
+
+Mode: [detected mode]
+Scale: [detected scale]
+
+Suggested next: /god-prd (write the requirements)
+Or: /god-mode (run the full autonomous arc)
+```

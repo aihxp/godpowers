@@ -24,3 +24,11 @@ After god-observability-engineer returns:
 2. Verify each SLO has an error budget policy
 3. Verify each alert has a runbook
 4. Update `.godpowers/PROGRESS.md`: Observe status = done
+
+## On Completion
+
+```
+Observability complete: .godpowers/observe/STATE.md
+
+Suggested next: /god-harden (adversarial security review, gates Launch)
+```

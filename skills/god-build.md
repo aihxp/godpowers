@@ -58,3 +58,17 @@ After all waves:
 Pause for user ONLY if:
 - A requirement is genuinely ambiguous (two valid implementations)
 - A test reveals a gap in PRD or ARCH that needs human resolution
+
+## On Completion
+
+```
+Build complete: .godpowers/build/STATE.md
+[N] slices delivered. [N] commits. All tests passing.
+
+Suggested next: /god-harden (adversarial review, gates Launch)
+Alternative: /god-deploy (set up deploy pipeline, parallel-safe)
+Both can run; /god-harden is the critical path to Launch.
+```
+
+If more milestones remain in the roadmap, suggest re-running /god-build for
+the next milestone before moving to Tier 3.

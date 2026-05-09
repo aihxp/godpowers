@@ -24,3 +24,11 @@ After god-deploy-engineer returns:
 1. Verify STATE.md exists on disk
 2. Verify rollback procedure has been tested (not paper-only)
 3. Update `.godpowers/PROGRESS.md`: Deploy status = done
+
+## On Completion
+
+```
+Deploy pipeline complete: .godpowers/deploy/STATE.md
+
+Suggested next: /god-observe (wire SLOs, alerts, runbooks)
+```

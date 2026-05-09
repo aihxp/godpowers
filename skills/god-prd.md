@@ -36,3 +36,13 @@ Options:
   B: ... -- [tradeoff]
 Default: [if you say "go", I'll pick X because Y]
 ```
+
+## On Completion
+
+After PRD is written and have-nots pass, print:
+
+```
+PRD complete: .godpowers/prd/PRD.md
+
+Suggested next: /god-arch (design the architecture)
+```

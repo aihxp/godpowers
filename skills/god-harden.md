@@ -43,3 +43,22 @@ If ANY finding is Critical:
 3. Launch remains BLOCKED until:
    - Critical finding is fixed and re-verified, OR
    - User explicitly accepts the risk in writing
+
+## On Completion
+
+If FINDINGS.md has 0 Critical findings:
+```
+Harden complete: .godpowers/harden/FINDINGS.md
+[N] High, [N] Medium, [N] Low. 0 Critical. Launch gate: PASSED.
+
+Suggested next: /god-launch (put it in front of users)
+```
+
+If FINDINGS.md has Critical findings:
+```
+Harden complete: .godpowers/harden/FINDINGS.md
+[N] CRITICAL findings. Launch gate: BLOCKED.
+
+Suggested next: Resolve Critical findings, then re-run /god-harden.
+Use /god-debug if you need help with the fix.
+```

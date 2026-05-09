@@ -43,11 +43,33 @@ Open your AI coding tool in any project directory and type:
 That's the autonomous arc. It will run all tiers from idea to hardened
 production, pausing only when it has a real question for you.
 
+### Don't want full autonomy?
+
+Run individual commands. After each one finishes, Godpowers tells you what to
+run next based on disk state:
+
+```
+PRD complete: .godpowers/prd/PRD.md
+
+Suggested next: /god-arch (design the architecture)
+```
+
+You can also ask any time:
+
+```
+/god-next
+```
+
+This reads `.godpowers/PROGRESS.md`, scans disk, reconciles any drift, and
+suggests the next logical command. The SessionStart hook does the same thing
+when you open a new session in a Godpowers project.
+
 ### Slash Commands
 
 | Command | What it does | Spawns agent |
 |---------|--------------|--------------|
 | `/god-mode` | Full autonomous arc | god-orchestrator |
+| `/god-next` | Auto-detect and suggest the next command | (built-in) |
 | `/god-init` | Start a project, detect mode and scale | (built-in) |
 | `/god-prd` | Write the PRD | god-pm |
 | `/god-arch` | Design architecture | god-architect |

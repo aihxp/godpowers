@@ -28,3 +28,12 @@ After god-architect returns:
 ## Pause Format
 
 Relay any pauses from god-architect using the standard format (What/Why/Options/Default).
+
+## On Completion
+
+```
+Architecture complete: .godpowers/arch/ARCH.md
+
+Suggested next: /god-roadmap (sequence the work) or /god-stack (pick the tech)
+Both are gated on ARCH and can run in either order.
+```

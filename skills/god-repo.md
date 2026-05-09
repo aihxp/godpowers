@@ -23,3 +23,11 @@ After god-repo-scaffolder returns:
 1. Verify AUDIT.md exists on disk
 2. Verify CI passes on the empty scaffold
 3. Update `.godpowers/PROGRESS.md`: Repo status = done
+
+## On Completion
+
+```
+Repo scaffolded: .godpowers/repo/AUDIT.md
+
+Suggested next: /god-build (start building the first milestone)
+```
