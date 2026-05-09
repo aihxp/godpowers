@@ -66,3 +66,77 @@ On every invocation:
 2. Scan ALL artifact paths to verify what actually exists
 3. If PROGRESS.md and disk disagree: disk wins. Repair PROGRESS.md.
 4. Continue from the first non-done sub-step
+
+## Mode Detection (Tier 0 setup)
+
+Detect operating mode from environment and user intent:
+
+### Mode A: Greenfield (default)
+- No existing code in working directory (empty git repo or just README)
+- No `.godpowers/` directory
+- Run all tiers from PRD onwards
+
+### Mode B: Gap-fill
+- Existing codebase
+- May have some `.godpowers/` artifacts already
+- Detect which tiers have passing artifacts; skip those
+- Run only the missing tiers
+
+### Mode C: Audit
+- Triggered explicitly with --audit flag
+- Build nothing
+- Run god-auditor across all existing artifacts
+- Score each against have-nots from references/HAVE-NOTS.md
+- Produce `.godpowers/AUDIT-REPORT.md`
+
+### Mode D: Multi-repo
+- Triggered when working directory contains multiple sub-repos or when user
+  describes a system spanning multiple repos
+- Produce a coordination plan across repos
+- Each repo gets its own `.godpowers/` substate
+- A meta-PROGRESS.md at the root coordinates them
+
+Record the detected mode in PROGRESS.md.
+
+## Scale Detection (Tier 0 setup)
+
+Assess project description against:
+- **Trivial**: Single-file change, bug fix, config tweak. Skip planning, go to /god-fast.
+- **Small**: One feature, <1 week. Lightweight PRD, skip ARCH.
+- **Medium**: Multiple features, 1-4 weeks. Full PRD/ARCH/ROADMAP/STACK.
+- **Large**: Multiple services, 1-3 months. Add agent personas (PM, QA), optional sprints.
+- **Enterprise**: Multiple teams, 3+ months. Full personas, sprint ceremonies, compliance.
+
+Scale determines which tiers and agents activate. Record scale in PROGRESS.md.
+
+## YOLO Decisions Logging
+
+When `--yolo` flag is active, every auto-picked default at a pause point
+must be logged to `.godpowers/YOLO-DECISIONS.md`:
+
+```markdown
+# YOLO Decisions Log
+
+These decisions were made automatically because --yolo was active.
+Review and revise any that don't match your intent.
+
+## Tier 1 / Stack
+- Pause: TypeScript vs Python (within 10%)
+- Auto-picked: TypeScript
+- Reason (default): Frontend already TypeScript
+- Timestamp: [ISO 8601]
+
+## Tier 1 / Architecture
+- Pause: Monolith vs microservices for scale unknown
+- Auto-picked: Monolith
+- Reason: Lower complexity for unknown scale
+- Timestamp: [ISO 8601]
+```
+
+Append to YOLO-DECISIONS.md every time --yolo would have paused.
+
+## Have-Nots Reference
+
+The canonical have-nots catalog lives at `references/HAVE-NOTS.md` (115 named
+failure modes). When verifying an artifact, run the relevant tier's have-nots
+against it. When in doubt, spawn god-auditor to do the check.

@@ -73,6 +73,48 @@ const RUNTIMES = {
     skillsDir: 'skills',
     configFile: null,
   },
+  trae: {
+    name: 'Trae',
+    configDir: path.join(os.homedir(), '.trae'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  cline: {
+    name: 'Cline',
+    configDir: path.join(os.homedir(), '.cline'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  kilo: {
+    name: 'Kilo',
+    configDir: path.join(os.homedir(), '.kilo'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  antigravity: {
+    name: 'Antigravity',
+    configDir: path.join(os.homedir(), '.antigravity'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  qwen: {
+    name: 'Qwen Code',
+    configDir: path.join(os.homedir(), '.qwen'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  codebuddy: {
+    name: 'CodeBuddy',
+    configDir: path.join(os.homedir(), '.codebuddy'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
+  pi: {
+    name: 'Pi',
+    configDir: path.join(os.homedir(), '.pi'),
+    skillsDir: 'skills',
+    configFile: null,
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -262,7 +304,14 @@ function showHelp() {
   log('  --gemini             Install for Gemini CLI');
   log('  --copilot            Install for GitHub Copilot');
   log('  --augment            Install for Augment');
-  log('  --all                Install for all runtimes');
+  log('  --trae               Install for Trae');
+  log('  --cline              Install for Cline');
+  log('  --kilo               Install for Kilo');
+  log('  --antigravity        Install for Antigravity');
+  log('  --qwen               Install for Qwen Code');
+  log('  --codebuddy          Install for CodeBuddy');
+  log('  --pi                 Install for Pi');
+  log('  --all                Install for all 15 runtimes');
   log('  -u, --uninstall      Uninstall Godpowers');
   log('  -h, --help           Show this help message');
   log('');

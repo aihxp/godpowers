@@ -1,0 +1,449 @@
+# Godpowers Have-Nots Catalog
+
+> Named failure modes that disqualify an artifact. Each is grep-testable.
+> Spawned agents check their tier's have-nots before declaring done.
+> god-auditor uses this catalog to score retroactively.
+
+This document is the canonical source. If a have-not appears in an agent file
+that contradicts this document, this document wins.
+
+---
+
+## Universal Have-Nots (apply to ALL artifacts and code)
+
+### U-01 AI-slop
+Output passes the substitution test. Replace the product name with a competitor's;
+if the sentence still reads true, the content decides nothing. Fail.
+
+### U-02 Unlabeled sentence
+A sentence is not tagged DECISION, HYPOTHESIS, or OPEN QUESTION. Anything
+unlabeled is theater. Fail.
+
+### U-03 Phantom resume
+Agent claims a tier is "done" but the artifact is missing from disk. Fail.
+
+### U-04 Ghost handoff
+A tier is invoked before its upstream artifact exists on disk. Fail.
+
+### U-05 Rubber-stamp orchestration
+PROGRESS.md says "done" with no corresponding artifact on disk. Fail.
+
+### U-06 Silence as skip
+A tier is absent from PROGRESS.md (neither done nor skipped). Fail.
+
+### U-07 Paper artifact
+The document exists but the mechanism it describes does not. Example: a runbook
+that has never been executed. Fail.
+
+### U-08 Em or en dashes
+Em dash (U+2014) or en dash (U+2013) used in any output. Fail. Use commas,
+colons, semicolons, parentheses, or hyphens for ranges.
+
+### U-09 Decorative emoji
+Emoji used as decoration in code, docs, commit messages. Fail. Use words or
+real icons (SVG/icon library) when a visual marker is genuinely needed.
+
+### U-10 Phantom reference
+Document references another artifact that does not exist on disk. Fail.
+
+### U-11 Date-not-real
+Timestamp claimed in artifact is in the future or before the project started.
+Fail.
+
+### U-12 Theater sentences
+Sentences that read fine but say nothing measurable, decidable, or testable.
+Fail.
+
+---
+
+## Tier 0: Orchestration Have-Nots
+
+### O-01 Mode not detected
+PROGRESS.md missing the Mode field. Fail.
+
+### O-02 Scale not detected
+PROGRESS.md missing the Scale field. Fail.
+
+### O-03 Tier missing from ledger
+A canonical tier is absent from the PROGRESS.md tier table. Fail.
+
+### O-04 Status outside vocabulary
+A tier's status is not one of: pending, in-flight, done, skipped, imported,
+failed, re-invoked. Fail.
+
+### O-05 Decisions log empty after pause
+god-orchestrator paused for human input but did not record the resolution in
+the Decisions Log. Fail.
+
+### O-06 YOLO decisions silent
+--yolo flag was used but no YOLO-DECISIONS log was emitted. Fail.
+
+---
+
+## Tier 1: Planning Have-Nots
+
+### PRD Have-Nots
+
+#### P-01 Generic problem statement
+Problem statement passes substitution test. Fail.
+
+#### P-02 Generic target user
+Target user is "developers", "users", "teams", or any unfilled noun. Must be
+specific persona with role and context. Fail.
+
+#### P-03 Metric without number
+Success metric has no numeric target. Fail.
+
+#### P-04 Metric without timeline
+Success metric has no time bound (date, days, weeks). Fail.
+
+#### P-05 Metric without measurement method
+Success metric does not specify HOW it will be measured. Fail.
+
+#### P-06 Requirement without acceptance criteria
+A functional requirement has no observable acceptance criterion. Fail.
+
+#### P-07 No-gos empty
+Scope and No-Gos section is empty or missing. Fail.
+
+#### P-08 Open question without owner
+An open question has no named owner. Fail.
+
+#### P-09 Open question without due date
+An open question has no due date. "TBD" is not a date. Fail.
+
+#### P-10 Solution-first PRD
+Problem statement names the solution. The PRD frames the problem; the
+architecture proposes the solution. Fail.
+
+#### P-11 Feature laundry list
+Functional requirements are an unprioritized list with no MUST/SHOULD/COULD
+classification. Fail.
+
+#### P-12 Hollow PRD
+All sections are filled but no decisions are made. Every claim is
+[HYPOTHESIS] with no validation plans. Fail.
+
+#### P-13 Moving-target PRD
+PRD edited silently after downstream tiers consumed it. Edits must be tracked
+and downstream tiers must be re-validated. Fail.
+
+#### P-14 Assumption-soup PRD
+PRD is full of "we assume users will love it" or "users want X" without
+research or hypothesis labels. Fail.
+
+#### P-15 NFR absent
+Non-functional requirements section is missing or empty. Fail.
+
+### Architecture Have-Nots
+
+#### A-01 Box without responsibility
+A diagram component has no clear single responsibility. Fail.
+
+#### A-02 Shared responsibility unjustified
+Two components share the same responsibility without explicit justification.
+Fail.
+
+#### A-03 NFR not mapped
+An NFR from the PRD has no corresponding architectural choice in the
+NFR-to-Architecture map. Fail.
+
+#### A-04 ADR without flip point
+An ADR has no flip point (condition under which the decision reverses). Fail.
+
+#### A-05 "Scalable" without numbers
+The word "scalable" appears without quantification (users, requests/sec, data
+volume, latency targets). Fail.
+
+#### A-06 Trust boundary missing
+An external integration has no trust boundary documented. Fail.
+
+#### A-07 Data ownership unassigned
+A data entity has no owner service. Fail.
+
+#### A-08 Architecture theater
+Diagrams exist but no load-bearing decisions are documented. Fail.
+
+#### A-09 Cargo-cult cloud-native
+Kubernetes/Kafka/microservices for a 10-user CRUD app. Complexity must match
+scale from PRD. Fail.
+
+#### A-10 Stackitecture
+Stack chosen and called architecture. Architecture is system shape; stack is
+tool selection. Distinct documents. Fail.
+
+#### A-11 Resume-driven architecture
+Choice motivated by "looks good on resume" rather than fit-for-PRD. Fail.
+
+#### A-12 Paper-tiger architecture
+Looks robust on paper but fails first real load. NFR validation must include
+worst-case analysis. Fail.
+
+### Roadmap Have-Nots
+
+#### R-01 Generic milestone goal
+Milestone goal passes substitution test. Fail.
+
+#### R-02 Subjective completion gate
+Completion gate is "feels done" or "looks good" rather than observable. Fail.
+
+#### R-03 Speculative feature
+Roadmap milestone includes a feature not in the PRD. Fail.
+
+#### R-04 No prioritization
+All milestones are the same size. No real ordering. Fail.
+
+#### R-05 No dependency edges
+Milestones have no documented dependencies. Fail.
+
+#### R-06 Fictional precision
+Day-level dates without a documented capacity input (team size, velocity).
+Fail.
+
+#### R-07 Empty Later
+Later section is missing or empty. No long-term direction. Fail.
+
+#### R-08 Quarter-stuffing
+All four quarters are equally full. Real prioritization tapers. Fail.
+
+#### R-09 Shelf roadmap
+Roadmap written once, never consulted. Must show update timestamps. Fail.
+
+#### R-10 Roadmap theater
+Gantt aesthetics with no actual commitments. Fail.
+
+### Stack Have-Nots
+
+#### S-01 Choice without flip point
+Tech choice has no documented flip point. Fail.
+
+#### S-02 Choice without lock-in cost
+Tech choice has no lock-in cost classification. Fail.
+
+#### S-03 Pairing incompatibility
+Chosen technologies don't work together (e.g., ORM doesn't support DB). Fail.
+
+#### S-04 High lock-in danger
+High lock-in choice with likely flip point in <6 months without mitigation
+plan. Fail.
+
+#### S-05 "Best practice" without rationale
+Choice justified by "industry best practice" without specific tie to ARCH or
+PRD. Fail.
+
+---
+
+## Tier 2: Building Have-Nots
+
+### Repo Scaffold Have-Nots
+
+#### RP-01 README is template
+README contains TODO markers, lorem ipsum, or placeholder text. Fail.
+
+#### RP-02 No test directory
+No test directory structure exists. Fail.
+
+#### RP-03 No CI/CD
+No CI/CD pipeline configured. Fail.
+
+#### RP-04 No linter
+No linter configured for the chosen language. Fail.
+
+#### RP-05 No formatter
+No formatter configured. Fail.
+
+#### RP-06 .gitignore missing or generic
+.gitignore is missing or doesn't match the chosen stack. Fail.
+
+#### RP-07 SECURITY.md absent
+SECURITY.md (vulnerability reporting) is missing. Fail.
+
+#### RP-08 Scaffold-only
+Repo structure exists but features are stubbed with TODOs or fake data. Fail.
+
+### Build Have-Nots
+
+#### B-01 Code before test (TDD violation)
+Implementation written before its test. Fail. Implementation must be deleted
+and rewritten test-first.
+
+#### B-02 Test passes immediately on RED
+Test was added but did not fail before implementation. Fail. The test is
+wrong; fix it until it fails for the right reason.
+
+#### B-03 Single-stage review
+Only one review stage performed. Both spec compliance AND code quality must
+pass. Fail.
+
+#### B-04 Fat commit
+Multiple unrelated slices in one commit. Fail.
+
+#### B-05 Context rot
+Agent reused degraded context window instead of getting a fresh one. Fail.
+
+#### B-06 Stub in production code
+Implementation contains TODO, placeholder, or fake data in non-test code. Fail.
+
+#### B-07 Test suite failing on commit
+Commit made while any test is failing. Fail.
+
+#### B-08 Linter warnings on commit
+Commit made with unresolved linter warnings. Fail.
+
+#### B-09 No regression test for bug fix
+Bug fix committed without a regression test that reproduces the bug. Fail.
+
+#### B-10 Tests skipped or marked TODO
+Test files contain `it.skip`, `xit`, `@Ignore`, or equivalent without
+justification. Fail.
+
+#### B-11 Implementation detail tested
+Tests verify implementation details (private methods, internal state) rather
+than behavior. Fragile and adds little value. Fail.
+
+#### B-12 Hidden coupling
+Slice modifies code outside its declared file paths. Fail.
+
+---
+
+## Tier 3: Shipping Have-Nots
+
+### Deploy Have-Nots
+
+#### D-01 Different build per environment
+Each environment builds its own artifact. Fail. Build once; promote the same
+artifact.
+
+#### D-02 No rollback plan
+Deploy procedure has no documented rollback steps. Fail.
+
+#### D-03 Untested rollback
+Rollback documented but never executed in staging. Paper rollback. Fail.
+
+#### D-04 TCP-only health check
+Health check is just a port check. Must be application-level. Fail.
+
+#### D-05 No smoke test
+No post-deploy smoke test that hits real endpoints. Fail.
+
+#### D-06 Paper canary
+Canary label exists but no actual traffic split. Fail.
+
+#### D-07 No environment parity
+Dev/staging/prod use different config shapes. Fail.
+
+#### D-08 Manual deploy steps
+Production deploy requires a human running commands. Fail. Must be automated.
+
+### Observe Have-Nots
+
+#### OB-01 SLO without error budget policy
+SLO defined but no concrete action when budget is exhausted. Paper SLO. Fail.
+
+#### OB-02 Cause-based alert
+Alert fires on a cause ("CPU at 90%") not a symptom ("users seeing errors").
+Fail.
+
+#### OB-03 Alert without runbook
+Alert fires with no linked runbook for the on-call to follow. Fail.
+
+#### OB-04 Untested runbook
+Runbook exists but has never been dry-run. Paper runbook. Fail.
+
+#### OB-05 Blind dashboard
+Dashboard not tied to any SLO. Vanity metrics. Fail.
+
+#### OB-06 Sensitive data in logs
+Logs contain passwords, tokens, full PII, or other sensitive data. Fail.
+
+#### OB-07 Alert fatigue
+Alert that's fired more than 3x in 24 hours and ignored. Either tune or delete.
+Fail.
+
+#### OB-08 No tracing
+Multi-service architecture with no distributed tracing. Fail.
+
+### Launch Have-Nots
+
+#### L-01 Generic landing copy
+Landing copy passes substitution test. Reads generic. Fail.
+
+#### L-02 OG card unrendered
+OG meta tags exist but card was never visually verified. Fail.
+
+#### L-03 Same copy across channels
+Identical message posted to Show HN, Product Hunt, Reddit, Twitter. Fail.
+
+#### L-04 Silent launch
+Signups have no source attribution (no UTMs, no referrer tracking). Fail.
+
+#### L-05 No D-7 to D+7 plan
+Launch has no day-by-day runbook spanning the launch window. Fail.
+
+#### L-06 Decoration-word landing
+Hero contains "powerful", "seamless", "cutting-edge", "revolutionary",
+"robust" without quantification. Fail.
+
+#### L-07 No post-launch follow-up
+No plan for D+1 to D+7 (responding to comments, gathering feedback,
+iterating). Fail.
+
+#### L-08 "We'll figure out marketing later"
+Launch tier marked done with no actual launch artifacts. Fail.
+
+### Harden Have-Nots
+
+#### H-01 Scanner-only security
+Findings come only from automated scanners. No manual review. Fail.
+
+#### H-02 Auth boundaries not tested
+Auth/authz boundaries assumed from code reading, not actually probed. Fail.
+
+#### H-03 No input validation audit
+User input paths not systematically reviewed. Fail.
+
+#### H-04 Rate limiting not verified
+Rate limiting claimed but not tested with actual abuse simulation. Fail.
+
+#### H-05 OWASP categories skipped
+A Top 10 category marked "N/A" without justification. Fail.
+
+#### H-06 Findings without severity
+Finding exists but has no Critical/High/Medium/Low classification. Fail.
+
+#### H-07 Critical without remediation
+Critical finding presented to user with no remediation options. Fail.
+
+#### H-08 Hardening as ritual
+Annual pen test only, nothing between. Fail.
+
+#### H-09 Compliance without security
+Compliance checklist green but app still has exploitable holes. Fail.
+
+#### H-10 Dependency CVEs ignored
+Known CVEs in dependencies with no remediation plan. Fail.
+
+#### H-11 Paper trust boundaries
+Trust boundaries declared in docs but absent in code. Fail.
+
+---
+
+## Reference Tally
+
+- Universal: 12
+- Tier 0 Orchestration: 6
+- Tier 1 PRD: 15
+- Tier 1 Architecture: 12
+- Tier 1 Roadmap: 10
+- Tier 1 Stack: 5
+- Tier 2 Repo: 8
+- Tier 2 Build: 12
+- Tier 3 Deploy: 8
+- Tier 3 Observe: 8
+- Tier 3 Launch: 8
+- Tier 3 Harden: 11
+
+**Total: 115 named have-nots.**
+
+Each is grep-testable. Each is a documented failure mode. Together they form
+the mechanical quality definition for Godpowers output.
