@@ -92,7 +92,9 @@ For each finding:
 
 ## Output
 
-Write `.godpowers/harden/FINDINGS.md`:
+Use `templates/HARDEN-FINDINGS.md` (installed at
+`<runtime>/godpowers-templates/HARDEN-FINDINGS.md`) as the structural starting
+point. Write `.godpowers/harden/FINDINGS.md`:
 
 ```markdown
 # Security Findings

@@ -14,6 +14,9 @@ Initialize the Godpowers project structure.
 
 ## Process
 
+This skill is a thin wrapper. The actual initialization logic lives in the
+**god-orchestrator** agent (Mode Detection and Scale Detection sections).
+
 1. Check if `.godpowers/` already exists:
    - If yes: read PROGRESS.md, report current state, ask if user wants to
      reset or resume
@@ -21,11 +24,17 @@ Initialize the Godpowers project structure.
 
 2. Ask the user to describe what they want to build. Accept any format.
 
-3. Detect operating mode:
-   - **Mode A (greenfield)**: No existing code, no existing artifacts
-   - **Mode B (gap-fill)**: Existing codebase, missing artifacts
-   - **Mode C (audit)**: Existing artifacts to score
-   - **Mode D (multi-repo)**: Multiple repositories to coordinate
+3. Spawn **god-orchestrator** in fresh context with the user's description and
+   instruction: "Mode detection and scale detection only. Create `.godpowers/`
+   directory and PROGRESS.md. Do NOT proceed to PRD."
+
+   The orchestrator will:
+   - Run Mode Detection (A/B/C/D) per its documented logic
+   - Run Scale Detection (trivial/small/medium/large/enterprise)
+   - For Mode B: scan existing artifacts and codebase signals
+   - Create directory structure
+   - Write PROGRESS.md with mode, scale, timestamp, tier states
+   - Return mode/scale to this skill
 
 4. Detect scale by analyzing the description:
    - **Trivial**: Single file change, bug fix, config tweak

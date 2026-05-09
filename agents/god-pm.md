@@ -16,7 +16,9 @@ enough that an architect and developer can build from this document alone.
 
 ## Output
 
-Write `.godpowers/prd/PRD.md` with these required sections:
+Use `templates/PRD.md` (installed at `<runtime>/godpowers-templates/PRD.md`) as
+the structural starting point. Write `.godpowers/prd/PRD.md` with these
+required sections:
 
 1. **Problem Statement** (substitution-tested)
 2. **Target Users** (specific personas, not "developers")

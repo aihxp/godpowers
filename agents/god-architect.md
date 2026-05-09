@@ -22,7 +22,9 @@ Before starting:
 
 ## Output
 
-Write `.godpowers/arch/ARCH.md` and individual ADRs to `.godpowers/arch/adr/`.
+Use `templates/ARCH.md` (installed at `<runtime>/godpowers-templates/ARCH.md`)
+as the structural starting point. Write `.godpowers/arch/ARCH.md` and individual
+ADRs to `.godpowers/arch/adr/`.
 
 ### Required Sections
 

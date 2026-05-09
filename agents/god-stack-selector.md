@@ -37,7 +37,9 @@ Pick the technology stack.
 
 ## Output
 
-Write `.godpowers/stack/DECISION.md`:
+Use `templates/STACK-DECISION.md` (installed at
+`<runtime>/godpowers-templates/STACK-DECISION.md`) as the structural starting
+point. Write `.godpowers/stack/DECISION.md`:
 
 ```markdown
 # Stack Decision

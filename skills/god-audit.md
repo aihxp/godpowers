@@ -7,16 +7,27 @@ description: |
   Triggers on: "god audit", "audit the project", "score artifacts", "check quality"
 ---
 
-# God Audit
+# /god-audit
 
-Score existing artifacts. Build nothing. Report what fails and why.
+Spawn the **god-auditor** agent in a fresh context via Task tool.
 
-## Process
+## Setup
 
-1. Scan all artifact paths on disk
-2. For each artifact found, run the full have-nots catalog for its tier
-3. Score each artifact: PASS / PARTIAL / FAIL per have-not
-4. Produce `.godpowers/AUDIT-REPORT.md`:
+1. Verify `.godpowers/` directory exists. If not: tell user there's nothing to audit.
+2. Spawn god-auditor with instructions: "Run full audit mode. Score every
+   artifact against `references/HAVE-NOTS.md`."
+3. The agent writes `.godpowers/AUDIT-REPORT.md`
+
+## Verification
+
+After god-auditor returns:
+1. Verify AUDIT-REPORT.md exists on disk
+2. Display the summary table to the user
+3. If any artifact scored below 80%: suggest re-running the failing tier
+
+## Output Format
+
+The agent produces `.godpowers/AUDIT-REPORT.md`:
 
 ```markdown
 # Godpowers Audit Report

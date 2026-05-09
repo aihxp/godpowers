@@ -34,7 +34,8 @@ Sequence the work.
 
 ## Output
 
-Write `.godpowers/roadmap/ROADMAP.md`:
+Use `templates/ROADMAP.md` (installed at `<runtime>/godpowers-templates/ROADMAP.md`)
+as the structural starting point. Write `.godpowers/roadmap/ROADMAP.md`:
 
 ```markdown
 # Roadmap

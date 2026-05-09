@@ -64,7 +64,32 @@ for agent in "$ROOT/agents/"*.md; do
 done
 
 # 4. No em/en dashes
-if grep -rn $'[\xe2\x80\x93\xe2\x80\x94]' "$ROOT/SKILL.md" "$ROOT/skills/" "$ROOT/agents/" "$ROOT/README.md" 2>/dev/null; then
+# Use Python for proper UTF-8 handling. The previous bash byte-class regex
+# false-positives on any UTF-8 char starting with 0xE2 (block chars, arrows, etc.)
+DASH_HITS="$(python3 -c "
+import os, sys
+hits = []
+for path in [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]]:
+    if os.path.isfile(path):
+        files = [path]
+    elif os.path.isdir(path):
+        files = []
+        for root, dirs, fs in os.walk(path):
+            for f in fs:
+                if f.endswith('.md'):
+                    files.append(os.path.join(root, f))
+    else:
+        continue
+    for fp in files:
+        with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
+            for i, line in enumerate(f, 1):
+                if '–' in line or '—' in line:
+                    hits.append(f'{fp}:{i}')
+print('\n'.join(hits))
+" "$ROOT/SKILL.md" "$ROOT/skills" "$ROOT/agents" "$ROOT/README.md" 2>/dev/null)"
+
+if [ -n "$DASH_HITS" ]; then
+  echo "$DASH_HITS"
   fail "Em/en dashes found in content"
 else
   pass "No em/en dashes in content"

@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const VERSION = '0.1.0';
+const VERSION = '0.3.0';
 
 const BANNER = `
    ██████╗  ██████╗ ██████╗
@@ -267,6 +267,14 @@ function installForRuntime(runtimeKey, srcDir) {
     success('Installed templates/');
   }
 
+  // 4b. Install references (HAVE-NOTS catalog and per-tier antipatterns)
+  const referencesSrc = path.join(srcDir, 'references');
+  if (fs.existsSync(referencesSrc)) {
+    const referencesDest = path.join(runtime.configDir, 'godpowers-references');
+    copyRecursive(referencesSrc, referencesDest);
+    success('Installed references/');
+  }
+
   // 5. Install hooks (Claude Code only for now)
   if (runtimeKey === 'claude') {
     const hooksSrc = path.join(srcDir, 'hooks');
@@ -286,6 +294,79 @@ function installForRuntime(runtimeKey, srcDir) {
   // 6. Write VERSION
   fs.writeFileSync(path.join(runtime.configDir, 'GODPOWERS_VERSION'), VERSION);
   success(`Wrote GODPOWERS_VERSION (${VERSION})`);
+
+  return true;
+}
+
+// ---------------------------------------------------------------------------
+// Uninstall
+// ---------------------------------------------------------------------------
+
+function uninstallForRuntime(runtimeKey) {
+  const runtime = RUNTIMES[runtimeKey];
+  if (!runtime) {
+    error(`Unknown runtime: ${runtimeKey}`);
+    return false;
+  }
+
+  log(`\n  Uninstalling from \x1b[36m${runtime.name}\x1b[0m at \x1b[36m${runtime.configDir}\x1b[0m\n`);
+
+  const skillsDir = path.join(runtime.configDir, runtime.skillsDir);
+  const agentsDir = path.join(runtime.configDir, 'agents');
+  const templatesDir = path.join(runtime.configDir, 'godpowers-templates');
+  const referencesDir = path.join(runtime.configDir, 'godpowers-references');
+  const versionFile = path.join(runtime.configDir, 'GODPOWERS_VERSION');
+
+  let removed = 0;
+
+  // Remove all god-* skills
+  if (fs.existsSync(skillsDir)) {
+    for (const file of fs.readdirSync(skillsDir)) {
+      if (file.startsWith('god-') || file === 'godpowers.md') {
+        fs.unlinkSync(path.join(skillsDir, file));
+        removed++;
+      }
+    }
+    success(`Removed ${removed} god-* skill(s)`);
+  }
+
+  // Remove all god-* agents
+  let agentsRemoved = 0;
+  if (fs.existsSync(agentsDir)) {
+    for (const file of fs.readdirSync(agentsDir)) {
+      if (file.startsWith('god-')) {
+        fs.unlinkSync(path.join(agentsDir, file));
+        agentsRemoved++;
+      }
+    }
+    success(`Removed ${agentsRemoved} god-* agent(s)`);
+  }
+
+  // Remove templates and references directories
+  if (fs.existsSync(templatesDir)) {
+    fs.rmSync(templatesDir, { recursive: true, force: true });
+    success('Removed godpowers-templates/');
+  }
+  if (fs.existsSync(referencesDir)) {
+    fs.rmSync(referencesDir, { recursive: true, force: true });
+    success('Removed godpowers-references/');
+  }
+
+  // Remove hooks (Claude Code only)
+  if (runtimeKey === 'claude') {
+    const hooksDir = path.join(runtime.configDir, 'hooks');
+    for (const hook of ['session-start.sh', 'pre-tool-use.sh']) {
+      const hookPath = path.join(hooksDir, hook);
+      if (fs.existsSync(hookPath)) {
+        fs.unlinkSync(hookPath);
+        success(`Removed hooks/${hook}`);
+      }
+    }
+  }
+
+  if (fs.existsSync(versionFile)) {
+    fs.unlinkSync(versionFile);
+  }
 
   return true;
 }
@@ -354,6 +435,24 @@ function main() {
     opts.runtimes = Object.keys(RUNTIMES);
   }
 
+  // Handle uninstall
+  if (opts.uninstall) {
+    let removed = 0;
+    for (const runtime of opts.runtimes) {
+      if (uninstallForRuntime(runtime)) {
+        removed++;
+      }
+    }
+    log('');
+    if (removed > 0) {
+      log(`\x1b[32mUninstalled\x1b[0m from ${removed} runtime(s).`);
+    } else {
+      warn('No runtimes uninstalled.');
+    }
+    log('');
+    return;
+  }
+
   let installed = 0;
   for (const runtime of opts.runtimes) {
     if (installForRuntime(runtime, srcDir)) {
@@ -362,10 +461,25 @@ function main() {
   }
 
   if (installed > 0) {
+    // Count slash commands for verification message
+    const skillsCount = fs.readdirSync(path.join(srcDir, 'skills')).filter(f => f.endsWith('.md')).length;
+    const agentsCount = fs.readdirSync(path.join(srcDir, 'agents')).filter(f => f.endsWith('.md')).length;
+
     log('');
-    log(`\x1b[32mDone!\x1b[0m Installed Godpowers for ${installed} runtime(s).`);
+    log(`\x1b[32mDone!\x1b[0m Installed Godpowers v${VERSION} for ${installed} runtime(s).`);
     log('');
-    log('Start a new session and type: \x1b[36mgod mode\x1b[0m');
+    log(`\x1b[36mInstalled:\x1b[0m`);
+    log(`  ${skillsCount} slash commands (try: /god-mode, /god-next, /god-status)`);
+    log(`  ${agentsCount} specialist agents`);
+    log(`  Templates and references for artifact discipline`);
+    log('');
+    log(`\x1b[36mNext steps:\x1b[0m`);
+    log(`  1. Open your AI coding tool in any project directory`);
+    log(`  2. Type: \x1b[36m/god-mode\x1b[0m for full autonomous arc`);
+    log(`     Or:   \x1b[36m/god-next\x1b[0m to see what to run next`);
+    log(`     Or:   \x1b[36m/god-init\x1b[0m to start a new project`);
+    log('');
+    log(`\x1b[36mDocs:\x1b[0m https://github.com/godpowers/godpowers`);
     log('');
   } else {
     error('No runtimes installed. Run with --help for usage.');

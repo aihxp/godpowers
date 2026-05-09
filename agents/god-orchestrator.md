@@ -166,24 +166,61 @@ Detect operating mode from environment and user intent:
 - Run all tiers from PRD onwards
 
 ### Mode B: Gap-fill
-- Existing codebase
-- May have some `.godpowers/` artifacts already
+- Existing codebase or partial `.godpowers/` artifacts
 - Detect which tiers have passing artifacts; skip those
 - Run only the missing tiers
+
+**Detection logic (run this on every Mode B invocation)**:
+
+```
+For each canonical artifact path:
+  1. Check if file exists on disk
+  2. If exists: spawn god-auditor briefly to score against have-nots
+  3. If passes: mark tier as "imported" in PROGRESS.md, skip
+  4. If fails: mark tier as "in-flight" with the failures, will re-run
+  5. If missing: mark tier as "pending"
+
+Canonical paths to scan:
+  .godpowers/prd/PRD.md
+  .godpowers/arch/ARCH.md
+  .godpowers/roadmap/ROADMAP.md
+  .godpowers/stack/DECISION.md
+  .godpowers/repo/AUDIT.md
+  .godpowers/build/STATE.md
+  .godpowers/deploy/STATE.md
+  .godpowers/observe/STATE.md
+  .godpowers/launch/STATE.md
+  .godpowers/harden/FINDINGS.md
+
+Also check codebase signals (gap-fill heuristics):
+  - package.json or equivalent exists -> repo scaffold likely done, mark Repo "imported"
+  - .github/workflows/ or .gitlab-ci.yml exists -> CI exists, partial repo done
+  - tests/ or *.test.* files exist -> some build progress, suggest /god-status to verify
+  - Dockerfile + deploy config -> deploy may be done, prompt user
+
+Report findings to user before running any tier:
+  "Detected: PRD imported, ARCH missing, Roadmap imported (passes have-nots),
+   Repo imported (CI present), Build in progress. Resuming from Build."
+```
 
 ### Mode C: Audit
 - Triggered explicitly with --audit flag
 - Build nothing
 - Run god-auditor across all existing artifacts
-- Score each against have-nots from references/HAVE-NOTS.md
+- Score each against have-nots from `<runtime>/godpowers-references/HAVE-NOTS.md`
 - Produce `.godpowers/AUDIT-REPORT.md`
 
-### Mode D: Multi-repo
-- Triggered when working directory contains multiple sub-repos or when user
-  describes a system spanning multiple repos
-- Produce a coordination plan across repos
-- Each repo gets its own `.godpowers/` substate
-- A meta-PROGRESS.md at the root coordinates them
+### Mode D: Multi-repo (FUTURE WORK)
+
+> **Status**: documented but not implemented in v0.3. Use Mode A or B per repo
+> for now and coordinate manually.
+>
+> Planned for a future release: cross-repo orchestration with a meta
+> `.godpowers/` at the root and per-repo substates. Track progress at
+> [issue link TBD].
+
+If a user triggers Mode D in v0.3, fall back to Mode A or B for the current
+repo and tell the user multi-repo coordination is not yet supported.
 
 Record the detected mode in PROGRESS.md.
 
