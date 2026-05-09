@@ -135,6 +135,11 @@ god-launch:god-launch-strategist
 god-harden:god-harden-auditor
 god-debug:god-debugger
 god-mode:god-orchestrator
+god-spike:god-spike-runner
+god-postmortem:god-incident-investigator
+god-upgrade:god-migration-strategist
+god-docs:god-docs-writer
+god-update-deps:god-deps-auditor
 "
 
 while IFS=: read -r skill_name agent_name; do

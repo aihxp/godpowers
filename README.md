@@ -86,6 +86,21 @@ when you open a new session in a Godpowers project.
 | `/god-debug` | 4-phase systematic debug | god-debugger |
 | `/god-review` | Two-stage code review | god-spec-reviewer + god-quality-reviewer |
 
+### Other Workflows
+
+For real-world scenarios beyond greenfield:
+
+| Command | When to use | Spawns |
+|---------|-------------|--------|
+| `/god-feature` | Add a feature to an existing project | god-pm + god-architect (delta) + executor chain |
+| `/god-hotfix` | Urgent production bug fix | god-debugger + god-executor + reviewers + deploy |
+| `/god-refactor` | Safe refactor with TDD (no behavior change) | god-explorer + god-planner + executor chain |
+| `/god-spike` | Time-boxed research with throwaway POC | god-spike-runner |
+| `/god-postmortem` | Post-incident investigation | god-incident-investigator |
+| `/god-upgrade` | Framework/version migration with expand-contract | god-migration-strategist |
+| `/god-docs` | Write/update docs verified against code | god-docs-writer |
+| `/god-update-deps` | Audit and update dependencies safely | god-deps-auditor |
+
 ### God Mode Flags
 
 ```

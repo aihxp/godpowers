@@ -51,6 +51,26 @@ Detect the next logical command and either suggest it or run it.
 | Launch pending, harden clean | `/god-launch` | Launch the product |
 | All done | (none) | Project complete. Suggest `/god-audit` to score everything. |
 
+## Workflow Routing (when PROGRESS.md exists and user has options)
+
+If the project is in steady state and the user wants to do something specific,
+match intent to workflow:
+
+| User intent | Workflow |
+|-------------|----------|
+| Add a feature to existing project | `/god-feature` |
+| Production bug, urgent | `/god-hotfix` |
+| Bug found in dev, no urgency | `/god-debug` |
+| Refactor code without behavior change | `/god-refactor` |
+| Research a technical question | `/god-spike` |
+| Review an incident after the fact | `/god-postmortem` |
+| Migrate framework or version | `/god-upgrade` |
+| Update docs | `/god-docs` |
+| Update dependencies | `/god-update-deps` |
+| Score existing artifacts | `/god-audit` |
+| Quick inline fix | `/god-fast` |
+| Small task with TDD | `/god-quick` |
+
 ## Output Format
 
 ```
