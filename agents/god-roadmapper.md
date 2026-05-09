@@ -65,6 +65,16 @@ Roadmap FAILS if:
 - Day-level precision without capacity input
 - Later section is empty (no long-term vision)
 
+## YOLO Handling
+
+With `--yolo`, do NOT pause. Auto-pick defaults and log to YOLO-DECISIONS.md.
+
+Defaults for god-roadmapper:
+- **Capacity unknown**: assume 1 engineer at 0.5 slices/day baseline. Tag the
+  roadmap as [HYPOTHESIS] velocity until 2 sprints validate it.
+- **Two valid orderings**: pick the ordering that delivers user-facing value
+  earliest (vertical slice priority).
+
 ## Done Criteria
 
 - `.godpowers/roadmap/ROADMAP.md` exists

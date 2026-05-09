@@ -72,6 +72,29 @@ Options:
 Default if you say "go": [X] because [Y]
 ```
 
+## YOLO Handling
+
+If invoked with `--yolo`, do NOT pause. At every condition that would
+otherwise pause, auto-pick the default and log to
+`.godpowers/YOLO-DECISIONS.md`:
+
+```markdown
+## god-pm: [Brief decision title]
+- Pause condition: [what would have paused]
+- Auto-picked: [the default]
+- Reason: [why this is the safest default]
+- Timestamp: [ISO 8601]
+- Reversible by: [user can edit the PRD section X]
+```
+
+Defaults for god-pm:
+- **Ambiguous problem space**: pick the broader interpretation. Narrowing
+  later is cheaper than expanding.
+- **Domain knowledge gap**: log the missing knowledge as an [OPEN QUESTION]
+  with owner = "user" and due date = "before /god-arch".
+- **Conflicting requirements**: pick the requirement tied to the higher-priority
+  PRD success metric.
+
 ## Done Criteria
 
 - `.godpowers/prd/PRD.md` exists on disk

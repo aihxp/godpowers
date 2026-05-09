@@ -73,6 +73,17 @@ Pause ONLY if:
 - Two candidates score within 10% AND tiebreaker is human-only
 - A High lock-in choice has a likely flip point within 6 months
 
+## YOLO Handling
+
+With `--yolo`, do NOT pause. Auto-pick defaults and log to YOLO-DECISIONS.md.
+
+Defaults for god-stack-selector:
+- **Tied scores within 10%**: pick the option with lower lock-in cost. Ties
+  break toward reversibility.
+- **High lock-in with near flip point**: log it as a [HYPOTHESIS] choice and
+  flag for re-review at the flip-point trigger. Pick the lower-lock-in
+  alternative if scores are within 5%.
+
 ## Done Criteria
 
 - `.godpowers/stack/DECISION.md` exists

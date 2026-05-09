@@ -165,6 +165,51 @@ if [ -f "$ROOT/hooks/session-start.sh" ]; then
   fi
 fi
 
+if [ -f "$ROOT/hooks/pre-tool-use.sh" ]; then
+  if [ -x "$ROOT/hooks/pre-tool-use.sh" ]; then
+    pass "hooks/pre-tool-use.sh is executable"
+  else
+    fail "hooks/pre-tool-use.sh not executable"
+  fi
+fi
+
+# 11. god-mode autonomous routing: orchestrator references every tier's agent
+ORCH="$ROOT/agents/god-orchestrator.md"
+for required_agent in god-pm god-architect god-roadmapper god-stack-selector god-repo-scaffolder god-planner god-executor god-spec-reviewer god-quality-reviewer god-deploy-engineer god-observability-engineer god-harden-auditor god-launch-strategist; do
+  if grep -q "$required_agent" "$ORCH"; then
+    pass "orchestrator routes to $required_agent"
+  else
+    fail "orchestrator does not route to $required_agent"
+  fi
+done
+
+# 12. Build phase orchestration: orchestrator documents the 4-agent build chain
+if grep -qi "build phase orchestration" "$ORCH"; then
+  pass "orchestrator documents Build phase multi-agent chain"
+else
+  fail "orchestrator missing Build phase orchestration section"
+fi
+
+# 13. YOLO handling: every pause-capable agent documents YOLO behavior
+for yolo_agent in god-pm god-architect god-roadmapper god-stack-selector god-launch-strategist god-harden-auditor; do
+  agent_file="$ROOT/agents/${yolo_agent}.md"
+  if [ -f "$agent_file" ]; then
+    if grep -qi "yolo" "$agent_file"; then
+      pass "agents/${yolo_agent}.md documents YOLO handling"
+    else
+      fail "agents/${yolo_agent}.md missing YOLO handling"
+    fi
+  fi
+done
+
+# 14. Critical-finding carve-out: harden auditor must NOT auto-resolve Criticals
+if grep -qi "Critical findings.*cannot.*auto" "$ROOT/agents/god-harden-auditor.md" || \
+   grep -qi "yolo CANNOT auto-resolve" "$ROOT/agents/god-harden-auditor.md"; then
+  pass "harden-auditor preserves Critical-finding pause under --yolo"
+else
+  fail "harden-auditor missing Critical-finding --yolo carve-out"
+fi
+
 echo ""
 echo "  Results: $PASS passed, $FAIL failed"
 echo ""

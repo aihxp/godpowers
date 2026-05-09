@@ -72,6 +72,17 @@ Pause ONLY if:
 - A flip point depends on human constraints
 - PRD has architecturally contradictory NFRs
 
+## YOLO Handling
+
+With `--yolo`, do NOT pause. Auto-pick defaults and log to YOLO-DECISIONS.md.
+
+Defaults for god-architect:
+- **Tied architectures**: pick the simpler one. Complexity is hard to remove later.
+- **Human-constraint flip point**: pick the choice that scales DOWN gracefully
+  (a monolith you can split later beats microservices you can't merge).
+- **Contradictory NFRs**: pick the NFR tied to a hard PRD success metric over
+  one that's [HYPOTHESIS]-tagged. Log the contradiction for user review.
+
 ## Done Criteria
 
 - `.godpowers/arch/ARCH.md` exists with all required sections

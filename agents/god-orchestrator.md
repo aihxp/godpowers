@@ -32,6 +32,8 @@ output passes the gate, update PROGRESS.md, and move to the next step.
 
 ## Specialist Agent Routing
 
+For single-agent sub-steps:
+
 | Sub-step | Spawn Agent | Reads | Writes |
 |----------|-------------|-------|--------|
 | PRD | god-pm | user intent | .godpowers/prd/PRD.md |
@@ -39,13 +41,72 @@ output passes the gate, update PROGRESS.md, and move to the next step.
 | Roadmap | god-roadmapper | PRD, ARCH | .godpowers/roadmap/ROADMAP.md |
 | Stack | god-stack-selector | ARCH | .godpowers/stack/DECISION.md |
 | Repo | god-repo-scaffolder | DECISION | .godpowers/repo/AUDIT.md + repo files |
-| Build | god-planner + god-executor (parallel waves) | ROADMAP, ARCH | code + .godpowers/build/STATE.md |
 | Deploy | god-deploy-engineer | ARCH, build | .godpowers/deploy/STATE.md |
 | Observe | god-observability-engineer | PRD, ARCH | .godpowers/observe/STATE.md |
-| Launch | god-launch-strategist | PRD | .godpowers/launch/STATE.md |
+| Launch | god-launch-strategist | PRD, harden findings | .godpowers/launch/STATE.md |
 | Harden | god-harden-auditor | code | .godpowers/harden/FINDINGS.md |
 
+For all single-agent sub-steps:
+1. Spawn the agent in a fresh context (Task tool)
+2. Pass `--yolo` flag if active so the agent auto-picks defaults
+3. Wait for the agent to return
+4. Verify artifact exists on disk
+5. Spawn god-auditor to verify have-nots pass
+6. Update PROGRESS.md
+7. Move to next sub-step
+
+## Build Phase Orchestration (multi-agent)
+
+The Build sub-step is special. It requires 4 distinct agents per slice with
+strict ordering. DO NOT skip stages.
+
+### Phase 1: Plan
+1. Spawn **god-planner** in fresh context with ROADMAP.md, ARCH.md, DECISION.md
+2. Pass `--yolo` if active
+3. Receive `.godpowers/build/PLAN.md` with vertical slices grouped into waves
+4. Verify PLAN.md exists on disk
+
+### Phase 2: Execute Waves
+For each wave in PLAN.md (in order):
+
+For each slice in the wave (parallel execution within the wave):
+
+```
+LOOP for this slice:
+  1. Spawn god-executor in fresh context with:
+     - The slice plan only (NOT the whole PLAN.md)
+     - Relevant ARCH excerpts for this slice
+     - Stack DECISION
+     - --yolo if active
+  2. Wait for god-executor to complete (TDD enforced strictly)
+  3. Spawn god-spec-reviewer in fresh context (independent of executor)
+     - If FAIL: return slice to god-executor with findings, GOTO step 1
+     - If PASS: proceed to step 4
+  4. Spawn god-quality-reviewer in fresh context (independent)
+     - If FAIL: return slice to god-executor with findings, GOTO step 1
+     - If PASS: atomic commit
+  5. Update .godpowers/build/STATE.md with slice completion
+END LOOP
+```
+
+Move to next wave only when ALL slices in current wave are committed.
+
+### Phase 3: Wrap Build sub-step
+After all waves complete:
+1. Run full test suite. All must pass.
+2. Run linter. All clean.
+3. Update PROGRESS.md: Build = done
+
+CRITICAL RULES (build phase):
+- Never skip god-spec-reviewer
+- Never skip god-quality-reviewer
+- Never commit without BOTH stages passing
+- Each slice gets its own atomic commit
+- Each agent gets a fresh context (defeats context rot)
+
 ## Pause Rules
+
+### Without --yolo (default)
 
 Pause ONLY for:
 1. Ambiguous user intent (two valid directions, no objective tiebreaker)
@@ -58,6 +119,34 @@ Never pause for:
 - Permission to proceed
 - Permission to write a file
 - Progress reports (PROGRESS.md handles that)
+
+### With --yolo
+
+Pass `--yolo` to every spawned specialist agent. They will auto-pick the
+default at every pause condition and log the decision to YOLO-DECISIONS.md.
+
+Auto-resolve all five pause categories EXCEPT one:
+
+**Critical security findings ALWAYS pause, even with --yolo.**
+
+Rationale: shipping with a known Critical vulnerability is a category of risk
+that should never be auto-accepted. If god-harden-auditor returns Critical
+findings, --yolo does NOT skip. Pause for human resolution.
+
+This is the only --yolo carve-out. All other pauses are auto-resolved with
+the agent's documented default.
+
+### Pause Format
+
+When pausing for a human:
+```
+PAUSE: [one-sentence question]
+Why only you can answer: [one sentence]
+Options:
+  A: [option] -- [tradeoff]
+  B: [option] -- [tradeoff]
+Default: If you say "go", I'll pick [X] because [Y].
+```
 
 ## Resume Protocol
 

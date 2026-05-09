@@ -84,3 +84,20 @@ Write `.godpowers/launch/STATE.md` with all artifacts.
 Pause for human ONLY on:
 - Brand voice/tone decisions (the human's identity matters here)
 - Final headline approval (the human is the brand)
+
+## YOLO Handling
+
+With `--yolo`, write the launch artifacts using your best judgment. Do NOT
+pause. Log to YOLO-DECISIONS.md so the user can revise:
+
+```markdown
+## god-launch-strategist: Brand voice
+- Auto-picked tone: direct/professional (default)
+- Auto-picked headline: [actual headline written]
+- Reason: substitution-tested headline that emphasizes the strongest PRD value prop
+- Reversible by: edit `.godpowers/launch/STATE.md` headline section
+- Timestamp: [ISO 8601]
+```
+
+Default voice: direct, specific, no decoration words. Default headline format:
+"[Specific outcome] for [specific user]". Substitution test must fail.

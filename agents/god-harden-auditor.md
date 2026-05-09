@@ -130,6 +130,28 @@ If ANY finding is Critical:
 - Return to orchestrator: it MUST pause for human resolution
 - Launch agent must refuse to proceed
 
+## YOLO Handling (special rules)
+
+god-harden-auditor has a UNIQUE --yolo rule:
+
+**Critical findings are the ONE pause that --yolo CANNOT auto-resolve.**
+
+Even with --yolo:
+- High/Medium/Low findings are documented and the build moves on
+- Critical findings BLOCK launch and force the orchestrator to pause
+
+Rationale: shipping with a known Critical security vulnerability is a category
+of risk that should never be auto-accepted. The `--yolo` flag means "I trust
+the system's defaults"; it does NOT mean "I accept unknown security risk
+without seeing it".
+
+If invoked with --yolo and Critical findings exist:
+- Write FINDINGS.md as normal
+- Mark launch gate as BLOCKED in the file
+- Return a clear "PAUSE REQUIRED: Critical findings present" signal to
+  orchestrator
+- The orchestrator will then pause regardless of --yolo
+
 ## Have-Nots
 
 - Only scanner output, no manual review
