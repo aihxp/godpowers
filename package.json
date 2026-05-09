@@ -1,0 +1,40 @@
+{
+  "name": "godpowers",
+  "version": "0.1.0",
+  "description": "Ship fast. Ship right. Ship everything. Ship accountably.",
+  "bin": {
+    "godpowers": "./bin/install.js"
+  },
+  "scripts": {
+    "test": "node scripts/validate-skills.js && bash scripts/smoke.sh",
+    "validate-skills": "node scripts/validate-skills.js",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "agent",
+    "claude",
+    "codex",
+    "cursor",
+    "tdd",
+    "orchestration",
+    "godmode",
+    "slash-commands"
+  ],
+  "author": "Godpowers",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "agents/",
+    "hooks/",
+    "templates/",
+    "references/",
+    "SKILL.md",
+    "AGENTS.md"
+  ]
+}
