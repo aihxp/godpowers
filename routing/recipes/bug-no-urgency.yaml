@@ -1,0 +1,21 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: bug-no-urgency
+  category: production
+  description: "Bug found in dev, no urgency"
+
+triggers:
+  intent-keywords:
+    - "bug found"
+    - "broken in dev"
+    - "investigate bug"
+
+sequences:
+  default:
+    description: "Bug found in dev, no urgency"
+    steps:
+      - command: "/god-debug"
+        why: "4-phase systematic debug, not expedited"
+
+default-sequence: default

@@ -109,7 +109,7 @@ User types: /god-next
 Read .godpowers/state.json (or PROGRESS.md as fallback)
    |
    v
-Use lib/router.suggestNext(projectRoot)
+Use lib/router.suggestNext(projectRoot)  <- structural next
    |
    v
 For each tier in order:
@@ -118,13 +118,40 @@ For each tier in order:
    |
    v
 If all tiers done:
-   - Suggest workflow routing for steady state
-   - (god-feature, god-hotfix, etc. based on signals)
+   - Use lib/recipes.suggestForState(projectRoot)  <- scenario-aware
+   - Returns recipes matching current lifecycle phase
    |
    v
 Display: "Suggested next: /god-arch
           Why: PRD is complete; architecture is the next gate"
 ```
+
+## Process for Mode 4 (intent-based)
+
+```
+User says: "I need to add a new feature mid-development"
+   |
+   v
+/god-next consults lib/recipes.matchIntent(text, projectRoot)
+   |
+   v
+Returns ranked recipes matching:
+   - Intent keywords ("add new feature", "mid-development")
+   - State conditions (lifecycle-phase == in-arc)
+   |
+   v
+Display top match with the recipe's sequence:
+   "Best match: add-feature-mid-arc-pause
+    Sequence:
+      1. /god-pause-work  (Save current /god-mode arc state)
+      2. /god-feature     (Run feature workflow)
+      3. /god-resume-work (Restore arc)
+    
+    Run this sequence? Or see other matches?"
+```
+
+This is the recipe-driven decision support: agents consult `routing/recipes/`
+when user intent is fuzzy or doesn't map to a single command.
 
 ## Routing data
 

@@ -321,6 +321,47 @@ else
   fail "lib/router.js missing"
 fi
 
+# 23. lib/recipes.js exists
+if [ -f "$ROOT/lib/recipes.js" ]; then
+  pass "lib/recipes.js exists"
+else
+  fail "lib/recipes.js missing"
+fi
+
+# 24. routing/recipes/ has 30+ recipe files
+recipe_count=$(ls "$ROOT/routing/recipes/"*.yaml 2>/dev/null | wc -l)
+if [ "$recipe_count" -ge 30 ]; then
+  pass "routing/recipes/ has ${recipe_count} recipes"
+else
+  fail "routing/recipes/ has only ${recipe_count} recipes (expected 30+)"
+fi
+
+# 25. All recipes have apiVersion + kind: Recipe
+for recipe_file in "$ROOT/routing/recipes/"*.yaml; do
+  name="$(basename "$recipe_file")"
+  if grep -q "^apiVersion: godpowers/v1$" "$recipe_file"; then
+    pass "routing/recipes/${name} has apiVersion"
+  else
+    fail "routing/recipes/${name} missing apiVersion"
+  fi
+  if grep -q "^kind: Recipe$" "$recipe_file"; then
+    pass "routing/recipes/${name} has kind: Recipe"
+  else
+    fail "routing/recipes/${name} missing kind: Recipe"
+  fi
+done
+
+# 26. schema/recipe.v1.json exists and is valid JSON
+if [ -f "$ROOT/schema/recipe.v1.json" ]; then
+  if python3 -c "import json; json.load(open('$ROOT/schema/recipe.v1.json'))" 2>/dev/null; then
+    pass "schema/recipe.v1.json is valid JSON"
+  else
+    fail "schema/recipe.v1.json is not valid JSON"
+  fi
+else
+  fail "schema/recipe.v1.json missing"
+fi
+
 echo ""
 echo "  Results: $PASS passed, $FAIL failed"
 echo ""

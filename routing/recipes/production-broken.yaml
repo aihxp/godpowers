@@ -1,0 +1,26 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: production-broken
+  category: production
+  description: "Production is broken now"
+
+triggers:
+  intent-keywords:
+    - "production down"
+    - "urgent"
+    - "p0"
+    - "p1"
+    - "fire drill"
+    - "users seeing errors"
+  state-conditions:
+    - "lifecycle-phase == steady-state-active"
+
+sequences:
+  default:
+    description: "Production is broken now"
+    steps:
+      - command: "/god-hotfix"
+        why: "Skip planning, debug, fix with TDD, expedited deploy, schedule postmortem"
+
+default-sequence: default

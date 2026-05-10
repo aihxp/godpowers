@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: greenfield-fast
+  category: starting
+  description: "Greenfield idea to production with one command"
+
+triggers:
+  intent-keywords:
+    - "build something new"
+    - "start from scratch"
+    - "greenfield"
+    - "new project"
+    - "idea to production"
+  state-conditions:
+    - "no-godpowers-dir"
+
+sequences:
+  default:
+    description: "Greenfield idea to production with one command"
+    steps:
+      - command: "/god-mode"
+        why: "Full autonomous arc, idea to hardened production"
+
+default-sequence: default

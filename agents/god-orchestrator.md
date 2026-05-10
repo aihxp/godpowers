@@ -34,6 +34,29 @@ the routing config has a `standards` section). Standards check uses fresh
 context, independent of the producing agent. This is the arc-ready
 discipline integration point.
 
+## Recipe-Driven Decisions (for fuzzy intent)
+
+When the user describes intent in plain English instead of running a specific
+command, consult `routing/recipes/*.yaml` (installed at
+`<runtime>/godpowers-routing/recipes/`). These are scenario-based recipes
+that map fuzzy intent to specific command sequences.
+
+Programmatic access via `lib/recipes.js`:
+- `matchIntent(text, projectRoot)` -> ranked recipe matches by keyword
+- `suggestForState(projectRoot)` -> recipes matching current lifecycle phase
+- `getRecipe(name)` -> lookup specific recipe
+- `getSequence(recipe)` -> the command sequence to execute
+
+Example: user says "I need to add a feature mid-arc". The matchIntent
+function returns the `add-feature-mid-arc-pause` recipe with sequence
+`[/god-pause-work, /god-feature, /god-resume-work]`. Present this sequence
+with the "why" annotations for each step.
+
+This is the third layer of decision support:
+1. **Routing** (routing/<command>.yaml): structural prerequisites and gates
+2. **Recipes** (routing/recipes/<recipe>.yaml): scenario-based sequences
+3. **Standards** (god-standards-check): quality gates between stages
+
 ## Loop
 
 ```

@@ -1,0 +1,28 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: add-feature-mid-arc-pause
+  category: feature-addition
+  description: "Bigger feature mid-arc; pause arc, do feature, resume"
+
+triggers:
+  intent-keywords:
+    - "mid arc"
+    - "mid development"
+    - "pause arc"
+    - "feature during build"
+  state-conditions:
+    - "lifecycle-phase == in-arc"
+
+sequences:
+  default:
+    description: "Bigger feature mid-arc; pause arc, do feature, resume"
+    steps:
+      - command: "/god-pause-work"
+        why: "Save current /god-mode arc state"
+      - command: "/god-feature"
+        why: "Run feature workflow with full discipline"
+      - command: "/god-resume-work"
+        why: "Restore arc to where /god-mode was"
+
+default-sequence: default
