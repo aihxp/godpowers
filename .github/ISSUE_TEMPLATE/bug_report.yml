@@ -1,0 +1,78 @@
+name: Bug Report
+description: Something is broken or behaving unexpectedly
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `npx godpowers --help` first line
+      placeholder: "v0.4.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: AI runtime
+      options:
+        - Claude Code
+        - Codex
+        - Cursor
+        - Windsurf
+        - OpenCode
+        - Gemini CLI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug. Include the slash command you ran.
+      placeholder: I ran `/god-prd` and...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to reproduce the issue
+      placeholder: |
+        1. Run `/god-init`
+        2. Run `/god-prd`
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: state
+    attributes:
+      label: Project state
+      description: Output of `/god-status` if applicable, or paste relevant `.godpowers/state.json` content
+      render: json
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant events from `.godpowers/runs/<id>/events.jsonl` if available
+      render: shell
+    validations:
+      required: false

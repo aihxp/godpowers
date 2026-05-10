@@ -1,0 +1,52 @@
+name: Feature Request
+description: Suggest a new command, agent, workflow, or capability
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user pain or scenario this addresses
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What command, workflow, or behavior would address this?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of addition
+      options:
+        - New slash command
+        - New specialist agent
+        - New workflow YAML
+        - New recipe
+        - New extension pack
+        - Schema change
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you considered and why they fall short
+    validations:
+      required: false
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example usage
+      description: How would a user invoke this?
+      render: shell
+    validations:
+      required: false

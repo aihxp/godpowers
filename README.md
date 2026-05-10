@@ -1,5 +1,9 @@
 # Godpowers
 
+[![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
+
 **Ship fast. Ship right. Ship everything. Ship accountably.**
 
 Godpowers is an AI-powered development system that takes a project from raw
