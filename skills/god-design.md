@@ -28,8 +28,11 @@ producing DESIGN.md in the
 | `/god-design refresh` | Alias for document |
 | `/god-design suggest [text]` | Look for known site references and suggest matching DESIGN.md from awesome-design-md catalog |
 | `/god-design from <site>` | Fetch curated DESIGN.md from awesome-design-md and use as starter |
+| `/god-design from <url>` | If <url> is not in catalog, fall back to skillui static analysis |
 | `/god-design reference <site>` | Use a known site as a named reference in PRODUCT.md without copying its DESIGN.md |
 | `/god-design catalog` | List the 71 known sites with categories and short descriptions |
+| `/god-design scan <url> [--ultra]` | Scan a website / repo / dir with skillui and extract DESIGN.md |
+| `/god-design scan-repo <git-url>` | Clone repo and scan via skillui dir mode |
 | `/god-design extract` | Pull components into design system (impeccable extract) |
 | `/god-design shape` | Plan UX/UI before code (impeccable shape) |
 | `/god-design critique [scope]` | UX design review (impeccable critique) |
@@ -163,6 +166,59 @@ If the user wants to refresh a stale cache:
 - During `/god` (front door): if the user's free text mentions a known
   site, the recipe matcher includes a "use awesome-design DESIGN.md"
   recipe option
+
+## SkillUI fallback (when site is not in catalog)
+
+When a user references a site that isn't in the awesome-design-md
+catalog (e.g., a competitor not yet curated, a private app, or any
+arbitrary URL), fall back to
+[SkillUI](https://www.npmjs.com/package/skillui) (MIT licensed): a CLI
+that statically analyzes a website / git repo / local directory and
+extracts a complete design system including a DESIGN.md.
+
+### Detection cascade
+
+```
+User mentions a site reference (e.g., "feel like Acme.com")
+  -> lib/awesome-design.lookupSite(name)
+       hit:  use the curated DESIGN.md from the catalog
+       miss: fall through
+  -> lib/skillui-bridge.isInstalled()
+       installed:     run skillui --url <best-guess-URL>; produces DESIGN.md
+       not installed: prompt user to `npm install -g skillui` or skip
+```
+
+### Forms
+
+| Form | Behavior |
+|---|---|
+| `/god-design from <slug>` | Catalog lookup (Linear, Stripe, etc.); fast |
+| `/god-design from <url>` | Catalog lookup, falls through to SkillUI |
+| `/god-design scan <url>` | Always uses SkillUI; bypasses catalog |
+| `/god-design scan <url> --ultra` | SkillUI ultra mode (Playwright + screenshots) |
+| `/god-design scan-repo <git-url>` | Clone + scan via SkillUI dir mode |
+| `/god-design scan-dir <path>` | Scan a local project (e.g., for migration) |
+
+### Output flow
+
+```
+1. SkillUI runs; output cached at .godpowers/cache/skillui/<slug>/
+2. The generated DESIGN.md is found via findFirstDesignMd
+3. Validated by lib/design-spec.lint
+4. Reviewed by god-design-reviewer (two-stage gate)
+5. If PASS: promoted to project-root DESIGN.md
+6. Reverse-sync wires component implementations as usual
+```
+
+### Cost / install
+
+SkillUI default mode is pure static analysis (no browser, no API key).
+For ultra mode, requires Playwright + Chromium (one-time install).
+Both modes are local; no telemetry.
+
+The bridge layer is `lib/skillui-bridge.js`. Detect-and-delegate; never
+vendored. If SkillUI isn't installed, the bridge returns
+`{ error: 'not-installed' }` with the install command for the user.
 
 ## See also
 

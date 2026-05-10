@@ -26,10 +26,13 @@ Before doing anything:
    existing PRODUCT.md to discover whether the user has named known
    sites as references (e.g., "we want it to feel like Linear",
    "Stripe-style payment cards").
+3. Call `lib/skillui-bridge.isInstalled()` to determine whether SkillUI
+   is available for arbitrary-URL extraction (used as fallback when a
+   site reference is not in the catalog).
 
-Decision tree:
+Cascade:
 
-- **Site reference found in PRD/PRODUCT**: surface it first.
+- **Site reference IN catalog**: surface it first.
   ```
   Detected: "Linear" mentioned in PRD as brand reference.
 
@@ -39,6 +42,26 @@ Decision tree:
     3. Skip the catalog and proceed with normal flow
   ```
   Defaults vary by --yolo / --conservative; ask in default mode.
+- **Site reference NOT in catalog (and SkillUI installed)**: offer
+  static-analysis extraction.
+  ```
+  Detected: "Acme.com" mentioned in PRD but not in awesome-design-md catalog.
+
+  Options:
+    1. Run skillui --url https://acme.com to extract a DESIGN.md
+       (cached at .godpowers/cache/skillui/acme-com/)
+    2. Use Acme as a named reference in PRODUCT.md only
+    3. Skip and proceed with normal flow
+  ```
+- **Site reference NOT in catalog (and SkillUI not installed)**: prompt
+  to install SkillUI or skip.
+  ```
+  Detected: "Acme.com" not in catalog. SkillUI is not installed.
+
+  Options:
+    1. Install: npm install -g skillui (one-time, then auto-extract)
+    2. Skip and proceed with normal flow
+  ```
 - **Impeccable installed**: delegate. Run `/impeccable teach` for
   initial setup (produces both PRODUCT.md and DESIGN.md) or
   `/impeccable document` to regenerate DESIGN.md from existing code.
