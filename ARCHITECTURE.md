@@ -131,6 +131,38 @@ with attributes.
 This is the same shape as Datadog APM, Jaeger, Honeycomb. Future skill
 extensions can pipe to those tools.
 
+### Concurrency contract (advisory locking)
+
+Godpowers is **single-writer-per-mutation** but **multi-reader-anytime**.
+The contract:
+
+- Reads (`/god-status`, `/god-doctor`, `/god-help`, `/god-version`,
+  `/god-audit`) require no lock and can run any time, even while a
+  write is in flight.
+- Writes (any artifact-producing skill, `/god-build`, `/god-deploy`,
+  `/god-undo`, `/god-rollback`, `/god-repair`, `/god-restore`,
+  `/god-redo`, `/god-skip`, `/god-link`, `/god-scan`, `/god-sync`)
+  acquire a cooperative advisory lock by writing the `state.json`
+  `lock` object before mutating, and clearing it on completion.
+- The lock has a `scope` (e.g. `tier-1.arch`, `linkage`, `all`). Two
+  writers with non-overlapping scopes may run concurrently.
+- Stale locks (past `expires`) are reclaimable by any actor; the
+  reclaim emits a `state.repair` event with the previous holder
+  recorded.
+
+Why advisory and not OS-level: state.json lives on the developer's
+disk, but the same project may be touched by multiple AI sessions, a
+human editor, and CI workflows. An OS file lock would block none of
+them. An advisory lock in state.json is visible to every actor that
+respects the contract: today, the orchestrator and the recovery
+skills. Editors that touch artifact files directly do not respect the
+lock, which is fine: their changes show up as drift in `/god-doctor`
+and `/god-repair` handles reconciliation.
+
+Mode D (multi-repo suites) adds a second layer of locking at
+`.godpowers/suite/lock`, owned by `god-coordinator`. Per-repo locks
+stay local.
+
 ---
 
 ## 3. The Slash Command Surface

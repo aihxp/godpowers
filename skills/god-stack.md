@@ -30,3 +30,29 @@ Stack decision complete: .godpowers/stack/DECISION.md
 
 Suggested next: /god-repo (scaffold the repo with the chosen stack)
 ```
+
+
+## Re-invocation contract
+
+What happens if `/god-stack` is run when `.godpowers/stack/DECISION.md` already exists:
+
+| Existing state | Behavior |
+|---|---|
+| File does not exist | Spawn god-stack-selector; produce file; mark sub-step done |
+| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| File exists, fails lint or have-nots | Spawn god-stack-selector in update mode with current file + findings as input. Diff preview before overwrite. |
+| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-stack --force` to re-run. |
+| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-stack-<ts>/`. Spawn agent fresh. |
+| `--dry-run` flag passed | Show what would happen; touch nothing |
+
+Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.
+The reflog records every god-stack invocation as `op:god-stack` for `/god-undo`.
+
+### Idempotency guarantees
+
+- Running `/god-stack` twice with no user input between them is a no-op
+  (second call detects the artifact and pauses).
+- Running `/god-stack --dry-run` is always read-only.
+- An interrupted `/god-stack` (agent crashes mid-run) leaves state.json
+  with `status: failed` and the artifact path either missing or marked
+  for `/god-repair` review. Re-running picks up cleanly.

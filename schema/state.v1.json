@@ -78,6 +78,29 @@
       "type": "array",
       "description": "Auto-decisions made under --yolo. Mirrored to YOLO-DECISIONS.md.",
       "items": { "type": "object", "additionalProperties": true }
+    },
+    "lock": {
+      "type": "object",
+      "description": "Cooperative advisory lock for multi-user / multi-agent concurrency. The orchestrator acquires a lock before mutating state, releases on completion or after a stale-lock timeout. Concurrent writers see the lock and pause or pick a different sub-step.",
+      "properties": {
+        "holder": {
+          "type": "string",
+          "description": "Identifier of the actor holding the lock (e.g. 'alice@laptop', 'god-orchestrator@run-abc123')."
+        },
+        "acquired": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Lock auto-expires after this time. Stale locks (past expires) are reclaimable by any actor with a warning event."
+        },
+        "scope": {
+          "type": "string",
+          "description": "What the holder is currently mutating (e.g. 'tier-1.arch', 'linkage', 'all'). Lets concurrent actors pick non-conflicting work."
+        }
+      }
     }
   },
   "$defs": {

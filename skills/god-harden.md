@@ -62,3 +62,29 @@ Harden complete: .godpowers/harden/FINDINGS.md
 Suggested next: Resolve Critical findings, then re-run /god-harden.
 Use /god-debug if you need help with the fix.
 ```
+
+
+## Re-invocation contract
+
+What happens if `/god-harden` is run when `.godpowers/harden/FINDINGS.md` already exists:
+
+| Existing state | Behavior |
+|---|---|
+| File does not exist | Spawn god-harden-auditor; produce file; mark sub-step done |
+| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| File exists, fails lint or have-nots | Spawn god-harden-auditor in update mode with current file + findings as input. Diff preview before overwrite. |
+| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-harden --force` to re-run. |
+| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-harden-<ts>/`. Spawn agent fresh. |
+| `--dry-run` flag passed | Show what would happen; touch nothing |
+
+Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.
+The reflog records every god-harden invocation as `op:god-harden` for `/god-undo`.
+
+### Idempotency guarantees
+
+- Running `/god-harden` twice with no user input between them is a no-op
+  (second call detects the artifact and pauses).
+- Running `/god-harden --dry-run` is always read-only.
+- An interrupted `/god-harden` (agent crashes mid-run) leaves state.json
+  with `status: failed` and the artifact path either missing or marked
+  for `/god-repair` review. Re-running picks up cleanly.

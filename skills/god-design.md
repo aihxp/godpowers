@@ -231,3 +231,29 @@ vendored. If SkillUI isn't installed, the bridge returns
 - `references/design/DESIGN-ANATOMY.md` - what good DESIGN.md looks like
 - `references/design/DESIGN-ANTIPATTERNS.md` - what to avoid
 - [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) - upstream catalog
+
+
+## Re-invocation contract
+
+What happens if `/god-design` is run when `.godpowers/design/DESIGN.md` already exists:
+
+| Existing state | Behavior |
+|---|---|
+| File does not exist | Spawn god-designer; produce file; mark sub-step done |
+| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| File exists, fails lint or have-nots | Spawn god-designer in update mode with current file + findings as input. Diff preview before overwrite. |
+| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-design --force` to re-run. |
+| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-design-<ts>/`. Spawn agent fresh. |
+| `--dry-run` flag passed | Show what would happen; touch nothing |
+
+Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.
+The reflog records every god-design invocation as `op:god-design` for `/god-undo`.
+
+### Idempotency guarantees
+
+- Running `/god-design` twice with no user input between them is a no-op
+  (second call detects the artifact and pauses).
+- Running `/god-design --dry-run` is always read-only.
+- An interrupted `/god-design` (agent crashes mid-run) leaves state.json
+  with `status: failed` and the artifact path either missing or marked
+  for `/god-repair` review. Re-running picks up cleanly.

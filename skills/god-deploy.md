@@ -32,3 +32,29 @@ Deploy pipeline complete: .godpowers/deploy/STATE.md
 
 Suggested next: /god-observe (wire SLOs, alerts, runbooks)
 ```
+
+
+## Re-invocation contract
+
+What happens if `/god-deploy` is run when `.godpowers/deploy/STATE.md` already exists:
+
+| Existing state | Behavior |
+|---|---|
+| File does not exist | Spawn god-deploy-engineer; produce file; mark sub-step done |
+| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| File exists, fails lint or have-nots | Spawn god-deploy-engineer in update mode with current file + findings as input. Diff preview before overwrite. |
+| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-deploy --force` to re-run. |
+| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-deploy-<ts>/`. Spawn agent fresh. |
+| `--dry-run` flag passed | Show what would happen; touch nothing |
+
+Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.
+The reflog records every god-deploy invocation as `op:god-deploy` for `/god-undo`.
+
+### Idempotency guarantees
+
+- Running `/god-deploy` twice with no user input between them is a no-op
+  (second call detects the artifact and pauses).
+- Running `/god-deploy --dry-run` is always read-only.
+- An interrupted `/god-deploy` (agent crashes mid-run) leaves state.json
+  with `status: failed` and the artifact path either missing or marked
+  for `/god-repair` review. Re-running picks up cleanly.
