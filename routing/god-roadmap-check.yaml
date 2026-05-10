@@ -1,0 +1,39 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-roadmap-check
+  description: Reconcile intent against ROADMAP.md before feature work
+  tier: 1
+
+prerequisites:
+  required:
+    - check: file:.godpowers/roadmap/ROADMAP.md
+      auto-complete: /god-roadmap
+      human-required: true
+
+execution:
+  spawns: [god-roadmap-reconciler]
+  context: fresh
+  reads:
+    - .godpowers/roadmap/ROADMAP.md
+    - .godpowers/state.json
+    - .godpowers/prd/PRD.md
+  writes:
+    - reconciliation verdict (returned to caller)
+
+success-path:
+  next-recommended: varies-by-verdict
+  alternatives:
+    - command: /god-feature
+      when: status-is-enhancement-or-new
+    - command: /god-add-backlog
+      when: status-is-prerequisite-needed
+    - command: /god-status
+      when: status-is-already-done
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: no direct state update; verdict drives next command
+  events: [agent.start, agent.end, decision.route]

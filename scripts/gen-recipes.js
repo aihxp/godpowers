@@ -102,13 +102,15 @@ const recipes = [
   {
     name: 'add-feature-mid-arc-pause',
     category: 'feature-addition',
-    description: 'Bigger feature mid-arc; pause arc, do feature, resume',
+    description: 'Bigger feature mid-arc; reconcile with roadmap, pause arc, do feature, update roadmap, resume',
     keywords: ['mid arc', 'mid development', 'pause arc', 'feature during build'],
     stateConditions: ['lifecycle-phase == in-arc'],
     sequence: [
-      { cmd: '/god-pause-work', why: 'Save current /god-mode arc state' },
+      { cmd: '/god-roadmap-check', why: 'Reconcile against ROADMAP.md before doing feature work' },
+      { cmd: '/god-pause-work', why: 'Save current arc state', skipWhen: 'roadmap-says-already-done-or-prereq' },
       { cmd: '/god-feature', why: 'Run feature workflow with full discipline' },
-      { cmd: '/god-resume-work', why: 'Restore arc to where /god-mode was' }
+      { cmd: '/god-roadmap-update', why: 'Reflect the new feature in ROADMAP.md' },
+      { cmd: '/god-resume-work', why: 'Restore arc state' }
     ]
   },
   {
@@ -145,8 +147,10 @@ const recipes = [
     description: 'Parallel feature, do not disrupt main work',
     keywords: ['parallel feature', 'parallel work', 'isolated branch'],
     sequence: [
+      { cmd: '/god-roadmap-check', why: 'Reconcile against ROADMAP.md first' },
       { cmd: '/god-workstream new <feature-name>', why: 'Isolated git worktree + state' },
       { cmd: '/god-feature', why: 'Runs on the workstream' },
+      { cmd: '/god-roadmap-update', why: 'Reflect the new feature in ROADMAP.md' },
       { cmd: '/god-workstream merge <feature-name>', why: 'Merge back when done' }
     ]
   },

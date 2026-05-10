@@ -15,10 +15,14 @@ sequences:
   default:
     description: "Parallel feature, do not disrupt main work"
     steps:
+      - command: "/god-roadmap-check"
+        why: "Reconcile against ROADMAP.md first"
       - command: "/god-workstream new <feature-name>"
         why: "Isolated git worktree + state"
       - command: "/god-feature"
         why: "Runs on the workstream"
+      - command: "/god-roadmap-update"
+        why: "Reflect the new feature in ROADMAP.md"
       - command: "/god-workstream merge <feature-name>"
         why: "Merge back when done"
 
