@@ -1,0 +1,82 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: bluefield-arc
+  version: 1.0.0
+  description: |
+    Bluefield: new code, existing org context. Loads org standards first,
+    then runs full-arc with all decisions constrained by org context.
+
+on: [/god-bluefield, /god-mode --bluefield]
+
+jobs:
+  org-context:
+    tier: 0
+    uses: god-org-context-loader@^1.0.0
+
+  prd:
+    tier: 1
+    needs: org-context
+    uses: god-pm@^1.0.0
+
+  arch:
+    tier: 1
+    needs: prd
+    uses: god-architect@^1.0.0
+    with:
+      respect-org-context: true
+
+  roadmap:
+    tier: 1
+    needs: arch
+    uses: god-roadmapper@^1.0.0
+
+  stack:
+    tier: 1
+    needs: arch
+    uses: god-stack-selector@^1.0.0
+    with:
+      respect-org-context: true
+
+  repo:
+    tier: 2
+    needs: stack
+    uses: god-repo-scaffolder@^1.0.0
+
+  build:
+    tier: 2
+    needs: [roadmap, repo]
+    uses: god-planner@^1.0.0
+    review:
+      stages:
+        - uses: god-spec-reviewer@^1.0.0
+        - uses: god-quality-reviewer@^1.0.0
+    on-pass: commit-atomic
+
+  deploy:
+    tier: 3
+    needs: build
+    uses: god-deploy-engineer@^1.0.0
+    with:
+      use-org-platform: true
+
+  observe:
+    tier: 3
+    needs: deploy
+    uses: god-observability-engineer@^1.0.0
+    with:
+      use-org-stack: true
+
+  harden:
+    tier: 3
+    needs: build
+    uses: god-harden-auditor@^1.0.0
+    with:
+      check-org-security-standards: true
+    blocks-on:
+      - critical-finding: pause
+
+  launch:
+    tier: 3
+    needs: harden
+    uses: god-launch-strategist@^1.0.0

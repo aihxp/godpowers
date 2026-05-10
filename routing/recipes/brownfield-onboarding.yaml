@@ -1,0 +1,32 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: brownfield-onboarding
+  category: starting
+  description: "Inheriting an existing codebase; archaeology + reconstruction first"
+
+triggers:
+  intent-keywords:
+    - "brownfield"
+    - "inherit codebase"
+    - "legacy code"
+    - "understand existing"
+  state-conditions:
+    - "has-package-json"
+
+sequences:
+  default:
+    description: "Inheriting an existing codebase; archaeology + reconstruction first"
+    steps:
+      - command: "/god-archaeology"
+        why: "Deep history, decisions, conventions, risks"
+      - command: "/god-reconstruct"
+        why: "Reverse-engineer PRD/ARCH/ROADMAP/STACK from code"
+      - command: "/god-tech-debt"
+        why: "Categorize and prioritize debt"
+      - command: "/god-audit"
+        why: "Score reconstructed artifacts"
+      - command: "/god-feature"
+        why: "Now safe to add new work with reconciliation"
+
+default-sequence: default

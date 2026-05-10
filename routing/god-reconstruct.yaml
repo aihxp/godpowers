@@ -1,0 +1,36 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-reconstruct
+  description: Reverse-engineer planning artifacts from existing code
+  tier: 1
+
+prerequisites:
+  recommended:
+    - command: /god-archaeology
+      when: havent-run-archaeology-yet
+
+execution:
+  spawns: [god-reconstructor]
+  context: fresh
+  writes:
+    - .godpowers/prd/PRD.md
+    - .godpowers/arch/ARCH.md
+    - .godpowers/roadmap/ROADMAP.md
+    - .godpowers/stack/DECISION.md
+    - .godpowers/RECONSTRUCTION-LOG.md
+
+success-path:
+  next-recommended: /god-audit
+  alternatives:
+    - command: /god-tech-debt
+      when: ready-to-prioritize-debt
+    - command: /god-feature
+      when: ready-to-add-new-work
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1 reconstructed (with confidence levels)
+  events: [agent.start, artifact.created, agent.end]

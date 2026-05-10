@@ -1,0 +1,39 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: brownfield-arc
+  version: 1.0.0
+  description: |
+    Brownfield: existing codebase, understand before changing. Archaeology +
+    reconstruction + debt assessment, then proceed with normal arc workflows.
+
+on: [/god-brownfield, /god-mode --brownfield]
+
+jobs:
+  archaeology:
+    tier: 0
+    uses: god-archaeologist@^1.0.0
+
+  reconstruct:
+    tier: 1
+    needs: archaeology
+    uses: god-reconstructor@^1.0.0
+
+  debt-assess:
+    tier: 0
+    needs: archaeology
+    uses: god-debt-assessor@^1.0.0
+
+  audit:
+    tier: 0
+    needs: [reconstruct, debt-assess]
+    uses: god-auditor@^1.0.0
+    with:
+      mode: full-audit-on-reconstructed
+
+  steady-state-handoff:
+    tier: 0
+    needs: audit
+    uses: god-orchestrator@^1.0.0
+    with:
+      action: brownfield-to-steady

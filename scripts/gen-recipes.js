@@ -79,6 +79,31 @@ const recipes = [
       { cmd: '/god-next', why: 'Pick up where you left off' }
     ]
   },
+  {
+    name: 'brownfield-onboarding',
+    category: 'starting',
+    description: 'Inheriting an existing codebase; archaeology + reconstruction first',
+    keywords: ['brownfield', 'inherit codebase', 'legacy code', 'understand existing'],
+    stateConditions: ['has-package-json'],
+    sequence: [
+      { cmd: '/god-archaeology', why: 'Deep history, decisions, conventions, risks' },
+      { cmd: '/god-reconstruct', why: 'Reverse-engineer PRD/ARCH/ROADMAP/STACK from code' },
+      { cmd: '/god-tech-debt', why: 'Categorize and prioritize debt' },
+      { cmd: '/god-audit', why: 'Score reconstructed artifacts' },
+      { cmd: '/god-feature', why: 'Now safe to add new work with reconciliation' }
+    ]
+  },
+  {
+    name: 'bluefield-org-aware',
+    category: 'starting',
+    description: 'New project in an established org; respect org standards',
+    keywords: ['bluefield', 'new service', 'org standards', 'shared platform', 'within organization'],
+    sequence: [
+      { cmd: '/god-org-context init', why: 'Capture org-level standards and constraints' },
+      { cmd: '/god-init', why: 'Detect bluefield mode' },
+      { cmd: '/god-mode --bluefield', why: 'Arc constrained by org context' }
+    ]
+  },
 
   // FEATURE ADDITION (the "mid-development" scenarios)
   {

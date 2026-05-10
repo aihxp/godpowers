@@ -1,0 +1,28 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-archaeology
+  description: Deep brownfield code archaeology
+  tier: 0
+
+prerequisites:
+  required: []
+
+execution:
+  spawns: [god-archaeologist]
+  context: fresh
+  writes:
+    - .godpowers/archaeology/REPORT.md
+
+success-path:
+  next-recommended: /god-reconstruct
+  alternatives:
+    - command: /god-tech-debt
+      when: archaeology-surfaced-debt-concerns
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: archaeology completed
+  events: [agent.start, artifact.created, agent.end]

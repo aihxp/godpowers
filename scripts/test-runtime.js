@@ -120,11 +120,11 @@ test('workflow-parser builds waves correctly', () => {
   if (!waves[0].includes('prd')) throw new Error('prd should be in first wave');
 });
 
-test('workflow-parser validates all 11 core workflows', () => {
+test('workflow-parser validates 11+ core workflows', () => {
   const workflowsDir = path.join(__dirname, '..', 'workflows');
   const all = workflowParser.loadAll(workflowsDir);
-  if (Object.keys(all).length !== 11) {
-    throw new Error(`expected 11 workflows, got ${Object.keys(all).length}`);
+  if (Object.keys(all).length < 11) {
+    throw new Error(`expected 11+ workflows, got ${Object.keys(all).length}`);
   }
 });
 
