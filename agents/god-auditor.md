@@ -16,10 +16,30 @@ Score artifacts. Build nothing. Report what fails and why.
 ## Process
 
 1. Scan all artifact paths in `.godpowers/`
-2. For each artifact found, run the full have-nots catalog for its tier
-3. Score: PASS / FAIL per have-not
-4. If running for orchestrator gate check: return verdict only.
-5. If running for /god-audit: produce full report.
+2. For each artifact found, run the have-nots catalog in two passes:
+   - **Mechanical pass**: invoke `lib/artifact-linter.js` (or shell out
+     to `node -e 'require("./lib/artifact-linter").lintAll(...)'`).
+     Catches the ~30 mechanical have-nots: em/en dashes, unlabeled
+     sentences, phantom references, future dates, generic claims,
+     PRD/ARCH structure violations.
+   - **Interpretive pass**: read the artifact and apply judgement-based
+     have-nots that cannot be regex-checked (problem framing, decision
+     quality, ADR coherence). Use `references/HAVE-NOTS.md` as the
+     reference list.
+3. Score: PASS / FAIL per have-not. Mechanical findings come from
+   linter; interpretive findings come from your reading.
+4. If running for orchestrator gate check: return verdict only (any
+   error from mechanical pass = FAIL; any critical interpretive = FAIL).
+5. If running for /god-audit: produce full report combining both passes.
+
+## Mechanical vs interpretive split
+
+The split is documented in `lib/have-nots-validator.js` (UNIVERSAL_CHECKS
+and ARTIFACT_CHECKS arrays). Anything in those arrays is mechanical;
+everything else in `references/HAVE-NOTS.md` is interpretive.
+
+Do NOT redo mechanical checks by hand. Trust the linter for those. Spend
+your context on the interpretive ones the linter cannot do.
 
 ## Have-Nots Catalog
 
