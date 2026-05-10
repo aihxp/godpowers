@@ -26,8 +26,13 @@
     },
     "mode": {
       "type": "string",
-      "enum": ["A", "B", "C"],
-      "description": "A=greenfield, B=gap-fill, C=audit-only. (Mode D multi-repo is post-1.0.)"
+      "enum": ["A", "B", "C", "E"],
+      "description": "A=greenfield, B=brownfield/gap-fill, C=audit-only, E=bluefield (greenfield-in-org-context). Mode D (multi-repo suite membership) is tracked separately by `mode-d-suite` because every repo in a suite still runs one of A/B/E underneath."
+    },
+    "mode-d-suite": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when this repo is registered in a multi-repo suite. The peer agent god-coordinator owns suite-scope coordination via .godpowers/suite/."
     },
     "scale": {
       "type": "string",

@@ -486,25 +486,40 @@ throughout.
 Proceed?
 ```
 
+**Additional banner when this repo is part of a multi-repo suite** (Mode D, layered on top of A/B/E):
+```
+Also detected: this repo is part of a multi-repo suite at <suite-path>
+with N siblings.
+
+A peer agent (god-coordinator) will track suite-scope invariants
+(byte-identical files, shared standards, coordinated version table).
+Per-tier work in this repo continues as above.
+```
+
 The user sees plain language. The orchestrator internally tracks the mode
 in state.json (`mode: A | B | C | E`) for tooling but never burdens the
-user with the term.
+user with the term. Mode D (multi-repo suite membership) is a separate
+boolean flag, not a primary mode, because every repo in a suite still
+runs one of A / B / E underneath.
 
 ### Mode storage in state.json
 
 ```json
 {
   "mode": "A | B | C | E",
+  "mode-d-suite": false,
   "mode-detected-from": [
     "no-package-json-found",
-    "no-org-context-found"
+    "no-org-context-found",
+    "no-suite-detected"
   ],
   "mode-announced-as": "greenfield" // human-friendly label for output
 }
 ```
 
-Modes A/B/C/E are stored for programmatic queries; the human-friendly label
-is what the user sees.
+Modes A/B/C/E are stored for programmatic queries; `mode-d-suite` is
+true when `lib/multi-repo-detector.detect` finds the repo registered
+in a parent suite. The human-friendly label is what the user sees.
 
 ### Mode A: Greenfield (auto-detected)
 - No existing code in working directory
@@ -556,13 +571,27 @@ Report findings to user before running any tier:
 - Score each against have-nots from `<runtime>/godpowers-references/HAVE-NOTS.md`
 - Produce `.godpowers/AUDIT-REPORT.md`
 
-### Mode D: Multi-repo (FUTURE WORK)
+### Mode D: Multi-repo suite (auto-detected since v0.12)
 
-> **Status**: documented but not implemented in v0.3. Use Mode A or B per repo
-> for now and coordinate manually.
-
-If a user triggers Mode D, fall back to Mode A or B for the current repo
-and tell the user multi-repo coordination is not yet supported.
+- Current repo is registered as part of a multi-repo suite (siblings,
+  shared standards, byte-identical files, coordinated version table)
+- Detection: `lib/multi-repo-detector.detect(projectRoot)` returns
+  `{ inSuite: true, suitePath, role }` when a parent or sibling directory
+  contains `.godpowers/suite/suite.yaml` and this repo is listed
+- When detected, run the underlying per-repo mode (A, B, or E) as
+  normal AND set `mode-d-suite: true` in state.json
+- A peer agent, `god-coordinator`, owns suite-scope coordination via
+  `.godpowers/suite/`. The Quarterback rule still holds inside each repo;
+  god-coordinator never bypasses per-repo orchestrators
+- Per-tier additions when `mode-d-suite: true`:
+  - Read shared standards from `.godpowers/suite/STANDARDS.md` before
+    spawning planning agents
+  - Surface suite findings from `lib/suite-state.readSuiteState()` at
+    pause checkpoints
+  - When touching byte-identical or shared-standards files, emit a
+    `suite.invariant-touched` event so god-coordinator can react
+- Per-repo state.json remains the source of truth; never write to
+  `.godpowers/suite/` directly (that's god-coordinator's surface)
 
 ### Mode E: Bluefield (auto-detected)
 - No existing code in current dir
