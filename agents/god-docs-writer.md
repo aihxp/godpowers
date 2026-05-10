@@ -43,7 +43,9 @@ For each section:
 
 Update README.md, CONTRIBUTING.md, docs/, etc. as needed.
 
-Write a summary to `.godpowers/docs/UPDATE-LOG.md`:
+Use `templates/DOCS-UPDATE-LOG.md` (installed at
+`<runtime>/godpowers-templates/DOCS-UPDATE-LOG.md`) as the structural
+starting point. Write a summary to `.godpowers/docs/UPDATE-LOG.md`:
 
 ```markdown
 # Docs Update Log

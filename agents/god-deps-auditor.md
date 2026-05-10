@@ -70,7 +70,8 @@ For each update:
 
 ### 5. Output
 
-Write `.godpowers/deps/AUDIT.md`:
+Use `templates/DEPS-AUDIT.md` (installed at `<runtime>/godpowers-templates/DEPS-AUDIT.md`)
+as the structural starting point. Write `.godpowers/deps/AUDIT.md`:
 
 ```markdown
 # Dependency Audit

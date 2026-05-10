@@ -83,7 +83,8 @@ This is a postmortem about systems, not people. Phrasing:
 
 ## Output
 
-Write `.godpowers/postmortems/<incident-id>/POSTMORTEM.md`:
+Use `templates/POSTMORTEM.md` (installed at `<runtime>/godpowers-templates/POSTMORTEM.md`)
+as the structural starting point. Write `.godpowers/postmortems/<incident-id>/POSTMORTEM.md`:
 
 ```markdown
 # Incident <ID>: [Short title]

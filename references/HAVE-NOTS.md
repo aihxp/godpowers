@@ -428,6 +428,125 @@ Trust boundaries declared in docs but absent in code. Fail.
 
 ---
 
+## Workflow-Specific Have-Nots
+
+These apply to artifacts produced by non-arc workflows (postmortem, spike,
+migration, docs, deps).
+
+### Postmortem Have-Nots
+
+#### PM-01 Vague action items
+Action items like "communicate better" or "more tests" without specifics. Fail.
+
+#### PM-02 Action item without owner
+Action item has no named owner. Fail.
+
+#### PM-03 Action item without due date
+Action item has no specific due date. Fail.
+
+#### PM-04 Action item without success criterion
+No observable way to know the action item worked. Fail.
+
+#### PM-05 Symptom-level root cause
+Root cause is the symptom, not the underlying mechanism. Didn't go deep
+enough. Fail.
+
+#### PM-06 No class-of-bug identified
+Postmortem describes only the instance, not the broader pattern that could
+produce similar incidents. Fail.
+
+#### PM-07 Person-blaming language
+Phrasing blames individuals ("Alice forgot X") instead of systems ("the
+deploy script does not check X"). Fail.
+
+#### PM-08 Runbooks not updated
+Incident revealed runbook gaps; gaps not addressed. Fail.
+
+### Spike Have-Nots
+
+#### SP-01 Time-box exceeded silently
+Spent significantly more than time-box without escalating to user. Fail.
+
+#### SP-02 Built a feature instead of a proof
+Spike code is production-grade or merge-ready instead of throwaway. Fail.
+
+#### SP-03 Findings without evidence
+Claims like "this approach is faster" without numbers, code excerpts, or
+test results backing them. Fail.
+
+#### SP-04 No recommendation
+Findings list options but make no recommendation. "It depends" with no
+decision support. Fail.
+
+#### SP-05 Spike code merged to main
+Spike code reaches production rather than being deleted or rewritten cleanly
+in a real workflow. Fail.
+
+### Migration Have-Nots
+
+#### MG-01 Big-bang plan
+No incremental slices; everything migrates at once. Fail.
+
+#### MG-02 No expand-contract
+Old version removed before new version proven. Fail.
+
+#### MG-03 No rollback per slice
+Each migration step lacks an independent rollback. Fail.
+
+#### MG-04 Tests not added before migration
+Insufficient test coverage on affected surface; migration proceeded anyway.
+Fail.
+
+#### MG-05 Metrics not gating progression
+Slices ship without verifying production metrics before next slice. Fail.
+
+#### MG-06 Old code removed before 100% migrated
+Contract phase started before expand phase complete. Fail.
+
+#### MG-07 Just-upgrade-and-pray
+No risk assessment, no compensation plan. Fail.
+
+### Docs Have-Nots
+
+#### DC-01 Doc claim contradicts code
+A claim in docs is not true of the actual code. Fail.
+
+#### DC-02 Substitution-test passes
+Doc paragraph reads true for any product. Fail.
+
+#### DC-03 Examples don't run
+Code examples in docs would error if executed. Fail.
+
+#### DC-04 Runbook untested
+Runbook in docs has never been executed. Fail.
+
+#### DC-05 Diagrams represent past or future state
+Diagrams reflect what was, not what is, or what's planned, not what's
+shipped. Fail.
+
+### Deps Have-Nots
+
+#### DP-01 Critical CVE not addressed
+Critical CVE found and not addressed without explicit deferral rationale.
+Fail.
+
+#### DP-02 Multiple major updates batched
+Two or more major version bumps in one commit. Fail.
+
+#### DP-03 No regression tests run
+Updates committed without running tests after each. Fail.
+
+#### DP-04 Bulk update without per-package commits
+All updates in one commit, losing bisect-ability. Fail.
+
+#### DP-05 Lockfile not committed
+Dep changes committed but lockfile not updated or not staged. Fail.
+
+#### DP-06 Changelog not consulted
+Updates applied without reading changelog for breaking changes. Fail.
+
+---
+
 ## Reference Tally
 
 - Universal: 12
@@ -442,8 +561,13 @@ Trust boundaries declared in docs but absent in code. Fail.
 - Tier 3 Observe: 8
 - Tier 3 Launch: 8
 - Tier 3 Harden: 11
+- Workflow Postmortem: 8
+- Workflow Spike: 5
+- Workflow Migration: 7
+- Workflow Docs: 5
+- Workflow Deps: 6
 
-**Total: 115 named have-nots.**
+**Total: 146 named have-nots.**
 
 Each is grep-testable. Each is a documented failure mode. Together they form
 the mechanical quality definition for Godpowers output.

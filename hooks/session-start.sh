@@ -71,7 +71,20 @@ Or /god-next to confirm the suggestion before running.
 EOF
 else
   cat <<EOF
-All tiers complete. Suggested: /god-audit to score artifacts.
+All planning tiers complete. The project is in steady state.
+
+For ongoing work, route to the right workflow:
+  /god-feature       Add a feature to existing project
+  /god-hotfix        Urgent production bug fix
+  /god-refactor      Safe refactor, no behavior change
+  /god-spike         Time-boxed research / proof of concept
+  /god-postmortem    Post-incident investigation
+  /god-upgrade       Framework or version migration
+  /god-docs          Update documentation
+  /god-update-deps   Audit and update dependencies
+  /god-audit         Score existing artifacts
+  /god-debug         Systematic debugging
+  /god-status        Show full state
 
 EOF
 fi

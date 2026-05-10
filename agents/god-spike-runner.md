@@ -50,7 +50,8 @@ If the question is API ergonomics: write 3-5 client-side examples.
 
 ### 4. Document Findings
 
-Write `.godpowers/spikes/<question-slug>/SPIKE.md`:
+Use `templates/SPIKE.md` (installed at `<runtime>/godpowers-templates/SPIKE.md`)
+as the structural starting point. Write `.godpowers/spikes/<question-slug>/SPIKE.md`:
 
 ```markdown
 # Spike: [The Question]

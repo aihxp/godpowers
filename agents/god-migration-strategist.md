@@ -70,7 +70,8 @@ For each migration slice:
 
 ### 5. Output
 
-Write `.godpowers/migrations/<migration-slug>/MIGRATION.md`:
+Use `templates/MIGRATION.md` (installed at `<runtime>/godpowers-templates/MIGRATION.md`)
+as the structural starting point. Write `.godpowers/migrations/<migration-slug>/MIGRATION.md`:
 
 ```markdown
 # Migration: [From X to Y]

@@ -51,25 +51,61 @@ Detect the next logical command and either suggest it or run it.
 | Launch pending, harden clean | `/god-launch` | Launch the product |
 | All done | (none) | Project complete. Suggest `/god-audit` to score everything. |
 
-## Workflow Routing (when PROGRESS.md exists and user has options)
+## Workflow Routing (steady state)
 
-If the project is in steady state and the user wants to do something specific,
-match intent to workflow:
+When all planning tiers are done (project in steady state), use signal-based
+detection to suggest a workflow.
 
-| User intent | Workflow |
-|-------------|----------|
-| Add a feature to existing project | `/god-feature` |
-| Production bug, urgent | `/god-hotfix` |
-| Bug found in dev, no urgency | `/god-debug` |
-| Refactor code without behavior change | `/god-refactor` |
-| Research a technical question | `/god-spike` |
-| Review an incident after the fact | `/god-postmortem` |
-| Migrate framework or version | `/god-upgrade` |
-| Update docs | `/god-docs` |
-| Update dependencies | `/god-update-deps` |
-| Score existing artifacts | `/god-audit` |
-| Quick inline fix | `/god-fast` |
-| Small task with TDD | `/god-quick` |
+### Detection signals
+
+Check disk state in this order:
+
+| Signal | Suggest |
+|--------|---------|
+| Active incident in `.godpowers/postmortems/` with no POSTMORTEM.md | `/god-postmortem` |
+| Recent `/god-hotfix` commit in last 48 hours, no postmortem | `/god-postmortem` |
+| `package.json` outdated >30 days OR audit shows CVEs | `/god-update-deps` |
+| Existing `.godpowers/migrations/<slug>/MIGRATION.md` with status != complete | continue `/god-upgrade` |
+| Existing `.godpowers/spikes/<slug>/SPIKE.md` with status = inconclusive | suggest `/god-spike` follow-up |
+| README or core docs older than last release | `/god-docs` |
+| All else equal | ask the user (see User Intent Map below) |
+
+### User Intent Map
+
+If you cannot detect a clear signal, ask:
+
+```
+What kind of work are you doing?
+
+  1. Add a feature to existing project   -> /god-feature
+  2. Fix urgent production bug           -> /god-hotfix
+  3. Debug a non-urgent issue            -> /god-debug
+  4. Refactor without behavior change    -> /god-refactor
+  5. Research a technical question       -> /god-spike
+  6. Investigate a past incident         -> /god-postmortem
+  7. Upgrade framework or major dep      -> /god-upgrade
+  8. Update documentation                -> /god-docs
+  9. Update dependencies                 -> /god-update-deps
+  10. Score existing artifacts           -> /god-audit
+  11. Quick inline fix                   -> /god-fast
+  12. Small task with TDD discipline     -> /god-quick
+
+Or describe what you want to do in your own words and I'll route.
+```
+
+### Free-form intent matching
+
+If the user describes their intent in prose, match keywords:
+
+- "feature", "add", "new functionality" -> /god-feature
+- "production down", "users seeing errors", "p0", "p1", "urgent" -> /god-hotfix
+- "bug", "broken", "doesn't work" -> /god-debug
+- "refactor", "clean up", "rename", "extract", "DRY" -> /god-refactor
+- "POC", "prototype", "spike", "explore", "research", "feasibility" -> /god-spike
+- "postmortem", "RCA", "after-action", "incident review", "what happened" -> /god-postmortem
+- "upgrade", "migrate", "bump major", "Node 22", "React 19" -> /god-upgrade
+- "docs", "documentation", "README", "API docs" -> /god-docs
+- "deps", "dependencies", "npm audit", "outdated" -> /god-update-deps
 
 ## Output Format
 
