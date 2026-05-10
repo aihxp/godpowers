@@ -275,6 +275,52 @@ for schema_file in "$ROOT/schema/"*.json; do
   fi
 done
 
+# 18. Routing files exist for core commands
+for cmd in god-init god-prd god-arch god-roadmap god-stack god-repo god-build god-deploy god-observe god-launch god-harden god-mode god-feature god-hotfix god-refactor god-spike god-postmortem god-upgrade god-docs god-update-deps god-audit god-hygiene god-status god-next god-help god-doctor god-undo god-redo god-skip; do
+  routing_file="$ROOT/routing/${cmd}.yaml"
+  if [ -f "$routing_file" ]; then
+    pass "routing/${cmd}.yaml exists"
+  else
+    fail "routing/${cmd}.yaml missing"
+  fi
+done
+
+# 19. Routing files all have required fields
+for routing_file in "$ROOT/routing/"*.yaml; do
+  name="$(basename "$routing_file")"
+  if grep -q "^apiVersion: godpowers/v1$" "$routing_file"; then
+    pass "routing/${name} has apiVersion"
+  else
+    fail "routing/${name} missing apiVersion"
+  fi
+  if grep -q "^kind: CommandRouting$" "$routing_file"; then
+    pass "routing/${name} has kind: CommandRouting"
+  else
+    fail "routing/${name} missing kind"
+  fi
+done
+
+# 20. god-standards-check agent exists with required fields
+if [ -f "$ROOT/agents/god-standards-check.md" ]; then
+  pass "agents/god-standards-check.md exists"
+else
+  fail "agents/god-standards-check.md missing"
+fi
+
+# 21. /god-standards skill exists
+if [ -f "$ROOT/skills/god-standards.md" ]; then
+  pass "skills/god-standards.md exists"
+else
+  fail "skills/god-standards.md missing"
+fi
+
+# 22. lib/router.js exists
+if [ -f "$ROOT/lib/router.js" ]; then
+  pass "lib/router.js exists"
+else
+  fail "lib/router.js missing"
+fi
+
 echo ""
 echo "  Results: $PASS passed, $FAIL failed"
 echo ""

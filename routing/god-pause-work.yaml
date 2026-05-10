@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-pause-work
+  description: Save context handoff
+  tier: 0
+
+prerequisites:
+  required:
+    []
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes:
+    - .godpowers/HANDOFF.md
+
+
+success-path:
+  next-recommended: session-end
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-pause-work
+  events: [agent.start, artifact.created, agent.end]

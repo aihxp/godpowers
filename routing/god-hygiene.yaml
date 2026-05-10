@@ -1,0 +1,28 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-hygiene
+  description: Composite health check
+  tier: 0
+
+prerequisites:
+  required:
+    - check: state:lifecycle-phase == steady-state-active
+
+execution:
+  spawns: [god-auditor]
+  context: fresh
+  secondary-spawns: [god-deps-auditor, god-docs-writer, god-orchestrator]
+  writes:
+    - .godpowers/HYGIENE-REPORT.md
+
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-hygiene
+  events: [agent.start, artifact.created, agent.end]

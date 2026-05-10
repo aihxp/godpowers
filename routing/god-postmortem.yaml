@@ -1,0 +1,34 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-postmortem
+  description: Post-incident investigation
+  tier: 0
+
+prerequisites:
+  required:
+    - check: state:lifecycle-phase == post-incident-pending OR incident-resolved
+
+execution:
+  spawns: [god-incident-investigator]
+  context: fresh
+  secondary-spawns: [god-docs-writer]
+  writes:
+    - .godpowers/postmortems/<id>/POSTMORTEM.md
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [PM-01, PM-02, PM-03, PM-04, PM-05, PM-06, PM-07, PM-08]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-postmortem
+  events: [agent.start, artifact.created, agent.end]
+  lifecycle-transition: post-incident-pending -> steady-state-active

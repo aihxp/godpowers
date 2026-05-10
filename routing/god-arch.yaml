@@ -1,0 +1,46 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-arch
+  description: Design system architecture
+  tier: 1
+
+prerequisites:
+  required:
+    - check: state:tier-1.prd.status == done
+      auto-complete: /god-prd
+      human-required: true
+    - check: have-nots-pass:prd
+      auto-complete: /god-prd
+      human-required: true
+
+execution:
+  spawns: [god-architect]
+  context: fresh
+  reads:
+    - .godpowers/prd/PRD.md
+    - templates/ARCH.md
+  writes:
+    - .godpowers/arch/ARCH.md
+    - .godpowers/arch/adr/
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [A-01, A-02, A-03, A-04, A-05, A-06, A-07, A-08, A-09, A-10, A-11, A-12]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-roadmap
+  alternatives:
+    - command: /god-stack
+      when: stack-not-yet-decided
+
+failure-path:
+  on-have-nots-fail: /god-arch
+  on-pause: relay-to-user-with-options
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1.arch.status = done
+  events: [agent.start, artifact.created, have-nots.check, agent.end]

@@ -1,0 +1,43 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-build
+  description: Build slices with TDD enforcement and two-stage review
+  tier: 2
+
+prerequisites:
+  required:
+    - check: state:tier-1.roadmap.status == done
+      auto-complete: /god-roadmap
+      human-required: true
+    - check: state:tier-2.repo.status == done
+      auto-complete: /god-roadmap
+      human-required: true
+
+execution:
+  spawns: [god-planner]
+  context: fresh
+  secondary-spawns: [god-executor, god-spec-reviewer, god-quality-reviewer]
+  writes:
+    - .godpowers/build/PLAN.md
+    - .godpowers/build/STATE.md
+    - source code
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [B-01, B-02, B-03, B-04, B-05, B-06, B-07, B-08, B-09, B-10, B-11, B-12]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-deploy
+  alternatives:
+    - command: /god-harden
+      when: parallel-with-deploy
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-2 updated for /god-build
+  events: [agent.start, artifact.created, agent.end]

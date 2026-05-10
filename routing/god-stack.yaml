@@ -1,0 +1,34 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-stack
+  description: Pick technology stack
+  tier: 1
+
+prerequisites:
+  required:
+    - check: state:tier-1.arch.status == done
+      auto-complete: /god-arch
+      human-required: true
+
+execution:
+  spawns: [god-stack-selector]
+  context: fresh
+  writes:
+    - .godpowers/stack/DECISION.md
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [S-01, S-02, S-03, S-04, S-05]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-repo
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1 updated for /god-stack
+  events: [agent.start, artifact.created, agent.end]

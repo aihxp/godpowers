@@ -1,0 +1,42 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-roadmap
+  description: Sequence work into milestones
+  tier: 1
+
+prerequisites:
+  required:
+    - check: state:tier-1.arch.status == done
+      auto-complete: /god-arch
+      human-required: true
+
+execution:
+  spawns: [god-roadmapper]
+  context: fresh
+  reads:
+    - .godpowers/prd/PRD.md
+    - .godpowers/arch/ARCH.md
+    - templates/ROADMAP.md
+  writes:
+    - .godpowers/roadmap/ROADMAP.md
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [R-01, R-02, R-03, R-04, R-05, R-06, R-07, R-08, R-09, R-10]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-stack
+  alternatives:
+    - command: /god-repo
+      when: stack-already-decided
+
+failure-path:
+  on-have-nots-fail: /god-roadmap
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1.roadmap.status = done
+  events: [agent.start, artifact.created, have-nots.check, agent.end]

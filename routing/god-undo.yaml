@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-undo
+  description: Revert last operation
+  tier: 0
+
+prerequisites:
+  required:
+    - check: file:.godpowers/log
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes:
+    []
+
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-undo
+  events: [agent.start, artifact.created, agent.end]

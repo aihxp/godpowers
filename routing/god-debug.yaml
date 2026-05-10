@@ -1,0 +1,28 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-debug
+  description: 4-phase systematic debug
+  tier: 0
+
+prerequisites:
+  required:
+    []
+
+execution:
+  spawns: [god-debugger]
+  context: fresh
+  writes:
+    - regression test
+    - fix
+
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-debug
+  events: [agent.start, artifact.created, agent.end]

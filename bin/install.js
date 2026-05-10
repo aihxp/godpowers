@@ -291,6 +291,14 @@ function installForRuntime(runtimeKey, srcDir) {
     success('Installed schema/');
   }
 
+  // 4e. Install routing definitions (per-command prerequisites + next-suggestions)
+  const routingSrc = path.join(srcDir, 'routing');
+  if (fs.existsSync(routingSrc)) {
+    const routingDest = path.join(runtime.configDir, 'godpowers-routing');
+    copyRecursive(routingSrc, routingDest);
+    success('Installed routing/');
+  }
+
   // 5. Install hooks (Claude Code only for now)
   if (runtimeKey === 'claude') {
     const hooksSrc = path.join(srcDir, 'hooks');

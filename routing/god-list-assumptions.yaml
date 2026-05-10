@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-list-assumptions
+  description: Surface assumptions
+  tier: 0
+
+prerequisites:
+  required:
+    []
+
+execution:
+  spawns: [god-explorer]
+  context: fresh
+  writes:
+    []
+
+
+success-path:
+  next-recommended: varies
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-list-assumptions
+  events: [agent.start, artifact.created, agent.end]

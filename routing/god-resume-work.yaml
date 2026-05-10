@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-resume-work
+  description: Restore from handoff
+  tier: 0
+
+prerequisites:
+  required:
+    - check: file:.godpowers/HANDOFF.md
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes:
+    []
+
+
+success-path:
+  next-recommended: varies
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-resume-work
+  events: [agent.start, artifact.created, agent.end]

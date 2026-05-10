@@ -1,0 +1,38 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-launch
+  description: Launch the product
+  tier: 3
+
+prerequisites:
+  required:
+    - check: state:tier-3.harden.status == done
+      auto-complete: /god-harden
+      human-required: true
+    - check: no-critical-findings
+      auto-complete: /god-harden
+      human-required: true
+
+execution:
+  spawns: [god-launch-strategist]
+  context: fresh
+  writes:
+    - .godpowers/launch/STATE.md
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [L-01, L-02, L-03, L-04, L-05, L-06, L-07, L-08]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: steady-state
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-3 updated for /god-launch
+  events: [agent.start, artifact.created, agent.end]
+  lifecycle-transition: in-arc -> steady-state-active

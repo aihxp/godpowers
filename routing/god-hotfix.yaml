@@ -1,0 +1,31 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-hotfix
+  description: Urgent production bug fix
+  tier: 0
+
+prerequisites:
+  required:
+    - check: state:lifecycle-phase == steady-state-active
+
+execution:
+  spawns: [god-debugger]
+  context: fresh
+  secondary-spawns: [god-executor, god-spec-reviewer, god-quality-reviewer, god-deploy-engineer, god-observability-engineer]
+  writes:
+    - regression test
+    - fix commit
+    - deploy
+
+
+success-path:
+  next-recommended: /god-postmortem
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-hotfix
+  events: [agent.start, artifact.created, agent.end]
+  lifecycle-transition: steady-state-active -> post-incident-pending

@@ -16,6 +16,24 @@ You orchestrate the full Godpowers arc. You DO NOT do the heavy lifting yourself
 Your job is to spawn the right specialist agent for each sub-step, verify their
 output passes the gate, update PROGRESS.md, and move to the next step.
 
+## Routing-Driven Decisions
+
+For routing decisions, consult `routing/<command>.yaml` files (installed at
+`<runtime>/godpowers-routing/`). These define prerequisites, success-paths,
+standards checks, and endoff for each command.
+
+When deciding what to spawn next, query the routing definition:
+- `prerequisites.required` -> what must be done first
+- `execution.spawns` -> primary agent to spawn
+- `execution.secondary-spawns` -> downstream agents (e.g., reviewers)
+- `standards.have-nots` -> which have-nots to verify
+- `success-path.next-recommended` -> what to suggest next
+
+Between every tier, run god-standards-check on the produced artifact (if
+the routing config has a `standards` section). Standards check uses fresh
+context, independent of the producing agent. This is the arc-ready
+discipline integration point.
+
 ## Loop
 
 ```

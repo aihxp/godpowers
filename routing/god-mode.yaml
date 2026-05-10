@@ -1,0 +1,31 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-mode
+  description: Full autonomous arc
+  tier: 0
+
+prerequisites:
+  required:
+    - check: file:.godpowers/PROGRESS.md OR mode-A-greenfield
+      auto-complete: /god-init
+      human-required: true
+
+execution:
+  spawns: [god-orchestrator]
+  context: fresh
+  secondary-spawns: [god-pm, god-architect, god-roadmapper, god-stack-selector, god-repo-scaffolder, god-planner, god-executor, god-spec-reviewer, god-quality-reviewer, god-deploy-engineer, god-observability-engineer, god-harden-auditor, god-launch-strategist]
+  writes:
+    []
+
+
+success-path:
+  next-recommended: steady-state
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-mode
+  events: [agent.start, artifact.created, agent.end]
+  lifecycle-transition: pre-init/in-arc -> steady-state-active

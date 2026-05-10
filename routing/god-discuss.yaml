@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-discuss
+  description: Pre-planning discussion
+  tier: 0
+
+prerequisites:
+  required:
+    []
+
+execution:
+  spawns: [god-explorer]
+  context: fresh
+  writes:
+    - .godpowers/discussions/<topic>.md
+
+
+success-path:
+  next-recommended: varies
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-discuss
+  events: [agent.start, artifact.created, agent.end]

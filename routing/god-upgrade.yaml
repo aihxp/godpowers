@@ -1,0 +1,33 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-upgrade
+  description: Framework migration
+  tier: 0
+
+prerequisites:
+  required:
+    - check: state:tier-2.build.status == done
+
+execution:
+  spawns: [god-migration-strategist]
+  context: fresh
+  secondary-spawns: [god-planner, god-executor, god-spec-reviewer, god-quality-reviewer, god-deploy-engineer, god-observability-engineer]
+  writes:
+    - .godpowers/migrations/<slug>/MIGRATION.md
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [MG-01, MG-02, MG-03, MG-04, MG-05, MG-06, MG-07]
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-upgrade
+  events: [agent.start, artifact.created, agent.end]

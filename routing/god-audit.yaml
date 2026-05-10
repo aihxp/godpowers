@@ -1,0 +1,32 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-audit
+  description: Score artifacts against have-nots
+  tier: 0
+
+prerequisites:
+  required:
+    - check: file:.godpowers/PROGRESS.md
+      auto-complete: /god-init
+      human-required: true
+
+execution:
+  spawns: [god-auditor]
+  context: fresh
+  writes:
+    - .godpowers/AUDIT-REPORT.md
+
+
+success-path:
+  next-recommended: /god-status
+  alternatives:
+    - command: /god-redo
+      when: failures-found
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-audit
+  events: [agent.start, artifact.created, agent.end]

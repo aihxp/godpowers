@@ -1,0 +1,37 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-init
+  description: Initialize a Godpowers project. Detects mode and scale.
+  tier: 0
+
+prerequisites:
+  required: []  # No prerequisites; this is the entry point
+  recommended:
+    - command: /god-explore
+      when: user-idea-is-fuzzy
+
+execution:
+  spawns: [god-orchestrator]
+  context: fresh
+  reads: [user-intent]
+  writes:
+    - .godpowers/PROGRESS.md
+    - .godpowers/state.json
+    - .godpowers/intent.yaml
+
+success-path:
+  next-recommended: /god-prd
+  alternatives:
+    - command: /god-mode
+      when: user-wants-autonomous-arc
+    - command: /god-map-codebase
+      when: mode-is-B-existing-codebase
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0.orchestration.status = done
+  events: [orchestrator.spawn, artifact.created, agent.end]
+  lifecycle-transition: pre-init -> in-arc
