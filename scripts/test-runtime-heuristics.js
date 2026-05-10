@@ -158,6 +158,36 @@ test('parseFlow recognizes "presses"', () => {
   }
 });
 
+test('parseFlow recognizes "lands on" (F-001 fix)', () => {
+  const flow = tester.parseFlow('user lands on the dashboard');
+  if (!flow || !flow.steps.find(s => s.kind === 'expect')) {
+    throw new Error('lands on not parsed');
+  }
+});
+
+test('parseFlow recognizes "arrives on" (F-001 fix)', () => {
+  const flow = tester.parseFlow('user arrives on the welcome page');
+  if (!flow || !flow.steps.find(s => s.kind === 'expect')) {
+    throw new Error('arrives on not parsed');
+  }
+});
+
+test('parseFlow recognizes "completes" (F-001 fix)', () => {
+  const flow = tester.parseFlow('user completes onboarding flow');
+  if (!flow || !flow.steps.find(s => s.kind === 'expect')) {
+    throw new Error('completes not parsed');
+  }
+});
+
+test('parseFlow on realistic PRD acceptance (F-001 dogfood input)', () => {
+  const text = 'User clicks Connect, completes Stripe OAuth, lands on populated dashboard within 30 seconds.';
+  const flow = tester.parseFlow(text);
+  if (!flow) throw new Error('null flow');
+  // Must catch click + at least one expect (completes or lands on)
+  if (!flow.steps.find(s => s.kind === 'click')) throw new Error('click missed');
+  if (!flow.steps.find(s => s.kind === 'expect')) throw new Error('expect missed');
+});
+
 test('parseFlow recognizes "types" with quoted text', () => {
   const flow = tester.parseFlow('user types "alice@example.com"');
   const typeStep = flow && flow.steps.find(s => s.kind === 'type');
