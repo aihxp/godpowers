@@ -106,10 +106,10 @@ const recipes = [
     keywords: ['mid arc', 'mid development', 'pause arc', 'feature during build'],
     stateConditions: ['lifecycle-phase == in-arc'],
     sequence: [
-      { cmd: '/god-roadmap-check', why: 'Reconcile against ROADMAP.md before doing feature work' },
-      { cmd: '/god-pause-work', why: 'Save current arc state', skipWhen: 'roadmap-says-already-done-or-prereq' },
+      { cmd: '/god-reconcile', why: 'Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc.' },
+      { cmd: '/god-pause-work', why: 'Save current arc state', skipWhen: 'reconciliation-says-already-done-or-prereq' },
       { cmd: '/god-feature', why: 'Run feature workflow with full discipline' },
-      { cmd: '/god-roadmap-update', why: 'Reflect the new feature in ROADMAP.md' },
+      { cmd: '/god-sync', why: 'Update all affected artifacts (PRD, ARCH, ROADMAP, etc.)' },
       { cmd: '/god-resume-work', why: 'Restore arc state' }
     ]
   },
@@ -147,10 +147,10 @@ const recipes = [
     description: 'Parallel feature, do not disrupt main work',
     keywords: ['parallel feature', 'parallel work', 'isolated branch'],
     sequence: [
-      { cmd: '/god-roadmap-check', why: 'Reconcile against ROADMAP.md first' },
+      { cmd: '/god-reconcile', why: 'Multi-artifact reconciliation across all impacted sections' },
       { cmd: '/god-workstream new <feature-name>', why: 'Isolated git worktree + state' },
       { cmd: '/god-feature', why: 'Runs on the workstream' },
-      { cmd: '/god-roadmap-update', why: 'Reflect the new feature in ROADMAP.md' },
+      { cmd: '/god-sync', why: 'Sync all affected artifacts (PRD, ARCH, ROADMAP, etc.)' },
       { cmd: '/god-workstream merge <feature-name>', why: 'Merge back when done' }
     ]
   },

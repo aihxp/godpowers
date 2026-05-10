@@ -1,0 +1,48 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-reconcile
+  description: Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc.
+  tier: 0
+
+prerequisites:
+  required:
+    - check: file:.godpowers/PROGRESS.md
+      auto-complete: /god-init
+      human-required: true
+
+execution:
+  spawns: [god-reconciler]
+  context: fresh
+  reads:
+    - .godpowers/prd/PRD.md
+    - .godpowers/arch/ARCH.md
+    - .godpowers/roadmap/ROADMAP.md
+    - .godpowers/stack/DECISION.md
+    - .godpowers/repo/AUDIT.md
+    - .godpowers/build/STATE.md
+    - .godpowers/deploy/STATE.md
+    - .godpowers/observe/STATE.md
+    - .godpowers/harden/FINDINGS.md
+    - .godpowers/launch/STATE.md
+    - .godpowers/backlog/BACKLOG.md
+    - .godpowers/seeds/
+    - .godpowers/todos/TODOS.md
+    - .godpowers/threads/
+
+success-path:
+  next-recommended: varies-by-verdict
+  alternatives:
+    - command: /god-feature
+      when: status-is-enhancement-or-new
+    - command: /god-add-backlog
+      when: status-is-prerequisite-needed
+    - command: /god-status
+      when: status-is-already-done
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: no direct state update; verdict drives next command
+  events: [agent.start, agent.end, decision.route]

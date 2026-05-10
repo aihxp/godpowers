@@ -18,15 +18,15 @@ sequences:
   default:
     description: "Bigger feature mid-arc; reconcile with roadmap, pause arc, do feature, update roadmap, resume"
     steps:
-      - command: "/god-roadmap-check"
-        why: "Reconcile against ROADMAP.md before doing feature work"
+      - command: "/god-reconcile"
+        why: "Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc."
       - command: "/god-pause-work"
         why: "Save current arc state"
-        skip-when: roadmap-says-already-done-or-prereq
+        skip-when: reconciliation-says-already-done-or-prereq
       - command: "/god-feature"
         why: "Run feature workflow with full discipline"
-      - command: "/god-roadmap-update"
-        why: "Reflect the new feature in ROADMAP.md"
+      - command: "/god-sync"
+        why: "Update all affected artifacts (PRD, ARCH, ROADMAP, etc.)"
       - command: "/god-resume-work"
         why: "Restore arc state"
 
