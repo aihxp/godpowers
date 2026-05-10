@@ -284,15 +284,17 @@ test('status reports canonical + detected tools state', () => {
   if (!s.pointers.every(p => p.hasFence)) throw new Error('pointer fences missing');
 });
 
-test('all 11 tool platforms are recognized in detection', () => {
-  // Sanity: the 11 detection signals across 11 tools work
+test('all 13 tool platforms are recognized in detection', () => {
+  // Sanity: detection signals across all known tools work
   const expectations = [
     { signal: '.claude', tool: 'claude-code' },
     { signal: '.gemini', tool: 'gemini' },
     { signal: '.cursor', tool: 'cursor' },
     { signal: '.windsurf', tool: 'windsurf' },
     { signal: '.roo', tool: 'roo' },
-    { signal: '.continue', tool: 'continue' }
+    { signal: '.continue', tool: 'continue' },
+    { signal: '.pi', tool: 'pi' },
+    { signal: '.agents', tool: 'agent-skills' }
   ];
   for (const e of expectations) {
     const tmp = mkTmp();

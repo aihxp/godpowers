@@ -13,6 +13,29 @@ For other AI tools: `--codex`, `--cursor`, `--windsurf`, `--gemini`,
 `--opencode`, `--copilot`, `--augment`, `--trae`, `--cline`, `--kilo`,
 `--antigravity`, `--qwen`, `--codebuddy`, `--pi`. Or `--all` for everything.
 
+### Pi support (earendil-works/pi-coding-agent)
+
+[Pi](https://github.com/earendil-works/pi) is supported as a first-class
+target. The installer's `--pi` flag copies godpowers skills into
+`~/.pi/skills/` (Pi's user-global skills directory). Pi reads `AGENTS.md`
+and `CLAUDE.md` for project context, both of which godpowers populates
+via `/god-context on`. When a project has a local `.pi/` directory,
+`/god-context` also writes a 1-line pointer to `.pi/skills/godpowers.md`.
+
+Pi follows the cross-tool [Agent Skills standard](https://agentskills.io)
+at `.agents/skills/`; godpowers writes there too when `.agents/`
+exists in the project.
+
+### T3 Code support (pingdotgg/t3code)
+
+[T3 Code](https://github.com/pingdotgg/t3code) is a web/desktop GUI
+that wraps existing AI agents (Codex, Claude Code, OpenCode). Because
+T3 invokes the underlying agent's CLI, it transparently inherits
+whatever AGENTS.md / CLAUDE.md fence godpowers has written for that
+agent. No T3-specific install or config is needed; the existing
+`--codex`, `--claude`, or `--opencode` install paths plus `/god-context on`
+cover T3 users automatically.
+
 ### Optional: full design pipeline
 
 For UI work, install these (godpowers detects each lazily; works without
