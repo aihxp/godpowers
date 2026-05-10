@@ -49,6 +49,35 @@
         "in-migration",
         "spike-pending-followup"
       ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["A", "B", "C", "E"],
+      "description": "Mirror of intent.yaml mode for runtime queries. A=greenfield, B=brownfield/gap-fill, C=audit-only, E=bluefield."
+    },
+    "mode-d-suite": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when this repo is part of a multi-repo suite (god-coordinator owns suite scope)."
+    },
+    "mode-detected-from": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Signals used to detect the mode (e.g. 'no-package-json-found', 'org-context-yaml-in-parent')."
+    },
+    "mode-announced-as": {
+      "type": "string",
+      "description": "Human-friendly label shown to the user (greenfield/brownfield/bluefield/audit)."
+    },
+    "linkage": {
+      "type": "object",
+      "description": "Slot for linkage map summary. Authoritative file is .godpowers/linkage.json.",
+      "additionalProperties": true
+    },
+    "yolo-decisions": {
+      "type": "array",
+      "description": "Auto-decisions made under --yolo. Mirrored to YOLO-DECISIONS.md.",
+      "items": { "type": "object", "additionalProperties": true }
     }
   },
   "$defs": {

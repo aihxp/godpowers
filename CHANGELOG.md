@@ -12,7 +12,7 @@ support, and routing sweep. Test suite at 1415 passing across 22 suites.
 
 ### Added (Mode D - multi-repo suites)
 - `agents/god-coordinator.md`: Tier-0 peer agent for cross-repo coordination
-- `lib/suite-config.js`: Mode D suite registration + version table
+- `lib/suite-state.js`: Mode D suite registration + version table
 - `lib/meta-linter.js`: cross-repo lint for byte-identical files
 - `skills/god-suite-init.md`: register siblings + shared standards
 - `skills/god-suite-status.md`: side-by-side repo status
