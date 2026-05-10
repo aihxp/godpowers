@@ -278,17 +278,123 @@ On every invocation:
 
 ## Mode Detection (Tier 0 setup)
 
-Detect operating mode from environment and user intent:
+**This runs automatically. Users never need to know the mode names. The
+orchestrator detects, announces in plain English, and proceeds.**
 
-### Mode A: Greenfield (default)
-- No existing code in working directory (empty git repo or just README)
-- No `.godpowers/` directory
+### Auto-detection algorithm
+
+Run on every `/god-init` and `/god-mode` invocation:
+
+```
+Step 1: Is there code in the directory?
+   Indicators of "yes":
+   - package.json / pyproject.toml / Cargo.toml / go.mod / Gemfile / etc.
+   - src/ or lib/ directory with files
+   - Tests directory with content
+   - More than 1 file in working directory beyond .git/, .gitignore, README.md
+
+Step 2: Is there organizational context?
+   Indicators of "yes":
+   - .godpowers/org-context.yaml exists in current dir
+   - .godpowers/org-context.yaml exists in parent or grandparent directory
+   - Workspace config that references shared standards (pnpm-workspace.yaml,
+     nx.json, lerna.json with shared config)
+   - Dotfiles indicating org standards (.editorconfig with non-default values
+     suggesting org standard, etc.)
+
+Step 3: Decide the mode
+   ┌───────────────────────────────────────────────────────┐
+   │             | Code present | No code present         │
+   │-------------|--------------|------------------------- │
+   │ Org context | Brownfield   | Bluefield               │
+   │   present   | (with org    | (new code, org          │
+   │             |  constraints)| constraints)            │
+   │-------------|--------------|------------------------- │
+   │ No org      | Brownfield   | Greenfield              │
+   │ context     | (vanilla)    | (free choice)           │
+   └───────────────────────────────────────────────────────┘
+```
+
+### How to announce (plain English, no jargon)
+
+The orchestrator NEVER says "brownfield" or "bluefield" to the user
+unprompted. It describes what it found in plain terms:
+
+**For greenfield (no code, no org context)**:
+```
+Detected: empty directory.
+
+Starting fresh: I'll guide you through PRD -> Architecture -> Build -> Ship.
+```
+
+**For brownfield (code present, no org context)**:
+```
+Detected: existing codebase.
+
+I'll start by understanding what's here:
+  1. Code archaeology (history, conventions, risks)
+  2. Reverse-engineer planning artifacts from the code
+  3. Assess technical debt
+  4. Then we can add new work safely
+
+This is the recommended path. Proceed?
+```
+
+**For brownfield (code present, org context found)**:
+```
+Detected: existing codebase + org standards.
+
+I'll start by understanding what's here, while respecting your org's
+standards (TypeScript, AWS, Datadog, ...). Path:
+  1. Code archaeology
+  2. Reverse-engineer planning artifacts
+  3. Assess technical debt against org standards
+  4. Then add new work
+
+This is the recommended path. Proceed?
+```
+
+**For bluefield (no code, org context found)**:
+```
+Detected: empty directory + org standards.
+
+You're starting a new project within an established org. I'll constrain
+all decisions to your org's standards (TypeScript, AWS, Datadog, ...).
+Path: PRD -> Architecture -> Build -> Ship, with org standards enforced
+throughout.
+
+Proceed?
+```
+
+The user sees plain language. The orchestrator internally tracks the mode
+in state.json (`mode: A | B | C | E`) for tooling but never burdens the
+user with the term.
+
+### Mode storage in state.json
+
+```json
+{
+  "mode": "A | B | C | E",
+  "mode-detected-from": [
+    "no-package-json-found",
+    "no-org-context-found"
+  ],
+  "mode-announced-as": "greenfield" // human-friendly label for output
+}
+```
+
+Modes A/B/C/E are stored for programmatic queries; the human-friendly label
+is what the user sees.
+
+### Mode A: Greenfield (auto-detected)
+- No existing code in working directory
+- No org-context.yaml
 - Run all tiers from PRD onwards
 
-### Mode B: Gap-fill
-- Existing codebase or partial `.godpowers/` artifacts
-- Detect which tiers have passing artifacts; skip those
-- Run only the missing tiers
+### Mode B: Brownfield / Gap-fill (auto-detected)
+- Existing code OR partial `.godpowers/` artifacts present
+- May or may not have org context
+- Default path: archaeology -> reconstruct -> debt-assess -> proceed
 
 **Detection logic (run this on every Mode B invocation)**:
 
@@ -334,15 +440,21 @@ Report findings to user before running any tier:
 
 > **Status**: documented but not implemented in v0.3. Use Mode A or B per repo
 > for now and coordinate manually.
->
-> Planned for a future release: cross-repo orchestration with a meta
-> `.godpowers/` at the root and per-repo substates. Track progress at
-> [issue link TBD].
 
-If a user triggers Mode D in v0.3, fall back to Mode A or B for the current
-repo and tell the user multi-repo coordination is not yet supported.
+If a user triggers Mode D, fall back to Mode A or B for the current repo
+and tell the user multi-repo coordination is not yet supported.
 
-Record the detected mode in PROGRESS.md.
+### Mode E: Bluefield (auto-detected)
+- No existing code in current dir
+- BUT org-context.yaml found (in current dir, parent, or grandparent)
+- Run full arc with all decisions constrained by org context
+- Spawn god-org-context-loader first to load constraints
+- All downstream agents (god-stack-selector, god-architect, god-deploy-engineer,
+  god-observability-engineer, god-harden-auditor) receive the org-context
+  and respect it
+
+Record the detected mode in PROGRESS.md (machine-readable: A/B/C/E) and in
+state.json (`mode-announced-as` for human-friendly output).
 
 ## Scale Detection (Tier 0 setup)
 

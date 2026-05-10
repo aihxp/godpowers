@@ -17,21 +17,43 @@ You are receiving a /god-mode invocation. Your job is to spawn the
 ## Process
 
 1. Greet the user briefly: "God Mode engaged. Describe what you want to build."
-2. Wait for their response (any format: sentence, paragraph, page)
-3. Parse flags from the invocation:
+
+2. **Auto-detect project type in background** (no jargon to user):
+   - Scan working directory for code presence (package.json, src/, etc.)
+   - Look for org-context.yaml (current dir + parents)
+   - Decide: greenfield / brownfield / bluefield (internally A/B/C/E)
+   - Announce in plain English what was detected (see god-orchestrator
+     "How to announce" section)
+
+3. Wait for the user's project description (any format).
+
+4. Parse flags from the invocation:
    - `--yolo` (skip pauses, pick defaults)
    - `--conservative` (more checkpoints)
    - `--from=<tier>` (resume from specific tier)
    - `--audit` (score only, build nothing)
    - `--dry-run` (plan only)
-4. Spawn the **god-orchestrator** agent via Task tool with:
+   - `--brownfield` (force brownfield path even if detection says greenfield)
+   - `--bluefield` (force bluefield path)
+   - `--greenfield` (force greenfield, skip archaeology even if code exists)
+
+5. Spawn the **god-orchestrator** agent via Task tool with:
    - The user's project description
+   - The detected mode (A/B/C/E)
    - The active flags
    - Instruction to read `.godpowers/PROGRESS.md` from disk if it exists
-5. Relay the orchestrator's output to the user
-6. When the orchestrator pauses, present the question to the user using the
-   pause format (What / Why / Options / Default)
-7. When the user answers, re-spawn god-orchestrator with the answer
+
+6. Orchestrator runs the appropriate workflow:
+   - Greenfield -> full-arc
+   - Brownfield -> brownfield-arc (archaeology -> reconstruct -> debt-assess -> proceed)
+   - Bluefield -> bluefield-arc (org-context -> arc with constraints)
+
+7. Relay the orchestrator's output to the user.
+
+8. When the orchestrator pauses, present the question to the user using the
+   pause format (What / Why / Options / Default).
+
+9. When the user answers, re-spawn god-orchestrator with the answer.
 
 ## Pause Format (relay from orchestrator)
 

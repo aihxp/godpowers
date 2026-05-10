@@ -14,27 +14,45 @@ Initialize the Godpowers project structure.
 
 ## Process
 
-This skill is a thin wrapper. The actual initialization logic lives in the
-**god-orchestrator** agent (Mode Detection and Scale Detection sections).
+This skill is a thin wrapper. Detection happens automatically; user never
+needs to specify a mode.
 
 1. Check if `.godpowers/` already exists:
    - If yes: read PROGRESS.md, report current state, ask if user wants to
      reset or resume
    - If no: proceed with initialization
 
-2. Ask the user to describe what they want to build. Accept any format.
+2. **Auto-detect what kind of project this is** (background, no user prompt):
+   - Scan working directory for code presence:
+     - package.json / pyproject.toml / Cargo.toml / go.mod / Gemfile / etc.
+     - src/ or lib/ with files
+     - Existing tests
+   - Look for org-level context (current dir + parent dirs):
+     - .godpowers/org-context.yaml
+     - Workspace configs that share standards
 
-3. Spawn **god-orchestrator** in fresh context with the user's description and
-   instruction: "Mode detection and scale detection only. Create `.godpowers/`
-   directory and PROGRESS.md. Do NOT proceed to PRD."
+3. **Announce findings in plain English** (no jargon):
+   - Empty dir + no org context: "Detected: empty directory. Starting fresh."
+   - Empty dir + org context: "Detected: empty directory + org standards.
+     I'll respect your org's tooling/infrastructure choices."
+   - Code present + no org context: "Detected: existing codebase. I'll
+     understand it before changing anything (archaeology + reconstruction)."
+   - Code present + org context: "Detected: existing codebase + org standards.
+     I'll archaeology, reconstruct, and respect your org's standards."
+
+4. Ask the user to describe what they want to build. Accept any format.
+
+5. Spawn **god-orchestrator** in fresh context with the user's description and
+   the detected mode/context.
 
    The orchestrator will:
-   - Run Mode Detection (A/B/C/D) per its documented logic
+   - Run Mode Detection (announced in plain English; stored as A/B/C/E internally)
    - Run Scale Detection (trivial/small/medium/large/enterprise)
-   - For Mode B: scan existing artifacts and codebase signals
+   - For brownfield: schedule archaeology + reconstruction as preflight
+   - For bluefield: load org-context as constraint
    - Create directory structure
    - Write PROGRESS.md with mode, scale, timestamp, tier states
-   - Return mode/scale to this skill
+   - Return mode/scale/announcement to this skill
 
 4. Detect scale by analyzing the description:
    - **Trivial**: Single file change, bug fix, config tweak
