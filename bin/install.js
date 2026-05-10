@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const VERSION = '0.11.0';
+const VERSION = '0.12.0';
 
 const BANNER = `
    ██████╗  ██████╗ ██████╗

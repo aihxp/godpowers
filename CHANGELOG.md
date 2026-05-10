@@ -5,10 +5,10 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 0.12.0 work
+## [0.12.0] - 2026-05-10
 
 Mode D (multi-repo suites), agent discipline, story-file workflow, Pi + T3
-support, and routing sweep. Test suite at 1400+ passing across 22 suites.
+support, and routing sweep. Test suite at 1415 passing across 22 suites.
 
 ### Added (Mode D - multi-repo suites)
 - `agents/god-coordinator.md`: Tier-0 peer agent for cross-repo coordination
@@ -170,6 +170,96 @@ passing across 18 suites.
 - VoltAgent awesome-design-md (71-site curated catalog)
 - SkillUI (static analysis fallback for arbitrary URLs)
 - vercel-labs/agent-browser + Playwright (runtime verification backends)
+
+## [0.8.1] - 2026-05-09
+
+### Changed
+- Automatic mode detection across `/god-init` and `/god-mode`: greenfield /
+  brownfield / bluefield decided invisibly from disk signals (package.json,
+  source dirs, org-context markers). Users no longer need to know the
+  jargon; the system asks plain-English clarifying questions only when
+  signals are ambiguous.
+
+## [0.8.0] - 2026-05-09
+
+### Added (brownfield + bluefield support)
+- `agents/god-archaeologist.md`: deep code archaeology (history, decisions,
+  conventions, risks, tribal knowledge) beyond `/god-map-codebase`
+- `agents/god-reconstructor.md`: reverse-engineers PRD / ARCH / ROADMAP /
+  STACK from existing code so brownfield projects can use full
+  reconciliation
+- `agents/god-debt-assessor.md`: 8-category debt assessment with P0-P3
+  prioritization (code, design, dependency, security, test, doc,
+  operational, knowledge)
+- `agents/god-org-context-loader.md`: bluefield support for org-level
+  shared standards, conventions, infrastructure, libraries
+- Skills: `/god-archaeology`, `/god-reconstruct`, `/god-tech-debt`,
+  `/god-org-context`
+
+## [0.7.3] - 2026-05-09
+
+### Added
+- Greenfield artifact coverage: `/god-mode` reliably creates the 10 core
+  artifacts across Tier 0-3 sub-steps. The 4 capture artifacts (BACKLOG,
+  SEEDS, TODOS, THREADS) remain lazy by design (created only when used).
+- Mandatory final sync: `/god-mode` always runs `/god-sync` at end of arc
+  regardless of flags (`--yolo`, `--conservative`, `--with-hygiene`).
+
+## [0.7.2] - 2026-05-09
+
+### Added (comprehensive multi-artifact reconciliation)
+- Extended reconciliation from roadmap-only to all 13 impacted artifacts:
+  PRD, ARCH, ROADMAP, STACK, REPO, DEPLOY, OBSERVE, HARDEN, LAUNCH,
+  BACKLOG, SEEDS, TODOS, THREADS
+- New skills: `/god-reconcile` (before feature work), `/god-sync` (after)
+- Cross-artifact divergence detection (e.g. PRD/roadmap moving-target,
+  STACK drift vs lock files)
+
+## [0.7.1] - 2026-05-09
+
+### Added (roadmap reconciliation loop)
+- `agents/god-roadmap-reconciler.md`: classifies user intent vs ROADMAP.md
+  with 6 verdicts (already-done, in-progress, enhancement,
+  prerequisite-needed, new, ambiguous)
+- `agents/god-roadmap-updater.md`: keeps ROADMAP.md as a living artifact
+  after feature work; detects PRD divergence
+- Skills: `/god-roadmap-check`, `/god-roadmap-update`
+
+## [0.7.0] - 2026-05-09
+
+### Added (recipes as programmatic input)
+- `schema/recipe.v1.json`: structured recipe definition with triggers
+  (intent-keywords + state-conditions), decision-tree, sequences, default
+- 33 structured recipes at `routing/recipes/<recipe>.yaml` covering
+  starting, feature-addition, production, maintaining, recovering,
+  collaborating, knowledge categories
+- Agents consult recipes for fuzzy intent decisions (no longer just human docs)
+
+## [0.6.0] - 2026-05-09
+
+### Added (unified decision engine + routing + standards gates)
+- `schema/routing.v1.json`: JSON Schema for routing definitions
+  - Prerequisites (required + recommended) with auto-complete commands
+  - Execution (spawns, secondary-spawns, reads, writes)
+  - Standards (substitution-test, three-label-test, have-nots,
+    gate-on-failure)
+  - Success-path + failure-path
+- Standards gates between command stages (artifact discipline runs
+  independent of the producing agent)
+
+## [0.5.0] - 2026-05-09
+
+### Added (reference content depth)
+- 12 substantive per-tier reference documents at `references/`:
+  - `planning/PRD-ANATOMY.md`, `PRD-ANTIPATTERNS.md`
+  - `planning/ARCH-ANATOMY.md`, `ARCH-ANTIPATTERNS.md`
+  - `planning/ROADMAP-ANATOMY.md`, `STACK-ANATOMY.md`
+  - `building/BUILD-VERTICAL-SLICES.md`, `BUILD-WAVES.md`
+  - `shipping/DEPLOY-PATTERNS.md`, `OBSERVE-SLO-EXAMPLES.md`,
+    `HARDEN-OWASP-WORKSHEETS.md`
+  - `orchestration/MODE-DETECTION.md`, `SCALE-DETECTION.md`
+  - `shared/GLOSSARY.md`, `ORCHESTRATORS.md`
+- Each with worked examples, antipattern catalogs, concrete guidance
 
 ## [0.4.0] - 2026-05-09
 
