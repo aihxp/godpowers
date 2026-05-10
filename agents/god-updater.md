@@ -87,6 +87,18 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Append a session note to the thread
 - Update thread status if work was completed
 
+### Design-reviewer gate (BEFORE reverse-sync, when DESIGN/PRODUCT changed)
+- Hash-check `DESIGN.md` and `PRODUCT.md` against
+  `state.json.tiers.tier-1.design.last-hash` and `tier-1.product.last-hash`.
+- If either changed since last sync: spawn `god-design-reviewer` in
+  the appropriate mode FIRST.
+  - On BLOCK verdict: append to `.godpowers/design/REJECTED.md`,
+    abort reverse-sync for this run, surface to user, do NOT proceed.
+  - On PASS or WARN: continue to reverse-sync below.
+- Update `last-hash` fields in state.json after the gate runs.
+- This is the same gate god-orchestrator uses for mid-arc detection;
+  god-updater enforces it at sync time so manual edits don't bypass it.
+
 ### Reverse-sync (Phase 6) - the load-bearing add
 - Call `lib/reverse-sync.run(projectRoot)`. This:
   - Scans code via `lib/code-scanner` for linkage signals

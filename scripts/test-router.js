@@ -157,5 +157,38 @@ test('routing files all have execution.spawns', () => {
 // Cleanup
 fs.rmSync(tmp, { recursive: true, force: true });
 
+// Phase audit: conditional-next routing
+test('getNextCommand evaluates ui-detected condition', () => {
+  // Set up a project root with React in package.json
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-test-'));
+  fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({
+    dependencies: { react: '^18.0.0' }
+  }));
+  // /god-stack has conditional-next: ui-detected -> /god-design, no-ui-detected -> /god-repo
+  const next = router.getNextCommand('/god-stack', { projectRoot: tmp });
+  if (next !== '/god-design') throw new Error('expected /god-design for UI project, got ' + next);
+});
+
+test('getNextCommand falls back to next-recommended when no condition', () => {
+  // /god-prd has no conditional-next
+  const next = router.getNextCommand('/god-prd');
+  if (next !== '/god-arch') throw new Error('expected /god-arch, got ' + next);
+});
+
+test('getNextCommand evaluates no-ui-detected for backend project', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-test-'));
+  fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({
+    dependencies: { express: '^4.0.0' }
+  }));
+  const next = router.getNextCommand('/god-stack', { projectRoot: tmp });
+  if (next !== '/god-repo') throw new Error('expected /god-repo for backend, got ' + next);
+});
+
 console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
 if (failed > 0) process.exit(1);

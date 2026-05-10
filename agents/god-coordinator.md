@@ -93,8 +93,11 @@ suite (the collection of repos), not individual repos.
 
 ## Have-Nots (you fail if)
 
-- You modify a sibling repo's `state.json` directly (only its
-  orchestrator can write that)
+- You modify a sibling repo's `state.json` directly **outside the
+  init-mode exception**. The init exception is narrow: in `init` mode
+  only, you write the `suite.hubPath` field into each newly-registered
+  sibling's state.json. Any other field, in any other mode, is the
+  per-repo orchestrator's domain.
 - You run a full arc on a sibling (that's beyond your scope)
 - You promote `--strict` byte-identical drift to non-blocking when
   user passed `--strict` (gate must hold)
