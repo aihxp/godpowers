@@ -66,11 +66,25 @@ Cascade:
   initial setup (produces both PRODUCT.md and DESIGN.md) or
   `/impeccable document` to regenerate DESIGN.md from existing code.
   Do not reimplement impeccable's logic.
-- **Impeccable not installed**: fall back to a minimal builder. Use
-  PRD.md (target users, register hints), ARCH.md (UI surface),
+- **Impeccable not installed**: fall back to a minimal builder backed
+  by Godpowers' internal design references. Read these in order:
+  - `references/design/DESIGN-ANATOMY.md` (structure)
+  - `references/design/TYPOGRAPHY.md` (type rules)
+  - `references/design/COLOR.md` (palette + contrast)
+  - `references/design/SPATIAL.md` (spacing + grid)
+  - `references/design/MOTION.md` (animation)
+  - `references/design/INTERACTION.md` (forms + focus + buttons)
+  - `references/design/RESPONSIVE.md` (breakpoints + touch)
+  - `references/design/UX-WRITING.md` (copy)
+  - `references/design/DESIGN-ANTIPATTERNS.md` (what to avoid)
+
+  Use PRD.md (target users, register hints), ARCH.md (UI surface),
   STACK.md (UI framework) to generate a starter DESIGN.md from the
-  template. Set warning that the output will be less polished without
-  impeccable.
+  template, applying the rules from the references above. The output
+  will be less polished than impeccable's, but it's not toothless: the
+  references encode our design opinions across all 7 domains
+  (typography, color, spatial, motion, interaction, responsive,
+  ux-writing) at shallower depth than impeccable's full skill set.
 
 If both a site reference and impeccable are available, you can combine:
 fetch the curated DESIGN.md as the starting frontmatter, then run

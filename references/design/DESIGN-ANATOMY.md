@@ -94,3 +94,28 @@ review gate.
 ## Worked example
 
 See `examples/saas-mrr-tracker/DESIGN.md` for a complete, lint-clean example.
+
+## Domain-specific references
+
+These shorter, focused references cover the 7 design domains at
+shallower depth than Impeccable's full skill set. Used by god-designer
+when Impeccable is not installed; useful as a baseline regardless:
+
+- [TYPOGRAPHY.md](./TYPOGRAPHY.md) - type families, scales, line-height,
+  tabular numerals
+- [COLOR.md](./COLOR.md) - OKLCH, 5-color rule, WCAG contrast,
+  dark mode, tinted neutrals
+- [SPATIAL.md](./SPATIAL.md) - spacing scales, grids, touch targets,
+  vertical rhythm
+- [MOTION.md](./MOTION.md) - durations, easings, prefers-reduced-motion,
+  staggering
+- [INTERACTION.md](./INTERACTION.md) - forms, focus states, buttons,
+  loading patterns, empty states
+- [RESPONSIVE.md](./RESPONSIVE.md) - breakpoints, mobile-first, touch
+  targets, container queries
+- [UX-WRITING.md](./UX-WRITING.md) - button labels, error messages,
+  empty states, tone calibration
+
+For deeper guidance on any domain, install
+[Impeccable](https://github.com/pbakaus/impeccable) and use its 7
+domain-specific skills.
