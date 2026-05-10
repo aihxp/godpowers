@@ -47,6 +47,20 @@ Open your AI coding tool in any project directory and type:
 That's the autonomous arc. It will run all tiers from idea to hardened
 production, pausing only when it has a real question for you.
 
+### Just describe what you want
+
+If you don't know which command to run, type free text after `/god`:
+
+```
+/god production is broken
+/god add a feature without breaking the current arc
+/god I'm coming back after a week
+```
+
+The front door matches your intent against scenario recipes and proposes the
+right command sequence. Confirmation is always required before anything
+destructive runs. See `skills/god.md`.
+
 ### Don't want full autonomy?
 
 Run individual commands. After each one finishes, Godpowers tells you what to
@@ -72,6 +86,7 @@ when you open a new session in a Godpowers project.
 
 | Command | What it does | Spawns agent |
 |---------|--------------|--------------|
+| `/god` | Front door: match free-text intent to a command sequence | (built-in) |
 | `/god-mode` | Full autonomous arc | god-orchestrator |
 | `/god-next` | Auto-detect and suggest the next command | (built-in) |
 | `/god-init` | Start a project, detect mode and scale | (built-in) |

@@ -1,6 +1,32 @@
 # Godpowers Concepts
 
-Three things to understand: tiers, agents, and quality gates.
+Four things to understand: the Quarterback, tiers, agents, and quality gates.
+
+## The Quarterback
+
+There is exactly one orchestrator: `god-orchestrator`. Think of it as the
+quarterback. It reads the defense (mode + scale detection), calls the play
+(spawns the right specialist for each tier sub-step), owns the playbook
+(state.json, PROGRESS.md, intent.yaml, events.jsonl), and manages the clock
+(mandatory final sync at end of arc).
+
+Three skills sit on the sideline and read the same playbook without calling
+plays:
+
+| Skill | Role |
+|-------|------|
+| `/god` | Front door. Maps free-text intent to a recipe and proposes the right command. |
+| `/god-next` | Pre-flight + post-flight routing. Checks prereqs and announces what's next. |
+| `/god-status` | Re-derives state from disk. Reports inconsistencies. |
+
+These skills do not own state. They read recipes (`routing/recipes/*.yaml`)
+and routing definitions (`routing/*.yaml`) and propose commands. The
+quarterback (and the agents it spawns) is the only writer to the load-bearing
+artifacts.
+
+We deliberately do not stack a meta-orchestrator above `god-orchestrator`.
+That's the BMAD trap. If we ever need parallel cross-tier coordination, it
+goes in as a peer at Tier 0 (e.g., a future `god-coordinator`), never above.
 
 ## Tiers
 
