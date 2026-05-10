@@ -18,6 +18,11 @@ execution:
     - .godpowers/harden/FINDINGS.md
   blocks-on:
     - critical-finding: pause-required
+  parallel-spawns:
+    - condition: ui-detected
+      agent: god-browser-tester
+      mode: a11y-only
+      reason: real-DOM accessibility audit alongside security harden
 
 standards:
   substitution-test: true
@@ -33,4 +38,4 @@ failure-path:
 
 endoff:
   state-update: tier-3 updated for /god-harden
-  events: [agent.start, artifact.created, agent.end]
+  events: [agent.start, artifact.created, agent.end, linkage.snapshot, drift.detected, review-required.populated, runtime.audit-complete, runtime.test-complete]

@@ -121,6 +121,30 @@ auto-refresh.
 
 If the user later wants to enable it manually, they run `/god-context on`.
 
+## Mode D detection (multi-repo workspace)
+
+After PROGRESS.md is written, also check whether this directory is
+part of a multi-repo suite:
+
+1. Call `lib/multi-repo-detector.detect(projectRoot)`.
+2. If `isMultiRepo: true`: surface to user.
+   ```
+   This project's parent appears to be a Mode D suite hub (siblings: a, b).
+     - We're a sibling - join the suite via /god-suite-init in the hub
+     - We're the hub - run /god-suite-status to see all repos
+     - Skip - proceed as a standalone repo
+   ```
+3. If sibling .godpowers/ dirs exist nearby but no hub registered:
+   ```
+   Detected sibling .godpowers/ dirs at: [paths]
+   Want to register as a multi-repo suite (Mode D)? Run /god-suite-init.
+   ```
+4. Persist detection result to `state.json` under
+   `project.suite-detection`.
+
+Mode D registration is opt-in. Do NOT auto-create suite-config.yaml
+without explicit user invocation of /god-suite-init.
+
 ## On Completion
 
 After init completes, print:

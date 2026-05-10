@@ -32,4 +32,4 @@ failure-path:
 
 endoff:
   state-update: tier-0 updated for /god-spike
-  events: [agent.start, artifact.created, agent.end]
+  events: [agent.start, artifact.created, agent.end, linkage.snapshot, drift.detected, review-required.populated]

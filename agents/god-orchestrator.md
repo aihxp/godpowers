@@ -37,8 +37,27 @@ You and only you are responsible for:
    --yolo).
 
 If you find yourself wanting another orchestrator above this one, stop. The
-answer is to add a peer at Tier 0 (e.g., a future `god-coordinator` for
-parallel cross-tier patches), never a meta-orchestrator above the Quarterback.
+answer is to add a peer at Tier 0, never a meta-orchestrator above the
+Quarterback. The `god-coordinator` agent (shipped in v0.12 as part of
+Mode D / multi-repo support) is exactly such a peer: it owns
+suite-scope coordination across multiple repos but never bypasses
+per-repo orchestrators. When working in a registered Mode D suite,
+expect god-coordinator at Tier 0 alongside you, not above.
+
+## Mode D awareness (when applicable)
+
+Before each tier, check whether this repo is part of a registered suite:
+
+1. Call `lib/multi-repo-detector.detect(projectRoot)`.
+2. If `isMultiRepo: true`:
+   - Note role (`hub` or `sibling`) in events
+   - Surface suite findings from `lib/suite-state.readSuiteState()` at
+     pause checkpoints
+   - When making changes that affect byte-identical or shared-standards
+     files (LICENSE, .editorconfig, package.json engines), emit a
+     `suite.invariant-touched` event so god-coordinator can react
+3. Per-repo state.json remains the source of truth; never write to
+   `.godpowers/suite/` directly (that's god-coordinator's surface).
 
 ## Routing-Driven Decisions
 

@@ -70,7 +70,30 @@ Linkage status (from .godpowers/links/):
   Drift: 1 (colors.removed referenced in src/old.css but missing in DESIGN.md)
   Pending reviews: 5 (see REVIEW-REQUIRED.md)
   Last scan: 2026-05-10T14:23:11Z
-  - Harden        pending
+
+Suite (Mode D) status:
+  This repo is a sibling of suite "my-products" (hub: ../hub)
+  Run /god-suite-status to see all 3 repos and meta-linter findings.
 
 Next: god roadmap
 ```
+
+## Mode D awareness
+
+If `lib/multi-repo-detector.detect(projectRoot)` returns
+`isMultiRepo: true`, /god-status appends a "Suite (Mode D) status"
+section showing:
+- Suite name and our role (hub or sibling)
+- Hub path
+- Suggestion to run /god-suite-status for the aggregate view
+
+For the hub itself, this section becomes:
+```
+Suite (Mode D) status:
+  This repo IS the hub for suite "my-products" (3 siblings).
+  Aggregate: 42 artifacts done, 1 drift, 5 pending reviews.
+  Last suite refresh: 2026-05-10T16:45:00Z
+```
+
+The suite section is omitted entirely when the project is not part of
+a registered suite.
