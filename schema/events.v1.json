@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://godpowers.dev/schema/events.v1.json",
+  "title": "Godpowers Event (v1)",
+  "description": "OpenTelemetry-shape event. One per line in events.jsonl. Append-only.",
+  "type": "object",
+  "required": ["trace_id", "span_id", "ts", "name"],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{16,32}$",
+      "description": "Identifies the run."
+    },
+    "span_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,16}$",
+      "description": "Identifies the span (operation) within the trace."
+    },
+    "parent": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8,16}$",
+      "description": "Parent span_id. Omitted for root spans."
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "enum": [
+        "workflow.run",
+        "workflow.complete",
+        "agent.start",
+        "agent.end",
+        "agent.pause",
+        "agent.yolo-resolve",
+        "user.resolve",
+        "tool.call",
+        "tool.result",
+        "model.call",
+        "decision.route",
+        "artifact.created",
+        "artifact.updated",
+        "artifact.hash",
+        "have-nots.check",
+        "gate.fail",
+        "gate.pass",
+        "tier.skip",
+        "state.repair",
+        "state.rollback",
+        "extension.install",
+        "extension.activate",
+        "error",
+        "warn"
+      ]
+    },
+    "attrs": {
+      "type": "object",
+      "description": "Event-specific attributes. Schema varies by event name."
+    }
+  },
+  "additionalProperties": false
+}

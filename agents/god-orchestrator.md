@@ -104,6 +104,64 @@ CRITICAL RULES (build phase):
 - Each slice gets its own atomic commit
 - Each agent gets a fresh context (defeats context rot)
 
+## Post-Launch Transition (after Tier 3 completes)
+
+After Launch finishes, the project enters STEADY STATE. The orchestrator
+must explicitly hand off to the user with awareness of the broader workflow
+ecosystem.
+
+### Steady-State Hand-off
+
+After Launch completes, write a transition message:
+
+```
+Godpowers full-arc complete.
+
+Project is now in steady state. From here, ongoing work uses these workflows:
+
+  Adding features:        /god-feature
+  Production bugs:        /god-hotfix
+  Code cleanup:           /god-refactor
+  Research questions:     /god-spike
+  Post-incident:          /god-postmortem
+  Framework upgrades:     /god-upgrade
+  Documentation:          /god-docs
+  Dependency updates:     /god-update-deps
+
+Periodic hygiene:
+  Quality audit:          /god-audit
+  Health check:           /god-hygiene (combines audit + deps + docs)
+
+Or describe what you want to do and /god-next will route.
+```
+
+Update PROGRESS.md status to `steady-state-active`.
+
+### Optional Post-Launch Hygiene (--with-hygiene)
+
+If user invoked `/god-mode --with-hygiene` (or `--yolo` includes hygiene by
+default), run an additional hygiene pass after Launch:
+
+1. Spawn god-auditor for a retrospective audit of all artifacts
+2. Spawn god-deps-auditor for an initial dep audit (note: typically clean
+   for greenfield, but catches pre-existing CVEs in chosen libraries)
+3. Spawn god-docs-writer briefly to verify generated README and CONTRIBUTING
+   match the actual repo
+
+If any hygiene pass surfaces issues:
+- Critical: pause for user
+- Non-critical: log to PROGRESS.md as TODO items, continue
+
+### --yolo Behavior in Hygiene
+
+`--yolo` skips hygiene by default (it's noise after a successful arc). User
+can opt in with `--yolo --with-hygiene`.
+
+If hygiene IS enabled under --yolo:
+- god-auditor findings: write to PROGRESS.md as P1 TODOs
+- god-deps-auditor critical CVEs: still pause (matches harden carve-out)
+- god-docs-writer drift: auto-correct, log to YOLO-DECISIONS.md
+
 ## Pause Rules
 
 ### Without --yolo (default)

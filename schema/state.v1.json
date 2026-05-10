@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://godpowers.dev/schema/state.v1.json",
+  "title": "Godpowers Project State (v1)",
+  "description": "Machine-managed project state. The 'facts' artifact in the three load-bearing artifacts pattern.",
+  "type": "object",
+  "required": ["$schema", "version", "project", "tiers"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://godpowers.dev/schema/state.v1.json"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "project": {
+      "type": "object",
+      "required": ["name", "started"],
+      "properties": {
+        "name": { "type": "string" },
+        "started": { "type": "string", "format": "date-time" }
+      }
+    },
+    "active-workstream": {
+      "type": "string",
+      "default": "main"
+    },
+    "tiers": {
+      "type": "object",
+      "patternProperties": {
+        "^tier-[0-9]+$": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z][a-z0-9-]*$": {
+              "$ref": "#/$defs/SubStep"
+            }
+          }
+        }
+      }
+    },
+    "lifecycle-phase": {
+      "type": "string",
+      "enum": [
+        "pre-init",
+        "in-arc",
+        "steady-state-active",
+        "post-incident-pending",
+        "in-migration",
+        "spike-pending-followup"
+      ]
+    }
+  },
+  "$defs": {
+    "SubStep": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in-flight", "done", "skipped", "imported", "failed", "re-invoked"]
+        },
+        "artifact": {
+          "type": "string",
+          "description": "Relative path from .godpowers/"
+        },
+        "artifact-hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "agent-version": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*@\\d+\\.\\d+\\.\\d+$"
+        },
+        "have-nots-passed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]+-\\d{2}$"
+          }
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free-form for skip reason, failure detail, etc."
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

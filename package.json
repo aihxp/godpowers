@@ -27,6 +27,14 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godpowers/godpowers.git"
+  },
+  "homepage": "https://github.com/godpowers/godpowers#readme",
+  "bugs": {
+    "url": "https://github.com/godpowers/godpowers/issues"
+  },
   "files": [
     "bin/",
     "skills/",
@@ -34,7 +42,11 @@
     "hooks/",
     "templates/",
     "references/",
+    "schema/",
+    "lib/",
     "SKILL.md",
-    "AGENTS.md"
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ]
 }

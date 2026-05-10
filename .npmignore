@@ -1,0 +1,32 @@
+# Development files
+node_modules/
+.git/
+.github/
+docs/RFC/
+docs/ROADMAP.md
+ARCHITECTURE.md
+CONTRIBUTING.md
+.gitignore
+.npmignore
+
+# Test infrastructure
+tests/
+scripts/smoke.sh
+scripts/validate-skills.js
+
+# Dev artifacts
+*.log
+.DS_Store
+.env
+.env.*
+coverage/
+dist/
+tmp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db

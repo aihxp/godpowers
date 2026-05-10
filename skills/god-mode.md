@@ -66,12 +66,20 @@ Pass through. Orchestrator skips building, runs god-auditor on existing artifact
 ### --dry-run
 Pass through. Orchestrator plans but writes nothing.
 
+### --with-hygiene
+After Launch, run a post-launch hygiene pass: god-auditor + god-deps-auditor +
+god-docs-writer verification. Catches pre-existing CVEs, doc drift, artifact
+quality drift before declaring complete.
+
+### --skip-hygiene
+Default. Skip the hygiene pass. Use when iterating quickly.
+
 ## Completion
 
 When orchestrator returns "complete", display:
 
 ```
-Godpowers: Complete.
+Godpowers full-arc complete.
 
 Artifacts on disk:
   + PRD           .godpowers/prd/PRD.md
@@ -86,4 +94,21 @@ Artifacts on disk:
   + Harden        .godpowers/harden/FINDINGS.md
 
 Built. Tested. Shipped. Hardened.
+
+Project is now in STEADY STATE. From here, use these workflows:
+
+  Adding features:        /god-feature
+  Production bugs:        /god-hotfix
+  Code cleanup:           /god-refactor
+  Research questions:     /god-spike
+  Post-incident:          /god-postmortem
+  Framework upgrades:     /god-upgrade
+  Documentation:          /god-docs
+  Dependency updates:     /god-update-deps
+
+Periodic hygiene:
+  Quality audit:          /god-audit
+  Health check:           /god-hygiene
+
+Or describe what you want and /god-next will route.
 ```

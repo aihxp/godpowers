@@ -8,6 +8,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2026-05-09
 
 ### Added
+- **god-mode lifecycle awareness**:
+  - god-orchestrator now has explicit Post-Launch Transition phase
+  - After `/god-mode` (full-arc), project enters STEADY STATE
+  - Steady-state hand-off message lists all 11 ongoing workflows
+  - New flag `/god-mode --with-hygiene` runs audit + deps + docs verification
+  - `/god-mode --yolo --with-hygiene` enables autonomous hygiene (still pauses on Critical CVEs)
+- **2 new lifecycle slash commands**:
+  - `/god-hygiene`: composite health check (audit + deps + docs)
+  - `/god-lifecycle`: shows project phase and contextually appropriate workflows
+- **v0.5 scaffolding**:
+  - `schema/intent.v1.yaml.json`: JSON Schema for godpowers.yaml (intent)
+  - `schema/state.v1.json`: JSON Schema for state.json (facts)
+  - `schema/events.v1.json`: OpenTelemetry-shape event vocabulary
+  - `lib/README.md`: planned runtime modules with target versions
+  - `docs/RFC/0002-workflow-yaml-v1.md`: workflow language design
+- **Distribution prep**:
+  - `.npmignore` excludes dev files from npm package
+  - `package.json` repository, homepage, bugs fields populated
+  - `scripts/release.sh`: tag + publish flow with verification
+- **First-party extension scaffold**:
+  - `extensions/security-pack/manifest.yaml`
+  - `extensions/security-pack/agents/god-soc2-auditor.md`
+  - `extensions/security-pack/skills/god-soc2-audit.md`
+  - `extensions/security-pack/README.md`
+  - Demonstrates extension shape for v0.8 implementation
+- **Integration test scaffold**:
+  - `tests/README.md`: three-layer test strategy
+  - `tests/integration/README.md`: planned end-to-end tests with record/replay
+  - Fixture project layout designed for v0.5 implementation
+
 - **8 new workflow slash commands** for real-world scenarios beyond greenfield:
   - `/god-feature`: Add a feature to an existing project
   - `/god-hotfix`: Urgent production bug fix (skips planning, expedited deploy)
