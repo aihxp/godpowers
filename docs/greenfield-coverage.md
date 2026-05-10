@@ -5,33 +5,40 @@
 
 ## TL;DR
 
-`/god-mode` produces **10 of 14** artifact categories during the arc. The
-remaining **4 capture artifacts** are lazy: they only exist when you use
-those commands.
+`/god-mode` produces **up to 12 of 16** artifact categories during the arc
+(2 are conditional on UI presence). The remaining **4 capture artifacts**
+are lazy: they only exist when you use those commands.
 
-After the arc, `/god-sync` runs automatically to ensure all 14 categories
+After the arc, `/god-sync` runs automatically to ensure all 16 categories
 are in a consistent state (existing artifacts validated; missing capture
-artifacts noted as "not-yet-created").
+artifacts noted as "not-yet-created"; conditional artifacts marked
+`not-required` for backend-only projects).
 
-## What `/god-mode` creates (10 artifacts)
+## What `/god-mode` creates (up to 12 artifacts)
 
 These are produced sequentially as the arc progresses:
 
-| Tier | Sub-step | Artifact path | Created by |
-|------|----------|---------------|------------|
-| 0 | Orchestration | `.godpowers/state.json` | god-orchestrator |
-| 0 | Orchestration | `.godpowers/PROGRESS.md` | god-orchestrator |
-| 0 | Orchestration | `.godpowers/intent.yaml` (v0.5+) | god-orchestrator |
-| 1 | PRD | `.godpowers/prd/PRD.md` | god-pm |
-| 1 | Architecture | `.godpowers/arch/ARCH.md` + `adr/` | god-architect |
-| 1 | Roadmap | `.godpowers/roadmap/ROADMAP.md` | god-roadmapper |
-| 1 | Stack | `.godpowers/stack/DECISION.md` | god-stack-selector |
-| 2 | Repo | `.godpowers/repo/AUDIT.md` + repo source | god-repo-scaffolder |
-| 2 | Build | `.godpowers/build/PLAN.md` + `STATE.md` + code | god-planner + god-executor |
-| 3 | Deploy | `.godpowers/deploy/STATE.md` | god-deploy-engineer |
-| 3 | Observe | `.godpowers/observe/STATE.md` | god-observability-engineer |
-| 3 | Harden | `.godpowers/harden/FINDINGS.md` | god-harden-auditor |
-| 3 | Launch | `.godpowers/launch/STATE.md` | god-launch-strategist |
+| Tier | Sub-step | Artifact path | Created by | Conditional? |
+|------|----------|---------------|------------|---|
+| 0 | Orchestration | `.godpowers/state.json` | god-orchestrator | always |
+| 0 | Orchestration | `.godpowers/PROGRESS.md` | god-orchestrator | always |
+| 0 | Orchestration | `.godpowers/intent.yaml` (v0.5+) | god-orchestrator | always |
+| 1 | PRD | `.godpowers/prd/PRD.md` | god-pm | always |
+| 1 | Architecture | `.godpowers/arch/ARCH.md` + `adr/` | god-architect | always |
+| 1 | Roadmap | `.godpowers/roadmap/ROADMAP.md` | god-roadmapper | always |
+| 1 | Stack | `.godpowers/stack/DECISION.md` | god-stack-selector | always |
+| 1 | **Design** | `DESIGN.md` (project root, Google Labs spec) | god-designer | **UI projects only** |
+| 1 | **Product** | `PRODUCT.md` (project root) | impeccable teach | **UI + impeccable installed** |
+| 2 | Repo | `.godpowers/repo/AUDIT.md` + repo source | god-repo-scaffolder | always |
+| 2 | Build | `.godpowers/build/PLAN.md` + `STATE.md` + code | god-planner + god-executor | always |
+| 3 | Deploy | `.godpowers/deploy/STATE.md` | god-deploy-engineer | always |
+| 3 | Observe | `.godpowers/observe/STATE.md` | god-observability-engineer | always |
+| 3 | Harden | `.godpowers/harden/FINDINGS.md` | god-harden-auditor | always |
+| 3 | Launch | `.godpowers/launch/STATE.md` | god-launch-strategist | always |
+
+Detection of UI presence is automatic via `lib/design-detector.js`
+(reads STACK + package.json + filesystem signals). Backend-only
+projects skip Design and Product tiers with `not-required` status.
 
 Plus the run-level artifact:
 

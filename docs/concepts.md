@@ -82,7 +82,8 @@ Every sentence is exactly one of:
 Anything unlabeled is theater. Rewrite.
 
 ### Have-nots
-200 named failure modes. Each is grep-testable. Examples:
+99 named failure modes. ~30 are mechanical (regex-checkable);
+the rest are interpretive. Examples:
 - P-01: Generic problem statement (passes substitution test)
 - A-04: ADR without flip point
 - B-01: Code before test (TDD violation)
@@ -90,6 +91,34 @@ Anything unlabeled is theater. Rewrite.
 - H-07: Critical finding without remediation options
 
 The catalog: `references/HAVE-NOTS.md`.
+The mechanical 30 are wired into `lib/have-nots-validator.js` and
+caught by `/god-lint`.
+
+## Three verification axes
+
+Validation runs on three orthogonal axes:
+
+| Axis | Catches | Speed |
+|---|---|---|
+| **Static** | Document-level have-nots, format violations, missing fields | < 1s |
+| **Linkage** | Drift between artifacts and code; orphans; cross-artifact impact | < 5s |
+| **Runtime** | Rendered styles vs design tokens; PRD acceptance flows; real-DOM contrast | 30s-2min |
+
+Static catches form. Linkage catches lying. Runtime catches breakage.
+See [validation.md](./validation.md) for the complete picture.
+
+## Five external integrations (detect-and-delegate, none vendored)
+
+- **Google Labs design.md** - format spec for DESIGN.md
+- **Impeccable** - design intelligence (7 domain refs + 23 commands)
+- **awesome-design-md** - 71-site curated catalog
+- **SkillUI** - static-analysis fallback for arbitrary URLs
+- **vercel-labs/agent-browser + Playwright** - runtime verification
+
+Each is detected via `lib/<name>-detector` or `lib/<name>-bridge`.
+None of their content is vendored; we delegate when present and fall
+back gracefully when absent (light-impeccable internal references for
+design; no-backend message for runtime).
 
 ## The three load-bearing artifacts (designed for v0.5+)
 

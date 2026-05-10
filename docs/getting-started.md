@@ -13,6 +13,22 @@ For other AI tools: `--codex`, `--cursor`, `--windsurf`, `--gemini`,
 `--opencode`, `--copilot`, `--augment`, `--trae`, `--cline`, `--kilo`,
 `--antigravity`, `--qwen`, `--codebuddy`, `--pi`. Or `--all` for everything.
 
+### Optional: full design pipeline
+
+For UI work, install these (godpowers detects each lazily; works without
+them via the internal fallback path):
+
+```bash
+npm install -g agent-browser           # runtime verification (preferred)
+agent-browser install                  # downloads Chrome for Testing
+npm install -g skillui                 # extract DESIGN.md from any URL
+npx skills add https://github.com/pbakaus/impeccable   # design intelligence
+```
+
+Catalog (no install): the 71-site awesome-design-md catalog at
+github.com/VoltAgent/awesome-design-md is used via lazy fetch when you
+run `/god-design from <site>`.
+
 ## Your first project (5 minutes)
 
 Open Claude Code in an empty directory. Type:

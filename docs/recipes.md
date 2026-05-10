@@ -828,3 +828,67 @@ If you know the command, here's where each one shines:
 | `/god-set-profile` | Model profile |
 | `/god-extension-add/list/remove/info` | Skill pack management |
 | `/god-smite` | Delete node_modules + reinstall |
+
+---
+
+## Design recipes (added in v0.11)
+
+### Recipe: Use a known site as design baseline
+
+**When**: PRD names a familiar product as visual reference (Linear, Stripe,
+Notion, etc.).
+
+**Sequence**:
+1. `/god-design suggest` - scans PRD for known site mentions
+2. `/god-design from <site>` - fetches curated DESIGN.md from awesome-design-md
+3. god-design-reviewer gates the change (two-stage spec + quality)
+4. `/god-design polish` - refine with impeccable if installed
+5. Reverse-sync wires component implementations as `/god-build` proceeds
+
+71 curated sites available; cached per-project on first fetch.
+
+### Recipe: Verify the running app matches design
+
+**When**: After `/god-build`, before `/god-launch`. Or any time DESIGN.md
+changes and you want to check the live app.
+
+**Sequence**:
+1. Ensure dev server or deploy preview is running at a reachable URL
+2. `/god-test-runtime audit [url]` - design audit only
+3. `/god-test-runtime test [url]` - functional acceptance flows
+4. `/god-test-runtime` - both pipelines in one browser session
+5. Critical findings flow to REVIEW-REQUIRED.md and pause arc
+6. `/god-review-changes` walks them
+
+Runs headless (agent-browser preferred; Playwright fallback). Backends
+detected automatically; install one with `npm install -g agent-browser`
+or `npm install playwright`.
+
+### Recipe: Extract design from an unknown site
+
+**When**: PRD references a site that's NOT in the awesome-design-md catalog.
+
+**Sequence**:
+1. `/god-design scan <url>` - SkillUI extracts a DESIGN.md via static
+   analysis (or `--ultra` for Playwright-driven visual extraction)
+2. `/god-design polish` - refine with impeccable if installed
+3. god-design-reviewer gates the result
+4. PASS verdict applies the DESIGN.md to project root
+
+Cached at `.godpowers/cache/skillui/<slug>/`. Requires
+`npm install -g skillui` for first-time setup.
+
+### Recipe: Multi-repo coordinated change (Mode D)
+
+**When**: Suite of repos under one org; a refactor needs to touch several.
+
+**Sequence**:
+1. `/god-suite-init` - one-time registration of siblings
+2. `/god-suite-status` - confirm all repos are clean before patch
+3. `/god-suite-patch "<description>" --repos a,b,c` - coordinated change
+4. Each repo's `god-orchestrator` runs the patch (per-repo Quarterback rule)
+5. `/god-suite-status` to verify aggregate outcome
+6. `/god-suite-release` if a coordinated release follows
+
+Suite-config at `<hub>/.godpowers/suite-config.yaml` declares siblings
+explicitly (no auto-discovery).
