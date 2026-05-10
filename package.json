@@ -6,7 +6,7 @@
     "godpowers": "./bin/install.js"
   },
   "scripts": {
-    "test": "node scripts/validate-skills.js && bash scripts/smoke.sh && node scripts/test-runtime.js && node scripts/test-router.js && node scripts/test-recipes.js && node scripts/test-context-writer.js && node scripts/test-artifact-linter.js && node scripts/test-artifact-diff.js",
+    "test": "node scripts/validate-skills.js && bash scripts/smoke.sh && node scripts/test-runtime.js && node scripts/test-router.js && node scripts/test-recipes.js && node scripts/test-context-writer.js && node scripts/test-artifact-linter.js && node scripts/test-artifact-diff.js && node scripts/test-design-foundation.js",
     "validate-skills": "node scripts/validate-skills.js",
     "smoke": "bash scripts/smoke.sh",
     "test:runtime": "node scripts/test-runtime.js",

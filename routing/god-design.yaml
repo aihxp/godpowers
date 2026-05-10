@@ -1,0 +1,67 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-design
+  description: Design lifecycle (DESIGN.md + PRODUCT.md) bridged to impeccable
+  tier: 1
+
+prerequisites:
+  required:
+    - check: file:.godpowers/PROGRESS.md
+      reason: "/god-design needs an initialized project"
+      auto-complete: /god-init
+    - check: file:.godpowers/stack/DECISION.md
+      reason: "Stack must be selected before design (UI framework drives token shape)"
+      auto-complete: /god-stack
+  optional:
+    - check: file:.godpowers/prd/PRD.md
+      reason: "PRD informs target users and register"
+    - check: file:.godpowers/arch/ARCH.md
+      reason: "ARCH names the UI surface that DESIGN applies to"
+
+execution:
+  spawns: [god-designer]
+  secondary-spawns: [god-design-reviewer]
+  context: fresh
+  conditional:
+    - condition: ui-detected
+      run: spawn-designer
+    - condition: no-ui-detected
+      run: skip-with-status-not-required
+
+  writes:
+    - DESIGN.md
+    - PRODUCT.md
+    - .godpowers/design/STATE.md
+
+standards:
+  have-nots:
+    - D-NAME           # frontmatter name required
+    - D-CONTRAST       # WCAG AA on text/background components
+    - D-TOKEN-REF      # all {token.refs} resolve
+    - D-SECTION-ORDER  # canonical section order
+    - D-SECTION-DUP    # no duplicate sections
+    - "impeccable-critical" # if impeccable installed, no critical findings
+    - "purple-blue gradients" # impeccable anti-pattern
+    - "Inter everywhere"      # impeccable anti-pattern
+    - "cards in cards"        # impeccable anti-pattern
+
+success-path:
+  next-recommended: /god-repo
+  why: Design tokens stable; repo can scaffold with token references
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1.design.status = done; tier-1.product.status = done (if impeccable)
+  events:
+    - agent.start
+    - design.required-detected
+    - impeccable.dispatch
+    - impeccable.findings
+    - design.review-verdict
+    - design.lint-result
+    - artifact.created
+    - artifact.updated
+    - agent.end
