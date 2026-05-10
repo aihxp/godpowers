@@ -94,6 +94,7 @@ when you open a new session in a Godpowers project.
 | `/god-arch` | Design architecture | god-architect |
 | `/god-roadmap` | Sequence the work | god-roadmapper |
 | `/god-stack` | Pick the technology stack | god-stack-selector |
+| `/god-design` | Visual design system (DESIGN.md + PRODUCT.md) | god-designer + god-design-reviewer |
 | `/god-repo` | Scaffold the repository | god-repo-scaffolder |
 | `/god-build` | Build it (TDD, parallel waves) | god-planner + god-executor + reviewers |
 | `/god-deploy` | Set up deploy pipeline | god-deploy-engineer |
@@ -104,6 +105,12 @@ when you open a new session in a Godpowers project.
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
 | `/god-review` | Two-stage code review | god-spec-reviewer + god-quality-reviewer |
+| `/god-lint` | Mechanically validate artifacts against have-nots | (built-in) |
+| `/god-scan` | Rebuild linkage map from code; run reverse-sync | (built-in) |
+| `/god-link` | Manually add or remove a code-artifact link | (built-in) |
+| `/god-design-impact` | What-if analysis on DESIGN.md changes | (built-in) |
+| `/god-review-changes` | Walk REVIEW-REQUIRED.md interactively | (built-in) |
+| `/god-context` | Manage AGENTS.md / CLAUDE.md / GEMINI.md fences | god-context-writer |
 
 ### Other Workflows
 
