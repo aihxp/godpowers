@@ -23,9 +23,10 @@ static lint and linkage drift).
 | `/god-test-runtime` | Full pipeline: audit + functional tests |
 | `/god-test-runtime audit [url]` | Design audit only |
 | `/god-test-runtime test [url]` | Functional tests only |
+| `/god-test-runtime --backend agent-browser` | Force vercel-labs/agent-browser CLI (preferred) |
 | `/god-test-runtime --backend playwright` | Force Playwright (local) |
 | `/god-test-runtime --backend vercel` | Force Vercel Browser (cloud) |
-| `/god-test-runtime --backend auto` | Default: prefer Playwright, fall back to Vercel |
+| `/god-test-runtime --backend auto` | Default cascade: agent-browser -> Playwright -> Vercel |
 | `/god-test-runtime --strict` | Promote warnings to errors |
 | `/god-test-runtime --no-runtime` | Skip; surface as warning (use sparingly) |
 
@@ -106,9 +107,61 @@ critical findings have the same gate semantics.
 { "name": "runtime.end", "runId": "..." }
 ```
 
+## Backend choice in detail
+
+Three native backends supported, with a preference cascade:
+
+### 1. agent-browser (preferred) - vercel-labs/agent-browser
+
+[github.com/vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser).
+Native Rust CLI built specifically for AI agents. Features:
+
+- Accessibility-tree-first interface with stable refs (`@e1`, `@e2`)
+- Semantic locators (`find role button --name "Submit"`)
+- No Node.js daemon required (single binary)
+- Headless by default; optimized for AI workflows
+- Built-in `chat` mode for natural-language control
+
+Install:
+```bash
+npm install -g agent-browser
+agent-browser install   # Downloads Chrome from Chrome for Testing
+```
+
+This is our preferred backend. Maps better to PRD acceptance phrasing
+("user clicks Submit" -> `find role button click --name "Submit"`).
+
+### 2. Playwright - microsoft/playwright
+
+Full programmatic browser automation. Used when agent-browser absent.
+Headless launch only (`headless: true` enforced by bridge).
+
+### 3. Vercel Browser API - hosted
+
+For projects deployed to Vercel with `@vercel/browser-api` configured.
+Browser runs in cloud; API is HTTP. Headless by definition.
+
+## Alternative backends (not bundled, easy to swap)
+
+The bridge layer (`lib/browser-bridge.js`) is structured so additional
+backends can be added with a small adapter. Notable alternatives users
+have integrated:
+
+| Tool | Repo | Strength |
+|---|---|---|
+| Stagehand | github.com/browserbase/stagehand | AI-first observe/act/extract API over Playwright |
+| browser-use | github.com/browser-use/browser-use | Vision + DOM hybrid (Python) |
+| Steel | github.com/steel-dev/steel-browser | Open-source Browserbase alternative |
+| AgentQL | github.com/tinyfish-io/agentql | Stable query language over Playwright |
+| Skyvern | github.com/skyvern-ai/skyvern | Screenshot-driven workflow automation |
+
+We don't ship adapters for these; the bridge pattern (detect-and-delegate)
+makes it straightforward to write your own.
+
 ## See also
 
-- `lib/browser-bridge.js` - Playwright / Vercel Browser detect + launch
-- `lib/runtime-audit.js` - design verification on rendered DOM
-- `lib/runtime-test.js` - PRD acceptance to user-flow assertions
+- `lib/browser-bridge.js` - cascade detection + launch (agent-browser, Playwright, Vercel Browser)
+- `lib/agent-browser-driver.js` - vercel-labs/agent-browser CLI wrapper
+- `lib/runtime-audit.js` - design verification on rendered DOM (backend-aware)
+- `lib/runtime-test.js` - PRD acceptance to user-flow assertions (backend-aware)
 - `agents/god-browser-tester.md` - lifecycle owner of runtime checks
