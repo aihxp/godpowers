@@ -185,6 +185,28 @@ Recommended sequence:
 Run this sequence? (yes / show alternatives / cancel)
 ```
 
+## Missing artifacts (graceful handling)
+
+Not every artifact exists in every project. Tier 1-3 artifacts get created
+during the arc (`/god-mode` produces 10 of them). Capture artifacts
+(BACKLOG, SEEDS, TODOS, THREADS) are lazy: they only exist if the user
+has used those commands.
+
+When an artifact file does NOT exist, return:
+
+```json
+{
+  "<artifact>": { "status": "not-yet-created", "action": "(none; will be created if reconciliation says so)" }
+}
+```
+
+Example: in a fresh `/god-mode` run that just finished Tier 1 PRD, only
+PRD.md exists. ARCH/ROADMAP/etc. are not-yet-created. Don't fail; report
+honestly.
+
+This is the "greenfield-aware" behavior: reconciler works correctly at
+every project stage, not just steady state.
+
 ## When to skip reconciliation
 
 The orchestrator should skip this agent for:

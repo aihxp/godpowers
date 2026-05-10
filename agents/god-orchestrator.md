@@ -151,6 +151,27 @@ After Launch finishes, the project enters STEADY STATE. The orchestrator
 must explicitly hand off to the user with awareness of the broader workflow
 ecosystem.
 
+### Mandatory Final Sync (always, including --yolo)
+
+Before declaring the arc complete, ALWAYS run /god-sync:
+
+1. Spawn god-updater in fresh context
+2. Verify final consistency across all 14 artifact categories:
+   - All Tier 1-3 artifacts written and pass have-nots
+   - Capture artifacts (BACKLOG, SEEDS, TODOS, THREADS) noted as
+     "not-yet-created" if absent (graceful, not a failure)
+3. Update SYNC-LOG.md with the arc completion entry
+4. Update state.json with all final tier statuses
+
+This step runs regardless of flags:
+- /god-mode -> sync runs
+- /god-mode --yolo -> sync runs (no pause; auto-applies)
+- /god-mode --conservative -> sync runs (with pause for confirmation)
+- /god-mode --with-hygiene -> sync runs PLUS hygiene check
+
+This ensures every full-arc run leaves the project in a sync'd state. The
+artifact coverage is consistent across all 14 categories.
+
 ### Steady-State Hand-off
 
 After Launch completes, write a transition message:

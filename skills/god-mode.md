@@ -74,6 +74,24 @@ quality drift before declaring complete.
 ### --skip-hygiene
 Default. Skip the hygiene pass. Use when iterating quickly.
 
+## Mandatory final sync
+
+Regardless of flags, `/god-mode` always runs `/god-sync` before declaring
+complete. This ensures all 14 artifact categories are in a consistent state:
+
+- 10 Tier 0-3 artifacts validated (have-nots passing)
+- 4 capture artifacts noted as `not-yet-created` (graceful handling)
+- SYNC-LOG.md updated with arc completion entry
+- state.json reflects final tier statuses
+
+Under `--yolo`, the sync step auto-applies (no pause). Under
+`--conservative`, it pauses for confirmation. Under `--with-hygiene`,
+it runs alongside the hygiene pass.
+
+The sync step is what closes the loop between greenfield arc creation and
+the comprehensive 14-artifact reconciliation system. See
+`docs/greenfield-coverage.md` for what's created when.
+
 ## Completion
 
 When orchestrator returns "complete", display:
