@@ -971,6 +971,130 @@ Mandatory before declaring this plan complete.
 
 If any step fails, fix before declaring the plan complete.
 
+### Phase 11: Runtime Verification (Browser Automation)
+
+The third axis of verification: actually run the app in a headless
+browser and check that it renders matching DESIGN.md and behaves
+matching PRD acceptance criteria.
+
+We have static (lint, design-spec, scanner) and linkage (artifact-to-
+code map). What we don't have: "does the running app match what we
+said?" Phase 11 fills that gap.
+
+**Headless-only.** No interactive browser windows. Two backends:
+- Local: Playwright (when installed)
+- Cloud: Vercel Browser API (when project is deployed to Vercel)
+
+**Use cases:**
+- Design audit: rendered colors match DESIGN.md tokens? WCAG contrast
+  on real DOM? Component structure matches?
+- Functional verification: does P-MUST-01 ("user can log in") actually
+  work end-to-end against the running app?
+- Visual regression: screenshot diffing across builds
+- Accessibility audit: real DOM a11y check (axe-core via Playwright)
+
+**New code:**
+- `lib/browser-bridge.js` - detect Playwright / Vercel Browser; uniform
+  interface for launch/page/close. Headless-only; never opens an
+  interactive window. Public API:
+  - `isPlaywrightInstalled()` -> bool
+  - `hasVercelBrowserConfig()` -> bool
+  - `launch(opts)` -> Promise<browser>
+  - `getActiveBackend()` -> 'playwright' | 'vercel-browser' | null
+- `lib/runtime-audit.js` - design verification against rendered DOM:
+  - `extractComputedStyles(page, selector)` -> tokens actually applied
+  - `compareToDesign(rendered, designContent)` -> drift findings
+  - `checkContrastRealDOM(page)` -> axe-core results
+  - `screenshot(page, scope)` -> path to PNG in
+    `.godpowers/runtime/<run-id>/screenshots/`
+  - `auditPage(url, designMd, opts)` -> structured findings
+- `lib/runtime-test.js` - functional verification:
+  - `extractAcceptanceCriteria(prdContent)` -> [{ id, text, parsed-flow }]
+  - `runFlow(page, flow)` -> { passed, steps, error?, screenshots }
+  - `verifyRequirement(page, prdId)` -> structured result
+  - `runAllForUrl(url, prdContent)` -> { results, summary, runId }
+
+**New agent:**
+- `agents/god-browser-tester.md` - lifecycle owner of runtime
+  verification. Spawned by /god-test-runtime, /god-build (optional),
+  /god-launch (mandatory gate), /god-harden (a11y check).
+
+**New skills:**
+- `skills/god-test-runtime.md` - user-facing runtime verification.
+  Forms:
+  - `/god-test-runtime` - run full pipeline (audit + test)
+  - `/god-test-runtime audit [url]` - design audit only
+  - `/god-test-runtime test [url]` - functional test only
+  - `/god-test-runtime --backend playwright|vercel|auto` - backend choice
+
+**Updates:**
+- `routing/god-build.yaml` - optional runtime audit step after build wave
+- `routing/god-launch.yaml` - mandatory runtime test gate; blocks launch
+  on critical failures (default + --yolo)
+- `routing/god-harden.yaml` - includes runtime accessibility check
+- `routing/god-design.yaml` - post-DESIGN.md change: runtime audit on
+  rendered surface
+- `agents/god-orchestrator.md` - new "Runtime Verification" section
+  describing when runtime checks fire
+- `agents/god-launch-strategist.md` - includes runtime test results in
+  launch readiness assessment
+- `lib/state.js` - add `runtime` slot to state.json with last run
+  timestamp, backend used, results summary
+- `agents/god-updater.md` - on /god-sync, include runtime drift in
+  REVIEW-REQUIRED.md alongside other drift kinds
+
+**New artifacts:**
+- `.godpowers/runtime/<run-id>/` per-run output:
+  - `audit-report.json` - design audit findings
+  - `test-report.json` - functional test results
+  - `screenshots/<page-name>.png` - reference screenshots
+  - `summary.md` - human-readable summary
+
+**Headless rules (non-negotiable):**
+- All Playwright launches use `headless: true`
+- Never opens a visible browser window
+- No `headless: false` flag exposed in any skill
+- CI/cloud: Vercel Browser is headless by definition
+- User opt-out for local: explicitly skip runtime tier with
+  `--no-runtime` flag (not a "show the browser" mode)
+
+**Critical-finding gate (extended):**
+The existing critical-finding gate now also fires on:
+- Runtime audit critical findings (token drift > 10% of components,
+  WCAG fail on text-on-background)
+- Runtime test critical failures (any P-MUST-* requirement fails its
+  flow)
+- Accessibility violations at AA level
+
+All pause both default mode AND --yolo. Same rationale: cannot
+auto-resolve "the running app doesn't work."
+
+**Behavioral tests:**
+~30 tests covering:
+- Playwright presence detection (returns boolean)
+- Vercel Browser config detection (looks for vercel.json + project)
+- runtime-audit comparing mocked computed styles to mocked tokens
+  (drift detection)
+- runtime-test extracting acceptance criteria from PRD
+- runFlow happy path with mocked browser
+- Screenshot path resolution
+- Findings aggregation and severity rules
+- runAllForUrl orchestration (mocked end-to-end)
+
+**Acceptance:** running /god-test-runtime against a synthetic dev
+server produces an audit-report.json with token-vs-rendered comparisons
+and a test-report.json with PRD-requirement assertions. Critical
+findings flow to REVIEW-REQUIRED.md. Non-critical findings logged but
+do not gate.
+
+**Plan checkpoint after Phase 11:** the system now verifies code
+against artifacts in three orthogonal ways:
+- Static: artifact-linter, design-spec
+- Linkage: linkage map, drift-detector, reverse-sync
+- Runtime: browser-bridge, runtime-audit, runtime-test
+
+No more "is the running app what we said?" gap.
+
 ## Scope summary
 
 | Category | Net new |
