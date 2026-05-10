@@ -141,4 +141,4 @@ Add `--yolo` to skip pauses except Critical security. Auto-decisions log to
 - [Concepts](concepts.md) - the vocabulary and mental model
 - [Reference](reference.md) - all 60+ commands
 - [Tutorial: First Project](tutorials/first-project.md) - end-to-end walkthrough
-- [Composing with other tools](../references/shared/ORCHESTRATORS.md) - GSD, Superpowers, BMAD
+- [Composing with other tools](../references/shared/ORCHESTRATORS.md) - coexistence with other AI workflow systems

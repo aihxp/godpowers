@@ -25,8 +25,10 @@ quarterback (and the agents it spawns) is the only writer to the load-bearing
 artifacts.
 
 We deliberately do not stack a meta-orchestrator above `god-orchestrator`.
-That's the BMAD trap. If we ever need parallel cross-tier coordination, it
-goes in as a peer at Tier 0 (e.g., a future `god-coordinator`), never above.
+Stacking orchestrators is a known anti-pattern: it creates ambiguity about
+who owns state, who decides when to pause, and whose error is authoritative.
+If we ever need parallel cross-tier coordination, it goes in as a peer at
+Tier 0 (e.g., `god-coordinator` for Mode D), never above.
 
 ## Tiers
 
@@ -132,12 +134,14 @@ This is the Cargo + Poetry + OpenTelemetry pattern applied to AI workflows.
 
 ## Workflows
 
-The arc isn't just "/god-mode". 11 core workflows handle different real-world
-scenarios:
+The arc isn't just "/god-mode". 13 core workflows handle different
+real-world scenarios:
 
 | Workflow | When |
 |----------|------|
 | full-arc | Greenfield, idea to launch |
+| bluefield-arc | Org-context-constrained greenfield |
+| brownfield-arc | Existing codebase, full reverse-engineering |
 | feature-arc | Add feature to existing project |
 | hotfix-arc | Urgent production bug |
 | refactor-arc | Safe refactor, no behavior change |
@@ -149,7 +153,9 @@ scenarios:
 | audit-only | Score artifacts, build nothing |
 | hygiene | Periodic health check |
 
-Each is a declarative YAML in `workflows/`. The orchestrator reads them.
+Story-file workflow (`/god-story` family) and Mode D suite workflows
+(`/god-suite-*`) layer on top of these. Each is a declarative YAML in
+`workflows/`. The orchestrator reads them.
 
 ## Modes
 
@@ -158,9 +164,10 @@ Each is a declarative YAML in `workflows/`. The orchestrator reads them.
 | A | Greenfield (no existing code, no .godpowers/) |
 | B | Gap-fill (existing project, missing artifacts) |
 | C | Audit-only (score existing artifacts) |
-| D | Multi-repo (future work, post-1.0) |
+| D | Multi-repo suites (hub + siblings; coordinated via `god-coordinator`) |
 
-god-orchestrator detects mode automatically from disk signals.
+god-orchestrator detects mode automatically from disk signals. Mode D
+adds `god-coordinator` as a Tier-0 peer, never above.
 
 ## Pauses
 
@@ -191,11 +198,11 @@ First-party packs (scaffolded in v0.4, full in v0.8):
 - `@godpowers/launch-pack` - Show HN, PH, IH, OSS
 - `@godpowers/data-pack` - ETL, ML features, dashboards
 
-## How it composes with parents
+## How it composes with other AI workflow systems
 
-- **GSD**: complementary. Different state directories.
-- **Superpowers**: orthogonal. Adopted (TDD, two-stage review).
-- **BMAD**: alternative for planning, complementary for execution.
-- **arc-ready**: ancestor. Extended with skill model and workflows.
+Godpowers does not assume it's the only AI workflow tool installed.
+It keeps its state in `.godpowers/` and never writes outside it.
 
-See `references/shared/ORCHESTRATORS.md` for composition patterns.
+See [references/shared/ORCHESTRATORS.md](../references/shared/ORCHESTRATORS.md)
+for the coexistence rules and migration paths. For acknowledgement of
+the prior-art that shaped godpowers, see [INSPIRATION.md](../INSPIRATION.md).

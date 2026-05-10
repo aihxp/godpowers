@@ -2,7 +2,7 @@
 name: god-story
 description: |
   Write a new STORY.md - a fine-grained slice of work, smaller than
-  /god-feature. BMAD-inspired story-file workflow. Spawns
+  /god-feature. Story-file workflow for incremental delivery. Spawns
   god-storyteller in fresh context.
 
   Triggers on: "god story", "/god-story", "write a story", "user story",

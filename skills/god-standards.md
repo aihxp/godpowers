@@ -1,7 +1,7 @@
 ---
 name: god-standards
 description: |
-  Run arc-ready style standards check on a specific artifact. Verifies
+  Run artifact standards check on a specific artifact. Verifies
   substitution test, three-label test, and tier-specific have-nots. Use
   manually for spot-checks or invoke as a gate between commands.
 

@@ -70,7 +70,7 @@
     },
     "standards": {
       "type": "object",
-      "description": "Arc-ready style discipline checks at this gate",
+      "description": "Artifact discipline checks at this gate",
       "properties": {
         "substitution-test": { "type": "boolean", "default": false },
         "three-label-test": { "type": "boolean", "default": false },

@@ -1,176 +1,199 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference.
+Complete command, agent, and artifact reference for v0.11.0.
 
-## Slash commands (60+)
+## Slash commands (82 total)
 
-### Lifecycle
-- `/god-init` - Initialize project
-- `/god-mode` - Run full autonomous arc
-- `/god-status` - Re-derive state from disk
-- `/god-next` - Suggest next command based on state
-- `/god-help` - Discoverable contextual help
-- `/god-doctor` - Diagnose install + state, suggest fixes
-- `/god-version` - Print version
-- `/god-lifecycle` - Show project phase
+### Front door
+- `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
+- `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
+- `/god-status` - Re-derive project state from disk.
+- `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
-### Planning tier
-- `/god-prd` - Write PRD
-- `/god-arch` - Design architecture
-- `/god-roadmap` - Sequence work
-- `/god-stack` - Pick tech stack
-- `/god-discuss` - Pre-planning Socratic discussion
-- `/god-list-assumptions` - Surface assumptions before they cement
-- `/god-explore` - Open-ended ideation
+### Lifecycle (Tier 0)
+- `/god-init` - Initialize a Godpowers project. Detects mode (A/B/C/D) and scale.
+- `/god-mode` - Full autonomous arc orchestrator (idea to hardened production).
 
-### Building tier
-- `/god-repo` - Scaffold repo
-- `/god-build` - Build the milestone (TDD, waves, two-stage review)
-- `/god-add-tests` - Add tests to legacy code
+### Planning tier (Tier 1)
+- `/god-discuss` - Adaptive Socratic discussion before planning.
+- `/god-explore` - Open-ended Socratic ideation.
+- `/god-list-assumptions` - Surface assumptions before they cement.
+- `/god-prd` - Write Product Requirements Document.
+- `/god-arch` - Design system architecture.
+- `/god-roadmap` - Sequence work into milestones.
+- `/god-stack` - Pick the technology stack.
+- `/god-design` - DESIGN.md / PRODUCT.md lifecycle (Google Labs spec + impeccable).
+- `/god-design-impact` - Predict impact of a proposed DESIGN.md change.
+- `/god-org-context` - Bluefield org-level context (standards, conventions, infra).
 
-### Shipping tier
-- `/god-deploy` - Deploy pipeline
-- `/god-observe` - Observability + SLOs
-- `/god-launch` - Launch (gated on harden)
-- `/god-harden` - Adversarial security review
+### Building tier (Tier 2)
+- `/god-repo` - Scaffold a production-grade repository.
+- `/god-build` - Build the milestone (TDD, waves, two-stage review).
+- `/god-add-tests` - Generate tests for existing code based on UAT criteria.
+
+### Shipping tier (Tier 3)
+- `/god-deploy` - Set up deploy pipeline.
+- `/god-observe` - Wire observability + SLOs.
+- `/god-launch` - Launch the product (gated on harden).
+- `/god-harden` - Adversarial security review.
 
 ### Beyond greenfield
-- `/god-feature` - Add feature to existing project
-- `/god-hotfix` - Urgent production bug fix
-- `/god-refactor` - Safe refactor, no behavior change
-- `/god-spike` - Time-boxed research with throwaway POC
-- `/god-postmortem` - Post-incident investigation
-- `/god-upgrade` - Framework / version migration
-- `/god-docs` - Documentation work
-- `/god-update-deps` - Dependency updates
+- `/god-feature` - Add a feature to an existing project.
+- `/god-hotfix` - Urgent production bug fix (skips planning).
+- `/god-refactor` - Safe refactor with strict TDD (no behavior change).
+- `/god-spike` - Time-boxed research with throwaway POC.
+- `/god-postmortem` - Post-incident investigation.
+- `/god-upgrade` - Framework / version migration (expand-contract).
+- `/god-docs` - Documentation work (verified against code).
+- `/god-update-deps` - CVE-aware incremental dependency updates.
+- `/god-hygiene` - Composite health check (audit + deps + docs).
+- `/god-tech-debt` - Assess + prioritize debt across 8 categories.
+
+### Story-file workflow (fine-grained slices)
+- `/god-story` - Write a STORY.md (smaller than /god-feature).
+- `/god-stories` - List all STORY.md files grouped by status.
+- `/god-story-build` - Implement a single story.
+- `/god-story-verify` - Run story's acceptance criteria as headless browser tests.
+- `/god-story-close` - Mark a story done after build + verify.
+
+### Mode D (multi-repo suites)
+- `/god-suite-init` - Register a multi-repo suite (siblings, byte-identical files).
+- `/god-suite-status` - Show all repos' status side-by-side.
+- `/god-suite-sync` - Propagate byte-identical files across all repos.
+- `/god-suite-patch` - Coordinated change touching multiple repos.
+- `/god-suite-release` - Coordinate a release across siblings.
+
+### Linkage + propagation
+- `/god-scan` - Manually trigger a full reverse-sync of the codebase.
+- `/god-link` - Manually add or remove a code-artifact link.
+- `/god-sync` - Sync all affected artifacts after feature work.
+- `/god-review-changes` - Walk REVIEW-REQUIRED.md interactively.
+- `/god-reconcile` - Comprehensive reconciliation across all impacted artifacts.
+- `/god-reconstruct` - Reverse-engineer planning artifacts from existing code.
+
+### Verification
+- `/god-lint` - Mechanical validation against have-nots catalog.
+- `/god-standards` - Artifact standards check (substitution + three-label + have-nots).
+- `/god-test-runtime` - Headless browser verification (design audit + flow assertions).
+- `/god-audit` - Score existing artifacts against all have-nots.
+- `/god-agent-audit` - Validate every agents/*.md against the agent contract.
 
 ### Recovery
-- `/god-undo` - Revert last operation
-- `/god-redo <tier>` - Re-run a tier
-- `/god-skip <tier>` - Explicit skip with audit
-- `/god-repair` - Fix detected drift
-- `/god-rollback <tier>` - Walk back tier + downstream
-- `/god-restore` - Recover from .trash
+- `/god-undo` - Revert last operation via reflog.
 
-### Observability
-- `/god-logs [run-id]` - Events as readable timeline
-- `/god-metrics` - Per-tier stats
-- `/god-trace <tier>` - Deep dive on a tier
-- `/god-audit` - Score artifacts against have-nots
-- `/god-hygiene` - Composite health check
-- `/god-graph` - Project knowledge graph
+### Knowledge + intelligence
+- `/god-map-codebase` - Parallel codebase analysis.
+- `/god-intel` - Query / refresh codebase intel.
+- `/god-archaeology` - Deep code archaeology for brownfield projects.
+- `/god-graph` - Build, query, and inspect the project knowledge graph.
+- `/god-thread` - Persistent context threads.
+- `/god-extract-learnings` - Capture decisions / lessons / patterns.
 
 ### Capture
-- `/god-add-todo` - Capture as todo with priority
-- `/god-check-todos` - List and route
-- `/god-note` - Zero-friction capture
-- `/god-add-backlog` - Add to long-term backlog
-- `/god-plant-seed` - Forward-looking idea with trigger condition
+- `/god-add-todo` - Capture as todo with priority.
+- `/god-check-todos` - List and route todos.
+- `/god-note` - Zero-friction idea capture.
+- `/god-add-backlog` - Add to long-term backlog.
+- `/god-plant-seed` - Forward-looking idea with trigger condition.
 
-### Knowledge
-- `/god-map-codebase` - Parallel codebase analysis
-- `/god-intel` - Query/refresh codebase intel
-- `/god-thread` - Persistent context threads
-- `/god-extract-learnings` - Capture decisions / lessons / patterns
+### Process / team
+- `/god-sprint` - Sprint plan / status / retro.
+- `/god-party` - Multi-persona collaboration session.
+- `/god-pause-work` - Save context handoff.
+- `/god-resume-work` - Restore from handoff.
+- `/god-workstream` - Parallel workspace management.
 
-### Process / Team
-- `/god-sprint` - Sprint plan / status / retro
-- `/god-party` - Multi-persona collaboration
-- `/god-pause-work` - Save context handoff
-- `/god-resume-work` - Restore from handoff
-- `/god-workstream` - Parallel workspace management
+### Roadmap maintenance
+- `/god-roadmap-check` - Check if intent overlaps existing roadmap.
+- `/god-roadmap-update` - Update roadmap after feature work.
 
-### Configuration
-- `/god-settings` - View/modify intent.yaml settings
-- `/god-set-profile` - Switch model profile
+### Context + configuration
+- `/god-context` - Manage fenced section in AGENTS.md / CLAUDE.md / GEMINI.md / etc.
+- `/god-settings` - View / modify intent.yaml settings.
+- `/god-set-profile` - Switch model profile.
 
 ### Utility
-- `/god-fast` - Trivial inline edit
-- `/god-quick` - Small task with TDD
-- `/god-debug` - 4-phase systematic debug
-- `/god-review` - Two-stage code review
-- `/god-pr-branch` - Clean PR branch (filter .godpowers/ commits)
-- `/god-build-agent` - Generate custom specialist agent
-- `/god-smite` - Delete node_modules, reinstall
+- `/god-fast` - Trivial inline edit (no agents, no plans).
+- `/god-quick` - Small task with TDD discipline, skip optional gates.
+- `/god-debug` - 4-phase systematic debug.
+- `/god-review` - Two-stage code review (spec + quality).
+- `/god-pr-branch` - Clean PR branch (filter .godpowers/ commits).
+- `/god-build-agent` - Generate custom specialist agent.
 
-### Extensions (v0.8+)
-- `/god-extension-add @x/y` - Install skill pack
-- `/god-extension-list` - Show installed packs
-- `/god-extension-remove @x/y` - Uninstall pack
-- `/god-extension-info @x/y` - Show pack details
-- `/god-test-extension <path>` - Run plugin contract tests
+### Extensions (v0.13+, scaffolds present at v0.11)
+- `@godpowers/security-pack` - SOC 2, HIPAA, PCI auditors
+- `@godpowers/launch-pack` - Show HN, Product Hunt, Indie Hackers, OSS strategists
+- `@godpowers/data-pack` - ETL, ML feature, dashboard specialists
 
-### From @godpowers/security-pack
-- `/god-soc2-audit` - SOC 2 Common Criteria audit
-- `/god-hipaa-audit` - HIPAA Security Rule audit
-- `/god-pci-audit` - PCI-DSS 4.0 audit
+## Specialist agents (38 total)
 
-### From @godpowers/launch-pack
-- `/god-show-hn` - Show HN launch plan
-- `/god-product-hunt` - Product Hunt launch plan
-- `/god-indie-hackers` - Indie Hackers post
-- `/god-oss-release` - Open source library release
+### Tier 0 - Orchestration
+- `god-orchestrator` - Autonomous arc runner (Quarterback).
+- `god-coordinator` - Mode D peer for multi-repo coordination.
+- `god-org-context-loader` - Bluefield org-context reader.
 
-### From @godpowers/data-pack
-- `/god-etl` - ETL pipeline build
-- `/god-ml-feature` - ML feature with consistency + drift
-- `/god-dashboard` - Dashboard with question-per-chart
+### Tier 1 - Planning agents
+- `god-pm` - PRD writer.
+- `god-architect` - System designer.
+- `god-roadmapper` - Work sequencer.
+- `god-stack-selector` - Tech stack picker.
+- `god-designer` - DESIGN.md + PRODUCT.md lifecycle owner.
+- `god-design-reviewer` - Two-stage design gate (spec + quality).
+- `god-explorer` - Pre-init Socratic ideator.
 
-## Specialist agents (33)
+### Tier 2 - Building agents
+- `god-repo-scaffolder` - Repo bootstrap.
+- `god-planner` - Build slice planner.
+- `god-executor` - TDD-enforced implementer.
+- `god-spec-reviewer` - Stage 1 code review.
+- `god-quality-reviewer` - Stage 2 code review.
+- `god-storyteller` - STORY.md writer.
 
-### Core orchestration
-- god-orchestrator - Autonomous arc runner
-
-### Planning agents
-- god-pm - PRD writer
-- god-architect - System designer
-- god-roadmapper - Work sequencer
-- god-stack-selector - Tech picker
-- god-explorer - Pre-init Socratic ideator
-
-### Building agents
-- god-repo-scaffolder - Repo bootstrap
-- god-planner - Build slice planner
-- god-executor - TDD-enforced implementer
-- god-spec-reviewer - Stage 1 review
-- god-quality-reviewer - Stage 2 review
-
-### Shipping agents
-- god-deploy-engineer - Deploy pipeline
-- god-observability-engineer - SLOs + runbooks
-- god-launch-strategist - Launch copy
-- god-harden-auditor - OWASP walker
-- god-incident-investigator - Postmortems
+### Tier 3 - Shipping agents
+- `god-deploy-engineer` - Deploy pipeline.
+- `god-observability-engineer` - SLOs + runbooks.
+- `god-launch-strategist` - Launch copy.
+- `god-harden-auditor` - OWASP walker (Critical blocks launch).
+- `god-browser-tester` - Headless browser runtime verification.
 
 ### Workflow specialists
-- god-spike-runner - Time-boxed POC builder
-- god-migration-strategist - Expand-contract migrations
-- god-docs-writer - No-lying docs
-- god-deps-auditor - CVE-aware dep updates
-- god-debugger - 4-phase systematic debug
+- `god-spike-runner` - Time-boxed POC builder.
+- `god-migration-strategist` - Expand-contract migrations.
+- `god-docs-writer` - No-lying docs (verified against code).
+- `god-deps-auditor` - CVE-aware dep updates.
+- `god-debugger` - 4-phase systematic debug.
+- `god-incident-investigator` - Postmortems with action items.
+- `god-retrospective` - Sprint retrospectives.
+- `god-debt-assessor` - Technical debt assessor.
+
+### Brownfield specialists
+- `god-archaeologist` - Deep code archaeology.
+- `god-reconstructor` - Reverse-engineer planning artifacts.
+- `god-reconciler` - Cross-artifact reconciliation.
 
 ### Meta
-- god-auditor - Have-nots scorer
-- god-retrospective - Sprint retrospectives
-
-### From extensions
-- god-soc2-auditor, god-hipaa-auditor, god-pci-auditor (security-pack)
-- god-show-hn-strategist, god-product-hunt-strategist, god-indie-hackers-strategist, god-oss-release-strategist (launch-pack)
-- god-etl-engineer, god-ml-feature-engineer, god-dashboard-builder (data-pack)
+- `god-auditor` - Have-nots scorer.
+- `god-standards-check` - Artifact discipline gate.
+- `god-updater` - Reverse-sync runner.
+- `god-context-writer` - AI-tool context fenced section manager.
+- `god-roadmap-reconciler` - Roadmap overlap detection.
+- `god-roadmap-updater` - Roadmap update after work.
 
 ## Artifact paths
 
 ```
 .godpowers/
-  PROGRESS.md              Tier status (legacy view, v0.4)
-  intent.yaml              Project intent (v0.5+)
-  state.json               Project state (v0.5+)
+  PROGRESS.md              Tier status
+  intent.yaml              Project intent
+  state.json               Project state
 
   prd/PRD.md               Product Requirements
   arch/ARCH.md             Architecture
   arch/adr/                ADRs
   roadmap/ROADMAP.md       Sequenced work
   stack/DECISION.md        Tech decisions
+  design/DESIGN.md         Google Labs design spec
+  design/PRODUCT.md        Strategic product file
   repo/AUDIT.md            Repo scaffold audit
   build/PLAN.md            Build slices
   build/STATE.md           Build progress
@@ -179,21 +202,28 @@ Complete command, agent, and artifact reference.
   launch/STATE.md          Launch artifacts
   harden/FINDINGS.md       Security findings
 
+  stories/STORY-*.md       Fine-grained slices
   postmortems/<id>/POSTMORTEM.md
   spikes/<slug>/SPIKE.md
   migrations/<slug>/MIGRATION.md
   features/<slug>/PRD.md
-  
+
+  linkage.json             Bidirectional artifact-to-code map
+  REVIEW-REQUIRED.md       Pending propagation reviews
+
+  codebase/                Codebase intelligence (mappers + archaeology)
   todos/TODOS.md
   notes/NOTES.md
   backlog/BACKLOG.md
   seeds/<id>.md
   threads/<name>.md
-  
-  runs/<id>/events.jsonl   Per-run event log (v0.5+)
-  log                      Reflog (v0.6+)
-  .trash/                  Recoverable deletions (v0.6+)
-  
+
+  suite/                   Mode D multi-repo config + version table
+
+  runs/<id>/events.jsonl   Per-run event log
+  log                      Reflog
+  .trash/                  Recoverable deletions
+
   YOLO-DECISIONS.md        Auto-decisions log
   HANDOFF.md               Pause/resume context
   AUDIT-REPORT.md          /god-audit output
@@ -208,9 +238,13 @@ Install-only. Everything else is slash commands.
 npx godpowers --claude --global    Install for Claude Code
 npx godpowers --all                Install for all 15 runtimes
 npx godpowers --uninstall          Remove
-npx godpowers --migrate            v0.3 -> v0.4 upgrade
+npx godpowers --migrate            One-shot upgrade
 npx godpowers --help               Help
 ```
+
+Supported runtimes (15): Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
+Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi.
+T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 ## Schemas
 
@@ -219,11 +253,16 @@ JSON Schema files at `schema/`:
 - `state.v1.json` - state.json structure
 - `events.v1.json` - events.jsonl event vocabulary
 - `workflow.v1.json` - workflow YAML structure
+- `routing.v1.json` - routing config structure
 
 ## See also
 
 - [Getting Started](getting-started.md)
 - [Concepts](concepts.md)
+- [Change Propagation](change-propagation.md)
+- [Linkage](linkage.md)
+- [Validation](validation.md)
 - [Have-Nots Catalog](../references/HAVE-NOTS.md)
 - [Architecture](../ARCHITECTURE.md)
 - [Roadmap](ROADMAP.md)
+- [Inspiration](../INSPIRATION.md)

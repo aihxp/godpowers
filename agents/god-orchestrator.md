@@ -74,8 +74,8 @@ When deciding what to spawn next, query the routing definition:
 
 Between every tier, run god-standards-check on the produced artifact (if
 the routing config has a `standards` section). Standards check uses fresh
-context, independent of the producing agent. This is the arc-ready
-discipline integration point.
+context, independent of the producing agent, so it catches drift the
+producing agent's own self-check would miss.
 
 ## Recipe-Driven Decisions (for fuzzy intent)
 

@@ -1,7 +1,7 @@
 ---
 name: god-standards-check
 description: |
-  Arc-ready style standards gate-checker. Runs between command stages to
+  Artifact standards gate-checker. Runs between command stages to
   verify substitution test, three-label test, and have-nots compliance on
   the just-produced artifact. Pauses or auto-fixes based on configuration.
 
@@ -11,7 +11,7 @@ tools: Read, Grep, Glob
 
 # God Standards Check
 
-Run arc-ready style discipline checks at workflow gates.
+Run artifact discipline checks at workflow gates.
 
 ## Purpose
 
@@ -22,8 +22,8 @@ output, this agent runs BEFORE the next stage to verify:
 2. **Three-label test**: every sentence is DECISION/HYPOTHESIS/OPEN QUESTION
 3. **Have-nots**: tier-specific failure modes from references/HAVE-NOTS.md
 
-This is the arc-ready integration point. The discipline that arc-ready
-applies as a single skill is now applied as a between-stage gate.
+This discipline runs as a between-stage gate so it catches drift independent
+of the producing agent's own self-check.
 
 ## Inputs
 

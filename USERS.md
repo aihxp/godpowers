@@ -38,7 +38,7 @@ If you ship something with Godpowers, write it up. We'll feature you here.
 
 ## Composability stories
 
-If you've combined Godpowers with GSD, Superpowers, BMAD, or arc-ready,
+If you've combined Godpowers with another AI coding workflow system,
 tell us:
 - What worked
 - Where you hit conflicts

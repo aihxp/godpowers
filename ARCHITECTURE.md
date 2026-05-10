@@ -7,8 +7,8 @@
 This document is the canonical design for Godpowers as a coherent product.
 v0.1 through v0.3 were skeleton; this defines v0.4 through v1.0.
 
-The design follows the **GSD model**: Godpowers is a skill-based system. The
-only CLI surface is `npx godpowers` for installation. All user-facing
+The design follows a **pure-skill model**: Godpowers is a skill-based system.
+The only CLI surface is `npx godpowers` for installation. All user-facing
 operations are slash commands inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
@@ -39,7 +39,7 @@ contexts to produce mechanically-verified artifacts on disk.
 > Type one slash command. Get a hardened, observable, deployed product, every
 > step traceable, every artifact accountable.
 
-### What stays the same as GSD
+### Core surface (pure-skill foundation)
 - Skills at `<runtime>/skills/god-*.md` invoked as slash commands
 - Specialist agents at `<runtime>/agents/god-*.md` spawned via Task tool
 - Single CLI surface: `npx godpowers` for install/uninstall only
@@ -805,6 +805,6 @@ The architecture is grounded in concrete patterns from production tools.
 | Plugin contract tests | Nx | `/god-test-extension` |
 | Record/replay | proven pattern | tests/replay/ |
 | Capability handshake | npm engines | engines.godpowers |
-| Skill-only surface | GSD | The whole product |
+| Skill-only surface | pure-skill model | The whole product |
 
 If a design question comes up, look it up in this table first.

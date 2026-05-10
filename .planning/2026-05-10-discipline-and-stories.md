@@ -5,9 +5,10 @@ Status: PROPOSED
 
 ## Goal
 
-Close the two parent-comparison gaps identified:
-1. **Agent discipline** (Superpowers' lead)
-2. **Story-file workflow** (BMAD's lead)
+Close two gaps identified during comparison with prior-art systems
+(see INSPIRATION.md):
+1. **Agent discipline**
+2. **Story-file workflow**
 
 Without breaking what we have. Both phases are ADDITIVE, not refactors.
 

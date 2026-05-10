@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.11.0-blue)](CHANGELOG.md)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
 
@@ -29,7 +29,9 @@ npx godpowers --claude --global
 ```
 
 Other targets: `--codex`, `--cursor`, `--windsurf`, `--opencode`, `--gemini`,
-`--copilot`, `--augment`. Or `--all` for everything.
+`--copilot`, `--augment`, `--trae`, `--cline`, `--kilo`, `--antigravity`,
+`--qwen`, `--codebuddy`, `--pi`. Or `--all` for everything (15 runtimes).
+T3 Code is transparently supported through the underlying agent.
 
 The installer copies:
 - Slash command skills to `<runtime>/skills/`
@@ -212,7 +214,18 @@ options with tradeoffs, and a default if the user just says "go".
 
 ## Supported Tools
 
-Claude Code, Codex, Cursor, Windsurf, Gemini CLI, OpenCode, Copilot, Augment.
+15 first-class runtimes: Claude Code, Codex, Cursor, Windsurf, Gemini CLI,
+OpenCode, Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy,
+Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
+
+## Full reference
+
+- [Getting Started](docs/getting-started.md)
+- [Concepts](docs/concepts.md)
+- [Command reference (all 82 skills + 38 agents)](docs/reference.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [Inspiration](INSPIRATION.md)
 
 ## License
 

@@ -14,7 +14,7 @@ Each command has:
 1. **Trigger phrases**: what user inputs match
 2. **Prerequisites**: what must be done first (with auto-complete options)
 3. **Execution**: what spawns, what's read, what's written
-4. **Standards check**: arc-ready style discipline gates
+4. **Standards check**: artifact discipline gates
 5. **Success path**: what to do next on success
 6. **Failure path**: what to do on errors or have-not failures
 7. **Endoff**: state changes and events emitted

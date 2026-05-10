@@ -494,13 +494,7 @@ See individual tier sections above.
 
 ## Integration
 
-Godpowers is self-contained but can compose with external tools:
-
-- **GSD**: Godpowers can consume GSD's .planning/ state or produce artifacts
-  that GSD commands can read
-- **Superpowers**: Orthogonal. Superpowers shapes agent behavior; Godpowers
-  shapes artifact contracts. Install both for maximum coverage.
-- **BMAD**: Godpowers subsumes BMAD's planning capabilities. Use one or the
-  other for planning, not both.
-- **Arc-ready**: Godpowers inherits arc-ready's artifact paths and discipline.
-  They produce compatible outputs.
+Godpowers is self-contained. It composes cleanly with other AI coding
+workflow systems when both are installed; their state directories are
+disjoint and their slash commands don't collide. See `INSPIRATION.md`
+for design ancestry.

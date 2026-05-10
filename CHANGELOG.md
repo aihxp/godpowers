@@ -5,6 +5,63 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 0.12.0 work
+
+Mode D (multi-repo suites), agent discipline, story-file workflow, Pi + T3
+support, and routing sweep. Test suite at 1400+ passing across 22 suites.
+
+### Added (Mode D - multi-repo suites)
+- `agents/god-coordinator.md`: Tier-0 peer agent for cross-repo coordination
+- `lib/suite-config.js`: Mode D suite registration + version table
+- `lib/meta-linter.js`: cross-repo lint for byte-identical files
+- `skills/god-suite-init.md`: register siblings + shared standards
+- `skills/god-suite-status.md`: side-by-side repo status
+- `skills/god-suite-sync.md`: byte-identical file propagation
+- `skills/god-suite-patch.md`: coordinated multi-repo change
+- `skills/god-suite-release.md`: release coordination across siblings
+- `references/shared/multi-repo-suite-layout.md`
+
+### Added (agent discipline - phase 17)
+- `lib/agent-validator.js`: validates every agents/*.md against the agent
+  contract (frontmatter, required sections, output schema)
+- `skills/god-agent-audit.md`: `/god-agent-audit` runs the validator
+
+### Added (story-file workflow - phase 18)
+- `lib/story-validator.js`: parses + validates STORY.md files
+- `agents/god-storyteller.md`: STORY.md writer
+- `skills/god-story.md`: write a new story
+- `skills/god-stories.md`: list stories by status
+- `skills/god-story-build.md`: implement a story
+- `skills/god-story-verify.md`: run acceptance criteria as headless tests
+- `skills/god-story-close.md`: close after build + verify
+
+### Added (runtime support)
+- Pi (earendil-works/pi) support in installer (`--pi` flag, ~/.pi/skills/)
+- T3 Code (pingdotgg/t3code) transparent support via underlying agent
+- Cross-tool Agent Skills standard at .agents/skills/
+
+### Added (brownfield depth)
+- `agents/god-archaeologist.md`: deep code archaeology
+- `agents/god-reconstructor.md`: reverse-engineer planning artifacts
+- `agents/god-reconciler.md`: cross-artifact reconciliation
+- `agents/god-debt-assessor.md`: technical-debt scorer
+- `skills/god-archaeology.md`, `god-reconstruct.md`, `god-reconcile.md`,
+  `god-tech-debt.md`
+
+### Changed (routing sweep + integration)
+- Phase 13: routing sweep + beyond-arc skill linkage participation
+- Phase 14: documentation surface for runtime / linkage / design
+- Phase 15: runtime heuristic improvements (parseFlow verb coverage)
+- Audit-driven fixes: closed 4 misconnections + disconnections between
+  beyond-arc workflows and linkage / reverse-sync
+
+### Documentation
+- `INSPIRATION.md`: single canonical acknowledgement of prior-art
+- Doc deck refreshed to current state (82 skills, 38 agents, v0.11+)
+
+### Tests
+- 22 test suites, 1400+ passing (was 18 suites, 1235 at 0.11.0)
+
 ## [0.11.0] - 2026-05-10
 
 Major release. Production-ready validation, full design pipeline, and
@@ -254,7 +311,7 @@ passing across 18 suites.
   HARDEN-FINDINGS) with embedded have-nots checklists
 - `references/HAVE-NOTS.md` consolidated catalog with 115 named failure modes
 - 7 new runtimes in installer: Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
-  (15 total, matching GSD parity)
+  (15 total)
 - 9 new slash commands:
   - `/god-fast` - trivial inline edits
   - `/god-quick` - TDD-discipline tasks below /god-build threshold

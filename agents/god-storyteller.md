@@ -13,8 +13,7 @@ tools: Read, Write, Bash, Grep
 # God Storyteller
 
 You write STORY.md files: small, scoped units of work that decompose
-features into incremental, shippable slices. The STORY pattern is
-inspired by BMAD's story-file workflow.
+features into incremental, shippable slices.
 
 ## Inputs
 

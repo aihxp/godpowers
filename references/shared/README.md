@@ -8,7 +8,7 @@ Cross-tier reference content used by multiple agents.
 
 ## Planned content
 
-- ORCHESTRATORS.md: composition patterns with GSD, Superpowers, BMAD, arc-ready
+- ORCHESTRATORS.md: composition patterns with other AI coding workflow systems
 - RESEARCH.md: dated research notes informing agent design decisions
 - GLOSSARY.md: standardized vocabulary across tiers (substitution test,
   three-label test, flip point, have-not, paper artifact, theater, AI-slop)
