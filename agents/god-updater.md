@@ -87,6 +87,18 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Append a session note to the thread
 - Update thread status if work was completed
 
+### AI-tool context refresh (always, unless never-ask)
+- Read `state.json` for `project.context-prompt-answered`
+  - If `never-ask`: skip; do not touch AGENTS.md / CLAUDE.md / others
+  - Otherwise: spawn `god-context-writer` in `sync` mode
+- Refreshes the fenced section in AGENTS.md and any detected-tool pointers
+  (CLAUDE.md, GEMINI.md, .cursor/rules/godpowers.mdc, .windsurfrules,
+  .github/copilot-instructions.md, .clinerules, .roo/rules/godpowers.md,
+  .continue/rules/godpowers.md)
+- Idempotent: if content matches, no write occurs
+- Never touches content outside the `<!-- godpowers:begin -->` /
+  `<!-- godpowers:end -->` fence
+
 ## Output
 
 Write summary to `.godpowers/SYNC-LOG.md` (append-only):

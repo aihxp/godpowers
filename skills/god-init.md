@@ -99,6 +99,28 @@ needs to specify a mode.
 
 `.godpowers/PROGRESS.md` created with initial state.
 
+## AI-tool context (one-time prompt)
+
+After PROGRESS.md is written, ask the user once:
+
+```
+Tell your AI coding tools (Claude Code, Codex, Gemini, Cursor, Windsurf,
+Copilot, Cline, etc.) that this is a Godpowers project? This writes a fenced
+section to AGENTS.md (canonical) and 1-line pointers to any AI-tool config
+files detected in this project.
+
+  yes        - write fences now
+  no         - skip for now (you can run /god-context on later)
+  never-ask  - never ask again on this project
+```
+
+Persist the answer to `state.json` under `project.context-prompt-answered`.
+On `yes`, spawn `god-context-writer` in `write` mode. On `never-ask`, store
+that flag so future runs of /god-init and /god-sync skip the prompt and the
+auto-refresh.
+
+If the user later wants to enable it manually, they run `/god-context on`.
+
 ## On Completion
 
 After init completes, print:
@@ -108,6 +130,7 @@ Godpowers initialized.
 
 Mode: [detected mode]
 Scale: [detected scale]
+AI-tool context: [enabled / skipped / never-ask]
 
 Suggested next: /god-prd (write the requirements)
 Or: /god-mode (run the full autonomous arc)

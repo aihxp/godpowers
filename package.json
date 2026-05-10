@@ -6,9 +6,13 @@
     "godpowers": "./bin/install.js"
   },
   "scripts": {
-    "test": "node scripts/validate-skills.js && bash scripts/smoke.sh",
+    "test": "node scripts/validate-skills.js && bash scripts/smoke.sh && node scripts/test-runtime.js && node scripts/test-router.js && node scripts/test-recipes.js && node scripts/test-context-writer.js",
     "validate-skills": "node scripts/validate-skills.js",
-    "smoke": "bash scripts/smoke.sh"
+    "smoke": "bash scripts/smoke.sh",
+    "test:runtime": "node scripts/test-runtime.js",
+    "test:router": "node scripts/test-router.js",
+    "test:recipes": "node scripts/test-recipes.js",
+    "test:context": "node scripts/test-context-writer.js"
   },
   "keywords": [
     "ai",
