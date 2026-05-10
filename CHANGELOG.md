@@ -5,6 +5,63 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2026-05-10
+
+Context-rot protection (the major new feature), extension runtime, and
+observability readers. Ships earlier-than-roadmapped observability
+because it cost very little once events.jsonl already existed.
+
+### Added (context-rot protection)
+- `lib/checkpoint.js`: read/write/append API for `.godpowers/CHECKPOINT.md`,
+  the disk-authoritative "where you are" pin. Frontmatter holds id,
+  project, mode, mode-d-suite, lifecycle, current-tier, current-substep,
+  last-action, last-actor, last-update, facts-hash. Markdown body holds
+  Where-you-are + Last actions (up to 20) + Held facts (up to 10) +
+  Next suggested command + "if you are a new session" guide.
+- `skills/god-locate.md`: orient a new chat session or new AI tool against
+  disk reality. Reads CHECKPOINT + state.json + events.jsonl tail +
+  reflog + intent.yaml. Single-screen output. Replaces guesswork when
+  switching tools or returning to a project.
+- `skills/god-context-scan.md`: detect drift between the AI's stated mental
+  model and disk. The defensive cousin of /god-status. Use in long
+  sessions before commits. Surfaces hallucinated facts and stale memory.
+- `lib/events.js`: hash chain on events.jsonl. Each event includes
+  `prev` = sha256 of the previous line (or `genesis` for the first).
+  New `verifyChain(file)` detects any truncation / tampering /
+  reordering. Cheap; cryptographically tamper-evident audit log.
+- `hooks/session-start.sh`: now prefers CHECKPOINT.md over PROGRESS.md
+  when present. Prints the "Where you are" + Next-suggested sections
+  for instant orientation.
+
+### Added (v0.13 extension runtime)
+- `schema/extension-manifest.v1.json`: schema for extension manifests
+  (apiVersion, kind, metadata.name + version, engines.godpowers SemVer
+  range, provides {agents,skills,workflows,have-nots}, activation rules).
+- `lib/extensions.js`: install / list / info / remove + SemVer range
+  matcher (exact, ^X.Y.Z, ~X.Y.Z, >=, <, compound). Capability handshake
+  rejects install when engines.godpowers doesn't include the running
+  godpowers version.
+- 5 new skills: `/god-extension-add`, `/god-extension-list`,
+  `/god-extension-info`, `/god-extension-remove`, `/god-test-extension`.
+
+### Added (v0.15 observability, shipped early)
+- `lib/event-reader.js`: timeline / metrics / trace / summarize over
+  events.jsonl. Pairs agent.start with agent.end to compute durations.
+  Aggregates per-tier counts, durations, pauses, errors. Reads one run
+  or all runs in the project.
+- 3 new skills: `/god-logs`, `/god-metrics`, `/god-trace`.
+
+### Tests
+- 27 -> 30 test suites; 1629 -> roughly 1670 passing.
+- New: scripts/test-checkpoint.js (16), scripts/test-extensions.js (19),
+  scripts/test-event-reader.js (9).
+- All existing tests still pass; the events hash chain didn't break
+  anything because emit() was always single-line append.
+
+### Changed
+- bin/install.js VERSION: 0.12.0 -> 0.13.0
+- package.json version: 0.12.0 -> 0.13.0
+
 ## [0.12.0] - 2026-05-10
 
 Mode D (multi-repo suites), agent discipline, story-file workflow, Pi + T3

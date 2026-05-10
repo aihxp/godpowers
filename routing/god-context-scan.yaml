@@ -1,0 +1,24 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-context-scan
+  description: 
+  tier: 0
+
+prerequisites:
+  required: []
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: varies
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0
+  events: [agent.start, agent.end]

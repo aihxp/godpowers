@@ -16,9 +16,10 @@ set -euo pipefail
 
 PROGRESS_FILE=".godpowers/PROGRESS.md"
 STATE_FILE=".godpowers/state.json"
+CHECKPOINT_FILE=".godpowers/CHECKPOINT.md"
 
 # Exit silently if not in a Godpowers project
-if [ ! -f "$PROGRESS_FILE" ] && [ ! -f "$STATE_FILE" ]; then
+if [ ! -f "$PROGRESS_FILE" ] && [ ! -f "$STATE_FILE" ] && [ ! -f "$CHECKPOINT_FILE" ]; then
   exit 0
 fi
 
@@ -28,6 +29,19 @@ cat <<'EOF'
 
 A Godpowers project is active in this directory.
 EOF
+
+# Prefer CHECKPOINT.md (the orient-a-new-session pin) when present
+if [ -f "$CHECKPOINT_FILE" ]; then
+  echo ""
+  echo "Checkpoint ($CHECKPOINT_FILE) - read this FIRST:"
+  echo ""
+  # Print the "Where you are" section + Next suggested command
+  sed -n '/^## Where you are/,/^## Last actions/p' "$CHECKPOINT_FILE" | head -20
+  sed -n '/^## Next suggested command/,/^##/p' "$CHECKPOINT_FILE" | head -6
+  echo ""
+  echo "Run /god-locate for full orientation."
+  echo ""
+fi
 
 # Show the state summary, preferring state.json (authoritative)
 if [ -f "$STATE_FILE" ]; then

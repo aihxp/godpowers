@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-10
-> Current shipped: v0.11.0
+> Current shipped: v0.13.0
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -44,37 +44,24 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
 ## Remaining toward v1.0
 
-### v0.12.0 - Distribution
+### v0.13.0 (shipped 2026-05-10) - Context-rot protection + extensions + observability
 
-**Theme**: shippable to npm with release engineering.
+Shipped earlier-than-roadmapped and combined:
 
-- `npm publish godpowers` (the installer + core)
-- Conventional commits + semantic-release on main
-- GitHub Release automation with auto-changelog
-- npm install verification: `npm test --integration`
-- Telemetry: opt-in, off-by-default
+- **Context-rot protection** (new): `lib/checkpoint.js`,
+  `.godpowers/CHECKPOINT.md`, `/god-locate`, `/god-context-scan`,
+  events.jsonl hash chain, SessionStart hook prefers CHECKPOINT
+- **Extension runtime**: `lib/extensions.js`, schema/extension-manifest.v1.json,
+  `/god-extension-add/list/info/remove`, `/god-test-extension`,
+  SemVer capability handshake. Scaffolds in `extensions/` are now
+  installable. Pack publishing to npm is part of v0.14 distribution.
+- **Observability readers**: `lib/event-reader.js`, `/god-logs`,
+  `/god-metrics`, `/god-trace`. OTel exporter + cost tracking remain
+  for v0.14 / v0.15.
 
-### v0.13.0 - Skill Pack Ecosystem (full)
+### v0.14.0 - Workflow Runtime + Distribution
 
-**Theme**: third-party extensions with strict contracts.
-
-The scaffolds exist in `extensions/`; v0.13 ships the runtime:
-
-- `/god-extension-add @x/y` (install pack from npm)
-- `/god-extension-list`
-- `/god-extension-info @x/y`
-- `/god-extension-remove @x/y`
-- Lazy activation: pack files don't load until their skill is invoked
-- Capability handshake: install fails on godpowers version mismatch
-- `/god-test-extension <path>` contract tests
-- First-party packs published:
-  - `@godpowers/security-pack` (SOC2, HIPAA, PCI auditors)
-  - `@godpowers/launch-pack` (Show HN, Product Hunt, Indie strategists)
-  - `@godpowers/data-pack` (ETL, ML features, dashboards)
-
-### v0.14.0 - Workflow Runtime
-
-**Theme**: workflows are declarative, runnable, testable, with plan-then-apply.
+**Theme**: workflows are declarative + runnable; godpowers ships on npm.
 
 Workflow YAMLs already exist at `workflows/`; v0.14 makes them executable:
 
@@ -83,15 +70,22 @@ Workflow YAMLs already exist at `workflows/`; v0.14 makes them executable:
 - Plan output written to `.godpowers/runs/<id>/plan.yaml`
 - Custom workflows authorable at `.godpowers/workflows/`
 
-### v0.15.0 - Observability
+Distribution (was v0.12 originally):
 
-**Theme**: see what happened, performant or not.
+- `npm publish godpowers` (the installer + core)
+- Conventional commits + semantic-release on main
+- GitHub Release automation with auto-changelog
+- npm install verification
+- Telemetry: opt-in, off-by-default
 
-- `/god-logs [<run-id>]` (events.jsonl as readable timeline)
-- `/god-metrics` (per-tier stats: duration, pauses, retries)
-- `/god-trace <tier>` (deep dive on one tier's events)
-- Optional OTel exporter
-- Cost tracking per run
+### v0.15.0 - Observability extras + first-party packs
+
+- OTel exporter for events.jsonl
+- Cost tracking per run (model tokens, recorded in events)
+- First-party packs published to npm:
+  - `@godpowers/security-pack` (SOC2, HIPAA, PCI auditors)
+  - `@godpowers/launch-pack` (Show HN, Product Hunt, Indie strategists)
+  - `@godpowers/data-pack` (ETL, ML features, dashboards)
 
 ### v1.0.0 - Stable
 
