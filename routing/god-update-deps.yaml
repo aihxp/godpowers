@@ -28,9 +28,12 @@ success-path:
     - command: /god-status
       when: no-major-bumps
 
+  post-success-actions:
+    - run: /god-scan
+      reason: refresh linkage map; surface drift to REVIEW-REQUIRED.md
 failure-path:
   on-error: /god-doctor
 
 endoff:
   state-update: tier-0 updated for /god-update-deps
-  events: [agent.start, artifact.created, agent.end]
+  events: [agent.start, artifact.created, agent.end, linkage.snapshot, drift.detected, review-required.populated]

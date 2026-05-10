@@ -78,3 +78,26 @@ Postmortem FAILS if:
 - No class-of-bug identified
 - Runbooks not updated
 - Timeline has gaps without acknowledging unknowns
+
+## Linkage and reverse-sync
+
+Per Phase 13 of the production-ready plan, this workflow participates
+in the linkage system:
+
+- On completion of any code change, `lib/reverse-sync.run(projectRoot)`
+  is called via god-updater. This:
+  - Scans new/modified code for linkage annotations (// Implements: P-MUST-NN, etc.)
+  - Updates `.godpowers/links/{artifact-to-code,code-to-artifact}.json`
+  - Detects drift via `lib/drift-detector`
+  - Appends fenced footers to PRD/ARCH/ROADMAP/STACK/DESIGN
+  - Surfaces drift findings to REVIEW-REQUIRED.md
+
+- Stable IDs MUST be used in artifact deltas (P-MUST-NN, ADR-NNN,
+  C-{slug}, M-{slug}, S-{slug}, D-{slug}, token paths). The scanner
+  picks them up automatically via comment annotations.
+
+- For UI work: agent-browser audit may run as part of /god-build
+  post-wave or /god-launch gate (see `/god-test-runtime`).
+
+- Findings flow into the standard REVIEW-REQUIRED.md walkthrough
+  via `/god-review-changes`.

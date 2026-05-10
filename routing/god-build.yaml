@@ -35,9 +35,12 @@ success-path:
     - command: /god-harden
       when: parallel-with-deploy
 
+  post-success-actions:
+    - run: /god-scan
+      reason: refresh linkage map; surface drift to REVIEW-REQUIRED.md
 failure-path:
   on-error: /god-doctor
 
 endoff:
   state-update: tier-2 updated for /god-build
-  events: [agent.start, artifact.created, agent.end]
+  events: [agent.start, artifact.created, agent.end, linkage.snapshot, drift.detected, review-required.populated]
