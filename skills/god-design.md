@@ -26,6 +26,10 @@ producing DESIGN.md in the
 | `/god-design teach` | Strategic interview + DESIGN.md + PRODUCT.md (impeccable teach) |
 | `/god-design document` | Regenerate DESIGN.md from existing code (impeccable document) |
 | `/god-design refresh` | Alias for document |
+| `/god-design suggest [text]` | Look for known site references and suggest matching DESIGN.md from awesome-design-md catalog |
+| `/god-design from <site>` | Fetch curated DESIGN.md from awesome-design-md and use as starter |
+| `/god-design reference <site>` | Use a known site as a named reference in PRODUCT.md without copying its DESIGN.md |
+| `/god-design catalog` | List the 71 known sites with categories and short descriptions |
 | `/god-design extract` | Pull components into design system (impeccable extract) |
 | `/god-design shape` | Plan UX/UI before code (impeccable shape) |
 | `/god-design critique [scope]` | UX design review (impeccable critique) |
@@ -106,12 +110,68 @@ For every subcommand dispatch:
 { "name": "design.lint-result", "errors": 0, "warnings": 1 }
 ```
 
+## Awesome DESIGN.md catalog integration
+
+When the user mentions a known site (in PRD body, brand description, or
+free-text intent), the catalog from
+[VoltAgent's awesome-design-md](https://github.com/VoltAgent/awesome-design-md)
+(MIT licensed, 71 curated DESIGN.md files at time of writing) provides
+ready-to-use starting points.
+
+### Detection
+
+`lib/awesome-design.extractSiteReferences(text)` scans text for known
+site mentions. Triggers include:
+
+- Direct mention: "Linear", "Stripe", "Notion"
+- Phrasal mention: "feel like Linear", "similar to Stripe", "Apple-style"
+- Slug mention: "linear.app", "x.ai"
+
+The catalog covers 71 sites across 9 categories: AI/LLM, dev-tools,
+backend-data, productivity, design-tools, fintech, ecommerce,
+media-consumer, automotive.
+
+### Behaviors
+
+- **`/god-design suggest`**: scan PRD + PRODUCT (if present) for site
+  mentions, surface matches with their preview URLs. Non-destructive.
+- **`/god-design from linear`**: fetch `linear.app/DESIGN.md` from the
+  catalog and use as starter. Cached at
+  `.godpowers/cache/awesome-design/<slug>.md`. After fetch, runs through
+  god-design-reviewer's two-stage gate before applying.
+- **`/god-design reference linear`**: adds Linear as a named brand
+  reference in PRODUCT.md without copying its DESIGN.md. Useful when
+  you want "the feeling of Linear" without their tokens verbatim.
+- **`/god-design catalog`**: prints the full list with categories and
+  descriptions.
+
+### Cache + license
+
+DESIGN.md files are fetched lazily from raw.githubusercontent.com and
+cached per-project under `.godpowers/cache/awesome-design/`. Source repo
+is MIT-licensed; tokens represent publicly visible CSS values.
+
+If the user wants to refresh a stale cache:
+```
+/god-design from linear --refresh
+```
+
+### When the catalog is consulted automatically
+
+- During `/god-design teach` flow: god-designer scans PRD/PRODUCT for
+  site mentions and offers suggestions before drafting from scratch
+- During `/god` (front door): if the user's free text mentions a known
+  site, the recipe matcher includes a "use awesome-design DESIGN.md"
+  recipe option
+
 ## See also
 
 - `lib/design-detector.js` - UI and impeccable detection
 - `lib/design-spec.js` - Google Labs format parser and linter
 - `lib/impeccable-bridge.js` - command dispatch layer
+- `lib/awesome-design.js` - 71-site catalog + lookup + fetch
 - `agents/god-designer.md` - lifecycle owner
 - `agents/god-design-reviewer.md` - two-stage review gate
 - `references/design/DESIGN-ANATOMY.md` - what good DESIGN.md looks like
 - `references/design/DESIGN-ANTIPATTERNS.md` - what to avoid
+- [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) - upstream catalog

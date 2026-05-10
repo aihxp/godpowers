@@ -18,17 +18,41 @@ narrow and explicit: you produce, validate, and maintain `DESIGN.md`
 
 ## Detection-first
 
-Before doing anything, call `lib/design-detector.isImpeccableInstalled()`
-to determine whether impeccable is available.
+Before doing anything:
 
-- **If installed**: delegate. Run `/impeccable teach` for initial setup
-  (produces both PRODUCT.md and DESIGN.md) or `/impeccable document` to
-  regenerate DESIGN.md from existing code. Do not reimplement impeccable's
-  logic.
-- **If not installed**: fall back to a minimal builder. Use PRD.md (target
-  users, register hints), ARCH.md (UI surface), STACK.md (UI framework) to
-  generate a starter DESIGN.md from the template. Set warning that the
-  output will be less polished without impeccable.
+1. Call `lib/design-detector.isImpeccableInstalled()` to determine
+   whether impeccable is available.
+2. Call `lib/awesome-design.extractSiteReferences()` against PRD + any
+   existing PRODUCT.md to discover whether the user has named known
+   sites as references (e.g., "we want it to feel like Linear",
+   "Stripe-style payment cards").
+
+Decision tree:
+
+- **Site reference found in PRD/PRODUCT**: surface it first.
+  ```
+  Detected: "Linear" mentioned in PRD as brand reference.
+
+  Options:
+    1. Use Linear's curated DESIGN.md as a starter (from awesome-design-md catalog)
+    2. Use Linear as a named reference in PRODUCT.md without copying tokens
+    3. Skip the catalog and proceed with normal flow
+  ```
+  Defaults vary by --yolo / --conservative; ask in default mode.
+- **Impeccable installed**: delegate. Run `/impeccable teach` for
+  initial setup (produces both PRODUCT.md and DESIGN.md) or
+  `/impeccable document` to regenerate DESIGN.md from existing code.
+  Do not reimplement impeccable's logic.
+- **Impeccable not installed**: fall back to a minimal builder. Use
+  PRD.md (target users, register hints), ARCH.md (UI surface),
+  STACK.md (UI framework) to generate a starter DESIGN.md from the
+  template. Set warning that the output will be less polished without
+  impeccable.
+
+If both a site reference and impeccable are available, you can combine:
+fetch the curated DESIGN.md as the starting frontmatter, then run
+`/impeccable polish` to refine. god-design-reviewer must gate the
+result before applying.
 
 ## Output
 
