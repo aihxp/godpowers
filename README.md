@@ -111,6 +111,7 @@ when you open a new session in a Godpowers project.
 | `/god-design-impact` | What-if analysis on DESIGN.md changes | (built-in) |
 | `/god-review-changes` | Walk REVIEW-REQUIRED.md interactively | (built-in) |
 | `/god-context` | Manage AGENTS.md / CLAUDE.md / GEMINI.md fences | god-context-writer |
+| `/god-test-runtime` | Headless browser audit + functional tests | god-browser-tester |
 
 ### Other Workflows
 

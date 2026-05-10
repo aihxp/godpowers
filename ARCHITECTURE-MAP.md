@@ -534,26 +534,25 @@ godpowers/
 
 ---
 
-## Numbers
+## Numbers (as of v0.11.0)
 
 | Component | Count |
 |-----------|-------|
 | Layers | 4 |
 | Tiers | 4 (0-3) |
-| Sub-steps | 11 (PRD, ARCH, ROADMAP, STACK, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration) |
-| Slash commands (core) | 53 |
-| Slash commands (extensions) | 11 |
-| Specialist agents (core) | 23 |
-| Specialist agents (extensions) | 10 |
-| Workflows (core YAMLs) | 11 |
-| Workflows (extension YAMLs) | 10 |
-| Have-nots (core) | 146 |
-| Have-nots (extensions) | 54 |
-| Templates | 11 |
-| Reference documents | 17 |
+| Sub-steps (per tier) | 13: PRD, ARCH, ROADMAP, STACK, **DESIGN, PRODUCT**, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration |
+| Slash commands | 70+ (added: /god-design, /god-design-impact, /god-test-runtime, /god-scan, /god-link, /god-lint, /god-context, /god-review-changes, /god) |
+| Specialist agents | 35+ (added: god-designer, god-design-reviewer, god-design-updater, god-browser-tester, god-context-writer) |
+| Workflows (core YAMLs) | 13 |
+| Have-nots | 99 documented + 30+ mechanically validated by linter |
+| Templates | 12 (added: DESIGN.md) |
+| Reference documents | 24+ (added: 7 design domain refs, 7 antipattern refs, 2 design anatomy/antipatterns) |
 | JSON Schemas | 4 |
-| JS runtime modules | 4 |
+| **JS runtime modules** | **23** (was 4; added: linkage, code-scanner, drift-detector, impact, cross-artifact-impact, review-required, reverse-sync, design-detector, design-spec, impeccable-bridge, awesome-design, skillui-bridge, browser-bridge, agent-browser-driver, runtime-audit, runtime-test, artifact-linter, artifact-diff, have-nots-validator) |
+| **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
-| Documentation pages | 9 |
-| Tests | 547 |
-| Supported AI runtimes | 15 |
+| Documentation pages | 13 (added: change-propagation.md, linkage.md, dogfood-001-results.md, plus 7 design domain refs) |
+| **Test suites** | **18** (was 4) |
+| **Tests** | **1235** behavioral (was 547 mostly structural) |
+| Supported AI runtimes | 15+ |
+| Verification axes | **3**: static (lint, design-spec, have-nots), linkage (drift, reverse-sync), runtime (headless browser audit + functional test) |

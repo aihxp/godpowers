@@ -694,3 +694,94 @@ Which agents trigger god-standards-check after running:
 | Concepts and vocabulary | `docs/concepts.md` |
 
 This document (agent-specs.md) is the single place to look up: **for any agent, who calls it, what it reads, what it writes, who reads its output, and how it hands off.**
+
+---
+
+## Agents added in v0.5 - v0.11 (post-initial release)
+
+These specs cover the design, runtime, and AI-tool-context agents
+added during the production-ready + design + linkage push.
+
+### god-designer
+
+| Field | Value |
+|---|---|
+| **File** | `agents/god-designer.md` |
+| **Triggers** | `/god-design`, `/god-design teach`, `/god-design from <site>`, `/god-design suggest`, `/god-design refresh`, `/god-design polish [...]`, `/god-mode` Tier 1 (when UI detected) |
+| **Inputs** | PRD.md (target users, register), ARCH.md (UI surface), STACK/DECISION.md (UI framework), state.json |
+| **Outputs** | `DESIGN.md` (project root, Google Labs spec), `PRODUCT.md` (when impeccable installed), `.godpowers/design/STATE.md` (lint history) |
+| **Downstream consumers** | god-design-reviewer (gates the change), god-impact-analyzer, god-updater (reverse-sync), repo scaffolder (token references in templates) |
+| **Artifact awareness** | Reads PRD, ARCH, STACK; writes DESIGN, PRODUCT |
+| **Standards check** | Validates with `lib/design-spec.lint`, `npx @google/design.md lint`, and `npx impeccable detect` (when installed) |
+| **Handoff** | Returns to god-orchestrator with DESIGN.md path + validation summary; suggested next is `/god-repo` |
+
+### god-design-reviewer
+
+| Field | Value |
+|---|---|
+| **File** | `agents/god-design-reviewer.md` |
+| **Triggers** | Spawned by god-design-updater BEFORE impact analysis; spawned by god-orchestrator on mid-arc DESIGN/PRODUCT change detection |
+| **Inputs** | DESIGN.md diff (old vs new), PRODUCT.md (for register, brand, anti-references) |
+| **Outputs** | Verdict: PASS / WARN / BLOCK; appends to `.godpowers/design/REJECTED.md` on BLOCK |
+| **Downstream consumers** | god-design-updater (continues only on PASS or WARN); god-orchestrator (BLOCK pauses both default and --yolo as critical-finding gate trigger) |
+| **Artifact awareness** | Reads PRD, PRODUCT, DESIGN |
+| **Standards check** | Stage 1 (spec): impeccable critique against PRODUCT register; Stage 2 (quality): design-spec lint + impeccable audit + WCAG contrast |
+| **Handoff** | Verdict + REJECTED.md path back to god-design-updater; emits `design.review-verdict` event |
+
+### god-design-updater
+
+| Field | Value |
+|---|---|
+| **File** | conceptually owned by `god-updater.md` (reverse-sync section); design-specific path lives in `lib/impact.js` + `lib/review-required.js` |
+| **Triggers** | DESIGN.md or PRODUCT.md change detected (mid-arc, /god-sync, post-impeccable-command) |
+| **Inputs** | DESIGN.md diff, linkage map |
+| **Outputs** | Updates DESIGN.md fence footer; populates REVIEW-REQUIRED.md with affected files; emits `runtime.review-needed` events |
+| **Downstream consumers** | god-design-reviewer (gates), god-impact-analyzer (computes affected files), reverse-sync pipeline |
+| **Artifact awareness** | Reads/writes DESIGN; reads PRD, ARCH; reads/writes REVIEW-REQUIRED |
+| **Standards check** | Inherits god-design-reviewer's gate verdict |
+| **Handoff** | After PASS/WARN verdict: continues to impact analysis -> REVIEW-REQUIRED.md -> reverse-sync. After BLOCK: aborts propagation. |
+
+### god-browser-tester
+
+| Field | Value |
+|---|---|
+| **File** | `agents/god-browser-tester.md` |
+| **Triggers** | `/god-test-runtime`, `/god-build` (post-wave, optional), `/god-launch` (mandatory gate), `/god-harden` (a11y portion), `/god-design` (post-change runtime audit) |
+| **Inputs** | URL (live dev server, deploy preview, or production); DESIGN.md (for design audit); PRD.md (for acceptance criteria); project root |
+| **Outputs** | `.godpowers/runtime/<run-id>/audit-report.json` (design verification), `test-report.json` (functional verification), `screenshots/<page>.png`, `summary.md` |
+| **Downstream consumers** | god-orchestrator (launch gate), god-updater (REVIEW-REQUIRED population), state.json runtime slot |
+| **Artifact awareness** | Reads DESIGN, PRD; writes runtime reports; populates REVIEW-REQUIRED.md |
+| **Standards check** | WCAG AA contrast on real DOM; component drift > 10%; P-MUST-* acceptance flow failures (all are critical-finding gate triggers) |
+| **Handoff** | Returns to spawner with run ID, backend used, audit + test summaries, paths to reports; suggested next is `/god-review-changes` if findings populated |
+
+### god-context-writer
+
+| Field | Value |
+|---|---|
+| **File** | `agents/god-context-writer.md` |
+| **Triggers** | `/god-context on/off/status`, `/god-init` (one-time consent prompt), `/god-sync` (auto-refresh unless never-ask) |
+| **Inputs** | state.json (project name, mode, scale, linkage state), DESIGN.md and PRODUCT.md presence, detected AI tools |
+| **Outputs** | Fenced sections in AGENTS.md (canonical), CLAUDE.md, GEMINI.md, .cursor/rules/godpowers.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .roo/, .continue/ (only when their tool is detected) |
+| **Downstream consumers** | AI coding tools reading the project on cold session start |
+| **Artifact awareness** | Reads state.json + linkage.json; writes only inside `<!-- godpowers:begin --> ... <!-- godpowers:end -->` fences |
+| **Standards check** | Detect-then-write: never creates files for tools without their config dir; never overwrites user content outside the fence; idempotent |
+| **Handoff** | Returns to spawner with results summary (which targets had fences refreshed) |
+
+---
+
+## External integration map
+
+5 integrations, all detect-and-delegate, none vendored:
+
+| Integration | Source | Bridge module | Used by |
+|---|---|---|---|
+| Google Labs design.md | github.com/google-labs-code/design.md | `lib/design-spec.js` (we implement the parser) | god-designer, god-design-reviewer |
+| Impeccable | github.com/pbakaus/impeccable | `lib/impeccable-bridge.js` | god-designer, god-design-reviewer |
+| awesome-design-md | github.com/VoltAgent/awesome-design-md | `lib/awesome-design.js` (catalog metadata vendored; content lazy-fetched) | god-designer (when site reference detected) |
+| SkillUI | npmjs.com/package/skillui | `lib/skillui-bridge.js` | god-designer (fallback when site not in catalog) |
+| vercel-labs/agent-browser + Playwright | github.com/vercel-labs/agent-browser, microsoft/playwright | `lib/browser-bridge.js`, `lib/agent-browser-driver.js` | god-browser-tester (runtime verification) |
+
+When external integration is absent, the system falls back to internal
+references (`references/design/*` for design intelligence) or
+graceful degradation (e.g., runtime verification reports
+`no-backend-available` with install instructions).

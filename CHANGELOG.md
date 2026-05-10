@@ -5,6 +5,115 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-05-10
+
+Major release. Production-ready validation, full design pipeline, and
+runtime verification. 18 commits since 0.4.0; full test suite at 1235
+passing across 18 suites.
+
+### Added (validation foundation)
+- `lib/have-nots-validator.js`: 11 mechanical have-nots checks (em/en
+  dash, emoji, unlabeled paragraphs, phantom references, future dates,
+  generic claims, PRD/ARCH structure violations)
+- `lib/artifact-linter.js`: per-artifact orchestrator with detectType,
+  lintFile, lintAll, formatReport, aggregate
+- `lib/artifact-diff.js`: regression detection between artifact versions
+- `skills/god-lint.md`: `/god-lint` mechanical validation
+- `references/HAVE-NOTS.md` integrated into linter
+
+### Added (exemplars and antipatterns parity)
+- `examples/saas-mrr-tracker/` complete UI project (PRD/ARCH/ROADMAP/STACK/DESIGN)
+- `examples/cli-tool/` backend-only project (PRD/ARCH/ROADMAP/STACK)
+- `references/planning/ROADMAP-ANTIPATTERNS.md`
+- `references/planning/STACK-ANTIPATTERNS.md`
+- `references/building/BUILD-ANTIPATTERNS.md`
+- `references/shipping/{DEPLOY,OBSERVE,HARDEN,LAUNCH}-ANTIPATTERNS.md`
+- `references/design/{DESIGN-ANATOMY,DESIGN-ANTIPATTERNS}.md`
+
+### Added (design foundation - integrations)
+- `lib/design-detector.js`: UI presence detection across 24+ frameworks
+- `lib/design-spec.js`: Google Labs design.md parser + linter (frontmatter
+  schema, section order, token resolution, WCAG contrast)
+- `lib/impeccable-bridge.js`: detect-and-delegate to Impeccable's 23 commands
+- `lib/awesome-design.js`: 71-site catalog from VoltAgent's awesome-design-md
+- `lib/skillui-bridge.js`: SkillUI fallback for sites not in catalog
+- `agents/god-designer.md`: lifecycle owner of DESIGN.md + PRODUCT.md
+- `agents/god-design-reviewer.md`: two-stage gate (spec + quality)
+- `skills/god-design.md`: 26 subcommands bridging impeccable + catalog + skillui
+- `routing/god-design.yaml`
+- `templates/DESIGN.md`
+
+### Added (linkage + propagation)
+- `lib/linkage.js`: bidirectional artifact-to-code map with 7 stable ID types
+  (P-MUST/SHOULD/COULD-NN, ADR-NNN, C-{slug}, M-{slug}, S-{slug}, token paths, D-{slug})
+- `lib/code-scanner.js`: 6 discovery mechanisms (annotations, filenames,
+  imports, style-system, test descriptions, manual)
+- `lib/drift-detector.js`: design token drift, stack version drift, ARCH
+  container drift
+- `lib/impact.js`: forward propagation (artifact change -> affected code)
+- `lib/cross-artifact-impact.js`: 6 rule classes for artifact-to-artifact impact
+- `lib/review-required.js`: REVIEW-REQUIRED.md + REJECTED.md managers
+- `lib/reverse-sync.js`: code -> artifact fenced footer appender
+  (PRD/ARCH/ROADMAP/STACK/DESIGN)
+- `skills/god-design-impact.md`: what-if analysis
+- `skills/god-review-changes.md`: walk REVIEW-REQUIRED.md
+- `skills/god-scan.md`: manual reverse-sync
+- `skills/god-link.md`: manual link entry
+
+### Added (runtime verification - headless)
+- `lib/browser-bridge.js`: headless-only browser launch (cascade:
+  agent-browser preferred, Playwright fallback)
+- `lib/agent-browser-driver.js`: vercel-labs/agent-browser CLI wrapper
+- `lib/runtime-audit.js`: design verification on rendered DOM (computed
+  styles vs DESIGN.md tokens, real-DOM WCAG contrast)
+- `lib/runtime-test.js`: PRD acceptance criteria as user-flow assertions
+- `agents/god-browser-tester.md`
+- `skills/god-test-runtime.md`
+
+### Added (light-impeccable - 7 design domain references)
+- `references/design/TYPOGRAPHY.md` (~140 lines)
+- `references/design/COLOR.md` (~145 lines)
+- `references/design/SPATIAL.md` (~110 lines)
+- `references/design/MOTION.md` (~120 lines)
+- `references/design/INTERACTION.md` (~150 lines)
+- `references/design/RESPONSIVE.md` (~125 lines)
+- `references/design/UX-WRITING.md` (~130 lines)
+
+### Added (ai-tool context)
+- `lib/context-writer.js`: AGENTS.md / CLAUDE.md / GEMINI.md / .cursor/ /
+  .windsurf/ / others fenced section manager (11 AI tools detected)
+- `agents/god-context-writer.md`
+- `skills/god-context.md`
+
+### Added (front-door)
+- `skills/god.md`: free-text intent matcher
+
+### Changed
+- `god-orchestrator.md`: extended Quarterback responsibilities;
+  detection-driven Tier 1 routing; mid-arc DESIGN/PRODUCT change
+  detection; extended critical-finding gate (drift, lint errors,
+  design-review BLOCK, validator errors); explicit YOLO behavior table
+- `god-updater.md`: now calls reverse-sync.run on /god-sync
+- `lib/state.js`: schema additions (tier-1.design, tier-1.product,
+  linkage slot, yolo-decisions array)
+
+### Documentation
+- `docs/change-propagation.md`: forward + reverse + cross-artifact propagation
+- `docs/linkage.md`: stable IDs, 6 discovery mechanisms, drift detection
+- `.planning/2026-05-10-production-ready-and-design.md`: comprehensive plan
+- `.planning/dogfood-001-results.md`: end-to-end validation results
+
+### Tests
+- 18 test suites, 1235 passing, 0 failing (was 4 suites, ~360 tests at 0.4.0)
+- All new tests behavioral, not just structural
+
+### External integrations (5; all detect-and-delegate, none vendored)
+- Google Labs design.md (format spec)
+- Impeccable (design intelligence; 7 domain refs + 23 commands + 27 anti-patterns)
+- VoltAgent awesome-design-md (71-site curated catalog)
+- SkillUI (static analysis fallback for arbitrary URLs)
+- vercel-labs/agent-browser + Playwright (runtime verification backends)
+
 ## [0.4.0] - 2026-05-09
 
 ### Added
