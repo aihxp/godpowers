@@ -87,6 +87,19 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Append a session note to the thread
 - Update thread status if work was completed
 
+### Reverse-sync (Phase 6) - the load-bearing add
+- Call `lib/reverse-sync.run(projectRoot)`. This:
+  - Scans code via `lib/code-scanner` for linkage signals
+  - Updates `.godpowers/links/{artifact-to-code,code-to-artifact}.json`
+  - Runs drift detection via `lib/drift-detector`
+  - Dispatches `npx impeccable detect` on UI files when impeccable installed
+  - Appends fenced linkage footers to PRD/ARCH/ROADMAP/STACK/DESIGN
+  - Surfaces drift + impeccable findings to `REVIEW-REQUIRED.md`
+- Update `state.json.linkage` with current `coverage-pct`, `orphan-count`,
+  `drift-count`, `review-required-items`
+- Emit events: `linkage.snapshot`, `drift.detected` (per finding),
+  `review-required.populated`
+
 ### AI-tool context refresh (always, unless never-ask)
 - Read `state.json` for `project.context-prompt-answered`
   - If `never-ask`: skip; do not touch AGENTS.md / CLAUDE.md / others

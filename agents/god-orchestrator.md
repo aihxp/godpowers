@@ -81,6 +81,83 @@ This is the third layer of decision support:
 2. **Recipes** (routing/recipes/<recipe>.yaml): scenario-based sequences
 3. **Standards** (god-standards-check): quality gates between stages
 
+## Detection-Driven Tier 1 Routing
+
+After STACK done, branch on UI presence:
+
+1. Call `lib/design-detector.isUiProject(projectRoot)` to determine
+   whether DESIGN tier is required.
+2. Call `lib/design-detector.isImpeccableInstalled(projectRoot)` to
+   determine whether to delegate or fall back.
+3. Persist results to `state.json.project.detection-results`.
+4. If `requires-design: true`: spawn `god-designer` for DESIGN tier
+   (Tier 1 sub-step 5). god-designer delegates to impeccable's
+   `/impeccable teach` if available, else falls back to a minimal builder.
+5. If `requires-design: false`: mark `tier-1.design.status = not-required`
+   and `tier-1.product.status = not-required`. Advance to Tier 2.
+
+## Linkage and Reverse-Sync
+
+Reverse-sync runs incrementally, not just at end-of-arc:
+
+- After each Tier 2 build wave commit: spawn `god-updater` in
+  reverse-sync mode. Calls `lib/reverse-sync.run(projectRoot)`:
+  scan code via `lib/code-scanner` -> apply to linkage map ->
+  detect drift via `lib/drift-detector` -> dispatch impeccable detect
+  on UI files -> append fenced footers to artifacts -> surface findings
+  to REVIEW-REQUIRED.md.
+- After every Tier 3 sub-step: spawn `god-updater` again to capture
+  any new linkage signals (e.g., DEPLOY/STATE.md getting Source links
+  to deploy config files).
+- Mandatory final `/god-sync` at end of Tier 3: full reverse-sync,
+  drift detection, REVIEW-REQUIRED.md finalization, AGENTS.md fence
+  refresh.
+
+## Mid-Arc DESIGN/PRODUCT Change Detection
+
+Before starting each tier, hash-check DESIGN.md and PRODUCT.md against
+last known hash in state.json:
+
+- If changed: spawn `god-design-reviewer` for two-stage gate (spec +
+  quality). Three verdicts: PASS / WARN / BLOCK.
+  - BLOCK: append to `.godpowers/design/REJECTED.md`; pause arc;
+    surface diff + reason. Critical-finding gate trigger.
+  - WARN: continue with warnings logged to events.jsonl.
+  - PASS: continue normal propagation pipeline (impact analysis ->
+    REVIEW-REQUIRED.md -> reverse-sync).
+
+## Extended Critical-Finding Gate
+
+The existing critical-finding gate now also fires on:
+- Breaking drift findings (e.g., WCAG contrast fail, ARCH container
+  responsibility violation, STACK dep version mismatch)
+- Critical impeccable findings on the diff
+- Lint errors from `lib/artifact-linter` on any artifact
+- Validator errors from `lib/have-nots-validator`
+- god-design-reviewer BLOCK verdicts
+
+All pause both default mode AND --yolo. Lint errors cannot be
+auto-resolved; they're mechanical signal that something is structurally
+wrong.
+
+## YOLO Behavior with Design + Linkage
+
+| Concern | Default | --yolo |
+|---|---|---|
+| AGENTS.md context prompt | Pause | Auto-yes; log |
+| Impeccable install prompt | Pause | Auto-yes; log |
+| PRODUCT.md interview | Pause | Pause anyway (load-bearing brand) |
+| Design token defaults | Pause | Auto-pick impeccable defaults; log |
+| Lint errors | Pause | Pause anyway |
+| Lint warnings | Continue, log | Continue, log |
+| Drift (informational) | Continue | Continue |
+| Drift (breaking) | Pause | Pause anyway |
+| Impeccable critical at /god-launch | Pause | Pause anyway |
+| Impeccable warnings at launch | Pause to ack | Auto-ack with justification |
+| REVIEW-REQUIRED.md auto-clear | No | No anyway |
+| Reverse-sync between tiers | Yes | Yes |
+| Mandatory final /god-sync | Always | Always |
+
 ## Loop
 
 ```

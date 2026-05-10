@@ -47,10 +47,12 @@ Mode: A (greenfield)    Scale: medium
 Started: 2026-05-09
 
 Tier 1: Planning
-  + PRD           done     .godpowers/prd/PRD.md (passes have-nots)
-  + Architecture  done     .godpowers/arch/ARCH.md (passes have-nots)
+  + PRD           done     .godpowers/prd/PRD.md (lint clean: 0 errors)
+  + Architecture  done     .godpowers/arch/ARCH.md (lint clean: 0 errors)
   - Roadmap       pending
   - Stack         pending
+  - Design        not-required (backend-only project)
+  - Product       not-required (backend-only project)
 
 Tier 2: Building
   - Repo          pending
@@ -60,6 +62,14 @@ Tier 3: Shipping
   - Deploy        pending
   - Observe       pending
   - Launch        pending
+  - Harden        pending
+
+Linkage status (from .godpowers/links/):
+  Coverage: 87% (15 of 17 declared IDs implemented)
+  Orphans: 2 (P-MUST-09, P-SHOULD-03)
+  Drift: 1 (colors.removed referenced in src/old.css but missing in DESIGN.md)
+  Pending reviews: 5 (see REVIEW-REQUIRED.md)
+  Last scan: 2026-05-10T14:23:11Z
   - Harden        pending
 
 Next: god roadmap

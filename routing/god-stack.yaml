@@ -24,11 +24,18 @@ standards:
   gate-on-failure: pause-for-user
 
 success-path:
-  next-recommended: /god-repo
+  next-recommended: /god-design
+  conditional-next:
+    - condition: ui-detected
+      next: /god-design
+      reason: UI framework selected; design tokens needed before scaffolding
+    - condition: no-ui-detected
+      next: /god-repo
+      reason: Backend-only project; skip design tier
 
 failure-path:
   on-error: /god-doctor
 
 endoff:
   state-update: tier-1 updated for /god-stack
-  events: [agent.start, artifact.created, agent.end]
+  events: [agent.start, artifact.created, design.required-detected, agent.end]
