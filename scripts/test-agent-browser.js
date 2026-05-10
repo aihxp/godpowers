@@ -85,7 +85,7 @@ test('bridge.isAgentBrowserInstalled returns boolean', () => {
 test('bridge.getActiveBackend respects agent-browser preference order', () => {
   // The result depends on what's actually installed. Verify it's a known value.
   const r = bridge.getActiveBackend('/tmp');
-  if (r !== null && r !== 'agent-browser' && r !== 'playwright' && r !== 'vercel-browser') {
+  if (r !== null && r !== 'agent-browser' && r !== 'playwright') {
     throw new Error(`unexpected backend: ${r}`);
   }
 });

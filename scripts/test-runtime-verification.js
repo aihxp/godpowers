@@ -67,47 +67,12 @@ function mkTmp() {
     if (typeof r !== 'boolean') throw new Error('not boolean');
   });
 
-  test('hasVercelBrowserConfig returns false on empty project', () => {
-    const tmp = mkTmp();
-    if (browserBridge.hasVercelBrowserConfig(tmp)) throw new Error('false positive');
-  });
-
-  test('hasVercelBrowserConfig detects vercel.json with browser config', () => {
-    const tmp = mkTmp();
-    fs.writeFileSync(
-      path.join(tmp, 'vercel.json'),
-      JSON.stringify({ functions: { 'api/browser.js': { '@vercel/browser': true } } })
-    );
-    if (!browserBridge.hasVercelBrowserConfig(tmp)) throw new Error('not detected');
-  });
-
-  test('hasVercelBrowserConfig detects @vercel/browser-api dep', () => {
-    const tmp = mkTmp();
-    fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({
-      dependencies: { '@vercel/browser-api': '^1.0.0' }
-    }));
-    if (!browserBridge.hasVercelBrowserConfig(tmp)) throw new Error('not detected');
-  });
-
-  test('hasVercelBrowserConfig detects VERCEL_BROWSER_TOKEN env', () => {
-    const tmp = mkTmp();
-    const original = process.env.VERCEL_BROWSER_TOKEN;
-    process.env.VERCEL_BROWSER_TOKEN = 'test-token';
-    try {
-      if (!browserBridge.hasVercelBrowserConfig(tmp)) throw new Error('not detected');
-    } finally {
-      if (original === undefined) delete process.env.VERCEL_BROWSER_TOKEN;
-      else process.env.VERCEL_BROWSER_TOKEN = original;
-    }
-  });
-
-  test('getActiveBackend returns null on empty project (no Playwright, no Vercel)', () => {
+  test('getActiveBackend returns null or a known backend on empty project', () => {
     const tmp = mkTmp();
     const result = browserBridge.getActiveBackend(tmp);
-    // On most CI environments without Playwright installed and no Vercel
-    // config, this returns null. If Playwright IS installed locally it
-    // returns 'playwright' - that's also valid. Both are correct.
-    if (result !== null && result !== 'playwright' && result !== 'vercel-browser') {
+    // On most CI environments without agent-browser or Playwright installed,
+    // this returns null. If either IS installed locally it returns its name.
+    if (result !== null && result !== 'agent-browser' && result !== 'playwright') {
       throw new Error(`unexpected: ${result}`);
     }
   });

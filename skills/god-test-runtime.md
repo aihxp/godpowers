@@ -24,9 +24,8 @@ static lint and linkage drift).
 | `/god-test-runtime audit [url]` | Design audit only |
 | `/god-test-runtime test [url]` | Functional tests only |
 | `/god-test-runtime --backend agent-browser` | Force vercel-labs/agent-browser CLI (preferred) |
-| `/god-test-runtime --backend playwright` | Force Playwright (local) |
-| `/god-test-runtime --backend vercel` | Force Vercel Browser (cloud) |
-| `/god-test-runtime --backend auto` | Default cascade: agent-browser -> Playwright -> Vercel |
+| `/god-test-runtime --backend playwright` | Force Playwright (local fallback) |
+| `/god-test-runtime --backend auto` | Default cascade: agent-browser -> Playwright |
 | `/god-test-runtime --strict` | Promote warnings to errors |
 | `/god-test-runtime --no-runtime` | Skip; surface as warning (use sparingly) |
 
@@ -136,31 +135,9 @@ This is our preferred backend. Maps better to PRD acceptance phrasing
 Full programmatic browser automation. Used when agent-browser absent.
 Headless launch only (`headless: true` enforced by bridge).
 
-### 3. Vercel Browser API - hosted
-
-For projects deployed to Vercel with `@vercel/browser-api` configured.
-Browser runs in cloud; API is HTTP. Headless by definition.
-
-## Alternative backends (not bundled, easy to swap)
-
-The bridge layer (`lib/browser-bridge.js`) is structured so additional
-backends can be added with a small adapter. Notable alternatives users
-have integrated:
-
-| Tool | Repo | Strength |
-|---|---|---|
-| Stagehand | github.com/browserbase/stagehand | AI-first observe/act/extract API over Playwright |
-| browser-use | github.com/browser-use/browser-use | Vision + DOM hybrid (Python) |
-| Steel | github.com/steel-dev/steel-browser | Open-source Browserbase alternative |
-| AgentQL | github.com/tinyfish-io/agentql | Stable query language over Playwright |
-| Skyvern | github.com/skyvern-ai/skyvern | Screenshot-driven workflow automation |
-
-We don't ship adapters for these; the bridge pattern (detect-and-delegate)
-makes it straightforward to write your own.
-
 ## See also
 
-- `lib/browser-bridge.js` - cascade detection + launch (agent-browser, Playwright, Vercel Browser)
+- `lib/browser-bridge.js` - cascade detection + launch (agent-browser, Playwright)
 - `lib/agent-browser-driver.js` - vercel-labs/agent-browser CLI wrapper
 - `lib/runtime-audit.js` - design verification on rendered DOM (backend-aware)
 - `lib/runtime-test.js` - PRD acceptance to user-flow assertions (backend-aware)
