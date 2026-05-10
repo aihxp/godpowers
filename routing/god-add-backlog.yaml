@@ -1,0 +1,24 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-add-backlog
+  description: Add idea to backlog (less urgent than todo)
+  tier: 0
+
+prerequisites:
+  required: []
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-next
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-add-backlog
+  events: [agent.start, agent.end]

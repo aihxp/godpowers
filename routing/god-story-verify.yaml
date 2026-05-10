@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-story-verify
+  description: Run story's acceptance criteria as headless browser tests
+  tier: 2
+
+prerequisites:
+  required:
+    - .godpowers/stories/STORY-*.md (status=in-progress)
+
+execution:
+  spawns: [god-browser-tester]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-story-close
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-2 updated for /god-story-verify
+  events: [agent.start, agent.end]

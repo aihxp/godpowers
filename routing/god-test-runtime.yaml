@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-test-runtime
+  description: Headless browser runtime verification
+  tier: 3
+
+prerequisites:
+  required:
+    - .godpowers/design/DESIGN.md
+
+execution:
+  spawns: [god-browser-tester]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-launch
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-3 updated for /god-test-runtime
+  events: [agent.start, agent.end]

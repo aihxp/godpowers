@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-story-build
+  description: Implement a single story
+  tier: 2
+
+prerequisites:
+  required:
+    - .godpowers/stories/STORY-*.md
+
+execution:
+  spawns: [god-planner+god-executor+reviewers]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-story-verify
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-2 updated for /god-story-build
+  events: [agent.start, agent.end]

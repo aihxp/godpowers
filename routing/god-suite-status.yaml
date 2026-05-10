@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-suite-status
+  description: Side-by-side status of all suite repos
+  tier: 0
+
+prerequisites:
+  required:
+    - .godpowers/suite/suite.yaml
+
+execution:
+  spawns: [god-coordinator]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-suite-sync or /god-suite-patch
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-suite-status
+  events: [agent.start, agent.end]

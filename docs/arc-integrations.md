@@ -383,7 +383,7 @@ Phase 4: Contract (god-executor)
    - Atomic commit
 ```
 
-**This is /god-mode-level complexity, but for a different purpose**:
+**This is `/god-mode`-level complexity, but for a different purpose**:
 greenfield builds new; upgrade migrates existing without breaking.
 
 ---
@@ -567,7 +567,7 @@ These don't fire workflows directly; they capture intent for later routing.
         |      workflow based     |                  |
         |      on todo nature]    |                  |
         |                         v                  |
-        |                /god-review-backlog         |
+        |                /god-add-backlog            |
         |                (promote to active)         |
         |                                            v
         |                              /god-plant-seed check

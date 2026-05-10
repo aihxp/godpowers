@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-design-impact
+  description: What-if analysis on DESIGN.md change
+  tier: 1
+
+prerequisites:
+  required:
+    - .godpowers/design/DESIGN.md
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-design or /god-sync
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-1 updated for /god-design-impact
+  events: [agent.start, agent.end]

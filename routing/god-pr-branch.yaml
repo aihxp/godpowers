@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-pr-branch
+  description: Create clean PR branch filtering .godpowers commits
+  tier: 0
+
+prerequisites:
+  required:
+    - .godpowers/
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-next
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-pr-branch
+  events: [agent.start, agent.end]

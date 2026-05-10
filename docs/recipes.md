@@ -259,23 +259,29 @@ BLOCKS launch if Critical findings (even with --yolo).
 ```
 Refuses to run if /god-harden has unresolved Criticals.
 
-### Channel-specific launch (with extension)
+### Channel-specific launch (with extension, v0.13+)
+
+> Status: extension runtime ships in v0.13. Scaffolds for these
+> commands exist in `extensions/launch-pack/` today.
 
 ```
-/god-extension-add @godpowers/launch-pack
-/god-show-hn        <- HN-specific tactics
-/god-product-hunt   <- PH-specific
-/god-indie-hackers  <- IH-specific
-/god-oss-release    <- OSS library publishing
+/god-extension-add @godpowers/launch-pack    # v0.13
+/god-show-hn        <- HN-specific tactics    # v0.13
+/god-product-hunt   <- PH-specific            # v0.13
+/god-indie-hackers  <- IH-specific            # v0.13
+/god-oss-release    <- OSS library publishing # v0.13
 ```
 
-### Compliance audit (with extension)
+### Compliance audit (with extension, v0.13+)
+
+> Status: extension runtime ships in v0.13. Scaffolds for these
+> commands exist in `extensions/security-pack/` today.
 
 ```
-/god-extension-add @godpowers/security-pack
-/god-soc2-audit
-/god-hipaa-audit
-/god-pci-audit
+/god-extension-add @godpowers/security-pack  # v0.13
+/god-soc2-audit                              # v0.13
+/god-hipaa-audit                             # v0.13
+/god-pci-audit                               # v0.13
 ```
 
 ---
@@ -714,9 +720,12 @@ Reads disk state, suggests the right command with reason.
 
 ```
 /god-status              <- current state
-/god-logs                <- recent operations
-/god-trace <tier>        <- detailed events for a tier
+/god-logs                <- recent operations (v0.15)
+/god-trace <tier>        <- detailed events for a tier (v0.15)
 ```
+
+> `/god-logs` and `/god-trace` ship with the v0.15 observability layer.
+> Today you can `cat .godpowers/runs/<id>/events.jsonl` for the raw stream.
 
 ### "Where did this requirement come from?"
 

@@ -1,3 +1,9 @@
+# STATUS: NOT YET AUTHORITATIVE
+# The orchestrator agent's prose (agents/god-orchestrator.md) drives runtime
+# behavior. This YAML is documentation of intent for the v0.14 workflow-runtime
+# release. Reading code: trust the orchestrator. Authoring workflows: edit
+# both this file AND the orchestrator until v0.14 lands.
+#
 apiVersion: godpowers/v1
 kind: Workflow
 metadata:

@@ -175,22 +175,29 @@ inside the AI coding tool. The only CLI is `npx godpowers` for install.
 | `/god-rollback <tier>` | Walk back state + move artifacts to .trash |
 | `/god-restore` | Recover artifacts from .trash |
 
-### Observability commands
+### Observability commands (planned for v0.15)
 
-| Command | What it does |
-|---------|-------------|
-| `/god-logs [<run-id>]` | View events.jsonl as readable timeline |
-| `/god-metrics` | Per-tier stats: duration, pauses, retries |
-| `/god-trace <tier>` | Deep dive on a specific tier's events |
+> Status: events.jsonl is written today; these readable-timeline
+> wrappers ship in v0.15. Until then, raw inspection via
+> `cat .godpowers/runs/<id>/events.jsonl`.
 
-### Extension commands
+| Command | What it does | Ships |
+|---------|-------------|-------|
+| `/god-logs [<run-id>]` | View events.jsonl as readable timeline | v0.15 |
+| `/god-metrics` | Per-tier stats: duration, pauses, retries | v0.15 |
+| `/god-trace <tier>` | Deep dive on a specific tier's events | v0.15 |
 
-| Command | What it does |
-|---------|-------------|
-| `/god-extension-add @x/y` | Install a skill pack from npm |
-| `/god-extension-list` | Show installed extensions |
-| `/god-extension-remove @x/y` | Uninstall a pack |
-| `/god-extension-info @x/y` | Show pack details |
+### Extension commands (planned for v0.13)
+
+> Status: scaffolds exist in `extensions/`; runtime ships in v0.13.
+
+| Command | What it does | Ships |
+|---------|-------------|-------|
+| `/god-extension-add @x/y` | Install a skill pack from npm | v0.13 |
+| `/god-extension-list` | Show installed extensions | v0.13 |
+| `/god-extension-remove @x/y` | Uninstall a pack | v0.13 |
+| `/god-extension-info @x/y` | Show pack details | v0.13 |
+| `/god-test-extension <path>` | Plugin contract tests | v0.13 |
 
 ### Workstream commands
 
@@ -520,9 +527,11 @@ Every error from a Godpowers command ends with the most likely next command
 
 ---
 
-## 9. Observability (As Slash Commands)
+## 9. Observability (As Slash Commands) — v0.15
 
-Three views of the same events.jsonl, all via slash commands:
+Three views of the same events.jsonl, all via slash commands. The
+events.jsonl write surface exists today; these reader commands
+ship with the v0.15 observability release.
 
 | Command | Output |
 |---------|--------|
@@ -621,7 +630,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 26 skills, 18 agents, default workflows, base have-nots |
+| `godpowers` | Core: 91 skills, 38 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |
@@ -774,7 +783,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 26 skills + 18 agents | Same surface. Plus declarative contracts. Plus recovery slash commands. |
+| 91 skills + 38 agents (shipped at v0.12) | Same surface. Plus declarative contracts (v0.14 workflow runtime). |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

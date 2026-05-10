@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-review-changes
+  description: Walk REVIEW-REQUIRED.md interactively
+  tier: 0
+
+prerequisites:
+  required:
+    - .godpowers/REVIEW-REQUIRED.md
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-sync
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-review-changes
+  events: [agent.start, agent.end]

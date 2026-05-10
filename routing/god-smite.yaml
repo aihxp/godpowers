@@ -1,0 +1,29 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-smite
+  description: Hard-reset dependency cache; reinstall
+  tier: 0
+
+prerequisites:
+  required: []
+  recommended:
+    - git working tree is clean (or at least committed)
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  reads:
+    - package.json or equivalent stack-config file
+  writes:
+    - .godpowers/log (append op:smite event)
+
+success-path:
+  next-recommended: /god-status
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: none (cache only)
+  events: [agent.start, op.smite, agent.end]

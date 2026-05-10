@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-sprint
+  description: Sprint plan / status / retro
+  tier: 0
+
+prerequisites:
+  required:
+    - .godpowers/roadmap/ROADMAP.md
+
+execution:
+  spawns: [god-retrospective]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-feature or /god-story
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-0 updated for /god-sprint
+  events: [agent.start, agent.end]

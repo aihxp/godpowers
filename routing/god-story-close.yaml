@@ -1,0 +1,25 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-story-close
+  description: Mark a story done after build+verify
+  tier: 2
+
+prerequisites:
+  required:
+    - .godpowers/stories/STORY-*.md (status=in-progress or blocked)
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  writes: []
+
+success-path:
+  next-recommended: /god-stories
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: tier-2 updated for /god-story-close
+  events: [agent.start, agent.end]
