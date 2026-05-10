@@ -1,0 +1,17 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: audit-only
+  version: 1.0.0
+  description: |
+    Score existing artifacts against have-nots. Build nothing.
+    Run by /god-audit.
+
+on: [/god-audit]
+
+jobs:
+  audit-score:
+    tier: 0
+    uses: god-auditor@^1.0.0
+    with:
+      mode: full-audit

@@ -1,0 +1,26 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: postmortem
+  version: 1.0.0
+  description: |
+    Post-incident investigation. Builds timeline, identifies root cause and
+    class-of-bug, produces blameless action items.
+    Run by /god-postmortem.
+
+on: [/god-postmortem]
+
+jobs:
+  postmortem-investigate:
+    tier: 3
+    uses: god-incident-investigator@^1.0.0
+    with:
+      template: POSTMORTEM.md
+
+  postmortem-runbook-update:
+    tier: 3
+    needs: postmortem-investigate
+    uses: god-docs-writer@^1.0.0
+    with:
+      mode: runbook-updates
+    skip-when: no-runbook-gaps-identified

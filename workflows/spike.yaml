@@ -1,0 +1,18 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: spike
+  version: 1.0.0
+  description: |
+    Time-boxed research with throwaway POC.
+    Run by /god-spike.
+
+on: [/god-spike]
+
+jobs:
+  spike-run:
+    tier: 1
+    uses: god-spike-runner@^1.0.0
+    with:
+      template: SPIKE.md
+      time-box: 1d

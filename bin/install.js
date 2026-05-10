@@ -275,6 +275,22 @@ function installForRuntime(runtimeKey, srcDir) {
     success('Installed references/');
   }
 
+  // 4c. Install workflows (declarative YAML for /god-mode and friends)
+  const workflowsSrc = path.join(srcDir, 'workflows');
+  if (fs.existsSync(workflowsSrc)) {
+    const workflowsDest = path.join(runtime.configDir, 'godpowers-workflows');
+    copyRecursive(workflowsSrc, workflowsDest);
+    success('Installed workflows/');
+  }
+
+  // 4d. Install schemas (for validation)
+  const schemaSrc = path.join(srcDir, 'schema');
+  if (fs.existsSync(schemaSrc)) {
+    const schemaDest = path.join(runtime.configDir, 'godpowers-schema');
+    copyRecursive(schemaSrc, schemaDest);
+    success('Installed schema/');
+  }
+
   // 5. Install hooks (Claude Code only for now)
   if (runtimeKey === 'claude') {
     const hooksSrc = path.join(srcDir, 'hooks');

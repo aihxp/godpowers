@@ -240,6 +240,41 @@ else
   fail "harden-auditor missing Critical-finding --yolo carve-out"
 fi
 
+# 15. Workflow YAMLs exist for each major slash command
+for workflow in full-arc feature-arc hotfix-arc refactor-arc spike postmortem migration-arc docs-arc deps-audit audit-only hygiene; do
+  workflow_file="$ROOT/workflows/${workflow}.yaml"
+  if [ -f "$workflow_file" ]; then
+    pass "workflows/${workflow}.yaml exists"
+  else
+    fail "workflows/${workflow}.yaml missing"
+  fi
+done
+
+# 16. Workflow YAMLs have apiVersion + kind + metadata
+for workflow_file in "$ROOT/workflows/"*.yaml; do
+  name="$(basename "$workflow_file")"
+  if grep -q "^apiVersion: godpowers/v1$" "$workflow_file"; then
+    pass "workflows/${name} has apiVersion: godpowers/v1"
+  else
+    fail "workflows/${name} missing apiVersion"
+  fi
+  if grep -q "^kind: Workflow$" "$workflow_file"; then
+    pass "workflows/${name} has kind: Workflow"
+  else
+    fail "workflows/${name} missing kind: Workflow"
+  fi
+done
+
+# 17. JSON Schemas are valid JSON
+for schema_file in "$ROOT/schema/"*.json; do
+  name="$(basename "$schema_file")"
+  if python3 -c "import json; json.load(open('$schema_file'))" 2>/dev/null; then
+    pass "schema/${name} is valid JSON"
+  else
+    fail "schema/${name} is not valid JSON"
+  fi
+done
+
 echo ""
 echo "  Results: $PASS passed, $FAIL failed"
 echo ""

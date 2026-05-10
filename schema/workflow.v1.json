@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://godpowers.dev/schema/workflow.v1.json",
+  "title": "Godpowers Workflow (v1)",
+  "description": "Declarative workflow definition. Read by god-orchestrator.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "on", "jobs"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "enum": ["godpowers/v1"]
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["Workflow"]
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "description": { "type": "string" }
+      }
+    },
+    "on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/god-[a-z-]+$"
+      }
+    },
+    "jobs": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*$": { "$ref": "#/$defs/Job" }
+      },
+      "minProperties": 1
+    }
+  },
+  "$defs": {
+    "Job": {
+      "type": "object",
+      "required": ["uses"],
+      "properties": {
+        "tier": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "uses": {
+          "type": "string",
+          "pattern": "^god-[a-z-]+@[\\^~]?\\d+\\.\\d+\\.\\d+$|^god-[a-z-]+@[\\^~]?\\d+\\.x$",
+          "description": "Agent reference with SemVer constraint"
+        },
+        "needs": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        },
+        "with": {
+          "type": "object",
+          "description": "Inputs to the agent"
+        },
+        "review": {
+          "type": "object",
+          "properties": {
+            "stages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["uses"],
+                "properties": {
+                  "uses": { "type": "string" },
+                  "on-fail": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "blocks-on": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "per": { "type": "string", "enum": ["slice", "wave"] },
+        "parallel-by": { "type": "string", "enum": ["slice", "wave"] },
+        "on-pass": { "type": "string" },
+        "skip-when": { "type": "string" }
+      }
+    }
+  }
+}

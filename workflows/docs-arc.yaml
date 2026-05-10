@@ -1,0 +1,17 @@
+apiVersion: godpowers/v1
+kind: Workflow
+metadata:
+  name: docs-arc
+  version: 1.0.0
+  description: |
+    Verify and update documentation against code.
+    Run by /god-docs.
+
+on: [/god-docs]
+
+jobs:
+  docs-update:
+    tier: 1
+    uses: god-docs-writer@^1.0.0
+    with:
+      template: DOCS-UPDATE-LOG.md
