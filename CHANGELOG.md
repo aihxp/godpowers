@@ -5,6 +5,37 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added (token cost saver)
+- `lib/cost-tracker.js`: per-call cost recording + per-tier / per-agent /
+  per-model aggregation. Built-in pricing table for major models
+  (Claude / GPT / Gemini / O-series). `recordCost`, `recordCacheHit`,
+  `recordCacheMiss`, `aggregate`, `formatReport`, `priceTokens`.
+- `lib/agent-cache.js`: opt-in agent-output cache. Deterministic key
+  from `sha256(agent + version + sorted inputs + state-hash)`. TTL
+  with auto-expiry. Sharded storage at `.godpowers/cache/<shard>/<key>.json`.
+- `lib/context-budget.js`: per-agent budget planner. Reads required/
+  optional context from agent frontmatter; computes loadout under
+  `default-max-tokens` cap; emits `budget.exceeded` when required
+  alone overflows.
+- `schema/intent.v1.yaml.json`: new `budgets` block with
+  `default-max-tokens`, `model-profile` (cheap/standard/expensive),
+  `cache` (bool), `cache-ttl-hours`, per-agent overrides.
+- `lib/events.js`: 4 new event names (`cost.recorded`, `cache.hit`,
+  `cache.miss`, `budget.exceeded`).
+- 3 new skills: `/god-cost` (spend + savings report),
+  `/god-budget` (view + set budgets), `/god-cache-clear` (invalidate
+  cache entries by agent / age / TTL).
+- `agents/god-orchestrator.md`: new "Cost-conscious agent dispatch"
+  section that wires cache check, context-budget loadout, model
+  selection by profile, and cost recording into the per-spawn flow.
+
+### Tests
+- 32 suites (was 31), 1838 passing (was 1785). +53.
+- `scripts/test-cost-saver.js`: 26 tests across cost-tracker (7),
+  agent-cache (11), context-budget (8).
+
 ## [0.13.0] - 2026-05-10
 
 Context-rot protection (the major new feature), extension runtime, and

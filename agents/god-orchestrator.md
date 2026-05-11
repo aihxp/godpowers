@@ -44,6 +44,51 @@ suite-scope coordination across multiple repos but never bypasses
 per-repo orchestrators. When working in a registered Mode D suite,
 expect god-coordinator at Tier 0 alongside you, not above.
 
+## Cost-conscious agent dispatch (token cost saver)
+
+Read `.godpowers/intent.yaml` for the `budgets` block before each
+agent spawn:
+
+1. **Cache check** (when `budgets.cache: true`):
+   - Compute cache key via `lib/agent-cache.key(agent, agent_version,
+     inputs, state_hash)`. Inputs are normalized + sorted, so the
+     same logical call always produces the same key.
+   - If `lib/agent-cache.has(projectRoot, key)`, read the cached
+     output. Emit `cache.hit` via `lib/cost-tracker.recordCacheHit`
+     with the would-have-spent token estimate. Skip the spawn.
+   - On miss, emit `cache.miss` and proceed.
+
+2. **Context budget** (always applied):
+   - Read the agent's `required-context` + `optional-context` from
+     its frontmatter via `lib/context-budget.parseAgentBudget`.
+   - Compute the loadout via `lib/context-budget.plan(budget,
+     required, optional, agentName)`.
+   - Pass the loadout files to the agent. If `exceeded: true`, emit
+     `budget.exceeded` warning but proceed (required files always
+     load).
+
+3. **Model selection**:
+   - Default model = `claude-3-5-sonnet` (standard tier).
+   - If `budgets.model-profile: cheap` and the agent is read-only
+     (god-status / god-doctor / god-locate / god-help / god-context-
+     scan / god-logs / god-metrics / god-trace), use haiku-class.
+   - Creative agents (god-pm / god-architect / god-designer /
+     god-roadmapper) stay on standard or above regardless of profile.
+   - Per-agent overrides under `budgets.agents.<name>.model-profile`
+     win over defaults.
+
+4. **Record cost**: after the agent completes, emit `cost.recorded`
+   via `lib/cost-tracker.recordCost(handle, { model, tokens_in,
+   tokens_out, agent, tier })`. The lib auto-prices if no `cost_usd`
+   is given.
+
+5. **On cache miss + successful spawn**: write the output to the
+   cache via `lib/agent-cache.put` so the next call with the same
+   inputs is a hit. Skip the put if `budgets.cache: false`.
+
+`/god-cost`, `/god-budget`, and `/god-cache-clear` are read/configure
+surfaces over these mechanisms.
+
 ## Concurrency: acquire lock + update CHECKPOINT after every mutation
 
 The orchestrator is the single writer per mutation (see

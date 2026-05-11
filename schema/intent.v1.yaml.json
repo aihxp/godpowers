@@ -52,6 +52,44 @@
       "default": "full-arc",
       "description": "Name of the workflow YAML file to use."
     },
+    "budgets": {
+      "type": "object",
+      "description": "Token-cost saver controls. Optional; default behavior is no budget cap, cache off.",
+      "properties": {
+        "default-max-tokens": {
+          "type": "integer",
+          "minimum": 1000,
+          "description": "Default per-agent context cap (input loadout). 80000 is a reasonable starting point on a 200K window."
+        },
+        "model-profile": {
+          "type": "string",
+          "enum": ["cheap", "standard", "expensive"],
+          "description": "Bias for which model the orchestrator picks per agent. 'cheap' routes routine work (status/doctor/locate) to smaller models; high-stakes creative work always uses the standard or expensive tier."
+        },
+        "cache": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable the agent-output cache. Cache hits avoid re-spawning agents when inputs + state hash match. Opt-in; clear with /god-cache-clear."
+        },
+        "cache-ttl-hours": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 24,
+          "description": "Cache entry TTL in hours. After expiry, entries are recomputed."
+        },
+        "agents": {
+          "type": "object",
+          "description": "Per-agent overrides keyed by agent name (e.g. 'god-pm', 'god-architect').",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "max-tokens": { "type": "integer", "minimum": 1000 },
+              "model-profile": { "type": "string", "enum": ["cheap", "standard", "expensive"] }
+            }
+          }
+        }
+      }
+    },
     "executors": {
       "type": "object",
       "properties": {
