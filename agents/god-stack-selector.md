@@ -15,6 +15,20 @@ Pick the technology stack.
 ## Gate Check
 
 `.godpowers/arch/ARCH.md` MUST exist.
+Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
+context.
+
+## Imported Preparation Context
+
+If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical and stack
+signals before scoring candidates. Use imported technology choices, constraints,
+and team familiarity as hypothesis-level input only.
+
+Rules:
+- Do not let imported stack preference override ARCH NFRs or ADRs.
+- Treat imported technology choices as candidate evidence, not decisions.
+- If imported context conflicts with ARCH, ARCH wins and the conflict becomes a
+  stack open question.
 
 ## Process
 

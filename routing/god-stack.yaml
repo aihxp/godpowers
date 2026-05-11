@@ -14,6 +14,9 @@ prerequisites:
 execution:
   spawns: [god-stack-selector]
   context: fresh
+  reads:
+    - .godpowers/arch/ARCH.md
+    - .godpowers/prep/IMPORTED-CONTEXT.md
   writes:
     - .godpowers/stack/DECISION.md
 

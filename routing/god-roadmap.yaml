@@ -17,6 +17,7 @@ execution:
   reads:
     - .godpowers/prd/PRD.md
     - .godpowers/arch/ARCH.md
+    - .godpowers/prep/IMPORTED-CONTEXT.md
     - templates/ROADMAP.md
   writes:
     - .godpowers/roadmap/ROADMAP.md

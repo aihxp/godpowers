@@ -19,6 +19,7 @@ execution:
     - .godpowers/PROGRESS.md
     - .godpowers/state.json
     - .godpowers/intent.yaml
+    - .godpowers/prep/IMPORTED-CONTEXT.md
 
 success-path:
   next-recommended: /god-prd

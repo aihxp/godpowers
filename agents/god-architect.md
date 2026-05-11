@@ -19,6 +19,21 @@ flip points.
 Before starting:
 - `.godpowers/prd/PRD.md` MUST exist
 - PRD MUST pass have-nots (run god-auditor first if uncertain)
+- Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
+  context.
+
+## Imported Preparation Context
+
+If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical signals
+before drafting ARCH. Use imported architecture, integration, risk, and stack
+constraints as hypothesis-level input only.
+
+Rules:
+- Do not let imported context override PRD NFRs or Godpowers state.
+- Convert useful imported signals into ADR context, tradeoffs, or open
+  questions.
+- If imported context conflicts with the PRD, the PRD wins and the conflict
+  becomes an `[OPEN QUESTION]`.
 
 ## Output
 

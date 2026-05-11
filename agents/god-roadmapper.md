@@ -16,6 +16,22 @@ Sequence the work.
 ## Gate Check
 
 `.godpowers/arch/ARCH.md` MUST exist and pass have-nots.
+Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
+context.
+
+## Imported Preparation Context
+
+If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its delivery signals
+before sequencing milestones. Use imported GSD, Superpowers, BMAD, or similar
+stories and plans as hypothesis-level input only.
+
+Rules:
+- Do not add roadmap features that are not grounded in the PRD.
+- Use imported milestones, stories, and done-work signals to inform ordering,
+  dependency edges, and open questions.
+- If imported context conflicts with PRD or ARCH, PRD and ARCH win.
+- Mark any imported sequencing assumption as `[HYPOTHESIS]` until confirmed by
+  Godpowers artifacts or the user.
 
 ## Process
 

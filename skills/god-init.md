@@ -30,6 +30,15 @@ needs to specify a mode.
    - Look for org-level context (current dir + parent dirs):
      - .godpowers/org-context.yaml
      - Workspace configs that share standards
+   - Look for adjacent planning-system context:
+     - GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`
+     - Superpowers: `.superpowers/`, `superpowers/`, `SUPERPOWERS.md`,
+       `.claude/skills/`, `.codex/skills/`
+     - BMAD: `.bmad-core/`, `bmad-core/`, `.bmad/`, `BMAD.md`,
+       `docs/prd.md`, `docs/architecture.md`, `docs/roadmap.md`
+   - If any are detected, summarize useful signals into
+     `.godpowers/prep/IMPORTED-CONTEXT.md` as preparation context.
+     Do not treat external planning-system files as source of truth.
 
 3. **Announce findings in plain English** (no jargon):
    - Empty dir + no org context: "Detected: empty directory. Starting fresh."
@@ -48,6 +57,8 @@ needs to specify a mode.
    The orchestrator will:
    - Run Mode Detection (announced in plain English; stored as A/B/C/E internally)
    - Run Scale Detection (trivial/small/medium/large/enterprise)
+   - Run planning-system context detection for GSD, Superpowers, and BMAD
+   - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
    - For brownfield: schedule archaeology + reconstruction as preflight
    - For bluefield: load org-context as constraint
    - Create directory structure
@@ -65,6 +76,8 @@ needs to specify a mode.
    ```
    .godpowers/
      PROGRESS.md
+     prep/
+       IMPORTED-CONTEXT.md   # only when GSD / Superpowers / BMAD context exists
      prd/
      arch/
        adr/
@@ -98,6 +111,11 @@ needs to specify a mode.
 ## Output
 
 `.godpowers/PROGRESS.md` created with initial state.
+
+If GSD, Superpowers, BMAD, or similar planning context is detected, create
+`.godpowers/prep/IMPORTED-CONTEXT.md`. This artifact is preparation context,
+not source of truth. It feeds PRD, architecture, roadmap, and stack decisions
+as hypothesis-level input only.
 
 ## AI-tool context (automatic for explicit init)
 

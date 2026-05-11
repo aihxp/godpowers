@@ -29,6 +29,22 @@ required sections:
 7. **Appetite** (time/resource/technical constraints)
 8. **Open Questions** (with owner and due date)
 
+## Imported Preparation Context
+
+If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read it before drafting the
+PRD. Use product signals from GSD, Superpowers, BMAD, or similar systems as
+hypothesis-level input only.
+
+Rules:
+- Do not copy imported text wholesale into the PRD.
+- Do not treat imported context as source of truth.
+- Convert relevant imported product signals into `[HYPOTHESIS]` requirements,
+  success metrics, scope notes, no-gos, or open questions.
+- If imported context conflicts with user intent or existing Godpowers state,
+  preserve the Godpowers state and add an `[OPEN QUESTION]`.
+- In PRD rationale, mention the source only when it materially changes a
+  requirement.
+
 ## Quality Gates
 
 Run these checks on every section before declaring done:

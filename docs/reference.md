@@ -215,6 +215,7 @@ First-party packs on npm:
   PROGRESS.md              Tier status
   intent.yaml              Project intent
   state.json               Project state
+  prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
 
   prd/PRD.md               Product Requirements
   arch/ARCH.md             Architecture

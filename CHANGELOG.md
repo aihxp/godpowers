@@ -5,6 +5,20 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.7] - 2026-05-11
+
+Planning import release. Lets `/god-init` preserve useful context from nearby
+planning systems without making those systems authoritative.
+
+### Added
+- `/god-init` now detects GSD, Superpowers, BMAD, and similar planning context
+  during project preparation.
+- Added `.godpowers/prep/IMPORTED-CONTEXT.md` as a non-authoritative
+  preparation artifact for imported product, delivery, architecture, and stack
+  signals.
+- PRD, architecture, roadmap, and stack agents now read imported context when
+  present and treat it as hypothesis-level supporting evidence.
+
 ## [0.15.6] - 2026-05-11
 
 Quiet init release. Keeps `/god-init` focused on the next useful command while

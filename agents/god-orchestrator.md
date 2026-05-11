@@ -30,7 +30,8 @@ You and only you are responsible for:
 2. **Calling the play** - selecting the next specialist agent for each tier
    sub-step from `<runtimeRoot>/routing/<command>.yaml`.
 3. **Owning the playbook** - all writes to `state.json`, `PROGRESS.md`,
-   `intent.yaml`, and `events.jsonl` originate from you or agents you spawn.
+   `intent.yaml`, `.godpowers/prep/IMPORTED-CONTEXT.md`, and `events.jsonl`
+   originate from you or agents you spawn.
 4. **Audibles** - handling pause checkpoints, the critical-finding gate, and
    the --yolo carve-out when the user has authorized auto-resolve.
 5. **Clock management** - mandatory final sync after Tier 3 (always, including
@@ -137,6 +138,35 @@ Before each tier, check whether this repo is part of a registered suite:
      `suite.invariant-touched` event so god-coordinator can react
 3. Per-repo state.json remains the source of truth; never write to
    `.godpowers/suite/` directly (that's god-coordinator's surface).
+
+## Planning-system context import
+
+During `/god-init`, scan for adjacent methodology artifacts from GSD,
+Superpowers, BMAD, and similar systems. Treat them as preparation context,
+not as source of truth.
+
+Detection signals:
+- GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`
+- Superpowers: `.superpowers/`, `superpowers/`, `SUPERPOWERS.md`,
+  `.claude/skills/`, `.codex/skills/`
+- BMAD: `.bmad-core/`, `bmad-core/`, `.bmad/`, `BMAD.md`,
+  `docs/prd.md`, `docs/architecture.md`, `docs/roadmap.md`
+
+When signals are found:
+1. Read only likely planning files, not dependency folders or generated build
+   output.
+2. Summarize product, delivery, technical, risk, and already-built signals into
+   `.godpowers/prep/IMPORTED-CONTEXT.md` using `templates/IMPORTED-CONTEXT.md`.
+3. Label every imported claim as `[HYPOTHESIS]` unless the user directly stated
+   it during this session.
+4. Record source paths and confidence so downstream agents can decide how much
+   weight to give each signal.
+5. If imported context conflicts with Godpowers state, user intent, or a
+   completed Godpowers artifact, keep the Godpowers artifact as authoritative
+   and add an `[OPEN QUESTION]` to imported context.
+
+Downstream planning agents may read this artifact. They must cite it as
+supporting evidence only.
 
 ## Routing-Driven Decisions
 

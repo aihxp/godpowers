@@ -19,6 +19,7 @@ execution:
   context: fresh
   reads:
     - .godpowers/prd/PRD.md
+    - .godpowers/prep/IMPORTED-CONTEXT.md
     - templates/ARCH.md
   writes:
     - .godpowers/arch/ARCH.md
