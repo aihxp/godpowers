@@ -84,14 +84,14 @@ Shipped:
 
 ### v0.15.0 - Distribution + OTel + first-party packs (in flight)
 
-Landed on this branch; ships on merge to main via semantic-release:
+Landed on main; ships when a `v*` tag is pushed:
 
 - **`npm publish godpowers`** to the public registry (token stored as
   the `NPM_TOKEN` GitHub Actions secret; no token in source)
-- **Semantic-release automation** on main: `release.config.js` +
-  `.github/workflows/release.yml`. Conventional-commit history -> next
-  version + auto-generated CHANGELOG + npm publish (with provenance) +
-  GitHub Release.
+- **Tag-triggered publish workflow**: `.github/workflows/publish.yml`
+  runs the full test suite then `npm publish --provenance --access
+  public` on every `v*` tag push. Version bumps are manual
+  (`npm version minor`), CHANGELOG is human-curated.
 - **OTel exporter** for events.jsonl: `lib/otel-exporter.js` plus the
   `/god-export-otel` skill. Maps workflow.run + agent.start/end to
   OTLP spans; cost.recorded / gate.fail / error attach as span events.
