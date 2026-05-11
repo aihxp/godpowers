@@ -64,8 +64,12 @@ For each PRD success metric, define an SLO:
   dashboards, and runbooks.
 - If the provider is not reachable, create provider-neutral dashboard and alert
   definitions as code when possible.
-- If dashboard/API credentials are missing, append them to the single waiting
-  access bundle instead of returning a broad checklist.
+- If dashboard/API credentials are missing, do not request them until the next
+  executable observability check specifically requires that provider access.
+  Prefer local definitions as code, runbook dry-runs, log-shape checks, and CI
+  verification first.
+- If a credential is truly required, append one exact access item to the single
+  waiting access bundle, with the command that will run next.
 - Under `/god-mode --yolo`, continue through every local or CI-verifiable
   observability check before pausing for external access.
 
@@ -88,3 +92,5 @@ Write `.godpowers/observe/STATE.md` with:
 - Alert with no runbook
 - Broad dashboard checklist instead of definitions as code or one exact access
   bundle
+- Requests dashboards or API keys before local observability definitions are
+  created and checked

@@ -54,6 +54,11 @@ the launch runbook, smoke command, source attribution plan, and local
 launch-readiness checks. If real launch is blocked by missing external access,
 pause on the single access bundle from deploy or launch state.
 
+The launch pause must not expand into every possible channel, analytics, or
+provider credential. Ask only for the next missing access item needed to run a
+named live smoke, launch-readiness, attribution, or monitoring check. If no
+live target URL is known, ask only for `STAGING_APP_URL=<staging-origin>`.
+
 
 ## Re-invocation contract
 

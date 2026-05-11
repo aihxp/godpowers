@@ -70,12 +70,15 @@ For each channel:
   `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present, and
   `.godpowers/observe/STATE.md`.
 - If deploy or observe is waiting on external access, do not create a broad
-  dashboard checklist. Reference the single waiting access bundle and write
-  launch state as `waiting-for-external-access`.
+  dashboard checklist. Reference only the smallest next access item from the
+  waiting bundle and write launch state as `waiting-for-external-access`.
 - If a staging or production URL is available, run or specify the exact smoke
   command and record the result.
 - If only local staging is available, run local launch-readiness checks and
   clearly label scope as local readiness, not live launch.
+- Do not ask for launch-channel accounts, analytics dashboards, provider
+  dashboards, API keys, or admin consoles until a named launch-readiness or
+  smoke check cannot run without that exact access.
 
 ## Output
 
@@ -92,6 +95,8 @@ Write `.godpowers/launch/STATE.md` with all artifacts.
 - "We'll figure out marketing later"
 - Broad provider checklist instead of one exact external access bundle
 - Declares live launch without a verified live target
+- Requests launch or provider credentials before the live staging smoke check
+  proves they are needed
 
 ## Pause Conditions
 

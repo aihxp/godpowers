@@ -61,9 +61,17 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
   run the same smoke command against it.
 - If provider credentials, DNS, TLS, dashboard access, or production secrets are
   missing, write `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
-- That file must contain one smallest access bundle, exact env var names,
-  exact dashboard/provider links or placeholders, and the command Godpowers will
-  run after access exists.
+- That file must contain the smallest next access item, exact env var names
+  only when needed by the next command, exact provider links only when a failed
+  check proves they are needed, and the command Godpowers will run after access
+  exists.
+- Default first pause: ask only for `STAGING_APP_URL=<staging-origin>` so the
+  real smoke command can run. Do not ask for provider keys, API tokens,
+  dashboards, DNS tokens, production secrets, admin consoles, or test users
+  until a named deploy, smoke, rollback, health, callback, webhook, export, or
+  observability check cannot run without that exact item.
+- Add at most one new external access item per pause unless one command
+  invocation genuinely requires several values together.
 - Do not return a broad checklist as the final answer. Either return tested
   deploy readiness or the one access bundle.
 
@@ -105,3 +113,4 @@ Write `.godpowers/deploy/STATE.md`:
 - Paper canary (label without traffic split)
 - Broad provider checklist with no scripts or exact access bundle
 - Marks deploy done when the only verified target is missing
+- Requests all provider keys before the staging URL smoke check has run

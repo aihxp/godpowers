@@ -45,6 +45,11 @@ update alert definitions, dashboard definitions, runbooks, and local checks
 first. If real provider access is still required, append the exact missing
 credentials to `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
 
+Provider credentials are last-mile inputs. Do not ask for dashboard access,
+API keys, or observability admin consoles until the local definitions, runbook
+dry-runs, log-shape checks, and CI-verifiable checks are done and the next
+named command cannot run without one exact credential.
+
 
 ## Re-invocation contract
 

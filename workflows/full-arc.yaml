@@ -69,11 +69,16 @@ jobs:
     closure:
       on-missing-external-access: create-waiting-access-bundle
       local-verification-required: true
+      access-order: ask-for-staging-url-before-provider-keys
+      max-new-access-items-per-pause: 1
 
   observe:
     tier: 3
     needs: deploy
     uses: god-observability-engineer@^1.0.0
+    closure:
+      access-order: ask-for-local-definitions-before-provider-keys
+      max-new-access-items-per-pause: 1
 
   harden:
     tier: 3
@@ -91,3 +96,5 @@ jobs:
     closure:
       no-broad-checklists: true
       on-missing-external-access: pause-with-single-access-bundle
+      access-order: ask-for-staging-url-before-provider-keys
+      max-new-access-items-per-pause: 1

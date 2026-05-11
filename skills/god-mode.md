@@ -85,6 +85,11 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      Shipping Closure Protocol: verify a real environment when available,
      otherwise create local/CI-verifiable deploy automation and pause only for
      one exact external access bundle.
+   - Instruction that keys, API tokens, dashboards, admin consoles, and
+     provider-specific access are last-mile inputs. The first external pause
+     should ask only for the smallest next item needed by a concrete command,
+     usually `STAGING_APP_URL=<staging-origin>`. Ask for additional provider
+     access only after a named check proves it is needed.
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

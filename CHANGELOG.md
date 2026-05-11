@@ -5,6 +5,22 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.13] - 2026-05-11
+
+Access ladder release. Tightens `/god-mode --yolo` shipping closure so keys,
+API tokens, dashboards, admin consoles, and provider access are requested only
+when a concrete check proves they are needed.
+
+### Changed
+- Added an External Access Ladder to the Shipping Closure Protocol: ask first
+  for the deployed staging origin, run the real staging smoke command, then ask
+  for one additional access item only when the next named check requires it.
+- Deploy, observability, launch, and full-arc instructions now cap blocked
+  shipping pauses to one new external access item unless a single command
+  genuinely requires several values together.
+- God Mode now treats provider keys and API tokens as last-mile inputs, not
+  upfront rollout prerequisites.
+
 ## [0.15.12] - 2026-05-11
 
 Shipping closure release. Prevents `/god-mode --yolo` from stopping with broad

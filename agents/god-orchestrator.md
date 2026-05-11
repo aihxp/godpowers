@@ -348,12 +348,31 @@ For deploy, observe, harden, and launch:
 5. Under `--yolo`, auto-pick safe defaults for provider-neutral choices and
    continue through every local and CI-verifiable gate.
 6. Only pause when real external access is required and absent. The pause must
-   ask for one concrete thing, such as "provide STAGING_URL and these 5 secrets"
-   or "confirm production DNS host and token." Do not output a long checklist
-   as the stopping condition.
+   ask for the smallest next input needed to run the next concrete check. The
+   first pause should usually ask only for the deployed staging origin, for
+   example `STAGING_APP_URL=<staging-origin>`. Do not ask for API keys,
+   provider dashboards, DNS tokens, production secrets, or admin consoles until
+   a specific scripted check cannot run without that exact access.
 7. Do not say "Suggested next" for a blocked shipping tier. Say either
    `Arc complete` or `PAUSE: external access required`, with the exact artifact
    that lists the required bundle.
+
+### External Access Ladder
+
+Use this order when external access is missing:
+
+1. Ask for the deployed staging origin only if no live target URL is known.
+2. Run the real staging smoke command against that origin.
+3. Ask for a provider key, dashboard, admin console, or test user only when a
+   named smoke, callback, webhook, export, observability, or rollback check
+   fails or cannot execute without that exact item.
+4. Add at most one new access item per pause unless several items are required
+   by the same command invocation.
+5. Every access request must include the command that will run next and the
+   artifact that will be updated after it runs.
+
+Never request every possible key or API at the start of shipping. Keys and API
+tokens are last-mile inputs.
 
 ## YOLO Behavior with Design + Linkage
 

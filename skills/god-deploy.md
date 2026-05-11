@@ -47,6 +47,13 @@ env manifest, and local staging harness first. If real external access is still
 required, pause on the single access bundle in
 `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
 
+The single access bundle must be incremental. Ask for the smallest next item
+needed to run the next command. If no live target URL is known, ask only for
+`STAGING_APP_URL=<staging-origin>` and the exact smoke command that will run.
+Do not ask for provider keys, API tokens, dashboards, DNS tokens, production
+secrets, admin consoles, or test users until a specific scripted check proves
+that exact item is required.
+
 
 ## Re-invocation contract
 
