@@ -21,6 +21,7 @@ execution:
   context: fresh
   reads:
     - .godpowers/intent.yaml
+    - .godpowers/prep/INITIAL-FINDINGS.md
     - .godpowers/prep/IMPORTED-CONTEXT.md
     - templates/PRD.md
   writes:

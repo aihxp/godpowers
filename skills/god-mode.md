@@ -47,6 +47,9 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - The detected mode (A/B/C/E)
    - The active flags
    - Instruction to read `.godpowers/PROGRESS.md` from disk if it exists
+   - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
+     `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the
+     first planning or build step
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

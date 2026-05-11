@@ -30,8 +30,9 @@ You and only you are responsible for:
 2. **Calling the play** - selecting the next specialist agent for each tier
    sub-step from `<runtimeRoot>/routing/<command>.yaml`.
 3. **Owning the playbook** - all writes to `state.json`, `PROGRESS.md`,
-   `intent.yaml`, `.godpowers/prep/IMPORTED-CONTEXT.md`, and `events.jsonl`
-   originate from you or agents you spawn.
+   `intent.yaml`, `.godpowers/prep/INITIAL-FINDINGS.md`,
+   `.godpowers/prep/IMPORTED-CONTEXT.md`, and `events.jsonl` originate from you
+   or agents you spawn.
 4. **Audibles** - handling pause checkpoints, the critical-finding gate, and
    the --yolo carve-out when the user has authorized auto-resolve.
 5. **Clock management** - mandatory final sync after Tier 3 (always, including
@@ -144,6 +145,20 @@ Before each tier, check whether this repo is part of a registered suite:
 During `/god-init`, scan for adjacent methodology artifacts from GSD,
 Superpowers, BMAD, and similar systems. Treat them as preparation context,
 not as source of truth.
+
+Before or alongside that import, write `.godpowers/prep/INITIAL-FINDINGS.md`
+using `templates/INITIAL-FINDINGS.md`. This artifact records what Godpowers
+observed directly during init:
+- codebase shape, language, framework, package manager, tests, CI, deploy, and
+  documentation signals
+- AI-tool instruction files and methodology systems detected
+- risk signals and open questions raised by the scan
+- the suggested next command and why that command is the safest next step
+
+Downstream `/god-prd`, `/god-next`, and `/god-mode` flows must read
+`INITIAL-FINDINGS.md` when present. Use it as preparation context only. If it
+conflicts with user intent, state.json, PROGRESS.md, or completed Godpowers
+artifacts, the Godpowers artifact wins.
 
 Detection signals:
 - GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`

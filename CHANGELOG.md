@@ -5,6 +5,27 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.8] - 2026-05-11
+
+Init preparation release. Documents what Godpowers found before PRD, next-step
+routing, or the full autonomous arc starts.
+
+### Added
+- `/god-init` now always creates `.godpowers/prep/INITIAL-FINDINGS.md` with
+  codebase shape, framework and tooling signals, tests, CI, docs, AI-tool
+  instructions, detected methodology systems, risks, and the suggested next
+  command rationale.
+- `/god-prd`, `/god-next`, and `/god-mode` now read initial findings before
+  choosing or producing the next Godpowers artifact.
+- Architecture, roadmap, and stack agents now read initial findings alongside
+  imported planning context when present.
+
+### Documented
+- The full recent init preparation flow is now documented together:
+  automatic AI-tool context for explicit `god init`, quiet context writes,
+  GSD / Superpowers / BMAD import into `IMPORTED-CONTEXT.md`, and direct
+  Godpowers repo findings in `INITIAL-FINDINGS.md`.
+
 ## [0.15.7] - 2026-05-11
 
 Planning import release. Lets `/god-init` preserve useful context from nearby

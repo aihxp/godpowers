@@ -16,10 +16,15 @@ Sequence the work.
 ## Gate Check
 
 `.godpowers/arch/ARCH.md` MUST exist and pass have-nots.
+Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
+context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
 
 ## Imported Preparation Context
+
+If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for repo risks,
+existing tests, docs, CI, deploy, and suggested sequencing implications.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its delivery signals
 before sequencing milestones. Use imported GSD, Superpowers, BMAD, or similar

@@ -15,10 +15,15 @@ Pick the technology stack.
 ## Gate Check
 
 `.godpowers/arch/ARCH.md` MUST exist.
+Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
+context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
 
 ## Imported Preparation Context
+
+If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for direct
+tooling, package manager, framework, runtime, CI, and deploy observations.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical and stack
 signals before scoring candidates. Use imported technology choices, constraints,

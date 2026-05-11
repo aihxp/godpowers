@@ -31,6 +31,10 @@ required sections:
 
 ## Imported Preparation Context
 
+If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first so the PRD
+reflects what Godpowers observed during init: codebase shape, tests, docs,
+risks, and methodology systems detected.
+
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read it before drafting the
 PRD. Use product signals from GSD, Superpowers, BMAD, or similar systems as
 hypothesis-level input only.

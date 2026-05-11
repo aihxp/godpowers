@@ -30,6 +30,10 @@ needs to specify a mode.
    - Look for org-level context (current dir + parent dirs):
      - .godpowers/org-context.yaml
      - Workspace configs that share standards
+   - Write `.godpowers/prep/INITIAL-FINDINGS.md` summarizing what Godpowers
+     observed about the repo, tooling, docs, tests, risks, and suggested next
+     command. This happens before `/god-prd`, `/god-next`, or `/god-mode`
+     continues.
    - Look for adjacent planning-system context:
      - GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`
      - Superpowers: `.superpowers/`, `superpowers/`, `SUPERPOWERS.md`,
@@ -57,6 +61,7 @@ needs to specify a mode.
    The orchestrator will:
    - Run Mode Detection (announced in plain English; stored as A/B/C/E internally)
    - Run Scale Detection (trivial/small/medium/large/enterprise)
+   - Write `.godpowers/prep/INITIAL-FINDINGS.md`
    - Run planning-system context detection for GSD, Superpowers, and BMAD
    - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
    - For brownfield: schedule archaeology + reconstruction as preflight
@@ -77,6 +82,7 @@ needs to specify a mode.
    .godpowers/
      PROGRESS.md
      prep/
+       INITIAL-FINDINGS.md
        IMPORTED-CONTEXT.md   # only when GSD / Superpowers / BMAD context exists
      prd/
      arch/
@@ -111,6 +117,12 @@ needs to specify a mode.
 ## Output
 
 `.godpowers/PROGRESS.md` created with initial state.
+
+Always create `.godpowers/prep/INITIAL-FINDINGS.md`. This is Godpowers'
+durable answer to "what did init find in this codebase?" It captures codebase
+shape, framework and tooling signals, tests, CI, docs, AI-tool files, detected
+methodology systems, risk signals, and the reasoning behind the suggested next
+command.
 
 If GSD, Superpowers, BMAD, or similar planning context is detected, create
 `.godpowers/prep/IMPORTED-CONTEXT.md`. This artifact is preparation context,

@@ -37,6 +37,7 @@ Each command has:
   - `.godpowers/PROGRESS.md`
   - `.godpowers/state.json`
   - `.godpowers/intent.yaml`
+  - `.godpowers/prep/INITIAL-FINDINGS.md`
   - `.godpowers/prep/IMPORTED-CONTEXT.md` when GSD, Superpowers, BMAD, or
     similar planning context is detected
 
@@ -72,6 +73,7 @@ Each command has:
 - Secondary spawns: `god-auditor` (for verification)
 - Reads:
   - `.godpowers/intent.yaml`
+  - `.godpowers/prep/INITIAL-FINDINGS.md` if present
   - `.godpowers/prep/IMPORTED-CONTEXT.md` if present
   - `templates/PRD.md` (structural starting point)
 - Writes:
@@ -112,6 +114,7 @@ Each command has:
 - Spawns: `god-architect`
 - Reads:
   - `.godpowers/prd/PRD.md`
+  - `.godpowers/prep/INITIAL-FINDINGS.md` if present
   - `.godpowers/prep/IMPORTED-CONTEXT.md` if present
   - `templates/ARCH.md`
 - Writes:
@@ -140,7 +143,7 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-roadmapper`
-- Reads: PRD, ARCH, optional imported preparation context,
+- Reads: PRD, ARCH, optional initial findings, optional imported preparation context,
   `templates/ROADMAP.md`
 - Writes: `.godpowers/roadmap/ROADMAP.md`
 
@@ -158,7 +161,8 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-stack-selector`
-- Reads: ARCH and optional imported preparation context
+- Reads: ARCH, optional initial findings, and optional imported preparation
+  context
 - Writes: `.godpowers/stack/DECISION.md`
 
 **Standards**: have-nots S-01 through S-05

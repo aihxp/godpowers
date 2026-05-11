@@ -215,6 +215,7 @@ First-party packs on npm:
   PROGRESS.md              Tier status
   intent.yaml              Project intent
   state.json               Project state
+  prep/INITIAL-FINDINGS.md Godpowers init scan and suggested next rationale
   prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
 
   prd/PRD.md               Product Requirements

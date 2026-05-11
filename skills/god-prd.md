@@ -14,10 +14,13 @@ Spawn the **god-pm** agent in a fresh context via Task tool.
 ## Setup
 
 1. If `.godpowers/PROGRESS.md` does not exist: tell the user to run `/god-init` first
-2. Otherwise: spawn god-pm with the user's project description from PROGRESS.md
-3. The agent writes `.godpowers/prd/PRD.md`
-4. The agent runs have-nots checks before declaring done
-5. If god-pm pauses for a human question: relay to user using pause format
+2. Read `.godpowers/prep/INITIAL-FINDINGS.md` if present.
+3. Read `.godpowers/prep/IMPORTED-CONTEXT.md` if present.
+4. Spawn god-pm with the user's project description from PROGRESS.md plus any
+   prep artifacts. Prep artifacts are context, not source of truth.
+5. The agent writes `.godpowers/prd/PRD.md`
+6. The agent runs have-nots checks before declaring done
+7. If god-pm pauses for a human question: relay to user using pause format
 
 ## Verification
 

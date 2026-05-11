@@ -12,6 +12,9 @@ prerequisites:
 execution:
   spawns: [built-in]
   context: fresh
+  reads:
+    - .godpowers/prep/INITIAL-FINDINGS.md
+    - .godpowers/prep/IMPORTED-CONTEXT.md
   writes:
     []
 

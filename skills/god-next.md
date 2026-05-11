@@ -39,6 +39,12 @@ if any are missing.
 User just ran /god-next. Auto-detects current project phase and suggests
 the next logical command.
 
+Before suggesting, read `.godpowers/prep/INITIAL-FINDINGS.md` and
+`.godpowers/prep/IMPORTED-CONTEXT.md` if present. Use them to explain why the
+next step is safe or why a migration-aware step such as `/god-prd`,
+`/god-map-codebase`, or `/god-mode` is better. Prep artifacts are context only;
+state.json and completed Godpowers artifacts remain authoritative.
+
 ## Process for Mode 1 (post-completion)
 
 ```

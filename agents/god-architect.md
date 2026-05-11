@@ -19,10 +19,16 @@ flip points.
 Before starting:
 - `.godpowers/prd/PRD.md` MUST exist
 - PRD MUST pass have-nots (run god-auditor first if uncertain)
+- Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
+  context.
 - Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
   context.
 
 ## Imported Preparation Context
+
+If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for direct
+Godpowers observations about framework, tooling, deploy, tests, docs, and
+codebase risks.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical signals
 before drafting ARCH. Use imported architecture, integration, risk, and stack

@@ -1,0 +1,52 @@
+# Initial Findings
+
+> This artifact records what Godpowers observed during `/god-init`. It is
+> preparation documentation for planning, routing, and migration. Godpowers
+> state and completed artifacts remain authoritative after they exist.
+
+## Codebase Shape
+
+- [HYPOTHESIS] Project type: [greenfield / brownfield / bluefield / audit].
+- [HYPOTHESIS] Scale: [trivial / small / medium / large / enterprise].
+- [HYPOTHESIS] Primary language or runtime: [detected value].
+- [HYPOTHESIS] Framework or app model: [detected value].
+- [HYPOTHESIS] Package manager or build tool: [detected value].
+
+## Repo Signals
+
+- [HYPOTHESIS] Source directories found: [paths].
+- [HYPOTHESIS] Test signals found: [paths or "none detected"].
+- [HYPOTHESIS] CI or release signals found: [paths or "none detected"].
+- [HYPOTHESIS] Deployment signals found: [paths or "none detected"].
+- [HYPOTHESIS] Documentation signals found: [paths or "none detected"].
+
+## Methodology And AI Tool Signals
+
+- [HYPOTHESIS] AI instruction files found: [paths or "none detected"].
+- [HYPOTHESIS] GSD context found: [paths or "none detected"].
+- [HYPOTHESIS] Superpowers context found: [paths or "none detected"].
+- [HYPOTHESIS] BMAD context found: [paths or "none detected"].
+- [HYPOTHESIS] Imported context artifact: [.godpowers/prep/IMPORTED-CONTEXT.md or "not created"].
+
+## Planning Implications
+
+- [HYPOTHESIS] PRD should pay attention to: [product or user signal].
+- [HYPOTHESIS] Architecture should pay attention to: [technical or risk signal].
+- [HYPOTHESIS] Roadmap should pay attention to: [delivery or dependency signal].
+- [HYPOTHESIS] Stack should pay attention to: [tooling or constraint signal].
+
+## Risks And Unknowns
+
+- [OPEN QUESTION] [Question raised by repo scan] -- Owner: user -- Due: before the relevant planning step.
+- [HYPOTHESIS] Risk signal: [missing tests / unclear deploy path / stale docs / conflicting planning systems].
+
+## Suggested Next
+
+- [DECISION] Suggested next command: [/god-prd / /god-map-codebase / /god-mode / /god-next].
+- [DECISION] Reason: [why this command is the safest next step based on findings].
+
+## Use Rules
+
+- [DECISION] Downstream agents may use this artifact as preparation context only.
+- [DECISION] If this artifact conflicts with `.godpowers/intent.yaml`, `.godpowers/state.json`, `PROGRESS.md`, or a completed Godpowers artifact, the Godpowers artifact wins.
+- [DECISION] Imported GSD, Superpowers, and BMAD signals must be converted into Godpowers-native artifacts, not preserved as parallel state.

@@ -36,7 +36,7 @@ Each agent has these fields:
 |---|---|
 | **Triggers** | `/god-mode`, `/god-init` (delegated), `/god-mode --yolo` |
 | **Inputs** | User intent, `.godpowers/state.json`, `.godpowers/PROGRESS.md`, optional `.godpowers/intent.yaml`, optional GSD / Superpowers / BMAD context |
-| **Outputs** | `.godpowers/state.json` (mode + scale), `.godpowers/PROGRESS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
+| **Outputs** | `.godpowers/state.json` (mode + scale), `.godpowers/PROGRESS.md`, `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
 | **Downstream consumers** | All other agents read state.json |
 | **Artifact awareness** | All 14 artifact categories (it routes to specialists) |
 | **Handoff** | Spawns specialists in tier order; awaits their return; pauses for legitimate human-only decisions |
@@ -62,10 +62,10 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-prd`, `/god-feature` (mini-PRD mode), `/god-mode` (via orchestrator), reconciliation if PRD missing |
-| **Inputs** | User intent, `.godpowers/intent.yaml`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/PRD.md` |
+| **Inputs** | User intent, `.godpowers/intent.yaml`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/PRD.md` |
 | **Outputs** | `.godpowers/prd/PRD.md` + `.godpowers/prd/PRD.meta.json` |
 | **Downstream consumers** | god-architect, god-roadmapper, god-launch-strategist, god-observability-engineer (reads NFRs), god-reconciler |
-| **Artifact awareness** | Imported preparation context is supporting evidence only, never source of truth |
+| **Artifact awareness** | Initial findings and imported preparation context are supporting evidence only, never source of truth |
 | **Handoff** | Returns when PRD passes have-nots P-01..P-15. Pauses for ambiguous problem space, missing domain knowledge, conflicting requirements. |
 | **Standards check** | YES (substitution + three-label + 15 have-nots) |
 
@@ -74,7 +74,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-arch`, `/god-feature` (delta mode), `/god-mode` |
-| **Inputs** | `.godpowers/prd/PRD.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ARCH.md` |
+| **Inputs** | `.godpowers/prd/PRD.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ARCH.md` |
 | **Outputs** | `.godpowers/arch/ARCH.md`, `.godpowers/arch/adr/<n>-<title>.md` |
 | **Downstream consumers** | god-roadmapper, god-stack-selector, god-planner, god-deploy-engineer, god-harden-auditor |
 | **Artifact awareness** | PRD requirements, NFRs, optional org-context.yaml (bluefield), imported preparation context as supporting evidence |
@@ -86,7 +86,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-roadmap`, `/god-mode`, `/god-roadmap-update` (legacy) |
-| **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/arch/ARCH.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ROADMAP.md` |
+| **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/arch/ARCH.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ROADMAP.md` |
 | **Outputs** | `.godpowers/roadmap/ROADMAP.md` |
 | **Downstream consumers** | god-planner, god-roadmap-reconciler, god-reconciler |
 | **Artifact awareness** | PRD requirements, ARCH dependency edges, imported milestones and stories as supporting evidence |
@@ -98,7 +98,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-stack`, `/god-mode` |
-| **Inputs** | `.godpowers/arch/ARCH.md`, optional `.godpowers/org-context.yaml` (bluefield constraint), optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
+| **Inputs** | `.godpowers/arch/ARCH.md`, optional `.godpowers/org-context.yaml` (bluefield constraint), optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
 | **Outputs** | `.godpowers/stack/DECISION.md` |
 | **Downstream consumers** | god-repo-scaffolder, god-planner, god-deploy-engineer |
 | **Artifact awareness** | ARCH NFRs, ADRs, org constraints if bluefield, imported stack signals as supporting evidence |
