@@ -72,3 +72,19 @@ Both can run; /god-harden is the critical path to Launch.
 
 If more milestones remain in the roadmap, suggest re-running /god-build for
 the next milestone before moving to Tier 3.
+
+
+## Locking
+
+The orchestrator acquires a state-lock before this skill mutates anything,
+scoped to the smallest affected unit (e.g. `tier-1.prd` for `/god-prd`,
+`linkage` for `/god-scan`). Lock TTL is 5 minutes; reentrant for the
+same holder; force-reclaimable if stale via `/god-repair`.
+
+Read-only inspection commands (`/god-status`, `/god-doctor`,
+`/god-locate`) do NOT block on the lock. Concurrent writers on
+non-overlapping scopes are allowed; on overlapping scopes, the second
+writer pauses or routes elsewhere via `/god-next`.
+
+See [ARCHITECTURE.md "Concurrency contract"](../ARCHITECTURE.md) for
+the full contract.

@@ -44,6 +44,40 @@ suite-scope coordination across multiple repos but never bypasses
 per-repo orchestrators. When working in a registered Mode D suite,
 expect god-coordinator at Tier 0 alongside you, not above.
 
+## Concurrency: acquire lock + update CHECKPOINT after every mutation
+
+The orchestrator is the single writer per mutation (see
+ARCHITECTURE.md "Concurrency contract"). Before any state-changing
+sub-step:
+
+1. Acquire the advisory lock via `lib/state-lock.acquire(projectRoot,
+   { holder: 'god-orchestrator@<run-id>', scope: '<tier-N.substep>',
+   ttlMs: 5 * 60 * 1000 })`.
+2. If `acquired: false`, the project is being mutated by another actor
+   (concurrent session, CI, or a previous run that crashed without
+   release). Options:
+   - If `reason: 'held'` and current process can wait, sleep up to
+     30s and retry.
+   - If lock is stale (auto-reclaimed on acquire), proceed.
+   - Otherwise pause and surface to user: "lock held by X since Y;
+     run `/god-repair` to reclaim or wait for the holder."
+3. Run the mutating work inside the lock.
+4. Release: `lib/state-lock.release(projectRoot, holder)`. Always
+   release on the success path AND every error path. Use
+   `lib/state-lock.withLock(...)` for the safest pattern.
+
+Read-only commands (`/god-status`, `/god-doctor`, `/god-help`,
+`/god-version`, `/god-audit`, `/god-locate`, `/god-context-scan`,
+`/god-logs`, `/god-metrics`, `/god-trace`) do NOT acquire a lock.
+
+After every sub-step completion (success OR failure), call
+`lib/checkpoint.syncFromState(projectRoot, { nextCommand, nextReason })`
+to refresh `.godpowers/CHECKPOINT.md`. This keeps the disk pin in sync
+so a new session can run `/god-locate` and immediately know where
+things are. The cost is a single file write; the benefit is that
+context-rot in any future session is bounded by the time between
+checkpoints.
+
 ## Mode D awareness (when applicable)
 
 Before each tier, check whether this repo is part of a registered suite:
