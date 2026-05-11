@@ -82,19 +82,41 @@ Shipped:
   extensions/, INSPIRATION.md were missing); `prepublishOnly` runs
   the full test suite before any publish. Tarball: 364KB / 439 files.
 
-### v0.15.0 - Distribution + OTel + first-party packs
+### v0.15.0 - Distribution + OTel + first-party packs (in flight)
 
-- `npm publish godpowers` to the public registry
-- Semantic-release automation on main
-- OTel exporter for events.jsonl
-- Cost-tracker live-integration with provider token reports (currently
-  estimates from byte counts; v0.15 wires actual model token responses
-  when the AI tool exposes them)
-- First-party packs published to npm:
+Landed on this branch; ships on merge to main via semantic-release:
+
+- **`npm publish godpowers`** to the public registry (token stored as
+  the `NPM_TOKEN` GitHub Actions secret; no token in source)
+- **Semantic-release automation** on main: `release.config.js` +
+  `.github/workflows/release.yml`. Conventional-commit history -> next
+  version + auto-generated CHANGELOG + npm publish (with provenance) +
+  GitHub Release.
+- **OTel exporter** for events.jsonl: `lib/otel-exporter.js` plus the
+  `/god-export-otel` skill. Maps workflow.run + agent.start/end to
+  OTLP spans; cost.recorded / gate.fail / error attach as span events.
+  Honors `OTEL_EXPORTER_OTLP_ENDPOINT` and `OTEL_EXPORTER_OTLP_HEADERS`
+  (for Honeycomb / Datadog auth). No external deps.
+- **Cost-tracker live integration**: `cost.recorded` events now carry
+  `source: 'live' | 'estimated'`. New `recordModelCall(handle, attrs)`
+  is the canonical entry point for AI tools surfacing real per-call
+  token counts. `/god-cost --strict` exits non-zero if any in-scope
+  record is estimated (CI gate once live reporting is wired).
+- **First-party packs publishable**:
   - `@godpowers/security-pack` (SOC2, HIPAA, PCI auditors)
   - `@godpowers/launch-pack` (Show HN, Product Hunt, Indie strategists)
   - `@godpowers/data-pack` (ETL, ML features, dashboards)
-- Telemetry: opt-in, off-by-default
+
+  Each pack ships its own `package.json` with `publishConfig.access=public`
+  and `peerDependencies.godpowers`. The
+  `.github/workflows/publish-pack.yml` workflow_dispatch action
+  publishes a single pack after a version bump.
+
+Deferred to a later release:
+
+- **Telemetry: opt-in, off-by-default** - separate trust/privacy design
+  pass; what questions we want to answer with the data should precede
+  the wire format.
 
 ### v1.0.0 - Stable
 
