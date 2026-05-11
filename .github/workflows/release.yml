@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    name: semantic-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for commit analysis)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Run full test suite (gate)
+        run: npm test
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: npx -y semantic-release@^24

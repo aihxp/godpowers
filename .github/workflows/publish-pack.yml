@@ -1,0 +1,43 @@
+name: Publish extension pack
+
+# Manually publish a first-party extension pack to npm. Triggered from
+# the GitHub Actions UI (workflow_dispatch). Bump the pack's package.json
+# version first, then run this workflow with the pack name.
+
+on:
+  workflow_dispatch:
+    inputs:
+      pack:
+        description: 'Pack to publish (security-pack, launch-pack, data-pack)'
+        required: true
+        type: choice
+        options:
+          - security-pack
+          - launch-pack
+          - data-pack
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish @godpowers/${{ inputs.pack }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Verify pack publishability (full root test suite)
+        run: npm test
+
+      - name: Publish pack
+        working-directory: extensions/${{ inputs.pack }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: npm publish --access public
