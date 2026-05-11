@@ -2,14 +2,14 @@ apiVersion: godpowers/v1
 kind: Extension
 metadata:
   name: "@godpowers/data-pack"
-  version: 1.0.0
+  version: 0.1.0
   description: |
     Data engineering specialists. ETL pipelines, ML feature stores, dashboards.
     Refuses common data anti-patterns: stale features in prod, dashboards
     without SLOs, ETL without idempotency.
 
 engines:
-  godpowers: ">=1.0.0 <2.0.0"
+  godpowers: ">=0.14.0 <2.0.0"
 
 provides:
   agents:

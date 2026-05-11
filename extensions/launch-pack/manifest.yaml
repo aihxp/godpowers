@@ -2,14 +2,14 @@ apiVersion: godpowers/v1
 kind: Extension
 metadata:
   name: "@godpowers/launch-pack"
-  version: 1.0.0
+  version: 0.1.0
   description: |
     Channel-specific launch strategists. Each agent knows the conventions,
     audience, and pitfalls of one launch channel. Layers on top of
     god-launch-strategist with channel expertise.
 
 engines:
-  godpowers: ">=1.0.0 <2.0.0"
+  godpowers: ">=0.14.0 <2.0.0"
 
 provides:
   agents:

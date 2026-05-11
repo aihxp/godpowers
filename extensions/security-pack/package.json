@@ -1,0 +1,42 @@
+{
+  "name": "@godpowers/security-pack",
+  "version": "0.1.0",
+  "description": "Compliance-aware security agents for SOC 2, HIPAA, and PCI-DSS audits. Layers on top of god-harden-auditor with regulation-specific checks.",
+  "keywords": [
+    "godpowers",
+    "godpowers-extension",
+    "security",
+    "soc2",
+    "hipaa",
+    "pci-dss",
+    "compliance",
+    "audit"
+  ],
+  "author": "Godpowers",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godpowers/godpowers.git",
+    "directory": "extensions/security-pack"
+  },
+  "homepage": "https://github.com/godpowers/godpowers/tree/main/extensions/security-pack#readme",
+  "bugs": {
+    "url": "https://github.com/godpowers/godpowers/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "agents/",
+    "skills/",
+    "workflows/",
+    "manifest.yaml",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "godpowers": ">=0.14.0 <2.0.0"
+  }
+}
