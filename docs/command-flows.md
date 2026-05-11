@@ -3,8 +3,8 @@
 > Per-command flow showing prerequisites, execution, subagent spawning,
 > standards check, success path, and endoff.
 >
-> Source of truth: `routing/<command>.yaml` files. This document is the
-> human-readable view.
+> Source of truth: `<runtimeRoot>/routing/<command>.yaml` files. This document
+> is the human-readable view.
 
 ---
 
@@ -530,7 +530,7 @@ Lists commands grouped by tier.
 Diagnoses install + state, suggests fixes.
 
 ### /god-version
-Prints version (currently 0.4.0).
+Prints the installed Godpowers version and capability summary.
 
 ### /god-lifecycle
 Shows project phase and contextually appropriate workflows.
@@ -635,12 +635,12 @@ Surface assumptions before they cement.
 
 ## Universal pattern
 
-Every command above follows this pattern (enforced by routing/<command>.yaml):
+Every command above follows this pattern (enforced by `<runtimeRoot>/routing/<command>.yaml`):
 
 ```
 1. /god-X invoked
 2. Skill calls /god-next --before=/god-X (pre-flight)
-3. Router checks prereqs from routing/god-X.yaml
+3. Router checks prereqs from `<runtimeRoot>/routing/god-X.yaml`
 4. Missing prereqs: prompt user, optionally run them first
 5. All prereqs satisfied: skill spawns specialist agent(s)
 6. Agent does work in fresh context
@@ -652,8 +652,8 @@ Every command above follows this pattern (enforced by routing/<command>.yaml):
 12. Router returns success-path.next-recommended
 13. Skill prints suggestion + reason
 
-(All routing data is in routing/<command>.yaml.
- The decision engine is /god-next backed by lib/router.js.)
+(All routing data is in `<runtimeRoot>/routing/<command>.yaml`.
+ The decision engine is `/god-next` backed by `<runtimeRoot>/lib/router.js`.)
 ```
 
 This is the universal contract. Every skill follows it. Every routing file

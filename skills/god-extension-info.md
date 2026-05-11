@@ -23,7 +23,7 @@ Example:
 ## Output
 
 ```
-EXTENSION: @godpowers/security-pack v1.0.0
+EXTENSION: @godpowers/security-pack v0.1.0
 Path: ~/.claude/godpowers-extensions/@godpowers/security-pack
 Description:
   Compliance-aware security agents for SOC 2, HIPAA, and PCI-DSS
@@ -31,7 +31,7 @@ Description:
   specific checks.
 
 Engines:
-  godpowers: >=1.0.0 <2.0.0   (compatible with running v0.13.0? YES)
+  godpowers: >=0.14.0 <2.0.0  (compatible with running v0.15.3? YES)
 
 Provides:
   Agents (3):

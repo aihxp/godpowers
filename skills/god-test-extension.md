@@ -49,7 +49,7 @@ Manifest: ./extensions/security-pack/manifest.yaml  [OK]
 apiVersion: godpowers/v1                            [OK]
 metadata.name: @godpowers/security-pack             [OK]
 metadata.version: 1.0.0                             [OK]
-engines.godpowers: >=1.0.0 <2.0.0                   [OK]
+engines.godpowers: >=0.14.0 <2.0.0                  [OK]
 
 Provided surface:
   agents/god-soc2-auditor.md   [OK]

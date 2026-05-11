@@ -4,8 +4,8 @@
 > artifact awareness, handoff protocol. Single source of truth.
 
 For per-agent prose instructions: see `agents/<name>.md`.
-For per-command routing: see `routing/<command>.yaml`.
-For workflow DAGs: see `workflows/<workflow>.yaml`.
+For per-command routing: see `<runtimeRoot>/routing/<command>.yaml`.
+For workflow DAGs: see `<runtimeRoot>/workflows/<workflow>.yaml`.
 
 This document is the cross-reference: who reads what, who writes what,
 who hands off to whom.
@@ -47,7 +47,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-next`, called internally by skills before execution |
-| **Inputs** | `routing/<command>.yaml`, `.godpowers/state.json` |
+| **Inputs** | `<runtimeRoot>/routing/<command>.yaml`, `.godpowers/state.json` |
 | **Outputs** | Routing decision (returned to caller, not written to disk) |
 | **Downstream consumers** | Calling skill |
 | **Artifact awareness** | All routing definitions, lifecycle phases |
@@ -679,9 +679,9 @@ Which agents trigger god-standards-check after running:
 | Need | Source |
 |---|---|
 | Per-agent prose instructions | `agents/<name>.md` |
-| Per-command routing (prereqs, next, agents spawned) | `routing/<command>.yaml` |
-| Workflow DAGs | `workflows/<workflow>.yaml` |
-| Recipes (intent → command sequences) | `routing/recipes/<recipe>.yaml` |
+| Per-command routing (prereqs, next, agents spawned) | `<runtimeRoot>/routing/<command>.yaml` |
+| Workflow DAGs | `<runtimeRoot>/workflows/<workflow>.yaml` |
+| Recipes (intent → command sequences) | `<runtimeRoot>/routing/recipes/<recipe>.yaml` |
 | Have-nots catalog | `references/HAVE-NOTS.md` |
 | Skill-to-agent mapping (visual) | `ARCHITECTURE-MAP.md` |
 | Cross-workflow integrations | `docs/arc-integrations.md` |

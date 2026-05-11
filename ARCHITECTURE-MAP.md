@@ -455,20 +455,20 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v0.4.0)
-├── .npmignore
+├── package.json (v0.15.3)
+├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
 │
-├── skills/                        <- 53 core slash commands
+├── skills/                        <- 105 core slash commands
 │   ├── god-mode.md, god-init.md, god-prd.md, god-arch.md, ...
 │   └── (one .md per slash command)
 │
-├── agents/                        <- 23 core specialist agents
+├── agents/                        <- 38 core specialist agents
 │   ├── god-orchestrator.md, god-pm.md, god-architect.md, ...
 │   └── (one .md per agent)
 │
-├── workflows/                     <- 11 declarative workflow YAMLs
+├── workflows/                     <- 13 executable workflow YAMLs
 │   ├── full-arc.yaml, feature-arc.yaml, hotfix-arc.yaml, ...
 │
 ├── templates/                     <- 11 artifact templates
@@ -482,17 +482,19 @@ godpowers/
 │   ├── shipping/                  <- Deploy patterns, SLOs, OWASP worksheets
 │   └── shared/                    <- Glossary, orchestrator composition
 │
-├── schema/                        <- 4 frozen JSON Schemas
+├── schema/                        <- 7 JSON Schemas
 │   ├── intent.v1.yaml.json
 │   ├── state.v1.json
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (4 modules)
-│   ├── state.js                   <- 88 lines, drift detection
-│   ├── events.js                  <- 118 lines, OTel-shape spans
-│   ├── intent.js                  <- 109 lines, YAML parser
-│   └── workflow-parser.js         <- 89 lines, topological waves
+├── lib/                           <- Real JS runtime (42 modules)
+│   ├── state.js                   <- state model + drift detection
+│   ├── events.js                  <- OTel-shape event log + hash chain
+│   ├── router.js                  <- command routing
+│   ├── recipes.js                 <- intent recipes
+│   ├── workflow-runner.js         <- executable workflow plans
+│   └── otel-exporter.js           <- OTLP/JSON export
 │
 ├── hooks/                         <- 2 hooks
 │   ├── session-start.sh           <- Loads project context on session open
@@ -534,25 +536,25 @@ godpowers/
 
 ---
 
-## Numbers (as of v0.11.0)
+## Numbers (as of v0.15.3)
 
 | Component | Count |
 |-----------|-------|
 | Layers | 4 |
 | Tiers | 4 (0-3) |
 | Sub-steps (per tier) | 13: PRD, ARCH, ROADMAP, STACK, **DESIGN, PRODUCT**, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration |
-| Slash commands | 70+ (added: /god-design, /god-design-impact, /god-test-runtime, /god-scan, /god-link, /god-lint, /god-context, /god-review-changes, /god) |
-| Specialist agents | 35+ (added: god-designer, god-design-reviewer, god-design-updater, god-browser-tester, god-context-writer) |
+| Slash commands | 105 |
+| Specialist agents | 38 |
 | Workflows (core YAMLs) | 13 |
 | Have-nots | 99 documented + 30+ mechanically validated by linter |
-| Templates | 12 (added: DESIGN.md) |
-| Reference documents | 24+ (added: 7 design domain refs, 7 antipattern refs, 2 design anatomy/antipatterns) |
-| JSON Schemas | 4 |
-| **JS runtime modules** | **23** (was 4; added: linkage, code-scanner, drift-detector, impact, cross-artifact-impact, review-required, reverse-sync, design-detector, design-spec, impeccable-bridge, awesome-design, skillui-bridge, browser-bridge, agent-browser-driver, runtime-audit, runtime-test, artifact-linter, artifact-diff, have-nots-validator) |
+| Templates | 12 |
+| Reference documents | 24+ |
+| JSON Schemas | 7 |
+| **JS runtime modules** | **42** |
 | **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
-| Documentation pages | 13 (added: change-propagation.md, linkage.md, dogfood-001-results.md, plus 7 design domain refs) |
-| **Test suites** | **18** (was 4) |
-| **Tests** | **1235** behavioral (was 547 mostly structural) |
+| Documentation pages | 18 under docs/ plus reference material |
+| **Test suites** | **36+ test files** |
+| **Tests** | **Full behavioral suite gated by npm test** |
 | Supported AI runtimes | 15+ |
 | Verification axes | **3**: static (lint, design-spec, have-nots), linkage (drift, reverse-sync), runtime (headless browser audit + functional test) |

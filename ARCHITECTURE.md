@@ -559,7 +559,7 @@ Every error from a Godpowers command ends with the most likely next command
 
 ---
 
-## 9. Observability (As Slash Commands) — v0.15
+## 9. Observability (As Slash Commands): v0.15
 
 Three views of the same events.jsonl, all via slash commands. The
 events.jsonl write surface exists today; these reader commands
@@ -640,7 +640,7 @@ metadata:
   version: 1.0.0
 
 engines:
-  godpowers: ">=1.0.0 <2.0.0"
+  godpowers: ">=0.14.0 <2.0.0"
 
 provides:
   agents:
@@ -662,7 +662,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 104 skills, 38 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 105 skills, 38 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |
@@ -745,7 +745,7 @@ After migration, the slash command `/god-doctor` validates the new state.
 Each extension declares:
 ```yaml
 engines:
-  godpowers: ">=1.0.0 <2.0.0"
+  godpowers: ">=0.14.0 <2.0.0"
 ```
 
 `/god-extension-add` checks compatibility before installing. Mismatches fail
@@ -815,7 +815,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 104 skills + 38 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 105 skills + 38 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

@@ -28,7 +28,7 @@ You and only you are responsible for:
 1. **Reading the defense** - mode detection (greenfield/brownfield/bluefield/audit)
    and scale detection.
 2. **Calling the play** - selecting the next specialist agent for each tier
-   sub-step from `routing/<command>.yaml`.
+   sub-step from `<runtimeRoot>/routing/<command>.yaml`.
 3. **Owning the playbook** - all writes to `state.json`, `PROGRESS.md`,
    `intent.yaml`, and `events.jsonl` originate from you or agents you spawn.
 4. **Audibles** - handling pause checkpoints, the critical-finding gate, and
@@ -140,9 +140,11 @@ Before each tier, check whether this repo is part of a registered suite:
 
 ## Routing-Driven Decisions
 
-For routing decisions, consult `routing/<command>.yaml` files (installed at
-`<runtime>/godpowers-routing/`). These define prerequisites, success-paths,
-standards checks, and endoff for each command.
+For routing decisions, consult `<runtimeRoot>/routing/<command>.yaml` files.
+When running from a repository checkout, `<runtimeRoot>` is the project root.
+When installed into an AI tool, `<runtimeRoot>` is
+`<tool-config-dir>/godpowers-runtime`. These files define prerequisites,
+success-paths, standards checks, and endoff for each command.
 
 When deciding what to spawn next, query the routing definition:
 - `prerequisites.required` -> what must be done first
@@ -159,11 +161,10 @@ producing agent's own self-check would miss.
 ## Recipe-Driven Decisions (for fuzzy intent)
 
 When the user describes intent in plain English instead of running a specific
-command, consult `routing/recipes/*.yaml` (installed at
-`<runtime>/godpowers-routing/recipes/`). These are scenario-based recipes
-that map fuzzy intent to specific command sequences.
+command, consult `<runtimeRoot>/routing/recipes/*.yaml`. These are
+scenario-based recipes that map fuzzy intent to specific command sequences.
 
-Programmatic access via `lib/recipes.js`:
+Programmatic access via `<runtimeRoot>/lib/recipes.js`:
 - `matchIntent(text, projectRoot)` -> ranked recipe matches by keyword
 - `suggestForState(projectRoot)` -> recipes matching current lifecycle phase
 - `getRecipe(name)` -> lookup specific recipe
@@ -175,8 +176,8 @@ function returns the `add-feature-mid-arc-pause` recipe with sequence
 with the "why" annotations for each step.
 
 This is the third layer of decision support:
-1. **Routing** (routing/<command>.yaml): structural prerequisites and gates
-2. **Recipes** (routing/recipes/<recipe>.yaml): scenario-based sequences
+1. **Routing** (`<runtimeRoot>/routing/<command>.yaml`): structural prerequisites and gates
+2. **Recipes** (`<runtimeRoot>/routing/recipes/<recipe>.yaml`): scenario-based sequences
 3. **Standards** (god-standards-check): quality gates between stages
 
 ## Detection-Driven Tier 1 Routing

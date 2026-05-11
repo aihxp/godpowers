@@ -1,8 +1,8 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v0.15.0.
+Complete command, agent, and artifact reference for v0.15.3.
 
-## Slash commands (104 total)
+## Slash commands (105 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.

@@ -19,8 +19,9 @@ plays:
 | `/god-next` | Pre-flight + post-flight routing. Checks prereqs and announces what's next. |
 | `/god-status` | Re-derives state from disk. Reports inconsistencies. |
 
-These skills do not own state. They read recipes (`routing/recipes/*.yaml`)
-and routing definitions (`routing/*.yaml`) and propose commands. The
+These skills do not own state. They read recipes
+(`<runtimeRoot>/routing/recipes/*.yaml`) and routing definitions
+(`<runtimeRoot>/routing/*.yaml`) and propose commands. The
 quarterback (and the agents it spawns) is the only writer to the load-bearing
 artifacts.
 

@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-11
-> Current shipped: v0.15.0
+> Current shipped: v0.15.3
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -13,13 +13,15 @@ slash commands.
 
 ## Shipped releases
 
-### v0.11.0 (current) - Production validation + design pipeline + runtime verification
+### Current surface (v0.15.3)
 
 What works today:
-- **82 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **105 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
-  observability, capture, knowledge, process, configuration, utility)
+  observability, capture, knowledge, process, configuration, utility,
+  extension management, release support)
 - **38 specialist agents** in fresh contexts
+- **13 executable workflows** and **36 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
   (with T3 Code transparently inheriting the underlying agent)
@@ -36,7 +38,7 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- 22 test suites, 1400+ passing
+- Full CI suite with 36+ behavioral test files and extension-pack publish gates
 
 See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
@@ -84,7 +86,7 @@ Shipped:
 
 ### v0.15.0 (shipped 2026-05-11) - Distribution + OTel + first-party packs
 
-`godpowers@0.15.0` is live on npm with sigstore provenance:
+`godpowers@0.15.x` is live on npm with sigstore provenance:
 https://www.npmjs.com/package/godpowers
 
 - **`npm install -g godpowers`** or `npx godpowers --claude --global`
@@ -116,6 +118,33 @@ https://www.npmjs.com/package/godpowers
   `.github/workflows/publish-pack.yml` workflow_dispatch action
   publishes a single pack after a version bump.
 
+### v0.15.1 (shipped 2026-05-11) - Metadata + documentation polish
+
+Shipped:
+
+- npm registry metadata improved: searchable description and expanded
+  keywords for AI agents, orchestration, coding tools, and artifact taxonomy.
+- `docs/reference.md` indexed the commands added across v0.13 to v0.15.
+- README install copy and roadmap wording were tightened.
+
+### v0.15.2 (shipped 2026-05-11) - Runtime hardening + pack gate
+
+Shipped:
+
+- Installed `/god`, `/god-next`, `/god-help`, `/god-standards`, and
+  `/god-version` now resolve runtime modules through
+  `<tool-config-dir>/godpowers-runtime` when not running inside the repo.
+- Installer copies `package.json` into `godpowers-runtime`, so installed OTel
+  exports report the real package version.
+- Linkage scans now replace stale scanner-owned links while preserving manual
+  links.
+- Checkpoint facts preserve action history; context writer reads the canonical
+  root-level `mode` and `scale` from `state.json`.
+- Event hash chains remain valid for large event lines.
+- Extension reinstalls clear old pack contents before copying the new pack.
+- Pack publish gate now checks peer dependency ranges against manifest
+  engines and uses a private npm cache for dry-run packing.
+
 Deferred to a later release:
 
 - **Telemetry: opt-in, off-by-default** - separate trust/privacy design
@@ -146,7 +175,7 @@ docs site. Work, ordered by readiness:
 
 Remaining work before tag:
 
-- [x] npm publish marker tag (v0.15.0, with sigstore provenance)
+- [x] npm publish marker tag (v0.15.3, with sigstore provenance)
 - [ ] Record/replay integration test suite (full-arc, audit-only,
       build-only against fixtures)
 - [ ] Documentation site at godpowers.dev

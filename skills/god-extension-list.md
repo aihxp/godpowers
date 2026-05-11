@@ -18,17 +18,17 @@ List installed godpowers extensions.
 ```
 INSTALLED EXTENSIONS (3)
 
-@godpowers/security-pack  v1.0.0
+@godpowers/security-pack  v0.1.0
   Path: ~/.claude/godpowers-extensions/@godpowers/security-pack
   Skills: /god-soc2-audit, /god-hipaa-audit, /god-pci-audit
   Agents: god-soc2-auditor, god-hipaa-auditor, god-pci-auditor
   Workflows: soc2-arc, hipaa-arc, pci-arc
 
-@godpowers/launch-pack    v1.0.0
+@godpowers/launch-pack    v0.1.0
   Path: ~/.claude/godpowers-extensions/@godpowers/launch-pack
   Skills: /god-show-hn, /god-product-hunt, /god-indie-hackers, /god-oss-release
 
-@godpowers/data-pack      v0.9.0
+@godpowers/data-pack      v0.1.0
   Path: ~/.claude/godpowers-extensions/@godpowers/data-pack
   Skills: /god-etl, /god-ml-feature, /god-dashboard
 ```

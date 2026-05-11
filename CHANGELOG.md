@@ -5,6 +5,20 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.3] - 2026-05-11
+
+Documentation refresh release. Aligns the public docs, architecture map,
+roadmap, command examples, and extension examples with the shipped v0.15
+surface.
+
+### Changed
+- Updated command and agent counts across README, reference docs, roadmap,
+  architecture docs, and command examples.
+- Documented the installed runtime root path convention for routing, recipes,
+  workflows, and runtime modules.
+- Refreshed extension examples to match first-party pack versions and current
+  Godpowers engine compatibility.
+
 ## [0.15.2] - 2026-05-11
 
 Runtime hardening release. Fixes packaging and workflow edge cases found by

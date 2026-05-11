@@ -22,8 +22,8 @@ Where `<source>` is either:
 - An absolute or relative path to a directory containing `manifest.yaml`
   (e.g. `./extensions/security-pack`)
 - A scoped npm package name (e.g. `@godpowers/security-pack`).
-  In v0.13.0 only local directories are supported; npm install is on
-  the v0.14 ramp.
+  First-party packs are publish-ready npm packages; local directories
+  remain supported for development and private packs.
 
 ## Process
 
