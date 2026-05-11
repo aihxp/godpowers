@@ -5,6 +5,87 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.0] - 2026-05-11
+
+Distribution release. Godpowers and its three first-party packs are
+now publishable to npm with supply-chain provenance. OTel exporter
+turns events.jsonl into something a real observability backend can
+consume. Cost tracker distinguishes live (provider-reported) from
+estimated (heuristic) per-call token counts.
+
+### Added (cost-tracker live integration)
+- `cost.recorded` events now carry `source: 'live' | 'estimated'`.
+  Live = AI tool surfaced real per-call token counts from the
+  provider API; estimated = orchestrator's heuristic byte-based
+  count.
+- `lib/cost-tracker.recordModelCall(handle, attrs)`: canonical entry
+  point for AI tools with real usage data. Tags `source: 'live'`
+  automatically.
+- `lib/cost-tracker.isStrictLive(projectRoot, runIds?)`: returns
+  `{strict, live_calls, estimated_calls, total_calls}` to drive CI
+  gates.
+- `aggregate()` splits `totals` into `live_calls / live_usd /
+  live_tokens` and `estimated_*`.
+- `formatReport()` breaks the Spent line into Live and Estimated
+  sublines.
+- `/god-cost --strict`: exit non-zero if any in-scope record is
+  estimated. Wire into CI once live reporting is reliable.
+
+### Added (OTel exporter)
+- `lib/otel-exporter.js`: converts a run's events.jsonl into
+  OTLP/JSON ResourceSpans and (optionally) POSTs to an OTLP HTTP
+  collector. No external deps; uses Node's built-in http/https.
+- Event -> span mapping: `workflow.run` + `workflow.complete` form
+  the root span; `agent.start` + `agent.end` (matched by span_id)
+  become child spans parented to the root; other named events
+  (`cost.recorded`, `gate.fail`, `error`, `decision.route`,
+  `tool.call`) attach as span events; `error` or `gate.fail`
+  flips parent span status to ERROR.
+- Honors `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` (takes precedence),
+  `OTEL_EXPORTER_OTLP_ENDPOINT` (with `/v1/traces` auto-appended),
+  and `OTEL_EXPORTER_OTLP_HEADERS` (comma-separated `k=v` for auth
+  like `x-honeycomb-team=...`).
+- New skill `/god-export-otel`: opt-in; nothing exports until
+  invoked. Supports `--run-id`, `--all`, `--endpoint`, `--stdout`,
+  `--service-name`.
+
+### Added (first-party packs publishable as npm packages)
+- Each pack ships its own `package.json` with the scoped name,
+  `publishConfig.access=public`, `files` allowlist, and
+  `peerDependencies.godpowers`:
+  - `@godpowers/security-pack` (SOC 2, HIPAA, PCI-DSS auditors)
+  - `@godpowers/launch-pack` (Show HN, Product Hunt, Indie Hackers,
+    OSS release strategists)
+  - `@godpowers/data-pack` (ETL, ML features, dashboards)
+- Each pack starts at `0.1.0`, decoupled from the godpowers root
+  version.
+- Manifest engines fix: `>=1.0.0 <2.0.0` (impossible while godpowers
+  is on 0.x) -> `>=0.14.0 <2.0.0`.
+
+### Added (distribution)
+- `.github/workflows/publish.yml`: tag-triggered publish. On a `v*`
+  tag push, runs the full test suite as a gate, then `npm publish
+  --provenance --access public` using `${{ secrets.NPM_TOKEN }}`.
+- `.github/workflows/publish-pack.yml`: workflow_dispatch entry
+  point. Pick `security-pack`, `launch-pack`, or `data-pack` from
+  the GitHub Actions UI to publish that pack to npm after bumping
+  its `package.json` version.
+- CHANGELOG remains human-curated; `npm version minor` + push tags
+  is the release procedure.
+
+### Tests
+- 9 new tests for `source: 'live' | 'estimated'` cost-tracker
+  behavior, `recordModelCall()`, `isStrictLive()`, and aggregate
+  splits (35 total in `test-cost-saver.js`).
+- 15 new tests for the OTel exporter, including a real in-process
+  HTTP collector verifying POST, content-type, path, body, and
+  auth-header propagation.
+- 43 new tests for extension-pack publish readiness across all
+  three first-party packs: package.json well-formed, name+version
+  match manifest, `npm pack --dry-run` succeeds, tarball includes
+  required files, tarball excludes node_modules / .git / tests.
+- Full suite now 36 test suites, 1864+ behavioral tests.
+
 ## [0.14.0] - 2026-05-11
 
 The big release. Workflow runtime is now executable, locks and
