@@ -23,6 +23,18 @@ It fuses four disciplines into one unified workflow:
 - **Team intelligence** - scale-adaptive complexity, specialized agent personas
   (PM, Architect, Executor, Reviewer, Harden Auditor, etc.).
 
+## Status: 0.x
+
+Godpowers is in active 0.x development. The CLI, slash command names,
+and on-disk artifact schemas (`intent.yaml`, `state.json`, manifest YAML,
+agent frontmatter, skill frontmatter, `events.jsonl` vocabulary) are
+working but not yet contract-stable. Breaking changes ship as minor
+bumps with CHANGELOG callouts; patch releases never break anything.
+
+1.0.0 is gated on real-user dogfood, a record/replay integration test
+suite, a docs site, and schema stability guarantees. See
+[ROADMAP.md](docs/ROADMAP.md) for the full gate checklist.
+
 ## Install
 
 ```bash
