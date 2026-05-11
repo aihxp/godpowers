@@ -20,6 +20,8 @@ Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
 context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
+Optional: `.godpowers/design/DESIGN.md` and `.godpowers/design/PRODUCT.md`
+may exist as early product-experience preparation.
 
 ## Imported Preparation Context
 
@@ -30,6 +32,10 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its delivery signals
 before sequencing milestones. Use imported GSD, Superpowers, BMAD, or similar
 stories and plans as hypothesis-level input only.
 
+If DESIGN.md or PRODUCT.md exists, read them before sequencing milestones.
+Use screens, flows, components, accessibility obligations, and product voice to
+shape vertical slices and acceptance gates.
+
 Rules:
 - Do not add roadmap features that are not grounded in the PRD.
 - Use imported milestones, stories, and done-work signals to inform ordering,
@@ -37,6 +43,7 @@ Rules:
 - If imported context conflicts with PRD or ARCH, PRD and ARCH win.
 - Mark any imported sequencing assumption as `[HYPOTHESIS]` until confirmed by
   Godpowers artifacts or the user.
+- Keep design-derived milestones grounded in the PRD and ARCH.
 
 ## Process
 

@@ -64,17 +64,22 @@ The `card` token wraps each metric panel. No nested cards.
 
 ## When DESIGN.md is required
 
-`/god-design` runs as a Tier 1 sub-step when `lib/design-detector`
-returns `requires-design: true`. Triggers:
+`/god-design` runs as an early Tier 1 sub-step after PRD and before
+architecture when `lib/design-detector` returns `requires-design: true`.
+Triggers:
 
 - `package.json` has a frontend framework dep (React, Vue, Svelte,
   Next.js, Nuxt, etc. - 24 patterns recognized)
 - `pubspec.yaml` declares Flutter
-- `.godpowers/stack/DECISION.md` mentions a UI framework
+- `.godpowers/prep/INITIAL-FINDINGS.md`, `.godpowers/prep/IMPORTED-CONTEXT.md`,
+  or PRD mentions UI, screens, journeys, components, product voice, brand, or
+  interaction states
+- `.godpowers/stack/DECISION.md` mentions a UI framework, when stack already
+  exists
 - `src/components/`, `app/`, or `public/` directory exists
 
 When skipped: `tier-1.design.status = not-required` and the arc
-proceeds straight to `/god-repo`.
+continues to architecture.
 
 ## How to start a DESIGN.md
 

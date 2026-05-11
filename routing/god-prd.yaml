@@ -37,6 +37,13 @@ standards:
 
 success-path:
   next-recommended: /god-arch
+  conditional-next:
+    - condition: ui-detected
+      next: /god-design
+      reason: UI or product-experience signals found; write DESIGN.md before architecture
+    - condition: no-ui-detected
+      next: /god-arch
+      reason: No UI surface detected; architecture is the next planning gate
   alternatives:
     - command: /god-mode
       when: user-wants-autonomous-from-here

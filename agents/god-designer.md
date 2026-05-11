@@ -4,7 +4,7 @@ description: |
   Lifecycle owner of DESIGN.md and PRODUCT.md. Detects impeccable; if
   installed, delegates to /impeccable teach (initial) or /impeccable
   document (refresh from code). If not installed, falls back to a
-  minimal builder using PRD/ARCH/STACK.
+  minimal builder using prep artifacts, PRD, and any available ARCH/STACK.
 
   Spawned by: /god-design, god-orchestrator (Tier 1, conditional on UI)
 tools: Read, Write, Edit, Bash, Grep, Glob
@@ -78,10 +78,18 @@ Cascade:
   - `references/design/UX-WRITING.md` (copy)
   - `references/design/DESIGN-ANTIPATTERNS.md` (what to avoid)
 
-  Use PRD.md (target users, register hints), ARCH.md (UI surface),
-  STACK.md (UI framework) to generate a starter DESIGN.md from the
-  template, applying the rules from the references above. The output
-  will be less polished than impeccable's, but it's not toothless: the
+  Read `.godpowers/prep/INITIAL-FINDINGS.md` and
+  `.godpowers/prep/IMPORTED-CONTEXT.md` when present, then use PRD.md
+  (target users, flows, register hints), plus ARCH.md and STACK.md only
+  when they already exist. Early mode runs after PRD and before
+  architecture, so do not require ARCH or STACK. In early mode, produce
+  an experience contract that architecture and stack can honor later:
+  screens, flows, component needs, interaction states, product voice,
+  constraints, anti-references, and visual token direction.
+
+  Generate a starter DESIGN.md from the template, applying the rules
+  from the references above. The output will be less polished than
+  impeccable's, but it's not toothless: the
   references encode our design opinions across all 7 domains
   (typography, color, spatial, motion, interaction, responsive,
   ux-writing) at shallower depth than impeccable's full skill set.
@@ -152,7 +160,8 @@ After done, return to god-orchestrator with:
 - DESIGN.md path
 - PRODUCT.md path (if produced)
 - Validation summary (errors, warnings)
-- Suggested next: `/god-repo` (proceed to scaffolding)
+- Suggested next: `/god-arch` when design ran early, or `/god-repo` when
+  architecture, roadmap, and stack are already complete
 
 ## Linkage hooks
 

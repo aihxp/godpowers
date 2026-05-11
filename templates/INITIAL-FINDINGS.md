@@ -19,6 +19,7 @@
 - [HYPOTHESIS] CI or release signals found: [paths or "none detected"].
 - [HYPOTHESIS] Deployment signals found: [paths or "none detected"].
 - [HYPOTHESIS] Documentation signals found: [paths or "none detected"].
+- [HYPOTHESIS] UI or product-experience signals found: [frameworks, routes, components, workflows, design docs, or "none detected"].
 
 ## Methodology And AI Tool Signals
 
@@ -31,6 +32,7 @@
 ## Planning Implications
 
 - [HYPOTHESIS] PRD should pay attention to: [product or user signal].
+- [HYPOTHESIS] Design should pay attention to: [early UX, workflow, brand, component, or interaction signal].
 - [HYPOTHESIS] Architecture should pay attention to: [technical or risk signal].
 - [HYPOTHESIS] Roadmap should pay attention to: [delivery or dependency signal].
 - [HYPOTHESIS] Stack should pay attention to: [tooling or constraint signal].

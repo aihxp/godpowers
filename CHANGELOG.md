@@ -5,6 +5,21 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.9] - 2026-05-11
+
+Early design planning release. Lets UI and product-experience projects shape
+DESIGN.md before architecture.
+
+### Changed
+- `/god-init` now records UI and product-experience signals in
+  `.godpowers/prep/INITIAL-FINDINGS.md`.
+- `/god-prd`, `/god-next`, and `/god-mode` now route to `/god-design` after
+  PRD and before `/god-arch` when UI or product-experience signals are found.
+- `/god-design` now requires PRD, not stack, so DESIGN.md can inform
+  architecture, roadmap, and stack instead of arriving after them.
+- Architecture, roadmap, and stack routing and agents now read DESIGN.md and
+  PRODUCT.md when present.
+
 ## [0.15.8] - 2026-05-11
 
 Init preparation release. Documents what Godpowers found before PRD, next-step

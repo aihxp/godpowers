@@ -21,6 +21,9 @@ Spawn the **god-pm** agent in a fresh context via Task tool.
 5. The agent writes `.godpowers/prd/PRD.md`
 6. The agent runs have-nots checks before declaring done
 7. If god-pm pauses for a human question: relay to user using pause format
+8. If prep artifacts or the PRD show UI or product-experience signals, route
+   to `/god-design` next so DESIGN.md can shape architecture. Otherwise route
+   to `/god-arch`.
 
 ## Verification
 
@@ -47,7 +50,7 @@ After PRD is written and have-nots pass, print:
 ```
 PRD complete: .godpowers/prd/PRD.md
 
-Suggested next: /god-arch (design the architecture)
+Suggested next: /god-design (shape product experience) if UI/product experience is detected, otherwise /god-arch (design the architecture)
 ```
 
 

@@ -45,6 +45,11 @@ next step is safe or why a migration-aware step such as `/god-prd`,
 `/god-map-codebase`, or `/god-mode` is better. Prep artifacts are context only;
 state.json and completed Godpowers artifacts remain authoritative.
 
+If PRD is complete, DESIGN is missing, and initial findings, imported context,
+the PRD, or the codebase show UI or product-experience signals, suggest
+`/god-design` before `/god-arch`. DESIGN.md is early preparation for visible
+workflows, not a replacement for architecture.
+
 ## Process for Mode 1 (post-completion)
 
 ```
@@ -57,7 +62,8 @@ Skill calls: /god-next --after=/god-prd
 Read <runtimeRoot>/routing/god-prd.yaml
    |
    v
-Get success-path.next-recommended (e.g., "/god-arch")
+Get success-path.next-recommended (e.g., "/god-arch"), then apply any
+conditional-next rule such as UI-detected -> "/god-design"
    |
    v
 Display: "PRD complete: .godpowers/prd/PRD.md

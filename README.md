@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.8-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.15.9-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -73,6 +73,12 @@ run next based on disk state:
 PRD complete: .godpowers/prd/PRD.md
 
 Suggested next: /god-arch (design the architecture)
+```
+
+For UI or product-experience projects, PRD can route to design first:
+
+```
+Suggested next: /god-design (shape product experience)
 ```
 
 You can also ask any time:
@@ -164,7 +170,7 @@ Skill updates:   PROGRESS.md
 | Tier | Sub-steps | Specialists |
 |------|-----------|-------------|
 | 0: Orchestration | mode detection, scale, progress | god-orchestrator |
-| 1: Planning | PRD, ARCH, ROADMAP, STACK | god-pm, god-architect, god-roadmapper, god-stack-selector |
+| 1: Planning | PRD, optional DESIGN, ARCH, ROADMAP, STACK | god-pm, god-designer, god-architect, god-roadmapper, god-stack-selector |
 | 2: Building | repo, plan, execute, review | god-repo-scaffolder, god-planner, god-executor, god-spec-reviewer, god-quality-reviewer |
 | 3: Shipping | deploy, observe, launch, harden | god-deploy-engineer, god-observability-engineer, god-launch-strategist, god-harden-auditor |
 

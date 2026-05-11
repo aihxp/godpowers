@@ -23,6 +23,9 @@ Before starting:
   context.
 - Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
   context.
+- Optional: `.godpowers/design/DESIGN.md` and
+  `.godpowers/design/PRODUCT.md` may exist as early product-experience
+  preparation.
 
 ## Imported Preparation Context
 
@@ -34,10 +37,17 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical signals
 before drafting ARCH. Use imported architecture, integration, risk, and stack
 constraints as hypothesis-level input only.
 
+If `.godpowers/design/DESIGN.md` or `.godpowers/design/PRODUCT.md` exists,
+read them before drafting ARCH. Use early design to identify user-facing
+surfaces, routes, component boundaries, state flows, accessibility needs, and
+where architecture must preserve product experience.
+
 Rules:
 - Do not let imported context override PRD NFRs or Godpowers state.
 - Convert useful imported signals into ADR context, tradeoffs, or open
   questions.
+- Convert useful design signals into containers, ADR context, UI boundary
+  descriptions, or open questions.
 - If imported context conflicts with the PRD, the PRD wins and the conflict
   becomes an `[OPEN QUESTION]`.
 

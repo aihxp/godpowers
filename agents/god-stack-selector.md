@@ -19,6 +19,8 @@ Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
 context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
+Optional: `.godpowers/design/DESIGN.md` and `.godpowers/design/PRODUCT.md`
+may exist as product-experience preparation.
 
 ## Imported Preparation Context
 
@@ -29,11 +31,17 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical and stack
 signals before scoring candidates. Use imported technology choices, constraints,
 and team familiarity as hypothesis-level input only.
 
+If DESIGN.md or PRODUCT.md exists, read them before scoring frontend,
+component, styling, accessibility, animation, and design-token tooling
+candidates.
+
 Rules:
 - Do not let imported stack preference override ARCH NFRs or ADRs.
 - Treat imported technology choices as candidate evidence, not decisions.
 - If imported context conflicts with ARCH, ARCH wins and the conflict becomes a
   stack open question.
+- If design intent conflicts with ARCH NFRs, ARCH wins and the conflict becomes
+  a stack or architecture open question.
 
 ## Process
 

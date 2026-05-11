@@ -10,14 +10,18 @@ prerequisites:
     - check: file:.godpowers/PROGRESS.md
       reason: "/god-design needs an initialized project"
       auto-complete: /god-init
-    - check: file:.godpowers/stack/DECISION.md
-      reason: "Stack must be selected before design (UI framework drives token shape)"
-      auto-complete: /god-stack
-  optional:
     - check: file:.godpowers/prd/PRD.md
-      reason: "PRD informs target users and register"
+      reason: "Design needs PRD user, product, and register context"
+      auto-complete: /god-prd
+  optional:
+    - check: file:.godpowers/prep/INITIAL-FINDINGS.md
+      reason: "Initial findings can show UI and product-experience signals"
+    - check: file:.godpowers/prep/IMPORTED-CONTEXT.md
+      reason: "Imported GSD, Superpowers, or BMAD context can inform design hypotheses"
     - check: file:.godpowers/arch/ARCH.md
       reason: "ARCH names the UI surface that DESIGN applies to"
+    - check: file:.godpowers/stack/DECISION.md
+      reason: "STACK can refine framework-specific token shape when already selected"
 
 execution:
   spawns: [god-designer]
@@ -47,8 +51,11 @@ standards:
     - "cards in cards"        # impeccable anti-pattern
 
 success-path:
-  next-recommended: /god-repo
-  why: Design tokens stable; repo can scaffold with token references
+  next-recommended: /god-arch
+  why: Early product experience is defined; architecture can now respect the intended surfaces and flows
+  alternatives:
+    - command: /god-repo
+      when: architecture-roadmap-and-stack-already-done
 
 failure-path:
   on-error: /god-doctor

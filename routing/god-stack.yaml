@@ -16,6 +16,8 @@ execution:
   context: fresh
   reads:
     - .godpowers/arch/ARCH.md
+    - .godpowers/design/DESIGN.md
+    - .godpowers/design/PRODUCT.md
     - .godpowers/prep/INITIAL-FINDINGS.md
     - .godpowers/prep/IMPORTED-CONTEXT.md
   writes:

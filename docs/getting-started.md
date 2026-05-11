@@ -86,6 +86,7 @@ Skip `/god-mode` and run individual commands:
 ```
 /god-init       Start the project
 /god-prd        Write the PRD
+/god-design     Shape DESIGN.md early when UI or product experience is detected
 /god-arch       Design the architecture
 /god-roadmap    Sequence the work
 ... etc
@@ -96,6 +97,10 @@ what it found in the codebase. If it detects GSD, Superpowers, BMAD, or similar
 planning context, it also writes `.godpowers/prep/IMPORTED-CONTEXT.md` as
 supporting preparation material for PRD, architecture, roadmap, and stack
 decisions.
+
+For UI or product-experience projects, `/god-prd` can suggest `/god-design`
+before `/god-arch`. That lets screens, flows, components, product voice, and
+accessibility requirements inform architecture instead of arriving after it.
 
 After each, run `/god-next` to see the suggested next command.
 

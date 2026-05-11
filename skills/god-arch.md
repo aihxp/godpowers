@@ -15,8 +15,11 @@ Spawn the **god-architect** agent in a fresh context via Task tool.
 
 1. Verify `.godpowers/prd/PRD.md` exists. If not, tell user to run `/god-prd` first.
 2. Spawn god-auditor briefly to verify PRD passes have-nots. If fails, report and stop.
-3. Spawn god-architect with the PRD path and full context window
-4. The agent writes `.godpowers/arch/ARCH.md` and ADRs to `.godpowers/arch/adr/`
+3. If `.godpowers/design/DESIGN.md` or `.godpowers/design/PRODUCT.md` exists,
+   include it as input. Design is optional, but when present it informs UI
+   containers, routes, flows, and tradeoffs.
+4. Spawn god-architect with the PRD path and full context window
+5. The agent writes `.godpowers/arch/ARCH.md` and ADRs to `.godpowers/arch/adr/`
 
 ## Verification
 

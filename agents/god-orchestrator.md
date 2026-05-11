@@ -227,18 +227,23 @@ This is the third layer of decision support:
 
 ## Detection-Driven Tier 1 Routing
 
-After STACK done, branch on UI presence:
+After PRD and before ARCH, branch on UI or product-experience presence:
 
 1. Call `lib/design-detector.isUiProject(projectRoot)` to determine
    whether DESIGN tier is required.
 2. Call `lib/design-detector.isImpeccableInstalled(projectRoot)` to
    determine whether to delegate or fall back.
-3. Persist results to `state.json.project.detection-results`.
-4. If `requires-design: true`: spawn `god-designer` for DESIGN tier
-   (Tier 1 sub-step 5). god-designer delegates to impeccable's
+3. Read `.godpowers/prep/INITIAL-FINDINGS.md`,
+   `.godpowers/prep/IMPORTED-CONTEXT.md`, and `.godpowers/prd/PRD.md`
+   for UI, workflow, journey, component, brand, accessibility, and screen
+   signals.
+4. Persist results to `state.json.project.detection-results`.
+5. If `requires-design: true`: spawn `god-designer` for DESIGN tier before
+   architecture. god-designer delegates to impeccable's
    `/impeccable teach` if available, else falls back to a minimal builder.
-5. If `requires-design: false`: mark `tier-1.design.status = not-required`
-   and `tier-1.product.status = not-required`. Advance to Tier 2.
+   DESIGN.md and PRODUCT.md then inform architecture, roadmap, and stack.
+6. If `requires-design: false`: mark `tier-1.design.status = not-required`
+   and `tier-1.product.status = not-required`. Continue to architecture.
 
 ## Linkage and Reverse-Sync
 
@@ -323,9 +328,10 @@ For single-agent sub-steps:
 | Sub-step | Spawn Agent | Reads | Writes |
 |----------|-------------|-------|--------|
 | PRD | god-pm | user intent | .godpowers/prd/PRD.md |
-| Architecture | god-architect | PRD | .godpowers/arch/ARCH.md |
-| Roadmap | god-roadmapper | PRD, ARCH | .godpowers/roadmap/ROADMAP.md |
-| Stack | god-stack-selector | ARCH | .godpowers/stack/DECISION.md |
+| Design | god-designer | prep, PRD | .godpowers/design/DESIGN.md + .godpowers/design/PRODUCT.md |
+| Architecture | god-architect | PRD, optional DESIGN | .godpowers/arch/ARCH.md |
+| Roadmap | god-roadmapper | PRD, ARCH, optional DESIGN | .godpowers/roadmap/ROADMAP.md |
+| Stack | god-stack-selector | ARCH, optional DESIGN | .godpowers/stack/DECISION.md |
 | Repo | god-repo-scaffolder | DECISION | .godpowers/repo/AUDIT.md + repo files |
 | Deploy | god-deploy-engineer | ARCH, build | .godpowers/deploy/STATE.md |
 | Observe | god-observability-engineer | PRD, ARCH | .godpowers/observe/STATE.md |

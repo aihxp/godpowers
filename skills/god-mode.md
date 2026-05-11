@@ -50,6 +50,9 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
      `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the
      first planning or build step
+   - Instruction to run `/god-design` after `/god-prd` and before `/god-arch`
+     when initial findings, imported planning context, the PRD, or the
+     codebase show UI or product-experience signals
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

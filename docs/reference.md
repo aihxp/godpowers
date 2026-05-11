@@ -219,12 +219,12 @@ First-party packs on npm:
   prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
 
   prd/PRD.md               Product Requirements
+  design/DESIGN.md         Early UI and product-experience design spec when required
+  design/PRODUCT.md        Strategic product file when required
   arch/ARCH.md             Architecture
   arch/adr/                ADRs
   roadmap/ROADMAP.md       Sequenced work
   stack/DECISION.md        Tech decisions
-  design/DESIGN.md         Google Labs design spec
-  design/PRODUCT.md        Strategic product file
   repo/AUDIT.md            Repo scaffold audit
   build/PLAN.md            Build slices
   build/STATE.md           Build progress

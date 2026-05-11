@@ -19,6 +19,8 @@ execution:
   context: fresh
   reads:
     - .godpowers/prd/PRD.md
+    - .godpowers/design/DESIGN.md
+    - .godpowers/design/PRODUCT.md
     - .godpowers/prep/INITIAL-FINDINGS.md
     - .godpowers/prep/IMPORTED-CONTEXT.md
     - templates/ARCH.md

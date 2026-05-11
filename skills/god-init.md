@@ -43,6 +43,17 @@ needs to specify a mode.
    - If any are detected, summarize useful signals into
      `.godpowers/prep/IMPORTED-CONTEXT.md` as preparation context.
      Do not treat external planning-system files as source of truth.
+   - Detect whether early design preparation is warranted:
+     - UI frameworks or app models: React, Next, Vue, Nuxt, Svelte,
+       SvelteKit, Astro, Remix, Angular, Solid, Flutter, Electron, Tauri
+     - UI surfaces: `src/components/`, `app/`, `pages/`, `routes/`,
+       `public/`, form-heavy flows, dashboards, editor surfaces, mobile
+       shells, marketing pages, or other user-facing product experience
+     - Imported GSD, Superpowers, or BMAD context that mentions UX, screens,
+       journeys, components, brand, interaction states, or visual design
+   - Record the result in `INITIAL-FINDINGS.md` so `/god-prd`, `/god-next`,
+     and `/god-mode` can place `/god-design` after PRD and before
+     `/god-arch` when the project needs early product-experience shape.
 
 3. **Announce findings in plain English** (no jargon):
    - Empty dir + no org context: "Detected: empty directory. Starting fresh."
@@ -121,8 +132,8 @@ needs to specify a mode.
 Always create `.godpowers/prep/INITIAL-FINDINGS.md`. This is Godpowers'
 durable answer to "what did init find in this codebase?" It captures codebase
 shape, framework and tooling signals, tests, CI, docs, AI-tool files, detected
-methodology systems, risk signals, and the reasoning behind the suggested next
-command.
+methodology systems, UI or product-experience signals, risk signals, and the
+reasoning behind the suggested next command.
 
 If GSD, Superpowers, BMAD, or similar planning context is detected, create
 `.godpowers/prep/IMPORTED-CONTEXT.md`. This artifact is preparation context,
