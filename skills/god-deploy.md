@@ -54,6 +54,14 @@ Do not ask for provider keys, API tokens, dashboards, DNS tokens, production
 secrets, admin consoles, or test users until a specific scripted check proves
 that exact item is required.
 
+Live target URLs must be evidence-backed. Accept current user input, env/config
+values, deployment config, CI variable references, IaC output, hosting CLI
+output, or deployment docs that explicitly label the URL as owned and current.
+Never invent a domain from the product name, repo name, package name, README
+title, brand name, or common TLDs. If only local URLs exist, run local smoke
+only and pause for `STAGING_APP_URL=<deployed staging origin>`. If only
+production is known, do not use it as staging without explicit user approval.
+
 
 ## Re-invocation contract
 

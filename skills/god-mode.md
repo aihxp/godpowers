@@ -90,6 +90,10 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      should ask only for the smallest next item needed by a concrete command,
      usually `STAGING_APP_URL=<staging-origin>`. Ask for additional provider
      access only after a named check proves it is needed.
+   - Instruction that staging, preview, and production URLs must come from
+     direct evidence. Never infer or invent a domain from project name, package
+     name, repo name, README title, or brand name. If no deployed origin is
+     evidenced, pause for `STAGING_APP_URL=<deployed staging origin>`.
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

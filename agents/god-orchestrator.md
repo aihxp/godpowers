@@ -361,7 +361,8 @@ For deploy, observe, harden, and launch:
 
 Use this order when external access is missing:
 
-1. Ask for the deployed staging origin only if no live target URL is known.
+1. Ask for the deployed staging origin only if no live target URL is known from
+   explicit evidence.
 2. Run the real staging smoke command against that origin.
 3. Ask for a provider key, dashboard, admin console, or test user only when a
    named smoke, callback, webhook, export, observability, or rollback check
@@ -373,6 +374,23 @@ Use this order when external access is missing:
 
 Never request every possible key or API at the start of shipping. Keys and API
 tokens are last-mile inputs.
+
+### Origin Evidence Rule
+
+A staging, production, or preview origin is known only when it appears in direct
+evidence:
+
+- user-provided value in the current session
+- `STAGING_APP_URL`, `PUBLIC_APP_URL`, `APP_URL`, or equivalent env/config value
+- deployment config, CI variable reference, IaC output, hosting CLI output, or
+  checked-in deployment docs that explicitly label the URL as owned and current
+- an existing Godpowers artifact that cites one of the sources above
+
+Never invent domains from the product name, package name, repo name, README
+title, brand name, or common TLDs. Never turn `scriven` into
+`https://scriven.app`, or any similar guessed URL. If only production is known,
+do not call it staging. If only local URLs exist, run local smoke only and pause
+for `STAGING_APP_URL=<deployed staging origin>` before deployed staging smoke.
 
 ## YOLO Behavior with Design + Linkage
 

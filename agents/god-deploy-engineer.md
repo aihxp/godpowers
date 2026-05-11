@@ -70,6 +70,15 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
   dashboards, DNS tokens, production secrets, admin consoles, or test users
   until a named deploy, smoke, rollback, health, callback, webhook, export, or
   observability check cannot run without that exact item.
+- Treat a staging or production origin as known only when it appears in direct
+  evidence: current user input, env/config values, deployment config, CI
+  variable references, IaC output, hosting CLI output, or deployment docs that
+  explicitly label the URL as owned and current. Never guess domains from the
+  product name, package name, repo name, README title, brand name, or common
+  TLDs.
+- If only localhost or `127.0.0.1` exists, run local smoke only. If only
+  production is known, do not call it staging and do not use it as a yolo
+  default for staging smoke.
 - Add at most one new external access item per pause unless one command
   invocation genuinely requires several values together.
 - Do not return a broad checklist as the final answer. Either return tested
@@ -114,3 +123,5 @@ Write `.godpowers/deploy/STATE.md`:
 - Broad provider checklist with no scripts or exact access bundle
 - Marks deploy done when the only verified target is missing
 - Requests all provider keys before the staging URL smoke check has run
+- Invents or guesses a staging or production domain
+- Treats production as staging without explicit user approval

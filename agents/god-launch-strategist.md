@@ -79,6 +79,13 @@ For each channel:
 - Do not ask for launch-channel accounts, analytics dashboards, provider
   dashboards, API keys, or admin consoles until a named launch-readiness or
   smoke check cannot run without that exact access.
+- A URL is available only when it comes from direct evidence: current user
+  input, env/config, deployment config, CI variable references, IaC output,
+  hosting CLI output, or deployment docs that explicitly label it as owned and
+  current. Never infer a launch URL from product name, repo name, package name,
+  README title, brand name, or common TLDs.
+- If only production is known, do not treat it as staging. If no deployed
+  origin is known, pause for `STAGING_APP_URL=<deployed staging origin>`.
 
 ## Output
 
@@ -97,6 +104,7 @@ Write `.godpowers/launch/STATE.md` with all artifacts.
 - Declares live launch without a verified live target
 - Requests launch or provider credentials before the live staging smoke check
   proves they are needed
+- Invents or guesses launch, staging, or production domains
 
 ## Pause Conditions
 

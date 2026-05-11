@@ -59,6 +59,12 @@ provider credential. Ask only for the next missing access item needed to run a
 named live smoke, launch-readiness, attribution, or monitoring check. If no
 live target URL is known, ask only for `STAGING_APP_URL=<staging-origin>`.
 
+Live target URLs must be evidence-backed. Never invent a domain from the
+product name, repo name, package name, README title, brand name, or common TLDs.
+If only localhost or `127.0.0.1` exists, launch can only mark local readiness.
+If only production is known, do not treat it as staging without explicit user
+approval.
+
 
 ## Re-invocation contract
 

@@ -5,6 +5,21 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.14] - 2026-05-11
+
+Origin evidence release. Prevents `/god-mode --yolo` from inventing staging,
+preview, or production domains during shipping closure.
+
+### Changed
+- Added an Origin Evidence Rule to the Shipping Closure Protocol: deployed
+  origins must come from user input, env/config, deployment config, CI variable
+  references, IaC output, hosting CLI output, or deployment docs that explicitly
+  label the URL as owned and current.
+- Deploy and launch instructions now forbid guessing domains from product name,
+  repo name, package name, README title, brand name, or common TLDs.
+- Full-arc workflow metadata now marks deploy and launch closure as requiring
+  evidence-backed origins and forbidding inferred domains.
+
 ## [0.15.13] - 2026-05-11
 
 Access ladder release. Tightens `/god-mode --yolo` shipping closure so keys,

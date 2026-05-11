@@ -71,6 +71,8 @@ jobs:
       local-verification-required: true
       access-order: ask-for-staging-url-before-provider-keys
       max-new-access-items-per-pause: 1
+      origin-evidence-required: true
+      no-inferred-domains: true
 
   observe:
     tier: 3
@@ -98,3 +100,5 @@ jobs:
       on-missing-external-access: pause-with-single-access-bundle
       access-order: ask-for-staging-url-before-provider-keys
       max-new-access-items-per-pause: 1
+      origin-evidence-required: true
+      no-inferred-domains: true
