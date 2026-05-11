@@ -80,6 +80,39 @@ test('installer wrote godpowers-references/ with HAVE-NOTS.md', () => {
   assert(fs.existsSync(havenots), `${havenots} missing`);
 });
 
+test('installer wrote runtime bundle with lib next to workflow data', () => {
+  const runtimeDir = path.join(installedDir, 'godpowers-runtime');
+  assert(fs.existsSync(path.join(runtimeDir, 'lib', 'router.js')), 'runtime lib/router.js missing');
+  assert(fs.existsSync(path.join(runtimeDir, 'routing', 'god-mode.yaml')), 'runtime routing missing');
+  assert(fs.existsSync(path.join(runtimeDir, 'workflows', 'full-arc.yaml')), 'runtime workflow missing');
+  assert(fs.existsSync(path.join(runtimeDir, 'package.json')), 'runtime package.json missing');
+});
+
+test('installed OTel exporter reports package version', () => {
+  const runtimeDir = path.join(installedDir, 'godpowers-runtime');
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const otel = require(path.join(runtimeDir, 'lib', 'otel-exporter.js'));
+  const now = new Date().toISOString();
+  const out = otel.convertRun([{
+    trace_id: '0123456789abcdef0123456789abcdef',
+    span_id: '0123456789abcdef',
+    ts: now,
+    name: 'workflow.run',
+    attrs: { name: 'smoke' },
+    prev: 'genesis'
+  }]);
+  const version = out[0].scopeSpans[0].scope.version;
+  assert(version === pkg.version, `version mismatch: ${version} vs ${pkg.version}`);
+});
+
+test('installed router skills explain godpowers-runtime resolution', () => {
+  const skillsDir = path.join(installedDir, 'skills');
+  const god = fs.readFileSync(path.join(skillsDir, 'god.md'), 'utf8');
+  const next = fs.readFileSync(path.join(skillsDir, 'god-next.md'), 'utf8');
+  assert(god.includes('godpowers-runtime'), 'god.md missing runtime bundle guidance');
+  assert(next.includes('godpowers-runtime'), 'god-next.md missing runtime bundle guidance');
+});
+
 test('the 9 freshly-built skills are all installed', () => {
   const want = ['god-doctor', 'god-help', 'god-version', 'god-redo',
                 'god-skip', 'god-rollback', 'god-repair', 'god-restore',
@@ -136,6 +169,32 @@ test('cleanup runs (no error)', () => {
   } catch (e) {
     // not fatal
   }
+});
+
+test('uninstaller removes all installed Godpowers data dirs', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-uninstall-smoke-'));
+  execFileSync('node', [INSTALLER, '--claude', '--global'], {
+    env: { ...process.env, HOME: home },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  execFileSync('node', [INSTALLER, '--claude', '--global', '--uninstall'], {
+    env: { ...process.env, HOME: home },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  const claudeDir = path.join(home, '.claude');
+  for (const dir of [
+    'godpowers-templates',
+    'godpowers-references',
+    'godpowers-workflows',
+    'godpowers-schema',
+    'godpowers-routing',
+    'godpowers-runtime'
+  ]) {
+    assert(!fs.existsSync(path.join(claudeDir, dir)), `${dir} should be removed`);
+  }
+  fs.rmSync(home, { recursive: true, force: true });
 });
 
 console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);

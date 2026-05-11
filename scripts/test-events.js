@@ -67,6 +67,15 @@ test('handle.emit appends events to the same file', () => {
   assert(all[2].name === 'agent.end', `wrong order`);
 });
 
+test('large event lines still produce a valid hash chain', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  h.emit({ span_id: 'aabbccdd00112233', name: 'warn', attrs: { big: 'x'.repeat(5000) } });
+  h.emit({ span_id: 'aabbccdd00112234', name: 'agent.end' });
+  const r = events.verifyChain(h.file);
+  assert(r.valid, `chain reported invalid: ${JSON.stringify(r)}`);
+});
+
 test('emit rejects event missing trace_id', () => {
   const tmp = mkProject();
   const h = events.startRun(tmp);

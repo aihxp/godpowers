@@ -34,4 +34,4 @@ soft if offline).
 
 Built-in, no spawned agent. Reads:
 - `<runtime>/GODPOWERS_VERSION`
-- File counts in `<runtime>/skills/`, `<runtime>/agents/`, `workflows/`, `routing/recipes/`
+- File counts in `<runtime>/skills/`, `<runtime>/agents/`, `<runtime>/godpowers-runtime/workflows/`, and `<runtime>/godpowers-runtime/routing/recipes/`

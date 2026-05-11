@@ -5,6 +5,38 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.2] - 2026-05-11
+
+Runtime hardening release. Fixes packaging and workflow edge cases found by
+a deep audit, then locks them behind regression tests and pack publish gates.
+
+### Fixed
+- Installed `/god`, `/god-next`, `/god-help`, `/god-standards`, and
+  `/god-version` now point agents at the installed `godpowers-runtime`
+  bundle when the user is not inside the repository checkout.
+- Installer now copies `package.json` into `godpowers-runtime`, so installed
+  OTel exports report the real Godpowers version instead of `0.0.0`.
+- Linkage scans now replace stale scanner-owned links instead of only adding
+  new links. Manual links are preserved, and legacy maps without source
+  metadata are migrated safely.
+- `checkpoint.recordFact()` now preserves existing actions instead of wiping
+  the checkpoint action history.
+- Context writer now reads root-level `mode` and `scale`, matching the
+  canonical `state.json` shape produced by `lib/state.js`.
+- Event hash chains now stay valid when an event line is larger than 4KB.
+- Extension reinstall now clears the old installed pack directory first, so
+  deleted files do not remain active after reinstall.
+- Installer uninstall now removes all installed data/runtime directories,
+  including workflows, schema, routing, and `godpowers-runtime`.
+
+### Tests
+- Added regression coverage for stale linkage cleanup, checkpoint action
+  preservation, root-level mode/scale context rendering, large event hash
+  chains, installed OTel version metadata, runtime bundle guidance in installed
+  skills, extension reinstall cleanup, and uninstall cleanup.
+- Extension pack publish gate now verifies package peer dependency ranges
+  match the manifest and include the current Godpowers version.
+
 ## [0.15.1] - 2026-05-11
 
 Metadata + documentation polish. No code changes.

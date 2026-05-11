@@ -185,6 +185,17 @@ test('buildCanonicalContent includes mode, scale, project name', () => {
   if (!content.includes('medium')) throw new Error('scale missing');
 });
 
+test('buildCanonicalContent reads root-level mode and scale from state.json shape', () => {
+  const content = cw.buildCanonicalContent({
+    project: { name: 'root-shape' },
+    mode: 'B',
+    scale: 'small'
+  });
+  if (!content.includes('root-shape')) throw new Error('project name missing');
+  if (!content.includes('Mode: B')) throw new Error('root-level mode missing');
+  if (!content.includes('Scale: small')) throw new Error('root-level scale missing');
+});
+
 test('buildCanonicalContent lists active artifacts when present', () => {
   const content = cw.buildCanonicalContent(FAKE_STATE);
   if (!content.includes('PRD.md')) throw new Error('completed artifact not listed');

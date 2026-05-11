@@ -157,6 +157,20 @@ function copyRecursive(src, dest) {
   }
 }
 
+function copyRuntimeBundle(srcDir, destDir) {
+  ensureDir(destDir);
+  for (const dir of ['lib', 'routing', 'workflows', 'schema', 'templates', 'references']) {
+    const src = path.join(srcDir, dir);
+    if (fs.existsSync(src)) {
+      copyRecursive(src, path.join(destDir, dir));
+    }
+  }
+  const packageJson = path.join(srcDir, 'package.json');
+  if (fs.existsSync(packageJson)) {
+    fs.copyFileSync(packageJson, path.join(destDir, 'package.json'));
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Parse args
 // ---------------------------------------------------------------------------
@@ -299,6 +313,11 @@ function installForRuntime(runtimeKey, srcDir) {
     success('Installed routing/');
   }
 
+  // 4f. Install the executable runtime bundle with lib/ next to its data dirs.
+  const runtimeBundleDest = path.join(runtime.configDir, 'godpowers-runtime');
+  copyRuntimeBundle(srcDir, runtimeBundleDest);
+  success('Installed runtime bundle/');
+
   // 5. Install hooks (Claude Code only for now)
   if (runtimeKey === 'claude') {
     const hooksSrc = path.join(srcDir, 'hooks');
@@ -339,6 +358,10 @@ function uninstallForRuntime(runtimeKey) {
   const agentsDir = path.join(runtime.configDir, 'agents');
   const templatesDir = path.join(runtime.configDir, 'godpowers-templates');
   const referencesDir = path.join(runtime.configDir, 'godpowers-references');
+  const workflowsDir = path.join(runtime.configDir, 'godpowers-workflows');
+  const schemaDir = path.join(runtime.configDir, 'godpowers-schema');
+  const routingDir = path.join(runtime.configDir, 'godpowers-routing');
+  const runtimeBundleDir = path.join(runtime.configDir, 'godpowers-runtime');
   const versionFile = path.join(runtime.configDir, 'GODPOWERS_VERSION');
 
   let removed = 0;
@@ -366,14 +389,19 @@ function uninstallForRuntime(runtimeKey) {
     success(`Removed ${agentsRemoved} god-* agent(s)`);
   }
 
-  // Remove templates and references directories
-  if (fs.existsSync(templatesDir)) {
-    fs.rmSync(templatesDir, { recursive: true, force: true });
-    success('Removed godpowers-templates/');
-  }
-  if (fs.existsSync(referencesDir)) {
-    fs.rmSync(referencesDir, { recursive: true, force: true });
-    success('Removed godpowers-references/');
+  // Remove installed data and runtime directories
+  for (const dir of [
+    templatesDir,
+    referencesDir,
+    workflowsDir,
+    schemaDir,
+    routingDir,
+    runtimeBundleDir
+  ]) {
+    if (fs.existsSync(dir)) {
+      fs.rmSync(dir, { recursive: true, force: true });
+      success(`Removed ${path.basename(dir)}/`);
+    }
   }
 
   // Remove hooks (Claude Code only)

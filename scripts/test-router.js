@@ -134,6 +134,25 @@ test('evaluateCheck: state:tier-1.prd.status == done', () => {
   }
 });
 
+test('evaluateCheck: OR handles mixed file and greenfield predicates', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-or-test-'));
+  const ok = router.evaluateCheck('file:.godpowers/PROGRESS.md OR mode-A-greenfield', proj);
+  if (ok !== true) throw new Error('greenfield OR branch should pass');
+});
+
+test('evaluateCheck: OR handles mixed state predicates', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-or-test-'));
+  state.init(proj, 'router-or-test');
+  state.updateSubStep(proj, 'tier-1', 'arch', { status: 'done' });
+  const ok = router.evaluateCheck(
+    'state:lifecycle-phase == steady-state-active OR state:tier-1.arch.status == done',
+    proj
+  );
+  if (ok !== true) throw new Error('second state OR branch should pass');
+});
+
 test('routing files all have apiVersion: godpowers/v1', () => {
   router.clearCache();
   const all = router.loadAll();

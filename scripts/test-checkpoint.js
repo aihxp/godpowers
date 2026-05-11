@@ -142,6 +142,19 @@ test('recordFact dedups and reorders to most-recent-first', () => {
   assert(got.facts[1] === 'fact beta', `second: ${got.facts[1]}`);
 });
 
+test('recordFact preserves existing actions', () => {
+  const tmp = mkProject();
+  checkpoint.write(tmp, {
+    project: 'preserve',
+    actions: ['[2026-01-01T00:00:00.000Z] tester: first action'],
+    facts: ['old fact']
+  });
+  checkpoint.recordFact(tmp, 'new fact');
+  const got = checkpoint.read(tmp);
+  assert(got.actions.length === 1, `actions: ${got.actions.length}`);
+  assert(got.actions[0].includes('first action'), `action lost: ${got.actions[0]}`);
+});
+
 test('recordFact trims to MAX_FACTS', () => {
   const tmp = mkProject();
   for (let i = 0; i < checkpoint.MAX_FACTS + 5; i++) {

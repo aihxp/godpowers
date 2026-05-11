@@ -275,6 +275,43 @@ test('applyScan persists results to linkage map', () => {
   if (!fwd['P-MUST-01']) throw new Error('linkage not persisted');
 });
 
+test('applyScan removes stale scan links after annotations are deleted', () => {
+  const tmp = mkTmp();
+  fs.mkdirSync(path.join(tmp, 'src'), { recursive: true });
+  const file = path.join(tmp, 'src/login.ts');
+  fs.writeFileSync(file, '// Implements: P-MUST-01');
+  scanner.applyScan(tmp, scanner.scan(tmp));
+  fs.writeFileSync(file, '// annotation removed');
+  const r = scanner.applyScan(tmp, scanner.scan(tmp));
+  const fwd = linkage.readForward(tmp);
+  const rev = linkage.readReverse(tmp);
+  if (fwd['P-MUST-01']) throw new Error('stale forward link remained');
+  if (rev['src/login.ts']) throw new Error('stale reverse link remained');
+  if (r.removed < 1) throw new Error('removal count not reported');
+});
+
+test('applyScan preserves manual links while replacing scanner-owned links', () => {
+  const tmp = mkTmp();
+  fs.mkdirSync(path.join(tmp, 'src'), { recursive: true });
+  linkage.addLink(tmp, 'P-SHOULD-02', 'src/manual.ts');
+  fs.writeFileSync(path.join(tmp, 'src/login.ts'), '// Implements: P-MUST-01');
+  scanner.applyScan(tmp, scanner.scan(tmp));
+  fs.writeFileSync(path.join(tmp, 'src/login.ts'), '// annotation removed');
+  scanner.applyScan(tmp, scanner.scan(tmp));
+  const fwd = linkage.readForward(tmp);
+  if (fwd['P-MUST-01']) throw new Error('scanner link remained');
+  if (!fwd['P-SHOULD-02']) throw new Error('manual link was removed');
+});
+
+test('applyScan migrates legacy links without source metadata', () => {
+  const tmp = mkTmp();
+  linkage.addLink(tmp, 'P-MUST-01', 'src/old.ts', { source: 'code-scanner' });
+  fs.rmSync(linkage.sourcePath(tmp), { force: true });
+  scanner.applyScan(tmp, { links: [], stats: {} });
+  const fwd = linkage.readForward(tmp);
+  if (fwd['P-MUST-01']) throw new Error('legacy stale link remained');
+});
+
 // ============================================================================
 // scanner.styleSystemScan
 // ============================================================================

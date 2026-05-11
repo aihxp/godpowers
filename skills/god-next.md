@@ -3,7 +3,7 @@ name: god-next
 description: |
   Decision engine. For any command intent, checks prerequisites, proposes
   auto-completion of missing prerequisites, runs standards checks at gates,
-  and suggests next commands after success. Backed by routing/<command>.yaml
+  and suggests next commands after success. Backed by runtime routing YAML
   configurations.
 
   Triggers on: "god next", "/god-next", "what's next", "what should I do next",
@@ -15,16 +15,24 @@ description: |
 The unified decision engine. Routes between commands based on disk state,
 routing definitions, and user intent.
 
+## Runtime module resolution
+
+Before reading routing data or calling runtime modules, resolve the Godpowers runtime root:
+
+1. If `<projectRoot>/lib/router.js` exists, use the repository checkout runtime at `<projectRoot>`.
+2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill, such as `~/.claude`, `~/.codex`, `~/.cursor`, `~/.windsurf`, or `~/.gemini`.
+3. Read routing definitions from `<runtimeRoot>/routing/*.yaml` and recipes from `<runtimeRoot>/routing/recipes/*.yaml`.
+
 ## Three modes of invocation
 
 ### Mode 1: After a command (post-completion routing)
 The completing skill calls /god-next to determine what's next.
-Reads `routing/<just-completed>.yaml`, gets `success-path.next-recommended`,
+Reads `<runtimeRoot>/routing/<just-completed>.yaml`, gets `success-path.next-recommended`,
 suggests it.
 
 ### Mode 2: Before a command (pre-flight)
 User wants to run /god-X. /god-next checks prerequisites first.
-Reads `routing/<X>.yaml`, evaluates prerequisites, proposes auto-completion
+Reads `<runtimeRoot>/routing/<X>.yaml`, evaluates prerequisites, proposes auto-completion
 if any are missing.
 
 ### Mode 3: Standalone (state-driven)
@@ -40,7 +48,7 @@ A skill completes (e.g., /god-prd just finished)
 Skill calls: /god-next --after=/god-prd
    |
    v
-Read routing/god-prd.yaml
+Read <runtimeRoot>/routing/god-prd.yaml
    |
    v
 Get success-path.next-recommended (e.g., "/god-arch")
@@ -76,7 +84,7 @@ User types: /god-arch
 The /god-arch skill calls: /god-next --before=/god-arch
    |
    v
-Read routing/god-arch.yaml
+Read <runtimeRoot>/routing/god-arch.yaml
    |
    v
 For each prerequisite in prerequisites.required:
@@ -109,7 +117,7 @@ User types: /god-next
 Read .godpowers/state.json (or PROGRESS.md as fallback)
    |
    v
-Use lib/router.suggestNext(projectRoot)  <- structural next
+Use <runtimeRoot>/lib/router.js suggestNext(projectRoot)  <- structural next
    |
    v
 For each tier in order:
@@ -118,7 +126,7 @@ For each tier in order:
    |
    v
 If all tiers done:
-   - Use lib/recipes.suggestForState(projectRoot)  <- scenario-aware
+   - Use <runtimeRoot>/lib/recipes.js suggestForState(projectRoot)  <- scenario-aware
    - Returns recipes matching current lifecycle phase
    |
    v
@@ -132,7 +140,7 @@ Display: "Suggested next: /god-arch
 User says: "I need to add a new feature mid-development"
    |
    v
-/god-next consults lib/recipes.matchIntent(text, projectRoot)
+/god-next consults <runtimeRoot>/lib/recipes.js matchIntent(text, projectRoot)
    |
    v
 Returns ranked recipes matching:
@@ -150,20 +158,20 @@ Display top match with the recipe's sequence:
     Run this sequence? Or see other matches?"
 ```
 
-This is the recipe-driven decision support: agents consult `routing/recipes/`
+This is the recipe-driven decision support: agents consult `<runtimeRoot>/routing/recipes/`
 when user intent is fuzzy or doesn't map to a single command.
 
 ## Routing data
 
-Routing definitions live in `routing/*.yaml`. Each command has a file:
-- `routing/god-prd.yaml`
-- `routing/god-arch.yaml`
+Routing definitions live in `<runtimeRoot>/routing/*.yaml`. Each command has a file:
+- `<runtimeRoot>/routing/god-prd.yaml`
+- `<runtimeRoot>/routing/god-arch.yaml`
 - ...
 
 These define prerequisites, execution, success-path, failure-path, and
 endoff for each command.
 
-The `lib/router.js` JS module provides programmatic queries:
+The `<runtimeRoot>/lib/router.js` JS module provides programmatic queries:
 - `getRouting(command)` - load a command's routing
 - `checkPrerequisites(command, projectRoot)` - prereq check
 - `getNextCommand(command)` - get success-path next

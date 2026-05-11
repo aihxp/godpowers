@@ -2,7 +2,7 @@
 name: god
 description: |
   Front door. Take free-text intent from the user, match it to a recipe via
-  lib/recipes.matchIntent, and propose the matching command sequence. If no
+  the Godpowers runtime recipes module, and propose the matching command sequence. If no
   text given, fall back to state-driven suggestion (same as /god-next Mode 3).
 
   Triggers on: "/god", "god", "/god help", "I want to ...", "how do I ..."
@@ -13,7 +13,16 @@ description: |
 
 The natural-language entry point. Users describe what they want; this skill
 matches the intent to a recipe and suggests the right command sequence. No
-agent is spawned here. This is a thin router on top of `lib/recipes.js`.
+agent is spawned here. This is a thin router on top of the Godpowers runtime
+recipes module.
+
+## Runtime module resolution
+
+Before calling runtime modules, resolve the Godpowers runtime root:
+
+1. If `<projectRoot>/lib/recipes.js` exists, use the repository checkout runtime at `<projectRoot>`.
+2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill, such as `~/.claude`, `~/.codex`, `~/.cursor`, `~/.windsurf`, or `~/.gemini`.
+3. Load recipes from `<runtimeRoot>/lib/recipes.js`, routing from `<runtimeRoot>/lib/router.js`, and recipe YAML from `<runtimeRoot>/routing/recipes/`.
 
 ## Why this exists
 
@@ -50,11 +59,11 @@ Treat everything after `/god` as free text. If empty, treat as state-driven.
 
 ```
 text empty?
-  yes -> state-driven: call lib/recipes.suggestForState(projectRoot)
+  yes -> state-driven: call <runtimeRoot>/lib/recipes.js suggestForState(projectRoot)
          display top 3 recipes ranked by current lifecycle phase
-         also call lib/router.suggestNext(projectRoot) for structural next
+         also call <runtimeRoot>/lib/router.js suggestNext(projectRoot) for structural next
 
-  no  -> intent-driven: call lib/recipes.matchIntent(text, projectRoot)
+  no  -> intent-driven: call <runtimeRoot>/lib/recipes.js matchIntent(text, projectRoot)
          take top 1-3 matches by score
          if highest score >= 10 (exact phrase match): propose directly
          if highest score 5-9 (all-words match): propose with confirmation
@@ -116,8 +125,8 @@ If user picks the structural next:
 ## Interaction model
 
 This skill is a router, not an orchestrator. It:
-- Reads recipes (via `lib/recipes.js`)
-- Reads state (via `lib/state.js`)
+- Reads recipes (via `<runtimeRoot>/lib/recipes.js`)
+- Reads state (via `<runtimeRoot>/lib/state.js`)
 - Proposes commands
 
 It does NOT:
@@ -194,7 +203,7 @@ Suggested: /god-next   show all valid next-step options
 ## Why a skill, not an agent
 
 The matching and dispatch logic is mechanical (lookups against
-`routing/recipes/*.yaml`) and has no need for fresh-context isolation. Running
+`<runtimeRoot>/routing/recipes/*.yaml`) and has no need for fresh-context isolation. Running
 it as a skill keeps it fast, lets the user see the proposed commands, and
 avoids stacking another orchestrator layer above `god-orchestrator`. See
 `docs/concepts.md` (the Quarterback section) for why we don't add a second

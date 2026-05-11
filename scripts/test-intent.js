@@ -75,6 +75,18 @@ test('parseSimpleYaml strips inline comments', () => {
   assert(parsed.mode === 'A', `mode with comment: ${parsed.mode}`);
 });
 
+test('parseSimpleYaml preserves literal block scalars', () => {
+  const parsed = intent.parseSimpleYaml(`metadata:
+  name: full-arc
+  description: |
+    Idea to hardened production.
+    Run by /god-mode.
+kind: Workflow`);
+  assert(parsed.metadata.description === 'Idea to hardened production.\nRun by /god-mode.',
+    `description: ${JSON.stringify(parsed.metadata.description)}`);
+  assert(parsed.kind === 'Workflow', `kind after block: ${parsed.kind}`);
+});
+
 test('read parses a written intent.yaml', () => {
   const tmp = mkProject();
   writeIntent(tmp,

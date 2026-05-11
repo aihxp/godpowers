@@ -51,7 +51,9 @@ Show only one category (lifecycle, planning, building, shipping, etc.).
 Built-in, no spawned agent. Reads:
 - `<runtime>/skills/*.md` frontmatter
 - `.godpowers/state.json` (for current state line)
-- `lib/recipes.js` (for suggested next)
+- `<runtimeRoot>/lib/recipes.js` (for suggested next)
+
+Resolve `<runtimeRoot>` as `<projectRoot>` when `<projectRoot>/lib/recipes.js` exists. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill.
 
 ## When to use
 

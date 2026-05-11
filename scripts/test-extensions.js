@@ -148,6 +148,15 @@ test('install copies pack to runtime extensions dir', () => {
     'skill file not copied');
 });
 
+test('reinstall removes files deleted from pack source', () => {
+  const runtime = mkRuntime();
+  ext.install(runtime, mkPackSource('@test/p1', '1.0.0', '>=0.13.0'), '0.13.0');
+  ext.install(runtime, mkPackSource('@test/p1', '1.0.0', '>=0.13.0', { withSkill: false }), '0.13.0');
+  const installed = path.join(runtime, 'godpowers-extensions', '@test', 'p1');
+  assert(!fs.existsSync(path.join(installed, 'skills', 'god-test-skill.md')),
+    'stale skill file remained after reinstall');
+});
+
 test('install throws on capability mismatch', () => {
   const runtime = mkRuntime();
   const src = mkPackSource('@test/p2', '1.0.0', '>=99.0.0');

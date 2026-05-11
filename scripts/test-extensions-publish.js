@@ -19,6 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execSync } = require('child_process');
 
 const ext = require('../lib/extensions');
@@ -109,6 +110,19 @@ for (const packDir of packs) {
       'peerDependencies.godpowers required');
   });
 
+  test(`${packName}: peerDependencies.godpowers matches manifest engines`, () => {
+    const m = readManifest(packDir);
+    const p = readPackageJson(packDir);
+    assert(p.peerDependencies.godpowers === m.engines.godpowers,
+      `peer=${p.peerDependencies.godpowers} manifest=${m.engines.godpowers}`);
+  });
+
+  test(`${packName}: peerDependencies.godpowers accepts current godpowers`, () => {
+    const p = readPackageJson(packDir);
+    assert(ext.isCompatible(p.peerDependencies.godpowers, GODPOWERS_VERSION),
+      `peer '${p.peerDependencies.godpowers}' does not satisfy ${GODPOWERS_VERSION}`);
+  });
+
   test(`${packName}: manifest engines.godpowers satisfied by current godpowers`, () => {
     const m = readManifest(packDir);
     assert(ext.isCompatible(m.engines.godpowers, GODPOWERS_VERSION),
@@ -156,11 +170,19 @@ for (const packDir of packs) {
 
   test(`${packName}: npm pack --dry-run --json succeeds and emits expected files`, () => {
     let raw;
+    const npmCache = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-pack-cache-'));
     try {
       raw = execSync('npm pack --dry-run --json --silent',
-        { cwd: packDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+        {
+          cwd: packDir,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'ignore'],
+          env: { ...process.env, NPM_CONFIG_CACHE: npmCache }
+        });
     } catch (e) {
       throw new Error(`npm pack failed: ${e.message}`);
+    } finally {
+      fs.rmSync(npmCache, { recursive: true, force: true });
     }
     const parsed = JSON.parse(raw);
     const entry = Array.isArray(parsed) ? parsed[0] : parsed;
