@@ -19,6 +19,23 @@ View or set token-cost saver controls in intent.yaml.
 ### `/god-budget`
 Show current budgets in plain English.
 
+### `/god-budget --on`
+**One-shot enable.** Writes the recommended defaults to
+`intent.yaml.budgets`:
+- `default-max-tokens: 80000`
+- `model-profile: standard`
+- `cache: true`
+- `cache-ttl-hours: 24`
+
+Use this if you want budgeting without thinking about specific
+numbers. Idempotent; running it again is a no-op.
+
+### `/god-budget --off`
+**One-shot disable.** Removes the entire `budgets` block from
+`intent.yaml`. Cache stays on disk (clear it with
+`/god-cache-clear --all` if you want to free space). Budget caps no
+longer applied; cache hits no longer consulted on subsequent runs.
+
 ### `/god-budget --default-max-tokens=N`
 Set the default per-agent context cap. Example: `--default-max-tokens=80000`.
 

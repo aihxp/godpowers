@@ -1,8 +1,7 @@
-# STATUS: NOT YET AUTHORITATIVE
-# The orchestrator agent's prose (agents/god-orchestrator.md) drives runtime
-# behavior. This YAML is documentation of intent for the v0.14 workflow-runtime
-# release. Reading code: trust the orchestrator. Authoring workflows: edit
-# both this file AND the orchestrator until v0.14 lands.
+# STATUS: Authoritative (v0.14+). Read by lib/workflow-runner.js for plan
+# computation. The orchestrator agent (agents/god-orchestrator.md) dispatches
+# the agents in the order this file specifies. To preview without running,
+# use `/god-mode --workflow=<name> --plan`.
 #
 apiVersion: godpowers/v1
 kind: Workflow

@@ -32,7 +32,12 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - `--conservative` (more checkpoints)
    - `--from=<tier>` (resume from specific tier)
    - `--audit` (score only, build nothing)
-   - `--dry-run` (plan only)
+   - `--dry-run` (plan only, no agent dispatch)
+   - `--workflow=<name>` (v0.14 workflow runtime; load
+     `workflows/<name>.yaml`, run via `lib/workflow-runner`)
+   - `--plan` (v0.14; emit plan to `.godpowers/runs/<id>/plan.yaml`
+     and stop. Same effect as `--dry-run`. Use with `--workflow` for
+     a specific arc's plan.)
    - `--brownfield` (force brownfield path even if detection says greenfield)
    - `--bluefield` (force bluefield path)
    - `--greenfield` (force greenfield, skip archaeology even if code exists)
