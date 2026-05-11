@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/godpowers/godpowers.git",
+    "url": "git+https://github.com/aihxp/godpowers.git",
     "directory": "extensions/security-pack"
   },
-  "homepage": "https://github.com/godpowers/godpowers/tree/main/extensions/security-pack#readme",
+  "homepage": "https://github.com/aihxp/godpowers/tree/main/extensions/security-pack#readme",
   "bugs": {
-    "url": "https://github.com/godpowers/godpowers/issues"
+    "url": "https://github.com/aihxp/godpowers/issues"
   },
   "publishConfig": {
     "access": "public"

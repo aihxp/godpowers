@@ -36,11 +36,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/godpowers/godpowers.git"
+    "url": "git+https://github.com/aihxp/godpowers.git"
   },
-  "homepage": "https://github.com/godpowers/godpowers#readme",
+  "homepage": "https://github.com/aihxp/godpowers#readme",
   "bugs": {
-    "url": "https://github.com/godpowers/godpowers/issues"
+    "url": "https://github.com/aihxp/godpowers/issues"
   },
   "files": [
     "bin/",
