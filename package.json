@@ -1,7 +1,7 @@
 {
   "name": "godpowers",
   "version": "0.15.0",
-  "description": "Ship fast. Ship right. Ship everything. Ship accountably.",
+  "description": "AI-powered development system: 104 slash commands and 38 specialist agents that take a project from raw idea to hardened production. Runs inside Claude Code, Codex, Cursor, Windsurf, Gemini, and 10+ other AI coding tools.",
   "bin": {
     "godpowers": "./bin/install.js"
   },
@@ -19,15 +19,30 @@
   },
   "keywords": [
     "ai",
-    "coding",
+    "ai-agent",
+    "ai-agents",
+    "ai-development",
+    "ai-coding",
+    "ai-orchestration",
     "agent",
+    "agents",
     "claude",
+    "claude-code",
     "codex",
     "cursor",
+    "windsurf",
+    "gemini",
+    "copilot",
     "tdd",
     "orchestration",
     "godmode",
-    "slash-commands"
+    "slash-commands",
+    "skills",
+    "prd",
+    "architecture",
+    "roadmap",
+    "specialist-agents",
+    "developer-tools"
   ],
   "author": "Godpowers",
   "license": "MIT",

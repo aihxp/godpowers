@@ -124,58 +124,39 @@ Deferred to a later release:
 
 ### v0.16.0 - Real-world hardening (next)
 
-The 0.15 line shipped distribution; 0.16 earns the right to think about
-a freeze. Candidate work, ordered by readiness:
+The 0.15 line shipped distribution. 0.16 is about depth: harden what
+ships, expand examples, design telemetry intentionally, stand up the
+docs site. Work, ordered by readiness:
 
-- **Record/replay integration tests**. Capture one greenfield `/god-mode`
-  run end-to-end as a fixture. Replay it to validate that the
-  orchestrator behaves the same across model versions. This is the
-  "real integration test suite" line from the v1.0 gates and the
-  single highest-value signal we are missing.
+- **Record/replay integration tests**. Capture a greenfield `/god-mode`
+  run end-to-end as a fixture, then replay it to validate that the
+  orchestrator behaves the same across model versions. The remaining
+  v1.0 testing gate.
 - **Examples directory expansion**. Add 3+ fixture projects (today:
   `saas-mrr-tracker`, `cli-tool`). Targets: a brownfield-arc fixture,
   a Mode D suite fixture, a refactor-arc fixture.
-- **Telemetry opt-in design pass**. Before any wire goes in, decide
-  what questions we want answered (skill usage frequency? cache hit
-  rate distribution? agent pause reasons?). Write the RFC, then the
-  wire.
-- **Documentation site at godpowers.dev**. Vercel + Astro or similar,
-  built from the existing `docs/` directory.
+- **Telemetry opt-in design pass**. Decide first what questions we
+  want answered (skill usage frequency, cache hit rate distribution,
+  agent pause reasons), then ship the wire.
+- **Documentation site at godpowers.dev**. Built from `docs/`.
 
-### v1.0.0 - Stable (gated, not scheduled)
+### v1.0.0 - Stable
 
-**Theme**: freeze the public API. **Stance**: we have not earned this
-yet and will not tag 1.0.0 on a date. We tag 1.0.0 when the gates
-below are all green.
+**Theme**: freeze the public API.
 
-Gate checklist:
+Remaining work before tag:
 
 - [x] npm publish marker tag (v0.15.0, with sigstore provenance)
-- [ ] At least 5 real-user `/god-mode` end-to-end runs without
-      architecture-level bugs
-- [ ] Record/replay integration test suite covering full-arc,
-      audit-only, build-only against fixtures
+- [ ] Record/replay integration test suite (full-arc, audit-only,
+      build-only against fixtures)
 - [ ] Documentation site at godpowers.dev
 - [ ] Examples directory with 5+ fixture projects
-- [ ] Migration from any v0.x project to v1.0 is one command
-- [ ] Schemas have explicit stability guarantees (intent.yaml v1,
-      state.json v1, manifest YAML v1, agent frontmatter v1, skill
-      frontmatter v1, events.jsonl vocabulary v1)
-- [ ] Pack authors have a stable public API documented + tested
+- [ ] Migration path from any v0.x project (one command)
+- [ ] Schema stability guarantees (intent.yaml v1, state.json v1,
+      manifest YAML v1, agent frontmatter v1, skill frontmatter v1,
+      events.jsonl vocabulary v1)
+- [ ] Pack author public API documented + tested
 - [ ] 1.0 release notes
-- [ ] One full v0.15 -> v1.0 migration dogfooded by the maintainer
-
-Until every box is checked, the public API is treated as evolving on
-0.x. Breaking changes ship as minor bumps with CHANGELOG callouts;
-patch releases never break anything.
-
-### Acceptance for v1.0
-
-- Schemas have stability guarantees: no breaking changes within v1.x
-- Pack authors have stable APIs to build against
-- Integration tests cover full-arc + audit-only + build-only against
-  fixtures
-- One full v0.x -> v1.0 migration has been dogfooded
 
 ---
 
