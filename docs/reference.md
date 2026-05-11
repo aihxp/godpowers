@@ -80,6 +80,25 @@ Complete command, agent, and artifact reference for v0.15.0.
 
 ### Recovery
 - `/god-undo` - Revert last operation via reflog.
+- `/god-redo` - Re-run a tier or sub-step that already completed.
+- `/god-rollback` - Walk back a tier; move downstream artifacts to trash.
+- `/god-restore` - Recover files from `.godpowers/.trash/`.
+- `/god-repair` - Fix drift between `state.json` and disk state.
+- `/god-skip` - Skip a tier or sub-step with an audited reason.
+- `/god-locate` - Orient a fresh AI session from CHECKPOINT.md + state.
+- `/god-context-scan` - Detect drift between session mental model and disk.
+- `/god-smite` - Hard reset of the project's dependency cache.
+- `/god-doctor` - Diagnose install and project state; report fixes.
+
+### Observability
+- `/god-logs` - View `events.jsonl` as a readable timeline.
+- `/god-metrics` - Per-tier durations, pause and error counts.
+- `/god-trace` - Filter one run by tier for a deep dive.
+- `/god-cost` - Token + dollar spend report; live vs estimated split.
+- `/god-budget` - View / set context budgets per agent and tier.
+- `/god-cache-clear` - Invalidate the agent-output cache.
+- `/god-export-otel` - Export `events.jsonl` to an OTLP/JSON collector
+  (Honeycomb, Datadog, Jaeger, Tempo).
 
 ### Knowledge + intelligence
 - `/god-map-codebase` - Parallel codebase analysis.
@@ -119,8 +138,18 @@ Complete command, agent, and artifact reference for v0.15.0.
 - `/god-review` - Two-stage code review (spec + quality).
 - `/god-pr-branch` - Clean PR branch (filter .godpowers/ commits).
 - `/god-build-agent` - Generate custom specialist agent.
+- `/god-help` - Discoverable contextual help; lists skills grouped by tier.
+- `/god-version` - Print installed Godpowers version and capability summary.
 
-### Extensions (v0.13+, scaffolds present at v0.11)
+### Extensions (runtime since v0.13, packs on npm since v0.15)
+Pack management:
+- `/god-extension-add` - Install an extension pack from a local dir or npm.
+- `/god-extension-list` - Show all installed packs.
+- `/god-extension-info` - Manifest + capabilities of one installed pack.
+- `/god-extension-remove` - Uninstall a pack.
+- `/god-test-extension` - Contract tests against a pack before publishing.
+
+First-party packs on npm:
 - `@godpowers/security-pack` - SOC 2, HIPAA, PCI auditors
 - `@godpowers/launch-pack` - Show HN, Product Hunt, Indie Hackers, OSS strategists
 - `@godpowers/data-pack` - ETL, ML feature, dashboard specialists
