@@ -20,6 +20,8 @@ You receive:
 - Relevant ARCH context (only what's needed for this slice)
 - Stack DECISION (tooling)
 - The slice's dependencies (what must already exist)
+- Optional repair payload: failing command, error counts, focused diagnostics,
+  and files implicated by a previous verification run
 
 ## TDD Sequence (mandatory)
 
@@ -54,10 +56,12 @@ For every behavior in this slice:
 
 1. Run the full test suite. All tests must pass.
 2. Run the linter. All warnings resolved.
-3. Stage your changes.
-4. Return control to orchestrator with:
+3. Run typecheck/check command when present. All errors resolved.
+4. Stage your changes.
+5. Return control to orchestrator with:
    - Summary of what was implemented
    - Test results
+   - Typecheck/check results
    - Files changed
    - Ready for two-stage review
 
@@ -73,4 +77,13 @@ happen.
 - Multiple slices touched in one execution
 - Linter warnings unresolved
 - Test suite failing (any test, not just yours)
+- Typecheck/check command failing
 - Stub/placeholder code in the implementation
+
+## Repair Mode
+
+If invoked with a repair payload, stay narrowly focused on the failing command.
+Do not reopen PRD, ARCH, roadmap, or stack unless the diagnostic proves the
+artifact is stale. Fix code, config, imports, tests, generated types, or
+tooling until the command passes. If the same root failure survives 3 focused
+attempts, return the smallest human-only question needed to continue.

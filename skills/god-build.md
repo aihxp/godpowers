@@ -51,13 +51,19 @@ Move to next wave only when current wave is fully committed.
 After all waves:
 1. Run full test suite. All pass.
 2. Run linter. All clean.
-3. Update PROGRESS.md: Build status = done
+3. Run the package's typecheck/check command when present. All pass.
+4. If any verification command fails, do not mark Build complete. Re-enter
+   repair mode with the owning agent, pass the exact failing diagnostics, rerun
+   the command, and repeat until green or until the same root failure survives
+   3 repair attempts.
+5. Update PROGRESS.md: Build status = done
 
 ## Pause Conditions
 
 Pause for user ONLY if:
 - A requirement is genuinely ambiguous (two valid implementations)
 - A test reveals a gap in PRD or ARCH that needs human resolution
+- The same mechanical failure remains after 3 focused repair attempts
 
 ## On Completion
 
@@ -70,8 +76,9 @@ Alternative: /god-deploy (set up deploy pipeline, parallel-safe)
 Both can run; /god-harden is the critical path to Launch.
 ```
 
-If more milestones remain in the roadmap, suggest re-running /god-build for
-the next milestone before moving to Tier 3.
+If more delivery increments remain in the roadmap, continue building the next
+increment before moving to Tier 3 unless the user explicitly asked to stop
+after the current increment.
 
 
 ## Locking

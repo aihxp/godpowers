@@ -1,10 +1,10 @@
 ---
 name: god-roadmap
 description: |
-  Sequence the work into milestones. Spawns the god-roadmapper agent in a
-  fresh context. Gated on Architecture.
+  Sequence the work into Godpowers delivery increments. Spawns the
+  god-roadmapper agent in a fresh context. Gated on Architecture.
 
-  Triggers on: "god roadmap", "/god-roadmap", "sequence the work", "milestone plan"
+  Triggers on: "god roadmap", "/god-roadmap", "sequence the work", "delivery plan"
 ---
 
 # /god-roadmap

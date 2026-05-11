@@ -277,17 +277,52 @@ last known hash in state.json:
 
 ## Extended Critical-Finding Gate
 
-The existing critical-finding gate now also fires on:
-- Breaking drift findings (e.g., WCAG contrast fail, ARCH container
-  responsibility violation, STACK dep version mismatch)
-- Critical impeccable findings on the diff
-- Lint errors from `lib/artifact-linter` on any artifact
-- Validator errors from `lib/have-nots-validator`
+The critical-finding gate fires on:
+- Critical security findings from god-harden-auditor
 - god-design-reviewer BLOCK verdicts
+- Breaking drift findings that would make already-written artifacts unsafe
+  to trust without human context
+- Artifact linter or have-nots errors that still fail after repair attempts
 
-All pause both default mode AND --yolo. Lint errors cannot be
-auto-resolved; they're mechanical signal that something is structurally
-wrong.
+Only Critical security findings always pause, including under --yolo.
+Everything else must first enter the autonomous repair loop below. A failed
+typecheck, lint, check, unit test, generated artifact lint, or have-nots pass is
+not a reason to declare the arc complete. It is work.
+
+## Autonomous Repair Loop
+
+Godpowers full-arc means: plan, build, verify, repair, ship, sync. Do not stop
+at "artifacts generated" when the repo is still red.
+
+When any mechanical verification fails:
+- tests, typecheck, lint, formatter, build, `bun run check`, `npm run check`,
+  `npm test`, `cargo test`, `go test`, or equivalent
+- artifact lint or have-nots validation
+- generated scaffold audit with fixable failures
+- launch smoke check with deterministic reproduction
+
+Do this:
+1. Record the exact failing command, counts, and highest-signal diagnostics in
+   `.godpowers/build/STATE.md` or the active tier state file.
+2. Classify the failure:
+   - `repairable`: code, config, type, lint, test, generated artifact, missing
+     dependency, bad scaffold, or stale state problem.
+   - `human-only`: product scope contradiction, credential missing, paid vendor
+     decision, legal/compliance choice, or Critical security acceptance.
+3. For `repairable`, spawn the owning agent again in repair mode with only the
+   failing diagnostics, touched files, relevant artifact excerpts, and the
+   command to re-run.
+4. Re-run the failing command after each repair attempt.
+5. Repeat until green or until the same root failure survives 3 repair attempts.
+6. If repair succeeds, continue the same `/god-mode` run. Do not hand off a
+   "next recommended delivery increment" while required verification is red.
+7. If the same root failure survives 3 attempts, pause with a precise blocker,
+   attempted fixes, and the smallest human question needed to continue.
+
+Under `--yolo`, the repair loop auto-runs. It may commit atomic repair commits
+after tests pass. If a git remote exists and the user passed an explicit push
+flag or the project intent says pushing is allowed, push after the green commit
+and then continue the arc. Pushing is not a terminal state.
 
 ## YOLO Behavior with Design + Linkage
 
@@ -297,7 +332,8 @@ wrong.
 | Impeccable install prompt | Pause | Auto-yes; log |
 | PRODUCT.md interview | Pause | Pause anyway (load-bearing brand) |
 | Design token defaults | Pause | Auto-pick impeccable defaults; log |
-| Lint errors | Pause | Pause anyway |
+| Repairable mechanical failures | Repair loop | Repair loop |
+| Lint errors after 3 repair attempts | Pause | Pause with diagnostics |
 | Lint warnings | Continue, log | Continue, log |
 | Drift (informational) | Continue | Continue |
 | Drift (breaking) | Pause | Pause anyway |
@@ -317,8 +353,9 @@ wrong.
 5. Verify their output exists on disk
 6. Run have-nots check on the artifact
 7. If pass: update PROGRESS.md, move to next sub-step
-8. If fail: spawn the agent again with the failures, OR pause for human
-9. Repeat until all tiers complete
+8. If fail and repairable: enter the autonomous repair loop
+9. If fail and human-only: pause with the smallest needed question
+10. Repeat until all tiers complete and verification is green
 ```
 
 ## Specialist Agent Routing
@@ -387,7 +424,10 @@ Move to next wave only when ALL slices in current wave are committed.
 After all waves complete:
 1. Run full test suite. All must pass.
 2. Run linter. All clean.
-3. Update PROGRESS.md: Build = done
+3. Run typecheck/check command when the package exposes one. All clean.
+4. If any verification fails, run the autonomous repair loop. Do not mark
+   Build done and do not recommend later work while verification is red.
+5. Update PROGRESS.md: Build = done
 
 CRITICAL RULES (build phase):
 - Never skip god-spec-reviewer
@@ -395,6 +435,8 @@ CRITICAL RULES (build phase):
 - Never commit without BOTH stages passing
 - Each slice gets its own atomic commit
 - Each agent gets a fresh context (defeats context rot)
+- Build cannot be `done` when test, lint, typecheck, or check commands fail
+- A release blocker is a repair target, not the final answer
 
 ## Post-Launch Transition (after Tier 3 completes)
 
@@ -420,8 +462,10 @@ This step runs regardless of flags:
 - /god-mode --conservative -> sync runs (with pause for confirmation)
 - /god-mode --with-hygiene -> sync runs PLUS hygiene check
 
-This ensures every full-arc run leaves the project in a sync'd state. The
-artifact coverage is consistent across all 14 categories.
+After sync, re-run the final verification commands. If any are red, return to
+the autonomous repair loop. This ensures every full-arc run leaves the project
+green and sync'd, not merely documented. The artifact coverage is consistent
+across all 14 categories.
 
 ### Steady-State Hand-off
 
@@ -505,7 +549,8 @@ that should never be auto-accepted. If god-harden-auditor returns Critical
 findings, --yolo does NOT skip. Pause for human resolution.
 
 This is the only --yolo carve-out. All other pauses are auto-resolved with
-the agent's documented default.
+the agent's documented default, and all repairable mechanical failures are
+handled by the autonomous repair loop before the arc can be called complete.
 
 ### Pause Format
 

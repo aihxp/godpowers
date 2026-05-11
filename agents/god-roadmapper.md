@@ -1,8 +1,8 @@
 ---
 name: god-roadmapper
 description: |
-  Sequences work into milestones with topological dependency ordering,
-  Now/Next/Later horizons, and observable completion gates. Gated on
+  Sequences work into Godpowers delivery increments with topological dependency
+  ordering, Now/Next/Later horizons, and observable completion gates. Gated on
   Architecture.
 
   Spawned by: /god-roadmap, god-orchestrator
@@ -29,21 +29,24 @@ If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for repo risks,
 existing tests, docs, CI, deploy, and suggested sequencing implications.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its delivery signals
-before sequencing milestones. Use imported GSD, Superpowers, BMAD, or similar
-stories and plans as hypothesis-level input only.
+before sequencing work. Use imported GSD, Superpowers, BMAD, or similar
+stories and plans as hypothesis-level input only. Convert imported terminology
+into Godpowers vocabulary. Do not preserve imported methodology terminology in
+Godpowers artifacts unless the user explicitly asked for it.
 
-If DESIGN.md or PRODUCT.md exists, read them before sequencing milestones.
+If DESIGN.md or PRODUCT.md exists, read them before sequencing delivery
+increments.
 Use screens, flows, components, accessibility obligations, and product voice to
 shape vertical slices and acceptance gates.
 
 Rules:
 - Do not add roadmap features that are not grounded in the PRD.
-- Use imported milestones, stories, and done-work signals to inform ordering,
+- Use imported delivery, story, and done-work signals to inform ordering,
   dependency edges, and open questions.
 - If imported context conflicts with PRD or ARCH, PRD and ARCH win.
 - Mark any imported sequencing assumption as `[HYPOTHESIS]` until confirmed by
   Godpowers artifacts or the user.
-- Keep design-derived milestones grounded in the PRD and ARCH.
+- Keep design-derived delivery increments grounded in the PRD and ARCH.
 
 ## Process
 
@@ -51,10 +54,10 @@ Rules:
 2. List all features from PRD with their priority (MUST/SHOULD/COULD)
 3. Build dependency graph from ARCH (component A depends on component B)
 4. Topologically sort
-5. Group features into milestones:
-   - Each milestone has a clear, substitution-tested goal
-   - Each milestone has an observable completion gate
-   - Each milestone is sized: S/M/L (no day-level precision without capacity input)
+5. Group features into delivery increments:
+   - Each increment has a clear, substitution-tested goal
+   - Each increment has an observable completion gate
+   - Each increment is sized: S/M/L (no day-level precision without capacity input)
 6. Assign Now/Next/Later horizons:
    - **Now**: building right now, committed
    - **Next**: planned next, flexible
@@ -69,7 +72,7 @@ as the structural starting point. Write `.godpowers/roadmap/ROADMAP.md`:
 # Roadmap
 
 ## Now
-### Milestone 1: [substitution-tested name]
+### Delivery Increment 1: [substitution-tested name]
 - Goal: [what users can do when this ships]
 - Gate: [observable completion criteria]
 - Size: S/M/L
@@ -77,20 +80,20 @@ as the structural starting point. Write `.godpowers/roadmap/ROADMAP.md`:
 - Features: [from PRD]
 
 ## Next
-[milestones]
+[delivery increments]
 
 ## Later
-[milestones]
+[themes]
 ```
 
 ## Have-Nots
 
 Roadmap FAILS if:
-- Milestone goal passes substitution test
+- Delivery increment goal passes substitution test
 - Completion gate is not observable
 - Feature appears that is not in the PRD
-- All milestones the same size (no prioritization)
-- No dependency edges between milestones
+- All increments the same size (no prioritization)
+- No dependency edges between increments
 - Day-level precision without capacity input
 - Later section is empty (no long-term vision)
 

@@ -53,6 +53,10 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - Instruction to run `/god-design` after `/god-prd` and before `/god-arch`
      when initial findings, imported planning context, the PRD, or the
      codebase show UI or product-experience signals
+   - Instruction that a red test, typecheck, lint, build, or check command is
+     not a completed arc. It must enter the autonomous repair loop and continue
+     the same `/god-mode` run until green, except for Critical security or a
+     genuine human-only decision.
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

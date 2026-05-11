@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.9-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.15.10-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -141,12 +141,17 @@ For real-world scenarios beyond greenfield:
 
 ```
 /god-mode                # Standard: pauses for real questions only
-/god-mode --yolo         # Zero pauses. Picks every default. Full send.
+/god-mode --yolo         # Zero pauses except Critical security. Repairs red checks before it stops.
 /god-mode --conservative # More checkpoints
 /god-mode --from=arch    # Resume from a specific tier
 /god-mode --audit        # Score existing artifacts. Build nothing.
 /god-mode --dry-run      # Plan everything. Build nothing.
 ```
+
+`/god-mode` is not complete when it merely writes planning artifacts. It keeps
+going through build, verification, repair, launch, and final sync. Red tests,
+typecheck, lint, build, or check output enter the repair loop instead of being
+reported as the final result.
 
 ## Architecture
 

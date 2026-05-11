@@ -5,6 +5,22 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.10] - 2026-05-11
+
+God Mode continuity release. Makes red verification output repair work inside
+the same autonomous arc instead of a terminal summary.
+
+### Changed
+- `/god-mode` now treats failed tests, lint, typecheck, build, or check commands
+  as repairable work and enters an autonomous repair loop before declaring the
+  arc complete.
+- Build completion now requires test, lint, and typecheck/check commands to be
+  green when those commands exist.
+- `/god-mode --yolo` now auto-runs repair loops, with Critical security findings
+  remaining the only unconditional pause.
+- Roadmap and build planning language now uses Godpowers delivery increments
+  instead of preserving imported methodology terminology.
+
 ## [0.15.9] - 2026-05-11
 
 Early design planning release. Lets UI and product-experience projects shape

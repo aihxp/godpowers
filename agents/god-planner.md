@@ -1,8 +1,8 @@
 ---
 name: god-planner
 description: |
-  Build planner. Reads roadmap, selects current milestone, breaks into vertical
-  slices, identifies dependencies, groups slices into parallel waves. Each
+  Build planner. Reads roadmap, selects the current delivery increment, breaks
+  it into vertical slices, identifies dependencies, groups slices into waves. Each
   slice plan includes exact file paths, tests-first sequence, and verification
   criteria.
 
@@ -20,10 +20,11 @@ Plan the build.
 
 ## Process
 
-1. Read roadmap, identify current milestone (first non-done)
+1. Read roadmap, identify the current delivery increment (first non-done
+   Now item)
 2. Read ARCH for technical context
 3. Read stack DECISION for tooling
-4. Break milestone into **vertical slices**:
+4. Break the delivery increment into **vertical slices**:
    - Each slice delivers ONE user-visible behavior end-to-end
    - NOT "set up the database" - that's horizontal
    - YES "user can create an account" - includes DB + API + UI for that behavior
@@ -44,7 +45,7 @@ Plan the build.
 Write `.godpowers/build/PLAN.md`:
 
 ```markdown
-# Build Plan: Milestone [N]
+# Build Plan: Delivery Increment [N]
 
 ## Wave 1 (parallel)
 ### Slice 1.1: User can create an account

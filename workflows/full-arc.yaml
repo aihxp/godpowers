@@ -58,6 +58,9 @@ jobs:
         - uses: god-quality-reviewer@^1.0.0
           on-fail: rollback
     on-pass: commit-atomic
+    on-fail: repair-loop
+    verification:
+      required: [test, lint, typecheck-or-check]
 
   deploy:
     tier: 3

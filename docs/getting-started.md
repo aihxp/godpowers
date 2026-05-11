@@ -147,6 +147,11 @@ is never authoritative.
 Add `--yolo` to skip pauses except Critical security. Auto-decisions log to
 `.godpowers/YOLO-DECISIONS.md` for review.
 
+Mechanical failures are not pauses. If tests, lint, typecheck, build, or check
+commands fail, `/god-mode` records the diagnostics, repairs the failure, reruns
+verification, and continues. It only asks for help when the same root failure
+survives focused repair attempts or the blocker is genuinely human-only.
+
 ## Where to next
 
 - [Concepts](concepts.md) - the vocabulary and mental model
