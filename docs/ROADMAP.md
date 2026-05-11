@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-11
-> Current shipped: v0.14.0
+> Current shipped: v0.15.0
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -82,16 +82,20 @@ Shipped:
   extensions/, INSPIRATION.md were missing); `prepublishOnly` runs
   the full test suite before any publish. Tarball: 364KB / 439 files.
 
-### v0.15.0 - Distribution + OTel + first-party packs (in flight)
+### v0.15.0 (shipped 2026-05-11) - Distribution + OTel + first-party packs
 
-Landed on main; ships when a `v*` tag is pushed:
+`godpowers@0.15.0` is live on npm with sigstore provenance:
+https://www.npmjs.com/package/godpowers
 
-- **`npm publish godpowers`** to the public registry (token stored as
-  the `NPM_TOKEN` GitHub Actions secret; no token in source)
+- **`npm install -g godpowers`** or `npx godpowers --claude --global`
+  now works against the public registry (no git clone needed)
 - **Tag-triggered publish workflow**: `.github/workflows/publish.yml`
   runs the full test suite then `npm publish --provenance --access
   public` on every `v*` tag push. Version bumps are manual
   (`npm version minor`), CHANGELOG is human-curated.
+- **First-party packs are publish-ready** but the `@godpowers` npm org
+  must be created before they can ship. Once the org exists, three
+  workflow_dispatch runs publish all three packs at `0.1.0`.
 - **OTel exporter** for events.jsonl: `lib/otel-exporter.js` plus the
   `/god-export-otel` skill. Maps workflow.run + agent.start/end to
   OTLP spans; cost.recorded / gate.fail / error attach as span events.
