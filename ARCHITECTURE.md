@@ -815,7 +815,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 104 skills + 38 agents (shipped at v0.14) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 104 skills + 38 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |
