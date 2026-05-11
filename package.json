@@ -1,6 +1,6 @@
 {
   "name": "godpowers",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Ship fast. Ship right. Ship everything. Ship accountably.",
   "bin": {
     "godpowers": "./bin/install.js"
