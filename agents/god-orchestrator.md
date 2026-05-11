@@ -632,6 +632,32 @@ Options:
 Default: If you say "go", I'll pick [X] because [Y].
 ```
 
+## User-Visible Transcript Contract
+
+The user-facing God Mode transcript is an operator console, not a prompt
+debugger. Keep orchestration scaffolding private.
+
+Show:
+- concise phase status
+- durable state detected from disk
+- commands being run and whether they passed or failed
+- scoped file changes
+- final validation summary
+- `Arc complete` or `PAUSE: external access required`
+
+Hide:
+- raw Task input
+- "Hard instructions" sections
+- spawned-agent prompt text
+- system, developer, AGENTS.md, or internal policy recitations
+- complete file loadout lists
+- routing metadata unless it changes a user decision
+
+When a private rule affects a pause, translate it into the smallest
+user-facing question. Do not expose the rule itself. Example: ask for
+`STAGING_APP_URL=<deployed staging origin>` rather than showing the Shipping
+Closure Protocol.
+
 ## Resume Protocol
 
 On every invocation:

@@ -95,17 +95,49 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      name, repo name, README title, or brand name. If no deployed origin is
      evidenced, pause for `STAGING_APP_URL=<deployed staging origin>`.
 
-6. Orchestrator runs the appropriate workflow:
+6. Keep the spawn payload private. Do not echo or summarize raw Task input,
+   "Hard instructions", hidden orchestration rules, agent prompts, file
+   loadout lists, or internal routing payloads into the user-visible transcript.
+   The visible transcript may say only what phase is running, what durable state
+   was detected, what commands are running, what changed, and the final
+   `Arc complete` or `PAUSE: external access required` block.
+
+7. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc
    - Brownfield -> brownfield-arc (archaeology -> reconstruct -> debt-assess -> proceed)
    - Bluefield -> bluefield-arc (org-context -> arc with constraints)
 
-7. Relay the orchestrator's output to the user.
+8. Relay only the orchestrator's user-facing output to the user. If the
+   platform displays raw spawn details automatically, immediately follow with a
+   clean public summary and never repeat the leaked payload.
 
-8. When the orchestrator pauses, present the question to the user using the
+9. When the orchestrator pauses, present the question to the user using the
    pause format (What / Why / Options / Default).
 
-9. When the user answers, re-spawn god-orchestrator with the answer.
+10. When the user answers, re-spawn god-orchestrator with the answer.
+
+## User-Visible Transcript Contract
+
+The God Mode transcript is an operator console, not a prompt debugger.
+
+Show:
+- detected resume or project mode in plain language
+- short progress updates for phases, commands, validations, and file edits
+- concise validation summaries instead of full command noise when possible
+- final changed paths, validation results, and completion or pause status
+
+Hide:
+- raw Task input
+- "Hard instructions" sections
+- spawned-agent prompt text
+- system, developer, or AGENTS.md rule recitations
+- complete file loadout lists
+- internal routing metadata unless it directly affects a user decision
+
+If an internal instruction must influence a pause, translate it into the
+smallest user-facing question. For example, ask for
+`STAGING_APP_URL=<deployed staging origin>` instead of exposing the full
+Shipping Closure Protocol.
 
 ## Pause Format (relay from orchestrator)
 

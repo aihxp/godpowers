@@ -5,6 +5,20 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.15] - 2026-05-11
+
+Transcript hygiene release. Keeps God Mode orchestration scaffolding out of the
+normal user-visible transcript.
+
+### Changed
+- Added a User-Visible Transcript Contract to `/god-mode` and
+  `god-orchestrator`.
+- God Mode now explicitly hides raw Task input, "Hard instructions", spawned
+  agent prompts, complete file loadout lists, and internal routing metadata from
+  the user-facing transcript.
+- Private rules that affect a pause must be translated into the smallest
+  user-facing question instead of exposing the underlying prompt.
+
 ## [0.15.14] - 2026-05-11
 
 Origin evidence release. Prevents `/god-mode --yolo` from inventing staging,
