@@ -5,6 +5,17 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.5] - 2026-05-11
+
+Godpowers init UX release. Makes explicit command invocation behave like
+project setup instead of asking an obvious follow-up.
+
+### Changed
+- `god init` and `/god-init` now automatically write the Godpowers AI-tool
+  context fence after initialization.
+- Generic init triggers such as "start a project" and "initialize" still ask
+  once before writing AI-tool instruction files.
+
 ## [0.15.4] - 2026-05-11
 
 Codex command discovery release. Installs Godpowers commands in the directory

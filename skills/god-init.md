@@ -99,9 +99,17 @@ needs to specify a mode.
 
 `.godpowers/PROGRESS.md` created with initial state.
 
-## AI-tool context (one-time prompt)
+## AI-tool context (automatic for explicit init)
 
-After PROGRESS.md is written, ask the user once:
+After PROGRESS.md is written, decide from the trigger phrase:
+
+- If the user explicitly invoked `god init` or `/god-init`, write AI-tool
+  context automatically. The command itself is explicit consent to initialize
+  Godpowers project context for the active AI coding tool.
+- If the user used a generic trigger such as "start a project", "new project",
+  or "initialize", ask once before writing AI-tool instruction files.
+
+Prompt for generic triggers only:
 
 ```
 Tell your AI coding tools (Claude Code, Codex, Gemini, Cursor, Windsurf,
@@ -114,10 +122,12 @@ files detected in this project.
   never-ask  - never ask again on this project
 ```
 
-Persist the answer to `state.json` under `project.context-prompt-answered`.
-On `yes`, spawn `god-context-writer` in `write` mode. On `never-ask`, store
-that flag so future runs of /god-init and /god-sync skip the prompt and the
-auto-refresh.
+Persist the resolved answer to `state.json` under
+`project.context-prompt-answered`. For explicit `god init` and `/god-init`,
+store `yes` and spawn `god-context-writer` in `write` mode. For generic
+triggers, on `yes`, spawn `god-context-writer` in `write` mode. On
+`never-ask`, store that flag so future runs of /god-init and /god-sync skip
+the prompt and the auto-refresh.
 
 If the user later wants to enable it manually, they run `/god-context on`.
 

@@ -30,6 +30,8 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-orchestrator` (mode + scale detection)
+- Spawns: `god-context-writer` automatically for explicit `god init` or
+  `/god-init`; asks once before spawning for generic init triggers
 - Reads: user intent from chat
 - Writes:
   - `.godpowers/PROGRESS.md`

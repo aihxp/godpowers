@@ -104,7 +104,8 @@ is the source of truth.
 ## Never do these
 
 - Never overwrite content outside the fence.
-- Never silently create AGENTS.md without consent on first /god-init.
+- Never silently create AGENTS.md for generic init triggers. Explicit
+  `god init` and `/god-init` are consent to write the Godpowers context fence.
 - Never write to a tool's file if the tool's signal directory/file is missing.
 - Never fork the canonical section across multiple files; everything
   non-pointer goes only to AGENTS.md.
