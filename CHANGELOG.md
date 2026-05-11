@@ -5,6 +5,26 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.1] - 2026-05-11
+
+Metadata + documentation polish. No code changes.
+
+### Changed
+- `package.json` description rewritten from tagline to searchable
+  one-liner: explains what godpowers is and lists the AI tools it
+  runs in. Improves npm registry discoverability.
+- `package.json` keywords expanded 10 -> 25. Adds variants like
+  `ai-agent`, `ai-orchestration`, specific tool names
+  (`claude-code`, `windsurf`, `gemini`, `copilot`), and artifact
+  taxonomy (`prd`, `architecture`, `roadmap`, `specialist-agents`).
+- `docs/reference.md`: catalogue gap closed. The 23 skills shipped
+  in v0.13 - v0.15 are now indexed (recovery, observability, the
+  OTel exporter, extension management). Index now matches the 104
+  skill files on disk.
+- `README.md`: clean Install section without scaffold disclaimers.
+- `docs/ROADMAP.md`: v0.16 and v1.0 sections rewritten in a tighter,
+  goal-focused tone.
+
 ## [0.15.0] - 2026-05-11
 
 Distribution release. Godpowers and its three first-party packs are
