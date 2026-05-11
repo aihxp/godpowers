@@ -567,10 +567,19 @@ Default: If you say "go", I'll pick [X] because [Y].
 ## Resume Protocol
 
 On every invocation:
-1. Read PROGRESS.md from disk (NEVER trust conversation memory)
-2. Scan ALL artifact paths to verify what actually exists
-3. If PROGRESS.md and disk disagree: disk wins. Repair PROGRESS.md.
-4. Continue from the first non-done sub-step
+1. Read `.godpowers/CHECKPOINT.md`, `.godpowers/state.json`,
+   `.godpowers/PROGRESS.md`, and `.godpowers/intent.yaml` from disk. NEVER
+   trust conversation memory.
+2. Scan ALL artifact paths to verify what actually exists.
+3. If durable state exists, do not ask the user to describe the project again.
+   Reconstruct intent from disk and continue.
+4. If PROGRESS.md and disk disagree: disk wins. Repair PROGRESS.md.
+5. Continue from the first non-done sub-step or the first red verification
+   step.
+
+Only ask "what do you want to build?" when no `.godpowers` state, no intent,
+no checkpoint, and no completed artifact exists. In a brownfield repo with
+existing Godpowers artifacts, asking that question is a routing bug.
 
 ## Mode Detection (Tier 0 setup)
 

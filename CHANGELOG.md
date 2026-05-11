@@ -5,6 +5,18 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.11] - 2026-05-11
+
+God Mode resume release. Fixes `/god-mode --yolo` prompting for a project
+description when durable Godpowers state already exists.
+
+### Changed
+- `/god-mode` now treats existing `.godpowers` state as a resume signal and
+  rehydrates intent from checkpoint, state, progress, intent, prep, and tier
+  artifacts before asking the user anything.
+- The orchestrator now documents that asking "what do you want to build?" in a
+  brownfield repo with existing Godpowers artifacts is a routing bug.
+
 ## [0.15.10] - 2026-05-11
 
 God Mode continuity release. Makes red verification output repair work inside

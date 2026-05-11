@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.10-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.15.11-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -152,6 +152,9 @@ For real-world scenarios beyond greenfield:
 going through build, verification, repair, launch, and final sync. Red tests,
 typecheck, lint, build, or check output enter the repair loop instead of being
 reported as the final result.
+
+If `.godpowers` state already exists, `/god-mode --yolo` resumes from disk
+instead of asking for the project description again.
 
 ## Architecture
 

@@ -16,7 +16,15 @@ You are receiving a /god-mode invocation. Your job is to spawn the
 
 ## Process
 
-1. Greet the user briefly: "God Mode engaged. Describe what you want to build."
+1. Resolve whether this is a new arc or a resume:
+   - If `.godpowers/state.json`, `.godpowers/PROGRESS.md`, or
+     `.godpowers/CHECKPOINT.md` exists, this is a resume. Do not ask the user
+     to describe the project again. Rehydrate intent from disk and continue.
+   - If no durable Godpowers state exists and no project description was
+     supplied in the invocation, greet briefly: "God Mode engaged. Describe
+     what you want to build."
+   - If no durable state exists and the invocation includes a description, use
+     that description immediately.
 
 2. **Auto-detect project type in background** (no jargon to user):
    - Scan working directory for code presence (package.json, src/, etc.)
@@ -25,7 +33,22 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - Announce in plain English what was detected (see god-orchestrator
      "How to announce" section)
 
-3. Wait for the user's project description (any format).
+3. Load durable resume context before asking anything:
+   - `.godpowers/CHECKPOINT.md` first, when present
+   - `.godpowers/state.json`
+   - `.godpowers/PROGRESS.md`
+   - `.godpowers/intent.yaml`, when present
+   - `.godpowers/prep/INITIAL-FINDINGS.md`, when present
+   - `.godpowers/prep/IMPORTED-CONTEXT.md`, when present
+   - Existing tier artifacts on disk
+
+   If these files contain enough information to identify the project and next
+   unfinished or red step, continue automatically. If the only missing data is
+   a nice-to-have description, use a `[HYPOTHESIS]` from existing artifacts and
+   keep moving.
+
+   Ask for a description only when there is no durable intent, no completed
+   artifact, and no resumable state.
 
 4. Parse flags from the invocation:
    - `--yolo` (skip pauses, pick defaults)
@@ -43,9 +66,10 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - `--greenfield` (force greenfield, skip archaeology even if code exists)
 
 5. Spawn the **god-orchestrator** agent via Task tool with:
-   - The user's project description
+   - The user's project description, or durable intent recovered from disk
    - The detected mode (A/B/C/E)
    - The active flags
+   - Instruction that existing `.godpowers` state means resume, not prompt
    - Instruction to read `.godpowers/PROGRESS.md` from disk if it exists
    - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
      `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the

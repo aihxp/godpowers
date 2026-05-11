@@ -135,6 +135,10 @@ Every artifact lives on disk in `.godpowers/`. If a session ends, you can
 resume in a new one: it reads the disk and continues. Conversation memory
 is never authoritative.
 
+If `.godpowers` state already exists, `/god-mode --yolo` resumes from disk. It
+does not ask for the project description again unless there is no state, no
+intent, no checkpoint, and no completed artifact to recover from.
+
 ## Pause philosophy
 
 `/god-mode` only pauses for genuine human-only decisions:
