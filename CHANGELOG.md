@@ -5,36 +5,76 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.14.0] - 2026-05-11
+
+The big release. Workflow runtime is now executable, locks and
+checkpoints are wired into the orchestrator, a full token cost saver
+ships, on/off budget shortcut for casual users, GitHub Actions CI,
+and npm publish prep.
+
+### Added (lock + checkpoint wiring)
+- `lib/state-lock.js`: acquire / release / peek / isStale / reclaim /
+  withLock. Reentrant; scope-based conflict; stale-lock reclaim;
+  withLock guarantees release on thrown error.
+- `lib/checkpoint.syncFromState`: one-call orchestrator helper that
+  rebuilds CHECKPOINT.md from state.json + events.jsonl tail.
+- 28 artifact-producing skills gained `## Locking` sections that
+  document the contract for end users.
+- `agents/god-orchestrator.md`: new Concurrency section that wires
+  lock acquisition + CHECKPOINT auto-update into every sub-step.
 
 ### Added (token cost saver)
-- `lib/cost-tracker.js`: per-call cost recording + per-tier / per-agent /
-  per-model aggregation. Built-in pricing table for major models
-  (Claude / GPT / Gemini / O-series). `recordCost`, `recordCacheHit`,
-  `recordCacheMiss`, `aggregate`, `formatReport`, `priceTokens`.
-- `lib/agent-cache.js`: opt-in agent-output cache. Deterministic key
-  from `sha256(agent + version + sorted inputs + state-hash)`. TTL
-  with auto-expiry. Sharded storage at `.godpowers/cache/<shard>/<key>.json`.
-- `lib/context-budget.js`: per-agent budget planner. Reads required/
-  optional context from agent frontmatter; computes loadout under
-  `default-max-tokens` cap; emits `budget.exceeded` when required
-  alone overflows.
+- `lib/cost-tracker.js`: per-call cost recording + per-tier /
+  per-agent / per-model aggregation. Built-in pricing table for
+  major models (Claude / GPT / Gemini / O-series). recordCost /
+  recordCacheHit / recordCacheMiss / aggregate / formatReport /
+  priceTokens.
+- `lib/agent-cache.js`: opt-in agent-output cache keyed by
+  sha256(agent + version + sorted inputs + state-hash). TTL-bounded.
+  Sharded storage. Cache hits emit `cache.hit` with savings_usd.
+- `lib/context-budget.js`: per-agent budget planner. Reads required /
+  optional context from agent frontmatter; loads under cap; emits
+  `budget.exceeded` when required alone overflows.
 - `schema/intent.v1.yaml.json`: new `budgets` block with
-  `default-max-tokens`, `model-profile` (cheap/standard/expensive),
-  `cache` (bool), `cache-ttl-hours`, per-agent overrides.
+  `default-max-tokens`, `model-profile` (cheap / standard /
+  expensive), `cache`, `cache-ttl-hours`, per-agent overrides.
 - `lib/events.js`: 4 new event names (`cost.recorded`, `cache.hit`,
   `cache.miss`, `budget.exceeded`).
-- 3 new skills: `/god-cost` (spend + savings report),
-  `/god-budget` (view + set budgets), `/god-cache-clear` (invalidate
-  cache entries by agent / age / TTL).
+- 3 new skills: `/god-cost` (spend + savings report), `/god-budget`
+  (view + set budgets), `/god-cache-clear` (invalidate cache).
+- `lib/budget.js`: applyOn / applyOff / set / read / summary so
+  `/god-budget --on` and `--off` work as one-shot toggles.
 - `agents/god-orchestrator.md`: new "Cost-conscious agent dispatch"
-  section that wires cache check, context-budget loadout, model
-  selection by profile, and cost recording into the per-spawn flow.
+  section wiring cache check, context-budget loadout, model selection
+  by profile, and cost recording into every spawn.
+
+### Added (v0.14 workflow runtime)
+- `lib/workflow-runner.js`: listWorkflows + loadByName + plan +
+  writePlan + readPlan. Reads workflows/*.yaml via
+  lib/workflow-parser; computes dependency-ordered waves; serializes
+  plans to .godpowers/runs/<id>/plan.yaml.
+- `/god-mode --workflow=<name>` and `/god-mode --plan` flags added.
+- All 13 workflows/*.yaml had their "NOT YET AUTHORITATIVE" header
+  replaced with "Authoritative (v0.14+)".
+
+### Added (release engineering)
+- `.github/workflows/ci.yml`: matrix on Node 18/20/22; runs npm test
+  on every PR + main push. Separate `package` job runs npm pack
+  --dry-run and verifies bin entry + CHANGELOG has a current entry.
+- `package.json` files array: routing/, workflows/, extensions/,
+  INSPIRATION.md added (previously missing -> would have shipped a
+  broken package). prepublishOnly runs the full test suite before
+  any npm publish.
+- npm pack --dry-run: 364KB tarball / 1.1MB unpacked / 439 files.
 
 ### Tests
-- 32 suites (was 31), 1838 passing (was 1785). +53.
-- `scripts/test-cost-saver.js`: 26 tests across cost-tracker (7),
-  agent-cache (11), context-budget (8).
+- 34 suites (was 30 at v0.13.0), 1863 passing (was 1764). +99.
+- New: test-state-lock.js (21), test-cost-saver.js (26),
+  test-budget-onoff.js (13), test-workflow-runner.js (12).
+
+### Changed
+- bin/install.js VERSION: 0.13.0 -> 0.14.0
+- package.json version: 0.13.0 -> 0.14.0
 
 ## [0.13.0] - 2026-05-10
 

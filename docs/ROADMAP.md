@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
-> Last updated: 2026-05-10
-> Current shipped: v0.13.0
+> Last updated: 2026-05-11
+> Current shipped: v0.14.0
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -59,33 +59,42 @@ Shipped earlier-than-roadmapped and combined:
   `/god-metrics`, `/god-trace`. OTel exporter + cost tracking remain
   for v0.14 / v0.15.
 
-### v0.14.0 - Workflow Runtime + Distribution
+### v0.14.0 (shipped 2026-05-11) - Workflow runtime + cost saver + locks + CI
 
-**Theme**: workflows are declarative + runnable; godpowers ships on npm.
+Shipped:
 
-Workflow YAMLs already exist at `workflows/`; v0.14 makes them executable:
+- **Workflow runtime**: `lib/workflow-runner.js` reads
+  `workflows/*.yaml` and computes dependency-ordered plans. All 13
+  workflow YAMLs are now authoritative (no longer documentation-only).
+  `/god-mode --workflow=<name>` and `--plan` flags added.
+- **Lock + checkpoint wiring**: `lib/state-lock.js` (acquire / release /
+  reclaim / withLock), `lib/checkpoint.syncFromState` (per-sub-step
+  pin refresh). Orchestrator agent wired to acquire-mutate-release
+  and refresh CHECKPOINT.md on every sub-step.
+- **Token cost saver**: `lib/cost-tracker.js` + `lib/agent-cache.js` +
+  `lib/context-budget.js` + `lib/budget.js`. New skills: `/god-cost`,
+  `/god-budget` (+ `--on` / `--off` one-shot toggles), `/god-cache-
+  clear`. Schema `intent.v1.yaml.json` gains a `budgets` block.
+- **GitHub Actions CI**: matrix on Node 18/20/22; full test suite on
+  every PR + main push. Separate package job verifies npm pack
+  cleanliness.
+- **npm publish prep**: `files` array fixed (routing/, workflows/,
+  extensions/, INSPIRATION.md were missing); `prepublishOnly` runs
+  the full test suite before any publish. Tarball: 364KB / 439 files.
 
-- `schema/workflow.v1.json` finalized
-- `--plan` flag on `/god-mode` and tier commands
-- Plan output written to `.godpowers/runs/<id>/plan.yaml`
-- Custom workflows authorable at `.godpowers/workflows/`
+### v0.15.0 - Distribution + OTel + first-party packs
 
-Distribution (was v0.12 originally):
-
-- `npm publish godpowers` (the installer + core)
-- Conventional commits + semantic-release on main
-- GitHub Release automation with auto-changelog
-- npm install verification
-- Telemetry: opt-in, off-by-default
-
-### v0.15.0 - Observability extras + first-party packs
-
+- `npm publish godpowers` to the public registry
+- Semantic-release automation on main
 - OTel exporter for events.jsonl
-- Cost tracking per run (model tokens, recorded in events)
+- Cost-tracker live-integration with provider token reports (currently
+  estimates from byte counts; v0.15 wires actual model token responses
+  when the AI tool exposes them)
 - First-party packs published to npm:
   - `@godpowers/security-pack` (SOC2, HIPAA, PCI auditors)
   - `@godpowers/launch-pack` (Show HN, Product Hunt, Indie strategists)
   - `@godpowers/data-pack` (ETL, ML features, dashboards)
+- Telemetry: opt-in, off-by-default
 
 ### v1.0.0 - Stable
 

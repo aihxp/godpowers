@@ -662,7 +662,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 91 skills, 38 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 104 skills, 38 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |
@@ -815,7 +815,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 91 skills + 38 agents (shipped at v0.12) | Same surface. Plus declarative contracts (v0.14 workflow runtime). |
+| 104 skills + 38 agents (shipped at v0.14) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |
