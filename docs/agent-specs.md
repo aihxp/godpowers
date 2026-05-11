@@ -759,13 +759,13 @@ added during the production-ready + design + linkage push.
 | Field | Value |
 |---|---|
 | **File** | `agents/god-context-writer.md` |
-| **Triggers** | `/god-context on/off/status`, `/god-init` (automatic write), generic init triggers (one-time consent prompt), `/god-sync` (auto-refresh unless never-ask) |
+| **Triggers** | `/god-context on/off/status`, `/god-init` (automatic quiet write), generic init triggers (one-time consent prompt, then quiet write), `/god-sync` (quiet auto-refresh unless never-ask) |
 | **Inputs** | state.json (project name, mode, scale, linkage state), DESIGN.md and PRODUCT.md presence, detected AI tools |
 | **Outputs** | Fenced sections in AGENTS.md (canonical), CLAUDE.md, GEMINI.md, .cursor/rules/godpowers.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .roo/, .continue/ (only when their tool is detected) |
 | **Downstream consumers** | AI coding tools reading the project on cold session start |
 | **Artifact awareness** | Reads state.json + linkage.json; writes only inside `<!-- godpowers:begin --> ... <!-- godpowers:end -->` fences |
 | **Standards check** | Detect-then-write: never creates files for tools without their config dir; never overwrites user content outside the fence; idempotent |
-| **Handoff** | Returns to spawner with results summary (which targets had fences refreshed) |
+| **Handoff** | Returns compact success to `/god-init` and `/god-sync`; returns results summary only for explicit `/god-context` commands |
 
 ---
 

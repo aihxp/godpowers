@@ -124,10 +124,15 @@ files detected in this project.
 
 Persist the resolved answer to `state.json` under
 `project.context-prompt-answered`. For explicit `god init` and `/god-init`,
-store `yes` and spawn `god-context-writer` in `write` mode. For generic
-triggers, on `yes`, spawn `god-context-writer` in `write` mode. On
-`never-ask`, store that flag so future runs of /god-init and /god-sync skip
-the prompt and the auto-refresh.
+store `yes` and spawn `god-context-writer` in `write` mode with quiet output.
+For generic triggers, on `yes`, spawn `god-context-writer` in `write` mode
+with quiet output. On `never-ask`, store that flag so future runs of
+/god-init and /god-sync skip the prompt and the auto-refresh.
+
+When `god-context-writer` is spawned by /god-init, treat it as background
+setup. Do not narrate file exploration, planned edits, written files, or state
+updates unless the context write fails. On failure, report the error briefly
+and suggest `/god-context on` as the manual retry.
 
 If the user later wants to enable it manually, they run `/god-context on`.
 
@@ -160,12 +165,5 @@ without explicit user invocation of /god-suite-init.
 After init completes, print:
 
 ```
-Godpowers initialized.
-
-Mode: [detected mode]
-Scale: [detected scale]
-AI-tool context: [enabled / skipped / never-ask]
-
-Suggested next: /god-prd (write the requirements)
-Or: /god-mode (run the full autonomous arc)
+Suggested next: /god-prd for requirements, or /god-mode for the full autonomous arc.
 ```

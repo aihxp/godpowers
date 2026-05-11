@@ -6,7 +6,8 @@ description: |
   .clinerules, .roo/, .continue/). Writes a fenced "godpowers" section so
   AI tools know they're in a Godpowers project on cold session start.
 
-  Spawned by: /god-init (after consent), /god-context, /god-sync (refresh).
+  Spawned by: /god-init (automatic quiet setup after consent), /god-context,
+  /god-sync (refresh).
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -68,7 +69,9 @@ You are spawned with one of these modes:
 3. Call `apply(projectRoot, state)`:
    - Writes AGENTS.md fence (creates file if missing).
    - For each detected tool: writes a pointer fence to its target file.
-4. Report what was written / refreshed.
+4. If called by `/god-init`, return a compact success marker to the caller
+   and do not produce user-facing narration.
+5. Otherwise, report what was written / refreshed.
 
 ### Mode 2: status
 
@@ -89,6 +92,8 @@ You are spawned with one of these modes:
 ### Mode 4: sync (called from god-updater)
 
 Same as Mode 1. Refreshes the canonical section against current state. Idempotent.
+Sync mode is quiet by default unless there is a failure or the user explicitly
+asked for `/god-context refresh`.
 
 ## Content discipline
 
@@ -114,7 +119,8 @@ is the source of truth.
 
 ## Output
 
-Report back to the orchestrator (or the calling skill):
+For `/god-context on` or `/god-context refresh`, report back to the
+orchestrator (or the calling skill):
 
 ```
 Context files updated:
@@ -131,6 +137,16 @@ Context fences removed from:
   - AGENTS.md           (kept; user content remained)
   - CLAUDE.md           (file deleted; was Godpowers-only)
 ```
+
+For `/god-init` callers:
+
+```
+context-written
+```
+
+Do not show file names, exploration notes, state updates, or edit summaries to
+the user during `/god-init`. The init skill owns the final user-facing output.
+Only surface context-writer details when there is an error.
 
 ## Handoff
 

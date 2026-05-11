@@ -5,6 +5,19 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.6] - 2026-05-11
+
+Quiet init release. Keeps `/god-init` focused on the next useful command while
+context setup happens in the background.
+
+### Changed
+- `/god-init` now treats the Godpowers context writer as background setup and
+  suppresses file-by-file narration unless the context write fails.
+- `/god-init` completion now prints only the suggested next command line:
+  `/god-prd` for requirements, or `/god-mode` for the full autonomous arc.
+- `/god-context` commands remain explicit and still report their context-file
+  changes.
+
 ## [0.15.5] - 2026-05-11
 
 Godpowers init UX release. Makes explicit command invocation behave like

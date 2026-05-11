@@ -30,8 +30,8 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-orchestrator` (mode + scale detection)
-- Spawns: `god-context-writer` automatically for explicit `god init` or
-  `/god-init`; asks once before spawning for generic init triggers
+- Spawns: `god-context-writer` quietly for explicit `god init` or `/god-init`;
+  asks once before quiet spawning for generic init triggers
 - Reads: user intent from chat
 - Writes:
   - `.godpowers/PROGRESS.md`
@@ -40,7 +40,8 @@ Each command has:
 
 **Standards check**: none (no artifacts produced yet)
 
-**Success path**: `/god-prd` (or `/god-mode` for autonomous)
+**Success path**: print only
+`Suggested next: /god-prd for requirements, or /god-mode for the full autonomous arc.`
 
 **Failure path**: `/god-doctor`
 
