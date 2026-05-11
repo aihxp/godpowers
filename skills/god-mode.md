@@ -81,6 +81,10 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      not a completed arc. It must enter the autonomous repair loop and continue
      the same `/god-mode` run until green, except for Critical security or a
      genuine human-only decision.
+   - Instruction that deploy, observe, harden, and launch must follow the
+     Shipping Closure Protocol: verify a real environment when available,
+     otherwise create local/CI-verifiable deploy automation and pause only for
+     one exact external access bundle.
 
 6. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc

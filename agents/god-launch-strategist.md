@@ -65,6 +65,18 @@ For each channel:
 - D+1 to D+3: respond to all comments, gather feedback
 - D+7: post-launch retrospective
 
+### 6. Shipping Closure
+- Read `.godpowers/deploy/STATE.md`,
+  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present, and
+  `.godpowers/observe/STATE.md`.
+- If deploy or observe is waiting on external access, do not create a broad
+  dashboard checklist. Reference the single waiting access bundle and write
+  launch state as `waiting-for-external-access`.
+- If a staging or production URL is available, run or specify the exact smoke
+  command and record the result.
+- If only local staging is available, run local launch-readiness checks and
+  clearly label scope as local readiness, not live launch.
+
 ## Output
 
 Write `.godpowers/launch/STATE.md` with all artifacts.
@@ -78,6 +90,8 @@ Write `.godpowers/launch/STATE.md` with all artifacts.
 - Launch with no source attribution
 - No D+1 to D+7 follow-up plan
 - "We'll figure out marketing later"
+- Broad provider checklist instead of one exact external access bundle
+- Declares live launch without a verified live target
 
 ## Pause Conditions
 

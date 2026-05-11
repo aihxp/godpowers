@@ -20,7 +20,13 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
 
 1. Read ARCH for deployment topology
 2. Read stack DECISION for hosting/CI choices
-3. Configure pipeline:
+3. Detect what can be verified now:
+   - real staging or production URL and credentials
+   - local staging harness or mock provider harness
+   - CI provider and deploy scripts
+   - provider CLIs, env files, Docker files, reverse proxy config, database,
+     backup, and restore scripts
+4. Configure pipeline:
 
 ### Same-Artifact Promotion
 - Build the artifact ONCE (Docker image, binary, bundle)
@@ -48,6 +54,18 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
 ### Smoke Tests
 - Post-deploy smoke test that hits real endpoints
 - Fails the deploy if smoke test fails (auto-rollback)
+
+### External Access Closure
+- If real staging is reachable, run the real smoke and rollback checks.
+- If real staging is not reachable, build the closest local staging harness and
+  run the same smoke command against it.
+- If provider credentials, DNS, TLS, dashboard access, or production secrets are
+  missing, write `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
+- That file must contain one smallest access bundle, exact env var names,
+  exact dashboard/provider links or placeholders, and the command Godpowers will
+  run after access exists.
+- Do not return a broad checklist as the final answer. Either return tested
+  deploy readiness or the one access bundle.
 
 ## Output
 
@@ -85,3 +103,5 @@ Write `.godpowers/deploy/STATE.md`:
 - Health check is TCP-only
 - No smoke tests
 - Paper canary (label without traffic split)
+- Broad provider checklist with no scripts or exact access bundle
+- Marks deploy done when the only verified target is missing

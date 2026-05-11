@@ -23,7 +23,14 @@ After god-observability-engineer returns:
 1. Verify STATE.md exists on disk
 2. Verify each SLO has an error budget policy
 3. Verify each alert has a runbook
-4. Update `.godpowers/PROGRESS.md`: Observe status = done
+4. Verify provider work is one of:
+   - real provider alerts and dashboards verified
+   - provider-neutral definitions as code created and locally checked
+   - missing dashboard/API credentials appended to the single external access
+     bundle
+5. Update `.godpowers/PROGRESS.md`: Observe status = done only for verified
+   real provider config or local definitions as code. If external access is
+   missing, mark Observe = waiting-for-external-access.
 
 ## On Completion
 
@@ -32,6 +39,11 @@ Observability complete: .godpowers/observe/STATE.md
 
 Suggested next: /god-harden (adversarial security review, gates Launch)
 ```
+
+Under `/god-mode --yolo`, do not stop with a dashboard checklist. Create or
+update alert definitions, dashboard definitions, runbooks, and local checks
+first. If real provider access is still required, append the exact missing
+credentials to `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
 
 
 ## Re-invocation contract

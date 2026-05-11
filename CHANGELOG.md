@@ -5,6 +5,22 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.12] - 2026-05-11
+
+Shipping closure release. Prevents `/god-mode --yolo` from stopping with broad
+staging/provider checklists.
+
+### Changed
+- Added a Shipping Closure Protocol for deploy, observe, harden, and launch:
+  verify a real environment when reachable, otherwise create local or
+  CI-verifiable automation, then pause only for one exact external access
+  bundle.
+- Deploy, observability, and launch agents now treat missing provider access as
+  `waiting-for-external-access` with a concrete artifact instead of a generic
+  next-step checklist.
+- Full-arc workflow metadata now records closure behavior for missing external
+  access.
+
 ## [0.15.11] - 2026-05-11
 
 God Mode resume release. Fixes `/god-mode --yolo` prompting for a project

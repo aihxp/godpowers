@@ -23,7 +23,15 @@ Spawn the **god-deploy-engineer** agent in a fresh context via Task tool.
 After god-deploy-engineer returns:
 1. Verify STATE.md exists on disk
 2. Verify rollback procedure has been tested (not paper-only)
-3. Update `.godpowers/PROGRESS.md`: Deploy status = done
+3. Verify the deploy path is one of:
+   - real staging or production target tested
+   - local staging harness tested with equivalent health, smoke, and rollback
+     commands
+   - paused on `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` with one
+     exact missing access bundle
+4. Update `.godpowers/PROGRESS.md`: Deploy status = done only for a tested real
+   target or tested local staging harness. If external access is missing, mark
+   Deploy = waiting-for-external-access, not done.
 
 ## On Completion
 
@@ -32,6 +40,12 @@ Deploy pipeline complete: .godpowers/deploy/STATE.md
 
 Suggested next: /god-observe (wire SLOs, alerts, runbooks)
 ```
+
+Under `/god-mode --yolo`, do not stop with a provider checklist. Create or
+update the deploy scripts, smoke command, rollback command, health endpoints,
+env manifest, and local staging harness first. If real external access is still
+required, pause on the single access bundle in
+`.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
 
 
 ## Re-invocation contract

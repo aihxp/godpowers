@@ -324,6 +324,37 @@ after tests pass. If a git remote exists and the user passed an explicit push
 flag or the project intent says pushing is allowed, push after the green commit
 and then continue the arc. Pushing is not a terminal state.
 
+## Shipping Closure Protocol
+
+The shipping tier must not end by listing a broad provider checklist. God Mode
+either ships, creates the automation needed to ship, or pauses on one precise
+external access bundle.
+
+For deploy, observe, harden, and launch:
+1. Detect the target environment from deploy config, org context, env files,
+   CI config, README, existing scripts, and provider CLIs.
+2. If a real staging or production target is reachable, run the real smoke,
+   rollback, health, observability, and launch checks against it.
+3. If no real target is reachable but the stack can run locally, create or
+   update a local staging harness that exercises the same routes, health
+   checks, smoke checks, and launch gates. Run it.
+4. If provider credentials, DNS, TLS, dashboards, or production secrets are
+   missing, create the missing automation and documentation first:
+   - scripts for deploy, smoke, rollback, health, backup, and restore
+   - env var manifest with exact variable names
+   - CI jobs or documented commands that call those scripts
+   - `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` with the smallest
+     access bundle needed
+5. Under `--yolo`, auto-pick safe defaults for provider-neutral choices and
+   continue through every local and CI-verifiable gate.
+6. Only pause when real external access is required and absent. The pause must
+   ask for one concrete thing, such as "provide STAGING_URL and these 5 secrets"
+   or "confirm production DNS host and token." Do not output a long checklist
+   as the stopping condition.
+7. Do not say "Suggested next" for a blocked shipping tier. Say either
+   `Arc complete` or `PAUSE: external access required`, with the exact artifact
+   that lists the required bundle.
+
 ## YOLO Behavior with Design + Linkage
 
 | Concern | Default | --yolo |

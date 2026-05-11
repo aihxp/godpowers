@@ -15,7 +15,9 @@ Wire observability.
 
 ## Gate Check
 
-`.godpowers/deploy/STATE.md` exists. App is deployed and reachable.
+`.godpowers/deploy/STATE.md` exists. App is deployed and reachable, or deploy
+state documents a tested local staging harness plus a single external access
+bundle.
 
 ## Process
 
@@ -57,6 +59,16 @@ For each PRD success metric, define an SLO:
 - No "vanity metrics" dashboards
 - Top-level dashboard shows SLO status at a glance
 
+### 7. External Access Closure
+- If the observability provider is reachable, create or verify the real alerts,
+  dashboards, and runbooks.
+- If the provider is not reachable, create provider-neutral dashboard and alert
+  definitions as code when possible.
+- If dashboard/API credentials are missing, append them to the single waiting
+  access bundle instead of returning a broad checklist.
+- Under `/god-mode --yolo`, continue through every local or CI-verifiable
+  observability check before pausing for external access.
+
 ## Output
 
 Write `.godpowers/observe/STATE.md` with:
@@ -74,3 +86,5 @@ Write `.godpowers/observe/STATE.md` with:
 - Dashboard not tied to an SLO
 - Sensitive data in log output
 - Alert with no runbook
+- Broad dashboard checklist instead of definitions as code or one exact access
+  bundle

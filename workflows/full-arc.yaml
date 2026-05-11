@@ -66,6 +66,9 @@ jobs:
     tier: 3
     needs: build
     uses: god-deploy-engineer@^1.0.0
+    closure:
+      on-missing-external-access: create-waiting-access-bundle
+      local-verification-required: true
 
   observe:
     tier: 3
@@ -85,3 +88,6 @@ jobs:
     uses: god-launch-strategist@^1.0.0
     with:
       template: HARDEN-FINDINGS.md
+    closure:
+      no-broad-checklists: true
+      on-missing-external-access: pause-with-single-access-bundle

@@ -25,7 +25,13 @@ After god-launch-strategist returns:
 1. Verify STATE.md exists on disk
 2. Verify landing copy passes substitution test
 3. Verify OG cards rendered (not just meta tags)
-4. Update `.godpowers/PROGRESS.md`: Launch status = done
+4. Verify one of:
+   - launch target is live and smoke checked
+   - local launch-readiness harness passed and external access bundle is the
+     only missing item
+5. Update `.godpowers/PROGRESS.md`: Launch status = done only when live launch
+   or explicit local launch-readiness scope is complete. If external access is
+   missing, mark Launch = waiting-for-external-access.
 
 ## Pause Conditions
 
@@ -42,6 +48,11 @@ All Godpowers tiers done. Project is live.
 Suggested next: /god-audit (score all artifacts retrospectively)
 Or: /god-status (see the final state)
 ```
+
+Under `/god-mode --yolo`, do not stop by listing provider dashboards. Create
+the launch runbook, smoke command, source attribution plan, and local
+launch-readiness checks. If real launch is blocked by missing external access,
+pause on the single access bundle from deploy or launch state.
 
 
 ## Re-invocation contract
