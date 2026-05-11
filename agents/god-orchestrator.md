@@ -808,7 +808,8 @@ in a parent suite. The human-friendly label is what the user sees.
 ### Mode B: Brownfield / Gap-fill (auto-detected)
 - Existing code OR partial `.godpowers/` artifacts present
 - May or may not have org context
-- Default path: archaeology -> reconstruct -> debt-assess -> proceed
+- Default path: archaeology -> reconstruct -> debt-assess -> greenfield
+  simulation audit -> proceed
 
 **Detection logic (run this on every Mode B invocation)**:
 
@@ -877,6 +878,9 @@ Report findings to user before running any tier:
 - BUT org-context.yaml found (in current dir, parent, or grandparent)
 - Run full arc with all decisions constrained by org context
 - Spawn god-org-context-loader first to load constraints
+- Run greenfield simulation audit after org-context and before PRD so the arc
+  knows where canonical Godpowers defaults align with, conflict with, or are
+  constrained by org standards
 - All downstream agents (god-stack-selector, god-architect, god-deploy-engineer,
   god-observability-engineer, god-harden-auditor) receive the org-context
   and respect it

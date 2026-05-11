@@ -31,6 +31,9 @@ Score artifacts. Build nothing. Report what fails and why.
 4. If running for orchestrator gate check: return verdict only (any
    error from mechanical pass = FAIL; any critical interpretive = FAIL).
 5. If running for /god-audit: produce full report combining both passes.
+6. If running with `mode: greenfield-simulation`, do not build anything.
+   Simulate the canonical Godpowers greenfield arc and compare it against the
+   current project evidence or org constraints.
 
 ## Mechanical vs interpretive split
 
@@ -148,3 +151,56 @@ Overall: 85%
 
 For gate check (called by orchestrator): return PASS/FAIL with first failure
 only (orchestrator wants speed, not full report).
+
+For greenfield simulation audit, write
+`.godpowers/audit/GREENFIELD-SIMULATION.md`:
+
+```markdown
+# Greenfield Simulation Audit
+
+Date: [timestamp]
+Mode: [brownfield | bluefield]
+
+## Simulated Canonical Arc
+- PRD: [what a clean Godpowers PRD would need]
+- Design: [whether DESIGN.md should exist before ARCH]
+- ARCH: [expected architecture decisions]
+- ROADMAP: [expected sequencing]
+- STACK: [expected stack decision points]
+- REPO: [expected repo setup]
+- BUILD: [expected vertical-slice delivery]
+- DEPLOY: [expected deploy and rollback gates]
+- OBSERVE: [expected SLOs and runbooks]
+- HARDEN: [expected security gates]
+- LAUNCH: [expected launch readiness gates]
+
+## Evidence Compared
+- [source path or org-context source]
+
+## Alignment
+| Area | Greenfield Expectation | Existing Evidence | Status |
+|---|---|---|---|
+| PRD | [expectation] | [evidence] | aligned / gap / unknown |
+
+## Gaps To Carry Forward
+- [DECISION/HYPOTHESIS/OPEN QUESTION] [gap and where it should influence PRD, ARCH, ROADMAP, BUILD, or shipping]
+
+## Non-Goals
+- This audit does not rewrite artifacts.
+- This audit does not treat imported GSD, Superpowers, BMAD, or org context as
+  source of truth.
+- This audit does not block the arc unless it finds a Critical security or
+  impossible planning contradiction.
+```
+
+Greenfield simulation rules:
+- Brownfield: compare reconstructed artifacts, archaeology, debt assessment,
+  repo shape, tests, CI, deploy, observability, hardening, and launch evidence
+  against what the canonical greenfield arc would have created.
+- Bluefield: compare org context and constraints against the canonical
+  greenfield arc before PRD so downstream agents know which choices are
+  constrained, missing, or open.
+- Label every finding as DECISION, HYPOTHESIS, or OPEN QUESTION.
+- Do not invent missing intent. Mark unknowns as OPEN QUESTION.
+- Do not overwrite PRD, ARCH, ROADMAP, STACK, or shipping artifacts. This audit
+  is preparation context for downstream steps.

@@ -7,10 +7,11 @@ apiVersion: godpowers/v1
 kind: Workflow
 metadata:
   name: brownfield-arc
-  version: 1.0.0
+  version: 1.1.0
   description: |
     Brownfield: existing codebase, understand before changing. Archaeology +
-    reconstruction + debt assessment, then proceed with normal arc workflows.
+    reconstruction + debt assessment + greenfield simulation audit, then
+    proceed with normal arc workflows.
 
 on: [/god-brownfield, /god-mode --brownfield]
 
@@ -36,9 +37,18 @@ jobs:
     with:
       mode: full-audit-on-reconstructed
 
-  steady-state-handoff:
+  greenfield-simulation-audit:
     tier: 0
     needs: audit
+    uses: god-auditor@^1.0.0
+    with:
+      mode: greenfield-simulation
+      compare: existing-codebase-to-canonical-godpowers-arc
+      output: .godpowers/audit/GREENFIELD-SIMULATION.md
+
+  steady-state-handoff:
+    tier: 0
+    needs: greenfield-simulation-audit
     uses: god-orchestrator@^1.0.0
     with:
       action: brownfield-to-steady

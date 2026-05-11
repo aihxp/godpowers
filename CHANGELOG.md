@@ -5,6 +5,21 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.16] - 2026-05-11
+
+Greenfield simulation audit release. Adds a preparation audit to brownfield
+and bluefield arcs so they can compare existing evidence or org constraints
+against the canonical Godpowers greenfield process.
+
+### Changed
+- Brownfield arc now runs a greenfield simulation audit after archaeology,
+  reconstruction, debt assessment, and normal artifact audit.
+- Bluefield arc now runs a greenfield simulation audit after org-context and
+  before PRD so downstream planning can inherit org constraints intentionally.
+- `god-auditor` now documents `mode: greenfield-simulation`, writing
+  `.godpowers/audit/GREENFIELD-SIMULATION.md` without rewriting planning
+  artifacts.
+
 ## [0.15.15] - 2026-05-11
 
 Transcript hygiene release. Keeps God Mode orchestration scaffolding out of the

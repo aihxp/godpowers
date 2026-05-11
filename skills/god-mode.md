@@ -104,8 +104,8 @@ You are receiving a /god-mode invocation. Your job is to spawn the
 
 7. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc
-   - Brownfield -> brownfield-arc (archaeology -> reconstruct -> debt-assess -> proceed)
-   - Bluefield -> bluefield-arc (org-context -> arc with constraints)
+   - Brownfield -> brownfield-arc (archaeology -> reconstruct -> debt-assess -> greenfield simulation audit -> proceed)
+   - Bluefield -> bluefield-arc (org-context -> greenfield simulation audit -> arc with constraints)
 
 8. Relay only the orchestrator's user-facing output to the user. If the
    platform displays raw spawn details automatically, immediately follow with a

@@ -18,6 +18,19 @@ Spawn the **god-auditor** agent in a fresh context via Task tool.
    artifact against `references/HAVE-NOTS.md`."
 3. The agent writes `.godpowers/AUDIT-REPORT.md`
 
+## Greenfield Simulation Mode
+
+When invoked by `brownfield-arc` or `bluefield-arc` with
+`mode: greenfield-simulation`, spawn god-auditor with the current project
+evidence and ask it to compare the repo or org constraints against the
+canonical Godpowers greenfield arc. The agent writes
+`.godpowers/audit/GREENFIELD-SIMULATION.md`.
+
+This mode builds nothing and rewrites no planning artifacts. It exists so
+brownfield and bluefield projects can benefit from the same PRD, design, arch,
+roadmap, stack, build, deploy, observe, harden, and launch expectations that a
+greenfield Godpowers run would have applied.
+
 ## Verification
 
 After god-auditor returns:
