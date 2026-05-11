@@ -171,6 +171,36 @@ function copyRuntimeBundle(srcDir, destDir) {
   }
 }
 
+function installSkillFile(srcFile, skillsDest, runtimeKey, targetName = null) {
+  const baseName = targetName || path.basename(srcFile, '.md');
+  if (runtimeKey === 'codex') {
+    const skillDir = path.join(skillsDest, baseName);
+    ensureDir(skillDir);
+    fs.copyFileSync(srcFile, path.join(skillDir, 'SKILL.md'));
+    return;
+  }
+  fs.copyFileSync(srcFile, path.join(skillsDest, `${baseName}.md`));
+}
+
+function removeSkillEntry(skillsDir, entry) {
+  const entryPath = path.join(skillsDir, entry.name);
+  if (entry.isDirectory()) {
+    const skillFile = path.join(entryPath, 'SKILL.md');
+    if (entry.name.startsWith('god-') || entry.name === 'god' || entry.name === 'godpowers') {
+      if (fs.existsSync(skillFile)) {
+        fs.rmSync(entryPath, { recursive: true, force: true });
+        return true;
+      }
+    }
+    return false;
+  }
+  if (entry.name.startsWith('god-') || entry.name === 'god.md' || entry.name === 'godpowers.md') {
+    fs.unlinkSync(entryPath);
+    return true;
+  }
+  return false;
+}
+
 // ---------------------------------------------------------------------------
 // Parse args
 // ---------------------------------------------------------------------------
@@ -242,11 +272,12 @@ function installForRuntime(runtimeKey, srcDir) {
     let count = 0;
     for (const file of fs.readdirSync(skillsSrc)) {
       if (file.endsWith('.md')) {
-        fs.copyFileSync(path.join(skillsSrc, file), path.join(skillsDest, file));
+        installSkillFile(path.join(skillsSrc, file), skillsDest, runtimeKey);
         count++;
       }
     }
-    success(`Installed ${count} slash commands to skills/`);
+    const shape = runtimeKey === 'codex' ? 'Codex skill directories' : 'skills/';
+    success(`Installed ${count} slash commands to ${shape}`);
   }
 
   // 2. Install specialist agents to agents/
@@ -268,9 +299,8 @@ function installForRuntime(runtimeKey, srcDir) {
   // 3. Install the master SKILL.md (always-on context)
   const masterSkill = path.join(srcDir, 'SKILL.md');
   if (fs.existsSync(masterSkill)) {
-    const masterDest = path.join(skillsDest, 'godpowers.md');
-    fs.copyFileSync(masterSkill, masterDest);
-    success('Installed master SKILL.md as godpowers.md');
+    installSkillFile(masterSkill, skillsDest, runtimeKey, 'godpowers');
+    success('Installed master SKILL.md as godpowers');
   }
 
   // 4. Install templates
@@ -368,9 +398,8 @@ function uninstallForRuntime(runtimeKey) {
 
   // Remove all god-* skills
   if (fs.existsSync(skillsDir)) {
-    for (const file of fs.readdirSync(skillsDir)) {
-      if (file.startsWith('god-') || file === 'godpowers.md') {
-        fs.unlinkSync(path.join(skillsDir, file));
+    for (const entry of fs.readdirSync(skillsDir, { withFileTypes: true })) {
+      if (removeSkillEntry(skillsDir, entry)) {
         removed++;
       }
     }

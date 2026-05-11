@@ -5,6 +5,23 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.4] - 2026-05-11
+
+Codex command discovery release. Installs Godpowers commands in the directory
+shape Codex loads as individual skills.
+
+### Fixed
+- Codex installs now write each command as `~/.codex/skills/<command>/SKILL.md`,
+  so commands like `/god-next`, `/god-status`, and `/god-init` show up as
+  separate Codex skills instead of only exposing the umbrella `godpowers`
+  skill.
+- Codex uninstall now removes those command directories while preserving
+  unrelated user skills.
+
+### Tests
+- Added installer smoke coverage for Codex skill-directory installs and
+  uninstalls.
+
 ## [0.15.3] - 2026-05-11
 
 Documentation refresh release. Aligns the public docs, architecture map,

@@ -58,6 +58,25 @@ test('installer wrote ~/.claude/skills/ with at least 80 god-* files', () => {
   assert(files.length >= 80, `expected >=80 skills, got ${files.length}`);
 });
 
+test('installer writes Codex commands as skill directories', () => {
+  const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-codex-smoke-'));
+  execFileSync('node', [INSTALLER, '--codex', '--global'], {
+    env: { ...process.env, HOME: codexHome },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  const skillsDir = path.join(codexHome, '.codex', 'skills');
+  assert(fs.existsSync(path.join(skillsDir, 'god-next', 'SKILL.md')),
+    'god-next/SKILL.md missing');
+  assert(fs.existsSync(path.join(skillsDir, 'god-status', 'SKILL.md')),
+    'god-status/SKILL.md missing');
+  assert(fs.existsSync(path.join(skillsDir, 'godpowers', 'SKILL.md')),
+    'godpowers/SKILL.md missing');
+  assert(!fs.existsSync(path.join(skillsDir, 'god-next.md')),
+    'Codex should not receive flat god-next.md');
+  fs.rmSync(codexHome, { recursive: true, force: true });
+});
+
 test('installer wrote ~/.claude/agents/ with at least 30 god-* files', () => {
   const agentsDir = path.join(installedDir, 'agents');
   assert(fs.existsSync(agentsDir), `${agentsDir} missing`);
@@ -194,6 +213,24 @@ test('uninstaller removes all installed Godpowers data dirs', () => {
   ]) {
     assert(!fs.existsSync(path.join(claudeDir, dir)), `${dir} should be removed`);
   }
+  fs.rmSync(home, { recursive: true, force: true });
+});
+
+test('uninstaller removes Codex skill directories', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-codex-uninstall-'));
+  execFileSync('node', [INSTALLER, '--codex', '--global'], {
+    env: { ...process.env, HOME: home },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  execFileSync('node', [INSTALLER, '--codex', '--global', '--uninstall'], {
+    env: { ...process.env, HOME: home },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  const skillsDir = path.join(home, '.codex', 'skills');
+  assert(!fs.existsSync(path.join(skillsDir, 'god-next')), 'god-next should be removed');
+  assert(!fs.existsSync(path.join(skillsDir, 'godpowers')), 'godpowers should be removed');
   fs.rmSync(home, { recursive: true, force: true });
 });
 
