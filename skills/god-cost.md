@@ -32,12 +32,19 @@ Machine-readable.
 Use custom pricing table (JSON) instead of the built-in approximate
 table. Useful if you have negotiated rates.
 
+### `/god-cost --strict`
+Exit non-zero if any `cost.recorded` event has `source: 'estimated'`.
+Use in CI when you have wired live token reporting and want the
+build to fail the moment estimation creeps back in.
+
 ## Output
 
 ```
 GODPOWERS COST REPORT
 
 Spent: $0.4823 across 18 model calls (124,500 tokens)
+  Live:      $0.4012 (15 calls, 100,400 tokens)
+  Estimated: $0.0811 (3 calls, 24,100 tokens)
 Saved: $0.1842 via 7 cache hits (47,200 tokens)
 Cache hit rate: 28.0% (7/25)
 
@@ -61,11 +68,26 @@ Per model:
 ## Where the data comes from
 
 - `cost.recorded` events: every LLM call records `{model, tokens_in,
-  tokens_out, cost_usd, agent, tier}`. Aggregated by tier / agent /
-  model.
+  tokens_out, cost_usd, agent, tier, source}`. Aggregated by tier /
+  agent / model.
 - `cache.hit` events: each hit records `{savings_tokens, savings_usd,
   agent, tier}`. Counts toward savings.
 - `cache.miss` events: counted to compute hit rate.
+
+## Live vs estimated (source field)
+
+Every `cost.recorded` carries `source: 'live'` or `source: 'estimated'`:
+
+- **live**: the AI tool surfaced real per-call token counts from the
+  provider API response. Numbers reflect actual spend. Emitted by
+  `cost.recordModelCall(handle, {...})` from `lib/cost-tracker.js`.
+- **estimated** (default): the orchestrator inferred token counts from
+  byte heuristics (~4 bytes per token). Useful as a fallback when the
+  AI tool does not expose usage, but the totals are approximate and
+  should not be used for billing or budget enforcement.
+
+`--strict` exits non-zero if any record in scope is estimated. Wire it
+into CI once your tooling reliably reports live usage.
 
 ## Pricing table
 

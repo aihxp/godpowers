@@ -114,6 +114,99 @@ test('formatReport produces non-empty string with USD breakdown', () => {
   assert(/god-pm/.test(s), 'agent not in report');
 });
 
+test('recordCost defaults source to estimated when omitted', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500,
+                       agent: 'god-pm', tier: 'tier-1' });
+  const ev = events.readRun(tmp, h.runId).find(e => e.name === 'cost.recorded');
+  assert(ev.attrs.source === 'estimated', `source: ${ev.attrs.source}`);
+});
+
+test('recordCost honors explicit source: live', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500,
+                       agent: 'god-pm', tier: 'tier-1', source: 'live' });
+  const ev = events.readRun(tmp, h.runId).find(e => e.name === 'cost.recorded');
+  assert(ev.attrs.source === 'live', `source: ${ev.attrs.source}`);
+});
+
+test('recordCost rejects invalid source values by defaulting to estimated', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500,
+                       source: 'fabricated' });
+  const ev = events.readRun(tmp, h.runId).find(e => e.name === 'cost.recorded');
+  assert(ev.attrs.source === 'estimated', `bogus source not coerced: ${ev.attrs.source}`);
+});
+
+test('recordModelCall tags source as live', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordModelCall(h, { model: 'claude-3-5-sonnet', tokens_in: 100, tokens_out: 50,
+                            agent: 'god-pm', tier: 'tier-1' });
+  const ev = events.readRun(tmp, h.runId).find(e => e.name === 'cost.recorded');
+  assert(ev.attrs.source === 'live', `live not tagged: ${ev.attrs.source}`);
+});
+
+test('aggregate splits live and estimated totals', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordModelCall(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500,
+                            agent: 'god-pm', tier: 'tier-1' });
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 2000, tokens_out: 1000,
+                       agent: 'god-pm', tier: 'tier-1' });
+  const agg = cost.aggregate(tmp);
+  assert(agg.totals.live_calls === 1, `live_calls: ${agg.totals.live_calls}`);
+  assert(agg.totals.estimated_calls === 1, `est_calls: ${agg.totals.estimated_calls}`);
+  assert(agg.totals.live_tokens === 1500, `live_tokens: ${agg.totals.live_tokens}`);
+  assert(agg.totals.estimated_tokens === 3000, `est_tokens: ${agg.totals.estimated_tokens}`);
+  assert(agg.totals.live_usd > 0, 'live_usd should be positive');
+  assert(agg.totals.estimated_usd > 0, 'estimated_usd should be positive');
+});
+
+test('isStrictLive returns false when any record is estimated', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordModelCall(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500 });
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500 });
+  const r = cost.isStrictLive(tmp);
+  assert(r.strict === false, 'should not be strict');
+  assert(r.live_calls === 1, `live: ${r.live_calls}`);
+  assert(r.estimated_calls === 1, `estimated: ${r.estimated_calls}`);
+});
+
+test('isStrictLive returns true when every record is live', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordModelCall(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500 });
+  cost.recordModelCall(h, { model: 'gpt-4o', tokens_in: 2000, tokens_out: 1000 });
+  const r = cost.isStrictLive(tmp);
+  assert(r.strict === true, 'should be strict');
+  assert(r.estimated_calls === 0, `estimated: ${r.estimated_calls}`);
+  assert(r.live_calls === 2, `live: ${r.live_calls}`);
+});
+
+test('isStrictLive returns false on empty event log (no signal)', () => {
+  const tmp = mkProject();
+  const r = cost.isStrictLive(tmp);
+  assert(r.strict === false, 'empty log should not assert strict');
+  assert(r.total_calls === 0, `calls: ${r.total_calls}`);
+});
+
+test('formatReport breaks out live vs estimated lines', () => {
+  const tmp = mkProject();
+  const h = events.startRun(tmp);
+  cost.recordModelCall(h, { model: 'claude-3-5-sonnet', tokens_in: 1000, tokens_out: 500,
+                            agent: 'god-pm', tier: 'tier-1' });
+  cost.recordCost(h, { model: 'claude-3-5-sonnet', tokens_in: 2000, tokens_out: 1000,
+                       agent: 'god-pm', tier: 'tier-1' });
+  const s = cost.formatReport(cost.aggregate(tmp));
+  assert(/Live: +\$/.test(s), 'live line missing');
+  assert(/Estimated: \$/.test(s), 'estimated line missing');
+});
+
 console.log('\n  Agent cache behavioral tests\n');
 
 test('key is deterministic for same inputs', () => {
