@@ -7,11 +7,11 @@ apiVersion: godpowers/v1
 kind: Workflow
 metadata:
   name: bluefield-arc
-  version: 1.1.0
+  version: 1.2.0
   description: |
     Bluefield: new code, existing org context. Loads org standards first,
-    runs a greenfield simulation audit against those constraints, then runs
-    full-arc with all decisions constrained by org context.
+    runs a greenfield simulation audit against those constraints, then runs a
+    user-approved greenfieldification pass before the full arc.
 
 on: [/god-bluefield, /god-mode --bluefield]
 
@@ -29,9 +29,32 @@ jobs:
       compare: canonical-godpowers-arc-to-org-constraints
       output: .godpowers/audit/GREENFIELD-SIMULATION.md
 
+  greenfieldify-artifacts:
+    tier: 0
+    needs: greenfield-simulation-audit
+    uses: god-greenfieldifier@^1.0.0
+    with:
+      mode: bluefield
+      audit: .godpowers/audit/GREENFIELD-SIMULATION.md
+      plan: .godpowers/audit/GREENFIELDIFY-PLAN.md
+      approval: required-before-writing-canonical-artifacts
+      artifacts:
+        - .godpowers/prd/PRD.md
+        - .godpowers/design/DESIGN.md
+        - .godpowers/product/PRODUCT.md
+        - .godpowers/arch/ARCH.md
+        - .godpowers/roadmap/ROADMAP.md
+        - .godpowers/stack/DECISION.md
+        - .godpowers/repo/AUDIT.md
+        - .godpowers/build/STATE.md
+        - .godpowers/deploy/STATE.md
+        - .godpowers/observe/STATE.md
+        - .godpowers/launch/STATE.md
+        - .godpowers/harden/FINDINGS.md
+
   prd:
     tier: 1
-    needs: greenfield-simulation-audit
+    needs: greenfieldify-artifacts
     uses: god-pm@^1.0.0
 
   arch:

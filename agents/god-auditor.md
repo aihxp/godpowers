@@ -187,6 +187,8 @@ Mode: [brownfield | bluefield]
 
 ## Non-Goals
 - This audit does not rewrite artifacts.
+- This audit must be followed by `god-greenfieldifier` in brownfield and
+  bluefield workflows when the user wants the audit acted on.
 - This audit does not treat imported GSD, Superpowers, BMAD, or org context as
   source of truth.
 - This audit does not block the arc unless it finds a Critical security or
@@ -204,3 +206,6 @@ Greenfield simulation rules:
 - Do not invent missing intent. Mark unknowns as OPEN QUESTION.
 - Do not overwrite PRD, ARCH, ROADMAP, STACK, or shipping artifacts. This audit
   is preparation context for downstream steps.
+- In brownfield and bluefield workflows, hand this audit to god-greenfieldifier
+  so it can produce `.godpowers/audit/GREENFIELDIFY-PLAN.md`, pause for
+  approval when needed, and then update the affected artifacts thoroughly.

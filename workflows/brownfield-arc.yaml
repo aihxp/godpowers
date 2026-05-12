@@ -7,11 +7,11 @@ apiVersion: godpowers/v1
 kind: Workflow
 metadata:
   name: brownfield-arc
-  version: 1.1.0
+  version: 1.2.0
   description: |
     Brownfield: existing codebase, understand before changing. Archaeology +
-    reconstruction + debt assessment + greenfield simulation audit, then
-    proceed with normal arc workflows.
+    reconstruction + debt assessment + greenfield simulation audit, then a
+    user-approved greenfieldification pass before normal arc workflows.
 
 on: [/god-brownfield, /god-mode --brownfield]
 
@@ -46,9 +46,32 @@ jobs:
       compare: existing-codebase-to-canonical-godpowers-arc
       output: .godpowers/audit/GREENFIELD-SIMULATION.md
 
-  steady-state-handoff:
+  greenfieldify-artifacts:
     tier: 0
     needs: greenfield-simulation-audit
+    uses: god-greenfieldifier@^1.0.0
+    with:
+      mode: brownfield
+      audit: .godpowers/audit/GREENFIELD-SIMULATION.md
+      plan: .godpowers/audit/GREENFIELDIFY-PLAN.md
+      approval: required-before-writing-canonical-artifacts
+      artifacts:
+        - .godpowers/prd/PRD.md
+        - .godpowers/design/DESIGN.md
+        - .godpowers/product/PRODUCT.md
+        - .godpowers/arch/ARCH.md
+        - .godpowers/roadmap/ROADMAP.md
+        - .godpowers/stack/DECISION.md
+        - .godpowers/repo/AUDIT.md
+        - .godpowers/build/STATE.md
+        - .godpowers/deploy/STATE.md
+        - .godpowers/observe/STATE.md
+        - .godpowers/launch/STATE.md
+        - .godpowers/harden/FINDINGS.md
+
+  steady-state-handoff:
+    tier: 0
+    needs: greenfieldify-artifacts
     uses: god-orchestrator@^1.0.0
     with:
       action: brownfield-to-steady

@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
-> Last updated: 2026-05-11
-> Current shipped: v0.15.3
+> Last updated: 2026-05-12
+> Current shipped: v0.15.17
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -13,14 +13,14 @@ slash commands.
 
 ## Shipped releases
 
-### Current surface (v0.15.3)
+### Current surface (v0.15.17)
 
 What works today:
 - **105 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   extension management, release support)
-- **38 specialist agents** in fresh contexts
+- **39 specialist agents** in fresh contexts
 - **13 executable workflows** and **36 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
@@ -175,7 +175,7 @@ docs site. Work, ordered by readiness:
 
 Remaining work before tag:
 
-- [x] npm publish marker tag (v0.15.3, with sigstore provenance)
+- [x] npm publish marker tag (v0.15.17, with sigstore provenance)
 - [ ] Record/replay integration test suite (full-arc, audit-only,
       build-only against fixtures)
 - [ ] Documentation site at godpowers.dev

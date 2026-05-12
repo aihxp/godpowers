@@ -809,7 +809,8 @@ in a parent suite. The human-friendly label is what the user sees.
 - Existing code OR partial `.godpowers/` artifacts present
 - May or may not have org context
 - Default path: archaeology -> reconstruct -> debt-assess -> greenfield
-  simulation audit -> proceed
+  simulation audit -> greenfieldify plan and approved artifact updates ->
+  proceed
 
 **Detection logic (run this on every Mode B invocation)**:
 
@@ -843,6 +844,27 @@ Report findings to user before running any tier:
   "Detected: PRD imported, ARCH missing, Roadmap imported (passes have-nots),
    Repo imported (CI present), Build in progress. Resuming from Build."
 ```
+
+### Greenfieldification checkpoint for Mode B and Mode E
+
+The greenfield simulation audit is not enough by itself. It identifies gaps;
+god-greenfieldifier actions those gaps through a controlled artifact migration.
+
+Required sequence:
+
+1. Run greenfield simulation audit.
+2. Spawn god-greenfieldifier.
+3. Write `.godpowers/audit/GREENFIELDIFY-PLAN.md`.
+4. If the plan can change product scope, design direction, architecture,
+   roadmap, stack, deploy, observe, launch, harden, org policy, or user
+   commitments, pause for user approval before rewriting canonical artifacts.
+5. After approval, update every affected artifact, not just the first artifact
+   where the gap appears.
+6. Run sync so PROGRESS.md, state.json, and SYNC-LOG.md reflect what changed.
+
+Under `--yolo`, do not bypass this checkpoint for risky changes. YOLO may only
+auto-apply greenfieldification when every planned change is a non-destructive
+rewrite-candidate and no concrete existing evidence is removed.
 
 ### Mode C: Audit
 - Triggered explicitly with --audit flag
@@ -878,9 +900,10 @@ Report findings to user before running any tier:
 - BUT org-context.yaml found (in current dir, parent, or grandparent)
 - Run full arc with all decisions constrained by org context
 - Spawn god-org-context-loader first to load constraints
-- Run greenfield simulation audit after org-context and before PRD so the arc
-  knows where canonical Godpowers defaults align with, conflict with, or are
-  constrained by org standards
+- Run greenfield simulation audit after org-context, then run
+  god-greenfieldifier so the arc has an approved artifact plan before PRD.
+  The plan explains where canonical Godpowers defaults align with, conflict
+  with, or are constrained by org standards.
 - All downstream agents (god-stack-selector, god-architect, god-deploy-engineer,
   god-observability-engineer, god-harden-auditor) receive the org-context
   and respect it

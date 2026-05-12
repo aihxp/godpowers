@@ -5,6 +5,26 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.17] - 2026-05-12
+
+Greenfieldification release. Turns the brownfield and bluefield simulation
+audit into a controlled artifact migration instead of a passive report.
+
+### Added
+- Added `god-greenfieldifier`, a Tier 0 agent that writes
+  `.godpowers/audit/GREENFIELDIFY-PLAN.md`, classifies audit findings, pauses
+  before risky canonical artifact rewrites, and then updates affected artifacts
+  after approval.
+
+### Changed
+- Brownfield arc now runs greenfieldification after the greenfield simulation
+  audit and before steady-state handoff.
+- Bluefield arc now runs greenfieldification after the greenfield simulation
+  audit and before PRD.
+- `/god-mode`, `god-orchestrator`, and `/god-audit` now document that the
+  simulation audit must be acted on through a thorough, approval-gated artifact
+  migration.
+
 ## [0.15.16] - 2026-05-11
 
 Greenfield simulation audit release. Adds a preparation audit to brownfield

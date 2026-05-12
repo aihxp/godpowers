@@ -31,6 +31,21 @@ brownfield and bluefield projects can benefit from the same PRD, design, arch,
 roadmap, stack, build, deploy, observe, harden, and launch expectations that a
 greenfield Godpowers run would have applied.
 
+## Acting On Greenfield Simulation
+
+The audit is preparation, not the action. In brownfield and bluefield arcs,
+the next step must spawn `god-greenfieldifier`.
+
+`god-greenfieldifier` writes
+`.godpowers/audit/GREENFIELDIFY-PLAN.md`, classifies every audit finding, and
+then pauses before rewriting canonical artifacts whenever the change could
+alter product scope, design direction, architecture, roadmap, stack, deploy,
+observe, launch, harden, org policy, or user commitments.
+
+After approval, the greenfieldifier updates all affected artifacts thoroughly:
+PRD, DESIGN, PRODUCT, ARCH, ROADMAP, STACK, REPO, BUILD, DEPLOY, OBSERVE,
+LAUNCH, and HARDEN. It then syncs PROGRESS.md, state.json, and SYNC-LOG.md.
+
 ## Verification
 
 After god-auditor returns:

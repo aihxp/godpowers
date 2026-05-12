@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.16-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.15.17-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -156,6 +156,12 @@ reported as the final result.
 If `.godpowers` state already exists, `/god-mode --yolo` resumes from disk
 instead of asking for the project description again.
 
+For existing codebases and org-constrained new projects, God Mode now runs a
+greenfield simulation audit and then actions it through a greenfieldification
+plan. It pauses before risky artifact rewrites because that process can change
+product scope, design direction, architecture, roadmap, stack, and shipping
+commitments.
+
 ## Architecture
 
 ### Slash Command + Specialist Agent Pattern
@@ -200,9 +206,9 @@ Skill updates:   PROGRESS.md
 .godpowers/harden/FINDINGS.md  Security Findings
 ```
 
-## Quality Guarantees
+## Quality Guardrails
 
-Every artifact passes these mechanical checks:
+Every artifact passes these mechanical checks before it is treated as complete:
 
 | Check | What it catches |
 |---|---|
@@ -213,6 +219,26 @@ Every artifact passes these mechanical checks:
 | Critical-finding gate | Shipping with known security holes |
 | TDD enforcement | Code without tests |
 | Two-stage review | Code that passes tests but violates spec or quality |
+
+These checks are guardrails, not proof that the product is right. A PRD can
+pass the substitution test and still make the wrong product call. Godpowers
+uses mechanical checks to catch generic, missing, or untraceable work so the
+remaining judgment is visible to humans and reviewers.
+
+## Operational Reality
+
+Godpowers is pre-launch. See [USERS.md](USERS.md) for current adoption status.
+
+Full autonomous runs can be expensive because they spawn multiple fresh-context
+agents. The runtime records token and dollar estimates through `cost.recorded`
+events, and `/god-cost` reports spend, savings, live vs estimated token counts,
+and cache hits. `/god-budget` configures context caps, cache use, and model
+profiles. `/god-metrics` and `/god-trace` expose run duration, pauses, retries,
+and per-tier history from `.godpowers/runs/<id>/events.jsonl`.
+
+Treat a real `/god-mode` result as successful only when it produces shipped or
+ship-ready work on someone else's codebase, with validation results, cost, and
+wall-clock time visible.
 
 ## Pause Philosophy
 
@@ -237,7 +263,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 105 skills + 38 agents)](docs/reference.md)
+- [Command reference (all 105 skills + 39 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Changelog](CHANGELOG.md)
 - [Inspiration](INSPIRATION.md)

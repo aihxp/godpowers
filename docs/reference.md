@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v0.15.3.
+Complete command, agent, and artifact reference for v0.15.17.
 
 ## Slash commands (105 total)
 
@@ -154,7 +154,7 @@ First-party packs on npm:
 - `@godpowers/launch-pack` - Show HN, Product Hunt, Indie Hackers, OSS strategists
 - `@godpowers/data-pack` - ETL, ML feature, dashboard specialists
 
-## Specialist agents (38 total)
+## Specialist agents (39 total)
 
 ### Tier 0 - Orchestration
 - `god-orchestrator` - Autonomous arc runner (Quarterback).
