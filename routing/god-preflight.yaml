@@ -1,0 +1,36 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-preflight
+  description: Read-only intake audit before arc-ready and pillars
+  tier: 0
+
+prerequisites:
+  required:
+    - check: codebase-present
+      human-required: true
+
+execution:
+  spawns: [god-auditor]
+  context: fresh
+  writes:
+    - .godpowers/preflight/PREFLIGHT.md
+
+success-path:
+  next-recommended: /god-archaeology
+  alternatives:
+    - command: /god-init
+      when: missing-basic-project-state
+    - command: /god-reconstruct
+      when: planning-artifacts-missing
+    - command: /god-tech-debt
+      when: debt-dominates-risk
+    - command: /god-audit
+      when: artifacts-exist
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: preflight completed
+  events: [agent.start, artifact.created, agent.end]

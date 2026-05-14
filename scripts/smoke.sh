@@ -276,7 +276,7 @@ for schema_file in "$ROOT/schema/"*.json; do
 done
 
 # 18. Routing files exist for core commands
-for cmd in god-init god-prd god-arch god-roadmap god-stack god-repo god-build god-deploy god-observe god-launch god-harden god-mode god-feature god-hotfix god-refactor god-spike god-postmortem god-upgrade god-docs god-update-deps god-audit god-hygiene god-status god-next god-help god-doctor god-undo god-redo god-skip; do
+for cmd in god-init god-prd god-arch god-roadmap god-stack god-repo god-build god-deploy god-observe god-launch god-harden god-mode god-feature god-hotfix god-refactor god-spike god-postmortem god-upgrade god-docs god-update-deps god-preflight god-audit god-hygiene god-status god-next god-help god-doctor god-undo god-redo god-skip; do
   routing_file="$ROOT/routing/${cmd}.yaml"
   if [ -f "$routing_file" ]; then
     pass "routing/${cmd}.yaml exists"

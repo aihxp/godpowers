@@ -251,8 +251,13 @@ When in steady state, match keywords to workflows:
 | upgrade, migrate, bump major | /god-upgrade |
 | docs, documentation, README | /god-docs |
 | deps, dependencies, audit | /god-update-deps |
+| preflight, intake, audit before arc-ready, audit before pillars | /god-preflight |
 | audit, score, quality check | /god-audit |
 | health check, hygiene | /god-hygiene |
+
+If mode detection indicates brownfield or bluefield and
+`.godpowers/preflight/PREFLIGHT.md` is missing, prefer `/god-preflight` before
+recommending archaeology, reconstruction, arc-ready, pillars, or refactor work.
 
 ## Output Format
 

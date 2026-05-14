@@ -325,11 +325,11 @@ Each agent has these fields:
 
 | Field | Value |
 |---|---|
-| **Triggers** | `/god-audit`, `/god-hygiene`, called by orchestrator before tier transitions for gate checks, called by god-architect/etc. before they run (verify upstream passes have-nots) |
-| **Inputs** | Any artifact in `.godpowers/<tier>/` |
-| **Outputs** | `.godpowers/AUDIT-REPORT.md` (full audit) OR PASS/FAIL verdict (gate check) |
+| **Triggers** | `/god-preflight`, `/god-audit`, `/god-hygiene`, called by orchestrator before tier transitions for gate checks, called by god-architect/etc. before they run (verify upstream passes have-nots) |
+| **Inputs** | Any artifact in `.godpowers/<tier>/`; for preflight mode, repo structure, org context, docs, tests, CI, deploy, and agent instruction signals |
+| **Outputs** | `.godpowers/preflight/PREFLIGHT.md` (preflight) OR `.godpowers/AUDIT-REPORT.md` (full audit) OR PASS/FAIL verdict (gate check) |
 | **Downstream consumers** | Orchestrator (for routing decisions), tier agents (for gate checks) |
-| **Artifact awareness** | All 200 have-nots; all tier artifact contracts |
+| **Artifact awareness** | All 200 have-nots; all tier artifact contracts; preflight lens for arc-ready, pillars, Godpowers, suite, and refactor risk |
 | **Handoff** | Returns score per artifact + prioritized remediation. |
 | **Standards check** | This IS the standards check |
 

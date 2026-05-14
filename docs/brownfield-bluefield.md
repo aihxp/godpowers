@@ -51,11 +51,12 @@ existing patterns, miss tribal knowledge.
 
 **Workflow**:
 ```
-1. /god-archaeology     <- deep history + decisions + risks
-2. /god-reconstruct     <- derive PRD/ARCH/ROADMAP/STACK from code
-3. /god-tech-debt       <- assess and prioritize debt
-4. /god-audit           <- score the reconstructed artifacts
-5. (THEN start adding features)
+1. /god-preflight       <- intake audit before arc-ready and pillars
+2. /god-archaeology     <- deep history + decisions + risks
+3. /god-reconstruct     <- derive PRD/ARCH/ROADMAP/STACK from code
+4. /god-tech-debt       <- assess and prioritize debt
+5. /god-audit           <- score the reconstructed artifacts
+6. (THEN start adding features)
    /god-feature         <- with full reconciliation against reconstructed plans
 ```
 
@@ -64,14 +65,14 @@ Or run as a workflow:
 /god-mode --brownfield
 ```
 
-This runs `brownfield-arc.yaml`: archaeology -> reconstruct -> debt-assess -> audit.
+This runs `brownfield-arc.yaml`: preflight -> archaeology -> reconstruct -> debt-assess -> audit.
 
 ### What's different from greenfield
 
 | | Greenfield | Brownfield |
 |---|---|---|
 | Start with | empty dir | existing code |
-| First step | /god-init | /god-archaeology |
+| First step | /god-init | /god-preflight |
 | Planning artifacts | Created | Reconstructed (with confidence levels) |
 | Risk awareness | Low | HIGH (tribal knowledge, debt) |
 | Pace | Fast | Slow at first; archaeology takes time |
@@ -108,8 +109,9 @@ audit failures, fighting org standards.
 **Workflow**:
 ```
 1. /god-org-context init   <- capture org-level standards
-2. /god-init               <- detects bluefield mode
-3. /god-mode               <- arc constrained by org context
+2. /god-preflight          <- inspect inherited context before arc-ready and pillars
+3. /god-init               <- detects bluefield mode
+4. /god-mode               <- arc constrained by org context
 ```
 
 Or run as a workflow:
@@ -117,14 +119,14 @@ Or run as a workflow:
 /god-mode --bluefield
 ```
 
-This runs `bluefield-arc.yaml`: org-context -> PRD -> ARCH (constrained) -> ...
+This runs `bluefield-arc.yaml`: org-context -> preflight -> PRD -> ARCH (constrained) -> ...
 
 ### What's different from greenfield
 
 | | Greenfield | Bluefield |
 |---|---|---|
 | Start with | empty dir | empty dir + org context |
-| First step | /god-init | /god-org-context init |
+| First step | /god-init | /god-org-context init, then /god-preflight |
 | Stack choice | Free | Constrained by org standards |
 | Architecture | Free | Must integrate with shared services |
 | Deploy | Free | Must use org platform |
@@ -184,8 +186,8 @@ For a moderate feature (a few slices, end-to-end):
 | Mode | Time | Why |
 |------|------|-----|
 | Greenfield | Fast | No constraints; no archaeology needed |
-| Bluefield | Medium | Constraints to respect; some integration work |
-| Brownfield | Slow at start, then medium | Archaeology first; then like bluefield |
+| Bluefield | Medium | Preflight plus constraints to respect; some integration work |
+| Brownfield | Slow at start, then medium | Preflight and archaeology first; then like bluefield |
 
 ## Mode detection
 
@@ -218,11 +220,12 @@ Year 1: Greenfield
 Year 2: Bluefield (within own org)
    - Build a second product/service
    - /god-org-context init from year-1 learnings
+   - /god-preflight to inspect inherited constraints
    - /god-mode --bluefield, constrained appropriately
 
 Year 3: Brownfield
    - Acquire a codebase OR inherit from a team that's leaving
-   - /god-archaeology + /god-reconstruct
+   - /god-preflight + /god-archaeology + /god-reconstruct
    - Stakeholder review of reconstructed planning
    - Feature work with reconciliation
 ```

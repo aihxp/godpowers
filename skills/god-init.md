@@ -94,8 +94,8 @@ needs to specify a mode.
    - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
    - Initialize native Pillars context and record Pillars health in
      `INITIAL-FINDINGS.md`
-   - For brownfield: schedule archaeology + reconstruction as preflight
-   - For bluefield: load org-context as constraint
+   - For brownfield: schedule preflight before archaeology + reconstruction
+   - For bluefield: load org-context, then schedule preflight as constraint intake
    - Create directory structure
    - Write PROGRESS.md with mode, scale, timestamp, tier states
    - Return mode/scale/announcement to this skill

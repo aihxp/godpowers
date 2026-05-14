@@ -634,15 +634,25 @@ Never pause for:
 Pass `--yolo` to every spawned specialist agent. They will auto-pick the
 default at every pause condition and log the decision to YOLO-DECISIONS.md.
 
-Auto-resolve all five pause categories EXCEPT one:
+For brownfield and bluefield, run `/god-preflight` automatically before
+archaeology, reconstruction, arc-ready, pillars, or refactor work when
+`.godpowers/preflight/PREFLIGHT.md` is absent. Treat the preflight report as
+the routing baseline. Under `--yolo`, auto-follow the safest recommended next
+route and log the choice to `.godpowers/YOLO-DECISIONS.md`.
+
+Auto-resolve all pause categories EXCEPT:
 
 **Critical security findings ALWAYS pause, even with --yolo.**
 
-Rationale: shipping with a known Critical vulnerability is a category of risk
-that should never be auto-accepted. If god-harden-auditor returns Critical
-findings, --yolo does NOT skip. Pause for human resolution.
+**Impossible preflight routing contradictions pause, even with --yolo.**
 
-This is the only --yolo carve-out. All other pauses are auto-resolved with
+Rationale: shipping with a known Critical vulnerability is a category of risk
+that should never be auto-accepted. A preflight contradiction means the repo
+evidence does not support any safe next route. If god-harden-auditor returns
+Critical findings, or preflight cannot choose between mutually exclusive
+routes from evidence, --yolo does NOT skip. Pause for human resolution.
+
+These are the only --yolo carve-outs. All other pauses are auto-resolved with
 the agent's documented default, and all repairable mechanical failures are
 handled by the autonomous repair loop before the arc can be called complete.
 
@@ -973,6 +983,16 @@ Review and revise any that don't match your intent.
 ```
 
 Append to YOLO-DECISIONS.md every time --yolo would have paused.
+
+For preflight auto-routing, append:
+
+```markdown
+## Tier 0 / Preflight
+- Pause: Select first brownfield or bluefield route from preflight findings
+- Auto-picked: [command]
+- Reason: [preflight evidence and safest-sequence rationale]
+- Timestamp: [ISO 8601]
+```
 
 ## Have-Nots Reference
 

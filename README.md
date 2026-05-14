@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,9 +12,9 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.0.0 marks the stable release: the command, agent, workflow, schema,
-artifact, and native Pillars context surfaces are steady while real projects
-shape the next release train.
+Version 1.5.0 adds preflight intake for brownfield and bluefield projects while
+keeping the command, agent, workflow, schema, artifact, and native Pillars
+context surfaces stable for real projects.
 
 It fuses four disciplines into one unified workflow:
 
@@ -118,6 +118,7 @@ when you open a new session in a Godpowers project.
 | `/god-launch` | Launch (gated on harden) | god-launch-strategist |
 | `/god-harden` | Adversarial security review | god-harden-auditor |
 | `/god-status` | Re-derive state from disk | (built-in) |
+| `/god-preflight` | Read-only intake audit before arc-ready and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
 | `/god-review` | Two-stage code review | god-spec-reviewer + god-quality-reviewer |
@@ -288,9 +289,9 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 105 skills + 39 agents)](docs/reference.md)
+- [Command reference (all 106 skills + 39 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
-- [1.0 Release Notes](RELEASE.md)
+- [1.5 Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)
 - [Inspiration](INSPIRATION.md)
 

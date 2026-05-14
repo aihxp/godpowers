@@ -5,6 +5,36 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-05-14
+
+Preflight intake release. Adds a read-only front gate before Godpowers applies
+arc-ready direction, pillars scoring, archaeology, reconstruction, or refactor
+work to projects with prior context.
+
+### Added
+- Added `/god-preflight`, a read-only intake audit that writes
+  `.godpowers/preflight/PREFLIGHT.md`.
+- Added preflight scoring lenses for arc-ready, pillars, Godpowers,
+  ready-suite, refactor risk, and suite signals.
+- Added preflight mode to `god-auditor`.
+
+### Changed
+- Brownfield workflows now run preflight before archaeology.
+- Bluefield workflows now run org context, then preflight, before the
+  constrained arc begins.
+- `/god-mode --yolo` now auto-runs preflight for brownfield and bluefield,
+  follows the safest recommended route, and logs that choice to
+  `.godpowers/YOLO-DECISIONS.md`.
+- Public release metadata, package version, and README badge now point to
+  1.5.0.
+
+### Guardrails
+- Greenfield workflows skip preflight unless explicitly requested.
+- Preflight is read-only and does not create PRDs, architecture docs, pillar
+  reports, refactor patches, or source-code changes.
+- `--yolo` still pauses for Critical security findings and impossible preflight
+  routing contradictions.
+
 ## [1.0.0] - 2026-05-14
 
 Stable 1.0 release. Promotes the shipped Godpowers surface to the stable 1.0

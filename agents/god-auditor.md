@@ -1,17 +1,18 @@
 ---
 name: god-auditor
 description: |
-  Scores existing artifacts against all have-nots. Builds nothing. Reports
-  pass/fail per have-not with prioritized remediation. Used by /god-audit and
-  by orchestrator to verify gate checks.
+  Runs preflight intake, scores existing artifacts against all have-nots, and
+  reports pass/fail per have-not with prioritized remediation. Builds nothing.
+  Used by /god-preflight, /god-audit, and by orchestrator to verify gate checks.
 
-  Spawned by: /god-audit, god-orchestrator (gate checks)
+  Spawned by: /god-preflight, /god-audit, god-orchestrator (gate checks)
 tools: Read, Bash, Grep, Glob
 ---
 
 # God Auditor
 
-Score artifacts. Build nothing. Report what fails and why.
+Score artifacts or run preflight intake. Build nothing. Report what fails and
+why.
 
 ## Process
 
@@ -31,7 +32,9 @@ Score artifacts. Build nothing. Report what fails and why.
 4. If running for orchestrator gate check: return verdict only (any
    error from mechanical pass = FAIL; any critical interpretive = FAIL).
 5. If running for /god-audit: produce full report combining both passes.
-6. If running with `mode: greenfield-simulation`, do not build anything.
+6. If running with `mode: preflight`, do not run the artifact linter as the
+   main task. Inspect the repo and write `.godpowers/preflight/PREFLIGHT.md`.
+7. If running with `mode: greenfield-simulation`, do not build anything.
    Simulate the canonical Godpowers greenfield arc and compare it against the
    current project evidence or org constraints.
 
@@ -151,6 +154,64 @@ Overall: 85%
 
 For gate check (called by orchestrator): return PASS/FAIL with first failure
 only (orchestrator wants speed, not full report).
+
+For preflight, write `.godpowers/preflight/PREFLIGHT.md`:
+
+```markdown
+# Godpowers Preflight
+
+Date: [timestamp]
+Target: [path]
+
+## Snapshot
+- DECISION: Project type is [type] because [files or commands].
+- HYPOTHESIS: Primary runtime appears to be [runtime] because [evidence].
+- OPEN QUESTION: [question that blocks confident planning].
+
+## Readiness Scores
+| Lens | Score | Evidence | Main blocker |
+|---|---:|---|---|
+| Arc-ready | [0-100] | [specific files or absence] | [blocker] |
+| Pillars | [0-100] | [specific files or absence] | [blocker] |
+| Godpowers | [0-100] | [specific files or absence] | [blocker] |
+| Ready-suite | [0-100 or N/A] | [specific files or absence] | [blocker] |
+
+## Inventory
+- DECISION: [thing found] at `[path]`.
+- HYPOTHESIS: [thing inferred] from `[path]`.
+
+## Blockers Before Arc-Ready
+1. DECISION: [blocker].
+   Evidence: `[path]` or missing `[path]`.
+   Next move: [specific command or artifact].
+
+## Pillar Weaknesses
+1. DECISION: [weakness].
+   Evidence: `[path]` or missing `[path]`.
+   Impact: [why it matters].
+
+## Refactor Risk
+1. HYPOTHESIS: [risk].
+   Evidence: `[path]`.
+   Avoid until: [needed proof or test].
+
+## Recommended Sequence
+1. DECISION: Run [next command or task] first because [reason].
+2. DECISION: Run [next command or task] second because [reason].
+3. DECISION: Defer [task] until [condition].
+```
+
+Preflight rules:
+- Inspect package manifests, lockfiles, build files, test config, CI config,
+  source layout, entry points, docs, ADRs, env examples, AGENTS.md, deploy
+  signals, observability signals, and ownership signals.
+- Brownfield mode inspects existing codebase shape and refactor risk.
+- Bluefield mode inspects org context, sibling conventions, shared packages,
+  deployment expectations, and quality bars.
+- Greenfield mode skips preflight unless explicitly requested.
+- Tie every score to repo evidence.
+- Prefer "unknown" over confident invention.
+- Do not modify application code or canonical planning artifacts.
 
 For greenfield simulation audit, write
 `.godpowers/audit/GREENFIELD-SIMULATION.md`:

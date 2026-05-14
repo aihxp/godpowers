@@ -152,6 +152,18 @@ const commands = [
     altWhen: { '/god-redo': 'failures-found' },
   },
   {
+    cmd: '/god-preflight', tier: 0, agent: 'god-auditor', desc: 'Read-only intake audit before arc-ready and pillars',
+    prereq: ['codebase-present'],
+    writes: ['.godpowers/preflight/PREFLIGHT.md'],
+    next: '/god-archaeology',
+    altWhen: {
+      '/god-init': 'missing-basic-project-state',
+      '/god-reconstruct': 'planning-artifacts-missing',
+      '/god-tech-debt': 'debt-dominates-risk',
+      '/god-audit': 'artifacts-exist',
+    },
+  },
+  {
     cmd: '/god-hygiene', tier: 0, agent: 'god-auditor', desc: 'Composite health check',
     prereq: ['state:lifecycle-phase == steady-state-active'],
     secondarySpawns: ['god-deps-auditor', 'god-docs-writer', 'god-orchestrator'],
@@ -162,7 +174,7 @@ const commands = [
     cmd: '/god-mode', tier: 0, agent: 'god-orchestrator', desc: 'Full autonomous arc',
     prereq: ['file:.godpowers/PROGRESS.md OR mode-A-greenfield'],
     autoCompletePrereq: '/god-init',
-    secondarySpawns: ['god-pm', 'god-architect', 'god-roadmapper', 'god-stack-selector', 'god-repo-scaffolder', 'god-planner', 'god-executor', 'god-spec-reviewer', 'god-quality-reviewer', 'god-deploy-engineer', 'god-observability-engineer', 'god-harden-auditor', 'god-launch-strategist'],
+    secondarySpawns: ['god-auditor', 'god-pm', 'god-architect', 'god-roadmapper', 'god-stack-selector', 'god-repo-scaffolder', 'god-planner', 'god-executor', 'god-spec-reviewer', 'god-quality-reviewer', 'god-deploy-engineer', 'god-observability-engineer', 'god-harden-auditor', 'god-launch-strategist'],
     next: 'steady-state',
     lifecycleTransition: 'pre-init/in-arc -> steady-state-active',
   },

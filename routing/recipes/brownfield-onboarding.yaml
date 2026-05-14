@@ -3,7 +3,7 @@ kind: Recipe
 metadata:
   name: brownfield-onboarding
   category: starting
-  description: "Inheriting an existing codebase; archaeology + reconstruction first"
+  description: "Inheriting an existing codebase; preflight before archaeology"
 
 triggers:
   intent-keywords:
@@ -16,8 +16,10 @@ triggers:
 
 sequences:
   default:
-    description: "Inheriting an existing codebase; archaeology + reconstruction first"
+    description: "Inheriting an existing codebase; preflight before archaeology"
     steps:
+      - command: "/god-preflight"
+        why: "Read-only intake audit before arc-ready and pillars"
       - command: "/god-archaeology"
         why: "Deep history, decisions, conventions, risks"
       - command: "/god-reconstruct"

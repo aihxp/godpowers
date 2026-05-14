@@ -1,12 +1,12 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.0.0 (pure-skill model)
+> Status: STABLE v1.5.0 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.0.0 freezes the public surface for adoption while the implementation gathers
-real-world feedback.
+v1.5.0 keeps the public surface stable while adding preflight intake for
+brownfield and bluefield projects.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing
@@ -677,7 +677,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 105 skills, 39 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 106 skills, 39 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |
@@ -830,7 +830,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 105 skills + 39 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 106 skills + 39 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

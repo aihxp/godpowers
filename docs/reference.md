@@ -1,8 +1,8 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.0.0.
+Complete command, agent, and artifact reference for v1.5.0.
 
-## Slash commands (105 total)
+## Slash commands (106 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
@@ -75,6 +75,7 @@ Complete command, agent, and artifact reference for v1.0.0.
 - `/god-lint` - Mechanical validation against have-nots catalog.
 - `/god-standards` - Artifact standards check (substitution + three-label + have-nots).
 - `/god-test-runtime` - Headless browser verification (design audit + flow assertions).
+- `/god-preflight` - Read-only intake audit before arc-ready and pillars.
 - `/god-audit` - Score existing artifacts against all have-nots.
 - `/god-agent-audit` - Validate every agents/*.md against the agent contract.
 

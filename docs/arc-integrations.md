@@ -510,6 +510,11 @@ all spawned agents.
    v
 god-orchestrator runs with yolo=true
    |
+   ├── god-auditor called with mode=preflight for brownfield/bluefield
+   |   -> Writes .godpowers/preflight/PREFLIGHT.md
+   |   -> Auto-follows safest recommended route
+   |   -> Logs route choice to YOLO-DECISIONS.md
+   |
    ├── god-pm called with yolo=true
    |   -> Auto-picks default at every pause
    |   -> Logs to YOLO-DECISIONS.md
@@ -528,9 +533,9 @@ god-orchestrator runs with yolo=true
        -> Critical findings STILL pause (the carve-out)
 ```
 
-**The --yolo carve-out is unique to god-harden-auditor**. Critical
-security findings always pause. This is the one risk class --yolo can't
-auto-accept.
+**The --yolo carve-outs are Critical security findings and impossible
+preflight routing contradictions**. Critical security findings always pause.
+Preflight only pauses when repo evidence cannot support any safe next route.
 
 **For other workflows**:
 - /god-hotfix --yolo: skips review pauses but TDD still enforced

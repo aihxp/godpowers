@@ -7,10 +7,11 @@ apiVersion: godpowers/v1
 kind: Workflow
 metadata:
   name: bluefield-arc
-  version: 1.2.0
+  version: 1.3.0
   description: |
     Bluefield: new code, existing org context. Loads org standards first,
-    runs a greenfield simulation audit against those constraints, then runs a
+    runs a preflight intake against the surrounding environment, runs a
+    greenfield simulation audit against those constraints, then runs a
     user-approved greenfieldification pass before the full arc.
 
 on: [/god-bluefield, /god-mode --bluefield]
@@ -20,9 +21,18 @@ jobs:
     tier: 0
     uses: god-org-context-loader@^1.0.0
 
-  greenfield-simulation-audit:
+  preflight:
     tier: 0
     needs: org-context
+    uses: god-auditor@^1.0.0
+    with:
+      mode: preflight
+      scope: org-context-and-surrounding-repo
+      output: .godpowers/preflight/PREFLIGHT.md
+
+  greenfield-simulation-audit:
+    tier: 0
+    needs: preflight
     uses: god-auditor@^1.0.0
     with:
       mode: greenfield-simulation

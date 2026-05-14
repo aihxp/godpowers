@@ -14,9 +14,9 @@ Print version and a short capability summary.
 ## Output
 
 ```
-Godpowers v1.0.0
+Godpowers v1.5.0
 Install: /Users/.../.claude/  (matches package.json)
-Surface: 105 skills, 39 agents, 13 workflows, 36 recipes
+Surface: 106 skills, 39 agents, 13 workflows, 36 recipes
 Schema: intent.v1, state.v1, events.v1, workflow.v1, routing.v1, recipe.v1
 External integrations available: impeccable, agent-browser (others lazy)
 ```

@@ -82,10 +82,11 @@ const recipes = [
   {
     name: 'brownfield-onboarding',
     category: 'starting',
-    description: 'Inheriting an existing codebase; archaeology + reconstruction first',
+    description: 'Inheriting an existing codebase; preflight before archaeology',
     keywords: ['brownfield', 'inherit codebase', 'legacy code', 'understand existing'],
     stateConditions: ['has-package-json'],
     sequence: [
+      { cmd: '/god-preflight', why: 'Read-only intake audit before arc-ready and pillars' },
       { cmd: '/god-archaeology', why: 'Deep history, decisions, conventions, risks' },
       { cmd: '/god-reconstruct', why: 'Reverse-engineer PRD/ARCH/ROADMAP/STACK from code' },
       { cmd: '/god-tech-debt', why: 'Categorize and prioritize debt' },
@@ -100,6 +101,7 @@ const recipes = [
     keywords: ['bluefield', 'new service', 'org standards', 'shared platform', 'within organization'],
     sequence: [
       { cmd: '/god-org-context init', why: 'Capture org-level standards and constraints' },
+      { cmd: '/god-preflight', why: 'Inspect inherited context before arc-ready and pillars' },
       { cmd: '/god-init', why: 'Detect bluefield mode' },
       { cmd: '/god-mode --bluefield', why: 'Arc constrained by org context' }
     ]
