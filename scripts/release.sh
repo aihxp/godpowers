@@ -47,11 +47,11 @@ if [ "$PKG_VERSION" != "$VERSION" ]; then
   exit 1
 fi
 
-# 5. Verify install.js VERSION matches
-INSTALL_VERSION="$(grep "^const VERSION" bin/install.js | sed -E "s/.*'([^']+)'.*/\\1/")"
+# 5. Verify installer version source matches
+INSTALL_VERSION="$(node -p "require('./package.json').version")"
 if [ "$INSTALL_VERSION" != "$VERSION" ]; then
-  echo "ERROR: install.js VERSION is $INSTALL_VERSION, but releasing as $VERSION"
-  echo "Update bin/install.js VERSION constant first."
+  echo "ERROR: installer version source is $INSTALL_VERSION, but releasing as $VERSION"
+  echo "Update package.json first."
   exit 1
 fi
 
@@ -87,4 +87,4 @@ echo "Release v$VERSION complete."
 echo "  - npm: https://www.npmjs.com/package/godpowers/v/$VERSION"
 echo "  - tag: git tag $VERSION pushed"
 echo ""
-echo "Next: create a GitHub Release at https://github.com/godpowers/godpowers/releases"
+echo "Next: create a GitHub Release at https://github.com/aihxp/godpowers/releases"

@@ -2,18 +2,17 @@
 
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
-> Last updated: 2026-05-12
-> Current shipped: v0.15.18
+> Last updated: 2026-05-14
+> Current shipped: v1.0.0
 
-This roadmap tracks releases, what's shipped, and what remains before v1.0.
-Each release is independently shippable. Everything new is delivered as
-slash commands.
+This roadmap tracks releases, what's shipped, and what is frozen during the
+1.0 public adoption window. Everything user-facing remains slash-command based.
 
 ---
 
 ## Shipped releases
 
-### Current surface (v0.15.18)
+### Current surface (v1.0.0)
 
 What works today:
 - **105 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -48,7 +47,42 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
 ---
 
-## Remaining toward v1.0
+## Public adoption freeze
+
+### v1.0.0 - Stable
+
+**Theme**: freeze the public API and let real adoption produce the next set of
+changes.
+
+Frozen in 1.0:
+
+- Slash-command names and command families
+- Specialist agent names and frontmatter shape
+- Workflow YAML schema and shipped workflow names
+- Routing and recipe schema names
+- `.godpowers/` artifact locations
+- Native Pillars context layout through `AGENTS.md` and `agents/*.md`
+- Extension manifest compatibility contract for the 1.x line
+
+Allowed during freeze:
+
+- Critical fixes
+- Documentation clarity
+- Test coverage for frozen behavior
+- Compatibility fixes for supported AI coding tools
+- Small fixes that make documented 1.0 behavior true
+
+Deferred until adoption feedback:
+
+- New command families
+- New lifecycle phases
+- Schema format changes
+- Pillars format changes
+- Large extension API changes
+
+---
+
+## Historical releases
 
 ### v0.13.0 (shipped 2026-05-10) - Context-rot protection + extensions + observability
 
@@ -155,41 +189,23 @@ Deferred to a later release:
   pass; what questions we want to answer with the data should precede
   the wire format.
 
-### v0.16.0 - Real-world hardening (next)
+### Post-1.0 adoption work
 
-The 0.15 line shipped distribution. 0.16 is about depth: harden what
-ships, expand examples, design telemetry intentionally, stand up the
-docs site. Work, ordered by readiness:
+The 1.0 line freezes the public surface. The next work should come from
+adoption evidence:
 
 - **Record/replay integration tests**. Capture a greenfield `/god-mode`
   run end-to-end as a fixture, then replay it to validate that the
-  orchestrator behaves the same across model versions. The remaining
-  v1.0 testing gate.
-- **Examples directory expansion**. Add 3+ fixture projects (today:
-  `saas-mrr-tracker`, `cli-tool`). Targets: a brownfield-arc fixture,
-  a Mode D suite fixture, a refactor-arc fixture.
-- **Telemetry opt-in design pass**. Decide first what questions we
-  want answered (skill usage frequency, cache hit rate distribution,
-  agent pause reasons), then ship the wire.
+  orchestrator behaves the same across model versions.
+- **Examples directory expansion**. Add real fixture projects beyond the
+  current golden artifacts.
+- **Telemetry opt-in design pass**. Decide first what questions we want
+  answered, then ship the wire.
 - **Documentation site at godpowers.dev**. Built from `docs/`.
-
-### v1.0.0 - Stable
-
-**Theme**: freeze the public API.
-
-Remaining work before tag:
-
-- [x] npm publish marker tag (v0.15.18, with sigstore provenance)
-- [ ] Record/replay integration test suite (full-arc, audit-only,
-      build-only against fixtures)
-- [ ] Documentation site at godpowers.dev
-- [ ] Examples directory with 5+ fixture projects
-- [ ] Migration path from any v0.x project (one command)
-- [ ] Schema stability guarantees (intent.yaml v1, state.json v1,
-      manifest YAML v1, agent frontmatter v1, skill frontmatter v1,
-      events.jsonl vocabulary v1)
-- [ ] Pack author public API documented + tested
-- [ ] 1.0 release notes
+- **Migration helper from v0.x projects**. One command that explains and
+  applies the current Pillars plus `.godpowers` layout.
+- **Pack author guide**. Public extension authoring docs and compatibility
+  tests.
 
 ---
 
@@ -222,15 +238,13 @@ All other operations are slash commands inside the AI tool.
 
 ---
 
-## What each remaining release does NOT do
+## Freeze discipline
 
 | Version | Explicit non-goals |
 |---------|-------------------|
-| v0.12 | No new features (release engineering only) |
-| v0.13 | No core changes (extension runtime only) |
-| v0.14 | No new tier commands (workflow YAML layer only) |
-| v0.15 | No event-schema changes (events.jsonl format frozen at v0.11) |
-| v1.0 | No new features (stabilization only) |
-| All | NO `godpowers` CLI binary beyond install. Slash commands only. |
+| v1.0 | No new features without adoption evidence |
+| v1.0 | No schema churn |
+| v1.0 | No command family expansion |
+| All | No `godpowers` CLI binary beyond install. Slash commands only. |
 
 Discipline: a release that does too much is a release that ships late.

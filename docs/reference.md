@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v0.15.18.
+Complete command, agent, and artifact reference for v1.0.0.
 
 ## Slash commands (105 total)
 

@@ -5,6 +5,33 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-05-14
+
+Public adoption freeze release. Promotes the shipped Godpowers surface to the
+stable 1.0 line so real users can adopt it without the project moving under
+them.
+
+### Added
+- Added 1.0 release notes and public adoption language.
+- Added greenfield Pillars seeding so new Godpowers projects write the project
+  name into `agents/context.md` during initialization.
+
+### Changed
+- Bumped the package and public documentation version to 1.0.0.
+- Generated `AGENTS.md` now names Godpowers first, then explains that Pillars is
+  the native project context layer and `.godpowers/` remains the workflow state
+  and artifact layer.
+- Release documentation now frames the project as stable for public adoption
+  freeze rather than pre-launch expansion.
+- The release script now checks the installer version through `package.json`,
+  matching the dynamic installer implementation.
+
+### Frozen
+- Public slash-command, agent, workflow, routing, recipe, and schema surfaces are
+  frozen except for critical fixes and adoption feedback.
+- New command families, schema churn, and Pillars format changes are deferred
+  until adoption produces evidence.
+
 ## [0.15.18] - 2026-05-14
 
 Native Pillars context release. Makes Pillars the default project context

@@ -1,12 +1,12 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: DRAFT v0.15.18 (research-informed, pure-skill model)
+> Status: STABLE v1.0.0 (public adoption freeze, pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v0.1 through v0.3 were skeleton; this defines the v1 target and tracks shipped
-v0.15.x work against it.
+v1.0.0 freezes the public surface for adoption while the implementation gathers
+real-world feedback.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing

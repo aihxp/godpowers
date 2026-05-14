@@ -55,13 +55,20 @@ description: Product manager agent.
 
 test('init creates native Pillars protocol and floor pillars', () => {
   const tmp = mkTmp();
-  const result = pillars.init(tmp, { corePillars: ['stack', 'quality'] });
+  const result = pillars.init(tmp, {
+    corePillars: ['stack', 'quality'],
+    projectName: 'Fresh Product'
+  });
 
   if (!fs.existsSync(path.join(tmp, 'AGENTS.md'))) throw new Error('AGENTS.md missing');
   if (!fs.existsSync(path.join(tmp, 'agents', 'context.md'))) throw new Error('context pillar missing');
   if (!fs.existsSync(path.join(tmp, 'agents', 'repo.md'))) throw new Error('repo pillar missing');
   if (!fs.existsSync(path.join(tmp, 'agents', 'stack.md'))) throw new Error('stack pillar missing');
   if (!fs.existsSync(path.join(tmp, 'agents', 'quality.md'))) throw new Error('quality pillar missing');
+  const context = fs.readFileSync(path.join(tmp, 'agents', 'context.md'), 'utf8');
+  if (!context.includes('[HYPOTHESIS] Project name: Fresh Product')) {
+    throw new Error('context pillar missing project name seed');
+  }
   if (!result.detection.valid) throw new Error(result.detection.issues.join(', '));
 });
 

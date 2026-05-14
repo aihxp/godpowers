@@ -1,14 +1,13 @@
 # Users and Community
 
-Godpowers is at v0.15.18. Pre-launch.
+Godpowers is at v1.0.0. Public adoption freeze.
 
 ## Track record
 
-Currently zero production users. Be honest. We're a v0 of a v1 product.
-Real users will reveal which gaps actually matter; until then, this is
-architecture and discipline.
+Currently zero recorded production users. Be honest. This is the first stable
+public adoption line, and real users will reveal which gaps actually matter.
 
-## Proof needed
+## Proof needed during freeze
 
 The next credibility milestone is not another command count increase. It is a
 real `/god-mode` run on an unfamiliar codebase that produces shipped or
@@ -23,7 +22,7 @@ When that happens, record:
 - Validation commands and results
 - What actually shipped, or what blocked shipment
 
-## Be early
+## Adopt carefully
 
 If you use Godpowers on a real project:
 

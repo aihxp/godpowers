@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.18-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -11,6 +11,10 @@ Godpowers is an AI-powered development system that takes a project from raw
 idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
+
+Version 1.0.0 is the public adoption freeze: the command, agent, workflow,
+schema, artifact, and native Pillars context surfaces are stable while real
+projects shape the next release train.
 
 It fuses four disciplines into one unified workflow:
 
@@ -286,6 +290,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Concepts](docs/concepts.md)
 - [Command reference (all 105 skills + 39 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
+- [1.0 Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)
 - [Inspiration](INSPIRATION.md)
 
