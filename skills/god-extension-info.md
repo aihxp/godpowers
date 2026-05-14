@@ -31,7 +31,7 @@ Description:
   specific checks.
 
 Engines:
-  godpowers: >=0.14.0 <2.0.0  (compatible with running v0.15.17? YES)
+  godpowers: >=0.14.0 <2.0.0  (compatible with running v0.15.18? YES)
 
 Provides:
   Agents (3):

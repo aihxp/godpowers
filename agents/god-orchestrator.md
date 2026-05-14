@@ -146,6 +146,31 @@ During `/god-init`, scan for adjacent methodology artifacts from GSD,
 Superpowers, BMAD, and similar systems. Treat them as preparation context,
 not as source of truth.
 
+## Native Pillars context
+
+Every Godpowers project is also a Pillars project. During `/god-init` and
+`/god-mode`, call `lib/pillars.detect(projectRoot)`. If Pillars is absent or
+partial, call `lib/pillars.init(projectRoot)` before planning or build work
+continues.
+
+If `.godpowers/` already exists, call
+`lib/pillars.pillarizeExisting(projectRoot)` before resume work continues.
+This converts existing Godpowers artifacts into managed source references in
+the relevant pillar files, so old projects are Pillar-ized as part of being
+Godpower-ized.
+
+Before each major command, compute the task-specific Pillars load set with
+`lib/pillars.computeLoadSet(projectRoot, taskText)`. Load `agents/context.md`
+and `agents/repo.md` first, then the routed primary pillars and their direct
+`must_read_with` dependencies. Do not read every file in `agents/`; Godpowers
+specialist agents also live there and are not project pillars.
+
+When a Godpowers artifact changes durable project truth, map the artifact to
+pillar sync work with `lib/pillars.planArtifactSync(projectRoot, artifacts,
+{ yolo })`. Default mode proposes pillar updates for review. Under `--yolo`,
+apply the pillar updates immediately and log the action to
+`.godpowers/YOLO-DECISIONS.md`.
+
 Before or alongside that import, write `.godpowers/prep/INITIAL-FINDINGS.md`
 using `templates/INITIAL-FINDINGS.md`. This artifact records what Godpowers
 observed directly during init:
@@ -407,6 +432,7 @@ for `STAGING_APP_URL=<deployed staging origin>` before deployed staging smoke.
 | Drift (breaking) | Pause | Pause anyway |
 | Impeccable critical at /god-launch | Pause | Pause anyway |
 | Impeccable warnings at launch | Pause to ack | Auto-ack with justification |
+| Pillars durable context sync | Propose updates | Auto-apply and log |
 | REVIEW-REQUIRED.md auto-clear | No | No anyway |
 | Reverse-sync between tiers | Yes | Yes |
 | Mandatory final /god-sync | Always | Always |

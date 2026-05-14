@@ -1,6 +1,6 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: DRAFT v0.15.17 (research-informed, pure-skill model)
+> Status: DRAFT v0.15.18 (research-informed, pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
@@ -45,14 +45,27 @@ contexts to produce mechanically-verified artifacts on disk.
 - Specialist agents at `<runtime>/agents/god-*.md` spawned via Task tool
 - Single CLI surface: `npx godpowers` for install/uninstall only
 - Hooks for SessionStart and PreToolUse
+- Native Pillars project context in `AGENTS.md` and `agents/*.md`
 - Disk-authoritative state in `.godpowers/`
 
 ---
 
-## 2. The Three Load-Bearing Artifacts
+## 2. Native Context And Load-Bearing Artifacts
 
-The entire architecture rests on three files. If you understand these, you
-understand Godpowers.
+Godpowers separates portable project context from workflow state. Pillars
+files describe durable project truth any coding agent can read. `.godpowers`
+files describe the Godpowers workflow, artifacts, and execution history.
+
+Native Pillars context:
+
+| File | Role | Pattern source |
+|------|------|---------------|
+| `AGENTS.md` | **Protocol**: how coding agents load project context | Pillars |
+| `agents/context.md` | **Identity**: domain language and product invariants | Pillars |
+| `agents/repo.md` | **Layout**: repository structure and naming | Pillars |
+| `agents/*.md` | **Routed context**: task-specific project truth | Pillars |
+
+Godpowers workflow state:
 
 | File | Role | Pattern source |
 |------|------|---------------|
@@ -60,7 +73,8 @@ understand Godpowers.
 | `.godpowers/state.json` | **Facts**: what was resolved/done | Cargo.lock, poetry.lock |
 | `.godpowers/runs/<id>/events.jsonl` | **History**: what happened | OpenTelemetry traces |
 
-Every other architectural decision falls out from how these three relate.
+Every other architectural decision falls out from how these two layers relate:
+Pillars carries portable context, while `.godpowers` carries workflow state.
 
 ### `.godpowers/intent.yaml` (Intent)
 

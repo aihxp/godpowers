@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.15.17-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.15.18-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -14,6 +14,9 @@ in fresh contexts to do the work.
 
 It fuses four disciplines into one unified workflow:
 
+- **Native project context** - every Godpowers project is a Pillars project:
+  root `AGENTS.md` plus task-routed `agents/*.md` files carry durable project
+  truth before commands touch code.
 - **Artifact discipline** - every sentence in every document is a labeled
   decision, hypothesis, or open question. Mechanically verified failure modes.
 - **Execution engine** - fresh-context agents in parallel waves with atomic
@@ -156,6 +159,10 @@ reported as the final result.
 If `.godpowers` state already exists, `/god-mode --yolo` resumes from disk
 instead of asking for the project description again.
 
+Under `--yolo`, Godpowers also auto-applies Pillars sync proposals when
+durable `.godpowers` artifacts change project truth. The decision is logged to
+`.godpowers/YOLO-DECISIONS.md`.
+
 For existing codebases and org-constrained new projects, God Mode now runs a
 greenfield simulation audit and then actions it through a greenfieldification
 plan. It pauses before risky artifact rewrites because that process can change
@@ -205,6 +212,20 @@ Skill updates:   PROGRESS.md
 .godpowers/launch/STATE.md     Launch State
 .godpowers/harden/FINDINGS.md  Security Findings
 ```
+
+Godpowers projects also include native Pillars context:
+
+```
+AGENTS.md              Pillars loading protocol plus Godpowers managed fence
+agents/context.md      Always-loaded project identity and invariants
+agents/repo.md         Always-loaded repository layout and naming
+agents/*.md            Task-routed domain pillars
+```
+
+Existing `.godpowers` projects are Pillar-ized on resume or sync. Current PRD,
+ARCH, STACK, ROADMAP, BUILD, DEPLOY, OBSERVE, HARDEN, DESIGN, and PRODUCT
+artifacts become managed source references in the relevant pillar files, with
+labeled decisions, hypotheses, and open questions extracted when available.
 
 ## Quality Guardrails
 

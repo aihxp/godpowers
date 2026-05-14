@@ -25,6 +25,11 @@ may exist as early product-experience preparation.
 
 ## Imported Preparation Context
 
+Before sequencing, compute the Pillars load set for the roadmap task with
+`lib/pillars.computeLoadSet(projectRoot, taskText)`. Read `agents/context.md`
+and `agents/repo.md` first, then routed pillars that affect delivery,
+quality, deploy, or observability.
+
 If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for repo risks,
 existing tests, docs, CI, deploy, and suggested sequencing implications.
 
@@ -47,6 +52,9 @@ Rules:
 - Mark any imported sequencing assumption as `[HYPOTHESIS]` until confirmed by
   Godpowers artifacts or the user.
 - Keep design-derived delivery increments grounded in the PRD and ARCH.
+- If ROADMAP creates durable delivery or sequencing truth, plan updates for
+  relevant pillars. In `--yolo`, apply those updates and log them to
+  `.godpowers/YOLO-DECISIONS.md`.
 
 ## Process
 

@@ -31,6 +31,11 @@ required sections:
 
 ## Imported Preparation Context
 
+Before drafting, compute the Pillars load set for the PRD task with
+`lib/pillars.computeLoadSet(projectRoot, taskText)`. Read `agents/context.md`
+and `agents/repo.md` first, then any task-routed pillars. Pillars is native
+project truth for Godpowers; use it before broader repo archaeology.
+
 If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first so the PRD
 reflects what Godpowers observed during init: codebase shape, tests, docs,
 risks, and methodology systems detected.
@@ -48,6 +53,9 @@ Rules:
   preserve the Godpowers state and add an `[OPEN QUESTION]`.
 - In PRD rationale, mention the source only when it materially changes a
   requirement.
+- If the PRD creates durable product truth, plan corresponding updates for
+  `agents/context.md`. In `--yolo`, apply those updates and log them to
+  `.godpowers/YOLO-DECISIONS.md`.
 
 ## Quality Gates
 

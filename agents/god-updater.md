@@ -112,6 +112,17 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Emit events: `linkage.snapshot`, `drift.detected` (per finding),
   `review-required.populated`
 
+### Pillars sync (native context)
+- Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
+  partial.
+- For every durable Godpowers artifact changed during this sync, call
+  `lib/pillars.applyArtifactSync(projectRoot, changedArtifacts, { yolo })`.
+- Default mode may report the pillar updates as proposed review items when the
+  change is interpretive. Under `--yolo`, apply the managed source sections
+  immediately and log the decision to `.godpowers/YOLO-DECISIONS.md`.
+- Never read every file in `agents/` as project context. Only files with
+  `pillar:` frontmatter are Pillars files.
+
 ### AI-tool context refresh (always, unless never-ask)
 - Read `state.json` for `project.context-prompt-answered`
   - If `never-ask`: skip; do not touch AGENTS.md / CLAUDE.md / others

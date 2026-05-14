@@ -19,6 +19,10 @@ Orchestrate the build via specialist agents.
    - `.godpowers/stack/DECISION.md` exists (skip if scale is trivial)
    - Repo is scaffolded
 2. If any gate fails: tell user which command to run first
+3. Compute the Pillars load set for the build task with
+   `lib/pillars.computeLoadSet(projectRoot, taskText)`. Always load
+   `agents/context.md` and `agents/repo.md`, then pass only task-relevant
+   pillars into each planner or executor context.
 
 ## Orchestration
 
@@ -57,6 +61,9 @@ After all waves:
    the command, and repeat until green or until the same root failure survives
    3 repair attempts.
 5. Update PROGRESS.md: Build status = done
+6. If the build plan or implementation establishes durable conventions, plan
+   pillar updates through `lib/pillars.planArtifactSync`. Under
+   `/god-mode --yolo`, apply those updates immediately and log the decision.
 
 ## Pause Conditions
 

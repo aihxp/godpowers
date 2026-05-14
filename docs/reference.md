@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v0.15.17.
+Complete command, agent, and artifact reference for v0.15.18.
 
 ## Slash commands (105 total)
 
@@ -207,6 +207,32 @@ First-party packs on npm:
 - `god-context-writer` - AI-tool context fenced section manager.
 - `god-roadmap-reconciler` - Roadmap overlap detection.
 - `god-roadmap-updater` - Roadmap update after work.
+
+## Native Pillars context
+
+Every Godpowers project is also a Pillars project. Commands load
+`agents/context.md` and `agents/repo.md` first, then route task-specific
+pillar files by frontmatter triggers, `must_read_with`, and `see_also`.
+
+```
+AGENTS.md              Pillars loading protocol plus Godpowers managed fence
+agents/context.md      Always-loaded project identity and invariants
+agents/repo.md         Always-loaded repository layout and naming
+agents/stack.md        Technology choices and version constraints
+agents/arch.md         System boundaries and architecture decisions
+agents/data.md         Data model, migrations, queries, and storage
+agents/api.md          API contracts and request/response shapes
+agents/ui.md           Visual UI, components, and design tokens
+agents/auth.md         Identity, sessions, roles, and access control
+agents/quality.md      Testing, errors, style, and naming
+agents/deploy.md       Environments, promotion, rollback, and release process
+agents/observe.md      Logs, metrics, tracing, alerts, and runbooks
+```
+
+Existing `.godpowers` projects are Pillar-ized on resume and sync. Current
+Godpowers artifacts become managed source references in the relevant pillar
+files, with labeled decisions, hypotheses, and open questions extracted when
+available.
 
 ## Artifact paths
 

@@ -19,7 +19,9 @@ You are receiving a /god-mode invocation. Your job is to spawn the
 1. Resolve whether this is a new arc or a resume:
    - If `.godpowers/state.json`, `.godpowers/PROGRESS.md`, or
      `.godpowers/CHECKPOINT.md` exists, this is a resume. Do not ask the user
-     to describe the project again. Rehydrate intent from disk and continue.
+     to describe the project again. Call
+     `lib/pillars.pillarizeExisting(projectRoot)` first, then rehydrate intent
+     from disk and continue.
    - If no durable Godpowers state exists and no project description was
      supplied in the invocation, greet briefly: "God Mode engaged. Describe
      what you want to build."
@@ -34,6 +36,8 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      "How to announce" section)
 
 3. Load durable resume context before asking anything:
+   - Pillars load set from `lib/pillars.computeLoadSet(projectRoot, taskText)`,
+     starting with `agents/context.md` and `agents/repo.md`
    - `.godpowers/CHECKPOINT.md` first, when present
    - `.godpowers/state.json`
    - `.godpowers/PROGRESS.md`
@@ -74,6 +78,8 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
      `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the
      first planning or build step
+   - Instruction to compute and load the Pillars load set before every major
+     command, because Pillars is the native project context layer
    - Instruction to run `/god-design` after `/god-prd` and before `/god-arch`
      when initial findings, imported planning context, the PRD, or the
      codebase show UI or product-experience signals
@@ -162,7 +168,9 @@ Default: If you say "go", I'll pick [X] because [Y].
 
 ### --yolo
 Pass through to orchestrator. Orchestrator picks defaults at every pause point
-and logs decisions to `.godpowers/YOLO-DECISIONS.md`.
+and logs decisions to `.godpowers/YOLO-DECISIONS.md`. Pillar sync proposals
+generated from durable Godpowers artifact changes are auto-applied in this
+mode and logged as YOLO decisions.
 
 ### --conservative
 Pass through. Orchestrator pauses at every tier boundary.
@@ -197,6 +205,16 @@ complete. This ensures all 14 artifact categories are in a consistent state:
 Under `--yolo`, the sync step auto-applies (no pause). Under
 `--conservative`, it pauses for confirmation. Under `--with-hygiene`,
 it runs alongside the hygiene pass.
+
+The sync step also reconciles native Pillars context. When `.godpowers`
+artifacts create or change durable project truth, Godpowers maps those changes
+to relevant pillar files through `lib/pillars.planArtifactSync`. Default mode
+proposes pillar updates for review. `--yolo` applies them immediately and logs
+the action to `.godpowers/YOLO-DECISIONS.md`.
+
+If `/god-mode` resumes an existing `.godpowers` project that lacks Pillars,
+it Pillar-izes the project before continuing. Existing `.godpowers` artifacts
+become managed source references in the relevant `agents/*.md` files.
 
 The sync step is what closes the loop between greenfield arc creation and
 the comprehensive 14-artifact reconciliation system. See

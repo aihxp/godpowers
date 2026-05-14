@@ -5,6 +5,32 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.18] - 2026-05-14
+
+Native Pillars context release. Makes Pillars the default project context
+layer for Godpowers projects and keeps existing `.godpowers` artifacts aligned
+with portable `agents/*.md` pillar files.
+
+### Added
+- Added `lib/pillars.js` for Pillars detection, initialization, load-set
+  routing, existing-project Pillar-ization, artifact sync planning, and
+  semantic signal extraction from labeled Godpowers artifacts.
+- Added `scripts/test-pillars.js` and `npm run test:pillars` to cover the
+  `agents/` collision risk, Pillars initialization, routed load sets,
+  existing `.godpowers` conversion, artifact-to-pillar sync, `--yolo`
+  auto-apply behavior, and restricted-character sanitization.
+
+### Changed
+- `/god-init`, `/god-mode`, `/god-context`, and `/god-sync` now treat every
+  Godpowers project as a Pillars project by default.
+- Existing `.godpowers` projects are Pillar-ized on resume or sync, with PRD,
+  ARCH, STACK, ROADMAP, BUILD, DEPLOY, OBSERVE, HARDEN, DESIGN, and PRODUCT
+  artifacts linked into relevant pillar files.
+- `/god-feature`, `/god-build`, `/god-review`, PRD, architecture, roadmap,
+  orchestrator, and updater flows now document Pillars-first context loading.
+- Under `/god-mode --yolo`, durable artifact changes auto-apply managed
+  pillar sync sections and log the decision.
+
 ## [0.15.17] - 2026-05-12
 
 Greenfieldification release. Turns the brownfield and bluefield simulation

@@ -1,6 +1,6 @@
 # Users and Community
 
-Godpowers is at v0.15.17. Pre-launch.
+Godpowers is at v0.15.18. Pre-launch.
 
 ## Track record
 

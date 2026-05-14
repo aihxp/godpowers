@@ -2,8 +2,8 @@
 name: god-init
 description: |
   Initialize a Godpowers project. Detects operating mode (greenfield, gap-fill,
-  audit, multi-repo) and project scale. Creates .godpowers/ directory with
-  PROGRESS.md.
+  audit, multi-repo) and project scale. Creates native Pillars project context
+  plus the .godpowers/ workflow state directory with PROGRESS.md.
 
   Triggers on: "god init", "start a project", "new project", "initialize"
 ---
@@ -18,8 +18,9 @@ This skill is a thin wrapper. Detection happens automatically; user never
 needs to specify a mode.
 
 1. Check if `.godpowers/` already exists:
-   - If yes: read PROGRESS.md, report current state, ask if user wants to
-     reset or resume
+   - If yes: read PROGRESS.md, call `lib/pillars.pillarizeExisting(projectRoot)`
+     to ensure the existing Godpowers project is also Pillar-ized, report
+     current state, ask if user wants to reset or resume
    - If no: proceed with initialization
 
 2. **Auto-detect what kind of project this is** (background, no user prompt):
@@ -55,7 +56,23 @@ needs to specify a mode.
      and `/god-mode` can place `/god-design` after PRD and before
      `/god-arch` when the project needs early product-experience shape.
 
-3. **Announce findings in plain English** (no jargon):
+3. **Initialize native Pillars context**:
+   - Call `lib/pillars.init(projectRoot, findings)`.
+   - Ensure root `AGENTS.md` contains the Pillars loading protocol.
+   - Ensure `agents/context.md` and `agents/repo.md` exist with
+     `always_load: true`.
+   - Ensure Tier 1 Core pillar stubs exist for `stack`, `arch`, `data`, `api`,
+     `ui`, `auth`, `quality`, `deploy`, and `observe`.
+   - Preserve existing files. Create missing pillars as `status: stub` unless
+     Godpowers has strong evidence to mark them `present`.
+   - For an existing `.godpowers/` project, call
+     `lib/pillars.pillarizeExisting(projectRoot)` so current PRD, ARCH, STACK,
+     ROADMAP, BUILD, DEPLOY, OBSERVE, HARDEN, DESIGN, and PRODUCT artifacts
+     become managed source references in the relevant pillars.
+   - This is not optional for Godpowers projects. A Godpowers project is a
+     Pillars project by default.
+
+4. **Announce findings in plain English** (no jargon):
    - Empty dir + no org context: "Detected: empty directory. Starting fresh."
    - Empty dir + org context: "Detected: empty directory + org standards.
      I'll respect your org's tooling/infrastructure choices."
@@ -75,6 +92,8 @@ needs to specify a mode.
    - Write `.godpowers/prep/INITIAL-FINDINGS.md`
    - Run planning-system context detection for GSD, Superpowers, and BMAD
    - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
+   - Initialize native Pillars context and record Pillars health in
+     `INITIAL-FINDINGS.md`
    - For brownfield: schedule archaeology + reconstruction as preflight
    - For bluefield: load org-context as constraint
    - Create directory structure
@@ -90,6 +109,19 @@ needs to specify a mode.
 
 5. Create the directory structure:
    ```
+   AGENTS.md
+   agents/
+     context.md
+     repo.md
+     stack.md
+     arch.md
+     data.md
+     api.md
+     ui.md
+     auth.md
+     quality.md
+     deploy.md
+     observe.md
    .godpowers/
      PROGRESS.md
      prep/
@@ -132,17 +164,22 @@ needs to specify a mode.
 Always create `.godpowers/prep/INITIAL-FINDINGS.md`. This is Godpowers'
 durable answer to "what did init find in this codebase?" It captures codebase
 shape, framework and tooling signals, tests, CI, docs, AI-tool files, detected
-methodology systems, UI or product-experience signals, risk signals, and the
-reasoning behind the suggested next command.
+methodology systems, Pillars health, UI or product-experience signals, risk
+signals, and the reasoning behind the suggested next command.
 
 If GSD, Superpowers, BMAD, or similar planning context is detected, create
 `.godpowers/prep/IMPORTED-CONTEXT.md`. This artifact is preparation context,
 not source of truth. It feeds PRD, architecture, roadmap, and stack decisions
 as hypothesis-level input only.
 
-## AI-tool context (automatic for explicit init)
+## Native Pillars context and AI-tool context
 
-After PROGRESS.md is written, decide from the trigger phrase:
+After PROGRESS.md is written, Pillars context is already present. Every
+Godpowers project uses `AGENTS.md` plus `agents/*.md` as its native project
+truth layer.
+
+Then decide from the trigger phrase whether to write Godpowers pointer fences
+for individual AI tools:
 
 - If the user explicitly invoked `god init` or `/god-init`, write AI-tool
   context automatically. The command itself is explicit consent to initialize

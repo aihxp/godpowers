@@ -15,7 +15,11 @@ Spawn two specialist review agents in fresh contexts via Task tool.
 
 1. Gather context: what code is being reviewed? (recent diff, specific files, PR)
 2. Locate the relevant plan or PRD acceptance criteria
-3. Run Stage 1 first, then Stage 2 only if Stage 1 passes
+3. Compute the Pillars load set from the task and changed files with
+   `lib/pillars.computeLoadSet(projectRoot, taskText)`. Reviews may cite
+   violations of `agents/auth.md`, `agents/data.md`, `agents/ui.md`, or any
+   other loaded pillar directly.
+4. Run Stage 1 first, then Stage 2 only if Stage 1 passes
 
 ## Stage 1: Spec Compliance
 

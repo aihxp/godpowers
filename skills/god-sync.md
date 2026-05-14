@@ -29,7 +29,10 @@ User runs `/god-sync` after manual changes. Useful for:
 ## Setup
 
 1. Verify `.godpowers/` exists
-2. Spawn god-updater in fresh context with:
+2. Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
+   partial, because every Godpowers project must also carry native Pillars
+   context.
+3. Spawn god-updater in fresh context with:
    - The reconciliation verdict (if available from a prior /god-reconcile)
    - Or: re-run reconciliation against current state to detect what changed
    - Recent commits for context
@@ -39,8 +42,10 @@ User runs `/god-sync` after manual changes. Useful for:
 After god-updater returns:
 1. Verify each touched artifact passes its tier's have-nots
 2. Verify SYNC-LOG.md was appended
-3. Verify state.json reflects new tier statuses
-4. Display summary of what changed
+3. Verify Pillars source sections were updated for any changed durable
+   artifact. Under `--yolo`, pillar updates are auto-applied and logged.
+4. Verify state.json reflects new tier statuses
+5. Display summary of what changed
 
 ## Output
 
@@ -74,6 +79,7 @@ Suggested next: /god-status
 | Backlog cruft | Resolved entries linked to commits |
 | Orphan todos | Closes superseded todos |
 | Lost threads | Active threads get progress notes |
+| Pillars drift | Keeps `agents/*.md` aligned with current `.godpowers` artifacts |
 
 The loop:
 

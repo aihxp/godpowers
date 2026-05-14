@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-12
-> Current shipped: v0.15.17
+> Current shipped: v0.15.18
 
 This roadmap tracks releases, what's shipped, and what remains before v1.0.
 Each release is independently shippable. Everything new is delivered as
@@ -13,7 +13,7 @@ slash commands.
 
 ## Shipped releases
 
-### Current surface (v0.15.17)
+### Current surface (v0.15.18)
 
 What works today:
 - **105 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -30,6 +30,10 @@ What works today:
 - **Three-axis verification**: static (lint), linkage (drift), runtime (headless browser)
 - **Bidirectional linkage map** with 8 stable ID types
 - **Reverse-sync** writing fenced "Implementation Linkage" footers
+- **Native Pillars project context**: `AGENTS.md` plus routed
+  `agents/*.md` pillar files created for every Godpowers project
+- **Existing-project Pillar-ization**: current `.godpowers` artifacts become
+  managed source references with extracted durable signals in relevant pillars
 - **Conditional design pipeline**: DESIGN.md + PRODUCT.md with two-stage review
 - **Five external integrations** (detect-and-delegate, none vendored): Google Labs
   design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright
@@ -38,7 +42,7 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- Full CI suite with 36+ behavioral test files and extension-pack publish gates
+- Full CI suite with 37+ behavioral test files and extension-pack publish gates
 
 See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
@@ -175,7 +179,7 @@ docs site. Work, ordered by readiness:
 
 Remaining work before tag:
 
-- [x] npm publish marker tag (v0.15.17, with sigstore provenance)
+- [x] npm publish marker tag (v0.15.18, with sigstore provenance)
 - [ ] Record/replay integration test suite (full-arc, audit-only,
       build-only against fixtures)
 - [ ] Documentation site at godpowers.dev

@@ -30,6 +30,10 @@ Add a feature to an already-existing project.
 
 1. Verify `.godpowers/` exists. If not, fall back to /god-init first.
 2. Read existing PRD, ARCH, ROADMAP for context
+3. Compute the Pillars load set for the feature request with
+   `lib/pillars.computeLoadSet(projectRoot, taskText)`. Load
+   `agents/context.md` and `agents/repo.md` first, then task-routed pillars
+   such as `auth`, `data`, `api`, `ui`, or `quality`.
 
 ## Orchestration
 
@@ -64,6 +68,11 @@ audited at .godpowers/harden/FINDINGS.md."
 ### Phase 6: Soft launch
 No landing page. No marketing. The feature ships behind a flag, gradually
 enabled. Update CHANGELOG.
+
+### Phase 7: Pillars sync
+If the feature changes durable project truth, plan updates through
+`lib/pillars.planArtifactSync`. Default mode proposes the pillar edits for
+review. Under `/god-mode --yolo`, apply them immediately and log the decision.
 
 ## On Completion
 

@@ -29,6 +29,11 @@ Before starting:
 
 ## Imported Preparation Context
 
+Before drafting, compute the Pillars load set for the architecture task with
+`lib/pillars.computeLoadSet(projectRoot, taskText)`. Read `agents/context.md`
+and `agents/repo.md` first, then routed pillars such as `arch`, `stack`,
+`data`, `api`, `auth`, `deploy`, or `observe` when relevant.
+
 If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for direct
 Godpowers observations about framework, tooling, deploy, tests, docs, and
 codebase risks.
@@ -50,6 +55,9 @@ Rules:
   descriptions, or open questions.
 - If imported context conflicts with the PRD, the PRD wins and the conflict
   becomes an `[OPEN QUESTION]`.
+- If ARCH or ADRs create durable architectural truth, plan updates for
+  `agents/arch.md` and related pillars. In `--yolo`, apply those updates and
+  log them to `.godpowers/YOLO-DECISIONS.md`.
 
 ## Output
 

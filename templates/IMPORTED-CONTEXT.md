@@ -36,5 +36,6 @@
 
 - [DECISION] Godpowers agents may use this artifact as preparation context only.
 - [DECISION] This artifact must not override `.godpowers/intent.yaml`, `.godpowers/state.json`, `PROGRESS.md`, or any completed Godpowers artifact.
+- [DECISION] This artifact must not override native Pillars files under `agents/*.md`.
 - [DECISION] If imported context conflicts with user intent or a Godpowers artifact, the Godpowers artifact wins and the conflict becomes an open question.
 - [DECISION] PRD, architecture, roadmap, and stack agents should cite imported signals as `[HYPOTHESIS]` until confirmed by Godpowers artifacts or the user.
