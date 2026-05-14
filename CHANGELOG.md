@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2026-05-14
 
-Public adoption freeze release. Promotes the shipped Godpowers surface to the
-stable 1.0 line so real users can adopt it without the project moving under
-them.
+Stable 1.0 release. Promotes the shipped Godpowers surface to the stable 1.0
+line so real users can adopt it without the project moving under them.
 
 ### Added
 - Added 1.0 release notes and public adoption language.
@@ -21,8 +20,8 @@ them.
 - Generated `AGENTS.md` now names Godpowers first, then explains that Pillars is
   the native project context layer and `.godpowers/` remains the workflow state
   and artifact layer.
-- Release documentation now frames the project as stable for public adoption
-  freeze rather than pre-launch expansion.
+- Release documentation now frames the project as stable for real-world use
+  rather than pre-launch expansion.
 - The release script now checks the installer version through `package.json`,
   matching the dynamic installer implementation.
 

@@ -43,7 +43,7 @@ const recipeSurface = `${counts.recipes} recipes`;
 assertIncludes('package.json', `${counts.skills} slash commands and ${counts.agents} specialist agents`);
 assertIncludes('README.md', `version-${version}-blue`);
 assertIncludes('README.md', `all ${counts.skills} skills + ${counts.agents} agents`);
-assertIncludes('USERS.md', `Godpowers is at v${version}. Public adoption freeze.`);
+assertIncludes('USERS.md', `Godpowers is at v${version}. Stable release.`);
 assertIncludes('ARCHITECTURE.md', `STABLE v${version}`);
 assertIncludes('ARCHITECTURE.md', `Core: ${surface}, ${workflowSurface}`);
 assertIncludes('docs/ROADMAP.md', `Current shipped: v${version}`);

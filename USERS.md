@@ -1,6 +1,6 @@
 # Users and Community
 
-Godpowers is at v1.0.0. Public adoption freeze.
+Godpowers is at v1.0.0. Stable release.
 
 ## Track record
 

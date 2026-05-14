@@ -1,6 +1,6 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.0.0 (public adoption freeze, pure-skill model)
+> Status: STABLE v1.0.0 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 

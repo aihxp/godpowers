@@ -2,10 +2,9 @@
 
 Date: 2026-05-14
 
-Godpowers 1.0.0 is the public adoption freeze. The goal of this release is not
-to add another layer of capability, but to stop the ground from moving so real
-projects can try the system, report friction, and shape the next cycle from
-evidence.
+Godpowers 1.0.0 is the stable release. The goal of this release is not to add
+another layer of capability, but to stop the ground from moving so real projects
+can try the system, report friction, and shape the next cycle from evidence.
 
 ## What is stable
 
@@ -35,7 +34,7 @@ design, and product artifacts are linked back into relevant pillars.
 
 ## Freeze policy
 
-During the adoption freeze, do not add new command families, change schema
+During the stability window, do not add new command families, change schema
 formats, or rename public artifacts without evidence from real use.
 
 Allowed changes:

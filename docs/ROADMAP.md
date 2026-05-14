@@ -47,7 +47,7 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
 ---
 
-## Public adoption freeze
+## Stability window
 
 ### v1.0.0 - Stable
 

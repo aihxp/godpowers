@@ -12,9 +12,9 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.0.0 is the public adoption freeze: the command, agent, workflow,
-schema, artifact, and native Pillars context surfaces are stable while real
-projects shape the next release train.
+Version 1.0.0 marks the stable release: the command, agent, workflow, schema,
+artifact, and native Pillars context surfaces are steady while real projects
+shape the next release train.
 
 It fuses four disciplines into one unified workflow:
 
