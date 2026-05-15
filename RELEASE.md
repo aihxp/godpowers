@@ -51,6 +51,11 @@ use the same word for different things.
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
+The `v1.6.0` git tag points to the release commit that matches the npm
+`godpowers@1.6.0` package. Future public publishes should prefer the
+tag-triggered GitHub workflow so npm provenance, git history, and release notes
+stay aligned.
+
 Allowed changes:
 
 - Critical bug fixes

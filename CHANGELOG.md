@@ -32,6 +32,8 @@ roadmap, stack, docs, or lint artifacts.
   reverse, surprising without context, and based on a real tradeoff.
 - Public release metadata, package version, and README badge now point to
   1.6.0.
+- Release history now has a `v1.6.0` git tag matching the published npm
+  package.
 
 ### Guardrails
 - The domain glossary is preparation context only. It does not replace PRD,

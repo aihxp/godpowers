@@ -1,39 +1,37 @@
 /**
  * Workflow runner for integration tests.
  *
- * Status: SCAFFOLD (v0.4). Real implementation in v0.5 alongside the
- * workflow YAML runtime.
- *
- * The pattern: parse a workflow YAML, execute its DAG, mock LLM calls
- * via replay layer.
+ * Integration tests use the same workflow runtime as the package. The runtime
+ * plans deterministic agent waves and writes the plan artifact; actual agent
+ * execution still happens inside the orchestrator context.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { replay } = require('./replay');
-
-const WORKFLOWS_DIR = path.join(__dirname, '..', '..', 'workflows');
+const workflowRunner = require('../../lib/workflow-runner');
 
 /**
  * Run a workflow against a fixture project.
  *
- * Stub: in v0.4 this just records what the runner WOULD do.
- * In v0.5+ it actually parses the YAML and executes the DAG with mocked
- * LLM responses.
+ * This is intentionally a plan-mode smoke path. It proves the shipped workflow
+ * can be loaded, planned, and persisted for a real copied fixture project.
  */
 async function runWorkflow(workflowName, project, options = {}) {
-  const workflowPath = path.join(WORKFLOWS_DIR, `${workflowName}.yaml`);
-  if (!fs.existsSync(workflowPath)) {
-    throw new Error(`Workflow not found: ${workflowName}`);
-  }
+  const workflow = workflowRunner.loadByName(workflowName, options);
+  const runId = options.runId || `${workflowName}-smoke`;
+  const plan = workflowRunner.plan(workflow, {
+    projectRoot: project.path,
+    fixture: options.fixture || null
+  });
+  const planPath = workflowRunner.writePlan(project.path, runId, plan);
 
-  // v0.4 placeholder: just verify the workflow exists and project is loadable
-  // v0.5+ will actually parse and execute
   return {
     workflow: workflowName,
     project: project.path,
-    status: 'scaffold-only',
-    note: 'Real workflow execution lands in v0.5. This stub verifies the test infrastructure is wired correctly.',
+    status: 'planned',
+    runId,
+    planPath,
+    plan,
+    stepCount: plan.steps.length,
+    waveCount: plan.waves.length,
     artifacts: project.listArtifacts(),
     paused: false
   };

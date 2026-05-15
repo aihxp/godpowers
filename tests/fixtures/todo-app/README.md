@@ -9,4 +9,4 @@ No `.godpowers/` yet. No code yet.
 
 ## Used by
 
-- `tests/integration/full-arc.test.js` (v0.5+)
+- `tests/integration/full-arc.test.js`

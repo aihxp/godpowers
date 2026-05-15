@@ -1,12 +1,11 @@
 /**
  * Integration test: /god-mode (full-arc) against todo-app fixture.
  *
- * Status: SCAFFOLD (v0.4). Real assertions in v0.5+.
- *
  * Run: node tests/integration/full-arc.test.js
  */
 
 const assert = require('assert');
+const fs = require('fs');
 const fixture = require('../lib/fixture');
 const { runWorkflow } = require('../lib/runner');
 
@@ -14,20 +13,33 @@ async function run() {
   const project = fixture.load('todo-app');
 
   try {
-    const result = await runWorkflow('full-arc', project);
+    const result = await runWorkflow('full-arc', project, {
+      fixture: 'todo-app',
+      runId: 'full-arc-todo-app-smoke'
+    });
 
-    // v0.4 scaffold assertions: verify infrastructure is wired
     assert.strictEqual(result.workflow, 'full-arc', 'workflow loaded');
     assert.ok(result.project, 'project path set');
-    assert.strictEqual(result.status, 'scaffold-only', 'v0.4 stub responded');
+    assert.strictEqual(result.status, 'planned', 'workflow planned');
+    assert.strictEqual(result.stepCount, 10, 'full-arc step count');
+    assert.strictEqual(result.waveCount, 7, 'full-arc wave count');
+    assert.ok(project.exists('.godpowers/runs/full-arc-todo-app-smoke/plan.yaml'),
+      'plan artifact written');
 
-    console.log('  + scaffold test passed: workflow + fixture + runner wired');
+    const jobs = result.plan.steps.map(step => step.jobKey);
+    for (const job of ['prd', 'arch', 'roadmap', 'stack', 'repo', 'build',
+      'deploy', 'observe', 'harden', 'launch']) {
+      assert.ok(jobs.includes(job), `missing full-arc job: ${job}`);
+    }
 
-    // v0.5+ will add real assertions:
-    // assert.ok(project.exists('.godpowers/prd/PRD.md'), 'PRD created');
-    // assert.ok(project.exists('.godpowers/arch/ARCH.md'), 'ARCH created');
-    // assert.ok(project.exists('.godpowers/build/STATE.md'), 'Build done');
-    // ... etc
+    const planText = fs.readFileSync(result.planPath, 'utf8');
+    assert.ok(/workflow: full-arc/.test(planText), 'plan names workflow');
+    assert.ok(/step-count: 10/.test(planText), 'plan records step count');
+    assert.ok(/wave-count: 7/.test(planText), 'plan records wave count');
+    assert.ok(/god-pm/.test(planText), 'plan includes PM agent');
+    assert.ok(/god-launch-strategist/.test(planText), 'plan includes launch agent');
+
+    console.log('  + full-arc smoke passed: fixture + workflow plan + artifact');
 
   } finally {
     project.cleanup();

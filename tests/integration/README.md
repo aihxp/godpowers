@@ -1,48 +1,30 @@
-# Integration Tests (v0.5+)
+# Integration Tests
 
-End-to-end workflow tests. Implementation arrives in v0.5.
+End-to-end smoke tests for shipped workflows. These tests copy a fixture project
+to a temp directory, load the production workflow YAML, generate deterministic
+agent waves through `lib/workflow-runner.js`, and assert that the plan artifact
+is written under `.godpowers/runs/`.
 
-## Test structure (planned)
+## Current coverage
 
-```js
-// tests/integration/full-arc.test.js
-import { runWorkflow, fixture, replay } from '../helpers';
+| Test | Coverage |
+|------|----------|
+| `full-arc.test.js` | `/god-mode` full-arc workflow loads, plans 10 jobs across 7 waves, and writes `plan.yaml`. |
 
-describe('/god-mode (full-arc)', () => {
-  it('creates all 10 tier artifacts for greenfield', async () => {
-    const project = await fixture('greenfield-saas');
-    const result = await runWorkflow('full-arc', project, {
-      replay: 'full-arc-greenfield-v1'
-    });
+## Run
 
-    expect(result.exit).toBe(0);
-    expect(project.exists('.godpowers/prd/PRD.md')).toBe(true);
-    expect(project.exists('.godpowers/arch/ARCH.md')).toBe(true);
-    expect(project.exists('.godpowers/build/STATE.md')).toBe(true);
-    // ...
-  });
-
-  it('refuses to launch with Critical security findings', async () => {
-    const project = await fixture('greenfield-with-vuln');
-    const result = await runWorkflow('full-arc', project);
-
-    expect(result.exit).toBe(0);
-    expect(result.paused).toBe(true);
-    expect(result.pause.reason).toContain('Critical');
-  });
-});
+```bash
+npm run test:e2e
 ```
 
-## Fixtures (planned)
+## Fixture
 
 | Fixture | Tests |
 |---------|-------|
-| `greenfield-saas` | full-arc happy path |
-| `greenfield-with-vuln` | Critical-finding pause |
-| `legacy-monolith` | feature-arc, refactor-arc |
-| `flaky-prod` | hotfix-arc, postmortem |
-| `outdated-deps` | update-deps |
+| `todo-app` | Full-arc plan-mode smoke path for a small greenfield project. |
 
-## Status
+## Boundary
 
-Scaffold only in v0.4. Full implementation in v0.5.
+The workflow runtime plans agent execution and writes the plan. It does not
+execute LLM agents in CI. Real agent execution should be covered by future
+record/replay tests or evals.
