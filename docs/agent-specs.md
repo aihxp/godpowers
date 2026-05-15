@@ -62,10 +62,10 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-prd`, `/god-feature` (mini-PRD mode), `/god-mode` (via orchestrator), reconciliation if PRD missing |
-| **Inputs** | User intent, `.godpowers/intent.yaml`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/PRD.md` |
+| **Inputs** | User intent, `.godpowers/intent.yaml`, optional `.godpowers/domain/GLOSSARY.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/PRD.md` |
 | **Outputs** | `.godpowers/prd/PRD.md` + `.godpowers/prd/PRD.meta.json` |
 | **Downstream consumers** | god-architect, god-roadmapper, god-launch-strategist, god-observability-engineer (reads NFRs), god-reconciler |
-| **Artifact awareness** | Initial findings and imported preparation context are supporting evidence only, never source of truth |
+| **Artifact awareness** | Domain glossary, initial findings, and imported preparation context are supporting evidence only, never source of truth |
 | **Handoff** | Returns when PRD passes have-nots P-01..P-15. Pauses for ambiguous problem space, missing domain knowledge, conflicting requirements. |
 | **Standards check** | YES (substitution + three-label + 15 have-nots) |
 
@@ -74,11 +74,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-arch`, `/god-feature` (delta mode), `/god-mode` |
-| **Inputs** | `.godpowers/prd/PRD.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ARCH.md` |
+| **Inputs** | `.godpowers/prd/PRD.md`, optional `.godpowers/domain/GLOSSARY.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ARCH.md` |
 | **Outputs** | `.godpowers/arch/ARCH.md`, `.godpowers/arch/adr/<n>-<title>.md` |
 | **Downstream consumers** | god-roadmapper, god-stack-selector, god-planner, god-deploy-engineer, god-harden-auditor |
-| **Artifact awareness** | PRD requirements, NFRs, optional org-context.yaml (bluefield), imported preparation context as supporting evidence |
-| **Handoff** | Returns when ARCH passes have-nots A-01..A-12. Pauses on tied architectures, human-constraint flip points. |
+| **Artifact awareness** | PRD requirements, NFRs, optional org-context.yaml (bluefield), domain glossary, imported preparation context as supporting evidence |
+| **Handoff** | Returns when ARCH passes have-nots A-01..A-13. Pauses on tied architectures, human-constraint flip points. |
 | **Standards check** | YES |
 
 ### god-roadmapper
@@ -86,10 +86,10 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-roadmap`, `/god-mode`, `/god-roadmap-update` (legacy) |
-| **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/arch/ARCH.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ROADMAP.md` |
+| **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/arch/ARCH.md`, optional `.godpowers/domain/GLOSSARY.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ROADMAP.md` |
 | **Outputs** | `.godpowers/roadmap/ROADMAP.md` |
 | **Downstream consumers** | god-planner, god-roadmap-reconciler, god-reconciler |
-| **Artifact awareness** | PRD requirements, ARCH dependency edges, imported milestones and stories as supporting evidence |
+| **Artifact awareness** | PRD requirements, ARCH dependency edges, domain glossary, imported milestones and stories as supporting evidence |
 | **Handoff** | Returns when ROADMAP passes have-nots R-01..R-10. Pauses on capacity unknown, ambiguous ordering. |
 | **Standards check** | YES |
 
@@ -98,10 +98,10 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-stack`, `/god-mode` |
-| **Inputs** | `.godpowers/arch/ARCH.md`, optional `.godpowers/org-context.yaml` (bluefield constraint), optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
+| **Inputs** | `.godpowers/arch/ARCH.md`, optional `.godpowers/domain/GLOSSARY.md`, optional `.godpowers/org-context.yaml` (bluefield constraint), optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
 | **Outputs** | `.godpowers/stack/DECISION.md` |
 | **Downstream consumers** | god-repo-scaffolder, god-planner, god-deploy-engineer |
-| **Artifact awareness** | ARCH NFRs, ADRs, org constraints if bluefield, imported stack signals as supporting evidence |
+| **Artifact awareness** | ARCH NFRs, ADRs, org constraints if bluefield, domain glossary, imported stack signals as supporting evidence |
 | **Handoff** | Returns when DECISION passes have-nots S-01..S-05. Pauses on within-10% ties, high-lock-in choices. |
 | **Standards check** | YES |
 
@@ -110,10 +110,10 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-explore`, `/god-discuss`, `/god-list-assumptions`, `/god-refactor` (scoping mode) |
-| **Inputs** | User intent (free-form), optional existing artifacts |
-| **Outputs** | `.godpowers/explore/<slug>.md` OR `.godpowers/discussions/<topic>.md` |
+| **Inputs** | User intent (free-form), optional existing artifacts, optional `.godpowers/domain/GLOSSARY.md` |
+| **Outputs** | `.godpowers/explore/<slug>.md` OR `.godpowers/discussions/<topic>.md`, optional `.godpowers/domain/GLOSSARY.md` |
 | **Downstream consumers** | god-pm (uses clarified problem statement), god-planner (uses scoped refactor) |
-| **Artifact awareness** | Whatever artifacts exist for context |
+| **Artifact awareness** | Whatever artifacts exist for context, plus canonical domain terms and ambiguities |
 | **Handoff** | Returns clarified framing or surfaced assumptions |
 | **Standards check** | NO (output is exploration, not a tier artifact) |
 

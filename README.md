@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.5.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,9 +12,9 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.5.0 adds preflight intake for brownfield and bluefield projects while
-keeping the command, agent, workflow, schema, artifact, and native Pillars
-context surfaces stable for real projects.
+Version 1.6.0 adds domain precision: `/god-discuss` can resolve overloaded
+project language into `.godpowers/domain/GLOSSARY.md`, and downstream planning,
+architecture, stack, roadmap, docs, and lint flows use that vocabulary.
 
 It fuses four disciplines into one unified workflow:
 
@@ -23,6 +23,8 @@ It fuses four disciplines into one unified workflow:
   truth before commands touch code.
 - **Artifact discipline** - every sentence in every document is a labeled
   decision, hypothesis, or open question. Mechanically verified failure modes.
+- **Domain precision** - fuzzy or overloaded project language is challenged,
+  resolved, and stored in a domain glossary before it contaminates planning.
 - **Execution engine** - fresh-context agents in parallel waves with atomic
   commits. No context rot. No sequential bottlenecks.
 - **Quality immune system** - TDD enforcement, two-stage code review (spec
@@ -205,6 +207,7 @@ Skill updates:   PROGRESS.md
 ```
 .godpowers/PROGRESS.md         Cross-tier progress ledger
 .godpowers/prd/PRD.md          Product Requirements Document
+.godpowers/domain/GLOSSARY.md  Domain vocabulary and resolved ambiguities
 .godpowers/arch/ARCH.md        System Architecture
 .godpowers/arch/adr/           Architecture Decision Records
 .godpowers/roadmap/ROADMAP.md  Sequenced Roadmap

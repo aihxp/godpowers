@@ -60,6 +60,13 @@ Every piece of code passes two independent reviews:
 
 Both must pass. Failing either blocks the commit.
 
+### 8. Domain Precision
+Before fuzzy language enters PRD, architecture, roadmap, stack, or docs
+artifacts, challenge it against project vocabulary. If a code or doc scan can
+answer a question, inspect first. When a term is resolved, record it in
+`.godpowers/domain/GLOSSARY.md` with canonical spelling, avoided aliases,
+relationships, and any unresolved ambiguity.
+
 ---
 
 ## Operating Modes
@@ -469,6 +476,8 @@ See individual tier sections above.
   PROGRESS.md          # Cross-tier progress ledger
   prd/
     PRD.md             # Product Requirements Document
+  domain/
+    GLOSSARY.md        # Domain vocabulary and resolved ambiguities
   arch/
     ARCH.md            # System Architecture
     adr/               # Architecture Decision Records

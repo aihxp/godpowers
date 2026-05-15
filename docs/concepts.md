@@ -84,11 +84,19 @@ Every sentence is exactly one of:
 
 Anything unlabeled is theater. Rewrite.
 
+### Domain precision
+`/god-discuss` can create `.godpowers/domain/GLOSSARY.md` when a discussion
+resolves project-specific language. The glossary stores canonical terms,
+avoided aliases, relationships, example dialogue, and flagged ambiguities. It
+is preparation context for PRD, ARCH, ROADMAP, STACK, and docs. It does not
+replace those artifacts.
+
 ### Have-nots
 99 named failure modes. ~30 are mechanical (regex-checkable);
 the rest are interpretive. Examples:
 - P-01: Generic problem statement (passes substitution test)
 - A-04: ADR without flip point
+- DG-01: Glossary term without avoided aliases
 - B-01: Code before test (TDD violation)
 - L-04: Silent launch (no source attribution)
 - H-07: Critical finding without remediation options

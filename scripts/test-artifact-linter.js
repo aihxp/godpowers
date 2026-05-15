@@ -355,6 +355,66 @@ test('A-04 accepts complete mapping', () => {
 });
 
 // ============================================================================
+// DG-01..DG-05 domain glossary
+// ============================================================================
+
+test('DG-01 catches canonical term without avoided aliases', () => {
+  const content = `## Language
+
+**Customer**: [DECISION] A person or organization that places orders.`;
+  const findings = validator.checkDomainAvoidAliases(content);
+  if (!hasFinding(findings, 'DG-01')) throw new Error('missing avoided aliases not caught');
+});
+
+test('DG-01 accepts canonical term with avoided aliases', () => {
+  const content = `## Language
+
+**Customer**: [DECISION] A person or organization that places orders.
+_Avoid_: client, buyer`;
+  const findings = validator.checkDomainAvoidAliases(content);
+  if (findings.length !== 0) throw new Error(`expected 0, got ${findings.length}`);
+});
+
+test('DG-02 catches likely implementation detail', () => {
+  const content = `## Language
+
+**Customer**: [DECISION] A record stored in Postgres for a buyer.
+_Avoid_: client`;
+  const findings = validator.checkDomainImplementationDetails(content);
+  if (!hasFinding(findings, 'DG-02')) throw new Error('implementation detail not caught');
+});
+
+test('DG-03 catches ambiguity without owner or due date', () => {
+  const content = `## Flagged Ambiguities
+
+- [OPEN QUESTION] Account means Customer or User.`;
+  const findings = validator.checkDomainAmbiguityOwners(content);
+  if (!hasFinding(findings, 'DG-03')) throw new Error('ambiguity owner or due not caught');
+});
+
+test('DG-04 catches relationship using undefined term', () => {
+  const content = `## Language
+
+**Order**: [DECISION] A customer request for goods.
+_Avoid_: purchase
+
+## Relationships
+
+- [DECISION] **Order** belongs to one **Customer**.`;
+  const findings = validator.checkDomainRelationshipTerms(content);
+  if (!hasFinding(findings, 'DG-04')) throw new Error('undefined relationship term not caught');
+});
+
+test('DG-05 catches behavior-heavy definition', () => {
+  const content = `## Language
+
+**Order**: [DECISION] A workflow that handles customer purchases.
+_Avoid_: purchase`;
+  const findings = validator.checkDomainDefinitionBehavior(content);
+  if (!hasFinding(findings, 'DG-05')) throw new Error('behavior definition not caught');
+});
+
+// ============================================================================
 // runChecks orchestration
 // ============================================================================
 
@@ -389,6 +449,7 @@ test('summarize counts severities and codes', () => {
 test('linter detectType identifies PRD path', () => {
   if (linter.detectType('.godpowers/prd/PRD.md') !== 'prd') throw new Error('PRD detection');
   if (linter.detectType('/foo/.godpowers/arch/ARCH.md') !== 'arch') throw new Error('ARCH detection');
+  if (linter.detectType('/foo/.godpowers/domain/GLOSSARY.md') !== 'domain') throw new Error('domain detection');
   if (linter.detectType('DESIGN.md') !== 'design') throw new Error('DESIGN detection');
   if (linter.detectType('PRODUCT.md') !== 'product') throw new Error('PRODUCT detection');
 });

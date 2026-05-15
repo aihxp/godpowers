@@ -20,8 +20,10 @@ Write docs that don't lie.
 Identify:
 - Existing docs (README, CONTRIBUTING, API docs, comments, etc.)
 - Code surface (public APIs, exported functions, CLI commands, env vars)
+- `.godpowers/domain/GLOSSARY.md` if present
 - Doc gaps: code with no docs
 - Doc drift: docs claiming things that aren't true
+- Term drift: docs using avoided aliases or conflicting meanings
 
 ### 2. Verify Existing Docs Against Code
 
@@ -29,6 +31,8 @@ For every claim in existing docs:
 - Find the corresponding code
 - Verify the claim matches reality
 - Flag drift (e.g., README says `npm start` but package.json has `npm run dev`)
+- If `.godpowers/domain/GLOSSARY.md` exists, verify docs use canonical terms
+  unless a non-canonical term is quoted from an external source.
 
 ### 3. Write or Update
 
@@ -95,6 +99,7 @@ Date: [ISO 8601]
 Docs FAIL if:
 - Any claim contradicts the code
 - Substitution test passes (reads generic)
+- Avoided glossary aliases appear as current project language
 - Examples don't actually run
 - Runbooks have never been executed
 - API docs out of sync with function signatures

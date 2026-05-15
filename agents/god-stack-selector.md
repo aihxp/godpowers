@@ -19,6 +19,8 @@ Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
 context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
+Optional: `.godpowers/domain/GLOSSARY.md` may exist as domain preparation
+context.
 Optional: `.godpowers/design/DESIGN.md` and `.godpowers/design/PRODUCT.md`
 may exist as product-experience preparation.
 
@@ -31,6 +33,10 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical and stack
 signals before scoring candidates. Use imported technology choices, constraints,
 and team familiarity as hypothesis-level input only.
 
+If `.godpowers/domain/GLOSSARY.md` exists, read it before scoring candidates.
+Use it to understand domain relationships, ownership boundaries, data shape,
+integration language, and ambiguity that may affect stack fit.
+
 If DESIGN.md or PRODUCT.md exists, read them before scoring frontend,
 component, styling, accessibility, animation, and design-token tooling
 candidates.
@@ -40,6 +46,8 @@ Rules:
 - Treat imported technology choices as candidate evidence, not decisions.
 - If imported context conflicts with ARCH, ARCH wins and the conflict becomes a
   stack open question.
+- If glossary language changes apparent data ownership, integration boundaries,
+  or workflow complexity, reflect that in candidate scoring as evidence.
 - If design intent conflicts with ARCH NFRs, ARCH wins and the conflict becomes
   a stack or architecture open question.
 

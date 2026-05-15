@@ -5,6 +5,42 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-05-15
+
+Domain precision release. Adds a Godpowers-native vocabulary layer so fuzzy or
+overloaded project language is clarified before it enters PRD, architecture,
+roadmap, stack, docs, or lint artifacts.
+
+### Added
+- Added `.godpowers/domain/GLOSSARY.md` as preparation context for canonical
+  terms, avoided aliases, relationships, example dialogue, source notes, and
+  unresolved ambiguities.
+- Added `templates/DOMAIN-GLOSSARY.md`.
+- Added domain glossary have-nots DG-01 through DG-05.
+- Added mechanical linter coverage for missing avoided aliases,
+  implementation details in glossaries, unresolved ambiguities without owner or
+  due date, relationships using undefined terms, and behavior-heavy
+  definitions.
+
+### Changed
+- `/god-discuss` now runs domain grilling during next-phase scoping.
+- `god-explorer` now inspects code or docs before asking the user when repo
+  evidence can answer a domain question.
+- PM, architect, roadmapper, stack selector, and docs writer agents now read
+  `.godpowers/domain/GLOSSARY.md` when present.
+- Architecture guidance now limits ADR creation to choices that are hard to
+  reverse, surprising without context, and based on a real tradeoff.
+- Public release metadata, package version, and README badge now point to
+  1.6.0.
+
+### Guardrails
+- The domain glossary is preparation context only. It does not replace PRD,
+  ARCH, ROADMAP, STACK, docs, or Pillars files.
+- The glossary stores domain language, not implementation details or technical
+  scratch notes.
+- Unresolved vocabulary ambiguity must remain explicit as an open question with
+  owner and due date.
+
 ## [1.5.0] - 2026-05-14
 
 Preflight intake release. Adds a read-only front gate before Godpowers applies

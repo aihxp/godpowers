@@ -22,6 +22,9 @@ have-nots catalog. Real validation, not self-attestation. Catches:
 - PRD have-nots: metric without timeline / method, empty no-gos, open
   questions without owner / due date (P-04, P-05, P-07, P-08, P-09)
 - ARCH have-nots: NFR not mapped to architectural choice (A-04)
+- Domain glossary have-nots: missing avoided aliases, implementation details,
+  unresolved ambiguities, undefined relationship terms, behavior-heavy
+  definitions (DG-01..DG-05)
 
 More mechanical have-nots wired in over time. Interpretive checks (e.g.,
 "is the architecture actually good") remain agent-mediated.
@@ -40,7 +43,7 @@ More mechanical have-nots wired in over time. Interpretive checks (e.g.,
 1. Verify `.godpowers/` exists. If not: "Run `/god-init` first."
 2. Resolve target paths:
    - With argument: just that file
-   - Without: scan `.godpowers/{prd,arch,roadmap,stack,design}/` plus
+   - Without: scan `.godpowers/{prd,arch,roadmap,stack,domain,design}/` plus
      `DESIGN.md` and `PRODUCT.md` at project root
 3. For each target:
    - Detect artifact type from path

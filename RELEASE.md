@@ -1,11 +1,10 @@
-# Godpowers 1.5.0 Release
+# Godpowers 1.6.0 Release
 
-Date: 2026-05-14
+Date: 2026-05-15
 
-Godpowers 1.5.0 adds preflight intake for brownfield and bluefield projects.
-The goal of this release is to make Godpowers safer before it applies arc-ready,
-pillars, archaeology, reconstruction, or refactor work to codebases with prior
-context.
+Godpowers 1.6.0 adds domain precision. The goal of this release is to keep
+project language sharp before it becomes product scope, system shape, delivery
+sequence, stack rationale, documentation, or linted artifact text.
 
 ## What is stable
 
@@ -22,29 +21,30 @@ context.
 
 ## What is new
 
-- `/god-preflight` performs a read-only intake audit and writes
-  `.godpowers/preflight/PREFLIGHT.md`.
-- Brownfield arcs now run preflight before archaeology, reconstruction, tech
-  debt, and artifact audit.
-- Bluefield arcs now capture org context, then run preflight before the
-  constrained arc begins.
-- `/god-mode --yolo` runs preflight automatically for brownfield and bluefield,
-  follows the safest recommended route, and logs the route choice to
-  `.godpowers/YOLO-DECISIONS.md`.
-- Greenfield arcs still skip preflight unless the user explicitly asks for it.
+- `/god-discuss` now performs domain grilling during next-phase scoping.
+- `.godpowers/domain/GLOSSARY.md` records canonical terms, avoided aliases,
+  relationships, example dialogue, source notes, and flagged ambiguities.
+- `templates/DOMAIN-GLOSSARY.md` provides the native glossary shape.
+- `god-explorer` inspects code or docs before asking the user when repo
+  evidence can answer a domain question.
+- PM, architect, roadmapper, stack selector, and docs writer agents now read
+  `.godpowers/domain/GLOSSARY.md` when present.
+- `/god-lint` now recognizes domain glossary artifacts and reports DG-01
+  through DG-05 findings.
+- Architecture guidance now creates ADRs only when a decision is hard to
+  reverse, surprising without context, and based on a real tradeoff.
 
-## What 1.5 means
+## What 1.6 means
 
-Godpowers is the product users invoke. Pillars is the native project context
-layer Godpowers installs, reads, and keeps current.
+Godpowers now has a native vocabulary layer that supports planning without
+creating a competing source of truth. The domain glossary is preparation
+context. PRD, ARCH, ROADMAP, STACK, docs, and Pillars files still carry the
+durable decisions for their own domains.
 
-New projects get Godpowers-branded `AGENTS.md` protocol text, always-loaded
-`agents/context.md` and `agents/repo.md`, and routed pillar files for stack,
-architecture, data, API, UI, auth, quality, deploy, and observe concerns.
-
-Existing `.godpowers` projects are Pillar-ized on resume or sync. Durable
-signals from PRD, architecture, stack, roadmap, build, deploy, observe, harden,
-design, and product artifacts are linked back into relevant pillars.
+The glossary helps agents converge on exact project language before they write
+load-bearing artifacts. It is especially useful for brownfield and bluefield
+projects where existing docs, code names, org vocabulary, and user intent can
+use the same word for different things.
 
 ## Stability policy
 
@@ -57,7 +57,7 @@ Allowed changes:
 - Documentation clarity
 - Test coverage for frozen behavior
 - Compatibility fixes for supported AI coding tools
-- Small fixes that make existing 1.0 behavior work as documented
+- Small fixes that make existing 1.x behavior work as documented
 
 Deferred changes:
 
@@ -69,6 +69,6 @@ Deferred changes:
 
 ## Adoption ask
 
-Use Godpowers on brownfield, bluefield, and greenfield projects and report what
-the preflight pass gets right, what it overstates, and where the safest next
-route needs sharper defaults.
+Use `/god-discuss` before a PRD, feature, refactor, or migration where terms
+feel fuzzy. Report where the glossary catches ambiguity early, where it adds
+noise, and which domain checks should become stricter.

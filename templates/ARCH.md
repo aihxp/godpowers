@@ -34,6 +34,9 @@
 
 ## Architecture Decision Records
 
+Only create an ADR when all three are true: the decision is hard to reverse,
+surprising without context, and the result of a real tradeoff.
+
 ### ADR-001: [Decision Title]
 - **Context**: [What forced this decision]
 - **Decision**: [What was chosen]

@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.5.0.
+Complete command, agent, and artifact reference for v1.6.0.
 
 ## Slash commands (106 total)
 
@@ -246,6 +246,7 @@ available.
   prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
 
   prd/PRD.md               Product Requirements
+  domain/GLOSSARY.md       Domain vocabulary and resolved ambiguities
   design/DESIGN.md         Early UI and product-experience design spec when required
   design/PRODUCT.md        Strategic product file when required
   arch/ARCH.md             Architecture

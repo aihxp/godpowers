@@ -20,6 +20,8 @@ Optional: `.godpowers/prep/INITIAL-FINDINGS.md` may exist as preparation
 context.
 Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
 context.
+Optional: `.godpowers/domain/GLOSSARY.md` may exist as domain preparation
+context.
 Optional: `.godpowers/design/DESIGN.md` and `.godpowers/design/PRODUCT.md`
 may exist as early product-experience preparation.
 
@@ -39,6 +41,12 @@ stories and plans as hypothesis-level input only. Convert imported terminology
 into Godpowers vocabulary. Do not preserve imported methodology terminology in
 Godpowers artifacts unless the user explicitly asked for it.
 
+If `.godpowers/domain/GLOSSARY.md` exists, read it before sequencing work.
+Use canonical terms in increment goals, gates, dependencies, and feature
+names. Treat unresolved glossary ambiguities as roadmap `[OPEN QUESTION]`
+entries when they affect dependency order, scope boundaries, or completion
+gates.
+
 If DESIGN.md or PRODUCT.md exists, read them before sequencing delivery
 increments.
 Use screens, flows, components, accessibility obligations, and product voice to
@@ -51,6 +59,9 @@ Rules:
 - If imported context conflicts with PRD or ARCH, PRD and ARCH win.
 - Mark any imported sequencing assumption as `[HYPOTHESIS]` until confirmed by
   Godpowers artifacts or the user.
+- Do not invent roadmap terms when a canonical glossary term exists.
+- If glossary language conflicts with PRD or ARCH, PRD and ARCH win and the
+  conflict becomes an `[OPEN QUESTION]`.
 - Keep design-derived delivery increments grounded in the PRD and ARCH.
 - If ROADMAP creates durable delivery or sequencing truth, plan updates for
   relevant pillars. In `--yolo`, apply those updates and log them to

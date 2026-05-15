@@ -44,12 +44,22 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read it before drafting the
 PRD. Use product signals from GSD, Superpowers, BMAD, or similar systems as
 hypothesis-level input only.
 
+If `.godpowers/domain/GLOSSARY.md` exists, read it before drafting the PRD.
+Use canonical terms from the glossary in problem statements, target users,
+requirements, no-gos, and open questions. Treat unresolved glossary
+ambiguities as PRD `[OPEN QUESTION]` entries when they affect scope,
+acceptance criteria, or success metrics.
+
 Rules:
 - Do not copy imported text wholesale into the PRD.
 - Do not treat imported context as source of truth.
+- Do not let glossary terms override user intent or completed Godpowers
+  artifacts.
 - Convert relevant imported product signals into `[HYPOTHESIS]` requirements,
   success metrics, scope notes, no-gos, or open questions.
 - If imported context conflicts with user intent or existing Godpowers state,
+  preserve the Godpowers state and add an `[OPEN QUESTION]`.
+- If the glossary conflicts with user intent or existing Godpowers state,
   preserve the Godpowers state and add an `[OPEN QUESTION]`.
 - In PRD rationale, mention the source only when it materially changes a
   requirement.

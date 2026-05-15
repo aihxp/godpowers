@@ -48,7 +48,7 @@ GODPOWERS DOCTOR
 Install: claude (~/.claude/)
   [OK] 106 skills installed
   [OK] 39 agents installed
-  [OK] VERSION matches (1.5.0)
+  [OK] VERSION matches (1.6.0)
   [WARN] routing/god-doctor.yaml exists but skill file did not until now
 
 Project: /Users/.../my-project/.godpowers/

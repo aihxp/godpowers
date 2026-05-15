@@ -1,12 +1,12 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.5.0 (pure-skill model)
+> Status: STABLE v1.6.0 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.5.0 keeps the public surface stable while adding preflight intake for
-brownfield and bluefield projects.
+v1.6.0 keeps the public surface stable while adding domain precision before
+planning, architecture, stack, roadmap, docs, and lint work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing
@@ -72,6 +72,7 @@ Godpowers workflow state:
 | `.godpowers/intent.yaml` | **Intent**: what the user wants | Cargo.toml, package.json |
 | `.godpowers/state.json` | **Facts**: what was resolved/done | Cargo.lock, poetry.lock |
 | `.godpowers/runs/<id>/events.jsonl` | **History**: what happened | OpenTelemetry traces |
+| `.godpowers/domain/GLOSSARY.md` | **Vocabulary**: canonical project language and unresolved ambiguity | Domain glossary |
 
 Every other architectural decision falls out from how these two layers relate:
 Pillars carries portable context, while `.godpowers` carries workflow state.

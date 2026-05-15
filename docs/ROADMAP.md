@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-14
-> Current shipped: v1.5.0
+> Current shipped: v1.6.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.5.0)
+### Current surface (v1.6.0)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -31,6 +31,8 @@ What works today:
 - **Reverse-sync** writing fenced "Implementation Linkage" footers
 - **Native Pillars project context**: `AGENTS.md` plus routed
   `agents/*.md` pillar files created for every Godpowers project
+- **Domain precision layer**: `.godpowers/domain/GLOSSARY.md` plus DG-01 through
+  DG-05 linter checks for canonical terms, aliases, ambiguity, and relationships
 - **Existing-project Pillar-ization**: current `.godpowers` artifacts become
   managed source references with extracted durable signals in relevant pillars
 - **Conditional design pipeline**: DESIGN.md + PRODUCT.md with two-stage review

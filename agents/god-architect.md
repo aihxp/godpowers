@@ -23,6 +23,8 @@ Before starting:
   context.
 - Optional: `.godpowers/prep/IMPORTED-CONTEXT.md` may exist as preparation
   context.
+- Optional: `.godpowers/domain/GLOSSARY.md` may exist as domain preparation
+  context.
 - Optional: `.godpowers/design/DESIGN.md` and
   `.godpowers/design/PRODUCT.md` may exist as early product-experience
   preparation.
@@ -42,6 +44,12 @@ If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its technical signals
 before drafting ARCH. Use imported architecture, integration, risk, and stack
 constraints as hypothesis-level input only.
 
+If `.godpowers/domain/GLOSSARY.md` exists, read it before drafting ARCH. Use
+canonical terms for entities, bounded contexts, services, data ownership,
+trust boundaries, and ADR titles. Treat unresolved glossary ambiguities as
+architecture `[OPEN QUESTION]` entries when they affect ownership, integration
+contracts, state transitions, or external boundaries.
+
 If `.godpowers/design/DESIGN.md` or `.godpowers/design/PRODUCT.md` exists,
 read them before drafting ARCH. Use early design to identify user-facing
 surfaces, routes, component boundaries, state flows, accessibility needs, and
@@ -49,12 +57,18 @@ where architecture must preserve product experience.
 
 Rules:
 - Do not let imported context override PRD NFRs or Godpowers state.
+- Do not let glossary language override PRD NFRs or Godpowers state.
 - Convert useful imported signals into ADR context, tradeoffs, or open
   questions.
+- Convert useful glossary signals into entity names, relationship language,
+  ADR context, bounded context names, or open questions.
 - Convert useful design signals into containers, ADR context, UI boundary
   descriptions, or open questions.
 - If imported context conflicts with the PRD, the PRD wins and the conflict
   becomes an `[OPEN QUESTION]`.
+- If glossary language conflicts with PRD or code evidence, preserve the
+  stronger Godpowers artifact or direct code evidence and add an
+  `[OPEN QUESTION]`.
 - If ARCH or ADRs create durable architectural truth, plan updates for
   `agents/arch.md` and related pillars. In `--yolo`, apply those updates and
   log them to `.godpowers/YOLO-DECISIONS.md`.
@@ -73,7 +87,9 @@ ADRs to `.godpowers/arch/adr/`.
 2. **Container Diagram (C4 L2)** - major runtime containers with single clear
    responsibilities. No shared responsibility without justification.
 
-3. **Architecture Decision Records (ADRs)** - one per significant decision:
+3. **Architecture Decision Records (ADRs)** - one per significant decision
+   that is hard to reverse, surprising without context, and the result of a
+   real tradeoff:
    - Context (what forced the decision)
    - Decision (what was chosen)
    - Rationale (why this over alternatives)

@@ -179,6 +179,30 @@ Choice motivated by "looks good on resume" rather than fit-for-PRD. Fail.
 Looks robust on paper but fails first real load. NFR validation must include
 worst-case analysis. Fail.
 
+#### A-13 ADR inflation
+An ADR records a decision that is easy to reverse, obvious without context, or
+not the result of a real tradeoff. Fail.
+
+### Domain Glossary Have-Nots
+
+#### DG-01 Canonical term without avoided aliases
+A glossary term names the canonical language but does not list avoided aliases.
+Fail.
+
+#### DG-02 Implementation detail in glossary
+The domain glossary stores implementation details, stack choices, code paths,
+or technical scratch notes. The glossary is domain language only. Fail.
+
+#### DG-03 Unresolved ambiguity without owner or due date
+An ambiguity is recorded without an owner or due date. Fail.
+
+#### DG-04 Relationship uses non-canonical term
+A relationship references a term that is not defined in the glossary language
+section. Fail.
+
+#### DG-05 Definition does behavior work
+A definition describes what the system does instead of what the term is. Fail.
+
 ### Roadmap Have-Nots
 
 #### R-01 Generic milestone goal
