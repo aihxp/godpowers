@@ -4,13 +4,16 @@ Per-tier reference content for Tier 1 (Planning: PRD, Architecture, Roadmap, Sta
 
 ## Files
 
-- (placeholder; antipattern catalogs and worked examples to be added)
+- `PRD-ANATOMY.md`: structure and evidence expectations for product requirements.
+- `PRD-ANTIPATTERNS.md`: common ways PRDs become generic, untestable, or ungrounded.
+- `ARCH-ANATOMY.md`: architecture decision structure, boundaries, and tradeoff framing.
+- `ARCH-ANTIPATTERNS.md`: architecture theater, cargo-cult patterns, and weak constraints.
+- `STACK-ANATOMY.md`: stack decision shape, flip points, and operational fit.
+- `STACK-ANTIPATTERNS.md`: technology-choice failure modes and substitution-test misses.
+- `ROADMAP-ANATOMY.md`: sequencing, dependency, and milestone structure.
+- `ROADMAP-ANTIPATTERNS.md`: feature-factory, Gantt theater, and shelf-roadmap failures.
 
-## Planned content
+## Use
 
-- PRD anatomy with line-by-line annotations of a substitution-tested example
-- ARCH antipatterns: architecture theater, paper-tiger, cargo-cult cloud-native
-- Worked Stack decision examples with flip-point analysis
-- Roadmap anti-examples: Gantt theater, feature-factory output, shelf roadmaps
-
-See [HAVE-NOTS.md](../HAVE-NOTS.md) for the canonical failure-mode catalog.
+Use these references when reviewing or generating Tier 1 artifacts. Pair them
+with [HAVE-NOTS.md](../HAVE-NOTS.md) for the canonical failure-mode catalog.

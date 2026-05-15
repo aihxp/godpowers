@@ -1,28 +1,80 @@
-# lib/ - Runtime Library (placeholder)
+# lib/ - Runtime Library
 
-This directory is reserved for v0.5+ runtime modules. v0.4 has the schemas
-defined; v0.5 implements them.
+This directory contains the JavaScript runtime modules that support Godpowers
+validation, routing, workflow execution, state management, observability, and
+package-level integrations.
 
-## Planned modules
+## Core state and intent
 
-| Module | Purpose | Target version |
-|--------|---------|----------------|
-| `state.js` | Read/write `.godpowers/state.json` with schema validation | v0.5 |
-| `events.js` | Append OpenTelemetry-shape events to events.jsonl | v0.5 |
-| `intent.js` | Read/validate `intent.yaml` (or `.godpowers/intent.yaml`) | v0.5 |
-| `workflow-runtime.js` | Parse and execute workflow YAML | v0.5 |
-| `reflog.js` | Append to `.godpowers/log` and rewind state | v0.6 |
-| `trash.js` | Recoverable deletion to `.godpowers/.trash/` | v0.6 |
-| `metrics.js` | Compute per-tier stats from events.jsonl | v0.7 |
-| `extension-loader.js` | Lazy-activate skill packs | v0.8 |
+| Module | Purpose |
+|--------|---------|
+| `state.js` | Read, initialize, validate, and write `.godpowers/state.json`. |
+| `state-lock.js` | Coordinate state writes with a lock file. |
+| `intent.js` | Read and validate `intent.yaml` from project roots or `.godpowers/`. |
+| `checkpoint.js` | Create and inspect resumable checkpoint artifacts. |
+| `budget.js` | Read and enforce configured budget controls. |
+| `cost-tracker.js` | Track token and cost estimates from event streams. |
 
-## Why placeholder
+## Events and observability
 
-In v0.4 (current), Godpowers is markdown skills + agent prose. There's no
-runtime that needs these modules; agents read/write artifacts directly.
+| Module | Purpose |
+|--------|---------|
+| `events.js` | Append structured runtime events. |
+| `event-reader.js` | Read and aggregate event streams. |
+| `otel-exporter.js` | Export Godpowers events in an OpenTelemetry-shaped format. |
+| `runtime-audit.js` | Audit runtime health and expected project state. |
+| `runtime-test.js` | Provide runtime checks used by package tests. |
 
-In v0.5+, the workflow runtime needs structured access to state. That's when
-these modules ship.
+## Routing and execution
 
-See `../ARCHITECTURE.md` for the design and `../docs/ROADMAP.md` for the
-sequencing.
+| Module | Purpose |
+|--------|---------|
+| `router.js` | Resolve user intent to skills, agents, recipes, and workflows. |
+| `recipes.js` | Load and validate routing recipes. |
+| `workflow-parser.js` | Parse workflow YAML into executable steps. |
+| `workflow-runner.js` | Execute workflow steps with validation hooks. |
+| `agent-cache.js` | Cache agent metadata for faster routing. |
+| `agent-validator.js` | Validate agent frontmatter and contracts. |
+
+## Artifact quality
+
+| Module | Purpose |
+|--------|---------|
+| `artifact-linter.js` | Check artifacts for required labels, evidence, and domain precision. |
+| `artifact-diff.js` | Compare artifact changes for review and release workflows. |
+| `have-nots-validator.js` | Check artifacts against known failure modes. |
+| `meta-linter.js` | Validate Godpowers documentation and skill metadata. |
+| `story-validator.js` | Validate story artifacts and story lifecycle state. |
+
+## Design, context, and integrations
+
+| Module | Purpose |
+|--------|---------|
+| `context-writer.js` | Produce tool-specific context files. |
+| `context-budget.js` | Keep generated context within budget. |
+| `design-detector.js` | Detect design-system conventions. |
+| `design-spec.js` | Normalize design specifications. |
+| `awesome-design.js` | Validate design guidance against awesome-design rules. |
+| `browser-bridge.js` | Connect browser verification flows. |
+| `agent-browser-driver.js` | Drive browser-backed agent checks. |
+| `skillui-bridge.js` | Bridge skill metadata into UI surfaces. |
+| `impeccable-bridge.js` | Bridge runtime checks into impeccable quality workflows. |
+| `extensions.js` | Load and validate extension packs. |
+
+## Repository and graph helpers
+
+| Module | Purpose |
+|--------|---------|
+| `code-scanner.js` | Scan source trees for routing and quality evidence. |
+| `cross-artifact-impact.js` | Detect relationships between changed artifacts. |
+| `cross-repo-linkage.js` | Track suite-level repository relationships. |
+| `drift-detector.js` | Detect context drift between artifacts and implementation. |
+| `impact.js` | Summarize expected impact of proposed changes. |
+| `linkage.js` | Connect artifacts, stories, and implementation files. |
+| `multi-repo-detector.js` | Detect multi-repository workspaces. |
+| `reverse-sync.js` | Reflect implementation changes back into artifacts. |
+| `review-required.js` | Decide when review gates should block progress. |
+| `suite-state.js` | Manage state across registered project suites. |
+
+See `../ARCHITECTURE.md` for system design and `../docs/ROADMAP.md` for planned
+runtime work.

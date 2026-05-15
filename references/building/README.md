@@ -4,14 +4,12 @@ Per-tier reference content for Tier 2 (Building: Repo, Build).
 
 ## Files
 
-- (placeholder)
+- `BUILD-ANTIPATTERNS.md`: failure modes for implementation planning and execution.
+- `BUILD-VERTICAL-SLICES.md`: guidance for slicing work into user-visible increments.
+- `BUILD-WAVES.md`: dependency-aware parallelism patterns for multi-agent work.
 
-## Planned content
+## Use
 
-- TDD violation examples with how-to-fix
-- Two-stage review checklists with worked findings
-- Vertical slice anatomy with anti-examples (horizontal "set up the database")
-- Atomic commit examples
-- Wave parallelism dependency analysis worked examples
-
-See [HAVE-NOTS.md](../HAVE-NOTS.md) for the canonical failure-mode catalog.
+Use these references when reviewing implementation plans, build execution, and
+agent workstream shape. Pair them with [HAVE-NOTS.md](../HAVE-NOTS.md) for the
+canonical failure-mode catalog.
