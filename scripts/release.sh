@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Godpowers Release Script
-# Tags + publishes a new version. Run with: bash scripts/release.sh <version>
+# Runs release checks and pushes a version tag. The tag-triggered GitHub
+# workflow publishes to npm with provenance. Run with: bash scripts/release.sh <version>
 
 set -euo pipefail
 
@@ -32,12 +33,9 @@ if [ "$BRANCH" != "main" ]; then
   exit 1
 fi
 
-# 3. Run all tests
-echo "Running smoke tests..."
-bash scripts/smoke.sh
-
-echo "Running skill validation..."
-node scripts/validate-skills.js
+# 3. Run release checks
+echo "Running release checks..."
+npm run release:check
 
 # 4. Verify version in package.json matches
 PKG_VERSION="$(node -p "require('./package.json').version")"
@@ -66,7 +64,7 @@ echo "All pre-release checks passed."
 echo ""
 
 # 7. Confirm with user
-read -r -p "Tag v$VERSION and publish to npm? (yes/no) " CONFIRM
+read -r -p "Tag v$VERSION and push it to trigger npm publish? (yes/no) " CONFIRM
 if [ "$CONFIRM" != "yes" ]; then
   echo "Aborted."
   exit 0
@@ -76,15 +74,12 @@ fi
 git tag -a "v$VERSION" -m "Godpowers v$VERSION"
 echo "Tagged v$VERSION"
 
-# 9. Publish to npm
-npm publish
-
-# 10. Push tag
+# 9. Push tag. GitHub Actions publishes to npm from .github/workflows/publish.yml.
 git push origin "v$VERSION"
 
 echo ""
-echo "Release v$VERSION complete."
-echo "  - npm: https://www.npmjs.com/package/godpowers/v/$VERSION"
+echo "Release v$VERSION tag pushed."
 echo "  - tag: git tag $VERSION pushed"
+echo "  - npm publish: https://github.com/aihxp/godpowers/actions/workflows/publish.yml"
 echo ""
-echo "Next: create a GitHub Release at https://github.com/aihxp/godpowers/releases"
+echo "Next: verify npm, then create a GitHub Release at https://github.com/aihxp/godpowers/releases"

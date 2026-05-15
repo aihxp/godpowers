@@ -5,6 +5,40 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-05-15
+
+Release hardening patch. Keeps the 1.6 domain precision surface stable while
+making package publication, release checks, and CI verification harder to drift.
+
+### Added
+- Added `npm run release:check`, which runs the full test suite, audit checks,
+  and package contents verification.
+- Added `scripts/check-package-contents.js` to assert that the npm payload
+  includes load-bearing runtime files and excludes local-only development files.
+- Added `docs/RELEASE-CHECKLIST.md` for versioning, verification, package
+  surface, tag, npm provenance, and post-release cleanup.
+- Added an explicit plan-mode E2E smoke test for the `/god-mode` full-arc
+  workflow against the `todo-app` fixture.
+
+### Changed
+- CI now uses `npm ci`, runs audit checks, runs the E2E smoke path explicitly,
+  and keeps package checks aligned with local npm scripts.
+- Test documentation now describes the current runtime and E2E smoke coverage
+  instead of stale scaffold-only plans.
+- Runtime and reference README files now describe the implemented modules and
+  reference files instead of placeholder future work.
+- Package tarballs are ignored by git, and package contents checks reject
+  generated tarballs.
+- The release script now pushes the git tag and relies on the tag-triggered
+  GitHub Actions npm publish workflow for provenance.
+
+### Guardrails
+- This patch does not add new slash commands, agents, workflows, recipes, or
+  schemas.
+- The 1.6 domain glossary behavior remains unchanged.
+- Future npm publishes should use the tag-triggered GitHub workflow unless a
+  documented emergency requires a manual fallback.
+
 ## [1.6.0] - 2026-05-15
 
 Domain precision release. Adds a Godpowers-native vocabulary layer so fuzzy or

@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.1-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,9 +12,9 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.0 adds domain precision: `/god-discuss` can resolve overloaded
-project language into `.godpowers/domain/GLOSSARY.md`, and downstream planning,
-architecture, stack, roadmap, docs, and lint flows use that vocabulary.
+Version 1.6.1 hardens the release path around the 1.6 domain precision layer:
+release checks now cover tests, audit, package contents, E2E smoke, and npm
+payload verification before publishing.
 
 It fuses four disciplines into one unified workflow:
 

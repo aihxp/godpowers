@@ -1,10 +1,11 @@
-# Godpowers 1.6.0 Release
+# Godpowers 1.6.1 Release
 
 Date: 2026-05-15
 
-Godpowers 1.6.0 adds domain precision. The goal of this release is to keep
-project language sharp before it becomes product scope, system shape, delivery
-sequence, stack rationale, documentation, or linted artifact text.
+Godpowers 1.6.1 hardens the release and package path around the 1.6 domain
+precision release. The goal of this patch is to make tests, audit checks,
+package contents, E2E smoke coverage, npm publishing, and GitHub release
+metadata easier to verify before anything reaches users.
 
 ## What is stable
 
@@ -18,43 +19,41 @@ sequence, stack rationale, documentation, or linted artifact text.
 - Core schemas: intent, state, events, workflow, routing, recipes, extension
   manifests
 - Extension pack compatibility range for the 1.x line
+- Domain precision through `.godpowers/domain/GLOSSARY.md` and DG-01 through
+  DG-05 checks
 
 ## What is new
 
-- `/god-discuss` now performs domain grilling during next-phase scoping.
-- `.godpowers/domain/GLOSSARY.md` records canonical terms, avoided aliases,
-  relationships, example dialogue, source notes, and flagged ambiguities.
-- `templates/DOMAIN-GLOSSARY.md` provides the native glossary shape.
-- `god-explorer` inspects code or docs before asking the user when repo
-  evidence can answer a domain question.
-- PM, architect, roadmapper, stack selector, and docs writer agents now read
-  `.godpowers/domain/GLOSSARY.md` when present.
-- `/god-lint` now recognizes domain glossary artifacts and reports DG-01
-  through DG-05 findings.
-- Architecture guidance now creates ADRs only when a decision is hard to
-  reverse, surprising without context, and based on a real tradeoff.
+- `npm run release:check` now runs tests, audit checks, and package contents
+  verification as a single pre-release gate.
+- `npm run pack:check` now asserts required npm payload files and rejects
+  local-only files instead of relying on visual dry-run output.
+- CI now installs with `npm ci`, runs audit checks, runs E2E smoke explicitly,
+  and keeps package validation tied to local scripts.
+- `docs/RELEASE-CHECKLIST.md` documents the expected release flow, tag flow,
+  npm provenance path, and post-release verification.
+- `/god-mode` full-arc has a plan-mode E2E smoke test that verifies 10 jobs,
+  7 waves, and a generated `.godpowers/runs/.../plan.yaml` artifact.
+- Stale placeholder docs for runtime libraries, references, and test strategy
+  now describe the implemented system.
 
-## What 1.6 means
+## What 1.6.1 means
 
-Godpowers now has a native vocabulary layer that supports planning without
-creating a competing source of truth. The domain glossary is preparation
-context. PRD, ARCH, ROADMAP, STACK, docs, and Pillars files still carry the
-durable decisions for their own domains.
+Godpowers 1.6.1 does not expand the public command surface. It tightens the
+release discipline around the existing surface so local checks, CI checks, npm
+payload contents, git tags, and GitHub release metadata agree.
 
-The glossary helps agents converge on exact project language before they write
-load-bearing artifacts. It is especially useful for brownfield and bluefield
-projects where existing docs, code names, org vocabulary, and user intent can
-use the same word for different things.
+The domain glossary remains preparation context. PRD, ARCH, ROADMAP, STACK,
+docs, and Pillars files still carry durable decisions for their own domains.
 
 ## Stability policy
 
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.0` git tag points to the release commit that matches the npm
-`godpowers@1.6.0` package. Future public publishes should prefer the
-tag-triggered GitHub workflow so npm provenance, git history, and release notes
-stay aligned.
+The `v1.6.1` git tag points to the release commit that matches the npm
+`godpowers@1.6.1` package. Public publishes should prefer the tag-triggered
+GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:
 
@@ -74,6 +73,5 @@ Deferred changes:
 
 ## Adoption ask
 
-Use `/god-discuss` before a PRD, feature, refactor, or migration where terms
-feel fuzzy. Report where the glossary catches ambiguity early, where it adds
-noise, and which domain checks should become stricter.
+Run `npm run release:check` before publishing changes. Report any release path
+step that still depends on memory, manual inspection, or local machine state.

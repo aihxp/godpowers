@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-14
-> Current shipped: v1.6.0
+> Current shipped: v1.6.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.0)
+### Current surface (v1.6.1)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -44,6 +44,8 @@ What works today:
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
 - Full CI suite with 37+ behavioral test files and extension-pack publish gates
+- Release gate with full tests, audit checks, E2E smoke, and package contents
+  verification
 
 See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
