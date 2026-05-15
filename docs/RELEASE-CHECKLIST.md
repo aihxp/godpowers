@@ -1,0 +1,66 @@
+# Release Checklist
+
+Use this checklist before publishing a public Godpowers release.
+
+## Version And Notes
+
+- Confirm `package.json` has the intended version.
+- Confirm `README.md`, `CHANGELOG.md`, and `RELEASE.md` mention the same version.
+- Confirm `CHANGELOG.md` explains user-visible changes, guardrails, and release risks.
+- Confirm `RELEASE.md` explains what is stable, what changed, and what is deferred.
+
+## Local Verification
+
+Run the one-command release gate:
+
+```bash
+npm run release:check
+```
+
+This includes:
+
+- Full test suite through `npm test`.
+- Security and surface audit through `npm run test:audit`.
+- Package contents assertion through `npm run pack:check`.
+
+## Package Surface
+
+Confirm the npm payload includes:
+
+- `bin/install.js`
+- `SKILL.md`
+- `skills/`
+- `agents/`
+- `templates/`
+- `references/`
+- `routing/`
+- `workflows/`
+- `schema/`
+- `lib/`
+- `extensions/`
+
+Confirm the npm payload excludes:
+
+- `.github/`
+- `docs/`
+- `scripts/`
+- `tests/`
+- `examples/`
+- `node_modules/`
+- generated `*.tgz` files
+
+## Git And Npm
+
+- Commit release changes on `main`.
+- Push `main`.
+- Create a `vX.Y.Z` git tag on the release commit.
+- Push the tag.
+- Prefer the tag-triggered GitHub publish workflow for npm provenance.
+- Verify `npm view godpowers@latest version` after publish.
+- Verify the local installer can install the published version.
+
+## Post-Release
+
+- Keep package tarballs out of the repository.
+- Record any release follow-up as a GitHub issue or backlog item.
+- Do not start the next version until the published package, git tag, and docs agree.

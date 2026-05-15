@@ -20,7 +20,8 @@
     "test:diff": "node scripts/test-artifact-diff.js",
     "test:e2e": "node tests/integration/full-arc.test.js",
     "test:audit": "npm audit --omit=dev && git diff --check && npm run test:surface",
-    "pack:check": "npm pack --dry-run"
+    "pack:check": "node scripts/check-package-contents.js",
+    "release:check": "npm test && npm run test:audit && npm run pack:check"
   },
   "keywords": [
     "ai",
