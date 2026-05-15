@@ -18,7 +18,9 @@
     "test:pillars": "node scripts/test-pillars.js",
     "test:linter": "node scripts/test-artifact-linter.js",
     "test:diff": "node scripts/test-artifact-diff.js",
-    "test:e2e": "node tests/integration/full-arc.test.js"
+    "test:e2e": "node tests/integration/full-arc.test.js",
+    "test:audit": "npm audit --omit=dev && git diff --check && npm run test:surface",
+    "pack:check": "npm pack --dry-run"
   },
   "keywords": [
     "ai",
