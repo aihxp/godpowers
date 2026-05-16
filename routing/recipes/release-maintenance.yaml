@@ -1,0 +1,27 @@
+apiVersion: godpowers/v1
+kind: Recipe
+metadata:
+  name: release-maintenance
+  category: maintaining
+  description: "Release closeout, package, docs, and published-surface maintenance"
+
+triggers:
+  intent-keywords:
+    - "create release"
+    - "publish npm"
+    - "update readme badge"
+    - "release notes"
+    - "package release"
+
+sequences:
+  default:
+    description: "Release closeout, package, docs, and published-surface maintenance"
+    steps:
+      - command: "/god-sync"
+        why: "Refresh project artifacts and repo surface checks before release work"
+      - command: "/god-docs"
+        why: "Verify README, release notes, badges, and public docs against code"
+      - command: "/god-version"
+        why: "Confirm installed runtime and package version visibility"
+
+default-sequence: default

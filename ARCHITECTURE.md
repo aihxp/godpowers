@@ -1,8 +1,8 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.19 (pure-skill model plus repo documentation and surface sync)
+> Status: STABLE v1.6.20 (pure-skill model plus repo documentation and surface sync)
 > Authors: Godpowers Team
-> Last updated: 2026-05-12
+> Last updated: 2026-05-16
 
 This document is the canonical design for Godpowers as a coherent product.
 v1.6.19 keeps the public surface stable while adding autonomous repo
@@ -191,8 +191,9 @@ stay local.
 
 ## 3. The Slash Command Surface
 
-This is the canonical user surface. Everything happens through slash commands
-inside the AI coding tool. The only CLI is `npx godpowers` for install.
+[DECISION] This is the canonical user surface. Durable project work happens
+through slash commands inside the AI coding tool. The CLI exists for install,
+uninstall, legacy migration, and read-only status helpers.
 
 ### Lifecycle commands
 
@@ -231,29 +232,29 @@ inside the AI coding tool. The only CLI is `npx godpowers` for install.
 | `/god-rollback <tier>` | Walk back state + move artifacts to .trash |
 | `/god-restore` | Recover artifacts from .trash |
 
-### Observability commands (planned for v0.15)
+### Observability commands (shipped)
 
-> Status: events.jsonl is written today; these readable-timeline
-> wrappers ship in v0.15. Until then, raw inspection via
-> `cat .godpowers/runs/<id>/events.jsonl`.
+> [DECISION] `events.jsonl` is written by the runtime, and the readable
+> timeline wrappers are part of the current command surface.
 
-| Command | What it does | Ships |
-|---------|-------------|-------|
-| `/god-logs [<run-id>]` | View events.jsonl as readable timeline | v0.15 |
-| `/god-metrics` | Per-tier stats: duration, pauses, retries | v0.15 |
-| `/god-trace <tier>` | Deep dive on a specific tier's events | v0.15 |
+| Command | What it does | Status |
+|---------|-------------|--------|
+| `/god-logs [<run-id>]` | View events.jsonl as readable timeline | current |
+| `/god-metrics` | Per-tier stats: duration, pauses, retries | current |
+| `/god-trace <tier>` | Deep dive on a specific tier's events | current |
 
-### Extension commands (planned for v0.13)
+### Extension commands (shipped)
 
-> Status: scaffolds exist in `extensions/`; runtime ships in v0.13.
+> [DECISION] Extension scaffolds, manifests, runtime helpers, package checks,
+> and first-party pack tests are part of the current repository surface.
 
-| Command | What it does | Ships |
-|---------|-------------|-------|
-| `/god-extension-add @x/y` | Install a skill pack from npm | v0.13 |
-| `/god-extension-list` | Show installed extensions | v0.13 |
-| `/god-extension-remove @x/y` | Uninstall a pack | v0.13 |
-| `/god-extension-info @x/y` | Show pack details | v0.13 |
-| `/god-test-extension <path>` | Plugin contract tests | v0.13 |
+| Command | What it does | Status |
+|---------|-------------|--------|
+| `/god-extension-add @x/y` | Install a skill pack from npm | current |
+| `/god-extension-list` | Show installed extensions | current |
+| `/god-extension-remove @x/y` | Uninstall a pack | current |
+| `/god-extension-info @x/y` | Show pack details | current |
+| `/god-test-extension <path>` | Plugin contract tests | current |
 
 ### Workstream commands
 
@@ -282,7 +283,7 @@ inside the AI coding tool. The only CLI is `npx godpowers` for install.
 | `/god-version` | Print Godpowers version |
 | `/god-smite` | Delete node_modules, reinstall (easter egg) |
 
-### The only CLI surface
+### The CLI surface
 
 ```bash
 # Install
@@ -299,7 +300,119 @@ npx godpowers --migrate
 npx godpowers --help
 ```
 
-That's it. Everything else is slash commands.
+[DECISION] The CLI may install, uninstall, migrate legacy disk state, and read
+status or next-route information. Durable project mutations remain slash
+commands inside the AI coding tool.
+
+### Route Topology And Automation Audit (2026-05-16)
+
+[DECISION] The route graph is currently complete at the file level: 109
+`skills/god-*.md` command files match 109 `routing/god-*.yaml` route files.
+
+[DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
+agents, 13 workflow YAML files, and 40 intent recipes.
+
+[DECISION] The current route graph has 56 built-in or local-runtime command
+routes and 53 agent-routed command routes.
+
+[DECISION] Fifteen command routes declare secondary or parallel spawns:
+`/god-build`, `/god-design`, `/god-feature`, `/god-harden`, `/god-hotfix`,
+`/god-hygiene`, `/god-mode`, `/god-postmortem`, `/god-prd`, `/god-quick`,
+`/god-refactor`, `/god-review`, `/god-sync`, `/god-update-deps`, and
+`/god-upgrade`.
+
+[DECISION] All workflow `uses:` targets resolve to shipped agent files.
+
+[DECISION] All 40 recipes contain at least one slash-command route, and every
+recipe command reference resolves to a shipped command route.
+
+| Surface | Current count | Automation interpretation |
+|---------|---------------|---------------------------|
+| Skills | 109 | Every command has a user-facing skill file |
+| Routes | 109 | Every command has machine-readable routing metadata |
+| Agents | 40 | Spawn targets are available for specialist work |
+| Workflows | 13 | Arc execution has declarative DAGs |
+| Recipes | 40 | Fuzzy intent can route into command sequences |
+| Built-in routes | 56 | Local helpers need visible `Agent: none` cards |
+| Agent-routed routes | 53 | Spawned work needs visible spawn cards |
+
+#### Current Automation Ladder
+
+[DECISION] Godpowers uses a four-level automation ladder so local runtime
+actions, command routing, and agent spawning do not blur together.
+
+| Level | Action type | Examples | Visibility rule |
+|-------|-------------|----------|-----------------|
+| 0 | Read-only detection | `/god-status`, `/god-next`, `/god-doctor` detect checks | Report source and confidence |
+| 1 | Local safe sync | feature-awareness, repo-doc-sync, repo-surface-sync, reverse-sync, source-sync | Report `Agent: none, local runtime only` |
+| 2 | Command auto-invoke | `/god-sync`, `/god-reconcile`, `/god-review-changes` | Show trigger, files, and next command |
+| 3 | Scoped specialist spawn | `god-updater`, `god-docs-writer`, `god-browser-tester`, `god-harden-auditor` | Show spawned agent and owned scope |
+
+[DECISION] Auto-spawn is allowed only when the current workflow owns the
+surface being changed or when the user explicitly asks for the work.
+
+[DECISION] Auto-iteration is allowed only after a verifier reports a bounded
+failure with an owning agent and a clear retry condition.
+
+[DECISION] Auto-invoked work must leave a transcript-visible card and a disk
+artifact, log, or no-op reason.
+
+#### Gaps Closed In This Architecture
+
+[DECISION] Route spawn declarations must use atomic tokens. `/god-party` now
+uses `built-in` as the primary route owner and declares selectable persona
+agents under `parallel-spawns`.
+
+[DECISION] `/god-story-build` now declares `god-planner` as primary and
+`god-executor`, `god-spec-reviewer`, and `god-quality-reviewer` as secondary
+spawns.
+
+[DECISION] `lib/router.js` reads `execution.parallel-spawns` in addition to
+primary and secondary spawns.
+
+[DECISION] `lib/route-quality-sync.js` now detects symbolic route spawns,
+unresolved agent targets, and unapproved contextual route exits.
+
+[DECISION] Contextual route exits are allowed only for approved meta,
+inspection, extension, and flexible helper commands. New `varies` exits must
+be added deliberately or replaced with conditional-next branches.
+
+[DECISION] Standards coverage is enforced where route metadata owns durable
+artifact-producing work. `/god-story-build` now carries the build have-nots
+gate because it mutates source code.
+
+[DECISION] Recipe coverage has been expanded for release maintenance, context
+refresh, story work, and automation setup, in addition to existing docs drift
+coverage.
+
+[DECISION] `lib/recipe-coverage-sync.js` now detects missing high-frequency
+intent recipes before a release or closeout claims full routing coverage.
+
+[DECISION] `lib/release-surface-sync.js` now detects release-facing drift
+across README badges, changelog, release notes, package guardrails, release
+checklist policy, and package lock version.
+
+[DECISION] Feature awareness remains curated, and it now records
+route-quality-sync, recipe-coverage-sync, and release-surface-sync as known
+runtime capabilities. Repo-surface-sync remains the broad structural umbrella.
+
+#### Disconnected Flow Watchlist
+
+[DECISION] Repo surface sync should continue checking skills, routes, package
+payloads, agent spawn targets, workflow metadata, recipe routes, extension
+packs, and release policy before a release is declared current.
+
+[DECISION] Repo documentation sync should continue checking README badges,
+public surface counts, version references, release notes, and reference docs
+before a release is declared current.
+
+[DECISION] Dashboard status should continue reporting workflow progress,
+proactive checks, repo docs, repo surface, runtime test, security, dependency,
+and automation opportunities separately.
+
+[DECISION] Route-quality sync, recipe-coverage sync, and release-surface sync
+are now implemented as local runtime helpers and are included by
+repo-surface-sync.
 
 ---
 
@@ -583,11 +696,11 @@ Every error from a Godpowers command ends with the most likely next command
 
 ---
 
-## 9. Observability (As Slash Commands): v0.15
+## 9. Observability (As Slash Commands)
 
-Three views of the same events.jsonl, all via slash commands. The
-events.jsonl write surface exists today; these reader commands
-ship with the v0.15 observability release.
+[DECISION] Three views of the same events.jsonl are exposed via slash
+commands. The events write surface and reader commands are part of the current
+runtime.
 
 | Command | Output |
 |---------|--------|
@@ -832,14 +945,14 @@ Each release is independently shippable. v1.0 freezes the public API.
 
 ## 16. Mapping Current State to Target
 
-| current v0.15 surface | v1.0 target |
+| current v1.6.19 surface | v1.0 target |
 |------------|-------------|
 | `.godpowers/PROGRESS.md` (markdown) | `.godpowers/intent.yaml` + `.godpowers/state.json` + auto-generated PROGRESS.md (legacy view) |
 | Implicit workflow in orchestrator prose | `workflows/full-arc.yaml` declarative |
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
-| `npx godpowers` (1 package, install only) | Same! `npx godpowers` stays install-only. Plus skill pack ecosystem on npm. |
-| 106 skills + 39 agents (shipped at v0.15) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| `npx godpowers` (1 package, install, uninstall, migrate, status helpers) | Same mutation boundary. Durable project work stays slash-command driven. |
+| 109 skills + 40 agents (shipped at v1.6.19) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

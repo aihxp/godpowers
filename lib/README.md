@@ -15,6 +15,9 @@ package-level integrations.
 | `feature-awareness.js` | Detect and refresh existing-project awareness after runtime upgrades. |
 | `repo-doc-sync.js` | Detect and refresh mechanical repository documentation surfaces. |
 | `repo-surface-sync.js` | Detect structural drift across commands, routes, packages, agents, workflows, recipes, extensions, and release policy. |
+| `route-quality-sync.js` | Detect symbolic route spawns, unresolved agent targets, and unapproved contextual route exits. |
+| `recipe-coverage-sync.js` | Detect missing high-frequency intent recipe coverage. |
+| `release-surface-sync.js` | Detect release-facing drift across badges, release notes, changelog, package checks, and release checklist policy. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
 

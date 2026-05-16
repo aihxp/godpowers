@@ -37,11 +37,34 @@ projects from raw idea to hardened production.
 - Every claim must fail the substitution test (swap in a competitor, sentence must break)
 
 <!-- pillars:begin -->
-## Godpowers Pillars Protocol
+# Godpowers Project Context
 
-- [DECISION] Load `agents/context.md` and `agents/repo.md` before Godpowers commands make durable project decisions.
-- [DECISION] Load additional `agents/*.md` pillar files only when their frontmatter matches the task.
-- [DECISION] Treat `.godpowers/state.json`, `.godpowers/PROGRESS.md`, and `.godpowers/CHECKPOINT.md` as workflow state.
-- [DECISION] Treat Pillars files as portable project context for any coding agent that opens this repository.
-- [DECISION] Disk state wins over conversation memory when these sources disagree.
+This is a Godpowers project. Godpowers uses the Pillars standard as its native project context layer.
+Coding agents read project context from `./agents/*.md` before changing code, while `.godpowers/` remains the Godpowers workflow state and artifact layer.
+
+## At the start of any task
+
+1. Load every pillar whose frontmatter has `always_load: true`.
+2. Scan remaining pillar frontmatter and select task-relevant primaries from `triggers` and `covers`.
+3. Add each primary pillar direct `must_read_with` dependencies, depth 1 only.
+4. Read every pillar body in the computed load set.
+5. Read `see_also` pillars only when the task explicitly touches that area.
+6. Follow Rules, apply Workflows, heed Watchouts, and ask before deciding open Gaps.
+
+## Handling missing pillars
+
+| State | Action |
+|---|---|
+| `status: present` | Load and comply. |
+| `status: stub` | Treat the concern as acknowledged but undecided. Ask before making domain decisions. |
+| Name in `excluded:` | Treat as intentionally not applicable. |
+| Relevant but absent | Infer from code, state the assumption, and recommend authoring the pillar. |
+
+If `context.md` or `repo.md` is missing, pause and create stubs before continuing.
+
+## Excluded pillars
+
+```yaml
+excluded: []
+```
 <!-- pillars:end -->

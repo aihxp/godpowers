@@ -10,9 +10,18 @@ prerequisites:
     - .godpowers/stories/STORY-*.md
 
 execution:
-  spawns: [god-planner+god-executor+reviewers]
+  spawns: [god-planner]
   context: fresh
-  writes: []
+  secondary-spawns: [god-executor, god-spec-reviewer, god-quality-reviewer]
+  writes:
+    - .godpowers/stories/STORY-*.md
+    - source code
+
+standards:
+  substitution-test: true
+  three-label-test: true
+  have-nots: [B-01, B-02, B-03, B-04, B-05, B-06, B-07, B-08, B-09, B-10, B-11, B-12]
+  gate-on-failure: pause-for-user
 
 success-path:
   next-recommended: /god-story-verify

@@ -474,7 +474,7 @@ Auto-complete: `/god-init`
 **Execution**:
 - `lib/feature-awareness.run(projectRoot)` for existing-project runtime awareness
 - `lib/repo-doc-sync.run(projectRoot)` for public repository documentation claims
-- `lib/repo-surface-sync.run(projectRoot)` for structural repository surface drift
+- `lib/repo-surface-sync.run(projectRoot)` for structural repository surface drift, including route-quality, recipe-coverage, and release-surface checks
 - `lib/source-sync.run(projectRoot)` when imported source systems have sync-back enabled
 - `god-updater`
 - Writes: `.godpowers/SYNC-LOG.md`, `.godpowers/docs/REPO-DOC-SYNC.md`, `.godpowers/surface/REPO-SURFACE-SYNC.md`, and touched artifacts

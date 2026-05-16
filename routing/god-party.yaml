@@ -9,9 +9,11 @@ prerequisites:
   required: []
 
 execution:
-  spawns: [multi]
+  spawns: [built-in]
   context: fresh
-  writes: []
+  parallel-spawns: [god-pm, god-architect, god-executor, god-quality-reviewer, god-harden-auditor, god-launch-strategist]
+  writes:
+    - .godpowers/party/*.md
 
 success-path:
   next-recommended: /god-next

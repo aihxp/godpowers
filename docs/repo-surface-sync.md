@@ -1,7 +1,7 @@
 # Repository Surface Sync
 
 - [DECISION] Godpowers now checks structural repository surfaces as executable sync work.
-- [DECISION] `lib/repo-surface-sync.js` detects drift across command skills, routing metadata, package payload rules, agent spawn targets, workflow metadata, recipe command routes, extension packs, and release policy checks.
+- [DECISION] `lib/repo-surface-sync.js` detects drift across command skills, routing metadata, package payload rules, agent spawn targets, workflow metadata, recipe command routes, extension packs, route quality, recipe coverage, release surfaces, and release policy checks.
 - [DECISION] Detection is read-only by default.
 - [DECISION] The safe apply path only writes a sync log and may create missing routing stubs when `fixRouting` is explicitly enabled.
 - [DECISION] Structural findings appear in `/god-status`, `/god-doctor`, `/god-sync`, `/god-docs`, and `/god-mode` closeouts.
@@ -21,6 +21,9 @@
 - [DECISION] Agent contract sync checks that routed specialist spawns resolve to real `agents/god-*.md` files.
 - [DECISION] Workflow and recipe graph sync checks parseable workflow metadata and recipe command routes.
 - [DECISION] Extension pack sync checks manifest validation, package name and version agreement, peer dependency agreement, and provided file existence.
+- [DECISION] Route quality sync checks atomic spawn tokens, routed agent resolution, and approved contextual exits.
+- [DECISION] Recipe coverage sync checks high-frequency intent routes for release maintenance, docs drift, context refresh, story work, and automation setup.
+- [DECISION] Release surface sync checks README badges, changelog, release notes, release checklist policy, package lock version, and package payload guardrails.
 - [DECISION] Release policy sync checks that repo documentation sync is fresh and that the release checklist names repo surface sync.
 
 ## Auto-Spawn Policy

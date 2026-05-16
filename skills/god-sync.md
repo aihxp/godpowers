@@ -41,9 +41,10 @@ User runs `/god-sync` after manual changes. Useful for:
    Narrative drift should recommend or spawn `god-docs-writer`.
 5. Call `lib/repo-surface-sync.run(projectRoot)` so command routing, package
    payload, agent handoffs, workflow metadata, recipe routes, extension packs,
-   and release policy are checked before sync closes. Structural drift should
-   recommend scoped agents such as `god-auditor`, `god-roadmap-reconciler`, or
-   `god-coordinator`.
+   route quality, recipe coverage, release surfaces, and release policy are
+   checked before sync closes. Structural drift should recommend scoped agents
+   such as `god-auditor`, `god-roadmap-reconciler`, `god-coordinator`, or
+   `god-docs-writer`.
 6. If repo documentation changed durable project truth, plan or apply Pillars
    updates through `lib/pillars.planArtifactSync` or
    `lib/pillars.applyArtifactSync` under the active Pillars policy.
@@ -63,7 +64,7 @@ Auto-invoked:
   Trigger: <manual /god-sync, recipe closeout, /god-mode final sync, or other source>
   Agent: god-updater
   Local syncs:
-    - pending: feature-awareness, reverse-sync, source-sync, repo-doc-sync, repo-surface-sync, pillars-sync, checkpoint-sync, context-refresh
+    - pending: feature-awareness, reverse-sync, source-sync, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync, pillars-sync, checkpoint-sync, context-refresh
   Artifacts: pending
   Log: .godpowers/SYNC-LOG.md
 ```
@@ -92,6 +93,9 @@ Sync status:
     + source-sync: <written GSD/BMAD/Superpowers companion files, no-op, or skipped>
     + repo-doc-sync: <refreshed README badges/counts, recommended god-docs-writer, or no-op>
     + repo-surface-sync: <checked routes/package/agents/workflows/extensions, recommended scoped agents, or no-op>
+    + route-quality-sync: <checked atomic spawns and contextual exits, no-op, or recommended god-auditor>
+    + recipe-coverage-sync: <checked high-frequency intent recipes, no-op, or recommended god-roadmap-reconciler>
+    + release-surface-sync: <checked badges/changelog/release/package guards, no-op, or recommended god-docs-writer>
     + pillars-sync: <updated N pillar files, no-op, or proposed>
     + checkpoint-sync: <CHECKPOINT.md updated or skipped>
     + context-refresh: <updated AGENTS.md/tool pointers, no-op, or skipped by setting>

@@ -41,3 +41,11 @@ see_also: [quality, deploy, security]
 
 - [HYPOTHESIS] Package contents can regress when files are added outside the `files` allowlist in `package.json`.
 - [HYPOTHESIS] Routing drift can regress direct command gates because `lib/router.js` loads `routing/*.yaml` at runtime.
+
+<!-- godpowers:pillar-sync:begin -->
+## Godpowers artifact sources
+
+- Sync mode: proposed for review.
+- Related artifact: `docs/reference.md`.
+- Rule: keep this pillar aligned when these artifacts change durable repo truth.
+<!-- godpowers:pillar-sync:end -->

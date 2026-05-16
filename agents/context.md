@@ -31,8 +31,16 @@ see_also: [arch, quality, deploy]
 ## Watchouts
 
 - [HYPOTHESIS] User adoption risk concentrates around whether agent spawning, installed runtime metadata, and local validation behave the same across supported AI coding tools.
-- [HYPOTHESIS] Documentation drift risk is high because the public surface includes 109 slash commands, 40 specialist agents, 13 workflows, and 36 intent recipes.
+- [HYPOTHESIS] Documentation drift risk is high because the public surface includes 109 slash commands, 40 specialist agents, 13 workflows, and 40 intent recipes.
 
 ## Gaps
 
 - [OPEN QUESTION] Which real-world AI coding tool should be treated as the first adoption canary after `1.6.19`? Owner: maintainer. Due: before the next public release.
+
+<!-- godpowers:pillar-sync:begin -->
+## Godpowers artifact sources
+
+- Sync mode: proposed for review.
+- Related artifact: `docs/ROADMAP.md`.
+- Rule: keep this pillar aligned when these artifacts change durable context truth.
+<!-- godpowers:pillar-sync:end -->

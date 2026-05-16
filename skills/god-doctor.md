@@ -131,7 +131,8 @@ security prose needs judgment.
 For initialized projects, `/god-doctor` calls `lib/repo-surface-sync.detect`
 as a read-only diagnostic. It reports structural drift across command routing,
 package payload rules, agent spawn targets, workflow metadata, recipe command
-routes, extension packs, and release policy checks.
+routes, extension packs, route quality, recipe coverage, release surfaces, and
+release policy checks.
 
 `/god-doctor --fix` may call
 `lib/repo-surface-sync.run(projectRoot, { fixRouting: true })` to create
@@ -149,6 +150,12 @@ Built-in, no spawned agent. Reads:
 - `lib/repo-doc-sync.detect(projectRoot)` for repo documentation freshness
 - `lib/repo-surface-sync.detect(projectRoot)` for structural repo surface
   freshness
+- `lib/route-quality-sync.detect(projectRoot)` through repo surface sync for
+  atomic spawn and contextual route exit freshness
+- `lib/recipe-coverage-sync.detect(projectRoot)` through repo surface sync for
+  high-frequency intent recipe coverage freshness
+- `lib/release-surface-sync.detect(projectRoot)` through repo surface sync for
+  release-facing surface freshness
 - `bin/install.js` VERSION constant
 
 ## Exit codes

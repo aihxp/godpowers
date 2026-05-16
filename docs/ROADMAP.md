@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.19
+> Current shipped: v1.6.20
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -20,7 +20,7 @@ What works today:
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
-- **13 executable workflows** and **36 intent recipes**
+- **13 executable workflows** and **40 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
   (with T3 Code transparently inheriting the underlying agent)
@@ -47,8 +47,9 @@ What works today:
   docs, contribution guidance, security policy checks, and Pillars planning
   are checked during sync, docs, doctor, status, and god-mode closeouts.
 - **Repo surface sync**: command routing, package payloads, agent handoffs,
-  workflow metadata, recipe routes, extension packs, and release policy checks
-  are checked during sync, docs, doctor, status, and god-mode closeouts.
+  workflow metadata, recipe routes, extension packs, route-quality checks,
+  recipe-coverage checks, release-surface checks, and release policy checks are
+  checked during sync, docs, doctor, status, and god-mode closeouts.
 - **Codex agent metadata**: all 40 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route

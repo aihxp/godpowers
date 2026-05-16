@@ -1,19 +1,19 @@
-# Godpowers 1.6.19 Release
+# Godpowers 1.6.20 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.19 adds repository surface sync and clarifies status truth across
-`/god-status`, `/god-next`, God Mode closeouts, and installer CLI status
-helpers. Godpowers can now detect structural drift across routes, package
-payload rules, agent handoffs, workflow metadata, recipe routes, extension
-packs, and release policy before declaring a project run current.
+Godpowers 1.6.20 closes the automation gaps found after repository surface
+sync. It adds dedicated route-quality, recipe-coverage, and release-surface
+checks so Godpowers detects disconnected route spawns, missing intent recipes,
+and stale release-facing documentation before declaring a project or release
+current.
 
 ## What is stable
 
 - 109 slash commands
 - 40 specialist agents
 - 13 executable workflows
-- 36 intent recipes
+- 40 intent recipes
 - 15-runtime installer
 - Codex installs with generated `god-*.toml` agent metadata files
 - Markdown specialist agent contracts at `<runtime>/agents/god-*.md`
@@ -27,35 +27,38 @@ packs, and release policy before declaring a project run current.
 - Feature awareness for existing Godpowers projects
 - Repository documentation sync checks
 - Repository surface sync checks
+- Route quality, recipe coverage, and release surface sync checks
 
 ## What is new
 
-- Added `lib/repo-surface-sync.js`.
-- Added `docs/repo-surface-sync.md`.
-- Added `scripts/test-repo-surface-sync.js`.
-- `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, and `/god-mode` now
-  document repo surface sync integration.
-- Dashboard proactive checks now include a repo surface status line.
-- Package contents checks now require `lib/repo-surface-sync.js`.
-- Feature awareness now records `repo-surface-sync` as a known runtime feature.
-- Dashboard output keeps workflow progress distinct from audit, hygiene,
-  remediation, and launch-readiness scores.
+- Added `lib/route-quality-sync.js`.
+- Added `lib/recipe-coverage-sync.js`.
+- Added `lib/release-surface-sync.js`.
+- Added `scripts/test-automation-surface-sync.js`.
+- Added release maintenance, context refresh, story work, and automation setup
+  recipes.
+- `/god-party` now declares concrete parallel specialist personas.
+- `/god-story-build` now declares planner, executor, and reviewer handoffs
+  without symbolic spawn tokens.
+- Feature awareness now records route quality, recipe coverage, and release
+  surface sync as known runtime features.
+- Package contents checks now require all three new sync helpers.
 
-## Surface sync behavior
+## Automation surface behavior
 
 For a Godpowers repository, the helper checks:
 
-- every `skills/god-*.md` command has matching `routing/god-*.yaml` metadata
-- required package payload entries exist in `package.json`
+- every routed specialist spawn resolves to a real agent or built-in runtime
+  owner
+- every durable-writing route declares standards coverage or an approved
+  exemption
+- high-frequency work has discoverable intent recipes
+- release-facing version surfaces agree with `package.json`
 - package content checks require load-bearing runtime helper files
-- routed specialist spawns resolve to real agent files
-- workflows have parseable metadata
-- recipes contain slash-command routes
-- extension manifests, package metadata, peer dependencies, and provided files agree
-- release docs and release policy checks name repo documentation and repo surface sync
+- release checklist policy names the current sync guards
 
-Detection is read-only by default. Applying sync only writes a log and may
-create missing routing stubs when `fixRouting` is explicitly enabled.
+Detection is read-only by default. Applying sync writes logs and leaves
+judgment-heavy rewrites to scoped specialists.
 
 ## Auto-invoke and auto-spawn policy
 
@@ -77,6 +80,7 @@ Godpowers recommends scoped specialists only when judgment is needed:
 Release validation includes:
 
 - `node scripts/test-repo-surface-sync.js`
+- `node scripts/test-automation-surface-sync.js`
 - `node scripts/test-repo-doc-sync.js`
 - `node scripts/test-feature-awareness.js`
 - `node scripts/test-dashboard.js`
@@ -87,5 +91,5 @@ Release validation includes:
 - `git diff --check`
 - `npm run release:check`
 
-The `v1.6.19` tag should point to the release commit that matches the npm
-`godpowers@1.6.19` package.
+The `v1.6.20` tag should point to the release commit that matches the npm
+`godpowers@1.6.20` package.

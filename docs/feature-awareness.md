@@ -61,7 +61,9 @@ installed Godpowers runtime adds capabilities.
       "feature-awareness",
       "repo-documentation-sync",
       "repo-surface-sync",
-      "dashboard-status-metric-labels"
+      "route-quality-sync",
+      "recipe-coverage-sync",
+      "release-surface-sync"
     ],
     "last-awareness-refresh-at": "2026-05-16T12:00:00.000Z"
   }

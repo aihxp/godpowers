@@ -28,3 +28,11 @@ see_also: [security, deploy]
 ## Watchouts
 
 - [HYPOTHESIS] The full test suite is intentionally broad and can surface unrelated drift from docs, packaging, workflows, routing, and installer behavior.
+
+<!-- godpowers:pillar-sync:begin -->
+## Godpowers artifact sources
+
+- Sync mode: proposed for review.
+- Related artifact: `docs/ROADMAP.md`.
+- Rule: keep this pillar aligned when these artifacts change durable quality truth.
+<!-- godpowers:pillar-sync:end -->

@@ -81,6 +81,13 @@ test('getSpawnedAgents includes secondary spawns for /god-build', () => {
   if (!agents.includes('god-executor')) throw new Error('should include god-executor');
 });
 
+test('getSpawnedAgents includes conditional parallel spawns for /god-harden', () => {
+  router.clearCache();
+  const agents = router.getSpawnedAgents('/god-harden');
+  if (!agents.includes('god-harden-auditor')) throw new Error('should include god-harden-auditor');
+  if (!agents.includes('god-browser-tester')) throw new Error('should include god-browser-tester');
+});
+
 test('checkPrerequisites: /god-init has no prereqs', () => {
   router.clearCache();
   const result = router.checkPrerequisites('/god-init', tmp);

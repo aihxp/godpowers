@@ -119,7 +119,7 @@ as workflow progress.
 | Level | Behavior | Default action | Examples |
 |---|---|---|---|
 | 1 | Read-only suggestion | Run by default | `/god-next` route, status summary, hygiene suggestion |
-| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync, repo-surface-sync |
+| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync |
 | 3 | Scoped specialist agent | Spawn only with bounded evidence | design review, docs drift check, browser test with known URL |
 | 4 | Human-owned action | Require explicit approval | production launch, publish, destructive repair |
 

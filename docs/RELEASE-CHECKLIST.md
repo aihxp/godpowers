@@ -10,6 +10,9 @@ Use this checklist before publishing a public Godpowers release.
 - Confirm `RELEASE.md` explains what is stable, what changed, and what is deferred.
 - Confirm `lib/repo-doc-sync.detect(projectRoot)` reports `fresh` before publishing.
 - Confirm `lib/repo-surface-sync.detect(projectRoot)` reports `fresh` before publishing.
+- Confirm `lib/route-quality-sync.detect(projectRoot)` reports `fresh` before publishing.
+- Confirm `lib/recipe-coverage-sync.detect(projectRoot)` reports `fresh` before publishing.
+- Confirm `lib/release-surface-sync.detect(projectRoot)` reports `fresh` before publishing.
 
 ## Local Verification
 
@@ -26,6 +29,7 @@ This includes:
 - Package contents assertion through `npm run pack:check`.
 - Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 - Repository surface sync tests through `node scripts/test-repo-surface-sync.js`.
+- Automation surface sync tests through `node scripts/test-automation-surface-sync.js`.
 
 ## Package Surface
 

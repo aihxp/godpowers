@@ -215,7 +215,7 @@ Auto-invoked:
   Trigger: <what caused this automatic step>
   Agent: <god-updater | god-context-writer | none, local runtime only>
   Local syncs:
-    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
+    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | route-quality-sync | recipe-coverage-sync | release-surface-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
   Artifacts: <changed files, no-op, or deferred>
   Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
 ```
@@ -246,6 +246,9 @@ Automatic steps that especially need visible reporting:
 - repo documentation sync during `/god-sync`, `/god-docs`, `/god-doctor`,
   `/god-status`, or `/god-mode`
 - repo surface sync during `/god-sync`, `/god-docs`, `/god-doctor`,
+  `/god-status`, or `/god-mode`
+- route-quality sync, recipe-coverage sync, and release-surface sync through
+  repo-surface sync during `/god-sync`, `/god-docs`, `/god-doctor`,
   `/god-status`, or `/god-mode`
 
 ### 13. Proactive Auto-Invoke Policy
@@ -291,6 +294,9 @@ Run these local runtime helpers automatically when their trigger is present:
   `lib/repo-surface-sync.run` during `/god-sync`, `/god-docs`, or
   `/god-mode` when command routing, package payload, agent handoffs, workflow
   metadata, recipe routes, extension packs, or release policy may have drifted.
+- `lib/route-quality-sync.detect`, `lib/recipe-coverage-sync.detect`, and
+  `lib/release-surface-sync.detect` through repo-surface sync when route
+  spawns, high-frequency recipes, or release-facing surfaces may have drifted.
 - Context refresh dry-run after `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
   `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`,
   `.clinerules`, `.roo/`, or `.continue/` changes.

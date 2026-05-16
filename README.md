@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.19-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.20-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,11 +12,11 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.19 sharpens Godpowers status truth and adds repository surface
-sync. Dashboards now name whether they came from `lib/dashboard.js` or a manual
-fallback, and Godpowers checks routing gaps, package payload drift, agent
-handoff drift, workflow metadata drift, recipe route drift, extension pack
-drift, and release-policy drift before closeout.
+Version 1.6.20 closes the automation surface gaps around route quality, recipe
+coverage, and release readiness. Godpowers now checks symbolic route spawns,
+unresolved agent targets, standards coverage for durable-writing routes, missing
+high-frequency recipes, package payload guards, and release-facing version drift
+before closeout.
 
 It fuses four disciplines into one unified workflow:
 

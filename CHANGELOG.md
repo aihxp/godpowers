@@ -5,6 +5,42 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.6.20] - 2026-05-16
+
+Automation surface closeout and release guardrails.
+
+### Added
+- Added `lib/route-quality-sync.js` to detect symbolic route spawns,
+  unresolved agent targets, and unapproved contextual route exits.
+- Added `lib/recipe-coverage-sync.js` to detect missing high-frequency intent
+  recipes for release maintenance, docs drift, context refresh, story work, and
+  automation setup.
+- Added `lib/release-surface-sync.js` to detect release-facing drift across
+  badges, changelog, release notes, package guards, release checklist policy,
+  and package lock version.
+- Added recipe routes for release maintenance, context refresh, story work, and
+  automation setup.
+
+### Changed
+- `/god-party` routing now uses `built-in` as the primary owner and declares
+  selectable specialist personas under `parallel-spawns`.
+- `/god-story-build` routing now uses `god-planner` as primary and declares
+  executor plus reviewer agents as secondary spawns.
+- `lib/router.js` now includes conditional `parallel-spawns` in spawned-agent
+  resolution.
+- Repo surface sync now includes route-quality, recipe-coverage, and
+  release-surface checks.
+
+### Guardrails
+- Route quality checks now block symbolic spawn tokens, unresolved specialist
+  targets, unapproved contextual exits, and durable-writing routes without
+  standards coverage.
+- Release surface checks now require package, lockfile, README badge,
+  changelog, release notes, release checklist, and package payload guards to
+  agree before publish.
+
 ## [1.6.19] - 2026-05-16
 
 Repository surface sync and status truth closeout.
