@@ -15,10 +15,11 @@ see_also: [security, deploy]
 ## Commands
 
 - [DECISION] `npm test` is the required full verification command.
+- [DECISION] `npm run test:quick-proof` checks README, Quick Proof, release verification, runtime expectations, and adoption canary alignment.
 - [DECISION] `npm run test:audit` runs dependency audit, `git diff --check`, and documentation surface count tests.
 - [DECISION] `npm run pack:check` verifies the npm package contains required runtime files and excludes local-only files.
 - [DECISION] `npm run release:check` combines the full test suite, audit checks, and package contents checks.
-- [DECISION] The full test suite includes repo-doc sync, repo-surface sync, automation surface sync, host capabilities, extension authoring, dogfood, Mode D, installer smoke, workflow runner, OTel, and extension publish-readiness checks.
+- [DECISION] The full test suite includes quick proof docs, repo-doc sync, repo-surface sync, automation surface sync, host capabilities, extension authoring, dogfood, Mode D, installer smoke, workflow runner, OTel, and extension publish-readiness checks.
 
 ## Standards
 

@@ -8,7 +8,7 @@ metadata:
     Layers on top of god-harden-auditor with regulation-specific checks.
 
 engines:
-  godpowers: ">=0.14.0 <2.0.0"
+  godpowers: ">=2.0.0 <3.0.0"
 
 provides:
   agents:

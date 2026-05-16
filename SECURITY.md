@@ -55,9 +55,9 @@ When using Godpowers in a sensitive context:
 
 | Version | Supported |
 |---------|-----------|
-| 1.6.x   | Yes |
-| 1.5.x   | Security fixes only |
-| < 1.5   | No |
+| 2.0.x   | Yes |
+| 1.6.x   | Security fixes only |
+| < 1.6   | No |
 
 Godpowers repo documentation sync checks this table as part of release
 readiness, but support policy changes still require maintainer review.

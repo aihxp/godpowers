@@ -1,22 +1,22 @@
-# Godpowers Architecture (v1 Design Target)
+# Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v1.6.24 (pure-skill model plus dogfood, host guarantees, and release surface sync)
+> Status: STABLE v2.0.0 (pure-skill model plus executable proof, dogfood, host guarantees, and release surface sync)
 > Authors: Godpowers Team
 > Last updated: 2026-05-16
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.24 keeps the public surface stable while adding strict, fail-closed
-background release readiness across every owned repo, package, registry,
-workflow, and local install surface. Auto-invoked
-commands, spawned agents, local runtime helpers, platform-specific spawning
-limits, migration imports, sync-back writes, feature-awareness refreshes, repo
-documentation sync, repo surface sync, dogfood runs, and dashboard progress
-must be reported visibly instead of implied as hidden background work.
+v2.0.0 keeps the public slash-command surface stable while adding executable
+proof as a first-class product surface. Auto-invoked commands, spawned agents,
+local runtime helpers, platform-specific spawning limits, migration imports,
+sync-back writes, feature-awareness refreshes, repo documentation sync, repo
+surface sync, quick proof runs, dogfood runs, canary reports, and dashboard
+progress must be reported visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
-The CLI surface is `npx godpowers` for installation plus read-only status
-helpers such as `godpowers status --project .`, `godpowers next --project .`,
-and automation-provider inspection. Durable project operations remain slash
+The CLI surface is `npx godpowers` for installation plus read-only proof and
+status helpers such as `godpowers quick-proof --project .`,
+`godpowers status --project .`, `godpowers next --project .`, and
+automation-provider inspection. Durable project operations remain slash
 commands inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
@@ -808,7 +808,7 @@ metadata:
   version: 1.0.0
 
 engines:
-  godpowers: ">=0.14.0 <2.0.0"
+  godpowers: ">=2.0.0 <3.0.0"
 
 provides:
   agents:
@@ -913,7 +913,7 @@ After migration, the slash command `/god-doctor` validates the new state.
 Each extension declares:
 ```yaml
 engines:
-  godpowers: ">=0.14.0 <2.0.0"
+  godpowers: ">=2.0.0 <3.0.0"
 ```
 
 `/god-extension-add` checks compatibility before installing. Mismatches fail
@@ -976,14 +976,14 @@ Each release is independently shippable. v1.0 freezes the public API.
 
 ## 16. Mapping Current State to Target
 
-| current v1.6.24 surface | v1.0 target |
+| current v2.0.0 surface | v2.0 target |
 |------------|-------------|
 | `.godpowers/PROGRESS.md` (markdown) | `.godpowers/intent.yaml` + `.godpowers/state.json` + auto-generated PROGRESS.md (legacy view) |
 | Implicit workflow in orchestrator prose | `workflows/full-arc.yaml` declarative |
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install, uninstall, migrate, status helpers) | Same mutation boundary. Durable project work stays slash-command driven. |
-| 110 skills + 40 agents (shipped at v1.6.24) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 110 skills + 40 agents (shipped at v2.0.0) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

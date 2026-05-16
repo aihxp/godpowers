@@ -3,16 +3,16 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.24
+> Current shipped: v2.0.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
-1.0 public adoption window. Everything user-facing remains slash-command based.
+2.0 public adoption window. Everything user-facing remains slash-command based.
 
 ---
 
 ## Shipped releases
 
-### Current surface (v1.6.24)
+### Current surface (v2.0.0)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -30,6 +30,16 @@ What works today:
   name the runtime source, label workflow progress, report host guarantees,
   support compact `--brief` output, and keep audit scores out of the workflow
   percentage.
+- **Executable quick proof**: `npx godpowers quick-proof --project .` renders
+  a shipped fixture with real `.godpowers/state.json`, computed next action,
+  missing-artifact visibility, and host guarantees from the caller's
+  environment.
+- **Adoption canary harness**: `node scripts/run-adoption-canary.js <git-url>`
+  clones an external repository and captures CLI-verifiable proof, dashboard,
+  and next-route signals for first-user trust review.
+- **Published install verifier**: `node scripts/verify-published-install.js
+  godpowers@latest` checks quick proof, status, next, Claude install, and
+  Codex metadata install against the registry artifact.
 - **Messy-repo dogfooding**: `/god-dogfood` and `npx godpowers dogfood` run
   fixture scenarios for GSD migration, sync-back, host capabilities, extension
   authoring, and Mode D suite release dry-runs.
@@ -106,9 +116,9 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- Full CI suite with 52 script files, integration tests, dogfood runner,
-  host capability, extension authoring, Mode D, installer smoke, and
-  extension-pack publish gates
+- Full CI suite with 55 script files, integration tests, quick proof tests,
+  dogfood runner, host capability, extension authoring, Mode D, installer
+  smoke, and extension-pack publish gates
 - Release gate with full tests, audit checks, E2E smoke, and package contents
   verification
 
@@ -118,12 +128,12 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 
 ## Stability window
 
-### v1.0.0 - Stable
+### v2.0.0 - Executable Proof Stable
 
-**Theme**: freeze the public API and let real adoption produce the next set of
-changes.
+**Theme**: freeze the public API, make first-user proof executable, and let
+real adoption produce the next set of changes.
 
-Frozen in 1.0:
+Frozen in 2.0:
 
 - Slash-command names and command families
 - Specialist agent names and frontmatter shape
@@ -131,7 +141,7 @@ Frozen in 1.0:
 - Routing and recipe schema names
 - `.godpowers/` artifact locations
 - Native Pillars context layout through `AGENTS.md` and `agents/*.md`
-- Extension manifest compatibility contract for the 1.x line
+- Extension manifest compatibility contract for the 2.x line
 
 Allowed during freeze:
 

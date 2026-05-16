@@ -1,12 +1,12 @@
-# Godpowers 1.6.24 Release
+# Godpowers 2.0.0 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.24 turns release readiness automation into a strict,
-fail-closed background check. It packages the lesson from the 1.6.23 release:
-release readiness cannot be inferred from README, package metadata, and
-changelog alone. Every owned repo surface must be checked or the release is
-blocked.
+Godpowers 2.0.0 is the executable proof release. It turns the first-user trust
+loop from documentation into a packaged command: `npx godpowers quick-proof
+--project=.`. The command renders a shipped fixture with real
+`.godpowers/state.json`, computed next action, missing-artifact visibility, and
+host guarantees from the caller's environment.
 
 ## What is stable
 
@@ -20,18 +20,14 @@ blocked.
 - Shared runtime bundle at `<runtime>/godpowers-runtime`
 - Native Pillars project context through `AGENTS.md` and `agents/*.md`
 - `.godpowers/` workflow state and artifact layout
-- Safe-sync routing before deploy, observe, harden, launch, or god-mode work
-- Critical harden finding gate before launch
+- Dashboard action briefs for next-step compression
+- Dashboard host guarantees for full, degraded, and unknown runtime capability
+- `godpowers status --project .` and `godpowers next --project .`
+- `godpowers quick-proof --project .`
 - Planning-system migration for GSD, BMAD, and Superpowers
-- Managed sync-back companion files for imported source systems
-- Feature awareness for existing Godpowers projects
 - Repository documentation sync checks
 - Repository surface sync checks
 - Route quality, recipe coverage, and release surface sync checks
-- Dashboard action briefs for next-step compression
-- Dashboard host guarantees for full, degraded, and unknown runtime capability
-- Agent-spawn trace event guardrails
-- Mode D suite readiness checks
 - Messy-repo dogfood scenarios
 - Extension authoring scaffold helper
 - Mode D suite release dry-run planner
@@ -39,47 +35,43 @@ blocked.
 
 ## What is new
 
-- Added `strict-release-readiness` to the safe automation templates.
-- Added a strict release-surface manifest that covers root docs, docs, agents,
-  skills, routing, workflows, schema, templates, references, hooks, lib,
-  scripts, tests, fixtures, GitHub workflows, package metadata, npm latest, git
-  tag state, GitHub release state, CI status, publish workflow status, and
-  local install state.
-- Updated `/god-automation-setup` so background release checks use the strict
-  template by default.
-- Updated the release maintenance recipe so background release setup goes
-  through `/god-automation-setup` and keeps publishing behind explicit human
-  approval.
-- Updated auto-invoke visibility docs so strict release readiness is a Level 2
-  read-only local automation candidate.
+- Added `lib/quick-proof.js` and the packaged `fixtures/quick-proof/` project.
+- Added the `quick-proof` CLI command as the first executable proof path.
+- Added `docs/quick-proof.md` to make the first 10 minutes concrete.
+- Added `docs/proof-transcript.md` with captured command output.
+- Added `docs/adoption-canary.md` with pass/fail criteria and feedback routing.
+- Added `scripts/run-adoption-canary.js` to clone an external repo and capture
+  quick proof, dashboard status, and next-route output.
+- Added `scripts/verify-published-install.js` to verify the npm registry
+  artifact after publish.
+- Updated README, getting started, reference, release checklist, and Pillars
+  context so executable proof is part of the product surface.
 
 ## Guardrails
 
-- Strict release readiness fails closed when any required surface is unchecked,
-  stale, missing, untested, or inconsistent with the intended version.
-- Strict release readiness reports blockers and exact next commands only.
-- Strict release readiness must not modify files, stage, commit, tag, push,
-  create a GitHub release, publish to npm, delete files, clear caches, or
-  change runtime installs.
-- Behavioral tests verify that the strict template is fail-closed, read-only,
-  and names every required release surface.
+- Quick proof is read-only and deterministic.
+- Quick proof reports the user's current host guarantees separately from the
+  shipped fixture state.
+- Package contents checks require the quick-proof module and fixture state.
+- Published install verification checks quick proof, status, next, Claude
+  install, and Codex metadata install against the registry artifact.
+- The adoption canary harness captures CLI-verifiable signals only. Host slash
+  commands such as `/god-preflight`, `/god-audit`, and `/god-reconstruct` still
+  require an AI coding host.
 
 ## Validation
 
 Release validation includes:
 
-- `node scripts/test-automation-providers.js`
-- `node scripts/test-automation-surface-sync.js`
-- `node scripts/test-recipes.js`
-- source scan for forbidden dash characters in edited files
+- `npm run test:quick-proof`
+- `node scripts/run-adoption-canary.js <repo> --output=<report>`
 - `npm run release:check`
 - `npm pack --json`
-- npm cache clear before local install
-- local uninstall and reinstall from the generated tarball
-- tag-triggered npm publish workflow with provenance
-- npm registry verification after publish
-- local uninstall and reinstall from `godpowers@1.6.24`
-- all-runtime `godpowers --all` refresh after published install
+- local uninstall of previous runtime installs
+- local reinstall from the generated tarball
+- npm publish with provenance when available
+- `node scripts/verify-published-install.js godpowers@latest`
+- GitHub release creation for `v2.0.0`
 
-The `v1.6.24` tag should point to the release commit that matches the npm
-`godpowers@1.6.24` package.
+The `v2.0.0` tag should point to the release commit that matches the npm
+`godpowers@2.0.0` package.

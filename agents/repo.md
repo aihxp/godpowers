@@ -30,6 +30,7 @@ see_also: [quality, deploy, security]
 
 - [DECISION] Use `npm test` for the full local suite.
 - [DECISION] Use `npm run test:audit` for audit, whitespace, and documentation surface checks.
+- [DECISION] Use `npm run test:quick-proof` to verify the proof-first onboarding docs stay linked to README, release checks, runtime expectations, and the adoption canary.
 - [DECISION] Use `npm run pack:check` to verify npm package contents before release.
 - [DECISION] Use `npm run release:check` for the complete release gate.
 

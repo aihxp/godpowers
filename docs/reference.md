@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.24.
+Complete command, agent, and artifact reference for v2.0.0.
 
 ## Slash commands (110 total)
 
@@ -16,6 +16,7 @@ Complete command, agent, and artifact reference for v1.6.24.
 ### Installer CLI helpers
 - `godpowers status --project .` - Render the shared dashboard from disk state.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
+- `godpowers quick-proof --project .` - Render the shipped proof fixture with host guarantees.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.

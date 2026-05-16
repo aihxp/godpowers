@@ -1,5 +1,9 @@
 # Getting Started with Godpowers
 
+Want proof before the full walkthrough? Read [Quick Proof](quick-proof.md) for
+the runnable fixture command, transcript excerpts, starter command sets, and
+runtime expectations.
+
 ## Install
 
 ```bash

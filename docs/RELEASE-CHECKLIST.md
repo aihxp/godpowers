@@ -102,6 +102,42 @@ Confirm the npm payload excludes:
 - Verify `npm view godpowers@latest version` after publish.
 - Verify the local installer can install the published version.
 
+## Published Install Verification
+
+After publish, verify the artifact users receive from npm, not only the local
+repository checkout.
+
+Run these checks from a temporary directory:
+
+```bash
+node scripts/verify-published-install.js godpowers@latest
+npm view godpowers@latest version
+npx godpowers@latest --claude --global
+npx godpowers@latest --codex --global
+npx godpowers@latest quick-proof --project=. --brief
+npx godpowers@latest status --project=. --brief
+npx godpowers@latest next --project=. --brief
+```
+
+Confirm:
+
+- npm latest matches the intended release version.
+- `node scripts/verify-published-install.js godpowers@latest` passes against
+  the registry artifact instead of the local checkout.
+- Claude install writes skills, agents, references, runtime files, and the
+  version marker.
+- Codex install writes skill directories plus `agents/*.toml` metadata.
+- `quick-proof --project=. --brief` reads the shipped quick-proof fixture and
+  recommends `/god-prd`.
+- `status --project=. --brief` returns a dashboard-shaped report instead of a
+  module resolution error.
+- `next --project=. --brief` reports missing state honestly when no
+  `.godpowers/` directory exists.
+- Any degraded host capability is reported plainly.
+
+If a network or registry issue blocks this verification, record the blocker in
+the release notes and do not claim the published install has been verified.
+
 ## Post-Release
 
 - Keep package tarballs out of the repository.

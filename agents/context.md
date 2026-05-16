@@ -15,7 +15,7 @@ see_also: [arch, quality, deploy]
 ## Context
 
 - [DECISION] Godpowers is an AI-powered development system delivered as slash commands and specialist agents inside AI coding tools.
-- [DECISION] The package name is `godpowers`, and the current repository version is `1.6.24`.
+- [DECISION] The package name is `godpowers`, and the current repository version is `2.0.0`.
 - [DECISION] The primary audience is solo founders and small engineering teams using AI coding tools who need accountable production workflow discipline without enterprise process.
 - [DECISION] The product promise is one slash-command arc from idea to hardened, observable, launch-ready software with traceable artifacts on disk.
 - [DECISION] Godpowers uses a pure-skill model where `npx godpowers` installs runtime files and in-tool slash commands perform work.
@@ -36,7 +36,7 @@ see_also: [arch, quality, deploy]
 
 ## Gaps
 
-- [OPEN QUESTION] Which external messy repository should be treated as the first adoption canary after `1.6.24`? Owner: maintainer. Due: before the next public release.
+- [OPEN QUESTION] Which external messy repository should become the first full host-run adoption case study after `2.0.0`? Owner: maintainer. Due: before the next public release.
 
 <!-- godpowers:pillar-sync:begin -->
 ## Godpowers artifact sources
@@ -44,5 +44,6 @@ see_also: [arch, quality, deploy]
 - Sync mode: proposed for review.
 - Related artifact: `README.md`.
 - Related artifact: `docs/ROADMAP.md`.
+- Related artifact: `docs/adoption-canary.md`.
 - Rule: keep this pillar aligned when these artifacts change durable context truth.
 <!-- godpowers:pillar-sync:end -->

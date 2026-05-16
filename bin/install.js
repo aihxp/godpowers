@@ -322,6 +322,7 @@ function parseArgs(argv) {
     switch (arg) {
       case 'status':
       case 'next':
+      case 'quick-proof':
       case 'automation-status':
       case 'automation-setup':
       case 'dogfood':
@@ -594,15 +595,16 @@ function showHelp() {
   log('Commands:');
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
+  log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
   log('');
   log('Options:');
-  log('  --project=<path>     Project root for status, next, or automation commands');
-  log('  --json               Emit JSON for status, next, or automation commands');
-  log('  --brief              Render a compact dashboard for status or next');
+  log('  --project=<path>     Project root for status, next, proof, or automation commands');
+  log('  --json               Emit JSON for status, next, proof, or automation commands');
+  log('  --brief              Render compact output for status, next, or proof');
   log('  --name=<scope/name>  Extension package name for extension-scaffold');
   log('  --output=<path>      Extension output root for extension-scaffold');
   log('  --skill=<name>       Extension skill name for extension-scaffold');
@@ -632,6 +634,7 @@ function showHelp() {
   log('Examples:');
   log('  npx godpowers status --project=.');
   log('  npx godpowers next --project=.');
+  log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
   log('  npx godpowers dogfood');
@@ -681,6 +684,16 @@ function runDogfoodCommand(opts) {
   if (result.status !== 'pass') process.exit(1);
 }
 
+function runQuickProofCommand(opts) {
+  const quickProof = require('../lib/quick-proof');
+  const result = quickProof.compute(opts.project);
+  if (opts.json) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    console.log(quickProof.render(result, { brief: opts.brief }));
+  }
+}
+
 function runExtensionScaffoldCommand(opts) {
   const authoring = require('../lib/extension-authoring');
   if (!opts.extensionName) {
@@ -723,6 +736,11 @@ function main() {
 
   if (opts.command === 'status' || opts.command === 'next') {
     runDashboardCommand(opts);
+    return;
+  }
+
+  if (opts.command === 'quick-proof') {
+    runQuickProofCommand(opts);
     return;
   }
 

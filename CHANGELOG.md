@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-05-16
+
+Executable proof release.
+
+### Added
+- Added `npx godpowers quick-proof --project=.` as a read-only CLI helper that
+  renders a shipped fixture with real `.godpowers/state.json`, computed next
+  action, missing-artifact visibility, and current host guarantees.
+- Added `lib/quick-proof.js` and `fixtures/quick-proof/` so the first-user
+  proof loop is packaged, deterministic, and testable.
+- Added `docs/quick-proof.md`, `docs/proof-transcript.md`, and
+  `docs/adoption-canary.md` so onboarding, proof evidence, and real-world
+  canary work share one connected story.
+- Added `scripts/run-adoption-canary.js` to clone an external repository and
+  capture CLI-verifiable trust signals: quick proof, dashboard status, and next
+  route output.
+- Added `scripts/verify-published-install.js` to verify the published npm
+  artifact after release, including quick proof, dashboard status, Claude
+  install, and Codex metadata install.
+
+### Changed
+- README now leads with executable proof, starter command paths, runtime
+  expectations, and the accountable AI development thesis.
+- Release checklist now includes published install verification through the
+  registry artifact instead of only the local checkout.
+- Package contents checks now require `lib/quick-proof.js` and the shipped
+  quick-proof fixture state.
+- Context and quality pillars now treat quick proof, adoption canary, and
+  published-install verification as durable repository truth.
+
+### Guardrails
+- `npm run test:quick-proof` verifies README links, quick proof docs,
+  transcript evidence, release checklist wiring, adoption canary wiring, local
+  links, and forbidden character rules.
+- `npm run release:check` includes the quick-proof test and package payload
+  verification.
+- The adoption canary harness does not replace host slash-command execution.
+  It captures CLI-verifiable signals and clearly leaves `/god-preflight`,
+  `/god-audit`, and `/god-reconstruct` to the AI coding host.
+
 ## [1.6.24] - 2026-05-16
 
 Strict background release readiness.

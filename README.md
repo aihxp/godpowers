@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.24-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,12 +12,26 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.24 makes background release readiness strict and fail-closed.
-Godpowers now requires delegated release checks to cover root docs, docs,
-agents, skills, routing, workflows, schema, templates, references, hooks, lib,
-scripts, tests, fixtures, GitHub workflows, package metadata, npm, GitHub
-release, CI, publish workflow, and local install state before a human-approved
-release executor can run.
+Want the short proof first? Start with [Quick Proof](docs/quick-proof.md) to
+run `npx godpowers quick-proof --project=.`, see transcript excerpts, pick a
+starter command set, and understand runtime expectations before reading the
+full reference.
+
+Godpowers makes AI coding accountable: every serious run should leave disk
+state, artifacts, validation gates, host guarantees, and a next action. Code is
+only one output. The project memory and proof trail matter too.
+
+Version 2.0.0 makes the proof loop executable. `npx godpowers quick-proof
+--project=.` now renders a shipped fixture with real `.godpowers/state.json`,
+computed next action, missing-artifact visibility, and host guarantees. The
+release also ships a proof transcript, adoption canary harness, published npm
+install verifier, and package checks that require the proof fixture to ship.
+
+Strict release readiness remains fail-closed. Godpowers requires delegated
+release checks to cover root docs, docs, agents, skills, routing, workflows,
+schema, templates, references, hooks, lib, scripts, tests, fixtures, GitHub
+workflows, package metadata, npm, GitHub release, CI, publish workflow, and
+local install state before a human-approved release executor can run.
 
 The dashboard now starts with an action brief and a host guarantee line: the
 next command, why it is recommended, whether the project is ready, the first
@@ -39,6 +53,17 @@ It fuses four disciplines into one unified workflow:
   compliance + code quality), verification before completion.
 - **Team intelligence** - scale-adaptive complexity, specialized agent personas
   (PM, Architect, Executor, Reviewer, Harden Auditor, etc.).
+
+## What Godpowers Proves
+
+Godpowers is designed to prove more than "the model wrote files." A useful run
+should prove:
+
+- The current state is on disk, not trapped in chat memory.
+- The next action is derived from repository state.
+- Planning artifacts, code changes, reviews, and launch checks can be inspected.
+- Host guarantees are explicit, including degraded or simulated agent behavior.
+- Release confidence covers tests, package contents, install surfaces, and docs.
 
 ## Install
 
@@ -63,6 +88,18 @@ contracts, and the other runtimes use their supported agent or subagent
 mechanism against the installed `agents/god-*.md` files. If a host cannot
 provide a true fresh-context spawn, Godpowers must report that limitation
 instead of pretending a background agent ran.
+
+### Runtime Expectations
+
+| Runtime class | What to expect |
+|---|---|
+| Claude Code | Strong reference path when native agent spawning is available. |
+| Codex | Strong installed support through `agents/*.toml` metadata backed by the same Markdown agent contracts. |
+| Other install targets | Skills and agent contracts install, while host-native spawning depends on the tool. |
+| Degraded hosts | Godpowers must report local-only or simulated agent behavior instead of hiding the limitation. |
+
+See [Host capabilities](docs/host-capabilities.md) for the detailed guarantee
+model.
 
 ## Usage
 
@@ -116,6 +153,21 @@ This reads `.godpowers/PROGRESS.md`, scans disk, reconciles any drift, and
 suggests the next logical command with a compact action brief. The SessionStart
 hook does the same thing when you open a new session in a Godpowers project.
 
+### Start With A Path
+
+If the full command surface feels large, begin with one of these paths and only
+learn the next command when Godpowers recommends it.
+
+| Goal | Starter path |
+|---|---|
+| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-build` |
+| Add a feature | `/god-feature`, `/god-reconcile`, `/god-build`, `/god-review`, `/god-sync` |
+| Fix production | `/god-hotfix`, `/god-debug`, `/god-harden`, `/god-postmortem` |
+| Audit an existing repo | `/god-preflight`, `/god-audit`, `/god-archaeology`, `/god-tech-debt` |
+| Ship a release | `/god-status`, `/god-harden`, `/god-launch`, `npm run release:check` |
+| Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
+| Extend Godpowers | `/god-extension-add`, `/god-extension-list`, `npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.` |
+
 The same status engine is available from the installer CLI for humans, CI,
 Codex, Claude, Cursor, Gemini, OpenCode, Windsurf, Antigravity, and any host
 runtime that can execute Node:
@@ -125,6 +177,7 @@ npx godpowers status --project=.
 npx godpowers next --project=.
 npx godpowers status --project=. --brief
 npx godpowers status --project=. --json
+npx godpowers quick-proof --project=.
 npx godpowers dogfood
 npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 ```
@@ -379,9 +432,11 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 ## Full reference
 
 - [Getting Started](docs/getting-started.md)
+- [Quick Proof](docs/quick-proof.md)
 - [Concepts](docs/concepts.md)
 - [Command reference (all 110 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
+- [Adoption Canary](docs/adoption-canary.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)
 - [Repository surface sync](docs/repo-surface-sync.md)
 - [Roadmap](docs/ROADMAP.md)

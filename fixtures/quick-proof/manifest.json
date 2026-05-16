@@ -1,0 +1,19 @@
+{
+  "name": "quick-proof",
+  "description": "Deterministic fixture for the Godpowers quick proof CLI command.",
+  "project": "quick-proof-saas",
+  "proves": [
+    "state on disk",
+    "missing artifacts",
+    "next command",
+    "host guarantees"
+  ],
+  "expected": {
+    "state": "in progress",
+    "next": "/god-prd",
+    "missing": [
+      ".godpowers/prd/PRD.md",
+      ".godpowers/roadmap/ROADMAP.md"
+    ]
+  }
+}

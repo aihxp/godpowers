@@ -1,11 +1,11 @@
 # Users and Community
 
-Godpowers is at v1.6.24. Stable release.
+Godpowers is at v2.0.0. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. This is the first stable
-public adoption line, and real users will reveal which gaps actually matter.
+Currently zero recorded production users. Be honest. The 2.0.0 line ships an
+executable proof path, but real users will reveal which gaps actually matter.
 
 ## Proof needed during freeze
 
@@ -13,8 +13,9 @@ The next credibility milestone is not another command count increase. It is a
 real `/god-mode` run on an unfamiliar codebase that produces shipped or
 ship-ready work.
 
-Before claiming a case study, also run `npx godpowers dogfood` and record
-whether the shipped fixture suite still passes on the local host.
+Before claiming a case study, also run `npx godpowers quick-proof --project=.`,
+`npx godpowers dogfood`, and the adoption canary harness. Record whether the
+shipped fixture suite still passes on the local host.
 
 When that happens, record:
 - Repository shape and project type
@@ -24,7 +25,9 @@ When that happens, record:
 - Failed assumptions or repairs
 - Validation commands and results
 - Host guarantee level from `/god-status` or `godpowers status --brief`
+- Quick proof result from `npx godpowers quick-proof --project=.`
 - Dogfood result from `npx godpowers dogfood`
+- Adoption canary result from `node scripts/run-adoption-canary.js <git-url>`
 - What actually shipped, or what blocked shipment
 
 ## Adopt carefully
