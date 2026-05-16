@@ -5,6 +5,33 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.5] - 2026-05-16
+
+God Mode handoff privacy patch. Keeps the 1.6 command surface stable while
+making Codex-spawned `god-orchestrator` runs display a small safe pointer
+instead of detailed orchestration payloads.
+
+### Added
+- Added a private `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md` handoff
+  pattern for `/god-mode` orchestration context.
+- Added `god-orchestrator` instructions to read handoff files before planning
+  or mutation and keep handoff contents out of the visible transcript.
+- Added regression coverage proving agent validation ignores non-specialist
+  Pillars files under `agents/`.
+
+### Changed
+- `/god-mode` now spawns `god-orchestrator` with only a display-safe project
+  root, flags, and handoff file path.
+- Agent validation and smoke tests now inspect `agents/god-*.md` specialist
+  files while allowing Pillars context files like `agents/context.md` and
+  `agents/repo.md` to coexist.
+
+### Guardrails
+- This patch does not add slash commands, agents, workflows, recipes, schemas,
+  or public artifact formats.
+- `--yolo` still respects safe-sync and Critical harden blockers. The handoff
+  change affects transcript hygiene, not gate policy.
+
 ## [1.6.4] - 2026-05-16
 
 Release gate propagation patch. Keeps the 1.6 command surface stable while

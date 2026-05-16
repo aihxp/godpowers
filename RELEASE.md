@@ -1,11 +1,11 @@
-# Godpowers 1.6.4 Release
+# Godpowers 1.6.5 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.4 hardens release-truth routing around the stable 1.6 surface.
-The goal of this patch is to make safe sync and unresolved Critical harden
-findings block direct Tier 3 commands, `/god-mode`, and `/god-mode --yolo`,
-without changing the public command surface.
+Godpowers 1.6.5 keeps the stable 1.6 surface while fixing Codex God Mode
+transcript hygiene. The goal of this patch is to make `god-orchestrator`
+spawn correctly from `/god-mode` and `/god-mode --yolo` without exposing the
+detailed orchestration payload in the visible transcript.
 
 ## What is stable
 
@@ -27,33 +27,35 @@ without changing the public command surface.
 
 ## What is new
 
-- `/god-next` detects `.godpowers/sync/SAFE-SYNC-PLAN.md` and routes to
-  `/god-reconcile Release Truth And Safe Sync` before `/god-deploy`.
-- Direct `/god-observe`, `/god-harden`, `/god-launch`, and `/god-mode`
-  invocations also require `safe-sync-clear`.
-- `/god-launch` now executes the `no-critical-findings` prerequisite instead
-  of treating it as an unknown pass-through check.
-- `god-orchestrator` now checks router prerequisites before command dispatch,
-  including under `--yolo`.
-- Router tests cover unresolved safe sync plans, checkpoint blockers, direct
-  Tier 3 gates, `/god-mode`, unresolved Critical findings, and resolved gates.
+- `/god-mode` now writes detailed orchestration context to
+  `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md`.
+- `/god-mode` now spawns `god-orchestrator` with only a display-safe project
+  root, flags, and handoff file path.
+- `god-orchestrator` now knows to read the handoff file before planning,
+  spawning, or mutating project state.
+- `god-orchestrator` now treats handoff contents as private orchestration
+  context and keeps them out of the visible transcript.
+- Agent validation and smoke tests now inspect `agents/god-*.md` specialist
+  files while allowing Pillars context files like `agents/context.md` and
+  `agents/repo.md` to coexist.
 
-## What 1.6.4 means
+## What 1.6.5 means
 
-Godpowers 1.6.4 does not expand the public command surface. It tightens the
-runtime decision path so project truth can override structural tier order for
-safe sync and harden Critical gates.
+Godpowers 1.6.5 does not expand the public command surface. It fixes the Codex
+spawn integration path so the right specialist agent is still started, but the
+host UI only sees a small pointer to disk state instead of raw checkpoint,
+routing, and local-file details.
 
-The domain glossary remains preparation context. PRD, ARCH, ROADMAP, STACK,
-docs, and Pillars files still carry durable decisions for their own domains.
+Safe sync and unresolved Critical harden findings remain release-truth gates.
+`--yolo` can still auto-pick defaults, but it cannot bypass those blockers.
 
 ## Stability policy
 
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.4` git tag points to the release commit that matches the npm
-`godpowers@1.6.4` package. Public publishes should prefer the tag-triggered
+The `v1.6.5` git tag points to the release commit that matches the npm
+`godpowers@1.6.5` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

@@ -48,8 +48,10 @@ for skill in "$ROOT/skills/"*.md; do
   fi
 done
 
-# 3. All agent files have frontmatter, name, description
-for agent in "$ROOT/agents/"*.md; do
+# 3. All specialist agent files have frontmatter, name, description.
+# Project Pillars may also live under agents/ (context.md, repo.md, etc.),
+# but those are context files, not spawnable specialist agents.
+for agent in "$ROOT/agents/"/god-*.md; do
   name="$(basename "$agent")"
   if head -1 "$agent" | grep -q "^---"; then
     pass "agents/$name has frontmatter"

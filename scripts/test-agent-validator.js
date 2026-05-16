@@ -285,6 +285,24 @@ description: r
   if (unresolved.length !== 0) throw new Error('false positive');
 });
 
+test('auditAll ignores Pillars files in agents directory', () => {
+  const tmp = mkAgentsDir({
+    'context': '# Context\n\nProject context, not a specialist agent.\n',
+    'repo': '# Repo\n\nRepository context, not a specialist agent.\n',
+    'god-real': `---
+name: god-real
+description: r
+---`
+  });
+  const result = validator.auditAll(tmp);
+  if (result.summary.agentCount !== 1) {
+    throw new Error(`expected 1 specialist agent, got ${result.summary.agentCount}`);
+  }
+  if (result.summary.errors !== 0) {
+    throw new Error(`expected 0 errors, got ${result.summary.errors}`);
+  }
+});
+
 // ============================================================================
 // auditAll on real godpowers/agents
 // ============================================================================

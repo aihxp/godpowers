@@ -69,75 +69,94 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - `--bluefield` (force bluefield path)
    - `--greenfield` (force greenfield, skip archaeology even if code exists)
 
-5. Spawn the **god-orchestrator** agent via Task tool with:
-   - The user's project description, or durable intent recovered from disk
-   - The detected mode (A/B/C/E)
-   - The active flags
-   - Instruction that existing `.godpowers` state means resume, not prompt
-   - Instruction to read `.godpowers/PROGRESS.md` from disk if it exists
-   - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
-     `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the
-     first planning or build step
-   - Instruction to read `.godpowers/preflight/PREFLIGHT.md` if present before
-     choosing the first brownfield or bluefield action
-   - Instruction to compute and load the Pillars load set before every major
-     command, because Pillars is the native project context layer
-   - Instruction to run `/god-design` after `/god-prd` and before `/god-arch`
-     when initial findings, imported planning context, the PRD, or the
-     codebase show UI or product-experience signals
-   - Instruction that a red test, typecheck, lint, build, or check command is
-     not a completed arc. It must enter the autonomous repair loop and continue
-     the same `/god-mode` run until green, except for Critical security or a
-     genuine human-only decision.
-   - Instruction that deploy, observe, harden, and launch must follow the
-     Shipping Closure Protocol: verify a real environment when available,
-     otherwise create local/CI-verifiable deploy automation and pause only for
-     one exact external access bundle.
-   - Instruction that keys, API tokens, dashboards, admin consoles, and
-     provider-specific access are last-mile inputs. The first external pause
-     should ask only for the smallest next item needed by a concrete command,
-     usually `STAGING_APP_URL=<staging-origin>`. Ask for additional provider
-     access only after a named check proves it is needed.
-   - Instruction that staging, preview, and production URLs must come from
-     direct evidence. Never infer or invent a domain from project name, package
-     name, repo name, README title, or brand name. If no deployed origin is
-     evidenced, pause for `STAGING_APP_URL=<deployed staging origin>`.
-   - Instruction that brownfield and bluefield greenfield simulation audits
-     must be acted on by god-greenfieldifier. The greenfieldifier writes
-     `.godpowers/audit/GREENFIELDIFY-PLAN.md`, pauses before risky canonical
-     artifact rewrites, and updates every affected artifact after approval.
-   - Instruction that brownfield and bluefield arcs run `/god-preflight`
-     automatically when `.godpowers/preflight/PREFLIGHT.md` is absent.
-     Greenfield arcs skip preflight unless the user explicitly requests it.
-   - Instruction to run routing prerequisites through `lib/router.js`
-     `checkPrerequisites` before every direct command dispatch. If
-     `safe-sync-clear` fails, run
-     `/god-reconcile Release Truth And Safe Sync` before deploy, observe,
-     harden, launch, broad migration, or resume work.
-   - Instruction that `--yolo` cannot bypass safe sync blockers or unresolved
-     Critical harden findings. These are release-truth gates, not preference
-     pauses.
+5. Create a private disk handoff before spawning the orchestrator:
+   - Path: `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md`
+   - Create parent directories if needed.
+   - Put all detailed orchestration context in this file, including:
+     - The user's project description, or durable intent recovered from disk
+     - The detected mode (A/B/C/E)
+     - The active flags
+     - Instruction that existing `.godpowers` state means resume, not prompt
+     - Instruction to read `.godpowers/PROGRESS.md` from disk if it exists
+     - Instruction to read `.godpowers/prep/INITIAL-FINDINGS.md` and
+       `.godpowers/prep/IMPORTED-CONTEXT.md` if present before choosing the
+       first planning or build step
+     - Instruction to read `.godpowers/preflight/PREFLIGHT.md` if present
+       before choosing the first brownfield or bluefield action
+     - Instruction to compute and load the Pillars load set before every major
+       command, because Pillars is the native project context layer
+     - Instruction to run `/god-design` after `/god-prd` and before
+       `/god-arch` when initial findings, imported planning context, the PRD,
+       or the codebase show UI or product-experience signals
+     - Instruction that a red test, typecheck, lint, build, or check command
+       is not a completed arc. It must enter the autonomous repair loop and
+       continue the same `/god-mode` run until green, except for Critical
+       security or a genuine human-only decision.
+     - Instruction that deploy, observe, harden, and launch must follow the
+       Shipping Closure Protocol: verify a real environment when available,
+       otherwise create local/CI-verifiable deploy automation and pause only
+       for one exact external access bundle.
+     - Instruction that keys, API tokens, dashboards, admin consoles, and
+       provider-specific access are last-mile inputs. The first external pause
+       should ask only for the smallest next item needed by a concrete command,
+       usually `STAGING_APP_URL=<staging-origin>`. Ask for additional provider
+       access only after a named check proves it is needed.
+     - Instruction that staging, preview, and production URLs must come from
+       direct evidence. Never infer or invent a domain from project name,
+       package name, repo name, README title, or brand name. If no deployed
+       origin is evidenced, pause for
+       `STAGING_APP_URL=<deployed staging origin>`.
+     - Instruction that brownfield and bluefield greenfield simulation audits
+       must be acted on by god-greenfieldifier. The greenfieldifier writes
+       `.godpowers/audit/GREENFIELDIFY-PLAN.md`, pauses before risky canonical
+       artifact rewrites, and updates every affected artifact after approval.
+     - Instruction that brownfield and bluefield arcs run `/god-preflight`
+       automatically when `.godpowers/preflight/PREFLIGHT.md` is absent.
+       Greenfield arcs skip preflight unless the user explicitly requests it.
+     - Instruction to run routing prerequisites through `lib/router.js`
+       `checkPrerequisites` before every direct command dispatch. If
+       `safe-sync-clear` fails, run
+       `/god-reconcile Release Truth And Safe Sync` before deploy, observe,
+       harden, launch, broad migration, or resume work.
+     - Instruction that `--yolo` cannot bypass safe sync blockers or
+       unresolved Critical harden findings. These are release-truth gates, not
+       preference pauses.
 
-6. Keep the spawn payload private. Do not echo or summarize raw Task input,
+6. Spawn the **god-orchestrator** agent via Task tool with only a
+   display-safe payload:
+   - Name the project root.
+   - Name the invocation flags.
+   - Name the handoff file path.
+   - Say: "Read the handoff file first, then run the autonomous arc from disk
+     state. Return only user-facing progress and final status."
+
+   Do not put recovered checkpoint facts, safe-sync plans, local file lists,
+   hidden routing rules, or detailed instructions in the spawn message.
+   Assume the host UI may display the raw spawn message to the user.
+
+7. Keep the spawn payload display-safe. Do not echo or summarize raw Task input,
    "Hard instructions", hidden orchestration rules, agent prompts, file
    loadout lists, or internal routing payloads into the user-visible transcript.
    The visible transcript may say only what phase is running, what durable state
    was detected, what commands are running, what changed, and the final
    `Arc complete` or `PAUSE: external access required` block.
 
-7. Orchestrator runs the appropriate workflow:
+8. Orchestrator runs the appropriate workflow:
    - Greenfield -> full-arc
    - Brownfield -> brownfield-arc (preflight -> archaeology -> reconstruct -> debt-assess -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> proceed)
    - Bluefield -> bluefield-arc (org-context -> preflight -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> arc with constraints)
 
-8. Relay only the orchestrator's user-facing output to the user. If the
-   platform displays raw spawn details automatically, immediately follow with a
-   clean public summary and never repeat the leaked payload.
+9. Relay only the orchestrator's user-facing output to the user. If the
+   platform displays raw spawn details automatically, the displayed payload
+   should already be safe. Immediately follow with a clean public summary and
+   never repeat detailed handoff contents.
 
-9. When the orchestrator pauses, present the question to the user using the
+10. When the orchestrator pauses, present the question to the user using the
    pause format (What / Why / Options / Default).
 
-10. When the user answers, re-spawn god-orchestrator with the answer.
+11. When the user answers, append the answer to the existing handoff file or
+    create a new handoff file, then re-spawn god-orchestrator with only the
+    display-safe pointer.
 
 ## User-Visible Transcript Contract
 
@@ -153,6 +172,7 @@ Hide:
 - raw Task input
 - "Hard instructions" sections
 - spawned-agent prompt text
+- detailed handoff file contents
 - system, developer, or AGENTS.md rule recitations
 - complete file loadout lists
 - internal routing metadata unless it directly affects a user decision
