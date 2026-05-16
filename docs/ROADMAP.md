@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.14
+> Current shipped: v1.6.15
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,13 +12,13 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.14)
+### Current surface (v1.6.15)
 
 What works today:
-- **108 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **109 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
-  automation, extension management, release support)
+  automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
 - **13 executable workflows** and **36 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
@@ -36,6 +36,9 @@ What works today:
   host tool calling for simple read-only setup or spawn
   `god-automation-engineer` for complex setup, then records state only after
   the host setup succeeds.
+- **Planning-system migration**: `/god-init` and `/god-migrate` detect GSD,
+  BMAD, and Superpowers, import prep context and seed artifacts, and
+  `/god-sync` writes managed sync-back companion files.
 - **Codex agent metadata**: all 39 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route
@@ -74,7 +77,7 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- Full CI suite with 37+ behavioral test files and extension-pack publish gates
+- Full CI suite with 38+ behavioral test files and extension-pack publish gates
 - Release gate with full tests, audit checks, E2E smoke, and package contents
   verification
 

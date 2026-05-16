@@ -1,0 +1,61 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-migrate
+  description: Detect and migrate GSD, BMAD, and Superpowers planning context
+  tier: 0
+
+prerequisites:
+  required: []
+  recommended:
+    - command: /god-init
+      when: .godpowers-state-missing
+
+execution:
+  spawns: []
+  context: current
+  reads:
+    - .planning/**
+    - .gsd/**
+    - _bmad-output/**
+    - .bmad/**
+    - docs/superpowers/**
+  writes:
+    - .godpowers/prep/IMPORTED-CONTEXT.md
+    - .godpowers/prd/PRD.md
+    - .godpowers/arch/ARCH.md
+    - .godpowers/roadmap/ROADMAP.md
+    - .godpowers/stack/DECISION.md
+    - .godpowers/build/STATE.md
+    - .godpowers/state.json
+    - .planning/GODPOWERS-SYNC.md
+    - .gsd/GODPOWERS-SYNC.md
+    - _bmad-output/GODPOWERS-SYNC.md
+    - .bmad/GODPOWERS-SYNC.md
+    - docs/superpowers/GODPOWERS-SYNC.md
+  local-runtime:
+    - lib/planning-systems.importPlanningContext
+    - lib/source-sync.run
+  conditional-spawns:
+    - agent: god-greenfieldifier
+      when: low-confidence-or-conflicting-import
+
+standards:
+  gate-on-failure: pause-for-user
+
+success-path:
+  next-recommended: /god-audit
+  alternatives:
+    - command: /god-prd
+      when: imported-prd-seed-needs-hardening
+    - command: /god-roadmap
+      when: imported-roadmap-seed-needs-hardening
+    - command: /god-sync
+      when: user-only-wants-sync-back
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: source-systems imported and sync-back timestamps updated
+  events: [migration.detected, artifact.imported, source-sync.updated]

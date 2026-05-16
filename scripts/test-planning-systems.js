@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+/**
+ * Behavioral tests for planning-system migration and source sync-back.
+ */
+
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+
+const planningSystems = require('../lib/planning-systems');
+const sourceSync = require('../lib/source-sync');
+const state = require('../lib/state');
+
+let passed = 0;
+let failed = 0;
+
+function test(name, fn) {
+  try {
+    fn();
+    console.log(`  + ${name}`);
+    passed += 1;
+  } catch (e) {
+    console.error(`  x ${name}: ${e.message}`);
+    failed += 1;
+  }
+}
+
+function assert(cond, msg) {
+  if (!cond) throw new Error(msg || 'assertion failed');
+}
+
+function write(file, content) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, content);
+}
+
+function mkProject() {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-planning-systems-'));
+  fs.mkdirSync(path.join(tmp, '.godpowers'), { recursive: true });
+  state.init(tmp, 'planning-systems-test');
+  return tmp;
+}
+
+console.log('\n  Planning-system migration tests\n');
+
+test('detect finds GSD .planning artifacts', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '.planning', 'PROJECT.md'), '# Project\n\n## Users\n');
+  write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Functional Requirements\n');
+  write(path.join(tmp, '.planning', 'ROADMAP.md'), '# Roadmap\n\n## Phase 1\n');
+
+  const result = planningSystems.detect(tmp);
+  const gsd = result.systems.find((system) => system.id === 'gsd');
+  assert(gsd, 'GSD not detected');
+  assert(gsd.files.some((file) => file.path === '.planning/REQUIREMENTS.md'), 'requirements missing');
+  assert(gsd.confidence === 'high', `unexpected confidence: ${gsd.confidence}`);
+});
+
+test('detect finds BMAD v6 output artifacts', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '_bmad-output', 'planning-artifacts', 'PRD.md'), '# PRD\n\n## Goals\n');
+  write(path.join(tmp, '_bmad-output', 'planning-artifacts', 'architecture.md'), '# Architecture\n\n## ADR\n');
+  write(path.join(tmp, '_bmad-output', 'implementation-artifacts', 'sprint-status.yaml'), 'stories: []\n');
+
+  const result = planningSystems.detect(tmp);
+  const bmad = result.systems.find((system) => system.id === 'bmad');
+  assert(bmad, 'BMAD not detected');
+  assert(bmad.files.some((file) => file.path.includes('architecture.md')), 'architecture missing');
+});
+
+test('detect finds Superpowers specs and plans', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, 'docs', 'superpowers', 'specs', '2026-05-16-feature-design.md'), '# Feature Design\n\n## Scope\n');
+  write(path.join(tmp, 'docs', 'superpowers', 'plans', '2026-05-16-feature.md'), '# Plan\n\n- [ ] Write failing test\n');
+
+  const result = planningSystems.detect(tmp);
+  const superpowers = result.systems.find((system) => system.id === 'superpowers');
+  assert(superpowers, 'Superpowers not detected');
+  assert(superpowers.files.some((file) => file.path.includes('plans')), 'plan missing');
+});
+
+test('importPlanningContext writes prep context and Godpowers seed artifacts', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Login\n');
+  write(path.join(tmp, '.planning', 'ROADMAP.md'), '# Roadmap\n\n## Phase 1\n');
+
+  const result = planningSystems.importPlanningContext(tmp);
+  assert(result.importedContextPath === '.godpowers/prep/IMPORTED-CONTEXT.md', 'bad imported context path');
+  assert(result.writtenArtifacts.includes('prd/PRD.md'), 'PRD seed not written');
+  assert(result.writtenArtifacts.includes('roadmap/ROADMAP.md'), 'roadmap seed not written');
+
+  const imported = fs.readFileSync(path.join(tmp, '.godpowers', 'prep', 'IMPORTED-CONTEXT.md'), 'utf8');
+  assert(imported.includes('[DECISION] Source system: GSD.'), 'source not documented');
+  assert(imported.includes('[HYPOTHESIS]'), 'hypothesis labels missing');
+
+  const nextState = state.read(tmp);
+  assert(Array.isArray(nextState['source-systems']), 'source-systems state missing');
+  assert(nextState.tiers['tier-1'].prd.status === 'imported', 'PRD not marked imported');
+});
+
+test('importPlanningContext preserves existing Godpowers artifacts by default', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Login\n');
+  write(path.join(tmp, '.godpowers', 'prd', 'PRD.md'), '# Existing PRD\n\n- [DECISION] Keep me.\n');
+
+  planningSystems.importPlanningContext(tmp);
+  const prd = fs.readFileSync(path.join(tmp, '.godpowers', 'prd', 'PRD.md'), 'utf8');
+  assert(prd.includes('Keep me'), 'existing PRD overwritten');
+});
+
+test('sourceSync writes companion file and preserves existing STATE.md prose', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '.planning', 'STATE.md'), '# GSD State\n\nNative state stays here.\n');
+  write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Login\n');
+  planningSystems.importPlanningContext(tmp);
+
+  const result = sourceSync.run(tmp);
+  assert(result.results.length === 1, `unexpected sync count: ${result.results.length}`);
+  assert(result.results[0].companion === '.planning/GODPOWERS-SYNC.md', 'wrong companion path');
+
+  const companion = fs.readFileSync(path.join(tmp, '.planning', 'GODPOWERS-SYNC.md'), 'utf8');
+  assert(companion.includes(sourceSync.FENCE_BEGIN), 'companion fence missing');
+  assert(companion.includes('Godpowers Sync-Back'), 'sync content missing');
+
+  const nativeState = fs.readFileSync(path.join(tmp, '.planning', 'STATE.md'), 'utf8');
+  assert(nativeState.includes('Native state stays here.'), 'native prose lost');
+  assert(nativeState.includes('.planning/GODPOWERS-SYNC.md'), 'pointer missing');
+});
+
+test('sourceSync is idempotent', () => {
+  const tmp = mkProject();
+  write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Login\n');
+  planningSystems.importPlanningContext(tmp);
+
+  sourceSync.run(tmp);
+  const first = fs.readFileSync(path.join(tmp, '.planning', 'GODPOWERS-SYNC.md'), 'utf8');
+  sourceSync.run(tmp);
+  const second = fs.readFileSync(path.join(tmp, '.planning', 'GODPOWERS-SYNC.md'), 'utf8');
+  assert(first === second, 'sync-back changed on second run');
+  const count = (second.match(/godpowers:source-sync:begin/g) || []).length;
+  assert(count === 1, `expected one fence, got ${count}`);
+});
+
+console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
+if (failed > 0) process.exit(1);

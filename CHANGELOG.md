@@ -5,6 +5,43 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.15] - 2026-05-16
+
+Planning-system migration and sync-back.
+
+### Added
+- Added `lib/planning-systems.js` to detect GSD, BMAD, and Superpowers
+  planning context and convert useful signals into Godpowers prep and seed
+  artifacts.
+- Added `lib/source-sync.js` to write current Godpowers progress back into
+  managed companion files for imported planning systems.
+- Added `/god-migrate` as the explicit command for planning-system detection,
+  import, sync-back, and specialist escalation when migration evidence is
+  ambiguous.
+- Added `docs/planning-system-migration.md` with detection signals, import
+  mapping, sync-back destinations, conflict rules, and return-path guidance.
+- Added behavioral tests for GSD, BMAD, Superpowers, imported seed artifacts,
+  state recording, and idempotent sync-back.
+
+### Changed
+- `/god-init` now auto-invokes planning-system import when GSD, BMAD, or
+  Superpowers evidence is detected.
+- `/god-sync` now auto-invokes source-system sync-back when `state.json`
+  records enabled source systems.
+- `reverse-sync` now includes source-system sync-back in its runtime result.
+- `state.v1.json` now records imported source systems, import hashes,
+  sync-back hashes, conflict counts, and sync-back policy.
+
+### Guardrails
+- Imported planning context remains `[HYPOTHESIS]` until confirmed by the user
+  or a Godpowers artifact.
+- Existing Godpowers artifacts are preserved unless the user explicitly forces
+  overwrite.
+- Source-system files are not rewritten outside Godpowers-owned fences or
+  companion files.
+- Low-confidence or conflicting imports route to `god-greenfieldifier` for a
+  controlled migration plan.
+
 ## [1.6.14] - 2026-05-16
 
 Approved automation setup execution.

@@ -1,21 +1,18 @@
-# Godpowers 1.6.14 Release
+# Godpowers 1.6.15 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.14 turns automation setup from a plan-only contract into an
-approved execution contract for hosts that expose tool calling. The CLI remains
-deterministic and read-only, while `/god-automation-setup` can use host-native
-tool calling for simple read-only setup or spawn `god-automation-engineer` for
-complex setup.
+Godpowers 1.6.15 adds automatic migration from GSD, BMAD, and Superpowers
+projects into Godpowers. The release also adds managed sync-back so a team can
+return to its prior planning system with current Godpowers progress visible.
 
 ## What is stable
 
-- 108 slash commands
+- 109 slash commands
 - 40 specialist agents
 - 13 executable workflows
 - 36 intent recipes
 - 15-runtime installer
-- 459 package files in the npm tarball
 - Codex installs with generated `god-*.toml` agent metadata files
 - Markdown specialist agent contracts at `<runtime>/agents/god-*.md`
 - Shared runtime bundle at `<runtime>/godpowers-runtime`
@@ -29,57 +26,68 @@ complex setup.
 
 ## What is new
 
-- Added `god-automation-engineer`.
-- Added automation execution-plan metadata to `lib/automation-providers.js`.
-- Added gated automation state recording helpers.
-- `/god-automation-setup` now shows direct host tool calling availability,
-  complex setup delegation, and the state recording path.
-- Tests now cover host tool execution plans, complex setup delegation, and
-  post-success automation recording.
+- Added `lib/planning-systems.js` for GSD, BMAD, and Superpowers detection.
+- Added `lib/source-sync.js` for managed sync-back companion files.
+- Added `/god-migrate` as the explicit migration command.
+- `/god-init` now auto-invokes planning-system import when source systems are
+  detected.
+- `/god-sync` now auto-invokes source-system sync-back when enabled source
+  systems are recorded in `state.json`.
+- `reverse-sync` now returns source-system sync-back results.
+- `state.v1.json` now records source-system import and sync-back state.
+- Added `docs/planning-system-migration.md`.
 
-## Platform behavior
+## Migration behavior
 
-Claude Code, Codex, Cursor, Windsurf, Gemini, OpenCode, Copilot, Augment,
-Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, and Pi all receive the same
-portable Markdown agent contracts. Codex also receives `god-*.toml` files as
-its registry adapter.
+Godpowers detects:
 
-The dashboard and automation provider engines ship in the installed runtime
-bundle so host tools can use shared implementation code instead of parallel
-command-specific Markdown contracts. If a host platform cannot provide a true
-fresh-context agent spawn, durable scheduler, or callable automation tool,
-Godpowers must say so visibly and report the work as local runtime only,
-manual workflow only, or simulated in current context.
+- GSD: `.planning/`, `.gsd/`, `GSD.md`, and `gsd*.md`
+- BMAD: `_bmad/`, `_bmad-output/`, `.bmad-core/`, `.bmad/`, and `BMAD.md`
+- Superpowers: `docs/superpowers/`, `.superpowers/`, `SUPERPOWERS.md`, and
+  project-local skills
 
-## Safety policy
+Imported context is written to `.godpowers/prep/IMPORTED-CONTEXT.md`.
+Missing Godpowers seed artifacts are created only when source evidence exists.
+Existing Godpowers artifacts are preserved unless the user explicitly forces an
+overwrite.
 
-Godpowers may proactively suggest next steps and may run directly evidenced
-local helpers. It may spawn bounded agents only when the current workflow owns
-that surface.
+## Sync-back behavior
 
-Godpowers still must not auto-run these without explicit user intent:
+Godpowers writes managed companion files:
 
-- deployed staging verification against a guessed URL
-- production launch
-- provider dashboard, admin console, DNS, credential, or secret checks
-- schedule, routine, background agent, API trigger, or CI workflow creation
-- broad dependency upgrades
-- destructive repair, rollback, reset, delete, or cleanup
-- clearing `.godpowers/REVIEW-REQUIRED.md`
-- accepting Critical security findings
-- git stage, commit, push, package, release, or publish
-- `.godpowers/automations.json` writes before host setup success
+- GSD: `.planning/GODPOWERS-SYNC.md` or `.gsd/GODPOWERS-SYNC.md`
+- BMAD: `_bmad-output/GODPOWERS-SYNC.md` or `.bmad/GODPOWERS-SYNC.md`
+- Superpowers: `docs/superpowers/GODPOWERS-SYNC.md` or
+  `.superpowers/GODPOWERS-SYNC.md`
+
+Pointer fences are written only when a safe native state file already exists.
+Godpowers never rewrites source-system prose outside managed fences.
+
+## Auto-invoke and auto-spawn policy
+
+The import path is local runtime work and must be reported as:
+
+```
+Agent: none, local runtime only
+```
+
+The sync-back path is also local runtime work and must be reported the same
+way.
+
+Godpowers spawns `god-greenfieldifier` only when import confidence is low,
+multiple source systems conflict, or canonical seed artifacts cannot be safely
+created from available evidence.
 
 ## Validation
 
 Release validation includes:
 
-- `node scripts/test-dashboard.js`
-- `node scripts/test-automation-providers.js`
+- `node scripts/test-planning-systems.js`
+- `node scripts/test-reverse-sync.js`
 - `npm test`
 - `npm run test:audit`
 - `node scripts/check-package-contents.js`
 - `git diff --check`
 
-The `v1.6.14` git tag points to the release commit that matches the npm
-`godpowers@1.6.14` package.
+The `v1.6.15` git tag points to the release commit that matches the npm
+`godpowers@1.6.15` package.

@@ -1,15 +1,15 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.14 (pure-skill model plus dashboard and automation provider CLI)
+> Status: STABLE v1.6.15 (pure-skill model plus planning-system migration)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.14 keeps the public surface stable while making status, next-action
-routing, and automation provider support executable outside the slash command
-layer. Auto-invoked commands, spawned agents, local runtime helpers,
-platform-specific spawning limits, and dashboard progress must be reported
-visibly instead of implied as hidden background work.
+v1.6.15 keeps the public surface stable while adding automatic migration from
+GSD, BMAD, and Superpowers into Godpowers prep and seed artifacts. Auto-invoked
+commands, spawned agents, local runtime helpers, platform-specific spawning
+limits, migration imports, sync-back writes, and dashboard progress must be
+reported visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only status
@@ -683,7 +683,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 108 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 109 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

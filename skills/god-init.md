@@ -44,6 +44,13 @@ needs to specify a mode.
    - If any are detected, summarize useful signals into
      `.godpowers/prep/IMPORTED-CONTEXT.md` as preparation context.
      Do not treat external planning-system files as source of truth.
+   - Auto-invoke `lib/planning-systems.importPlanningContext(projectRoot)`
+     when GSD, Superpowers, or BMAD context is detected. Report this as
+     `Agent: none, local runtime only`.
+   - If import confidence is low, more than one source system appears to
+     conflict, or canonical Godpowers seed artifacts cannot be created from
+     available evidence, spawn `god-greenfieldifier` to produce a controlled
+     migration plan before rewriting any canonical artifact.
    - Detect whether early design preparation is warranted:
      - UI frameworks or app models: React, Next, Vue, Nuxt, Svelte,
        SvelteKit, Astro, Remix, Angular, Solid, Flutter, Electron, Tauri
@@ -109,6 +116,9 @@ needs to specify a mode.
    - Write `.godpowers/prep/INITIAL-FINDINGS.md`
    - Run planning-system context detection for GSD, Superpowers, and BMAD
    - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
+   - Run automatic planning-system import through
+     `lib/planning-systems.importPlanningContext(projectRoot)` and record
+     detected source systems under `state.json` `source-systems`
    - Initialize native Pillars context and record Pillars health in
      `INITIAL-FINDINGS.md`
    - For brownfield: schedule preflight before archaeology + reconstruction

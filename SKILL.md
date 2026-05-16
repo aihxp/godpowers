@@ -214,7 +214,7 @@ Auto-invoked:
   Trigger: <what caused this automatic step>
   Agent: <god-updater | god-context-writer | none, local runtime only>
   Local syncs:
-    + <reverse-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
+    + <planning-system-import | reverse-sync | source-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
   Artifacts: <changed files, no-op, or deferred>
   Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
 ```
@@ -238,6 +238,8 @@ Automatic steps that especially need visible reporting:
 - checkpoint refresh after state mutations
 - automation provider detection in `/god-status`, `/god-next`,
   `/god-automation-status`, and `/god-automation-setup`
+- planning-system import during `/god-init` or `/god-migrate`
+- source-system sync-back during `/god-sync`, `/god-scan`, or `/god-migrate`
 
 ### 13. Proactive Auto-Invoke Policy
 Godpowers should be proactive from disk evidence, not from guesswork. Before
@@ -265,6 +267,11 @@ Run these local runtime helpers automatically when their trigger is present:
   `PROGRESS.md` mutation.
 - Lightweight reverse-sync or linkage scan after code or artifact edits.
 - Pillars sync planning after durable artifact truth changes.
+- `lib/planning-systems.importPlanningContext` when GSD, BMAD, or
+  Superpowers planning context is detected during `/god-init` or
+  `/god-migrate`.
+- `lib/source-sync.run` when `state.json` records enabled `source-systems`
+  entries and `/god-sync`, `/god-scan`, or `/god-migrate` closes a workflow.
 - Context refresh dry-run after `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
   `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`,
   `.clinerules`, `.roo/`, or `.continue/` changes.
@@ -289,6 +296,9 @@ Spawn these agents only when the trigger is direct and scope is bounded:
 - `god-automation-engineer` after the user approves provider, template,
   cadence, and scope for multi-template, write-capable, background-agent,
   scriptable-scheduler, or provider-uncertain automation setup.
+- `god-greenfieldifier` when imported GSD, BMAD, or Superpowers context has
+  low confidence, conflicting systems, or missing canonical Godpowers seed
+  artifacts after local import.
 
 #### Level 4: Explicit approval required
 Never auto-run these from inference alone:

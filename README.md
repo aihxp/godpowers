@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.14-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.15-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,16 +12,13 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.14 builds on the executable dashboard engine and CLI status surface:
-`godpowers status --project .` and `godpowers next --project .` now compute the
-same disk-derived progress, planning visibility, proactive checks, and next
-action used by `/god-status`, `/god-next`, and God Mode closeouts.
-It adds an opt-in automation-provider layer so Godpowers can detect host
-automation surfaces such as Codex App automations, Claude Routines, Cline
-schedules, Qwen loops, Cursor Background Agents, Copilot cloud agent, and
-scriptable CLI providers without silently creating background work.
-Approved setup can now use host tool calling for simple read-only automation
-or spawn `god-automation-engineer` for complex automation setup.
+Version 1.6.15 adds planning-system migration for teams arriving from GSD,
+BMAD, or Superpowers. `/god-init` now auto-detects those systems, imports
+useful context into Godpowers prep and seed artifacts, and records source
+systems in `state.json`. `/god-sync` now syncs current Godpowers progress back
+to managed companion files so teams can return to the prior system with a clear
+handoff trail. Ambiguous imports can auto-spawn `god-greenfieldifier` for a
+controlled migration plan.
 
 It fuses four disciplines into one unified workflow:
 
@@ -147,6 +144,7 @@ npx godpowers status --project=. --json
 | `/god-status` | Re-derive state from disk | (built-in) |
 | `/god-automation-status` | Show host automation provider support | (built-in) |
 | `/god-automation-setup` | Prepare opt-in automation setup | (built-in) |
+| `/god-migrate` | Detect GSD, BMAD, and Superpowers context; import and sync back | god-greenfieldifier when needed |
 | `/god-preflight` | Read-only intake audit before project-run readiness and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
@@ -216,6 +214,19 @@ Automation setup is opt-in. The installer does not create schedules, routines,
 background agents, API triggers, or CI workflows. Safe starting templates are
 read-only status, checkpoint, review queue, hygiene, and release readiness
 reports.
+
+Godpowers can migrate from adjacent planning systems:
+
+```bash
+/god-migrate
+```
+
+This detects GSD `.planning/` or `.gsd/`, BMAD `_bmad-output/` or `.bmad/`,
+and Superpowers specs or plans. It writes
+`.godpowers/prep/IMPORTED-CONTEXT.md`, optional imported seed artifacts, and
+managed sync-back files such as `.planning/GODPOWERS-SYNC.md`,
+`_bmad-output/GODPOWERS-SYNC.md`, or
+`docs/superpowers/GODPOWERS-SYNC.md`.
 
 For existing codebases and org-constrained new projects, God Mode now runs a
 greenfield simulation audit and then actions it through a greenfieldification
@@ -339,7 +350,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 108 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 109 skills + 40 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
 - [1.5 Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)

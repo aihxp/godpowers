@@ -1,8 +1,8 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.14.
+Complete command, agent, and artifact reference for v1.6.15.
 
-## Slash commands (108 total)
+## Slash commands (109 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
@@ -10,6 +10,7 @@ Complete command, agent, and artifact reference for v1.6.14.
 - `/god-status` - Re-derive project state from disk.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
+- `/god-migrate` - Detect GSD, BMAD, and Superpowers context, import seeds, and sync back progress.
 - `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
 ### Installer CLI helpers
@@ -79,6 +80,7 @@ Complete command, agent, and artifact reference for v1.6.14.
 - `/god-review-changes` - Walk REVIEW-REQUIRED.md interactively.
 - `/god-reconcile` - Comprehensive reconciliation across all impacted artifacts.
 - `/god-reconstruct` - Reverse-engineer planning artifacts from existing code.
+- `/god-migrate` - Convert adjacent planning-system context into Godpowers prep and seed artifacts.
 
 ### Verification
 - `/god-lint` - Mechanical validation against have-nots catalog.

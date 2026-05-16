@@ -74,6 +74,63 @@
       "description": "Slot for linkage map summary. Authoritative file is .godpowers/linkage.json.",
       "additionalProperties": true
     },
+    "source-systems": {
+      "type": "array",
+      "description": "Detected external planning systems imported into Godpowers and eligible for managed sync-back.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "confidence", "files", "import-hash"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["gsd", "bmad", "superpowers", "other"]
+          },
+          "name": { "type": "string" },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"]
+          },
+          "markers": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "files": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "import-hash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "imported-at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sync-back-enabled": {
+            "type": "boolean",
+            "default": true
+          },
+          "last-sync-back-hash": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              { "type": "null" }
+            ]
+          },
+          "last-sync-back-at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "conflict-count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "yolo-decisions": {
       "type": "array",
       "description": "Auto-decisions made under --yolo. Mirrored to YOLO-DECISIONS.md.",
