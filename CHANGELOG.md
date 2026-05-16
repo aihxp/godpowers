@@ -5,6 +5,34 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.17] - 2026-05-16
+
+Autonomous repository documentation sync.
+
+### Added
+- Added `lib/repo-doc-sync.js` to detect and refresh mechanical repository
+  documentation claims.
+- Added `docs/repo-doc-sync.md` with auto-invoke, auto-spawn, Pillars, and
+  arc-ready closeout behavior.
+- Added behavioral tests for stale repo docs detection, safe mechanical sync,
+  sync logging, Pillars planning, and adjacent autonomous sync recommendations.
+- Added missing `/god-export-otel` routing metadata.
+
+### Changed
+- `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, and `/god-mode` now
+  document repo documentation sync behavior.
+- The dashboard proactive docs check now uses `lib/repo-doc-sync.detect`.
+- Package contents checks now require `lib/repo-doc-sync.js` and
+  `routing/god-export-otel.yaml`.
+- Release and contribution docs now describe repo documentation sync as part of
+  release readiness.
+
+### Guardrails
+- Detection is read-only by default.
+- Safe apply is limited to mechanical version, badge, and count claims.
+- Narrative changelog, release, contribution, support, and security policy
+  changes route to `god-docs-writer` or the maintainer.
+
 ## [1.6.16] - 2026-05-16
 
 Feature awareness for existing Godpowers projects.

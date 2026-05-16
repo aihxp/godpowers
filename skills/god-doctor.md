@@ -114,6 +114,18 @@ as a read-only diagnostic. It reports:
 `/god-doctor --fix` may call `lib/feature-awareness.run(projectRoot)` because
 that helper writes only safe state metadata and managed context fences.
 
+## Repo Documentation Sync
+
+For initialized projects, `/god-doctor` calls `lib/repo-doc-sync.detect` as a
+read-only diagnostic. It reports stale README badges, public surface counts,
+release notes, changelog entries, contribution guidance, security policy, and
+Pillars sync planning for changed repo docs.
+
+`/god-doctor --fix` may call `lib/repo-doc-sync.run(projectRoot)` because that
+helper writes only safe mechanical version, badge, and count claims. It should
+recommend `god-docs-writer` when narrative release, contribution, support, or
+security prose needs judgment.
+
 ## Implementation
 
 Built-in, no spawned agent. Reads:
@@ -122,6 +134,7 @@ Built-in, no spawned agent. Reads:
 - `.godpowers/state.json`, `intent.yaml`, `log`, `linkage.json`
 - `lib/feature-awareness.detect(projectRoot)` for existing-project upgrade
   awareness
+- `lib/repo-doc-sync.detect(projectRoot)` for repo documentation freshness
 - `bin/install.js` VERSION constant
 
 ## Exit codes

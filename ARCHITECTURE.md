@@ -1,15 +1,17 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.16 (pure-skill model plus feature awareness)
+> Status: STABLE v1.6.17 (pure-skill model plus repo documentation sync)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.16 keeps the public surface stable while adding feature awareness for
-existing Godpowers projects after runtime upgrades. Auto-invoked commands,
-spawned agents, local runtime helpers, platform-specific spawning limits,
-migration imports, sync-back writes, feature-awareness refreshes, and dashboard
-progress must be reported visibly instead of implied as hidden background work.
+v1.6.17 keeps the public surface stable while adding autonomous repo
+documentation sync for badges, release surfaces, contribution guidance,
+security policy checks, and Pillars planning. Auto-invoked commands, spawned
+agents, local runtime helpers, platform-specific spawning limits, migration
+imports, sync-back writes, feature-awareness refreshes, repo documentation
+sync, and dashboard progress must be reported visibly instead of implied as
+hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only status

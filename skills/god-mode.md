@@ -306,6 +306,7 @@ Sync status:
   Local syncs:
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
+    + repo-doc-sync: <refreshed repo docs, recommended god-docs-writer, or no-op>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>
     + context-refresh: <spawned, no-op, or skipped>
@@ -323,6 +324,11 @@ When `/god-mode` resumes an existing `.godpowers` project, it auto-invokes
 `lib/feature-awareness.run(projectRoot)` before the final sync report. This
 keeps upgraded projects aware of new runtime features, current context fences,
 and migration routes without rewriting user artifacts.
+
+The mandatory final sync also receives repo documentation sync through
+`/god-sync`. This keeps README badges, release surfaces, contribution guidance,
+security policy checks, and Pillars context planning arc-ready before the
+project run is declared complete.
 
 If `/god-mode` resumes an existing `.godpowers` project that lacks Pillars,
 it Pillar-izes the project before continuing. Existing `.godpowers` artifacts
@@ -345,6 +351,7 @@ Sync status:
   Local syncs:
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
+    + repo-doc-sync: <refreshed repo docs, recommended god-docs-writer, or no-op>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>
     + context-refresh: <spawned, no-op, or skipped>

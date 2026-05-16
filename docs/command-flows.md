@@ -457,6 +457,7 @@ Auto-complete: `/god-init`
 **Prerequisites**: none
 
 **Execution**:
+- `lib/repo-doc-sync.run(projectRoot)` for mechanical repository documentation claims
 - `god-docs-writer`
 - Writes: `.godpowers/docs/UPDATE-LOG.md`, README, docs/
 

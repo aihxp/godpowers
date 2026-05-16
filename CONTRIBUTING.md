@@ -81,13 +81,20 @@ Examples:
 
 Releases are manual and explicit:
 ```
-npm version minor   # bumps package.json, commits, tags v0.X.0
+npm version patch --no-git-tag-version
+npm test
+npm run release:check
+npm pack
 git push --follow-tags
-# publish.yml fires on tag push: tests, then npm publish --provenance
-gh release create v0.X.0 --generate-notes   # optional GitHub Release
+gh release create vX.Y.Z --title "vX.Y.Z" --notes-file RELEASE.md
+npm publish --provenance
 ```
 
-CHANGELOG.md is human-curated.
+Repo documentation sync must be clean before publishing. It keeps README
+badges, public surface counts, release references, contribution guidance,
+security policy, and Pillars planning signals aligned. CHANGELOG.md and
+RELEASE.md are human-curated even when mechanical repo documentation sync has
+run.
 
 ## Substitution Test
 

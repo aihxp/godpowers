@@ -84,6 +84,7 @@ is to completion, and what happens next.
 | Feature sync | Feature-addition recipes | Show `/god-sync` trigger and `SYNC-LOG.md` path |
 | Reverse-sync | `/god-sync`, `/god-scan`, code-touching workflows | Show whether an agent ran or local runtime only |
 | Pillars sync | Artifact truth changes | Show changed pillar files or no-op |
+| Repo documentation sync | `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, `/god-mode` | Show local fixes and prose agent recommendations |
 | Checkpoint sync | State mutation checkpoints | Show `.godpowers/CHECKPOINT.md` created, updated, no-op, or skipped |
 | Context refresh | `/god-sync`, `/god-init`, `/god-context` | Show `god-context-writer` spawn or no-op |
 | Standards checks | Routed stage boundaries | Show gate, artifact, pass/fail, and next route |
@@ -99,6 +100,7 @@ is to completion, and what happens next.
 | `/god-scan --linkage-only` | After code edits that include `Implements:` or `Source:` annotations | Keeps linkage current without full sync | Report local runtime only |
 | Checkpoint refresh | After any state.json write | Makes new sessions resume accurately | Never overwrite user content outside checkpoint |
 | Context refresh dry-run | After AGENTS.md or pillar changes | Shows whether tool pointers would change | Default to no-op unless configured |
+| Repo docs refresh | After README, release, contribution, security, support, or public count surfaces change | Keeps public repo docs aligned with runtime facts | Auto-fix mechanical claims only |
 | `/god-review-changes` suggestion | When REVIEW-REQUIRED.md gains entries | Gives the user a concrete review path | Do not auto-clear review items |
 | `/god-hygiene` suggestion | After a full project run or every 30 days | Keeps docs, deps, and quality current | Suggest by default, auto-run only when requested |
 | Runtime verification | After frontend-visible changes | Catches blank screens and layout regressions | Auto-run only when local app target is known |
@@ -109,7 +111,7 @@ is to completion, and what happens next.
 | Level | Behavior | Default action | Examples |
 |---|---|---|---|
 | 1 | Read-only suggestion | Run by default | `/god-next` route, status summary, hygiene suggestion |
-| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan |
+| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync |
 | 3 | Scoped specialist agent | Spawn only with bounded evidence | design review, docs drift check, browser test with known URL |
 | 4 | Human-owned action | Require explicit approval | production launch, publish, destructive repair |
 

@@ -18,3 +18,4 @@ This is a community project maintained on a best-effort basis. Response times va
 - Reference: docs/reference.md
 - Recipes: docs/recipes.md
 - Architecture: ARCHITECTURE.md
+- Repository documentation sync: docs/repo-doc-sync.md

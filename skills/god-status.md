@@ -171,8 +171,8 @@ Report:
 - Checkpoint: `fresh`, `missing`, `stale`, or `conflicts with state.json`
 - Reviews: `none` or `<N> pending, suggest /god-review-changes`
 - Sync: `fresh`, `missing`, `stale`, or `suggest /god-sync`
-- Docs: `fresh`, `possible drift, suggest /god-docs`, or
-  `docs drift-check already logged`
+- Docs: `fresh`, `<N> stale, suggest /god-docs`, `possible drift, suggest
+  /god-docs`, or `repo-doc-sync ran`
 - Runtime: `not-applicable`, `known URL, suggest /god-test-runtime`, or
   `no known URL, defer deployed verification`
 - Automation: `not configured`, `<N> active`, or

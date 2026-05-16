@@ -23,6 +23,11 @@ Documentation work. Docs that don't lie.
 
 ## Orchestration
 
+First call `lib/repo-doc-sync.run(projectRoot)` for mechanical repository
+documentation claims such as README badges, version references, public surface
+counts, and `/god-doctor` sample counts. Report this as `Agent: none, local
+runtime only`.
+
 Spawn **god-docs-writer** in fresh context.
 
 The agent:
@@ -56,6 +61,7 @@ Godpowers may invoke docs work proactively in two ways:
 |---|---|---|
 | Docs changed after code changed | Spawn `god-docs-writer` in drift-check mode when current workflow owns docs | Do not invent new docs scope |
 | Code changed after docs that claim current behavior | Suggest `/god-docs` or spawn drift-check inside `/god-mode`, `/god-feature`, `/god-refactor`, or `/god-sync` closeout | Verify claims against code before editing |
+| Repo docs surface drift | Run `lib/repo-doc-sync.run` for safe mechanical fixes, then spawn `god-docs-writer` for prose | Do not auto-invent changelog or release notes |
 | `REVIEW-REQUIRED.md` contains docs drift items | Suggest `/god-review-changes` first | Do not auto-clear review items |
 
 When auto-invoked, show:
@@ -65,6 +71,7 @@ Auto-invoked:
   Trigger: docs and code changed in the same workflow
   Agent: god-docs-writer
   Local syncs:
+    + repo-doc-sync: <safe mechanical fixes, prose review needed, or no-op>
     + docs-drift-check: <N claims checked, N drift items>
   Artifacts: .godpowers/docs/UPDATE-LOG.md or no-op
   Log: .godpowers/docs/UPDATE-LOG.md

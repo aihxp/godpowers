@@ -1,11 +1,12 @@
-# Godpowers 1.6.16 Release
+# Godpowers 1.6.17 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.16 adds feature awareness for existing Godpowers projects. After
-the installed runtime gains new capabilities, Godpowers can detect stale project
-awareness, record the current feature set in `state.json`, refresh AI-tool
-context fences, and route migration judgment to the right command or agent.
+Godpowers 1.6.17 adds autonomous repository documentation sync for release
+surfaces and project-run closeout. Godpowers can now detect stale README badges,
+public surface counts, release notes, changelog entries, contribution guidance,
+security policy, and Pillars context planning needs before a sync, docs, doctor,
+status, or god-mode closeout declares the repository current.
 
 ## What is stable
 
@@ -23,46 +24,52 @@ context fences, and route migration judgment to the right command or agent.
 - Critical harden finding gate before launch
 - Planning-system migration for GSD, BMAD, and Superpowers
 - Managed sync-back companion files for imported source systems
+- Feature awareness for existing Godpowers projects
 
 ## What is new
 
-- Added `lib/feature-awareness.js`.
-- Added `godpowers-features` to `state.v1.json`.
-- Added `scripts/test-feature-awareness.js`.
-- `/god-doctor`, `/god-context`, `/god-sync`, and `/god-mode` now document the
-  feature-awareness auto-invoke path.
-- `AGENTS.md` refreshes now include `/god-sync`, `/god-migrate`, and
-  `/god-context refresh` in the useful command list.
+- Added `lib/repo-doc-sync.js`.
+- Added `docs/repo-doc-sync.md`.
+- Added `scripts/test-repo-doc-sync.js`.
+- Added missing `/god-export-otel` routing metadata.
+- `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, and `/god-mode` now
+  document repo documentation sync integration.
+- The dashboard proactive docs check now reads repo documentation sync status.
+- Package contents checks now require the repo documentation sync helper and
+  `/god-export-otel` routing metadata.
 
-## Awareness behavior
+## Sync behavior
 
-For an initialized `.godpowers` project, the helper:
+For a Godpowers repository, the helper:
 
-- reads the installed runtime version
-- compares the project `godpowers-features` record to the current feature set
-- detects missing managed AI-tool context fences
-- detects unimported GSD, BMAD, or Superpowers planning artifacts
-- writes only safe state metadata and managed context fences when applied
+- reads package version and repository surface counts
+- detects stale mechanical claims in README, user docs, architecture docs,
+  roadmap docs, command reference docs, `/god-version`, and `/god-doctor`
+- applies safe mechanical badge, version, and count refreshes when requested
+- plans Pillars sync for changed repo documentation paths
+- recommends `god-docs-writer` for release notes, changelog, contribution,
+  support, or security policy prose
 
-Detection is read-only. Applying awareness does not rewrite product, planning,
-source-system, or code files outside Godpowers-owned fences.
+Detection is read-only by default. Applying sync does not invent narrative
+release notes, changelog entries, contribution policy, support policy, or
+security support policy.
 
 ## Auto-invoke and auto-spawn policy
 
-Feature awareness is local runtime work and must be reported as:
+Safe repo documentation sync is local runtime work and must be reported as:
 
-```
+```text
 Agent: none, local runtime only
 ```
 
-Godpowers recommends or spawns `god-greenfieldifier` only when imported or
-detected planning-system context has low confidence or conflicts that need
-migration judgment.
+Godpowers recommends or spawns `god-docs-writer` only when narrative docs need
+claim verification or policy judgment after local mechanical sync has finished.
 
 ## Validation
 
 Release validation includes:
 
+- `node scripts/test-repo-doc-sync.js`
 - `node scripts/test-feature-awareness.js`
 - `node scripts/test-context-writer.js`
 - `node scripts/test-planning-systems.js`
@@ -70,5 +77,5 @@ Release validation includes:
 - `node scripts/validate-skills.js`
 - `git diff --check`
 
-The `v1.6.16` tag should point to the release commit that matches the npm
-`godpowers@1.6.16` package.
+The `v1.6.17` tag should point to the release commit that matches the npm
+`godpowers@1.6.17` package.

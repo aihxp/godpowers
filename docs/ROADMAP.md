@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.16
+> Current shipped: v1.6.17
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.16)
+### Current surface (v1.6.17)
 
 What works today:
 - **109 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -41,7 +41,10 @@ What works today:
   `/god-sync` writes managed sync-back companion files.
 - **Feature awareness**: existing `.godpowers` projects record the current
   runtime feature set and refresh AI-tool context after upgrades.
-- **Codex agent metadata**: all 39 Godpowers specialist agents install with
+- **Repo documentation sync**: README badges, public surface counts, release
+  docs, contribution guidance, security policy checks, and Pillars planning
+  are checked during sync, docs, doctor, status, and god-mode closeouts.
+- **Codex agent metadata**: all 40 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route
   unresolved safe sync gates to `/god-reconcile Release Truth And Safe Sync`

@@ -8,6 +8,7 @@ Use this checklist before publishing a public Godpowers release.
 - Confirm `README.md`, `CHANGELOG.md`, and `RELEASE.md` mention the same version.
 - Confirm `CHANGELOG.md` explains user-visible changes, guardrails, and release risks.
 - Confirm `RELEASE.md` explains what is stable, what changed, and what is deferred.
+- Confirm `lib/repo-doc-sync.detect(projectRoot)` reports `fresh` before publishing.
 
 ## Local Verification
 
@@ -22,6 +23,7 @@ This includes:
 - Full test suite through `npm test`.
 - Security and surface audit through `npm run test:audit`.
 - Package contents assertion through `npm run pack:check`.
+- Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 
 ## Package Surface
 
