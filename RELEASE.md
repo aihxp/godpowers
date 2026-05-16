@@ -1,11 +1,11 @@
-# Godpowers 1.6.8 Release
+# Godpowers 1.6.9 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.8 keeps shipping work moving when a deployed staging URL is not
-ready yet. The goal of this patch is to finish local and CI-verifiable deploy,
-observe, harden, and launch gates first, then ask for `STAGING_APP_URL` only
-when the user requests staging or reaches final sign-off.
+Godpowers 1.6.9 makes proposal and report outputs easier to act on. The goal of
+this patch is to keep Godpowers from ending a recommendation, audit, lifecycle
+report, status report, or exploratory answer without offering concrete next
+moves.
 
 ## What is stable
 
@@ -24,34 +24,36 @@ when the user requests staging or reaches final sign-off.
 - Extension pack compatibility range for the 1.x line
 - Domain precision through `.godpowers/domain/GLOSSARY.md` and DG-01 through
   DG-05 checks
+- GSD-style proposition closeouts for exploratory, diagnostic, audit,
+  lifecycle, status, reconciliation, and decision-support outputs
 
 ## What is new
 
-- `god-orchestrator` now documents staging URL deferral as the default shipping
-  closure policy.
-- `/god-mode`, `/god-deploy`, and `/god-launch` now continue through local and
-  CI-verifiable gates when no live deployed origin is evidenced.
-- `god-deploy-engineer`, `god-observability-engineer`, and
-  `god-launch-strategist` now treat missing deployed staging as deferred unless
-  the user explicitly requested staging.
-- Missing deployed access is recorded in
-  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` with the exact command to
-  run later.
-- At final sign-off, Godpowers offers three clear choices: provide
-  `STAGING_APP_URL=<deployed staging origin>`, sign off local-only with
-  deployed verification deferred, or run `/god-deploy --stage` later.
+- The core Godpowers skill now requires a `Proposition:` block after
+  recommendations, proposals, exploratory plans, diagnostics, status reports,
+  audits, lifecycle reports, reconciliations, and decision-support answers
+  when no command was launched.
+- `/god`, `/god-next`, `/god-status`, `/god-lifecycle`, `/god-locate`,
+  `/god-context-scan`, `/god-preflight`, `/god-doctor`, `/god-audit`,
+  `/god-hygiene`, `/god-standards`, and `/god-agent-audit` now close with
+  concrete next choices.
+- Planning and analysis commands such as `/god-discuss`, `/god-explore`,
+  `/god-list-assumptions`, `/god-refactor`, `/god-spike`, `/god-tech-debt`,
+  `/god-archaeology`, `/god-map-codebase`, `/god-reconstruct`,
+  `/god-design-impact`, `/god-reconcile`, and `/god-roadmap-check` now make
+  their next move explicit.
+- Proposition blocks separate partial implementation, full implementation,
+  discussion, status inspection, and `/god-mode` continuation when safe.
 
-## What 1.6.8 means
+## What 1.6.9 means
 
-Godpowers 1.6.8 does not expand the public command surface. It changes when
-staging access is requested: not during ordinary mid-arc progress, but at an
-explicit staging request, deployed verification command, or final project
-sign-off.
+Godpowers 1.6.9 does not expand the public command surface. It changes how
+Godpowers exits proposal-like work: the user should see useful routes forward
+instead of only a recommendation.
 
-The release keeps the no-guessed-domain rule intact. Godpowers must not invent
-a staging URL from a product name, brand name, README title, or common TLD.
-If only local URLs exist, it runs local smoke, records deployed verification as
-deferred, and continues.
+Pure completion commands can still end with a normal `Suggested next` line when
+an artifact was actually produced. Proposal, diagnostic, audit, lifecycle,
+status, and decision-support commands must offer a proposition block.
 
 Safe sync and unresolved Critical harden findings remain release-truth gates.
 Per-repo Quarterback ownership remains intact for Mode D suite work.
@@ -61,8 +63,8 @@ Per-repo Quarterback ownership remains intact for Mode D suite work.
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.8` git tag points to the release commit that matches the npm
-`godpowers@1.6.8` package. Public publishes should prefer the tag-triggered
+The `v1.6.9` git tag points to the release commit that matches the npm
+`godpowers@1.6.9` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

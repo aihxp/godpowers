@@ -5,6 +5,44 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.9] - 2026-05-16
+
+Proposal closeout patch. Makes Godpowers end exploratory, diagnostic, audit,
+status, lifecycle, and decision-support answers with concrete choices instead
+of leaving the user to infer the next action.
+
+### Added
+- Added a core Proposal Closeout rule requiring a `Proposition:` block when
+  Godpowers gives a recommendation, proposal, exploratory plan, diagnostic
+  report, status report, audit report, lifecycle report, reconciliation report,
+  or decision-support response without directly launching work.
+- Added proposition closeouts to `/god`, `/god-next`, `/god-status`,
+  `/god-lifecycle`, `/god-locate`, `/god-context-scan`, `/god-preflight`,
+  `/god-doctor`, `/god-audit`, `/god-hygiene`, `/god-standards`, and
+  `/god-agent-audit`.
+- Added proposition closeouts to proposal-heavy planning and analysis commands:
+  `/god-discuss`, `/god-explore`, `/god-list-assumptions`, `/god-refactor`,
+  `/god-spike`, `/god-tech-debt`, `/god-archaeology`, `/god-map-codebase`,
+  `/god-reconstruct`, `/god-design-impact`, `/god-reconcile`, and
+  `/god-roadmap-check`.
+
+### Changed
+- Proposal-style outputs now mirror the clearer GSD pattern: implement a small
+  slice, implement the full route, discuss more, inspect status, or run
+  `/god-mode` only when that is safe.
+- `/god-next` and `/god-status` now explicitly distinguish partial progress,
+  full autonomous continuation, discussion, and inspection choices.
+- Diagnostic commands now avoid recommending broad automation when blockers or
+  disk-state inconsistencies make that unsafe.
+
+### Guardrails
+- Pure completion commands can still use their normal `Suggested next` line
+  after a verified artifact is produced.
+- `/god-mode` is not offered as a blanket answer when a blocker, failing gate,
+  manual repair, or unresolved ambiguity should be addressed first.
+- The patch changes guidance only. It does not add slash commands, specialist
+  agents, workflows, recipes, schemas, or public artifact formats.
+
 ## [1.6.8] - 2026-05-16
 
 Staging deferral patch. Keeps Godpowers moving through local and CI-verifiable

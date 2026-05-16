@@ -92,6 +92,23 @@ Suite (Mode D) status:
 Next: god roadmap
 ```
 
+## Proposition Closeout
+
+Every status report must end with a proposition block so the user can choose
+how much momentum to give Godpowers:
+
+```
+Proposition:
+  1. Implement partial: [single next command from "What happens next"]
+  2. Implement complete: /god-mode to continue the current arc when no blockers are present
+  3. Discuss more: /god-discuss [unclear state, blocker, or inconsistency]
+  4. Inspect status: /god-locate or /god-next for a smaller routing view
+Recommended: [one option and why it fits the disk-derived state]
+```
+
+If inconsistencies are present, make `/god-repair` the partial option and do
+not recommend `/god-mode` until disk state is coherent.
+
 ## Mode D awareness
 
 If `lib/multi-repo-detector.detect(projectRoot)` returns

@@ -58,6 +58,14 @@ Suggested next:
   /god-audit       - score the reconstructed artifacts
   /god-feature     - now you can add features with reconciliation
   /god-tech-debt   - assess what needs paying down
+
+Proposition:
+  1. Implement partial: /god-audit the reconstructed artifacts first
+  2. Implement complete: /god-audit then /god-feature with reconciliation
+  3. Discuss more: /god-discuss stakeholder review questions
+  4. Run God Mode: /god-mode after stakeholder review or audit accepts the reconstruction
+Recommended: /god-audit before new feature work because reconstruction is
+evidence-derived, not stakeholder-approved.
 ```
 
 ## Caveats

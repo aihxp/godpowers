@@ -111,6 +111,31 @@ Suggested next: /god-spike with narrower question
 Or: archive the spike if no longer relevant
 ```
 
+## Proposition Closeout
+
+Every lifecycle report must end with a proposition block. Use the detected
+phase to fill in concrete commands:
+
+```
+Proposition:
+  1. Implement partial: [smallest safe next command from the lifecycle report]
+  2. Implement complete: /god-mode [resume or scope] when the phase is safe for an autonomous arc
+  3. Discuss more: /god-discuss [unclear phase, blocker, or choice]
+  4. Inspect status: /god-status or /god-next
+Recommended: [one option and why it matches the detected phase]
+```
+
+For hard blockers, such as post-incident pending, replace the broad options
+with the required next command plus inspect and discuss alternatives:
+
+```
+Proposition:
+  1. Resolve required next: /god-postmortem
+  2. Inspect first: /god-status
+  3. Discuss blocker: /god-discuss incident follow-up
+Recommended: /god-postmortem because the incident learning loop is still open.
+```
+
 ## Have-Nots
 
 Lifecycle check FAILS if:

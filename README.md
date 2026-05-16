@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.8-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.9-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,9 +12,9 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.8 keeps the stable Godpowers surface while making shipping less
-interruptive: deployed staging verification is deferred until you request
-staging, run deployed verification, or reach final project sign-off.
+Version 1.6.9 keeps the stable Godpowers surface while making proposal and
+status outputs easier to act on: exploratory, diagnostic, audit, lifecycle, and
+decision-support commands now end with explicit proposition choices.
 
 It fuses four disciplines into one unified workflow:
 

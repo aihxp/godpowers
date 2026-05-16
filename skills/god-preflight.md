@@ -137,6 +137,20 @@ Use the report to choose the next pass:
 | Tests are absent before refactor | `/god-add-tests` |
 | Refactor path is obvious and bounded | `/god-refactor` |
 
+## Proposition Closeout
+
+End the user-facing response with a proposition block based on the recommended
+sequence:
+
+```
+Proposition:
+  1. Implement partial: [first recommended command or task]
+  2. Implement complete: [full recommended sequence]
+  3. Discuss more: /god-discuss [highest uncertainty or blocker]
+  4. Run God Mode: /god-mode only when the preflight says the repo is arc-ready or the remaining gaps are acceptable
+Recommended: [first command and why it should happen before the rest]
+```
+
 ## Guardrails
 
 - Build nothing.

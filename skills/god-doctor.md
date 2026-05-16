@@ -65,6 +65,23 @@ Suggested next steps:
   2. /god-restore  (review trash)
 ```
 
+## Proposition Closeout
+
+End every human-readable doctor report with a proposition block:
+
+```
+Proposition:
+  1. Implement partial: [safest single fix or diagnostic follow-up]
+  2. Implement complete: /god-doctor --fix when all proposed fixes are safe categories
+  3. Discuss more: /god-discuss [highest-risk warning or unclear repair]
+  4. Inspect status: /god-status after repair
+Recommended: [one option and why it is safe]
+```
+
+If the report contains errors that need manual repair, do not recommend
+`/god-doctor --fix` as complete. Recommend the highest-priority manual repair
+or `/god-repair` instead.
+
 ## Subcommands
 
 ### `/god-doctor`

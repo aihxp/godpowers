@@ -89,6 +89,19 @@ Suggested next:
 2. Accept the 2 new todos: /god-check-todos
 ```
 
+## Proposition Closeout
+
+End every context scan report with a proposition block:
+
+```
+Proposition:
+  1. Implement partial: [first suggested action, usually /god-locate or /god-repair]
+  2. Implement complete: resolve all error and warn drifts, then rerun /god-context-scan
+  3. Discuss more: /god-discuss context drift
+  4. Inspect status: /god-status after re-orientation
+Recommended: [one option and why]
+```
+
 ## What this does NOT do
 
 - Does not modify state. Read-only.

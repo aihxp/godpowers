@@ -1,6 +1,6 @@
 # Users and Community
 
-Godpowers is at v1.6.8. Stable release.
+Godpowers is at v1.6.9. Stable release.
 
 ## Track record
 

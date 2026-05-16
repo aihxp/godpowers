@@ -45,4 +45,11 @@ Suggested next:
   /god-reconstruct  - reverse-engineer planning artifacts from this code
   /god-tech-debt    - assess and prioritize debt revealed
   /god-feature      - now safe to add new work with archaeology in hand
+
+Proposition:
+  1. Implement partial: /god-tech-debt for only the highest-risk areas
+  2. Implement complete: /god-reconstruct then /god-audit for full brownfield alignment
+  3. Discuss more: /god-discuss the open tribal-knowledge questions
+  4. Run God Mode: /god-mode only after reconstruction or audit makes the state clear
+Recommended: /god-reconstruct when planning artifacts are missing or stale.
 ```

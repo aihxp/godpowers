@@ -53,4 +53,12 @@ Suggested next:
   - /god-update-deps if dependency debt is a P0/P1 driver
   - /god-upgrade for major-version migrations
   - Re-run /god-tech-debt quarterly
+
+Proposition:
+  1. Implement partial: run the command for the top P0 item only
+  2. Implement complete: /god-feature or /god-refactor for the full P0 bundle
+  3. Discuss more: /god-discuss the highest-cost or highest-risk debt item
+  4. Run God Mode: /god-mode only if debt work should join the full arc
+Recommended: start with the top P0 item, then re-run /god-tech-debt after it
+lands.
 ```

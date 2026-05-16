@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.8
+> Current shipped: v1.6.9
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.8)
+### Current surface (v1.6.9)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -39,6 +39,10 @@ What works today:
 - **Human-readable progress reports**: `/god-status`, `/god-locate`,
   `/god-next`, `/god-mode`, `CHECKPOINT.md`, and `PROGRESS.md` now surface
   percent complete, current step, recent work, and what happens next
+- **Proposition closeouts**: proposal, diagnostic, audit, lifecycle, status,
+  reconciliation, and decision-support outputs now end with concrete next
+  choices such as partial implementation, complete implementation, discussion,
+  inspection, or `/god-mode` when safe
 - **Mode A** (greenfield), **Mode B** (gap-fill), **Mode C** (audit),
   **Mode D** (multi-repo suites with `god-coordinator` as Tier-0 peer)
 - **Three-axis verification**: static (lint), linkage (drift), runtime (headless browser)

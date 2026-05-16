@@ -112,6 +112,22 @@ Recipes that fit your current state:
 Run structural next? (yes / pick recipe / cancel)
 ```
 
+If the answer is exploratory and proposes an approach instead of selecting or
+running a command, close with:
+
+```
+Proposition:
+  1. Implement partial: <smallest safe command or slice>
+  2. Implement complete: <full command sequence>
+  3. Discuss more: /god-discuss <topic or unresolved question>
+  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous arc
+Recommended: <one option and why>
+```
+
+Do not include a God Mode option when the request is clearly a tiny fix,
+single-file change, or narrow question. In that case, replace it with the
+smallest matching command, such as `/god-fast`, `/god-spike`, or `/god-next`.
+
 ### Step 4: execute or hand off
 
 If user confirms a recipe:

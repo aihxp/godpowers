@@ -93,6 +93,13 @@ Suggested next actions (in priority order):
   3. [next]
 
 Schedule next hygiene check in [N days] (default: 30).
+
+Proposition:
+  1. Implement partial: [highest-priority action]
+  2. Implement complete: [all P0/P1 hygiene actions in order]
+  3. Discuss more: /god-discuss hygiene remediation
+  4. Inspect status: /god-status after fixes
+Recommended: [one option and why]
 ```
 
 ## Have-Nots

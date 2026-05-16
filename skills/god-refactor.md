@@ -88,6 +88,29 @@ Behavior: unchanged
 Suggested next: /god-status or continue with /god-feature
 ```
 
+## Proposal Mode
+
+When the user asks for a proposal, recommendation, or performance-improvement
+approach and no files are edited, do not stop after the advice. End with a
+proposition block that turns the recommendation into user-selectable next
+moves.
+
+Use this shape:
+
+```
+Proposition:
+  1. Implement partial: /god-spike <measurement or smallest safe slice>
+  2. Implement complete: /god-refactor <full scoped refactor>
+  3. Discuss more: /god-discuss <unresolved scope question>
+  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous arc
+Recommended: <one option and why>
+```
+
+For performance refactors, prefer partial implementation when measurement is
+missing. Example:
+`Implement partial: /god-spike startup timeline to measure load phases before
+refactoring.`
+
 ## Have-Nots
 
 Refactor FAILS if:

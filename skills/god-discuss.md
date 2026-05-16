@@ -67,4 +67,11 @@ Key findings:
   - [term or ambiguity resolved]
 
 Suggested next: [the planning command this discussion was for]
+
+Proposition:
+  1. Implement partial: [smallest safe slice or planning command]
+  2. Implement complete: [full command that consumes this brief]
+  3. Discuss more: /god-discuss [specific unresolved question]
+  4. Run God Mode: /god-mode [scope] if the user wants autonomous execution
+Recommended: [one option and why]
 ```

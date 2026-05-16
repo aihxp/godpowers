@@ -62,6 +62,13 @@ Warnings:
 
 Infos: 90 missing-recommended-section suggestions across agents
        (run with --json for full list)
+
+Proposition:
+  1. Implement partial: fix the highest-priority error or warning
+  2. Implement complete: /god-agent-audit --fix for info-level placeholder sections only
+  3. Discuss more: /god-discuss agent contract findings
+  4. Inspect details: /god-agent-audit --json
+Recommended: [one option and why]
 ```
 
 ## Backward-compatibility promise

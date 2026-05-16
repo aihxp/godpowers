@@ -67,6 +67,31 @@ answer a question, inspect first. When a term is resolved, record it in
 `.godpowers/domain/GLOSSARY.md` with canonical spelling, avoided aliases,
 relationships, and any unresolved ambiguity.
 
+### 9. Proposal Closeout
+When you answer with a recommendation, proposal, or exploratory plan and do not
+make file edits, run commands, or hand off to another command, end with a
+proposition block. The block must give the user concrete next moves instead of
+leaving them at a dead stop.
+
+This also applies to diagnostic, status, audit, lifecycle, reconciliation, and
+decision-support reports when they end with suggestions, options, or a
+recommended sequence.
+
+Use this shape:
+
+```
+Proposition:
+  1. Implement partial: <smallest safe slice and command>
+  2. Implement complete: <larger command or arc>
+  3. Discuss more: <focused question or /god-discuss topic>
+  4. Run God Mode: /god-mode <optional flags or scope>
+Recommended: <one option and why>
+```
+
+Only include options that actually fit the situation. If `/god-mode` is too
+broad or unsafe for the request, say so and offer `/god-feature`,
+`/god-refactor`, `/god-spike`, or `/god-discuss` instead.
+
 ---
 
 ## Operating Modes

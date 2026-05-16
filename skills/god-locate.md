@@ -73,6 +73,22 @@ Drift check:
 - If gap > 1 hour, run /god-context-scan
 ```
 
+## Proposition Closeout
+
+The orientation summary must end with a compact proposition block:
+
+```
+Proposition:
+  1. Implement partial: [next suggested command]
+  2. Implement complete: /god-mode to continue the arc when no drift is flagged
+  3. Discuss more: /god-discuss [unclear state or stale checkpoint]
+  4. Inspect status: /god-status for the full report
+Recommended: [one option and why]
+```
+
+If drift is flagged, recommend `/god-context-scan` or `/god-repair` before
+continuing work.
+
 ## Process
 
 1. If `.godpowers/` does not exist: report "no Godpowers project here"

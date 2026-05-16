@@ -312,3 +312,21 @@ Previous tier had standards failures. Address before proceeding:
   - [failure 2]
 Suggested: /god-redo [tier] OR /god-skip [tier] --reason="..."
 ```
+
+## Proposition Closeout
+
+Every `/god-next` response must end with a proposition block unless it already
+launched the selected command:
+
+```
+Proposition:
+  1. Implement partial: [single suggested command]
+  2. Implement complete: [recipe sequence or /god-mode when safe]
+  3. Discuss more: /god-discuss [routing ambiguity or missing prerequisite]
+  4. Inspect status: /god-status or /god-locate
+Recommended: [one option and why]
+```
+
+For missing prerequisites, the partial option is the auto-completable
+prerequisite. For standards failures, the partial option is `/god-redo` with
+feedback and the complete option is blocked until the gate passes.

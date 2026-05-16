@@ -48,6 +48,19 @@ Assumptions Claude is operating under:
 Any of these wrong? Flag them now before they cement into decisions.
 ```
 
+## Proposition Closeout
+
+After listing assumptions, end with a proposition block:
+
+```
+Proposition:
+  1. Implement partial: correct or confirm the low-confidence assumptions only
+  2. Implement complete: confirm assumptions and continue to [queued command]
+  3. Discuss more: /god-discuss assumptions before planning
+  4. Inspect status: /god-status to re-ground before deciding
+Recommended: [one option and why]
+```
+
 ## Have-Nots
 
 - Assumptions are too vague to verify ("we're building a good product")

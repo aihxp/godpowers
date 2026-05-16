@@ -54,6 +54,13 @@ Verdict: PARTIAL (87%)
 Suggested next:
   /god-redo prd to address failures with feedback
   /god-skip prd --reason "..." to accept-as-is
+
+Proposition:
+  1. Implement partial: /god-redo [tier] with the listed failures
+  2. Implement complete: fix all failures, rerun /god-standards, then continue the gate
+  3. Discuss more: /god-discuss standards failure
+  4. Skip: /god-skip [tier] --reason "..." only with an explicit reason
+Recommended: [one option and why]
 ```
 
 ## Auto-invocation
