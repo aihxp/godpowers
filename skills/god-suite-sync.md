@@ -46,4 +46,4 @@ warnings by default; surfaces in REVIEW-REQUIRED.md per repo.
 - Touch files NOT declared in `byte-identical:` of suite-config.yaml
 - Modify per-repo state.json (only the syncer agent writes; no
   Quarterback-level changes)
-- Run any arc inside a sibling repo
+- Run any project run inside a sibling repo

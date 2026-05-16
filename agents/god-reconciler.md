@@ -188,7 +188,7 @@ Run this sequence? (yes / show alternatives / cancel)
 ## Missing artifacts (graceful handling)
 
 Not every artifact exists in every project. Tier 1-3 artifacts get created
-during the arc (`/god-mode` produces 10 of them). Capture artifacts
+during the project run (`/god-mode` produces 10 of them). Capture artifacts
 (BACKLOG, SEEDS, TODOS, THREADS) are lazy: they only exist if the user
 has used those commands.
 

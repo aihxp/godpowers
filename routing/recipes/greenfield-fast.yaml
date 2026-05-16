@@ -20,6 +20,6 @@ sequences:
     description: "Greenfield idea to production with one command"
     steps:
       - command: "/god-mode"
-        why: "Full autonomous arc, idea to hardened production"
+        why: "Full autonomous project run, idea to hardened production"
 
 default-sequence: default

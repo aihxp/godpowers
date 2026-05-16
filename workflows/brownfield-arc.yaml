@@ -11,7 +11,7 @@ metadata:
   description: |
     Brownfield: existing codebase, inspect before prescribing. Preflight +
     archaeology + reconstruction + debt assessment + greenfield simulation
-    audit, then a user-approved greenfieldification pass before normal arc
+    audit, then a user-approved greenfieldification pass before normal project-run
     workflows.
 
 on: [/god-brownfield, /god-mode --brownfield]

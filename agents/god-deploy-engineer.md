@@ -65,7 +65,7 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
   only when needed by the next command, exact provider links only when a failed
   check proves they are needed, and the command Godpowers will run after access
   exists.
-- Default behavior: do not pause mid-arc only to ask for
+- Default behavior: do not pause mid-run only to ask for
   `STAGING_APP_URL=<staging-origin>`. Record deployed staging as deferred, keep
   the exact smoke command in the waiting artifact, and continue through local
   and CI-verifiable deploy readiness.

@@ -5,6 +5,35 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.10] - 2026-05-16
+
+Progress visibility and plain-language closeout patch.
+
+### Added
+- Added a core user-facing vocabulary rule: visible output should say
+  "project run", "workflow", "phase", "current step", or "current milestone"
+  instead of unexplained internal "arc" jargon.
+- Added `Planning visibility` blocks to status, next-step, God Mode, and
+  orchestrator closeout guidance. These blocks surface PRD status, roadmap
+  status, current milestone, and completion basis when those artifacts exist or
+  are expected.
+
+### Changed
+- Reworded installer, session-start, `/god`, `/god-mode`, lifecycle, status,
+  routing, workflow, and specialist guidance to use plain project-run language
+  in user-visible text.
+- Checkpoint and session-start summaries now display lifecycle `in-arc` as
+  "in progress" while preserving the internal state key for compatibility.
+- God Mode completion guidance now ends with current status, planning
+  visibility, open items, and a concrete next recommendation.
+
+### Guardrails
+- Internal workflow names and state constants such as `full-arc.yaml` and
+  `in-arc` remain unchanged for compatibility.
+- The patch changes guidance and display wording only. It does not add slash
+  commands, specialist agents, workflows, recipes, schemas, or public artifact
+  formats.
+
 ## [1.6.9] - 2026-05-16
 
 Proposal closeout patch. Makes Godpowers end exploratory, diagnostic, audit,

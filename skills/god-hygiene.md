@@ -23,7 +23,7 @@ Periodic health check. Three audits in one slash command.
 ## When NOT to use
 
 - Mid-incident: focus on /god-hotfix or /god-debug
-- Right after /god-mode: hygiene was already optional during arc
+- Right after /god-mode: hygiene was already optional during the project run
 
 ## Orchestration
 

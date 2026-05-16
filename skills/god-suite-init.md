@@ -81,6 +81,6 @@ shared-standards:
 ## What this does NOT do
 
 - Modify any repo's source code
-- Run an arc on any repo
+- Run a project run on any repo
 - Override existing per-repo state.json beyond adding the
   `suite.hubPath` pointer

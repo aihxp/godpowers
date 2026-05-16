@@ -71,7 +71,7 @@ For each PRD success metric, define an SLO:
   verification first.
 - If a credential is truly required, append one exact access item to the single
   waiting access bundle, with the command that will run next. Do not pause
-  mid-arc just to request the deployed staging origin unless the user has
+  mid-run just to request the deployed staging origin unless the user has
   explicitly asked to stage now.
 - Under `/god-mode --yolo`, continue through every local or CI-verifiable
   observability check before pausing for external access.

@@ -17,7 +17,7 @@ Urgent production bug fix. Speed matters; discipline still applies.
 
 - Production is broken or degraded
 - Users are affected right now
-- Waiting for a normal /god-mode arc is unacceptable
+- Waiting for a normal /god-mode project run is unacceptable
 
 ## When NOT to use
 

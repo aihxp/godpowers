@@ -161,7 +161,7 @@ const commands = [
     altWhen: { '/god-redo': 'failures-found' },
   },
   {
-    cmd: '/god-preflight', tier: 0, agent: 'god-auditor', desc: 'Read-only intake audit before arc-ready and pillars',
+    cmd: '/god-preflight', tier: 0, agent: 'god-auditor', desc: 'Read-only intake audit before project-run readiness and pillars',
     prereq: ['codebase-present'],
     writes: ['.godpowers/preflight/PREFLIGHT.md'],
     next: '/god-archaeology',
@@ -180,7 +180,7 @@ const commands = [
     next: '/god-status',
   },
   {
-    cmd: '/god-mode', tier: 0, agent: 'god-orchestrator', desc: 'Full autonomous arc',
+    cmd: '/god-mode', tier: 0, agent: 'god-orchestrator', desc: 'Full autonomous project run',
     prereq: ['file:.godpowers/PROGRESS.md OR mode-A-greenfield'],
     extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-init',

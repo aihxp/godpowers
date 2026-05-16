@@ -63,7 +63,7 @@ The plan must include:
 
 - DECISION: Which findings are safe to action.
 - DECISION: Which artifacts would change.
-- HYPOTHESIS: Why each change better matches the canonical greenfield arc.
+- HYPOTHESIS: Why each change better matches the canonical greenfield project run.
 - OPEN QUESTION: Any product, org, risk, or architecture choice that needs the
   user.
 - A per-artifact impact table for PRD, DESIGN, PRODUCT, ARCH, ROADMAP, STACK,

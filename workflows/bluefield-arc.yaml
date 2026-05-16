@@ -12,7 +12,7 @@ metadata:
     Bluefield: new code, existing org context. Loads org standards first,
     runs a preflight intake against the surrounding environment, runs a
     greenfield simulation audit against those constraints, then runs a
-    user-approved greenfieldification pass before the full arc.
+    user-approved greenfieldification pass before the full project run.
 
 on: [/god-bluefield, /god-mode --bluefield]
 

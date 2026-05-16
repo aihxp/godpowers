@@ -1,7 +1,7 @@
 ---
 name: god-mode
 description: |
-  Full autonomous arc orchestrator. Spawns the god-orchestrator agent in a
+  Full autonomous project-run orchestrator. Spawns the god-orchestrator agent in a
   fresh context which runs the entire workflow: idea to hardened production.
   Pauses only for legitimate human-only decisions.
 
@@ -12,11 +12,12 @@ description: |
 # /god-mode
 
 You are receiving a /god-mode invocation. Your job is to spawn the
-**god-orchestrator** agent in a fresh context to run the autonomous arc.
+**god-orchestrator** agent in a fresh context to run the autonomous project
+workflow.
 
 ## Process
 
-1. Resolve whether this is a new arc or a resume:
+1. Resolve whether this is a new project run or a resume:
    - If `.godpowers/state.json`, `.godpowers/PROGRESS.md`, or
      `.godpowers/CHECKPOINT.md` exists, this is a resume. Do not ask the user
      to describe the project again. Call
@@ -64,7 +65,7 @@ You are receiving a /god-mode invocation. Your job is to spawn the
      `workflows/<name>.yaml`, run via `lib/workflow-runner`)
    - `--plan` (v0.14; emit plan to `.godpowers/runs/<id>/plan.yaml`
      and stop. Same effect as `--dry-run`. Use with `--workflow` for
-     a specific arc's plan.)
+     a specific project run's plan.)
    - `--brownfield` (force brownfield path even if detection says greenfield)
    - `--bluefield` (force bluefield path)
    - `--greenfield` (force greenfield, skip archaeology even if code exists)
@@ -89,16 +90,16 @@ You are receiving a /god-mode invocation. Your job is to spawn the
        `/god-arch` when initial findings, imported planning context, the PRD,
        or the codebase show UI or product-experience signals
      - Instruction that a red test, typecheck, lint, build, or check command
-       is not a completed arc. It must enter the autonomous repair loop and
+       is not a completed project run. It must enter the autonomous repair loop and
        continue the same `/god-mode` run until green, except for Critical
        security or a genuine human-only decision.
      - Instruction that deploy, observe, harden, and launch must follow the
        Shipping Closure Protocol: verify a real environment when available,
        otherwise create local/CI-verifiable deploy automation, defer deployed
        staging by default, and continue until the user requests staging or the
-       arc reaches final sign-off.
+       project run reaches final sign-off.
      - Instruction that keys, API tokens, dashboards, admin consoles, and
-       provider-specific access are last-mile inputs. Do not pause mid-arc for
+       provider-specific access are last-mile inputs. Do not pause mid-run for
        `STAGING_APP_URL` unless the user requested deployed staging. At final
        sign-off, ask only for the smallest next item needed by a concrete
        command, usually `STAGING_APP_URL=<staging-origin>`. Ask for additional
@@ -114,7 +115,7 @@ You are receiving a /god-mode invocation. Your job is to spawn the
        artifact rewrites, and updates every affected artifact after approval.
      - Instruction that brownfield and bluefield arcs run `/god-preflight`
        automatically when `.godpowers/preflight/PREFLIGHT.md` is absent.
-       Greenfield arcs skip preflight unless the user explicitly requests it.
+       Greenfield project runs skip preflight unless the user explicitly requests it.
      - Instruction to run routing prerequisites through `lib/router.js`
        `checkPrerequisites` before every direct command dispatch. If
        `safe-sync-clear` fails, run
@@ -129,7 +130,7 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    - Name the project root.
    - Name the invocation flags.
    - Name the handoff file path.
-   - Say: "Read the handoff file first, then run the autonomous arc from disk
+   - Say: "Read the handoff file first, then run the autonomous workflow from disk
      state. Return only user-facing progress and final status."
 
    Do not put recovered checkpoint facts, safe-sync plans, local file lists,
@@ -141,12 +142,12 @@ You are receiving a /god-mode invocation. Your job is to spawn the
    loadout lists, or internal routing payloads into the user-visible transcript.
    The visible transcript may say only what phase is running, what durable state
    was detected, what commands are running, what changed, and the final
-   `Arc complete` or `PAUSE: external access required` block.
+   `Project run complete` or `PAUSE: external access required` block.
 
 8. Orchestrator runs the appropriate workflow:
-   - Greenfield -> full-arc
-   - Brownfield -> brownfield-arc (preflight -> archaeology -> reconstruct -> debt-assess -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> proceed)
-   - Bluefield -> bluefield-arc (org-context -> preflight -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> arc with constraints)
+   - Greenfield -> full project run
+   - Brownfield -> brownfield project run (preflight -> archaeology -> reconstruct -> debt-assess -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> proceed)
+   - Bluefield -> bluefield project run (org-context -> preflight -> greenfield simulation audit -> greenfieldify plan and approved artifact updates -> workflow with constraints)
 
 9. Relay only the orchestrator's user-facing output to the user. If the
    platform displays raw spawn details automatically, the displayed payload
@@ -168,9 +169,15 @@ Show:
 - detected resume or project mode in plain language
 - a compact "Next step" card before each visible phase or tier sub-step
 - a compact "Step result" card after each visible phase or tier sub-step
+- plain-language workflow names. Say "project run" or "workflow" instead of
+  unexplained "arc" in visible output
+- PRD and roadmap visibility in status and closeout blocks when artifacts
+  exist or are expected
 - short progress updates for phases, commands, validations, and file edits
 - concise validation summaries instead of full command noise when possible
 - final changed paths, validation results, and completion or pause status
+- final current status, open items, worktree/index state, and recommended next
+  action
 
 Hide:
 - raw Task input
@@ -280,7 +287,7 @@ complete. This ensures all 14 artifact categories are in a consistent state:
 
 - 10 Tier 0-3 artifacts validated (have-nots passing)
 - 4 capture artifacts noted as `not-yet-created` (graceful handling)
-- SYNC-LOG.md updated with arc completion entry
+- SYNC-LOG.md updated with project-run completion entry
 - state.json reflects final tier statuses
 
 Under `--yolo`, the sync step auto-applies (no pause). Under
@@ -297,7 +304,7 @@ If `/god-mode` resumes an existing `.godpowers` project that lacks Pillars,
 it Pillar-izes the project before continuing. Existing `.godpowers` artifacts
 become managed source references in the relevant `agents/*.md` files.
 
-The sync step is what closes the loop between greenfield arc creation and
+The sync step is what closes the loop between greenfield project-run creation and
 the comprehensive 14-artifact reconciliation system. See
 `docs/greenfield-coverage.md` for what's created when.
 
@@ -306,7 +313,19 @@ the comprehensive 14-artifact reconciliation system. See
 When orchestrator returns "complete", display:
 
 ```
-Godpowers full-arc complete.
+Godpowers project run complete.
+
+Current status:
+  State: complete
+  Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+  Worktree: <clean | modified files unstaged | staged changes | mixed>
+  Index: <untouched | staged files listed>
+
+Planning visibility:
+  PRD: <done | pending | missing | deferred> <artifact path when present>
+  Roadmap: <done | pending | missing | deferred> <artifact path when present>
+  Current milestone: <roadmap milestone, tier, or next planning gate when known>
+  Completion: <pct>% <brief basis, for example done steps over total tracked steps>
 
 Artifacts on disk:
   + PRD           .godpowers/prd/PRD.md
@@ -337,5 +356,24 @@ Periodic hygiene:
   Quality audit:          /god-audit
   Health check:           /god-hygiene
 
-Or describe what you want and /god-next will route.
+Open items:
+  1. <none, or deployed staging deferred, pending review, unstaged files, etc.>
+
+Next:
+  Recommended: <single safest command or decision>
+  Why: <one sentence tied to disk state>
+
+Proposition:
+  1. Review status: /god-status
+  2. Continue work: /god-next or describe the next intent
+  3. Commit release-ready changes: stage only the intended files, then commit
+  4. Run deployed staging: provide STAGING_APP_URL=<deployed staging origin> when needed
 ```
+
+If the run edited code but did not stage or commit, the completion block must
+say so. If unrelated or pre-existing worktree changes are present, do not imply
+the worktree is clean. Recommend a scoped review or explicit staging path.
+
+If the run is a focused brownfield/refactor workflow rather than a full greenfield
+project run, adapt the same closeout shape and replace "Project is now in STEADY
+STATE" with the actual disk-derived lifecycle and next route.

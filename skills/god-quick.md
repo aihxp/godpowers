@@ -11,7 +11,7 @@ description: |
 # /god-quick
 
 Run a focused task with TDD and atomic commits, but skip the full planning
-arc.
+workflow.
 
 ## When to use
 

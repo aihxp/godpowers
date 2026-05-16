@@ -102,7 +102,7 @@ Proposition:
   1. Implement partial: /god-spike <measurement or smallest safe slice>
   2. Implement complete: /god-refactor <full scoped refactor>
   3. Discuss more: /god-discuss <unresolved scope question>
-  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous arc
+  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous project run
 Recommended: <one option and why>
 ```
 

@@ -1,7 +1,7 @@
 ---
 name: god-feature
 description: |
-  Add a feature to an existing project. Skips the full-arc setup (no /god-init,
+  Add a feature to an existing project. Skips the full project-run setup (no /god-init,
   no repo scaffolding, no /god-stack). Mini-PRD for the feature, optional
   micro-architecture, build, deploy via existing pipeline, harden new code.
 

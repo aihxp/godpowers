@@ -16,7 +16,7 @@ Keep ROADMAP.md as a living artifact.
 ## When to use
 
 - After completing a milestone (mark done, gate passed)
-- After adding a feature mid-arc that wasn't on the original roadmap
+- After adding a feature mid-run that wasn't on the original roadmap
 - When priorities shift (move between Now / Next / Later)
 - When a planned milestone is superseded
 

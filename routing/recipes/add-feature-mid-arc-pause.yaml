@@ -3,7 +3,7 @@ kind: Recipe
 metadata:
   name: add-feature-mid-arc-pause
   category: feature-addition
-  description: "Bigger feature mid-arc; reconcile with roadmap, pause arc, do feature, update roadmap, resume"
+  description: "Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume"
 
 triggers:
   intent-keywords:
@@ -16,18 +16,18 @@ triggers:
 
 sequences:
   default:
-    description: "Bigger feature mid-arc; reconcile with roadmap, pause arc, do feature, update roadmap, resume"
+    description: "Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume"
     steps:
       - command: "/god-reconcile"
         why: "Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc."
       - command: "/god-pause-work"
-        why: "Save current arc state"
+        why: "Save current project-run state"
         skip-when: reconciliation-says-already-done-or-prereq
       - command: "/god-feature"
         why: "Run feature workflow with full discipline"
       - command: "/god-sync"
         why: "Update all affected artifacts (PRD, ARCH, ROADMAP, etc.)"
       - command: "/god-resume-work"
-        why: "Restore arc state"
+        why: "Restore project-run state"
 
 default-sequence: default

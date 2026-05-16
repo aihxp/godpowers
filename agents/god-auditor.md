@@ -35,7 +35,7 @@ why.
 6. If running with `mode: preflight`, do not run the artifact linter as the
    main task. Inspect the repo and write `.godpowers/preflight/PREFLIGHT.md`.
 7. If running with `mode: greenfield-simulation`, do not build anything.
-   Simulate the canonical Godpowers greenfield arc and compare it against the
+   Simulate the canonical Godpowers greenfield project run and compare it against the
    current project evidence or org constraints.
 
 ## Mechanical vs interpretive split
@@ -252,16 +252,16 @@ Mode: [brownfield | bluefield]
   bluefield workflows when the user wants the audit acted on.
 - This audit does not treat imported GSD, Superpowers, BMAD, or org context as
   source of truth.
-- This audit does not block the arc unless it finds a Critical security or
+- This audit does not block the project run unless it finds a Critical security or
   impossible planning contradiction.
 ```
 
 Greenfield simulation rules:
 - Brownfield: compare reconstructed artifacts, archaeology, debt assessment,
   repo shape, tests, CI, deploy, observability, hardening, and launch evidence
-  against what the canonical greenfield arc would have created.
+  against what the canonical greenfield project run would have created.
 - Bluefield: compare org context and constraints against the canonical
-  greenfield arc before PRD so downstream agents know which choices are
+  greenfield project run before PRD so downstream agents know which choices are
   constrained, missing, or open.
 - Label every finding as DECISION, HYPOTHESIS, or OPEN QUESTION.
 - Do not invent missing intent. Mark unknowns as OPEN QUESTION.

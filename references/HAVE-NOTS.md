@@ -454,7 +454,7 @@ Trust boundaries declared in docs but absent in code. Fail.
 
 ## Workflow-Specific Have-Nots
 
-These apply to artifacts produced by non-arc workflows (postmortem, spike,
+These apply to artifacts produced by focused workflows (postmortem, spike,
 migration, docs, deps).
 
 ### Postmortem Have-Nots

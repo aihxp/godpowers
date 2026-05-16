@@ -9,7 +9,7 @@ metadata:
   name: feature-arc
   version: 1.0.0
   description: |
-    Add a feature to an existing project. Skips full-arc setup.
+    Add a feature to an existing project. Skips full project-run setup.
     Run by /god-feature.
 
 on: [/god-feature]

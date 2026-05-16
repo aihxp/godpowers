@@ -88,7 +88,7 @@ Proposition:
   1. Implement partial: /god-feature for the smallest proven slice
   2. Implement complete: /god-feature with the full recommendation
   3. Discuss more: /god-discuss the remaining uncertainty
-  4. Run God Mode: /god-mode only if this spike unblocks the full arc
+  4. Run God Mode: /god-mode only if this spike unblocks the full project run
 Recommended: proceed only when SPIKE.md has a clear DECISION and evidence.
 
 REMINDER: spike code is throwaway. Do NOT merge to main.

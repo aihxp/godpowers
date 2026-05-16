@@ -45,7 +45,7 @@ The reason is required. Skips without reason are rejected.
 ## Mandatory non-skippable steps
 
 These cannot be skipped:
-- The final `/god-sync` at end of arc
+- The final `/god-sync` at the end of the project run
 - `/god-harden` for projects with `public-facing: true` in intent.yaml
 - Standards gates between tiers (use `/god-standards --override` to bypass with reason)
 

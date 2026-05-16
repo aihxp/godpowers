@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.9-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.10-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,9 +12,10 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.9 keeps the stable Godpowers surface while making proposal and
-status outputs easier to act on: exploratory, diagnostic, audit, lifecycle, and
-decision-support commands now end with explicit proposition choices.
+Version 1.6.10 keeps the stable Godpowers surface while making progress more
+visible: user-facing output now prefers "project run" over internal "arc"
+jargon and status closeouts show PRD, roadmap, milestone, and completion
+position when available.
 
 It fuses four disciplines into one unified workflow:
 
@@ -57,7 +58,7 @@ Open your AI coding tool in any project directory and type:
 /god-mode
 ```
 
-That's the autonomous arc. It will run all tiers from idea to hardened
+That starts the autonomous project run. It will run all tiers from idea to hardened
 production, pausing only when it has a real question for you.
 
 ### Just describe what you want
@@ -66,7 +67,7 @@ If you don't know which command to run, type free text after `/god`:
 
 ```
 /god production is broken
-/god add a feature without breaking the current arc
+/god add a feature without breaking the current project run
 /god I'm coming back after a week
 ```
 
@@ -106,7 +107,7 @@ when you open a new session in a Godpowers project.
 | Command | What it does | Spawns agent |
 |---------|--------------|--------------|
 | `/god` | Front door: match free-text intent to a command sequence | (built-in) |
-| `/god-mode` | Full autonomous arc | god-orchestrator |
+| `/god-mode` | Full autonomous project run | god-orchestrator |
 | `/god-next` | Auto-detect and suggest the next command | (built-in) |
 | `/god-init` | Start a project, detect mode and scale | (built-in) |
 | `/god-prd` | Write the PRD | god-pm |
@@ -121,7 +122,7 @@ when you open a new session in a Godpowers project.
 | `/god-launch` | Launch (gated on harden) | god-launch-strategist |
 | `/god-harden` | Adversarial security review | god-harden-auditor |
 | `/god-status` | Re-derive state from disk | (built-in) |
-| `/god-preflight` | Read-only intake audit before arc-ready and pillars | god-auditor |
+| `/god-preflight` | Read-only intake audit before project-run readiness and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
 | `/god-review` | Two-stage code review | god-spec-reviewer + god-quality-reviewer |

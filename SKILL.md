@@ -82,7 +82,7 @@ Use this shape:
 ```
 Proposition:
   1. Implement partial: <smallest safe slice and command>
-  2. Implement complete: <larger command or arc>
+  2. Implement complete: <larger command or project run>
   3. Discuss more: <focused question or /god-discuss topic>
   4. Run God Mode: /god-mode <optional flags or scope>
 Recommended: <one option and why>
@@ -92,11 +92,75 @@ Only include options that actually fit the situation. If `/god-mode` is too
 broad or unsafe for the request, say so and offer `/god-feature`,
 `/god-refactor`, `/god-spike`, or `/god-discuss` instead.
 
+### 10. Completion Closeout
+When you complete work, especially from `/god-mode`, `/god-build`,
+`/god-feature`, `/god-hotfix`, `/god-refactor`, `/god-quick`, or any command
+that edits code or artifacts, do not stop at "complete" plus validation. End
+with a disk-derived closeout that tells the user the current state and what is
+next.
+
+Use this shape:
+
+```
+Current status:
+  State: <complete | partial | blocked | complete with deferred item>
+  Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>) when available
+  Worktree: <clean | modified files unstaged | staged changes | mixed>
+  Index: <untouched | staged files listed>
+
+Planning visibility:
+  PRD: <done | pending | missing | deferred> <artifact path when present>
+  Roadmap: <done | pending | missing | deferred> <artifact path when present>
+  Current milestone: <roadmap milestone, tier, or next planning gate when known>
+  Completion: <pct>% <brief basis, for example done steps over total tracked steps>
+
+What changed:
+  1. <highest-signal change>
+  2. <highest-signal change>
+
+Validation:
+  + <command>: <result>
+
+Open items:
+  1. <deferred staging, unstaged files, pending review, or none>
+
+Next:
+  Recommended: <one concrete command or user decision>
+  Why: <one sentence tied to current state>
+```
+
+If the command intentionally did not stage, commit, push, or deploy, say that
+plainly and explain what the user can do next. If deployed staging is deferred,
+include the deferred artifact path or exact missing input. If the worktree has
+pre-existing unrelated changes, say the index was left untouched and recommend
+a scoped review or staging command rather than implying the project is fully
+shipped.
+
+### 11. User-Facing Vocabulary
+Godpowers may use internal words such as "arc" in routing, recipes, and agent
+implementation notes. Do not require the user to decode that word in visible
+output.
+
+Use these plain-language substitutions in user-facing responses:
+- Say "project run" or "workflow" instead of "arc".
+- Say "phase" or "current step" instead of "tier" unless the user has asked
+  for tier details. If tier detail helps, say both, for example
+  "Planning, Tier 1".
+- Say "current milestone" or "roadmap step" when ROADMAP.md has a matching
+  milestone.
+- If you must use "arc", define it once as "the end-to-end project workflow"
+  and then return to plain language.
+
+Every status, completion, lifecycle, and next-step report should include PRD
+and roadmap visibility when those files exist or are expected. Show whether
+the PRD is done, whether the roadmap exists, which milestone or tier is active,
+how close the tracked workflow is to completion, and the next concrete move.
+
 ---
 
 ## Operating Modes
 
-### Mode A: Full Arc (greenfield)
+### Mode A: Full Project Run (greenfield)
 Default. Idea to hardened production. All four tiers, all gates.
 
 ### Mode B: Gap Fill (existing codebase)
@@ -456,7 +520,7 @@ On resume:
 - `--conservative`: Lower threshold for pausing. More human touchpoints.
 - `--from=<tier>`: Start from a specific tier. Re-derives earlier state from disk.
 - `--audit`: Score existing artifacts. Build nothing. Report gaps.
-- `--dry-run`: Plan everything. Build nothing. Show the full arc.
+- `--dry-run`: Plan everything. Build nothing. Show the full project run.
 
 ---
 

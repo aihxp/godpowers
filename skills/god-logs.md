@@ -3,7 +3,7 @@ name: god-logs
 description: |
   View events.jsonl as a readable timeline. Each line: timestamp,
   event name, tier, agent, duration if available. Use to inspect
-  what happened during a run, debug a stuck arc, or audit
+  what happened during a run, debug a stuck project run, or audit
   retroactively.
 
   Triggers on: "god logs", "/god-logs", "show logs", "what happened",

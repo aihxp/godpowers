@@ -2,7 +2,7 @@ apiVersion: godpowers/v1
 kind: CommandRouting
 metadata:
   command: /god-mode
-  description: Full autonomous arc
+  description: Full autonomous project run
   tier: 0
 
 prerequisites:

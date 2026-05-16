@@ -33,7 +33,7 @@ A version bump that knows about dependents. Different from `/god-launch`
    - Scans suite version-table for repos that depend on the bumped repo
    - For each dependent: writes a per-repo orchestrator handoff file and
      spawns its `god-orchestrator` with only a display-safe pointer for the
-     `version-bump` directive (NOT a full arc)
+     `version-bump` directive (NOT a full project run)
    - Aggregates results per-repo
    - Updates `.godpowers/suite-config.yaml` version-table to match
    - Appends to `.godpowers/suite/SYNC-LOG.md`

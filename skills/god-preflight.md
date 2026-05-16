@@ -1,12 +1,12 @@
 ---
 name: god-preflight
 description: |
-  Run a read-only intake audit before arc-ready, pillars, archaeology, or
+  Run a read-only intake audit before project-run readiness, pillars, archaeology, or
   reconstruction work. Inventory the codebase, surface blockers, and recommend
   the safest next pass without changing project code.
 
   Triggers on: "god preflight", "/god-preflight", "preflight audit",
-  "audit before arc-ready", "audit before pillars", "intake audit"
+  "audit before project-run readiness", "audit before pillars", "intake audit"
 ---
 
 # /god-preflight
@@ -15,7 +15,7 @@ Read-only intake audit for an existing codebase.
 
 ## When to use
 
-- Before applying arc-ready direction to an existing repo
+- Before applying project-run direction to an existing repo
 - Before scoring the repo against pillars
 - Before brownfield archaeology or reconstruction
 - When deciding whether to restructure, refactor, initialize Godpowers, or pause
@@ -28,7 +28,7 @@ It answers:
 
 - What kind of project is this?
 - What structure, tooling, tests, docs, CI, deploy paths, and agent instructions exist?
-- What is missing before arc-ready can make good decisions?
+- What is missing before the project run can make good decisions?
 - Which pillar weaknesses are already visible?
 - What areas are risky to refactor before more evidence exists?
 - What is the safest next pass?
@@ -147,7 +147,7 @@ Proposition:
   1. Implement partial: [first recommended command or task]
   2. Implement complete: [full recommended sequence]
   3. Discuss more: /god-discuss [highest uncertainty or blocker]
-  4. Run God Mode: /god-mode only when the preflight says the repo is arc-ready or the remaining gaps are acceptable
+  4. Run God Mode: /god-mode only when the preflight says the repo is ready or the remaining gaps are acceptable
 Recommended: [first command and why it should happen before the rest]
 ```
 

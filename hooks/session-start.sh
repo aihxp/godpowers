@@ -52,7 +52,7 @@ if [ -f "$STATE_FILE" ]; then
     jq -r '
       "  project: " + (.project.name // "(unnamed)"),
       "  mode: " + (.mode // "?") + (if ."mode-d-suite" then " (in suite)" else "" end),
-      "  lifecycle: " + (."lifecycle-phase" // "in-arc")
+      "  lifecycle: " + (if (."lifecycle-phase" // "in-arc") == "in-arc" then "in progress" else (."lifecycle-phase" // "in-arc") end)
     ' "$STATE_FILE" 2>/dev/null || head -20 "$STATE_FILE"
   else
     head -20 "$STATE_FILE"
@@ -66,7 +66,7 @@ fi
 cat <<'EOF'
 
 Next step: run /god-next  (it inspects disk state and proposes the next command)
-Or:       /god-mode for the full autonomous arc
+Or:       /god-mode for the full autonomous project run
 Or:       /god-help to see the catalog
 Or:       /god-status for the full project snapshot
 

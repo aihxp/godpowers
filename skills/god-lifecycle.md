@@ -17,7 +17,7 @@ Show project phase and contextually appropriate workflows.
 
 1. Detect lifecycle phase from disk:
    - **No `.godpowers/`** -> Pre-init
-   - **`.godpowers/PROGRESS.md` exists, not all tiers done** -> In-arc
+   - **`.godpowers/PROGRESS.md` exists, not all tiers done** -> In progress
    - **All tiers done, no special markers** -> Steady state
    - **`.godpowers/postmortems/<id>/` exists with no POSTMORTEM.md** -> Post-incident pending
    - **`.godpowers/migrations/<slug>/MIGRATION.md` exists, status != complete** -> In-migration
@@ -36,15 +36,18 @@ Lifecycle: Pre-init (no Godpowers project here)
 Available actions:
   /god-init     Initialize a Godpowers project
   /god-explore  Brainstorm before committing
-  /god-mode     Run full autonomous arc (will init first)
+  /god-mode     Run full autonomous project run (will init first)
 ```
 
-### In-arc
+### In Progress
 ```
-Lifecycle: In-arc (planning/building/shipping)
+Lifecycle: In progress (planning/building/shipping)
 
 Current state:
   PRD:          [done/pending]
+  Roadmap:      [done/pending]
+  Current step: [phase, tier, or roadmap milestone]
+  Completion:   [pct]% ([done] of [total] tracked steps)
   Architecture: [done/pending]
   ...
 
@@ -55,7 +58,7 @@ Or run /god-mode to autonomously continue from here.
 
 ### Steady state
 ```
-Lifecycle: Steady state (full-arc complete, in maintenance)
+Lifecycle: Steady state (project run complete, in maintenance)
 
 Last full audit: [N days ago]
 Last dep audit: [N days ago]
@@ -119,7 +122,7 @@ phase to fill in concrete commands:
 ```
 Proposition:
   1. Implement partial: [smallest safe next command from the lifecycle report]
-  2. Implement complete: /god-mode [resume or scope] when the phase is safe for an autonomous arc
+  2. Implement complete: /god-mode [resume or scope] when the phase is safe for an autonomous project run
   3. Discuss more: /god-discuss [unclear phase, blocker, or choice]
   4. Inspect status: /god-status or /god-next
 Recommended: [one option and why it matches the detected phase]

@@ -86,7 +86,7 @@ For each channel:
   current. Never infer a launch URL from product name, repo name, package name,
   README title, brand name, or common TLDs.
 - If only production is known, do not treat it as staging. If no deployed
-  origin is known, do not pause mid-arc for the staging URL. Record deployed
+  origin is known, do not pause mid-run for the staging URL. Record deployed
   launch verification as deferred and ask for
   `STAGING_APP_URL=<deployed staging origin>` only when the user requests
   staging or final project sign-off begins.

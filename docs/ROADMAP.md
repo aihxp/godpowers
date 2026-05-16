@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.9
+> Current shipped: v1.6.10
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.9)
+### Current surface (v1.6.10)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,

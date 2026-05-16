@@ -647,7 +647,7 @@ function main() {
     log('');
     log(`\x1b[36mNext steps:\x1b[0m`);
     log(`  1. Open your AI coding tool in any project directory`);
-    log(`  2. Type: \x1b[36m/god-mode\x1b[0m for full autonomous arc`);
+    log(`  2. Type: \x1b[36m/god-mode\x1b[0m for the full autonomous project run`);
     log(`     Or:   \x1b[36m/god-next\x1b[0m to see what to run next`);
     log(`     Or:   \x1b[36m/god-init\x1b[0m to start a new project`);
     log('');

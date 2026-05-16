@@ -18,7 +18,7 @@ const recipes = [
     keywords: ['build something new', 'start from scratch', 'greenfield', 'new project', 'idea to production'],
     stateConditions: ['no-godpowers-dir'],
     sequence: [
-      { cmd: '/god-mode', why: 'Full autonomous arc, idea to hardened production' }
+      { cmd: '/god-mode', why: 'Full autonomous project run, idea to hardened production' }
     ]
   },
   {
@@ -30,7 +30,7 @@ const recipes = [
     sequence: [
       { cmd: '/god-explore', why: 'Pre-init Socratic ideation' },
       { cmd: '/god-init', why: 'Commit to clarified framing' },
-      { cmd: '/god-mode', why: 'Run autonomous arc' }
+      { cmd: '/god-mode', why: 'Run autonomous project run' }
     ]
   },
   {
@@ -86,7 +86,7 @@ const recipes = [
     keywords: ['brownfield', 'inherit codebase', 'legacy code', 'understand existing'],
     stateConditions: ['has-package-json'],
     sequence: [
-      { cmd: '/god-preflight', why: 'Read-only intake audit before arc-ready and pillars' },
+      { cmd: '/god-preflight', why: 'Read-only intake audit before project-run readiness and pillars' },
       { cmd: '/god-archaeology', why: 'Deep history, decisions, conventions, risks' },
       { cmd: '/god-reconstruct', why: 'Reverse-engineer PRD/ARCH/ROADMAP/STACK from code' },
       { cmd: '/god-tech-debt', why: 'Categorize and prioritize debt' },
@@ -101,7 +101,7 @@ const recipes = [
     keywords: ['bluefield', 'new service', 'org standards', 'shared platform', 'within organization'],
     sequence: [
       { cmd: '/god-org-context init', why: 'Capture org-level standards and constraints' },
-      { cmd: '/god-preflight', why: 'Inspect inherited context before arc-ready and pillars' },
+      { cmd: '/god-preflight', why: 'Inspect inherited context before project-run readiness and pillars' },
       { cmd: '/god-init', why: 'Detect bluefield mode' },
       { cmd: '/god-mode --bluefield', why: 'Arc constrained by org context' }
     ]
@@ -129,15 +129,15 @@ const recipes = [
   {
     name: 'add-feature-mid-arc-pause',
     category: 'feature-addition',
-    description: 'Bigger feature mid-arc; reconcile with roadmap, pause arc, do feature, update roadmap, resume',
+    description: 'Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume',
     keywords: ['mid arc', 'mid development', 'pause arc', 'feature during build'],
     stateConditions: ['lifecycle-phase == in-arc'],
     sequence: [
       { cmd: '/god-reconcile', why: 'Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc.' },
-      { cmd: '/god-pause-work', why: 'Save current arc state', skipWhen: 'reconciliation-says-already-done-or-prereq' },
+      { cmd: '/god-pause-work', why: 'Save current project-run state', skipWhen: 'reconciliation-says-already-done-or-prereq' },
       { cmd: '/god-feature', why: 'Run feature workflow with full discipline' },
       { cmd: '/god-sync', why: 'Update all affected artifacts (PRD, ARCH, ROADMAP, etc.)' },
-      { cmd: '/god-resume-work', why: 'Restore arc state' }
+      { cmd: '/god-resume-work', why: 'Restore project-run state' }
     ]
   },
   {

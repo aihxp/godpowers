@@ -67,7 +67,7 @@ Constraints that will apply to this project:
   - Observability: Datadog
   ...
 
-Downstream agents will respect these throughout the arc.
+Downstream agents will respect these throughout the project run.
 
 Suggested next: /god-init (or /god-mode if you're ready to build)
 ```

@@ -50,7 +50,7 @@ required, record the single access bundle in
 requests staging or final sign-off begins.
 
 The single access bundle must be incremental. Do not ask for
-`STAGING_APP_URL` mid-arc unless the user requested deployed staging. At final
+`STAGING_APP_URL` mid-run unless the user requested deployed staging. At final
 sign-off or explicit staging, ask for the smallest next item needed to run the
 next command. If no live target URL is known, ask only for
 `STAGING_APP_URL=<staging-origin>` and the exact smoke command that will run.

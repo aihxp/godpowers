@@ -58,7 +58,7 @@ the user requests staging or final sign-off begins.
 The launch pause must not expand into every possible channel, analytics, or
 provider credential. Ask only for the next missing access item needed to run a
 named live smoke, launch-readiness, attribution, or monitoring check. Do not
-ask mid-arc for `STAGING_APP_URL` unless the user requested deployed staging.
+ask mid-run for `STAGING_APP_URL` unless the user requested deployed staging.
 At final sign-off, if no live target URL is known, ask only for
 `STAGING_APP_URL=<staging-origin>`.
 

@@ -19,7 +19,7 @@ sequences:
     description: "Inheriting an existing codebase; preflight before archaeology"
     steps:
       - command: "/god-preflight"
-        why: "Read-only intake audit before arc-ready and pillars"
+        why: "Read-only intake audit before project-run readiness and pillars"
       - command: "/god-archaeology"
         why: "Deep history, decisions, conventions, risks"
       - command: "/god-reconstruct"

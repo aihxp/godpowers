@@ -69,7 +69,7 @@ frontmatter. There's no proprietary binary state. To leave:
 ## What Godpowers does not try to be
 
 Godpowers is opinionated about: artifact discipline, bidirectional
-linkage, the four-tier arc, the single-orchestrator rule, headless
+linkage, the four-tier workflow, the single-orchestrator rule, headless
 runtime verification, and the substitution / three-label / have-nots
 gates. It is intentionally not opinionated about: team ceremonies,
 sprint cadence, ticket trackers, knowledge graphs, prompt engineering

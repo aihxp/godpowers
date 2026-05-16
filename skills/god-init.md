@@ -260,5 +260,5 @@ without explicit user invocation of /god-suite-init.
 After init completes, print:
 
 ```
-Suggested next: /god-prd for requirements, or /god-mode for the full autonomous arc.
+Suggested next: /god-prd for requirements, or /god-mode for the full autonomous project run.
 ```

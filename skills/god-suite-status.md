@@ -39,7 +39,7 @@ Aggregate
 Per-repo
 | Repo      | Mode | Phase     | Artifacts | Coverage | Drift | Reviews |
 |-----------|------|-----------|-----------|----------|-------|---------|
-| dashboard | A    | in-arc    | 12        | 92%      | 0     | 1       |
+| dashboard | A    | in progress | 12        | 92%      | 0     | 1       |
 | api       | A    | steady    | 18        | 85%      | 2     | 2       |
 | docs      | A    | steady    | 12        | 84%      | 1     | 2       |
 

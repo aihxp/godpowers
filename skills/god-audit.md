@@ -23,7 +23,7 @@ Spawn the **god-auditor** agent in a fresh context via Task tool.
 When invoked by `brownfield-arc` or `bluefield-arc` with
 `mode: greenfield-simulation`, spawn god-auditor with the current project
 evidence and ask it to compare the repo or org constraints against the
-canonical Godpowers greenfield arc. The agent writes
+canonical Godpowers greenfield project run. The agent writes
 `.godpowers/audit/GREENFIELD-SIMULATION.md`.
 
 This mode builds nothing and rewrites no planning artifacts. It exists so

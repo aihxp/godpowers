@@ -5,7 +5,7 @@
 
 ## Core abstractions
 
-**Tier**: a phase of the dev arc (0: Orchestration, 1: Planning, 2: Building, 3: Shipping).
+**Tier**: a phase of the development workflow (0: Orchestration, 1: Planning, 2: Building, 3: Shipping).
 
 **Sub-step**: a bounded unit within a tier (PRD, ARCH, Roadmap, Stack, Repo, Build, Deploy, Observe, Launch, Harden).
 

@@ -158,6 +158,16 @@ Path ahead:
 
 Keep the route to 3 lines unless the user asks for the full plan.
 
+Also show planning visibility when the artifacts exist or are expected:
+
+```
+Planning visibility:
+  PRD: <done | pending | missing> <path when present>
+  Roadmap: <done | pending | missing> <path when present>
+  Current milestone: <roadmap milestone, tier, or next planning gate>
+  Completion: <pct>% <basis from state.json or PROGRESS.md>
+```
+
 ## Process for Mode 4 (intent-based)
 
 ```
@@ -175,9 +185,9 @@ Returns ranked recipes matching:
 Display top match with the recipe's sequence:
    "Best match: add-feature-mid-arc-pause
     Sequence:
-      1. /god-pause-work  (Save current /god-mode arc state)
+      1. /god-pause-work  (Save current /god-mode project-run state)
       2. /god-feature     (Run feature workflow)
-      3. /god-resume-work (Restore arc)
+      3. /god-resume-work (Restore project run)
     
     Run this sequence? Or see other matches?"
 ```
@@ -277,13 +287,13 @@ When in steady state, match keywords to workflows:
 | upgrade, migrate, bump major | /god-upgrade |
 | docs, documentation, README | /god-docs |
 | deps, dependencies, audit | /god-update-deps |
-| preflight, intake, audit before arc-ready, audit before pillars | /god-preflight |
+| preflight, intake, audit before project run readiness, audit before pillars | /god-preflight |
 | audit, score, quality check | /god-audit |
 | health check, hygiene | /god-hygiene |
 
 If mode detection indicates brownfield or bluefield and
 `.godpowers/preflight/PREFLIGHT.md` is missing, prefer `/god-preflight` before
-recommending archaeology, reconstruction, arc-ready, pillars, or refactor work.
+recommending archaeology, reconstruction, project-run readiness, pillars, or refactor work.
 
 ## Output Format
 

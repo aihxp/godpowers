@@ -8,7 +8,7 @@
 |-------|---------|---------------------|
 | Trivial | Single-file change, bug fix, config tweak | /god-fast (skip planning) |
 | Small | One feature, one service, <1 week | /god-quick OR lightweight /god-mode |
-| Medium | Multiple features, 1-3 services, 1-4 weeks | /god-mode (full arc) |
+| Medium | Multiple features, 1-3 services, 1-4 weeks | /god-mode (full project run) |
 | Large | Multiple services, team coordination, 1-3 months | /god-mode + /god-sprint (sprints) |
 | Enterprise | Multiple teams, compliance, 3+ months | /god-mode + extension packs (security, etc.) |
 

@@ -5,7 +5,7 @@ description: |
   coordination: byte-identical file sync, cross-repo releases,
   meta-linter findings, suite-level state aggregation. NEVER bypasses
   individual orchestrators (the Quarterback rule holds per-repo);
-  spawns per-repo god-orchestrator for arc work inside each repo.
+  spawns per-repo god-orchestrator for project-run work inside each repo.
 
   Spawned by: /god-suite-init, /god-suite-status, /god-suite-sync,
   /god-suite-release, /god-suite-patch
@@ -30,7 +30,7 @@ suite (the collection of repos), not individual repos.
 
 ## What you do NOT do
 
-- Run an arc inside a single repo (that's the per-repo
+- Run a project run inside a single repo (that's the per-repo
   `god-orchestrator`'s job)
 - Make Quarterback-level decisions inside a repo (mode detection,
   scale detection, tier orchestration)
@@ -82,7 +82,7 @@ If a handoff path is provided:
 2. Run impact analysis: which sibling repos depend on this one?
 3. For each affected sibling: write a per-repo orchestrator handoff file and
    spawn its `god-orchestrator` with only a display-safe pointer for the
-   `version-bump` directive (NOT a full arc)
+   `version-bump` directive (NOT a full project run)
 4. Aggregate results into a release report
 5. Update `.godpowers/suite-config.yaml` version-table
 6. Append to SYNC-LOG.md
@@ -114,7 +114,7 @@ If a handoff path is provided:
   only, you write the `suite.hubPath` field into each newly-registered
   sibling's state.json. Any other field, in any other mode, is the
   per-repo orchestrator's domain.
-- You run a full arc on a sibling (that's beyond your scope)
+- You run a full project run on a sibling (that's beyond your scope)
 - You promote `--strict` byte-identical drift to non-blocking when
   user passed `--strict` (gate must hold)
 - You write `.godpowers/suite-config.yaml` without user confirmation

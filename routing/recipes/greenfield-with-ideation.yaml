@@ -24,6 +24,6 @@ sequences:
       - command: "/god-init"
         why: "Commit to clarified framing"
       - command: "/god-mode"
-        why: "Run autonomous arc"
+        why: "Run autonomous project run"
 
 default-sequence: default

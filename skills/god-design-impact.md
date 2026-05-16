@@ -70,7 +70,7 @@ Proposition:
   1. Implement partial: /god-design for only the lowest-risk token or component change
   2. Implement complete: /god-design with the full proposed change
   3. Discuss more: /god-discuss the design tradeoff before changing files
-  4. Run God Mode: /god-mode only if this design change is part of a wider arc
+  4. Run God Mode: /god-mode only if this design change is part of a wider project run
 Recommended: apply the smallest design change first when severity is warning
 or higher.
 ```

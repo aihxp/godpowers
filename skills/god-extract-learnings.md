@@ -15,7 +15,7 @@ Capture institutional knowledge from a completed phase or milestone.
 ## When to use
 
 - After completing a milestone (Now -> Done)
-- After a successful /god-mode arc
+- After a successful /god-mode project run
 - Before a /god-postmortem (different focus: that's for incidents)
 
 ## Process

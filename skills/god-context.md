@@ -132,7 +132,7 @@ Done. AI tools will no longer see Godpowers context on this project.
 
 ## Auto-refresh
 
-When `/god-sync` runs (post-arc, or any sync), `god-updater` calls this skill
+When `/god-sync` runs (after a project run, or any sync), `god-updater` calls this skill
 with `refresh` to keep `AGENTS.md` content aligned with the latest project
 state (mode, scale, completed tiers, active artifacts).
 

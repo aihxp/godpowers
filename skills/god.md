@@ -28,7 +28,7 @@ Before calling runtime modules, resolve the Godpowers runtime root:
 
 Slash commands are precise but require the user to know the command name.
 Recipes are scenario-shaped ("I'm coming back after a week", "production is
-broken", "add a feature mid-arc") and match free-text intent. `/god` is the
+broken", "add a feature during the current project run") and match free-text intent. `/god` is the
 front door that turns intent into the right slash command.
 
 This skill complements `/god-next` rather than replacing it:
@@ -39,7 +39,7 @@ This skill complements `/god-next` rather than replacing it:
 | `/god-next` | "I just finished X, what's next?" or pre-flight checks |
 | `/god-status` | "Where are we? what's done?" |
 | `/god-init` | "Start a project here" |
-| `/god-mode` | "Run the whole arc autonomously" |
+| `/god-mode` | "Run the whole project run autonomously" |
 
 ## Process
 
@@ -48,8 +48,8 @@ This skill complements `/god-next` rather than replacing it:
 Treat everything after `/god` as free text. If empty, treat as state-driven.
 
 ```
-/god add a feature without breaking the current arc
-   text = "add a feature without breaking the current arc"
+/god add a feature without breaking the current project run
+   text = "add a feature without breaking the current project run"
 
 /god
    text = "" -> state-driven mode
@@ -120,7 +120,7 @@ Proposition:
   1. Implement partial: <smallest safe command or slice>
   2. Implement complete: <full command sequence>
   3. Discuss more: /god-discuss <topic or unresolved question>
-  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous arc
+  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous project run
 Recommended: <one option and why>
 ```
 
@@ -178,8 +178,8 @@ User: /god add a new feature
 
 Top matches for "add a new feature":
 
-  1. add-feature-mid-arc-pause       (15)   Pause /god-mode arc, run feature, resume
-  2. add-feature-small               (10)   Lightweight feature, no arc context
+  1. add-feature-mid-arc-pause       (15)   Pause /god-mode, run feature, resume
+  2. add-feature-small               (10)   Lightweight feature, no project-run context
   3. add-feature-next-milestone      (10)   Defer to next milestone
 
 Pick one (1/2/3) or describe more specifically.
@@ -210,7 +210,7 @@ User: /god make me a sandwich
 No recipe matched. Falling back to state-driven suggestion.
 
 Where you are: tier-3 launched
-Structural next: (none, arc complete)
+Structural next: (none, project run complete)
 
 Suggested: /god-next   show all valid next-step options
        or: /god-status   re-derive state from disk

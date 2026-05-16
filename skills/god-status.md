@@ -34,6 +34,8 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
 6. Report:
    - Current mode and scale
    - Progress summary: percentage, completed step count, current step number
+   - Planning visibility: PRD status, roadmap status, active milestone, and
+     completion basis
    - What happened recently, using CHECKPOINT.md actions when available
    - What happens next, using routing and disk state
    - Per-tier status (with disk verification)
@@ -50,6 +52,12 @@ Mode: A (greenfield)    Scale: medium
 Started: 2026-05-09
 Progress: 15% (2 of 13 steps complete; current step 3 of 13)
 Current: Tier 1 Planning / Architecture
+
+Planning visibility:
+  PRD: done .godpowers/prd/PRD.md
+  Roadmap: pending
+  Current milestone: Planning / Architecture
+  Completion: 15% based on PROGRESS.md tracked steps
 
 What happened recently:
   1. PRD artifact verified on disk
@@ -100,7 +108,7 @@ how much momentum to give Godpowers:
 ```
 Proposition:
   1. Implement partial: [single next command from "What happens next"]
-  2. Implement complete: /god-mode to continue the current arc when no blockers are present
+  2. Implement complete: /god-mode to continue the current project run when no blockers are present
   3. Discuss more: /god-discuss [unclear state, blocker, or inconsistency]
   4. Inspect status: /god-locate or /god-next for a smaller routing view
 Recommended: [one option and why it fits the disk-derived state]

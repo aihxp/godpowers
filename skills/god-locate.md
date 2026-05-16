@@ -80,7 +80,7 @@ The orientation summary must end with a compact proposition block:
 ```
 Proposition:
   1. Implement partial: [next suggested command]
-  2. Implement complete: /god-mode to continue the arc when no drift is flagged
+  2. Implement complete: /god-mode to continue the project run when no drift is flagged
   3. Discuss more: /god-discuss [unclear state or stale checkpoint]
   4. Inspect status: /god-status for the full report
 Recommended: [one option and why]
