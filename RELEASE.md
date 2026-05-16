@@ -1,12 +1,11 @@
-# Godpowers 1.6.20 Release
+# Godpowers 1.6.21 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.20 closes the automation gaps found after repository surface
-sync. It adds dedicated route-quality, recipe-coverage, and release-surface
-checks so Godpowers detects disconnected route spawns, missing intent recipes,
-and stale release-facing documentation before declaring a project or release
-current.
+Godpowers 1.6.21 sharpens the daily operating loop after the automation
+surface closeout. It adds dashboard action briefs, requires agent-spawning
+routes to declare trace events, and expands release readiness checks across
+dogfood, extension publish, Mode D suite, and installer smoke gates.
 
 ## What is stable
 
@@ -28,21 +27,22 @@ current.
 - Repository documentation sync checks
 - Repository surface sync checks
 - Route quality, recipe coverage, and release surface sync checks
+- Dashboard action briefs for next-step compression
+- Agent-spawn trace event guardrails
+- Mode D suite readiness checks
 
 ## What is new
 
-- Added `lib/route-quality-sync.js`.
-- Added `lib/recipe-coverage-sync.js`.
-- Added `lib/release-surface-sync.js`.
-- Added `scripts/test-automation-surface-sync.js`.
-- Added release maintenance, context refresh, story work, and automation setup
-  recipes.
-- `/god-party` now declares concrete parallel specialist personas.
-- `/god-story-build` now declares planner, executor, and reviewer handoffs
-  without symbolic spawn tokens.
-- Feature awareness now records route quality, recipe coverage, and release
-  surface sync as known runtime features.
-- Package contents checks now require all three new sync helpers.
+- Added `Action brief` output to `lib/dashboard.js` and CLI status rendering.
+- Added route-quality enforcement for `agent.start` and `agent.end` trace
+  event declarations on agent-spawning routes.
+- Added repo-surface Mode D suite readiness checks for suite helper presence,
+  suite command skill and routing coverage, roadmap documentation, and release
+  test wiring.
+- Added release-surface checks for dogfood, extension publish, Mode D suite,
+  and installer smoke tests.
+- Updated `/god-init`, `/god-roadmap-update`, and `/god-sync` route metadata
+  to declare `agent.start`.
 
 ## Automation surface behavior
 
@@ -50,12 +50,15 @@ For a Godpowers repository, the helper checks:
 
 - every routed specialist spawn resolves to a real agent or built-in runtime
   owner
+- every agent-spawning route declares `agent.start` and `agent.end`
 - every durable-writing route declares standards coverage or an approved
   exemption
 - high-frequency work has discoverable intent recipes
 - release-facing version surfaces agree with `package.json`
 - package content checks require load-bearing runtime helper files
 - release checklist policy names the current sync guards
+- release gates include dogfood, extension publish, Mode D suite, and installer
+  smoke checks
 
 Detection is read-only by default. Applying sync writes logs and leaves
 judgment-heavy rewrites to scoped specialists.
@@ -84,6 +87,9 @@ Release validation includes:
 - `node scripts/test-repo-doc-sync.js`
 - `node scripts/test-feature-awareness.js`
 - `node scripts/test-dashboard.js`
+- `node scripts/test-mode-d.js`
+- `node scripts/test-extensions-publish.js`
+- `node scripts/test-install-smoke.js`
 - `node scripts/test-context-writer.js`
 - `node scripts/test-planning-systems.js`
 - `node scripts/test-doc-surface-counts.js`
@@ -91,5 +97,5 @@ Release validation includes:
 - `git diff --check`
 - `npm run release:check`
 
-The `v1.6.20` tag should point to the release commit that matches the npm
-`godpowers@1.6.20` package.
+The `v1.6.21` tag should point to the release commit that matches the npm
+`godpowers@1.6.21` package.

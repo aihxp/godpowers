@@ -53,6 +53,7 @@ test('compute reports not initialized and suggests /god-init', () => {
   const rendered = dashboard.render(result);
   assert(rendered.includes('Godpowers Dashboard'), 'render missing title');
   assert(rendered.includes('Source: runtime dashboard (lib/dashboard.js)'), 'render missing source');
+  assert(rendered.includes('Action brief:'), 'render missing action brief');
   assert(rendered.includes('Recommended: /god-init'), 'render missing init route');
 });
 
@@ -83,6 +84,7 @@ test('compute reports progress and planning visibility from disk', () => {
   assert(result.planning.roadmap.status === 'missing',
     `roadmap: ${result.planning.roadmap.status}`);
   assert(result.next.command === '/god-arch', `next: ${result.next.command}`);
+  assert(result.actionBrief.recommended === '/god-arch', `brief: ${result.actionBrief.recommended}`);
   assert(result.proactive.checkpoint === 'fresh',
     `checkpoint: ${result.proactive.checkpoint}`);
   assert(result.proactive.sync === 'fresh', `sync: ${result.proactive.sync}`);
@@ -98,7 +100,28 @@ test('render includes current status, proactive checks, and next route', () => {
   assert(rendered.includes('Planning visibility:'), 'missing planning visibility');
   assert(rendered.includes('Completion basis: .godpowers/state.json workflow steps'), `rendered: ${rendered}`);
   assert(rendered.includes('Proactive checks:'), 'missing proactive checks');
+  assert(rendered.includes('Action brief:'), 'missing action brief');
   assert(rendered.includes('Recommended: /god-prd'), `rendered: ${rendered}`);
+});
+
+test('action brief compresses blockers without hiding next route', () => {
+  const result = {
+    next: { command: '/god-sync', reason: 'Close out changed artifacts' },
+    proactive: {
+      repoSurface: 'fresh',
+      docs: '2 stale, suggest /god-docs',
+      reviews: 'none',
+      sync: 'missing, suggest /god-sync',
+      security: 'clear',
+      dependencies: 'dependency files changed, suggest /god-update-deps',
+      hygiene: 'stale, suggest /god-hygiene'
+    }
+  };
+  const brief = dashboard.actionBrief(result);
+  assert(brief.recommended === '/god-sync', `recommended: ${brief.recommended}`);
+  assert(brief.confidence === 'needs attention', `confidence: ${brief.confidence}`);
+  assert(brief.blockers.length === 3, `blockers: ${brief.blockers.length}`);
+  assert(brief.overflow === 1, `overflow: ${brief.overflow}`);
 });
 
 test('pending review file becomes proactive review suggestion', () => {

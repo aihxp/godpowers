@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.21] - 2026-05-16
+
+Dashboard compression, trace guardrails, and suite release readiness.
+
+### Added
+- Added dashboard action briefs so `/god-status`, `/god-next`, and CLI status
+  output show the recommended command, reason, readiness, and top blockers
+  before the detailed check list.
+- Added release-surface checks that verify dogfood, extension publish, Mode D
+  suite, and installer smoke tests remain wired into the release gate.
+- Added repo-surface suite readiness checks for Mode D helper, docs, tests,
+  and suite command route coverage.
+
+### Changed
+- Route-quality sync now requires every agent-spawning route to declare both
+  `agent.start` and `agent.end` trace events.
+- `/god-init`, `/god-roadmap-update`, and `/god-sync` route metadata now
+  declare the missing `agent.start` trace event.
+
+### Guardrails
+- Spawn observability, release dogfooding, extension readiness, suite
+  readiness, and onboarding compression are now checked by executable tests
+  instead of remaining documentation-only goals.
+
 ## [1.6.20] - 2026-05-16
 
 Automation surface closeout and release guardrails.

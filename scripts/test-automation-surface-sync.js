@@ -110,6 +110,13 @@ test('route quality sync rejects symbolic spawn tokens', () => {
   assert(report.stale.some((check) => check.id.startsWith('missing-standards')));
 });
 
+test('route quality sync requires trace events for agent-spawning routes', () => {
+  const tmp = fixture();
+  const report = routeQualitySync.detect(tmp);
+  assert(report.stale.some((check) => check.id === 'missing-trace-events--god-write'));
+  assert(report.stale.some((check) => check.id === 'agent-trace-policy'));
+});
+
 test('recipe coverage sync finds missing high-frequency recipes', () => {
   const tmp = fixture();
   const report = recipeCoverageSync.detect(tmp);
@@ -124,6 +131,15 @@ test('release surface sync catches missing package guardrails', () => {
   const report = releaseSurfaceSync.detect(tmp);
   assert.equal(report.status, 'stale');
   assert(report.stale.some((check) => check.id.includes('recipe-coverage-sync')));
+});
+
+test('release surface sync requires dogfood, extension, suite, and install gates', () => {
+  const tmp = fixture();
+  const report = releaseSurfaceSync.detect(tmp);
+  assert(report.stale.some((check) => check.id.includes('test-automation-surface-sync')));
+  assert(report.stale.some((check) => check.id.includes('test-extensions-publish')));
+  assert(report.stale.some((check) => check.id.includes('test-mode-d')));
+  assert(report.stale.some((check) => check.id.includes('test-install-smoke')));
 });
 
 test('current repository automation surfaces are fresh', () => {

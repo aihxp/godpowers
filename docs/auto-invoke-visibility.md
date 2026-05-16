@@ -50,6 +50,12 @@ Current status:
   Step: <sub-step label> (step <n> of <total steps>)
   Progress: <pct>% workflow progress (<done> of <total> tracked steps complete)
 
+Action brief:
+  Next: <one command or user decision>
+  Why: <one sentence tied to disk state>
+  Readiness: <ready | needs attention>
+  Attention: <none or top blockers, with overflow count>
+
 Planning visibility:
   PRD: <done | pending | missing | deferred> <path when present>
   Roadmap: <done | pending | missing | deferred> <path when present>
@@ -79,6 +85,9 @@ This dashboard is required for `/god-status`, `/god-next`, `/god-mode`, and
 workflow closeouts so the user can always see where Godpowers is, how close it
 is to completion, and what happens next.
 
+The action brief is the compressed onboarding surface. It must not replace the
+full proactive checks, because the detailed checks are the audit trail.
+
 Workflow progress and audit scores are separate metrics. The dashboard
 `Progress` line is only workflow step completion from state. Audit or hygiene
 scores must be labeled as audit scores in the surrounding closeout, not reused
@@ -96,6 +105,7 @@ as workflow progress.
 | Checkpoint sync | State mutation checkpoints | Show `.godpowers/CHECKPOINT.md` created, updated, no-op, or skipped |
 | Context refresh | `/god-sync`, `/god-init`, `/god-context` | Show `god-context-writer` spawn or no-op |
 | Standards checks | Routed stage boundaries | Show gate, artifact, pass/fail, and next route |
+| Spawn trace checks | Route-quality sync and release closeout | Require `agent.start` and `agent.end` for agent-spawning routes |
 | Preflight | Brownfield and bluefield starts | Show why it ran and which route it unlocked |
 | DESIGN/PRODUCT gate | Design or product artifact changed | Show `god-design-reviewer` verdict before propagation |
 

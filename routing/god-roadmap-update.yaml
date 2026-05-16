@@ -34,4 +34,4 @@ failure-path:
 
 endoff:
   state-update: tier-1.roadmap.updated timestamp
-  events: [artifact.updated, have-nots.check, agent.end]
+  events: [agent.start, artifact.updated, have-nots.check, agent.end]

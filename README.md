@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.20-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.21-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,11 +12,14 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.20 closes the automation surface gaps around route quality, recipe
-coverage, and release readiness. Godpowers now checks symbolic route spawns,
-unresolved agent targets, standards coverage for durable-writing routes, missing
-high-frequency recipes, package payload guards, and release-facing version drift
-before closeout.
+Version 1.6.21 sharpens the daily operating loop. Godpowers now shows a compact
+action brief in dashboard output, enforces trace events for every
+agent-spawning route, and keeps dogfood, extension publish, Mode D suite, and
+installer smoke gates wired into release readiness.
+
+The dashboard now starts with an action brief: the next command, why it is
+recommended, whether the project is ready, and the first blockers that need
+attention. Detailed proactive checks remain below the brief for auditability.
 
 It fuses four disciplines into one unified workflow:
 
@@ -107,8 +110,8 @@ You can also ask any time:
 ```
 
 This reads `.godpowers/PROGRESS.md`, scans disk, reconciles any drift, and
-suggests the next logical command. The SessionStart hook does the same thing
-when you open a new session in a Godpowers project.
+suggests the next logical command with a compact action brief. The SessionStart
+hook does the same thing when you open a new session in a Godpowers project.
 
 The same status engine is available from the installer CLI for humans, CI,
 Codex, Claude, Cursor, Gemini, OpenCode, Windsurf, Antigravity, and any host

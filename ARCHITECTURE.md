@@ -1,6 +1,6 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.20 (pure-skill model plus repo documentation and surface sync)
+> Status: STABLE v1.6.21 (pure-skill model plus repo documentation and surface sync)
 > Authors: Godpowers Team
 > Last updated: 2026-05-16
 
@@ -371,7 +371,12 @@ spawns.
 primary and secondary spawns.
 
 [DECISION] `lib/route-quality-sync.js` now detects symbolic route spawns,
-unresolved agent targets, and unapproved contextual route exits.
+unresolved agent targets, unapproved contextual route exits, and agent-spawn
+routes missing required trace events.
+
+[DECISION] Agent-spawning routes must declare both `agent.start` and
+`agent.end` in `endoff.events`. This makes auto-spawn visibility auditable
+from route metadata before a command runs.
 
 [DECISION] Contextual route exits are allowed only for approved meta,
 inspection, extension, and flexible helper commands. New `varies` exits must
@@ -390,7 +395,16 @@ intent recipes before a release or closeout claims full routing coverage.
 
 [DECISION] `lib/release-surface-sync.js` now detects release-facing drift
 across README badges, changelog, release notes, package guardrails, release
-checklist policy, and package lock version.
+checklist policy, package lock version, dogfood tests, extension publish tests,
+Mode D suite tests, and installer smoke tests.
+
+[DECISION] `lib/repo-surface-sync.js` now checks Mode D suite readiness:
+suite helper presence, suite command skill and routing coverage, roadmap
+documentation, and test gate wiring.
+
+[DECISION] `lib/dashboard.js` renders an action brief before the detailed
+status sections. The brief compresses the next command, route reason,
+readiness, and top blockers while keeping the full audit trail visible below.
 
 [DECISION] Feature awareness remains curated, and it now records
 route-quality-sync, recipe-coverage-sync, and release-surface-sync as known
@@ -408,7 +422,8 @@ before a release is declared current.
 
 [DECISION] Dashboard status should continue reporting workflow progress,
 proactive checks, repo docs, repo surface, runtime test, security, dependency,
-and automation opportunities separately.
+and automation opportunities separately, with the action brief acting as a
+summary rather than a replacement.
 
 [DECISION] Route-quality sync, recipe-coverage sync, and release-surface sync
 are now implemented as local runtime helpers and are included by

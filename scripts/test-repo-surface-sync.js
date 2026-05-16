@@ -87,7 +87,9 @@ test('detect reports missing route, package check, and missing spawn target', ()
   assert(report.stale.some((check) => check.id === 'route-for-god-beta'));
   assert(report.stale.some((check) => check.id.includes('package-check-lib-repo-surface-sync-js')));
   assert(report.stale.some((check) => check.id === 'missing-agent-god-missing'));
+  assert(report.stale.some((check) => check.id === 'suite-test-gate'));
   assert(report.spawnRecommendations.some((rec) => rec.agent === 'god-auditor'));
+  assert(report.spawnRecommendations.some((rec) => rec.agent === 'god-coordinator'));
 });
 
 test('run can create missing routing metadata when fixRouting is explicit', () => {

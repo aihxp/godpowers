@@ -30,4 +30,4 @@ failure-path:
 
 endoff:
   state-update: tier statuses updated based on what was synced
-  events: [artifact.updated, have-nots.check, agent.end]
+  events: [agent.start, artifact.updated, have-nots.check, agent.end]

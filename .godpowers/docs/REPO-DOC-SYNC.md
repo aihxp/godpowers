@@ -11,3 +11,12 @@
 - [DECISION] Refreshed ARCHITECTURE.md for architecture-version.
 - [DECISION] Refreshed docs/ROADMAP.md for roadmap-version.
 - [DECISION] Refreshed docs/reference.md for reference-version.
+
+## 2026-05-16T17:09:10.386Z
+
+- [DECISION] Repo documentation sync status before apply was stale.
+- [DECISION] Repo documentation sync status after apply is fresh.
+- [DECISION] Refreshed USERS.md for users-version.
+- [DECISION] Refreshed ARCHITECTURE.md for architecture-version.
+- [DECISION] Refreshed docs/ROADMAP.md for roadmap-version.
+- [DECISION] Refreshed docs/reference.md for reference-version.

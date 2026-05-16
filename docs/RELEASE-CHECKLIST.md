@@ -30,6 +30,12 @@ This includes:
 - Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 - Repository surface sync tests through `node scripts/test-repo-surface-sync.js`.
 - Automation surface sync tests through `node scripts/test-automation-surface-sync.js`.
+- Extension publish readiness tests through `node scripts/test-extensions-publish.js`.
+- Mode D suite tests through `node scripts/test-mode-d.js`.
+- Installer smoke tests through `node scripts/test-install-smoke.js`.
+
+Before publish, confirm release-surface sync still sees those dogfood,
+extension, suite, and installer gates in `package.json`.
 
 ## Package Surface
 

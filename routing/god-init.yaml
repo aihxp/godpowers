@@ -35,5 +35,5 @@ failure-path:
 
 endoff:
   state-update: tier-0.orchestration.status = done
-  events: [orchestrator.spawn, artifact.created, agent.end]
+  events: [orchestrator.spawn, agent.start, artifact.created, agent.end]
   lifecycle-transition: pre-init -> in-arc
