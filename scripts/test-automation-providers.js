@@ -53,7 +53,38 @@ test('detect returns safe templates and providers', () => {
   });
   assert(result.providers.length >= 10, `providers: ${result.providers.length}`);
   assert(result.safeTemplates.some(template => template.id === 'daily-status'), 'missing daily status');
+  assert(result.safeTemplates.some(template => template.id === 'strict-release-readiness'),
+    'missing strict release readiness');
   assert(result.recommendedProvider === null, 'unexpected provider recommendation');
+});
+
+test('strict release readiness is fail-closed and covers every release surface', () => {
+  const template = automation.SAFE_TEMPLATES.find(item => item.id === 'strict-release-readiness');
+  assert(template, 'missing strict release readiness template');
+  assert(template.risk.includes('fail-closed'), `risk: ${template.risk}`);
+  assert(template.prompt.includes('Fail closed'), template.prompt);
+  assert(template.prompt.includes('Do not modify files'), template.prompt);
+  const required = [
+    'root docs',
+    'docs/',
+    'agents/',
+    'skills/',
+    'routing/',
+    'workflows/',
+    'schema/',
+    'templates/',
+    'references/',
+    'hooks/',
+    'lib/',
+    'scripts/',
+    'tests/',
+    'fixtures/',
+    '.github/workflows',
+    'package surface'
+  ];
+  for (const needle of required) {
+    assert(template.surfaces.some(surface => surface.includes(needle)), `missing surface: ${needle}`);
+  }
 });
 
 test('detect recommends installed native scheduler before scriptable providers', () => {

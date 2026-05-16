@@ -83,7 +83,12 @@ for that exact write-capable automation:
 - `stale-checkpoint`: inspect checkpoint freshness and suggest `/god-sync` or `/god-resume-work`
 - `review-queue`: report unresolved review items without clearing them
 - `weekly-hygiene`: report docs, dependencies, checkpoint, reviews, and hygiene signals
+- `strict-release-readiness`: fail-closed release readiness across root docs, docs, agents, skills, routing, workflows, schema, templates, references, hooks, lib, scripts, tests, fixtures, GitHub workflows, package metadata, git tag state, GitHub release state, npm latest, and local install state
 - `release-readiness`: report release readiness without publishing
+
+Use `strict-release-readiness` for any background release automation. Use
+`release-readiness` only for quick manual checks where the user explicitly
+accepts a narrower report.
 
 ## Provider Guidance
 

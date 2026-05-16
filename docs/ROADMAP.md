@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.23
+> Current shipped: v1.6.24
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.23)
+### Current surface (v1.6.24)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -42,6 +42,11 @@ What works today:
   host tool calling for simple read-only setup or spawn
   `god-automation-engineer` for complex setup, then records state only after
   the host setup succeeds.
+- **Strict release readiness automation**: background release checks use the
+  `strict-release-readiness` template to fail closed unless every required
+  root-doc, docs, agent, skill, route, workflow, schema, template, reference,
+  hook, runtime, script, test, fixture, GitHub workflow, package, registry,
+  release, and install surface is checked.
 - **Planning-system migration**: `/god-init` and `/god-migrate` detect GSD,
   BMAD, and Superpowers, import prep context and seed artifacts, and
   `/god-sync` writes managed sync-back companion files.

@@ -1,13 +1,13 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.23 (pure-skill model plus dogfood, host guarantees, and release surface sync)
+> Status: STABLE v1.6.24 (pure-skill model plus dogfood, host guarantees, and release surface sync)
 > Authors: Godpowers Team
 > Last updated: 2026-05-16
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.23 keeps the public surface stable while hardening documentation sync,
-repository surface sync, release gates, host guarantee reporting, source-system
-sync-back, and upgrade awareness after a full repo audit. Auto-invoked
+v1.6.24 keeps the public surface stable while adding strict, fail-closed
+background release readiness across every owned repo, package, registry,
+workflow, and local install surface. Auto-invoked
 commands, spawned agents, local runtime helpers, platform-specific spawning
 limits, migration imports, sync-back writes, feature-awareness refreshes, repo
 documentation sync, repo surface sync, dogfood runs, and dashboard progress
@@ -976,14 +976,14 @@ Each release is independently shippable. v1.0 freezes the public API.
 
 ## 16. Mapping Current State to Target
 
-| current v1.6.23 surface | v1.0 target |
+| current v1.6.24 surface | v1.0 target |
 |------------|-------------|
 | `.godpowers/PROGRESS.md` (markdown) | `.godpowers/intent.yaml` + `.godpowers/state.json` + auto-generated PROGRESS.md (legacy view) |
 | Implicit workflow in orchestrator prose | `workflows/full-arc.yaml` declarative |
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install, uninstall, migrate, status helpers) | Same mutation boundary. Durable project work stays slash-command driven. |
-| 110 skills + 40 agents (shipped at v1.6.23) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 110 skills + 40 agents (shipped at v1.6.24) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

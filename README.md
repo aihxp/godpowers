@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.23-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.24-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,10 +12,12 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.23 hardens the release surface after a full file-by-file audit.
-Godpowers now keeps repo documentation, release gates, feature awareness,
-host guarantees, source-system sync-back, and repository surface checks aligned
-from reconciliation through final sync.
+Version 1.6.24 makes background release readiness strict and fail-closed.
+Godpowers now requires delegated release checks to cover root docs, docs,
+agents, skills, routing, workflows, schema, templates, references, hooks, lib,
+scripts, tests, fixtures, GitHub workflows, package metadata, npm, GitHub
+release, CI, publish workflow, and local install state before a human-approved
+release executor can run.
 
 The dashboard now starts with an action brief and a host guarantee line: the
 next command, why it is recommended, whether the project is ready, the first

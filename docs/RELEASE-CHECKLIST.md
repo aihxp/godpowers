@@ -13,6 +13,28 @@ Use this checklist before publishing a public Godpowers release.
 - Confirm `lib/route-quality-sync.detect(projectRoot)` reports `fresh` before publishing.
 - Confirm `lib/recipe-coverage-sync.detect(projectRoot)` reports `fresh` before publishing.
 - Confirm `lib/release-surface-sync.detect(projectRoot)` reports `fresh` before publishing.
+- For background or delegated release checks, use the `strict-release-readiness`
+  automation template and treat any unchecked surface as a blocker.
+
+Strict release readiness must cover:
+
+- Root docs: `README.md`, `CHANGELOG.md`, `RELEASE.md`, `CONTRIBUTING.md`,
+  `SUPPORT.md`, `USERS.md`, `ARCHITECTURE.md`, `ARCHITECTURE-MAP.md`,
+  `AGENTS.md`, and `SKILL.md`.
+- `docs/`, including release checklist, roadmap, reference, validation,
+  concepts, getting started, feature awareness, auto-invoke visibility, and
+  repo sync docs.
+- `agents/`, including pillar files and specialist agent contracts.
+- `skills/`, including command skills and release-visible examples.
+- `routing/`, including command routes and high-frequency recipes.
+- `workflows/`, including arc, suite, docs, deps, hygiene, and audit workflows.
+- `schema/`, `templates/`, `references/`, and `hooks/`.
+- `lib/`, including sync detectors, release guardrails, host capabilities,
+  automation providers, and runtime helpers.
+- `scripts/`, `tests/`, and `fixtures/`.
+- `.github/workflows/`, including CI, publish, and pack publish gates.
+- Package and published surfaces: `package.json`, `package-lock.json`,
+  npm payload, npm latest, git tag, GitHub release, and local install.
 
 ## Local Verification
 

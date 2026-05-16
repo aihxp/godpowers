@@ -23,5 +23,7 @@ sequences:
         why: "Verify README, release notes, badges, and public docs against code"
       - command: "/god-version"
         why: "Confirm installed runtime and package version visibility"
+      - command: "/god-automation-setup"
+        why: "Use strict-release-readiness for any background release check; do not publish without explicit user approval"
 
 default-sequence: default

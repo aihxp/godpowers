@@ -129,6 +129,7 @@ as workflow progress.
 | Runtime verification | After frontend-visible changes | Catches blank screens and layout regressions | Auto-run only when local app target is known |
 | Host capability detection | Dashboard, next-route, doctor, sync, and release surfaces | Makes host limits explicit before users rely on automation | Read-only only |
 | Dogfood runner | Before release, after migration/sync-back/host/extension/suite changes, or by user request | Exercises messy-project fixtures that unit tests cannot represent | Run only shipped fixtures unless user supplies a project |
+| Strict release readiness | Scheduled or manual pre-release checks | Prevents stale root docs, docs, agents, skills, routing, workflows, schema, templates, references, hooks, lib, scripts, tests, fixtures, GitHub workflows, package metadata, git tag, GitHub release, npm, and local install surfaces from drifting silently | Read-only, fail closed, no publish |
 | Automation setup execution | After exact provider, template, cadence, and scope approval | Lets the host LLM configure safe automation for the user | Record only after host setup succeeds |
 
 ## Proactive Matrix
@@ -167,6 +168,8 @@ Run these automatically when the trigger is direct, then display an
   release surfaces need host guarantee language.
 - Dogfood runner when `/god-dogfood`, `npx godpowers dogfood`, or release
   readiness checks directly request fixture execution.
+- Strict release readiness when a scheduled release check runs. It must report
+  unchecked surfaces as blockers instead of treating absent evidence as pass.
 
 ## Level 3 Auto-Spawn Agents
 

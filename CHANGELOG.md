@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.24] - 2026-05-16
+
+Strict background release readiness.
+
+### Added
+- Added the `strict-release-readiness` automation template so delegated or
+  scheduled release checks fail closed when any required release surface is
+  unchecked, stale, missing, untested, or inconsistent with the intended
+  version.
+- Added a required release-surface manifest for root docs, docs, agents,
+  skills, routing, workflows, schema, templates, references, hooks, lib,
+  scripts, tests, fixtures, GitHub workflows, package metadata, npm latest,
+  git tag state, GitHub release state, CI, publish workflow, and local install
+  state.
+
+### Changed
+- `/god-automation-setup` now recommends `strict-release-readiness` for
+  background release checks and keeps the narrower `release-readiness`
+  template reserved for quick manual checks.
+- The release maintenance recipe now routes background-release setup through
+  `/god-automation-setup` with an explicit no-publish guardrail.
+- Auto-invoke visibility docs now classify strict release readiness as a
+  read-only, fail-closed Level 2 automation candidate.
+- The release checklist now names every folder and published surface that must
+  be checked before packaging, tagging, pushing, releasing, or publishing.
+
+### Guardrails
+- Added behavioral coverage that verifies the strict release readiness
+  template exists, is fail-closed, refuses file mutation, and names every
+  required release surface.
+- The strict readiness template may report blockers and exact next commands,
+  but it must not modify files, stage, commit, tag, push, create a GitHub
+  release, publish to npm, delete files, clear caches, or change installs.
+
 ## [1.6.23] - 2026-05-16
 
 Full repository audit, release gate hardening, and documentation repair.
