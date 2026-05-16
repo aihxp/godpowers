@@ -71,7 +71,8 @@ For each channel:
   `.godpowers/observe/STATE.md`.
 - If deploy or observe is waiting on external access, do not create a broad
   dashboard checklist. Reference only the smallest next access item from the
-  waiting bundle and write launch state as `waiting-for-external-access`.
+  waiting bundle and write launch state as local-ready with deployed
+  verification deferred unless the user explicitly requested staging now.
 - If a staging or production URL is available, run or specify the exact smoke
   command and record the result.
 - If only local staging is available, run local launch-readiness checks and
@@ -85,7 +86,10 @@ For each channel:
   current. Never infer a launch URL from product name, repo name, package name,
   README title, brand name, or common TLDs.
 - If only production is known, do not treat it as staging. If no deployed
-  origin is known, pause for `STAGING_APP_URL=<deployed staging origin>`.
+  origin is known, do not pause mid-arc for the staging URL. Record deployed
+  launch verification as deferred and ask for
+  `STAGING_APP_URL=<deployed staging origin>` only when the user requests
+  staging or final project sign-off begins.
 
 ## Output
 

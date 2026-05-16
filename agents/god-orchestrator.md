@@ -382,6 +382,14 @@ The shipping tier must not end by listing a broad provider checklist. God Mode
 either ships, creates the automation needed to ship, or pauses on one precise
 external access bundle.
 
+Default behavior: do not pause mid-arc just to ask for a staging URL. If the
+user has not explicitly requested deployed staging verification and no live
+target URL is evidenced, complete every local and CI-verifiable shipping gate,
+write the missing deployed-origin item to
+`.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`, and continue. Ask for
+`STAGING_APP_URL` only when the user requests staging, invokes `/god-deploy`
+or `/god-launch` for deployed verification, or reaches final project sign-off.
+
 For deploy, observe, harden, and launch:
 1. Detect the target environment from deploy config, org context, env files,
    CI config, README, existing scripts, and provider CLIs.
@@ -399,29 +407,41 @@ For deploy, observe, harden, and launch:
      access bundle needed
 5. Under `--yolo`, auto-pick safe defaults for provider-neutral choices and
    continue through every local and CI-verifiable gate.
-6. Only pause when real external access is required and absent. The pause must
-   ask for the smallest next input needed to run the next concrete check. The
-   first pause should usually ask only for the deployed staging origin, for
-   example `STAGING_APP_URL=<staging-origin>`. Do not ask for API keys,
-   provider dashboards, DNS tokens, production secrets, or admin consoles until
-   a specific scripted check cannot run without that exact access.
-7. Do not say "Suggested next" for a blocked shipping tier. Say either
-   `Arc complete` or `PAUSE: external access required`, with the exact artifact
-   that lists the required bundle.
+6. If deployed verification is deferred by default, mark the shipping artifact
+   as local/CI ready and continue. Do not pause for `STAGING_APP_URL` yet.
+7. Only pause when the user explicitly requested deployed staging or final
+   sign-off requires a real deployed check. The pause must ask for the smallest
+   next input needed to run the next concrete check. The first external pause
+   should usually ask only for the deployed staging origin, for example
+   `STAGING_APP_URL=<staging-origin>`. Do not ask for API keys, provider
+   dashboards, DNS tokens, production secrets, or admin consoles until a
+   specific scripted check cannot run without that exact access.
+8. At final sign-off, if deployed verification is still deferred, present:
+   "Local and CI-verifiable closure is complete. Provide
+   `STAGING_APP_URL=<deployed staging origin>` to run deployed smoke now, say
+   `sign off local-only` to finish with deployed verification deferred, or run
+   `/god-deploy --stage` later."
+9. Do not say "Suggested next" for a blocked shipping tier. Say either
+   `Arc complete`, `Arc complete with deployed verification deferred`, or
+   `PAUSE: external access required`, with the exact artifact that lists the
+   required bundle.
 
 ### External Access Ladder
 
 Use this order when external access is missing:
 
-1. Ask for the deployed staging origin only if no live target URL is known from
-   explicit evidence.
-2. Run the real staging smoke command against that origin.
-3. Ask for a provider key, dashboard, admin console, or test user only when a
+1. If no live target URL is known from explicit evidence, defer the deployed
+   staging origin request unless the user asked to stage now or the arc has
+   reached final sign-off.
+2. When staging is requested or final sign-off begins, ask for the deployed
+   staging origin only.
+3. Run the real staging smoke command against that origin.
+4. Ask for a provider key, dashboard, admin console, or test user only when a
    named smoke, callback, webhook, export, observability, or rollback check
    fails or cannot execute without that exact item.
-4. Add at most one new access item per pause unless several items are required
+5. Add at most one new access item per pause unless several items are required
    by the same command invocation.
-5. Every access request must include the command that will run next and the
+6. Every access request must include the command that will run next and the
    artifact that will be updated after it runs.
 
 Never request every possible key or API at the start of shipping. Keys and API
@@ -441,8 +461,10 @@ evidence:
 Never invent domains from the product name, package name, repo name, README
 title, brand name, or common TLDs. Never turn `scriven` into
 `https://scriven.app`, or any similar guessed URL. If only production is known,
-do not call it staging. If only local URLs exist, run local smoke only and pause
-for `STAGING_APP_URL=<deployed staging origin>` before deployed staging smoke.
+do not call it staging. If only local URLs exist, run local smoke only, record
+deployed staging as deferred, and ask for
+`STAGING_APP_URL=<deployed staging origin>` only when staging is explicitly
+requested or final sign-off begins.
 
 ## YOLO Behavior with Design + Linkage
 
@@ -726,8 +748,8 @@ Hide:
 
 When a private rule affects a pause, translate it into the smallest
 user-facing question. Do not expose the rule itself. Example: ask for
-`STAGING_APP_URL=<deployed staging origin>` rather than showing the Shipping
-Closure Protocol.
+`STAGING_APP_URL=<deployed staging origin>` at final sign-off rather than
+showing the Shipping Closure Protocol.
 
 ## Step Narration Protocol
 

@@ -1,10 +1,11 @@
-# Godpowers 1.6.7 Release
+# Godpowers 1.6.8 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.7 makes the live workflow easier to track. The goal of this
-patch is to answer "what is Godpowers doing, how far along is it, what just
-happened, and what happens next" from disk state.
+Godpowers 1.6.8 keeps shipping work moving when a deployed staging URL is not
+ready yet. The goal of this patch is to finish local and CI-verifiable deploy,
+observe, harden, and launch gates first, then ask for `STAGING_APP_URL` only
+when the user requests staging or reaches final sign-off.
 
 ## What is stable
 
@@ -26,36 +27,31 @@ happened, and what happens next" from disk state.
 
 ## What is new
 
-- `lib/state.progressSummary` computes percentage complete, completed step
-  count, total step count, current step number, and current tier/sub-step from
-  `state.json`.
-- `CHECKPOINT.md` can persist progress frontmatter and now includes
-  "What happened recently" and "What happens next" sections.
-- `god-orchestrator` now has a Step Narration Protocol for compact
-  "Next step" and "Step result" cards around visible tier/sub-step work.
-- `/god-mode`, `/god-next`, `/god-status`, and `/god-locate` now document
-  progress, path-ahead, recent-work, and next-action summaries.
-- `templates/PROGRESS.md` now includes a current step plan and recent step
-  result shape.
-- Package publication now allowlists `agents/god-*.md`, preventing local
-  Pillars files under `agents/` from entering the npm payload.
-- Package contents checks now fail if non-specialist files under `agents/`
-  would be published.
-- `AGENTS.md` now includes the Pillars Protocol for loading durable project
-  context and workflow-state files.
-- Installer local mode now resolves runtime destinations under the current
-  directory and installs only `god-*.md` specialist agent files.
+- `god-orchestrator` now documents staging URL deferral as the default shipping
+  closure policy.
+- `/god-mode`, `/god-deploy`, and `/god-launch` now continue through local and
+  CI-verifiable gates when no live deployed origin is evidenced.
+- `god-deploy-engineer`, `god-observability-engineer`, and
+  `god-launch-strategist` now treat missing deployed staging as deferred unless
+  the user explicitly requested staging.
+- Missing deployed access is recorded in
+  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` with the exact command to
+  run later.
+- At final sign-off, Godpowers offers three clear choices: provide
+  `STAGING_APP_URL=<deployed staging origin>`, sign off local-only with
+  deployed verification deferred, or run `/god-deploy --stage` later.
 
-## What 1.6.7 means
+## What 1.6.8 means
 
-Godpowers 1.6.7 does not expand the public command surface. It makes the
-existing arc more legible by showing a disk-derived progress report, a short
-plan before visible work starts, and a short result after work completes or
-pauses.
+Godpowers 1.6.8 does not expand the public command surface. It changes when
+staging access is requested: not during ordinary mid-arc progress, but at an
+explicit staging request, deployed verification command, or final project
+sign-off.
 
-The release also tightens npm packaging around specialist agents. Local
-project Pillars can live under `agents/` during development, but only
-`agents/god-*.md` files are packaged as Godpowers specialist agents.
+The release keeps the no-guessed-domain rule intact. Godpowers must not invent
+a staging URL from a product name, brand name, README title, or common TLD.
+If only local URLs exist, it runs local smoke, records deployed verification as
+deferred, and continues.
 
 Safe sync and unresolved Critical harden findings remain release-truth gates.
 Per-repo Quarterback ownership remains intact for Mode D suite work.
@@ -65,8 +61,8 @@ Per-repo Quarterback ownership remains intact for Mode D suite work.
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.7` git tag points to the release commit that matches the npm
-`godpowers@1.6.7` package. Public publishes should prefer the tag-triggered
+The `v1.6.8` git tag points to the release commit that matches the npm
+`godpowers@1.6.8` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

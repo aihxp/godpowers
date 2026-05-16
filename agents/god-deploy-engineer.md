@@ -65,11 +65,16 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
   only when needed by the next command, exact provider links only when a failed
   check proves they are needed, and the command Godpowers will run after access
   exists.
-- Default first pause: ask only for `STAGING_APP_URL=<staging-origin>` so the
-  real smoke command can run. Do not ask for provider keys, API tokens,
-  dashboards, DNS tokens, production secrets, admin consoles, or test users
-  until a named deploy, smoke, rollback, health, callback, webhook, export, or
-  observability check cannot run without that exact item.
+- Default behavior: do not pause mid-arc only to ask for
+  `STAGING_APP_URL=<staging-origin>`. Record deployed staging as deferred, keep
+  the exact smoke command in the waiting artifact, and continue through local
+  and CI-verifiable deploy readiness.
+- Ask for `STAGING_APP_URL` only when the user explicitly requested deployed
+  staging, invokes `/god-deploy` for deployed verification, or reaches final
+  project sign-off. Do not ask for provider keys, API tokens, dashboards, DNS
+  tokens, production secrets, admin consoles, or test users until a named
+  deploy, smoke, rollback, health, callback, webhook, export, or observability
+  check cannot run without that exact item.
 - Treat a staging or production origin as known only when it appears in direct
   evidence: current user input, env/config values, deployment config, CI
   variable references, IaC output, hosting CLI output, or deployment docs that
@@ -122,6 +127,6 @@ Write `.godpowers/deploy/STATE.md`:
 - Paper canary (label without traffic split)
 - Broad provider checklist with no scripts or exact access bundle
 - Marks deploy done when the only verified target is missing
-- Requests all provider keys before the staging URL smoke check has run
+- Requests provider keys before an exact scripted check proves they are needed
 - Invents or guesses a staging or production domain
 - Treats production as staging without explicit user approval

@@ -52,12 +52,15 @@ Or: /god-status (see the final state)
 Under `/god-mode --yolo`, do not stop by listing provider dashboards. Create
 the launch runbook, smoke command, source attribution plan, and local
 launch-readiness checks. If real launch is blocked by missing external access,
-pause on the single access bundle from deploy or launch state.
+record the single access bundle from deploy or launch state and continue until
+the user requests staging or final sign-off begins.
 
 The launch pause must not expand into every possible channel, analytics, or
 provider credential. Ask only for the next missing access item needed to run a
-named live smoke, launch-readiness, attribution, or monitoring check. If no
-live target URL is known, ask only for `STAGING_APP_URL=<staging-origin>`.
+named live smoke, launch-readiness, attribution, or monitoring check. Do not
+ask mid-arc for `STAGING_APP_URL` unless the user requested deployed staging.
+At final sign-off, if no live target URL is known, ask only for
+`STAGING_APP_URL=<staging-origin>`.
 
 Live target URLs must be evidence-backed. Never invent a domain from the
 product name, repo name, package name, README title, brand name, or common TLDs.

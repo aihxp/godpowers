@@ -94,18 +94,20 @@ You are receiving a /god-mode invocation. Your job is to spawn the
        security or a genuine human-only decision.
      - Instruction that deploy, observe, harden, and launch must follow the
        Shipping Closure Protocol: verify a real environment when available,
-       otherwise create local/CI-verifiable deploy automation and pause only
-       for one exact external access bundle.
+       otherwise create local/CI-verifiable deploy automation, defer deployed
+       staging by default, and continue until the user requests staging or the
+       arc reaches final sign-off.
      - Instruction that keys, API tokens, dashboards, admin consoles, and
-       provider-specific access are last-mile inputs. The first external pause
-       should ask only for the smallest next item needed by a concrete command,
-       usually `STAGING_APP_URL=<staging-origin>`. Ask for additional provider
-       access only after a named check proves it is needed.
+       provider-specific access are last-mile inputs. Do not pause mid-arc for
+       `STAGING_APP_URL` unless the user requested deployed staging. At final
+       sign-off, ask only for the smallest next item needed by a concrete
+       command, usually `STAGING_APP_URL=<staging-origin>`. Ask for additional
+       provider access only after a named check proves it is needed.
      - Instruction that staging, preview, and production URLs must come from
        direct evidence. Never infer or invent a domain from project name,
        package name, repo name, README title, or brand name. If no deployed
-       origin is evidenced, pause for
-       `STAGING_APP_URL=<deployed staging origin>`.
+       origin is evidenced, record deployed staging as deferred and continue
+       until staging is requested or final sign-off begins.
      - Instruction that brownfield and bluefield greenfield simulation audits
        must be acted on by god-greenfieldifier. The greenfieldifier writes
        `.godpowers/audit/GREENFIELDIFY-PLAN.md`, pauses before risky canonical
@@ -181,8 +183,8 @@ Hide:
 
 If an internal instruction must influence a pause, translate it into the
 smallest user-facing question. For example, ask for
-`STAGING_APP_URL=<deployed staging origin>` instead of exposing the full
-Shipping Closure Protocol.
+`STAGING_APP_URL=<deployed staging origin>` at final sign-off instead of
+exposing the full Shipping Closure Protocol.
 
 ## Step Cards
 

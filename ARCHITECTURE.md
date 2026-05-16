@@ -1,14 +1,14 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.7 (pure-skill model)
+> Status: STABLE v1.6.8 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.7 keeps the public surface stable while making the arc easier to track
-through disk-derived progress summaries, "Next step" and "Step result" cards,
-recent-work checkpoint sections, and npm packaging that limits the specialist
-agent payload to `agents/god-*.md`.
+v1.6.8 keeps the public surface stable while making shipping less interruptive:
+deployed staging verification is deferred until explicit staging, deployed
+verification, or final project sign-off, while local and CI-verifiable gates
+continue to run.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing

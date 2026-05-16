@@ -17,7 +17,8 @@ Wire observability.
 
 `.godpowers/deploy/STATE.md` exists. App is deployed and reachable, or deploy
 state documents a tested local staging harness plus a single external access
-bundle.
+bundle. A deferred staging URL must not block observability setup when local or
+CI-verifiable checks can still run.
 
 ## Process
 
@@ -69,7 +70,9 @@ For each PRD success metric, define an SLO:
   Prefer local definitions as code, runbook dry-runs, log-shape checks, and CI
   verification first.
 - If a credential is truly required, append one exact access item to the single
-  waiting access bundle, with the command that will run next.
+  waiting access bundle, with the command that will run next. Do not pause
+  mid-arc just to request the deployed staging origin unless the user has
+  explicitly asked to stage now.
 - Under `/god-mode --yolo`, continue through every local or CI-verifiable
   observability check before pausing for external access.
 

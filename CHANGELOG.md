@@ -5,6 +5,31 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.8] - 2026-05-16
+
+Staging deferral patch. Keeps Godpowers moving through local and CI-verifiable
+shipping work instead of pausing early for a deployed staging URL.
+
+### Changed
+- `god-orchestrator` now treats deployed staging verification as deferred by
+  default when no live target URL is evidenced and the user did not request
+  staging.
+- `/god-mode`, `/god-deploy`, and `/god-launch` now ask for
+  `STAGING_APP_URL` only when the user explicitly requests staging, invokes
+  deployed verification, or reaches final project sign-off.
+- Deploy, observe, and launch specialists now record missing deployed access in
+  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` while continuing through
+  local and CI-verifiable gates.
+
+### Guardrails
+- Godpowers still never invents staging or production domains from names,
+  brands, titles, or common TLDs.
+- Provider keys, dashboards, DNS tokens, production secrets, and admin consoles
+  are requested only after a named scripted check proves that exact access is
+  needed.
+- Final sign-off can still run deployed smoke immediately when the user
+  provides `STAGING_APP_URL=<deployed staging origin>`.
+
 ## [1.6.7] - 2026-05-16
 
 Progress visibility patch. Makes Godpowers easier to follow while preserving

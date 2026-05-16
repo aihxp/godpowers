@@ -27,11 +27,12 @@ After god-deploy-engineer returns:
    - real staging or production target tested
    - local staging harness tested with equivalent health, smoke, and rollback
      commands
-   - paused on `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` with one
-     exact missing access bundle
-4. Update `.godpowers/PROGRESS.md`: Deploy status = done only for a tested real
-   target or tested local staging harness. If external access is missing, mark
-   Deploy = waiting-for-external-access, not done.
+   - local/CI deploy readiness complete with deployed staging verification
+     deferred in `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`
+4. Update `.godpowers/PROGRESS.md`: Deploy status can be done when a tested
+   real target or tested local staging harness exists. If deployed staging is
+   deferred, annotate Deploy as done-local with the waiting artifact path and
+   do not pause unless the user explicitly requested staging.
 
 ## On Completion
 
@@ -44,11 +45,14 @@ Suggested next: /god-observe (wire SLOs, alerts, runbooks)
 Under `/god-mode --yolo`, do not stop with a provider checklist. Create or
 update the deploy scripts, smoke command, rollback command, health endpoints,
 env manifest, and local staging harness first. If real external access is still
-required, pause on the single access bundle in
-`.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md`.
+required, record the single access bundle in
+`.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` and continue until the user
+requests staging or final sign-off begins.
 
-The single access bundle must be incremental. Ask for the smallest next item
-needed to run the next command. If no live target URL is known, ask only for
+The single access bundle must be incremental. Do not ask for
+`STAGING_APP_URL` mid-arc unless the user requested deployed staging. At final
+sign-off or explicit staging, ask for the smallest next item needed to run the
+next command. If no live target URL is known, ask only for
 `STAGING_APP_URL=<staging-origin>` and the exact smoke command that will run.
 Do not ask for provider keys, API tokens, dashboards, DNS tokens, production
 secrets, admin consoles, or test users until a specific scripted check proves
@@ -59,8 +63,8 @@ values, deployment config, CI variable references, IaC output, hosting CLI
 output, or deployment docs that explicitly label the URL as owned and current.
 Never invent a domain from the product name, repo name, package name, README
 title, brand name, or common TLDs. If only local URLs exist, run local smoke
-only and pause for `STAGING_APP_URL=<deployed staging origin>`. If only
-production is known, do not use it as staging without explicit user approval.
+only, record deployed staging as deferred, and continue. If only production is
+known, do not use it as staging without explicit user approval.
 
 
 ## Re-invocation contract
