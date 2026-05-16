@@ -286,6 +286,9 @@ Spawn these agents only when the trigger is direct and scope is bounded:
 - `god-deps-auditor` suggestion after dependency files changed; auto-spawn only
   inside `/god-update-deps`, `/god-hygiene`, or an explicitly approved project
   workflow.
+- `god-automation-engineer` after the user approves provider, template,
+  cadence, and scope for multi-template, write-capable, background-agent,
+  scriptable-scheduler, or provider-uncertain automation setup.
 
 #### Level 4: Explicit approval required
 Never auto-run these from inference alone:
@@ -299,6 +302,8 @@ Never auto-run these from inference alone:
 - git stage, commit, push, package, release, or publish
 - schedule, routine, background agent, API trigger, or CI workflow creation
   without explicit user approval
+- `.godpowers/automations.json` writes before the host automation setup
+  reports success
 
 Every auto-invoke decision must be explainable from one of these inputs:
 changed files, Godpowers artifacts, `state.json`, `PROGRESS.md`,

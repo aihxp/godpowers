@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.13.
+Complete command, agent, and artifact reference for v1.6.14.
 
 ## Slash commands (108 total)
 
@@ -16,7 +16,7 @@ Complete command, agent, and artifact reference for v1.6.13.
 - `godpowers status --project .` - Render the shared dashboard from disk state.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
 - `godpowers automation-status --project .` - Show automation provider support.
-- `godpowers automation-setup --project .` - Show a reviewed setup plan.
+- `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
 
 ### Lifecycle (Tier 0)
@@ -164,7 +164,7 @@ First-party packs on npm:
 - `@godpowers/launch-pack` - Show HN, Product Hunt, Indie Hackers, OSS strategists
 - `@godpowers/data-pack` - ETL, ML feature, dashboard specialists
 
-## Specialist agents (39 total)
+## Specialist agents (40 total)
 
 ### Tier 0 - Orchestration
 - `god-orchestrator` - Autonomous arc runner (Quarterback).
@@ -197,6 +197,7 @@ First-party packs on npm:
 
 ### Workflow specialists
 - `god-spike-runner` - Time-boxed POC builder.
+- `god-automation-engineer` - Approved host automation setup.
 - `god-migration-strategist` - Expand-contract migrations.
 - `god-docs-writer` - No-lying docs (verified against code).
 - `god-deps-auditor` - CVE-aware dep updates.

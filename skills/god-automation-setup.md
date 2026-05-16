@@ -10,7 +10,7 @@ description: |
 
 # /god-automation-setup
 
-Prepare a safe, host-native automation setup plan.
+Prepare and, after approval, execute safe host-native automation setup.
 
 ## Process
 
@@ -23,10 +23,18 @@ Prepare a safe, host-native automation setup plan.
    - cadence
    - connector or repository scope
    - whether write actions are allowed
-5. Create provider-native automation only if the current host exposes a safe
-   automation tool and the user explicitly approved the exact provider,
-   template, cadence, and scope.
-6. After creation, write or update `.godpowers/automations.json` with:
+5. If the plan reports `execution.directHostToolCalling: true`, and the user
+   approved the exact provider, template, cadence, and scope, use the host
+   automation tool or native command from `execution`.
+6. If setup is complex, write-capable, multi-template, background-agent based,
+   scriptable-scheduler based, or provider-uncertain, spawn
+   `god-automation-engineer` with the approved provider, templates, cadence,
+   scope, and plan output.
+7. If no host tool is callable, return exact manual setup steps and do not
+   record an active automation.
+8. After host setup succeeds, write or update `.godpowers/automations.json`
+   through `automation.buildAutomationRecord(...)` and
+   `automation.recordAutomation(..., { confirmedHostSuccess: true })` with:
    - automation id
    - provider id
    - status
@@ -34,7 +42,25 @@ Prepare a safe, host-native automation setup plan.
    - prompt summary
    - created timestamp
    - host surface used
-7. Run `/god-automation-status` after setup and show the result.
+9. Run `/god-automation-status` after setup and show the result.
+
+## Tool Calling And Agent Use
+
+Use host tool calling when available for simple, approved, read-only setup:
+
+- Codex App: call the Codex automation tool.
+- Claude Code: use the schedule or routine surface.
+- Cline: use `cline schedule`.
+- Qwen Code: use `/loop` and report that it is session-scoped.
+
+Spawn `god-automation-engineer` when any of these are true:
+
+- more than one template is requested
+- any write-capable automation is requested
+- provider setup needs background agents, API triggers, CI, OS scheduling, or
+  repository scope
+- the host tool exists but the setup requires multiple steps
+- provider capability is uncertain
 
 ## Hard Stops
 
@@ -81,6 +107,13 @@ Recommended provider: <provider>
 
 Setup steps:
   1. <host-native setup step>
+
+Execution path:
+  - Method: <host-tool-calling | host-native-command | local-command | manual>
+  - Action: <approved host action>
+  - Direct host tool calling: <available after approval | not available>
+  - Specialist agent: <god-automation-engineer | not required>
+  - Record after success: .godpowers/automations.json
 
 Recommended safe templates:
   - <template id>: <prompt>

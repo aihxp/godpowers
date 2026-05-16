@@ -33,6 +33,16 @@ godpowers automation-setup --project .
 godpowers automation-status --project . --json
 ```
 
+The CLI commands do not call an LLM and do not create host automations. They
+return deterministic provider and setup-plan data that Claude, Codex, Cursor,
+CI, or another host can consume.
+
+Inside an AI host, `/god-automation-setup` may use the host's native tool
+calling after explicit approval. Simple read-only setup can use a direct host
+tool or native command. Complex setup is delegated to `god-automation-engineer`
+so the host-specific steps, verification, and state recording happen in a
+fresh context.
+
 ## Safe Templates
 
 The first supported templates are read-only:
@@ -45,7 +55,8 @@ The first supported templates are read-only:
 
 ## State File
 
-Created automations should be recorded in `.godpowers/automations.json`.
+Created automations should be recorded in `.godpowers/automations.json` only
+after the host setup succeeds.
 
 ```json
 {
@@ -66,6 +77,27 @@ Created automations should be recorded in `.godpowers/automations.json`.
 Disk state remains authoritative. If `.godpowers/automations.json` says an
 automation exists but the host no longer has it, `/god-automation-status` must
 report drift and recommend repair instead of pretending the automation is live.
+
+## Execution Contract
+
+`lib/automation-providers.js` exposes:
+
+- `setupPlan(projectRoot, opts)`: provider, selected templates, and execution
+  path for the current host
+- `renderSetupPlan(plan)`: human-readable approval plan
+- `buildAutomationRecord(providerId, templateId, opts)`: state record builder
+- `recordAutomation(projectRoot, record, { confirmedHostSuccess: true })`:
+  state writer gated on confirmed host success
+
+The host workflow is:
+
+1. Render the setup plan.
+2. Ask for exact approval.
+3. Use direct host tool calling only when the plan says it is available.
+4. Spawn `god-automation-engineer` for multi-template, write-capable,
+   background-agent, scriptable-scheduler, or uncertain setup.
+5. Record the automation only after the provider reports success.
+6. Re-run `/god-automation-status`.
 
 ## Safety Rules
 

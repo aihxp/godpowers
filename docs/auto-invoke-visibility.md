@@ -102,6 +102,7 @@ is to completion, and what happens next.
 | `/god-review-changes` suggestion | When REVIEW-REQUIRED.md gains entries | Gives the user a concrete review path | Do not auto-clear review items |
 | `/god-hygiene` suggestion | After a full project run or every 30 days | Keeps docs, deps, and quality current | Suggest by default, auto-run only when requested |
 | Runtime verification | After frontend-visible changes | Catches blank screens and layout regressions | Auto-run only when local app target is known |
+| Automation setup execution | After exact provider, template, cadence, and scope approval | Lets the host LLM configure safe automation for the user | Record only after host setup succeeds |
 
 ## Proactive Matrix
 
@@ -152,6 +153,7 @@ Spawn these only when the scope is bounded and the trigger is visible:
   security-sensitive files changed.
 - `god-deps-auditor` inside dependency workflows, or as a suggestion after
   dependency files changed.
+- `god-automation-engineer` after approved complex automation setup.
 - `/god-automation-status` as a read-only provider report when automation
   support may be available.
 
@@ -168,6 +170,7 @@ Do not auto-invoke these without explicit user intent:
 - git stage, commit, push, or publish
 - schedule, routine, background agent, API trigger, or CI workflow creation
   without explicit user approval
+- `.godpowers/automations.json` writes before host setup success
 
 ## User Promise
 

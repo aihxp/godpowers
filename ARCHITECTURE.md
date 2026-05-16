@@ -1,11 +1,11 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.13 (pure-skill model plus dashboard and automation provider CLI)
+> Status: STABLE v1.6.14 (pure-skill model plus dashboard and automation provider CLI)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.13 keeps the public surface stable while making status, next-action
+v1.6.14 keeps the public surface stable while making status, next-action
 routing, and automation provider support executable outside the slash command
 layer. Auto-invoked commands, spawned agents, local runtime helpers,
 platform-specific spawning limits, and dashboard progress must be reported
@@ -683,7 +683,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 108 skills, 39 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 108 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

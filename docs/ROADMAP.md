@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.13
+> Current shipped: v1.6.14
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,14 +12,14 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.13)
+### Current surface (v1.6.14)
 
 What works today:
 - **108 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, extension management, release support)
-- **39 specialist agents** in fresh contexts
+- **40 specialist agents** in fresh contexts
 - **13 executable workflows** and **36 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
@@ -32,6 +32,10 @@ What works today:
   `godpowers automation-status --project .`, and
   `godpowers automation-setup --project .` without creating background work
   during install.
+- **Approved automation setup execution**: `/god-automation-setup` can use
+  host tool calling for simple read-only setup or spawn
+  `god-automation-engineer` for complex setup, then records state only after
+  the host setup succeeds.
 - **Codex agent metadata**: all 39 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route

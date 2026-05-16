@@ -5,6 +5,32 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.14] - 2026-05-16
+
+Approved automation setup execution.
+
+### Added
+- Added `god-automation-engineer`, a specialist agent for approved host-native
+  automation setup.
+- Added automation execution-plan metadata to `lib/automation-providers.js`.
+- Added gated automation state recording helpers:
+  `buildAutomationRecord(...)` and `recordAutomation(...)`.
+- Added tests for host tool execution plans, complex setup delegation, and
+  post-success automation recording.
+
+### Changed
+- `/god-automation-setup` now distinguishes simple direct host tool calling
+  from complex setup that should spawn `god-automation-engineer`.
+- Setup plans now show method, action, host tool availability, specialist
+  agent routing, and the state file written after success.
+- Automation docs now explain that CLI commands are deterministic and
+  read-only, while slash-command hosts can use LLM tool calling after approval.
+
+### Guardrails
+- `.godpowers/automations.json` is written only after host setup succeeds.
+- Complex, write-capable, background-agent, scriptable-scheduler, or uncertain
+  setup routes through `god-automation-engineer`.
+
 ## [1.6.13] - 2026-05-16
 
 Host automation provider discovery and opt-in setup planning.

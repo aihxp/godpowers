@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.13-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.14-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,7 +12,7 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.13 builds on the executable dashboard engine and CLI status surface:
+Version 1.6.14 builds on the executable dashboard engine and CLI status surface:
 `godpowers status --project .` and `godpowers next --project .` now compute the
 same disk-derived progress, planning visibility, proactive checks, and next
 action used by `/god-status`, `/god-next`, and God Mode closeouts.
@@ -20,6 +20,8 @@ It adds an opt-in automation-provider layer so Godpowers can detect host
 automation surfaces such as Codex App automations, Claude Routines, Cline
 schedules, Qwen loops, Cursor Background Agents, Copilot cloud agent, and
 scriptable CLI providers without silently creating background work.
+Approved setup can now use host tool calling for simple read-only automation
+or spawn `god-automation-engineer` for complex automation setup.
 
 It fuses four disciplines into one unified workflow:
 
@@ -337,7 +339,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 108 skills + 39 agents)](docs/reference.md)
+- [Command reference (all 108 skills + 40 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
 - [1.5 Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)

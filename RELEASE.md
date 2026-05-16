@@ -1,21 +1,21 @@
-# Godpowers 1.6.13 Release
+# Godpowers 1.6.14 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.13 adds host automation provider discovery and opt-in setup
-planning. The same local runtime surface can now report Codex App automations,
-Claude Routines, Cline schedules, Qwen loops, Cursor Background Agents,
-Copilot cloud agent support, and scriptable CLI options without silently
-creating background work.
+Godpowers 1.6.14 turns automation setup from a plan-only contract into an
+approved execution contract for hosts that expose tool calling. The CLI remains
+deterministic and read-only, while `/god-automation-setup` can use host-native
+tool calling for simple read-only setup or spawn `god-automation-engineer` for
+complex setup.
 
 ## What is stable
 
 - 108 slash commands
-- 39 specialist agents
+- 40 specialist agents
 - 13 executable workflows
 - 36 intent recipes
 - 15-runtime installer
-- 458 package files in the npm tarball
+- 459 package files in the npm tarball
 - Codex installs with generated `god-*.toml` agent metadata files
 - Markdown specialist agent contracts at `<runtime>/agents/god-*.md`
 - Shared runtime bundle at `<runtime>/godpowers-runtime`
@@ -29,15 +29,13 @@ creating background work.
 
 ## What is new
 
-- Added `lib/automation-providers.js`, a shared automation provider detector.
-- Added `godpowers automation-status --project .`.
-- Added `godpowers automation-setup --project .`.
-- Added `/god-automation-status` and `/god-automation-setup`.
-- Added `docs/automation-providers.md`.
-- Dashboard output now reports automation support when a host-native provider
-  is available.
-- Tests now cover provider classification, active automation config,
-  setup-plan rendering, and CLI JSON output.
+- Added `god-automation-engineer`.
+- Added automation execution-plan metadata to `lib/automation-providers.js`.
+- Added gated automation state recording helpers.
+- `/god-automation-setup` now shows direct host tool calling availability,
+  complex setup delegation, and the state recording path.
+- Tests now cover host tool execution plans, complex setup delegation, and
+  post-success automation recording.
 
 ## Platform behavior
 
@@ -49,9 +47,9 @@ its registry adapter.
 The dashboard and automation provider engines ship in the installed runtime
 bundle so host tools can use shared implementation code instead of parallel
 command-specific Markdown contracts. If a host platform cannot provide a true
-fresh-context agent spawn or durable scheduler, Godpowers must say so visibly
-and report the work as local runtime only, manual workflow only, or simulated
-in current context.
+fresh-context agent spawn, durable scheduler, or callable automation tool,
+Godpowers must say so visibly and report the work as local runtime only,
+manual workflow only, or simulated in current context.
 
 ## Safety policy
 
@@ -70,6 +68,7 @@ Godpowers still must not auto-run these without explicit user intent:
 - clearing `.godpowers/REVIEW-REQUIRED.md`
 - accepting Critical security findings
 - git stage, commit, push, package, release, or publish
+- `.godpowers/automations.json` writes before host setup success
 
 ## Validation
 
@@ -82,5 +81,5 @@ Release validation includes:
 - `node scripts/check-package-contents.js`
 - `git diff --check`
 
-The `v1.6.13` git tag points to the release commit that matches the npm
-`godpowers@1.6.13` package.
+The `v1.6.14` git tag points to the release commit that matches the npm
+`godpowers@1.6.14` package.
