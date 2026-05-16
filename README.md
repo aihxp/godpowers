@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.2-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.3-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,10 +12,10 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.2 hardens Codex agent integration around the 1.6 domain precision
-layer: Codex installs now include per-agent TOML metadata for all 39
-Godpowers specialist agents, while release checks cover every supported
-runtime surface.
+Version 1.6.3 hardens Godpowers routing around release truth and safe sync:
+`/god-next` now routes unresolved safe-sync blockers to
+`/god-reconcile Release Truth And Safe Sync` before deploy-era work, while
+Codex installs keep per-agent TOML metadata for all 39 specialist agents.
 
 It fuses four disciplines into one unified workflow:
 

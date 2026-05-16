@@ -5,6 +5,32 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.3] - 2026-05-16
+
+Safe sync routing patch. Keeps the 1.6 command surface stable while making
+`/god-next` and `/god-deploy` honor unresolved release sync blockers before
+Tier 3 work.
+
+### Added
+- Added router detection for `.godpowers/sync/SAFE-SYNC-PLAN.md`.
+- Added router detection for checkpoint text that marks safe sync as a
+  blocking red gate.
+- Added `safe-sync-clear` prerequisite support for routing files.
+- Added regression tests for safe sync plan blockers, checkpoint blockers,
+  deploy prerequisites, and resolved safe sync plans.
+
+### Changed
+- `/god-next` now suggests `/god-reconcile Release Truth And Safe Sync` before
+  `/god-deploy` when safe sync remains unresolved.
+- `/god-deploy` now advertises the safe sync reconcile command as its
+  auto-complete route when the gate is red.
+
+### Guardrails
+- This patch does not add slash commands, agents, workflows, recipes, schemas,
+  or public artifact formats.
+- The blocker clears only when `.godpowers/sync/SAFE-SYNC-DONE.md` or
+  `.godpowers/sync/SAFE-SYNC-RESOLVED.md` exists.
+
 ## [1.6.2] - 2026-05-16
 
 Codex agent metadata compatibility patch. Keeps the public command surface

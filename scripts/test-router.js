@@ -119,6 +119,92 @@ test('suggestNext: with PRD done, suggests /god-arch', () => {
   if (s.command !== '/god-arch') throw new Error(`expected /god-arch, got ${s.command}`);
 });
 
+function markPreDeployDone(projectRoot) {
+  state.init(projectRoot, 'router-safe-sync-test');
+  for (const [tier, sub] of [
+    ['tier-1', 'prd'],
+    ['tier-1', 'arch'],
+    ['tier-1', 'roadmap'],
+    ['tier-1', 'stack'],
+    ['tier-2', 'repo'],
+    ['tier-2', 'build']
+  ]) {
+    state.updateSubStep(projectRoot, tier, sub, { status: 'done' });
+  }
+}
+
+test('suggestNext: safe sync plan blocks deploy with reconcile route', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
+  markPreDeployDone(proj);
+  fs.mkdirSync(path.join(proj, '.godpowers', 'sync'), { recursive: true });
+  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
+    '# Release Truth And Safe Sync\n\nMissing: safe sync against origin/main\n');
+
+  const s = router.suggestNext(proj);
+  if (s.command !== '/god-reconcile Release Truth And Safe Sync') {
+    throw new Error(`expected safe-sync reconcile, got ${s.command}`);
+  }
+  if (s.blocker !== 'safe-sync') throw new Error('expected safe-sync blocker');
+  if (s.evidence !== '.godpowers/sync/SAFE-SYNC-PLAN.md') {
+    throw new Error(`expected plan evidence, got ${s.evidence}`);
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('checkPrerequisites: /god-deploy requires safe sync clear', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
+  markPreDeployDone(proj);
+  fs.mkdirSync(path.join(proj, '.godpowers', 'sync'), { recursive: true });
+  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
+    '# Release Truth And Safe Sync\n');
+
+  const result = router.checkPrerequisites('/god-deploy', proj);
+  if (result.satisfied) throw new Error('deploy prereqs should fail');
+  if (!result.missing.includes('safe-sync-clear')) {
+    throw new Error(`expected safe-sync-clear missing, got ${result.missing.join(',')}`);
+  }
+  const auto = result.autoCompletable.find(item => item.check === 'safe-sync-clear');
+  if (!auto) throw new Error('expected safe-sync auto-complete');
+  if (auto.autoCompleteCommand !== '/god-reconcile Release Truth And Safe Sync') {
+    throw new Error(`wrong auto-complete: ${auto.autoCompleteCommand}`);
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('suggestNext: resolved safe sync plan allows deploy route', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
+  markPreDeployDone(proj);
+  fs.mkdirSync(path.join(proj, '.godpowers', 'sync'), { recursive: true });
+  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
+    '# Release Truth And Safe Sync\n');
+  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-DONE.md'),
+    '# Safe Sync Done\n');
+
+  const s = router.suggestNext(proj);
+  if (s.command !== '/god-deploy') throw new Error(`expected /god-deploy, got ${s.command}`);
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('suggestNext: checkpoint safe sync blocker routes to reconcile', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
+  markPreDeployDone(proj);
+  fs.writeFileSync(path.join(proj, '.godpowers', 'CHECKPOINT.md'),
+    '# CHECKPOINT\n\nSafe sync remains the active red gate before deploy.\n');
+
+  const s = router.suggestNext(proj);
+  if (s.command !== '/god-reconcile Release Truth And Safe Sync') {
+    throw new Error(`expected checkpoint reconcile, got ${s.command}`);
+  }
+  if (s.evidence !== '.godpowers/CHECKPOINT.md') {
+    throw new Error(`expected checkpoint evidence, got ${s.evidence}`);
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
 test('evaluateCheck: file:path returns false for missing', () => {
   router.clearCache();
   if (router.evaluateCheck('file:nonexistent.txt', tmp) !== false) {

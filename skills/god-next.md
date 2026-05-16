@@ -135,6 +135,7 @@ Use <runtimeRoot>/lib/router.js suggestNext(projectRoot)  <- structural next
 For each tier in order:
    - Find first non-done sub-step
    - That's the suggested next command
+   - Before Tier 3, honor red gates such as unresolved safe sync
    |
    v
 If all tiers done:
@@ -231,6 +232,15 @@ Display both with: "Run in any order. /god-roadmap is critical-path."
 
 ### State drift (artifact missing but state says done)
 Detected by lib/state.detectDrift(). Suggest /god-repair.
+
+### Safe sync blocks deploy
+If `.godpowers/sync/SAFE-SYNC-PLAN.md` exists, or `.godpowers/CHECKPOINT.md`
+states that safe sync is a blocking red gate, suggest
+`/god-reconcile Release Truth And Safe Sync` before `/god-deploy`,
+`/god-observe`, `/god-harden`, or `/god-launch`.
+
+The blocker is cleared when `.godpowers/sync/SAFE-SYNC-DONE.md` or
+`.godpowers/sync/SAFE-SYNC-RESOLVED.md` exists.
 
 ### Steady state with multiple workflow options
 If lifecycle-phase = steady-state-active, route by user intent if provided
