@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.22] - 2026-05-16
+
+Dogfooding, host guarantees, extension authoring, and suite release dry-runs.
+
+### Added
+- Added `lib/dogfood-runner.js`, `/god-dogfood`, and `npx godpowers dogfood`
+  for deterministic messy-repo dogfood scenarios.
+- Added `fixtures/dogfood/` scenarios for half-migrated GSD import,
+  degraded and full host guarantees, extension scaffolding, and Mode D suite
+  release dry-run planning.
+- Added `lib/host-capabilities.js` and dashboard host guarantee reporting for
+  full, degraded, and unknown runtime capability states.
+- Added compact dashboard rendering with `npx godpowers status --brief`.
+- Added `lib/extension-authoring.js` and
+  `npx godpowers extension-scaffold --name=@scope/pack --output=.`.
+- Added Mode D suite release dry-run planning through
+  `suiteState.planRelease`.
+
+### Changed
+- Release-surface sync now requires dogfood, host capability, and extension
+  authoring test gates.
+- Repo-surface sync now checks dogfood runner presence, test wiring, and
+  required fixture manifests.
+- Package payload checks now include dogfood fixtures and the new runtime
+  helpers.
+- README, architecture, reference, release checklist, and runtime docs now
+  document dogfood, host guarantees, extension authoring, and suite dry-runs.
+
+### Guardrails
+- Dogfood runs copy fixtures into temporary directories before executing.
+- Host capability detection does not require network access.
+- Extension scaffolding does not overwrite existing files unless requested.
+- Suite release dry-runs return planned writes and impacted dependents without
+  mutating sibling repositories.
+
 ## [1.6.21] - 2026-05-16
 
 Dashboard compression, trace guardrails, and suite release readiness.

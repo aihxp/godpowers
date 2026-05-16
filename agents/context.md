@@ -41,6 +41,7 @@ see_also: [arch, quality, deploy]
 ## Godpowers artifact sources
 
 - Sync mode: proposed for review.
+- Related artifact: `README.md`.
 - Related artifact: `docs/ROADMAP.md`.
 - Rule: keep this pillar aligned when these artifacts change durable context truth.
 <!-- godpowers:pillar-sync:end -->

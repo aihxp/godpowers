@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.21-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.22-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,14 +12,15 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.21 sharpens the daily operating loop. Godpowers now shows a compact
-action brief in dashboard output, enforces trace events for every
-agent-spawning route, and keeps dogfood, extension publish, Mode D suite, and
-installer smoke gates wired into release readiness.
+Version 1.6.22 turns the last "needs more outside use" gaps into executable
+surface area. Godpowers now ships a messy-repo dogfood runner, dashboard host
+guarantee reporting, compact dashboard output, extension scaffolding, and
+Mode D suite release dry-run planning.
 
-The dashboard now starts with an action brief: the next command, why it is
-recommended, whether the project is ready, and the first blockers that need
-attention. Detailed proactive checks remain below the brief for auditability.
+The dashboard now starts with an action brief and a host guarantee line: the
+next command, why it is recommended, whether the project is ready, the first
+blockers that need attention, and whether the current host can provide full,
+degraded, or unknown runtime guarantees.
 
 It fuses four disciplines into one unified workflow:
 
@@ -120,7 +121,10 @@ runtime that can execute Node:
 ```bash
 npx godpowers status --project=.
 npx godpowers next --project=.
+npx godpowers status --project=. --brief
 npx godpowers status --project=. --json
+npx godpowers dogfood
+npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 ```
 
 ### Slash Commands
@@ -145,6 +149,7 @@ npx godpowers status --project=. --json
 | `/god-status` | Re-derive state from disk | (built-in) |
 | `/god-automation-status` | Show host automation provider support | (built-in) |
 | `/god-automation-setup` | Prepare opt-in automation setup | (built-in) |
+| `/god-dogfood` | Run messy-repo dogfood scenarios for release and autonomy readiness | (built-in) |
 | `/god-migrate` | Detect GSD, BMAD, and Superpowers context; import and sync back | god-greenfieldifier when needed |
 | `/god-preflight` | Read-only intake audit before project-run readiness and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
@@ -211,6 +216,17 @@ Godpowers can also inspect automation support:
 npx godpowers automation-status --project=.
 npx godpowers automation-setup --project=.
 ```
+
+Godpowers can dogfood itself against shipped messy-repo fixtures:
+
+```bash
+npx godpowers dogfood
+```
+
+The dogfood suite covers a half-migrated GSD project, full and degraded host
+guarantee detection, extension scaffold validation, and a Mode D suite release
+dry-run. `/god-dogfood` reports failures with scoped specialist ownership
+rather than treating fixture checks as silent background work.
 
 Automation setup is opt-in. The installer does not create schedules, routines,
 background agents, API triggers, or CI workflows. Safe starting templates are
@@ -362,7 +378,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 109 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 110 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)
 - [Repository surface sync](docs/repo-surface-sync.md)

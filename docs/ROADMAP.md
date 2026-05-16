@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.21
+> Current shipped: v1.6.22
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,10 +12,10 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.19)
+### Current surface (v1.6.22)
 
 What works today:
-- **109 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
@@ -27,8 +27,12 @@ What works today:
 - **Executable dashboard engine**: `lib/dashboard.js` powers `/god-status`,
   `/god-next`, God Mode closeouts, `godpowers status --project .`,
   `godpowers next --project .`, and JSON status output. Rendered dashboards
-  name the runtime source, label workflow progress, and keep audit scores out
-  of the workflow percentage.
+  name the runtime source, label workflow progress, report host guarantees,
+  support compact `--brief` output, and keep audit scores out of the workflow
+  percentage.
+- **Messy-repo dogfooding**: `/god-dogfood` and `npx godpowers dogfood` run
+  fixture scenarios for GSD migration, sync-back, host capabilities, extension
+  authoring, and Mode D suite release dry-runs.
 - **Automation provider detection**: `lib/automation-providers.js` powers
   `/god-automation-status`, `/god-automation-setup`,
   `godpowers automation-status --project .`, and
@@ -50,6 +54,15 @@ What works today:
   workflow metadata, recipe routes, extension packs, route-quality checks,
   recipe-coverage checks, release-surface checks, and release policy checks are
   checked during sync, docs, doctor, status, and god-mode closeouts.
+- **Host capability detection**: `lib/host-capabilities.js` reports full,
+  degraded, or unknown guarantees for shell tools, agent spawning, extension
+  authoring, and suite dry-runs.
+- **Extension authoring scaffold**: `npx godpowers extension-scaffold` creates
+  manifest, package, README, skill, agent, and workflow files without
+  overwriting existing files by default.
+- **Suite release dry-run planning**: `suiteState.planRelease` identifies
+  impacted dependents and planned writes before `god-coordinator` mutates a
+  Mode D suite.
 - **Codex agent metadata**: all 40 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route

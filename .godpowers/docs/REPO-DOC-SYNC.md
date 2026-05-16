@@ -20,3 +20,17 @@
 - [DECISION] Refreshed ARCHITECTURE.md for architecture-version.
 - [DECISION] Refreshed docs/ROADMAP.md for roadmap-version.
 - [DECISION] Refreshed docs/reference.md for reference-version.
+
+## 2026-05-16T17:41:15.423Z
+
+- [DECISION] Repo documentation sync status before apply was stale.
+- [DECISION] Repo documentation sync status after apply is stale.
+- [DECISION] Refreshed package.json for package-description-surface.
+- [DECISION] Refreshed README.md for readme-version-badge, readme-reference-counts.
+- [DECISION] Refreshed USERS.md for users-version.
+- [DECISION] Refreshed ARCHITECTURE.md for architecture-version, architecture-surface.
+- [DECISION] Refreshed docs/ROADMAP.md for roadmap-version, roadmap-command-count.
+- [DECISION] Refreshed docs/reference.md for reference-version, reference-command-count.
+- [DECISION] Refreshed skills/god-version.md for god-version-surface.
+- [DECISION] Refreshed skills/god-doctor.md for god-doctor-skill-count.
+- [HYPOTHESIS] god-docs-writer should review CHANGELOG.md, RELEASE.md.

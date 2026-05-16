@@ -30,6 +30,9 @@ This includes:
 - Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 - Repository surface sync tests through `node scripts/test-repo-surface-sync.js`.
 - Automation surface sync tests through `node scripts/test-automation-surface-sync.js`.
+- Host capability tests through `node scripts/test-host-capabilities.js`.
+- Extension authoring scaffold tests through `node scripts/test-extension-authoring.js`.
+- Dogfood runner tests through `node scripts/test-dogfood-runner.js`.
 - Extension publish readiness tests through `node scripts/test-extensions-publish.js`.
 - Mode D suite tests through `node scripts/test-mode-d.js`.
 - Installer smoke tests through `node scripts/test-install-smoke.js`.
@@ -51,6 +54,7 @@ Confirm the npm payload includes:
 - `workflows/`
 - `schema/`
 - `lib/`
+- `fixtures/`
 - `extensions/`
 
 Confirm the npm payload excludes:

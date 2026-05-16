@@ -13,11 +13,13 @@ package-level integrations.
 | `intent.js` | Read and validate `intent.yaml` from project roots or `.godpowers/`. |
 | `checkpoint.js` | Create and inspect resumable checkpoint artifacts. |
 | `feature-awareness.js` | Detect and refresh existing-project awareness after runtime upgrades. |
+| `host-capabilities.js` | Detect host guarantees for shell, git, npm, agent spawning, extension authoring, and suite dry-runs. |
 | `repo-doc-sync.js` | Detect and refresh mechanical repository documentation surfaces. |
 | `repo-surface-sync.js` | Detect structural drift across commands, routes, packages, agents, workflows, recipes, extensions, and release policy. |
 | `route-quality-sync.js` | Detect symbolic route spawns, unresolved agent targets, and unapproved contextual route exits. |
 | `recipe-coverage-sync.js` | Detect missing high-frequency intent recipe coverage. |
 | `release-surface-sync.js` | Detect release-facing drift across badges, release notes, changelog, package checks, and release checklist policy. |
+| `dogfood-runner.js` | Run deterministic messy-repo scenarios against migration, host, extension, and suite release behavior. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
 
@@ -68,6 +70,7 @@ package-level integrations.
 | `skillui-bridge.js` | Bridge skill metadata into UI surfaces. |
 | `impeccable-bridge.js` | Bridge runtime checks into impeccable quality workflows. |
 | `extensions.js` | Load and validate extension packs. |
+| `extension-authoring.js` | Scaffold publishable extension packs with manifest, package, README, skill, agent, and workflow files. |
 
 ## Repository and graph helpers
 

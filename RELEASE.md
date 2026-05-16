@@ -1,15 +1,15 @@
-# Godpowers 1.6.21 Release
+# Godpowers 1.6.22 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.21 sharpens the daily operating loop after the automation
-surface closeout. It adds dashboard action briefs, requires agent-spawning
-routes to declare trace events, and expands release readiness checks across
-dogfood, extension publish, Mode D suite, and installer smoke gates.
+Godpowers 1.6.22 turns the remaining "needs more real use" risks into
+executable surfaces. It adds deterministic messy-repo dogfooding, dashboard
+host guarantees, compact status output, extension authoring scaffolds, and
+Mode D suite release dry-run planning.
 
 ## What is stable
 
-- 109 slash commands
+- 110 slash commands
 - 40 specialist agents
 - 13 executable workflows
 - 40 intent recipes
@@ -28,21 +28,24 @@ dogfood, extension publish, Mode D suite, and installer smoke gates.
 - Repository surface sync checks
 - Route quality, recipe coverage, and release surface sync checks
 - Dashboard action briefs for next-step compression
+- Dashboard host guarantees for full, degraded, and unknown runtime capability
 - Agent-spawn trace event guardrails
 - Mode D suite readiness checks
+- Messy-repo dogfood scenarios
+- Extension authoring scaffold helper
+- Mode D suite release dry-run planner
 
 ## What is new
 
-- Added `Action brief` output to `lib/dashboard.js` and CLI status rendering.
-- Added route-quality enforcement for `agent.start` and `agent.end` trace
-  event declarations on agent-spawning routes.
-- Added repo-surface Mode D suite readiness checks for suite helper presence,
-  suite command skill and routing coverage, roadmap documentation, and release
-  test wiring.
-- Added release-surface checks for dogfood, extension publish, Mode D suite,
-  and installer smoke tests.
-- Updated `/god-init`, `/god-roadmap-update`, and `/god-sync` route metadata
-  to declare `agent.start`.
+- Added `lib/dogfood-runner.js`, `/god-dogfood`, and CLI `dogfood`.
+- Added dogfood fixtures for half-migrated GSD import and sync-back, full and
+  degraded host guarantees, extension scaffold validation, and suite release
+  dry-run planning.
+- Added `lib/host-capabilities.js` and dashboard host guarantee reporting.
+- Added compact dashboard output through `--brief`.
+- Added `lib/extension-authoring.js` and CLI `extension-scaffold`.
+- Added `suiteState.planRelease` for Mode D dependent impact planning before
+  mutation.
 
 ## Automation surface behavior
 
@@ -59,6 +62,9 @@ For a Godpowers repository, the helper checks:
 - release checklist policy names the current sync guards
 - release gates include dogfood, extension publish, Mode D suite, and installer
   smoke checks
+- dogfood fixtures cover migration, host guarantees, extension authoring, and
+  suite release dry-runs
+- host guarantees are visible in dashboard and compact dashboard output
 
 Detection is read-only by default. Applying sync writes logs and leaves
 judgment-heavy rewrites to scoped specialists.
@@ -77,11 +83,16 @@ Godpowers recommends scoped specialists only when judgment is needed:
 - `god-roadmap-reconciler` for workflow or recipe lifecycle drift
 - `god-coordinator` for extension pack drift
 - `god-docs-writer` for release prose drift
+- `god-greenfieldifier` for dogfood migration failures
+- `god-context-writer` for host capability failures
 
 ## Validation
 
 Release validation includes:
 
+- `node scripts/test-dogfood-runner.js`
+- `node scripts/test-host-capabilities.js`
+- `node scripts/test-extension-authoring.js`
 - `node scripts/test-repo-surface-sync.js`
 - `node scripts/test-automation-surface-sync.js`
 - `node scripts/test-repo-doc-sync.js`
@@ -97,5 +108,5 @@ Release validation includes:
 - `git diff --check`
 - `npm run release:check`
 
-The `v1.6.21` tag should point to the release commit that matches the npm
-`godpowers@1.6.21` package.
+The `v1.6.22` tag should point to the release commit that matches the npm
+`godpowers@1.6.22` package.

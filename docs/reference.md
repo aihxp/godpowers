@@ -1,8 +1,8 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.21.
+Complete command, agent, and artifact reference for v1.6.22.
 
-## Slash commands (109 total)
+## Slash commands (110 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
@@ -18,6 +18,9 @@ Complete command, agent, and artifact reference for v1.6.21.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
+- `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.
+- `godpowers extension-scaffold --name=@scope/pack --output=.` - Create a publishable extension pack skeleton.
+- `godpowers status --project . --brief` - Render only the action brief, host guarantee, status, and next route.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
 
 Dashboard status uses workflow progress from `.godpowers/state.json` tracked
@@ -90,6 +93,7 @@ metrics and should be labeled separately in closeouts.
 - `/god-lint` - Mechanical validation against have-nots catalog.
 - `/god-standards` - Artifact standards check (substitution + three-label + have-nots).
 - `/god-test-runtime` - Headless browser verification (design audit + flow assertions).
+- `/god-dogfood` - Run messy-repo dogfood scenarios for migration, host, extension, and suite readiness.
 - `/god-preflight` - Read-only intake audit before arc-ready and pillars.
 - `/god-audit` - Score existing artifacts against all have-nots.
 - `/god-agent-audit` - Validate every agents/*.md against the agent contract.

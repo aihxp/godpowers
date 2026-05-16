@@ -328,5 +328,27 @@ test('format returns markdown after refresh', () => {
   if (!md.includes('Suite State')) throw new Error('missing header');
 });
 
+test('planRelease produces dry-run impact plan for dependents', () => {
+  const { hub, repoB } = mkSuite();
+  fs.writeFileSync(path.join(repoB, 'package.json'), JSON.stringify({
+    name: 'repo-b',
+    version: '1.2.3',
+    dependencies: { 'repo-a': '^1.2.3' }
+  }, null, 2));
+  const plan = suiteState.planRelease(hub, 'repo-a', '1.2.4');
+  if (plan.mode !== 'dry-run') throw new Error(`mode wrong: ${plan.mode}`);
+  if (plan.status !== 'ready') throw new Error(`status wrong: ${plan.status}`);
+  if (plan.impacted.length !== 1) throw new Error(`impact wrong: ${plan.impacted.length}`);
+  if (plan.impacted[0].name !== 'repo-b') throw new Error('repo-b not impacted');
+  if (plan.writes.length < 3) throw new Error('writes not planned');
+});
+
+test('planRelease blocks unknown suite repo', () => {
+  const { hub } = mkSuite();
+  const plan = suiteState.planRelease(hub, 'repo-missing', '1.2.4');
+  if (plan.status !== 'blocked') throw new Error(`status wrong: ${plan.status}`);
+  if (plan.blockers.length !== 1) throw new Error('blocker missing');
+});
+
 console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
 if (failed > 0) process.exit(1);

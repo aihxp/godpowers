@@ -1,18 +1,17 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.21 (pure-skill model plus repo documentation and surface sync)
+> Status: STABLE v1.6.22 (pure-skill model plus dogfood, host guarantees, and release surface sync)
 > Authors: Godpowers Team
 > Last updated: 2026-05-16
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.19 keeps the public surface stable while adding autonomous repo
-documentation sync and repo surface sync for badges, release surfaces, routes,
-package payloads, agent handoffs, workflow metadata, recipe routes, extension
-packs, security policy checks, and Pillars planning. Auto-invoked commands,
-spawned agents, local runtime helpers, platform-specific spawning limits,
-migration imports, sync-back writes, feature-awareness refreshes, repo
-documentation sync, repo surface sync, and dashboard progress must be reported
-visibly instead of implied as hidden background work.
+v1.6.22 keeps the public surface stable while adding messy-repo dogfooding,
+host guarantee reporting, compact dashboard output, extension scaffolding, and
+Mode D suite release dry-run planning. Auto-invoked commands, spawned agents,
+local runtime helpers, platform-specific spawning limits, migration imports,
+sync-back writes, feature-awareness refreshes, repo documentation sync, repo
+surface sync, dogfood runs, and dashboard progress must be reported visibly
+instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only status
@@ -255,6 +254,7 @@ uninstall, legacy migration, and read-only status helpers.
 | `/god-extension-remove @x/y` | Uninstall a pack | current |
 | `/god-extension-info @x/y` | Show pack details | current |
 | `/god-test-extension <path>` | Plugin contract tests | current |
+| `/god-dogfood` | Messy-repo dogfood scenarios | current |
 
 ### Workstream commands
 
@@ -306,20 +306,20 @@ commands inside the AI coding tool.
 
 ### Route Topology And Automation Audit (2026-05-16)
 
-[DECISION] The route graph is currently complete at the file level: 109
-`skills/god-*.md` command files match 109 `routing/god-*.yaml` route files.
+[DECISION] The route graph is currently complete at the file level: 110
+`skills/god-*.md` command files match 110 `routing/god-*.yaml` route files.
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
 agents, 13 workflow YAML files, and 40 intent recipes.
 
-[DECISION] The current route graph has 56 built-in or local-runtime command
-routes and 53 agent-routed command routes.
+[DECISION] The current route graph has 58 built-in or local-runtime command
+routes and 52 agent-routed command routes.
 
-[DECISION] Fifteen command routes declare secondary or parallel spawns:
-`/god-build`, `/god-design`, `/god-feature`, `/god-harden`, `/god-hotfix`,
-`/god-hygiene`, `/god-mode`, `/god-postmortem`, `/god-prd`, `/god-quick`,
-`/god-refactor`, `/god-review`, `/god-sync`, `/god-update-deps`, and
-`/god-upgrade`.
+[DECISION] Eighteen command routes declare secondary or parallel spawns:
+`/god-build`, `/god-design`, `/god-dogfood`, `/god-feature`, `/god-harden`,
+`/god-hotfix`, `/god-hygiene`, `/god-mode`, `/god-party`, `/god-postmortem`,
+`/god-prd`, `/god-quick`, `/god-refactor`, `/god-review`,
+`/god-story-build`, `/god-sync`, `/god-update-deps`, and `/god-upgrade`.
 
 [DECISION] All workflow `uses:` targets resolve to shipped agent files.
 
@@ -328,13 +328,13 @@ recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
 |---------|---------------|---------------------------|
-| Skills | 109 | Every command has a user-facing skill file |
-| Routes | 109 | Every command has machine-readable routing metadata |
+| Skills | 110 | Every command has a user-facing skill file |
+| Routes | 110 | Every command has machine-readable routing metadata |
 | Agents | 40 | Spawn targets are available for specialist work |
 | Workflows | 13 | Arc execution has declarative DAGs |
 | Recipes | 40 | Fuzzy intent can route into command sequences |
-| Built-in routes | 56 | Local helpers need visible `Agent: none` cards |
-| Agent-routed routes | 53 | Spawned work needs visible spawn cards |
+| Built-in routes | 58 | Local helpers need visible `Agent: none` cards |
+| Agent-routed routes | 52 | Spawned work needs visible spawn cards |
 
 #### Current Automation Ladder
 
@@ -402,9 +402,24 @@ Mode D suite tests, and installer smoke tests.
 suite helper presence, suite command skill and routing coverage, roadmap
 documentation, and test gate wiring.
 
+[DECISION] `lib/dogfood-runner.js` now checks messy-repo fixtures for
+planning-system migration, source-system sync-back, host guarantees, extension
+scaffolding, and Mode D suite release dry-runs.
+
+[DECISION] `lib/host-capabilities.js` now reports full, degraded, or unknown
+runtime guarantees based on shell tooling and installed Godpowers agent
+metadata.
+
+[DECISION] `lib/extension-authoring.js` now scaffolds publishable extension
+packs with manifest, package, README, skill, agent, and workflow files.
+
+[DECISION] `lib/suite-state.js` now exposes a dry-run release plan so
+`god-coordinator` can show dependent impacts before mutation.
+
 [DECISION] `lib/dashboard.js` renders an action brief before the detailed
 status sections. The brief compresses the next command, route reason,
-readiness, and top blockers while keeping the full audit trail visible below.
+readiness, host guarantees, and top blockers while keeping the full audit
+trail visible below.
 
 [DECISION] Feature awareness remains curated, and it now records
 route-quality-sync, recipe-coverage-sync, and release-surface-sync as known
@@ -425,9 +440,10 @@ proactive checks, repo docs, repo surface, runtime test, security, dependency,
 and automation opportunities separately, with the action brief acting as a
 summary rather than a replacement.
 
-[DECISION] Route-quality sync, recipe-coverage sync, and release-surface sync
-are now implemented as local runtime helpers and are included by
-repo-surface-sync.
+[DECISION] Route-quality sync, recipe-coverage sync, release-surface sync,
+dogfood runner checks, host capability checks, extension authoring checks, and
+suite dry-run checks are now implemented as local runtime helpers and are
+included by release readiness.
 
 ---
 
@@ -814,7 +830,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 109 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 110 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |
@@ -967,7 +983,7 @@ Each release is independently shippable. v1.0 freezes the public API.
 | Prose-only agent files | Manifest YAML front matter + prose body |
 | Smoke tests (structural only) | Unit + skill contract + record/replay E2E |
 | `npx godpowers` (1 package, install, uninstall, migrate, status helpers) | Same mutation boundary. Durable project work stays slash-command driven. |
-| 109 skills + 40 agents (shipped at v1.6.19) | Same surface. Declarative contracts via lib/workflow-runner.js. |
+| 110 skills + 40 agents (shipped at v1.6.22) | Same surface. Declarative contracts via lib/workflow-runner.js. |
 | HAVE-NOTS.md (markdown) | Same content + machine-readable index |
 | Single-machine install only | npm-distributed packs, capability handshake |
 | Slash commands as primary surface | Unchanged. Slash commands stay primary. |

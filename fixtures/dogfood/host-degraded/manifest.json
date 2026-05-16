@@ -1,0 +1,5 @@
+{
+  "name": "Host guarantee degraded mode",
+  "kind": "host-capabilities",
+  "expectedLevel": "degraded"
+}

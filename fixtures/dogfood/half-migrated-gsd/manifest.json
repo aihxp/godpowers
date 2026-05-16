@@ -1,0 +1,16 @@
+{
+  "name": "Half migrated GSD project",
+  "kind": "planning-migration",
+  "actions": [
+    "import-planning-context",
+    "sync-back"
+  ],
+  "expectedSystems": [
+    "gsd"
+  ],
+  "expectedFiles": [
+    ".godpowers/prep/IMPORTED-CONTEXT.md",
+    ".godpowers/prd/PRD.md",
+    ".planning/GODPOWERS-SYNC.md"
+  ]
+}

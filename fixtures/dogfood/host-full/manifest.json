@@ -1,0 +1,5 @@
+{
+  "name": "Host guarantee full mode",
+  "kind": "host-capabilities",
+  "expectedLevel": "full"
+}

@@ -46,6 +46,7 @@ see_also: [quality, deploy, security]
 ## Godpowers artifact sources
 
 - Sync mode: proposed for review.
+- Related artifact: `README.md`.
 - Related artifact: `docs/reference.md`.
 - Rule: keep this pillar aligned when these artifacts change durable repo truth.
 <!-- godpowers:pillar-sync:end -->

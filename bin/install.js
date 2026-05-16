@@ -303,6 +303,12 @@ function parseArgs(argv) {
     command: null,
     project: process.cwd(),
     json: false,
+    brief: false,
+    extensionName: null,
+    extensionOutput: process.cwd(),
+    extensionSkill: null,
+    extensionAgent: null,
+    extensionWorkflow: null,
     runtimes: [],
     global: false,
     local: false,
@@ -318,10 +324,15 @@ function parseArgs(argv) {
       case 'next':
       case 'automation-status':
       case 'automation-setup':
+      case 'dogfood':
+      case 'extension-scaffold':
         opts.command = arg;
         break;
       case '--json':
         opts.json = true;
+        break;
+      case '--brief':
+        opts.brief = true;
         break;
       case '--project':
         if (args[i + 1]) {
@@ -351,6 +362,16 @@ function parseArgs(argv) {
       default:
         if (arg.startsWith('--project=')) {
           opts.project = path.resolve(arg.slice('--project='.length));
+        } else if (arg.startsWith('--name=')) {
+          opts.extensionName = arg.slice('--name='.length);
+        } else if (arg.startsWith('--output=')) {
+          opts.extensionOutput = path.resolve(arg.slice('--output='.length));
+        } else if (arg.startsWith('--skill=')) {
+          opts.extensionSkill = arg.slice('--skill='.length);
+        } else if (arg.startsWith('--agent=')) {
+          opts.extensionAgent = arg.slice('--agent='.length);
+        } else if (arg.startsWith('--workflow=')) {
+          opts.extensionWorkflow = arg.slice('--workflow='.length);
         } else if (arg.startsWith('--') && RUNTIMES[arg.slice(2)]) {
           opts.runtimes.push(arg.slice(2));
         }
@@ -575,10 +596,18 @@ function showHelp() {
   log('  next                 Show the dashboard and recommended next command');
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
+  log('  dogfood              Run built-in messy-repo dogfood scenarios');
+  log('  extension-scaffold   Create a publishable extension pack skeleton');
   log('');
   log('Options:');
   log('  --project=<path>     Project root for status, next, or automation commands');
   log('  --json               Emit JSON for status, next, or automation commands');
+  log('  --brief              Render a compact dashboard for status or next');
+  log('  --name=<scope/name>  Extension package name for extension-scaffold');
+  log('  --output=<path>      Extension output root for extension-scaffold');
+  log('  --skill=<name>       Extension skill name for extension-scaffold');
+  log('  --agent=<name>       Extension agent name for extension-scaffold');
+  log('  --workflow=<name>    Extension workflow name for extension-scaffold');
   log('  -g, --global         Install globally (to config directory)');
   log('  -l, --local          Install locally (to current directory)');
   log('  --claude             Install for Claude Code');
@@ -605,6 +634,8 @@ function showHelp() {
   log('  npx godpowers next --project=.');
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
+  log('  npx godpowers dogfood');
+  log('  npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.');
   log('  npx godpowers --claude --global');
   log('  npx godpowers --all');
   log('  npx godpowers --codex --cursor');
@@ -630,11 +661,50 @@ function runDashboardCommand(opts) {
   if (opts.json) {
     console.log(JSON.stringify(result, null, 2));
   } else {
-    console.log(dashboard.render(result));
+      console.log(dashboard.render(result, { brief: opts.brief }));
     if (opts.command === 'next') {
       console.log('');
       console.log('Suggested next command:');
       console.log(`  ${result.next && result.next.command ? result.next.command : 'describe the next intent'}`);
+    }
+  }
+}
+
+function runDogfoodCommand(opts) {
+  const dogfood = require('../lib/dogfood-runner');
+  const result = dogfood.runAll();
+  if (opts.json) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    console.log(dogfood.render(result));
+  }
+  if (result.status !== 'pass') process.exit(1);
+}
+
+function runExtensionScaffoldCommand(opts) {
+  const authoring = require('../lib/extension-authoring');
+  if (!opts.extensionName) {
+    error('extension-scaffold requires --name=@scope/package');
+    process.exit(1);
+  }
+  const result = authoring.scaffold(opts.extensionOutput, {
+    name: opts.extensionName,
+    skill: opts.extensionSkill || undefined,
+    agent: opts.extensionAgent || undefined,
+    workflow: opts.extensionWorkflow || undefined,
+    runtimeVersion: VERSION
+  });
+  if (opts.json) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    success(`Scaffolded ${result.name} at ${result.path}`);
+    if (result.written.length > 0) {
+      log(`Wrote ${result.written.length} file(s): ${result.written.join(', ')}`);
+    }
+    if (result.validation.length > 0) {
+      warn(`Validation warnings: ${result.validation.join('; ')}`);
+    } else {
+      success('Extension manifest validates');
     }
   }
 }
@@ -658,6 +728,16 @@ function main() {
 
   if (opts.command === 'automation-status' || opts.command === 'automation-setup') {
     runAutomationCommand(opts);
+    return;
+  }
+
+  if (opts.command === 'dogfood') {
+    runDogfoodCommand(opts);
+    return;
+  }
+
+  if (opts.command === 'extension-scaffold') {
+    runExtensionScaffoldCommand(opts);
     return;
   }
 
