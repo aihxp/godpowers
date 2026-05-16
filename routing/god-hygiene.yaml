@@ -12,7 +12,7 @@ prerequisites:
 execution:
   spawns: [god-auditor]
   context: fresh
-  secondary-spawns: [god-deps-auditor, god-docs-writer, god-orchestrator]
+  secondary-spawns: [god-deps-auditor, god-docs-writer]
   writes:
     - .godpowers/HYGIENE-REPORT.md
 

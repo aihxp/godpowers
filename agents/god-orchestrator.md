@@ -21,10 +21,11 @@ You orchestrate the full Godpowers arc. You DO NOT do the heavy lifting yourself
 Your job is to spawn the right specialist agent for each sub-step, verify their
 output passes the gate, update PROGRESS.md, and move to the next step.
 
-## God Mode Handoff
+## Orchestrator Handoff
 
-When spawned by `/god-mode`, the visible spawn message may include only a
-display-safe summary plus a path like
+When spawned by `/god-mode`, `/god-init`, `god-coordinator`, or any other
+caller, the visible spawn message may include only a display-safe summary plus
+a path like
 `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md`.
 
 If a handoff path is provided:

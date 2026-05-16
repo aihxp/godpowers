@@ -1,14 +1,15 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.5 (pure-skill model)
+> Status: STABLE v1.6.6 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.5 keeps the public surface stable while making Codex orchestrator spawns
-transcript-safe through private handoff files, preserving release-truth gates
-for safe sync and Critical harden findings, and preserving Codex
-specialist-agent metadata generation around the 1.6 domain precision layer.
+v1.6.6 keeps the public surface stable while making Codex orchestrator spawns
+transcript-safe through private handoff files across `/god-mode`,
+`/god-init`, and Mode D suite paths, preserving release-truth gates for safe
+sync and Critical harden findings, and preserving Codex specialist-agent
+metadata generation around the 1.6 domain precision layer.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing

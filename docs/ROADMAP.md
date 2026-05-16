@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
 > Last updated: 2026-05-14
-> Current shipped: v1.6.5
+> Current shipped: v1.6.6
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.5)
+### Current surface (v1.6.6)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -33,6 +33,9 @@ What works today:
 - **Transcript-safe God Mode spawn handoff**: `/god-mode` writes detailed
   orchestration context to `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md`
   and spawns `god-orchestrator` with only a display-safe pointer
+- **Transcript-safe init and suite handoffs**: `/god-init` and Mode D suite
+  coordinator paths use private handoff files before orchestrator or
+  coordinator spawns
 - **Mode A** (greenfield), **Mode B** (gap-fill), **Mode C** (audit),
   **Mode D** (multi-repo suites with `god-coordinator` as Tier-0 peer)
 - **Three-axis verification**: static (lint), linkage (drift), runtime (headless browser)

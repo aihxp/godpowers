@@ -39,6 +39,10 @@ function mkAgentsDir(agents) {
   return tmp;
 }
 
+function readProjectFile(relPath) {
+  return fs.readFileSync(path.join('.', relPath), 'utf8');
+}
+
 console.log('\n  Agent validator behavioral tests\n');
 
 // ============================================================================
@@ -300,6 +304,32 @@ description: r
   }
   if (result.summary.errors !== 0) {
     throw new Error(`expected 0 errors, got ${result.summary.errors}`);
+  }
+});
+
+test('non-god-mode orchestrator entrypoints use display-safe handoffs', () => {
+  const checks = [
+    ['skills/god-init.md', 'INIT-ORCHESTRATOR-HANDOFF.md'],
+    ['skills/god-suite-init.md', 'COORDINATOR-HANDOFF.md'],
+    ['skills/god-suite-release.md', 'COORDINATOR-HANDOFF.md'],
+    ['skills/god-suite-patch.md', 'COORDINATOR-HANDOFF.md'],
+    ['agents/god-coordinator.md', 'COORDINATOR-ORCHESTRATOR-HANDOFF.md'],
+  ];
+  for (const [relPath, marker] of checks) {
+    const text = readProjectFile(relPath);
+    if (!text.includes(marker)) {
+      throw new Error(`${relPath} missing ${marker}`);
+    }
+    if (!text.includes('display-safe')) {
+      throw new Error(`${relPath} missing display-safe spawn wording`);
+    }
+  }
+});
+
+test('hygiene route does not spawn orchestrator directly', () => {
+  const text = readProjectFile('routing/god-hygiene.yaml');
+  if (text.includes('god-orchestrator')) {
+    throw new Error('god-hygiene route should not list god-orchestrator');
   }
 });
 

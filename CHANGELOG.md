@@ -5,6 +5,33 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.6] - 2026-05-16
+
+Non-God-Mode handoff privacy patch. Extends the display-safe handoff pattern
+from `/god-mode` to other orchestrator entrypoints.
+
+### Added
+- Added private handoff guidance for `/god-init` before it spawns
+  `god-orchestrator`.
+- Added private handoff guidance for `/god-suite-init`,
+  `/god-suite-release`, and `/god-suite-patch` before they spawn
+  `god-coordinator`.
+- Added `god-coordinator` guidance for display-safe per-repo
+  `god-orchestrator` spawns.
+- Added regression coverage for non-`/god-mode` handoff entrypoints.
+
+### Changed
+- `god-orchestrator` now documents handoff files from `/god-init`,
+  `god-coordinator`, or any other caller, not only `/god-mode`.
+- `/god-hygiene` routing no longer lists `god-orchestrator` as a secondary
+  spawn because the skill only runs the three hygiene audits.
+
+### Guardrails
+- This patch does not add slash commands, agents, workflows, recipes, schemas,
+  or public artifact formats.
+- The handoff change affects transcript hygiene only. It does not weaken
+  release-truth gates or per-repo Quarterback ownership.
+
 ## [1.6.5] - 2026-05-16
 
 God Mode handoff privacy patch. Keeps the 1.6 command surface stable while

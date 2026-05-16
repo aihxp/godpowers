@@ -17,15 +17,27 @@ A version bump that knows about dependents. Different from `/god-launch`
 
 1. Verify suite is registered.
 2. Prompt for: which repo, new version, release notes.
-3. Spawn `god-coordinator` in `release` mode.
-4. god-coordinator:
+3. Create `.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md` with the repo,
+   new version, release notes, propagation flags, and suite release
+   instruction.
+4. Spawn `god-coordinator` in `release` mode with only a display-safe
+   payload:
+   - Name the hub path.
+   - Name the operation as `release`.
+   - Name the handoff file path.
+   - Say: "Read the handoff file first, then coordinate the suite release
+     from disk state. Return only user-facing progress and final status."
+   Do not put release notes, dependency impact, sibling paths, local file
+   lists, or detailed instructions in the visible spawn message.
+5. god-coordinator:
    - Scans suite version-table for repos that depend on the bumped repo
-   - For each dependent: spawns its `god-orchestrator` with a
+   - For each dependent: writes a per-repo orchestrator handoff file and
+     spawns its `god-orchestrator` with only a display-safe pointer for the
      `version-bump` directive (NOT a full arc)
    - Aggregates results per-repo
    - Updates `.godpowers/suite-config.yaml` version-table to match
    - Appends to `.godpowers/suite/SYNC-LOG.md`
-5. Reports aggregated outcome (bumped + propagated repos).
+6. Reports aggregated outcome (bumped + propagated repos).
 
 ## Forms
 

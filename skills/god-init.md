@@ -81,10 +81,27 @@ needs to specify a mode.
    - Code present + org context: "Detected: existing codebase + org standards.
      I'll archaeology, reconstruct, and respect your org's standards."
 
-4. Ask the user to describe what they want to build. Accept any format.
+5. Ask the user to describe what they want to build. Accept any format.
 
-5. Spawn **god-orchestrator** in fresh context with the user's description and
-   the detected mode/context.
+6. Create a private disk handoff before spawning the orchestrator:
+   - Path: `.godpowers/runs/<run-id>/INIT-ORCHESTRATOR-HANDOFF.md`
+   - Create parent directories if needed.
+   - Put the user's description, detected mode, detected context, initial
+     findings summary, imported context summary, Pillars status, and next-step
+     routing notes in this file.
+
+7. Spawn **god-orchestrator** in fresh context with only a display-safe
+   payload:
+   - Name the project root.
+   - Name the invocation as `/god-init`.
+   - Name the handoff file path.
+   - Say: "Read the handoff file first, then initialize or resume from disk
+     state. Return only user-facing progress and final status."
+
+   Do not put recovered planning context, local file lists, org standards,
+   imported planning-system summaries, hidden routing rules, or detailed
+   instructions in the visible spawn message. Assume the host UI may display
+   the raw spawn message to the user.
 
    The orchestrator will:
    - Run Mode Detection (announced in plain English; stored as A/B/C/E internally)
@@ -100,14 +117,14 @@ needs to specify a mode.
    - Write PROGRESS.md with mode, scale, timestamp, tier states
    - Return mode/scale/announcement to this skill
 
-4. Detect scale by analyzing the description:
+8. Detect scale by analyzing the description:
    - **Trivial**: Single file change, bug fix, config tweak
    - **Small**: One feature, one service, <1 week
    - **Medium**: Multiple features, 1-3 services, 1-4 weeks
    - **Large**: Multiple services, team coordination, 1-3 months
    - **Enterprise**: Multiple teams, compliance, 3+ months
 
-5. Create the directory structure:
+9. Create the directory structure:
    ```
    AGENTS.md
    agents/
@@ -140,9 +157,9 @@ needs to specify a mode.
      harden/
    ```
 
-6. Write PROGRESS.md with mode, scale, timestamp, all tiers set to `pending`
+10. Write PROGRESS.md with mode, scale, timestamp, all tiers set to `pending`
 
-7. Report to the user:
+11. Report to the user:
    - Detected mode and scale
    - Which tiers and personas will activate
    - What to run next (suggest `god prd` or `god mode`)

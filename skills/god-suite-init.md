@@ -32,12 +32,23 @@ are listed manually; godpowers does NOT auto-walk parent dirs.
    - Byte-identical files to track (one per line; e.g., LICENSE, .editorconfig)
    - Version-table entries (optional; can be added later)
    - Shared standards (node-version, linter; optional)
-3. Spawn `god-coordinator` agent in `init` mode with collected inputs.
-4. god-coordinator writes `.godpowers/suite-config.yaml` and updates
+3. Create `.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md` with the
+   collected suite name, sibling paths, byte-identical files, version-table
+   entries, shared standards, and init-mode instruction.
+4. Spawn `god-coordinator` agent in `init` mode with only a display-safe
+   payload:
+   - Name the hub path.
+   - Name the operation as `init`.
+   - Name the handoff file path.
+   - Say: "Read the handoff file first, then perform suite init from disk
+     state. Return only user-facing progress and final status."
+   Do not put sibling paths, version-table entries, shared standards, local
+   file lists, or detailed instructions in the visible spawn message.
+5. god-coordinator writes `.godpowers/suite-config.yaml` and updates
    each sibling's state.json with `suite.hubPath`.
-5. Initial `lib/suite-state.refreshFromRepos` runs to populate
+6. Initial `lib/suite-state.refreshFromRepos` runs to populate
    `.godpowers/suite/state.json` and `STATE.md`.
-6. Report registration complete; suggest `/god-suite-status` next.
+7. Report registration complete; suggest `/god-suite-status` next.
 
 ## Output
 

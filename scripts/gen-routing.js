@@ -175,7 +175,7 @@ const commands = [
   {
     cmd: '/god-hygiene', tier: 0, agent: 'god-auditor', desc: 'Composite health check',
     prereq: ['state:lifecycle-phase == steady-state-active'],
-    secondarySpawns: ['god-deps-auditor', 'god-docs-writer', 'god-orchestrator'],
+    secondarySpawns: ['god-deps-auditor', 'god-docs-writer'],
     writes: ['.godpowers/HYGIENE-REPORT.md'],
     next: '/god-status',
   },

@@ -22,11 +22,23 @@ locally; the coordinator tracks atomicity.
    - Patch description (what's the change)
    - Repos in scope (defaults: all siblings; user can subset)
    - Per-repo any specific notes
-3. Spawn `god-coordinator` in `patch` mode.
-4. For each repo in scope:
-   - Spawn that repo's `god-orchestrator` with the patch directive
+3. Create `.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md` with the patch
+   description, repos in scope, per-repo notes, dry-run flag, and patch-mode
+   instruction.
+4. Spawn `god-coordinator` in `patch` mode with only a display-safe payload:
+   - Name the hub path.
+   - Name the operation as `patch`.
+   - Name the handoff file path.
+   - Say: "Read the handoff file first, then coordinate the suite patch from
+     disk state. Return only user-facing progress and final status."
+   Do not put patch descriptions, per-repo notes, sibling paths, local file
+   lists, or detailed instructions in the visible spawn message.
+5. For each repo in scope:
+   - Write a per-repo orchestrator handoff file and spawn that repo's
+     `god-orchestrator` with only a display-safe pointer for the patch
+     directive
    - Track success/failure
-5. Coordinator aggregates results:
+6. Coordinator aggregates results:
    - All succeeded: report success; append to SYNC-LOG.md
    - Some failed: report partial; suggest manual continuation OR
      rollback (`/god-suite-patch --rollback <patch-id>`)

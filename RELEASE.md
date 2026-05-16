@@ -1,11 +1,11 @@
-# Godpowers 1.6.5 Release
+# Godpowers 1.6.6 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.5 keeps the stable 1.6 surface while fixing Codex God Mode
-transcript hygiene. The goal of this patch is to make `god-orchestrator`
-spawn correctly from `/god-mode` and `/god-mode --yolo` without exposing the
-detailed orchestration payload in the visible transcript.
+Godpowers 1.6.6 extends transcript-safe spawn handling beyond `/god-mode`.
+The goal of this patch is to keep Codex-visible spawn messages small and safe
+for `/god-init` and Mode D suite coordination while preserving the same
+orchestrator and coordinator behavior.
 
 ## What is stable
 
@@ -27,35 +27,40 @@ detailed orchestration payload in the visible transcript.
 
 ## What is new
 
-- `/god-mode` now writes detailed orchestration context to
-  `.godpowers/runs/<run-id>/ORCHESTRATOR-HANDOFF.md`.
-- `/god-mode` now spawns `god-orchestrator` with only a display-safe project
-  root, flags, and handoff file path.
-- `god-orchestrator` now knows to read the handoff file before planning,
-  spawning, or mutating project state.
-- `god-orchestrator` now treats handoff contents as private orchestration
-  context and keeps them out of the visible transcript.
-- Agent validation and smoke tests now inspect `agents/god-*.md` specialist
-  files while allowing Pillars context files like `agents/context.md` and
-  `agents/repo.md` to coexist.
+- `/god-init` now writes detailed initialization context to
+  `.godpowers/runs/<run-id>/INIT-ORCHESTRATOR-HANDOFF.md` before spawning
+  `god-orchestrator`.
+- `/god-suite-init`, `/god-suite-release`, and `/god-suite-patch` now write
+  suite coordination context to
+  `.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md` before spawning
+  `god-coordinator`.
+- `god-coordinator` now writes per-repo orchestrator context to
+  `.godpowers/runs/<run-id>/COORDINATOR-ORCHESTRATOR-HANDOFF.md` before
+  spawning a target repo's `god-orchestrator`.
+- `god-orchestrator` now treats handoff files as a general caller protocol,
+  not only as a `/god-mode` protocol.
+- `/god-hygiene` routing no longer lists `god-orchestrator` as a secondary
+  spawn because the skill only runs artifact, dependency, and documentation
+  audits.
 
-## What 1.6.5 means
+## What 1.6.6 means
 
-Godpowers 1.6.5 does not expand the public command surface. It fixes the Codex
-spawn integration path so the right specialist agent is still started, but the
-host UI only sees a small pointer to disk state instead of raw checkpoint,
-routing, and local-file details.
+Godpowers 1.6.6 does not expand the public command surface. It fixes more
+Codex spawn integration paths so the right agent is still started, but the host
+UI only sees a small pointer to disk state instead of raw project description,
+suite metadata, release notes, patch directives, dependency graphs, routing
+rules, or local-file details.
 
 Safe sync and unresolved Critical harden findings remain release-truth gates.
-`--yolo` can still auto-pick defaults, but it cannot bypass those blockers.
+Per-repo Quarterback ownership remains intact for Mode D suite work.
 
 ## Stability policy
 
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.5` git tag points to the release commit that matches the npm
-`godpowers@1.6.5` package. Public publishes should prefer the tag-triggered
+The `v1.6.6` git tag points to the release commit that matches the npm
+`godpowers@1.6.6` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

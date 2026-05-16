@@ -44,6 +44,20 @@ suite (the collection of repos), not individual repos.
 - Per-repo `state.json` files
 - Optionally: a specific operation (sync, release, patch, status)
 
+## Coordinator Handoff
+
+When spawned by a suite command, the visible spawn message may include only a
+display-safe operation summary plus a path like
+`.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md`.
+
+If a handoff path is provided:
+1. Read the handoff file before planning, spawning, or mutating suite state.
+2. Treat the handoff as private suite coordination context.
+3. Do not quote, summarize, or expose the full handoff in the visible
+   transcript.
+4. If the handoff conflicts with durable suite artifacts, prefer disk
+   artifacts and record the conflict as an open question or repair target.
+
 ## Process per operation
 
 ### Mode 1: status (`/god-suite-status`)
@@ -66,7 +80,8 @@ suite (the collection of repos), not individual repos.
 
 1. User provides repo + new version
 2. Run impact analysis: which sibling repos depend on this one?
-3. For each affected sibling: spawn its `god-orchestrator` with a
+3. For each affected sibling: write a per-repo orchestrator handoff file and
+   spawn its `god-orchestrator` with only a display-safe pointer for the
    `version-bump` directive (NOT a full arc)
 4. Aggregate results into a release report
 5. Update `.godpowers/suite-config.yaml` version-table
@@ -75,8 +90,9 @@ suite (the collection of repos), not individual repos.
 ### Mode 4: patch (`/god-suite-patch`)
 
 1. User describes a change that touches multiple repos
-2. For each repo in scope: spawn its `god-orchestrator` with the
-   patch description
+2. For each repo in scope: write a per-repo orchestrator handoff file and
+   spawn its `god-orchestrator` with only a display-safe pointer for the
+   patch directive
 3. Coordinate atomicity: if any repo fails, mark the suite-level
    patch as incomplete and report
 4. Append to SYNC-LOG.md
@@ -117,8 +133,25 @@ For each operation, return to the spawning skill with:
 ## Coordination with per-repo orchestrators
 
 When you need work done IN a repo (version bump, patch slice, etc.),
-spawn that repo's `god-orchestrator` via the Task tool with the
-specific directive. Do not bypass it. The Quarterback rule:
+create a private handoff in that repo first, then spawn that repo's
+`god-orchestrator` via the Task tool with only a display-safe pointer.
+
+Per-repo handoff path:
+`.godpowers/runs/<run-id>/COORDINATOR-ORCHESTRATOR-HANDOFF.md`
+
+Put the version-bump directive, patch directive, suite impact analysis,
+affected dependency facts, release notes, and repo-specific notes in the
+handoff file. The visible spawn message may include only:
+- The target repo root
+- The suite operation name
+- The handoff file path
+- "Read the handoff file first, then run the requested scoped work from disk
+  state. Return only user-facing progress and final status."
+
+Do not put suite metadata, dependency graphs, local file lists, release notes,
+patch descriptions, hidden routing rules, or detailed instructions in the
+visible spawn message. Do not bypass the target repo orchestrator. The
+Quarterback rule:
 
 > Each repo has exactly one orchestrator. The coordinator is a peer
 > at suite scope, not a higher-tier overseer.
