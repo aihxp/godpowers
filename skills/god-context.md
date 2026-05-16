@@ -33,10 +33,12 @@ the Godpowers fences off, check status, or refresh on demand.
 
 1. Verify `.godpowers/` exists. If not, suggest `/god-init` first.
 2. Read `.godpowers/state.json`.
-3. Call `lib/pillars.detect(projectRoot)`.
-4. If Pillars is absent or partial, call `lib/pillars.init(projectRoot)`.
-5. Spawn `god-context-writer` agent with the requested mode.
-6. Report results.
+3. Call `lib/feature-awareness.run(projectRoot)` to record current runtime
+   features and refresh managed AI-tool awareness safely.
+4. Call `lib/pillars.detect(projectRoot)`.
+5. If Pillars is absent or partial, call `lib/pillars.init(projectRoot)`.
+6. Spawn `god-context-writer` agent with the requested mode.
+7. Report results.
 
 ## What gets written
 
@@ -136,6 +138,14 @@ When `/god-sync` runs (after a project run, or any sync), `god-updater` calls th
 with `refresh` to keep `AGENTS.md` content aligned with the latest project
 state (mode, scale, completed tiers, active artifacts).
 
+For existing projects after a Godpowers upgrade, `/god-context refresh`
+auto-invokes `lib/feature-awareness.run(projectRoot)`. Report it as:
+
+```
+Agent: none, local runtime only
+Why: this path records current runtime features and refreshes managed context fences
+```
+
 You can disable the Godpowers fences by running `/god-context off`. Pillars
 remains because it is the native context contract for Godpowers projects.
 
@@ -146,7 +156,7 @@ The fenced content contains:
 - Mode (greenfield/brownfield/audit) and scale
 - A short list of completed-tier artifact paths
 - Quarterback rule reminder
-- Top 4 useful slash commands
+- Short useful slash command list
 
 It does NOT contain:
 - Secrets, credentials, API keys

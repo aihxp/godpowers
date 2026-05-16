@@ -5,6 +5,33 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.16] - 2026-05-16
+
+Feature awareness for existing Godpowers projects.
+
+### Added
+- Added `lib/feature-awareness.js` to detect stale project awareness after a
+  Godpowers runtime upgrade.
+- Added state recording for the current Godpowers feature set so existing
+  projects can tell whether their context has learned about new capabilities.
+- Added behavioral tests for feature-awareness detection, safe state refresh,
+  AI-tool context refresh, migration suggestions, and `god-greenfieldifier`
+  escalation.
+
+### Changed
+- `AGENTS.md` context refresh now advertises `/god-sync`, `/god-migrate`, and
+  `/god-context refresh` so AI tools opening an existing project see the new
+  migration and awareness commands.
+- `/god-doctor`, `/god-context`, `/god-sync`, and `/god-mode` now document the
+  feature-awareness auto-invoke path for existing `.godpowers` projects.
+- `state.v1.json` now accepts the `godpowers-features` awareness record.
+
+### Guardrails
+- Detection is read-only by default.
+- The apply path writes only safe state metadata and managed context fences.
+- Ambiguous planning-system evidence is reported as a scoped
+  `god-greenfieldifier` recommendation instead of being converted blindly.
+
 ## [1.6.15] - 2026-05-16
 
 Planning-system migration and sync-back.

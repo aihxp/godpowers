@@ -12,6 +12,7 @@ package-level integrations.
 | `state-lock.js` | Coordinate state writes with a lock file. |
 | `intent.js` | Read and validate `intent.yaml` from project roots or `.godpowers/`. |
 | `checkpoint.js` | Create and inspect resumable checkpoint artifacts. |
+| `feature-awareness.js` | Detect and refresh existing-project awareness after runtime upgrades. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
 
@@ -52,6 +53,8 @@ package-level integrations.
 |--------|---------|
 | `context-writer.js` | Produce tool-specific context files. |
 | `context-budget.js` | Keep generated context within budget. |
+| `planning-systems.js` | Detect and import GSD, BMAD, and Superpowers planning context. |
+| `source-sync.js` | Write managed Godpowers progress back to source-system companion files. |
 | `design-detector.js` | Detect design-system conventions. |
 | `design-spec.js` | Normalize design specifications. |
 | `awesome-design.js` | Validate design guidance against awesome-design rules. |

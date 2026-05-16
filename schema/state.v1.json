@@ -131,6 +131,32 @@
         "additionalProperties": false
       }
     },
+    "godpowers-features": {
+      "type": "object",
+      "description": "Installed Godpowers feature awareness recorded for this project.",
+      "required": ["feature-set-version", "runtime-version", "known"],
+      "properties": {
+        "feature-set-version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "runtime-version": {
+          "type": "string",
+          "pattern": "^(unknown|\\d+\\.\\d+\\.\\d+)$"
+        },
+        "known": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "last-awareness-refresh-at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
     "yolo-decisions": {
       "type": "array",
       "description": "Auto-decisions made under --yolo. Mirrored to YOLO-DECISIONS.md.",

@@ -1,15 +1,15 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.15 (pure-skill model plus planning-system migration)
+> Status: STABLE v1.6.16 (pure-skill model plus feature awareness)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.15 keeps the public surface stable while adding automatic migration from
-GSD, BMAD, and Superpowers into Godpowers prep and seed artifacts. Auto-invoked
-commands, spawned agents, local runtime helpers, platform-specific spawning
-limits, migration imports, sync-back writes, and dashboard progress must be
-reported visibly instead of implied as hidden background work.
+v1.6.16 keeps the public surface stable while adding feature awareness for
+existing Godpowers projects after runtime upgrades. Auto-invoked commands,
+spawned agents, local runtime helpers, platform-specific spawning limits,
+migration imports, sync-back writes, feature-awareness refreshes, and dashboard
+progress must be reported visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only status

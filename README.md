@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.15-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.16-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,13 +12,12 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.15 adds planning-system migration for teams arriving from GSD,
-BMAD, or Superpowers. `/god-init` now auto-detects those systems, imports
-useful context into Godpowers prep and seed artifacts, and records source
-systems in `state.json`. `/god-sync` now syncs current Godpowers progress back
-to managed companion files so teams can return to the prior system with a clear
-handoff trail. Ambiguous imports can auto-spawn `god-greenfieldifier` for a
-controlled migration plan.
+Version 1.6.16 adds feature awareness for existing Godpowers projects. When a
+new runtime adds capabilities, `/god-doctor`, `/god-context`, `/god-sync`, and
+`/god-mode` can detect stale project awareness, record the current feature set
+in `state.json`, refresh AI-tool context fences, and point source-system
+migration cases to `/god-migrate` or `god-greenfieldifier` when judgment is
+needed.
 
 It fuses four disciplines into one unified workflow:
 
@@ -228,6 +227,16 @@ managed sync-back files such as `.planning/GODPOWERS-SYNC.md`,
 `_bmad-output/GODPOWERS-SYNC.md`, or
 `docs/superpowers/GODPOWERS-SYNC.md`.
 
+Existing Godpowers projects can refresh their awareness after an upgrade:
+
+```bash
+/god-context refresh
+```
+
+This records the current Godpowers feature set in `.godpowers/state.json`,
+refreshes managed AI-tool context fences, and suggests `/god-migrate` or
+`god-greenfieldifier` when source-system evidence needs migration judgment.
+
 For existing codebases and org-constrained new projects, God Mode now runs a
 greenfield simulation audit and then actions it through a greenfieldification
 plan. It pauses before risky artifact rewrites because that process can change
@@ -351,8 +360,9 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
 - [Command reference (all 109 skills + 40 agents)](docs/reference.md)
+- [Feature awareness](docs/feature-awareness.md)
 - [Roadmap](docs/ROADMAP.md)
-- [1.5 Release Notes](RELEASE.md)
+- [Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)
 - [Inspiration](INSPIRATION.md)
 

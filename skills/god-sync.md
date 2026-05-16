@@ -29,14 +29,17 @@ User runs `/god-sync` after manual changes. Useful for:
 ## Setup
 
 1. Verify `.godpowers/` exists
-2. Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
+2. Call `lib/feature-awareness.run(projectRoot)` so existing projects learn
+   about newly installed Godpowers runtime capabilities before sync closes.
+   Report this as `Agent: none, local runtime only`.
+3. Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
    partial, because every Godpowers project must also carry native Pillars
    context.
-3. If `state.json` contains enabled `source-systems`, auto-invoke
+4. If `state.json` contains enabled `source-systems`, auto-invoke
    `lib/source-sync.run(projectRoot)` so current Godpowers progress is written
    back to imported GSD, BMAD, or Superpowers companion files. Report this as
    `Agent: none, local runtime only`.
-4. Spawn god-updater in fresh context with:
+5. Spawn god-updater in fresh context with:
    - The reconciliation verdict (if available from a prior /god-reconcile)
    - Or: re-run reconciliation against current state to detect what changed
    - Recent commits for context
@@ -48,7 +51,7 @@ Auto-invoked:
   Trigger: <manual /god-sync, recipe closeout, /god-mode final sync, or other source>
   Agent: god-updater
   Local syncs:
-    - pending: reverse-sync, source-sync, pillars-sync, checkpoint-sync, context-refresh
+    - pending: feature-awareness, reverse-sync, source-sync, pillars-sync, checkpoint-sync, context-refresh
   Artifacts: pending
   Log: .godpowers/SYNC-LOG.md
 ```
@@ -73,6 +76,7 @@ Sync status:
   Agent: god-updater spawned
   Local syncs:
     + reverse-sync: <scanned N files, updated M footers, populated K review items>
+    + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + source-sync: <written GSD/BMAD/Superpowers companion files, no-op, or skipped>
     + pillars-sync: <updated N pillar files, no-op, or proposed>
     + checkpoint-sync: <CHECKPOINT.md updated or skipped>

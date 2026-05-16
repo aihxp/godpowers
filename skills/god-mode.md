@@ -304,6 +304,7 @@ Sync status:
   Trigger: /god-mode final sync
   Agent: god-updater spawned
   Local syncs:
+    + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>
@@ -317,6 +318,11 @@ artifacts create or change durable project truth, Godpowers maps those changes
 to relevant pillar files through `lib/pillars.planArtifactSync`. Default mode
 proposes pillar updates for review. `--yolo` applies them immediately and logs
 the action to `.godpowers/YOLO-DECISIONS.md`.
+
+When `/god-mode` resumes an existing `.godpowers` project, it auto-invokes
+`lib/feature-awareness.run(projectRoot)` before the final sync report. This
+keeps upgraded projects aware of new runtime features, current context fences,
+and migration routes without rewriting user artifacts.
 
 If `/god-mode` resumes an existing `.godpowers` project that lacks Pillars,
 it Pillar-izes the project before continuing. Existing `.godpowers` artifacts
@@ -337,6 +343,7 @@ Sync status:
   Trigger: /god-mode final sync
   Agent: god-updater spawned
   Local syncs:
+    + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>

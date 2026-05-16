@@ -1,10 +1,11 @@
-# Godpowers 1.6.15 Release
+# Godpowers 1.6.16 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.15 adds automatic migration from GSD, BMAD, and Superpowers
-projects into Godpowers. The release also adds managed sync-back so a team can
-return to its prior planning system with current Godpowers progress visible.
+Godpowers 1.6.16 adds feature awareness for existing Godpowers projects. After
+the installed runtime gains new capabilities, Godpowers can detect stale project
+awareness, record the current feature set in `state.json`, refresh AI-tool
+context fences, and route migration judgment to the right command or agent.
 
 ## What is stable
 
@@ -20,74 +21,54 @@ return to its prior planning system with current Godpowers progress visible.
 - `.godpowers/` workflow state and artifact layout
 - Safe-sync routing before deploy, observe, harden, launch, or god-mode work
 - Critical harden finding gate before launch
-- GSD-style proposition closeouts for exploratory, diagnostic, audit,
-  lifecycle, status, reconciliation, and decision-support outputs
-- Plain-language project-run wording in user-facing reports
+- Planning-system migration for GSD, BMAD, and Superpowers
+- Managed sync-back companion files for imported source systems
 
 ## What is new
 
-- Added `lib/planning-systems.js` for GSD, BMAD, and Superpowers detection.
-- Added `lib/source-sync.js` for managed sync-back companion files.
-- Added `/god-migrate` as the explicit migration command.
-- `/god-init` now auto-invokes planning-system import when source systems are
-  detected.
-- `/god-sync` now auto-invokes source-system sync-back when enabled source
-  systems are recorded in `state.json`.
-- `reverse-sync` now returns source-system sync-back results.
-- `state.v1.json` now records source-system import and sync-back state.
-- Added `docs/planning-system-migration.md`.
+- Added `lib/feature-awareness.js`.
+- Added `godpowers-features` to `state.v1.json`.
+- Added `scripts/test-feature-awareness.js`.
+- `/god-doctor`, `/god-context`, `/god-sync`, and `/god-mode` now document the
+  feature-awareness auto-invoke path.
+- `AGENTS.md` refreshes now include `/god-sync`, `/god-migrate`, and
+  `/god-context refresh` in the useful command list.
 
-## Migration behavior
+## Awareness behavior
 
-Godpowers detects:
+For an initialized `.godpowers` project, the helper:
 
-- GSD: `.planning/`, `.gsd/`, `GSD.md`, and `gsd*.md`
-- BMAD: `_bmad/`, `_bmad-output/`, `.bmad-core/`, `.bmad/`, and `BMAD.md`
-- Superpowers: `docs/superpowers/`, `.superpowers/`, `SUPERPOWERS.md`, and
-  project-local skills
+- reads the installed runtime version
+- compares the project `godpowers-features` record to the current feature set
+- detects missing managed AI-tool context fences
+- detects unimported GSD, BMAD, or Superpowers planning artifacts
+- writes only safe state metadata and managed context fences when applied
 
-Imported context is written to `.godpowers/prep/IMPORTED-CONTEXT.md`.
-Missing Godpowers seed artifacts are created only when source evidence exists.
-Existing Godpowers artifacts are preserved unless the user explicitly forces an
-overwrite.
-
-## Sync-back behavior
-
-Godpowers writes managed companion files:
-
-- GSD: `.planning/GODPOWERS-SYNC.md` or `.gsd/GODPOWERS-SYNC.md`
-- BMAD: `_bmad-output/GODPOWERS-SYNC.md` or `.bmad/GODPOWERS-SYNC.md`
-- Superpowers: `docs/superpowers/GODPOWERS-SYNC.md` or
-  `.superpowers/GODPOWERS-SYNC.md`
-
-Pointer fences are written only when a safe native state file already exists.
-Godpowers never rewrites source-system prose outside managed fences.
+Detection is read-only. Applying awareness does not rewrite product, planning,
+source-system, or code files outside Godpowers-owned fences.
 
 ## Auto-invoke and auto-spawn policy
 
-The import path is local runtime work and must be reported as:
+Feature awareness is local runtime work and must be reported as:
 
 ```
 Agent: none, local runtime only
 ```
 
-The sync-back path is also local runtime work and must be reported the same
-way.
-
-Godpowers spawns `god-greenfieldifier` only when import confidence is low,
-multiple source systems conflict, or canonical seed artifacts cannot be safely
-created from available evidence.
+Godpowers recommends or spawns `god-greenfieldifier` only when imported or
+detected planning-system context has low confidence or conflicts that need
+migration judgment.
 
 ## Validation
 
 Release validation includes:
 
+- `node scripts/test-feature-awareness.js`
+- `node scripts/test-context-writer.js`
 - `node scripts/test-planning-systems.js`
-- `node scripts/test-reverse-sync.js`
-- `npm test`
-- `npm run test:audit`
-- `node scripts/check-package-contents.js`
+- `node scripts/test-doc-surface-counts.js`
+- `node scripts/validate-skills.js`
 - `git diff --check`
 
-The `v1.6.15` git tag points to the release commit that matches the npm
-`godpowers@1.6.15` package.
+The `v1.6.16` tag should point to the release commit that matches the npm
+`godpowers@1.6.16` package.

@@ -32,6 +32,8 @@ Run a system-state diagnostic. Build nothing. Touch nothing. Report only.
 5. Is the reflog (`.godpowers/log`) parseable?
 6. Are there entries in `.godpowers/.trash/`?
 7. Do declared linkage entries point at real code files?
+8. Does `state.json` know the current Godpowers feature set?
+9. Are managed AI-tool context fences present when tools are detected?
 
 ### External integration health
 1. Is impeccable present? `node_modules/impeccable` or `~/.claude/skills/impeccable`?
@@ -53,6 +55,7 @@ Install: claude (~/.claude/)
 
 Project: /Users/.../my-project/.godpowers/
   [OK] state.json valid
+  [WARN] feature awareness stale -> run /god-context refresh
   [WARN] PRD declared but .godpowers/prd/PRD.md missing -> run /god-prd
   [INFO] 2 entries in .trash/; run /god-restore to review
 
@@ -96,12 +99,29 @@ Skip install checks. Useful inside the project.
 ### `/god-doctor --fix`
 Attempt to repair detected issues automatically (only for safe categories: regenerate missing routing YAMLs, repair PROGRESS.md from state.json, etc.). Pauses before any destructive change.
 
+## Feature Awareness
+
+For initialized projects, `/god-doctor` calls `lib/feature-awareness.detect`
+as a read-only diagnostic. It reports:
+- runtime version recorded in `state.json`
+- missing current Godpowers feature IDs
+- missing managed AI-tool context fences
+- unimported GSD, BMAD, or Superpowers evidence that should route to
+  `/god-migrate`
+- `god-greenfieldifier` recommendation when migration evidence is low
+  confidence or conflicting
+
+`/god-doctor --fix` may call `lib/feature-awareness.run(projectRoot)` because
+that helper writes only safe state metadata and managed context fences.
+
 ## Implementation
 
 Built-in, no spawned agent. Reads:
 - `<runtime>/GODPOWERS_VERSION` (compare to package.json)
 - `<runtime>/skills/` and `<runtime>/agents/` listings
 - `.godpowers/state.json`, `intent.yaml`, `log`, `linkage.json`
+- `lib/feature-awareness.detect(projectRoot)` for existing-project upgrade
+  awareness
 - `bin/install.js` VERSION constant
 
 ## Exit codes

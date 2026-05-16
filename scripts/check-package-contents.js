@@ -28,6 +28,7 @@ const REQUIRED_FILES = [
   'lib/artifact-linter.js',
   'lib/have-nots-validator.js',
   'lib/state.js',
+  'lib/feature-awareness.js',
   'schema/workflow.v1.json',
   'routing/god-mode.yaml',
   'routing/recipes/greenfield-with-ideation.yaml',
