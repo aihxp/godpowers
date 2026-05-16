@@ -5,6 +5,45 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.11] - 2026-05-16
+
+Auto-invoke visibility and platform-neutral spawning patch.
+
+### Added
+- Added a core auto-invoke visibility rule requiring Godpowers to show when it
+  automatically runs a command, spawns an agent, or calls a local runtime
+  helper.
+- Added a proactive auto-invoke policy with four levels: read-only
+  suggestions, visible local helpers, bounded specialist agent spawns, and
+  explicit-approval-only actions.
+- Added proactive checks to `/god-next`, `/god-status`, and God Mode closeouts
+  so users can see checkpoint, review, sync, docs, runtime, security,
+  dependency, and hygiene opportunities without asking.
+- Added docs drift, runtime verification, and review queue guidance for
+  proactive closeouts.
+- Added `docs/auto-invoke-visibility.md` as a local design note for the
+  auto-invoke policy.
+
+### Changed
+- Replaced Claude-specific "Task tool" spawning wording in high-traffic skills
+  with platform-neutral host-agent spawning language.
+- Clarified that Claude, Codex, Cursor, Windsurf, Gemini, OpenCode, Copilot,
+  Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, and Pi may expose
+  specialist spawning differently while sharing the same Markdown agent
+  contracts.
+- Updated the Codex installer path to replace skill directories before copying
+  `SKILL.md`, preventing stale nested files from older install shapes.
+- `/god-sync`, `/god-scan`, `god-updater`, and `god-orchestrator` now describe
+  local sync helpers separately from spawned agents.
+
+### Guardrails
+- Production launch, guessed staging URLs, provider dashboards, credentials,
+  destructive repair, review clearing, Critical security acceptance, git
+  staging, commits, pushes, packages, releases, and npm publishing still require
+  explicit user intent.
+- If a host platform cannot provide a true fresh-context spawn, Godpowers must
+  say so instead of pretending a background agent ran.
+
 ## [1.6.10] - 2026-05-16
 
 Progress visibility and plain-language closeout patch.

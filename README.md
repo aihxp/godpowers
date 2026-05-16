@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.10-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.11-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,10 +12,10 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.10 keeps the stable Godpowers surface while making progress more
-visible: user-facing output now prefers "project run" over internal "arc"
-jargon and status closeouts show PRD, roadmap, milestone, and completion
-position when available.
+Version 1.6.11 keeps the stable Godpowers surface while making automatic work
+more visible and portable: syncs, proactive checks, and specialist spawning now
+report what ran, what changed, and which host-platform agent mechanism is being
+used.
 
 It fuses four disciplines into one unified workflow:
 
@@ -49,6 +49,13 @@ The installer copies:
 - Specialist agents to `<runtime>/agents/`
 - Codex agent metadata to `<runtime>/agents/*.toml`
 - SessionStart hook (Claude Code only) to `<runtime>/hooks/`
+
+Agent spawning is host-native. Claude uses its native agent/task interface,
+Codex uses installed `agents/*.toml` metadata backed by the same Markdown agent
+contracts, and the other runtimes use their supported agent or subagent
+mechanism against the installed `agents/god-*.md` files. If a host cannot
+provide a true fresh-context spawn, Godpowers must report that limitation
+instead of pretending a background agent ran.
 
 ## Usage
 

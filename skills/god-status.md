@@ -27,6 +27,8 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - `.godpowers/observe/STATE.md`
    - `.godpowers/launch/STATE.md`
    - `.godpowers/harden/FINDINGS.md`
+   - `.godpowers/SYNC-LOG.md`
+   - `.godpowers/CHECKPOINT.md`
 4. For each artifact found: run a lightweight have-nots check
 5. Compare disk state to PROGRESS.md state:
    - If PROGRESS.md says "done" but artifact is missing: FLAG as phantom resume
@@ -37,6 +39,8 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - Planning visibility: PRD status, roadmap status, active milestone, and
      completion basis
    - What happened recently, using CHECKPOINT.md actions when available
+   - Last sync status, using SYNC-LOG.md when available
+   - Proactive opportunities based on the auto-invoke policy
    - What happens next, using routing and disk state
    - Per-tier status (with disk verification)
    - Any inconsistencies between PROGRESS.md and disk
@@ -62,6 +66,26 @@ Planning visibility:
 What happened recently:
   1. PRD artifact verified on disk
   2. Tier state refreshed from state.json
+
+Last sync:
+  Trigger: /god-mode final sync
+  Agent: god-updater
+  Local syncs:
+    + reverse-sync: scanned 14 files, updated 2 footers, populated 0 review items
+    + pillars-sync: no-op
+    + checkpoint-sync: CHECKPOINT.md updated
+    + context-refresh: no-op
+  Log: .godpowers/SYNC-LOG.md
+
+Proactive opportunities:
+  Checkpoint: fresh
+  Reviews: 5 pending, suggest /god-review-changes
+  Sync: fresh
+  Docs: possible drift, suggest /god-docs
+  Runtime: known local URL, suggest /god-test-runtime
+  Security: clear
+  Dependencies: clear
+  Hygiene: stale, suggest /god-hygiene
 
 What happens next:
   1. Run /god-arch
@@ -116,6 +140,24 @@ Recommended: [one option and why it fits the disk-derived state]
 
 If inconsistencies are present, make `/god-repair` the partial option and do
 not recommend `/god-mode` until disk state is coherent.
+
+## Proactive Opportunity Rules
+
+Use the master auto-invoke policy to populate `Proactive opportunities`.
+`/god-status` is read-only by default, so it suggests Level 3 agents instead of
+spawning them unless the user asked status to continue work.
+
+Report:
+- Checkpoint: `fresh`, `missing`, `stale`, or `conflicts with state.json`
+- Reviews: `none` or `<N> pending, suggest /god-review-changes`
+- Sync: `fresh`, `missing`, `stale`, or `suggest /god-sync`
+- Docs: `fresh`, `possible drift, suggest /god-docs`, or
+  `docs drift-check already logged`
+- Runtime: `not-applicable`, `known URL, suggest /god-test-runtime`, or
+  `no known URL, defer deployed verification`
+- Security: `clear` or `sensitive files changed, suggest /god-harden`
+- Dependencies: `clear` or `dependency files changed, suggest /god-update-deps`
+- Hygiene: `fresh` or `stale, suggest /god-hygiene`
 
 ## Mode D awareness
 

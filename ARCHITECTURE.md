@@ -1,14 +1,14 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.10 (pure-skill model)
+> Status: STABLE v1.6.11 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.10 keeps the public surface stable while making progress easier to
-understand: user-facing responses prefer project-run language over internal
-arc jargon and status closeouts show PRD, roadmap, milestone, and completion
-position when available.
+v1.6.11 keeps the public surface stable while making automatic work easier to
+understand across supported AI coding tools: auto-invoked commands, spawned
+agents, local runtime helpers, and platform-specific spawning limits must be
+reported visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing

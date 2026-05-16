@@ -17,6 +17,19 @@ god-build, god-feature, god-hotfix etc. trigger automatically (per
 Phase 7 workflow integration). Useful when you want to refresh state
 between automatic triggers, or after manual code edits.
 
+Because `/god-scan` calls the local reverse-sync runtime directly, it must be
+explicit when no agent is spawned:
+
+```
+Auto-invoked:
+  Trigger: /god-scan
+  Agent: none, local runtime only
+  Local syncs:
+    + reverse-sync: pending
+  Artifacts: pending
+  Log: REVIEW-REQUIRED.md if drift is found
+```
+
 ## Forms
 
 | Form | Action |
@@ -43,6 +56,17 @@ between automatic triggers, or after manual code edits.
    - Drift findings (errors, warnings, infos)
    - Footers updated
    - REVIEW-REQUIRED items added
+4. End with sync status:
+
+```
+Sync status:
+  Trigger: /god-scan
+  Agent: none, local runtime only
+  Local syncs:
+    + reverse-sync: <scanned N files, updated M footers, populated K review items>
+  Artifacts: <changed linkage files, fenced artifacts, REVIEW-REQUIRED.md, or no-op>
+  Log: <REVIEW-REQUIRED.md or none>
+```
 
 ## Fence rules
 

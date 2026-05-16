@@ -9,7 +9,7 @@ description: |
 
 # /god-repo
 
-Spawn the **god-repo-scaffolder** agent in a fresh context via Task tool.
+Spawn the **god-repo-scaffolder** agent in a fresh context via the host platform's native agent spawning mechanism.
 
 ## Setup
 

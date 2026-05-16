@@ -49,6 +49,19 @@ unresolved Critical security findings.
 Every execution agent gets a fresh context window. The orchestrator is thin; it
 spawns workers with full context budgets. This defeats context rot.
 
+Spawning is platform-neutral. Use the host platform's native agent spawning
+mechanism and the installed `agents/god-*.md` contract:
+- Claude Code: spawn the matching Markdown agent from `~/.claude/agents/`.
+- Codex: spawn the matching Codex agent type from `~/.codex/agents/*.toml`;
+  the Markdown copy remains the source contract.
+- Cursor, Windsurf, Gemini, OpenCode, Copilot, Augment, Trae, Cline, Kilo,
+  Antigravity, Qwen, CodeBuddy, and Pi: use the platform's supported agent or
+  subagent mechanism against the installed Markdown files.
+
+When a platform cannot spawn a true fresh-context agent, say so plainly,
+preserve the same role contract, and report `Agent: none, local runtime only`
+or `Agent: simulated in current context` in the visible auto-invoked card.
+
 ### 6. TDD Enforcement
 Tests are written before implementation. Code written before its test is flagged
 and must be rewritten. RED-GREEN-REFACTOR is not optional.
@@ -155,6 +168,103 @@ Every status, completion, lifecycle, and next-step report should include PRD
 and roadmap visibility when those files exist or are expected. Show whether
 the PRD is done, whether the roadmap exists, which milestone or tier is active,
 how close the tracked workflow is to completion, and the next concrete move.
+
+### 12. Auto-Invoke Visibility
+When Godpowers automatically runs another command, agent, or local runtime
+helper, show the user what happened. Do not describe these as "background"
+unless they are truly detached from the current run. Most Godpowers sync work
+is auto-invoked but still part of the current workflow.
+
+Use this shape whenever an automatic step runs or is skipped:
+
+```
+Auto-invoked:
+  Trigger: <what caused this automatic step>
+  Agent: <god-updater | god-context-writer | none, local runtime only>
+  Local syncs:
+    + <reverse-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
+  Artifacts: <changed files, no-op, or deferred>
+  Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
+```
+
+If no agent was spawned, say so plainly:
+
+```
+Agent: none, local runtime only
+Why: this path calls lib/reverse-sync.run directly
+```
+
+Automatic steps that especially need visible reporting:
+- `/god-sync` spawning `god-updater`
+- `god-updater` calling reverse-sync, Pillars sync, checkpoint sync, or
+  AI-tool context refresh
+- `/god-mode` mandatory final sync
+- standards checks between routed stages
+- brownfield and bluefield automatic `/god-preflight`
+- DESIGN/PRODUCT change detection that spawns `god-design-reviewer`
+- `/god-scan` when it runs reverse-sync directly without an agent
+- checkpoint refresh after state mutations
+
+### 13. Proactive Auto-Invoke Policy
+Godpowers should be proactive from disk evidence, not from guesswork. Before
+auto-invoking anything, classify the action by risk and apply the safest
+allowed behavior.
+
+#### Level 1: Auto-suggest, read-only
+Run or apply these by default in every relevant closeout:
+- Compute `/god-next` routing after successful commands.
+- Show `/god-status` style progress after `/god-sync`, `/god-scan`, and
+  `/god-mode`.
+- Suggest `/god-review-changes` when `.godpowers/REVIEW-REQUIRED.md` has
+  pending items.
+- Suggest `/god-hygiene` after a full project run, after 30 days, or when
+  status shows stale docs, deps, or review queues.
+- Suggest `/god-locate` when `.godpowers/CHECKPOINT.md` is missing, stale, or
+  conflicts with `state.json`.
+
+#### Level 2: Auto-run local helpers, visible and logged
+Run these local runtime helpers automatically when their trigger is present:
+- `lib/checkpoint.syncFromState` after every `state.json` or
+  `PROGRESS.md` mutation.
+- Lightweight reverse-sync or linkage scan after code or artifact edits.
+- Pillars sync planning after durable artifact truth changes.
+- Context refresh dry-run after `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
+  `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`,
+  `.clinerules`, `.roo/`, or `.continue/` changes.
+- Progress recomputation after every command that changes artifacts.
+
+#### Level 3: Auto-spawn scoped specialist agents
+Spawn these agents only when the trigger is direct and scope is bounded:
+- `god-design-reviewer` when `DESIGN.md` or `PRODUCT.md` changed.
+- `god-updater` after feature, hotfix, refactor, build, deploy, observe,
+  launch, harden, docs, upgrade, or dependency workflows change code or
+  artifacts.
+- `god-docs-writer` in drift-check mode when docs changed after code changed,
+  or code changed after docs that claim current behavior.
+- `god-browser-tester` when frontend-visible files changed and a known local,
+  preview, staging, or production URL is evidenced.
+- `god-harden-auditor` suggestion after security-sensitive files changed;
+  auto-spawn only inside `/god-harden`, `/god-hotfix`, `/god-launch`, or
+  `/god-mode`.
+- `god-deps-auditor` suggestion after dependency files changed; auto-spawn only
+  inside `/god-update-deps`, `/god-hygiene`, or an explicitly approved project
+  workflow.
+
+#### Level 4: Explicit approval required
+Never auto-run these from inference alone:
+- deployed staging verification against a guessed URL
+- production launch
+- provider dashboard, admin console, DNS, credential, or secret checks
+- broad dependency upgrades
+- destructive repair, rollback, reset, delete, or cleanup
+- clearing `.godpowers/REVIEW-REQUIRED.md`
+- accepting Critical security findings
+- git stage, commit, push, package, release, or publish
+
+Every auto-invoke decision must be explainable from one of these inputs:
+changed files, Godpowers artifacts, `state.json`, `PROGRESS.md`,
+`CHECKPOINT.md`, `SYNC-LOG.md`, `REVIEW-REQUIRED.md`, routing YAML, recipe YAML,
+or explicit user intent.
 
 ---
 

@@ -96,6 +96,32 @@ critical findings have the same gate semantics.
 | `/god-harden` | a11y portion | warning |
 | `/god-design` (post-change) | audit | warning |
 
+Automatic runtime verification requires evidenced URL input:
+
+- A local dev server URL from `state.json.dev-server.url`
+- A deploy URL from `state.json.deploy.url`
+- A user-provided URL in the current session
+- A checked-in config or Godpowers artifact that explicitly identifies the URL
+  as current
+
+If frontend-visible files changed but no URL is evidenced, do not guess. Add a
+proactive suggestion for `/god-test-runtime` and explain what URL source is
+missing. If only a local URL is evidenced, run local verification and defer
+deployed staging verification until the user provides
+`STAGING_APP_URL=<deployed staging origin>` or reaches final sign-off.
+
+When auto-invoked, show:
+
+```text
+Auto-invoked:
+  Trigger: frontend-visible files changed and URL was evidenced
+  Agent: god-browser-tester
+  Local syncs:
+    + runtime-verification: <audit | test | full pipeline>
+  Artifacts: .godpowers/runtime/<run-id>/
+  Log: .godpowers/runtime/<run-id>/summary.md
+```
+
 ## Output to events.jsonl
 
 ```json

@@ -48,6 +48,28 @@ Update log: .godpowers/docs/UPDATE-LOG.md
 Suggested next: /god-status or continue with feature work
 ```
 
+## Proactive docs drift
+
+Godpowers may invoke docs work proactively in two ways:
+
+| Trigger | Action | Guardrail |
+|---|---|---|
+| Docs changed after code changed | Spawn `god-docs-writer` in drift-check mode when current workflow owns docs | Do not invent new docs scope |
+| Code changed after docs that claim current behavior | Suggest `/god-docs` or spawn drift-check inside `/god-mode`, `/god-feature`, `/god-refactor`, or `/god-sync` closeout | Verify claims against code before editing |
+| `REVIEW-REQUIRED.md` contains docs drift items | Suggest `/god-review-changes` first | Do not auto-clear review items |
+
+When auto-invoked, show:
+
+```text
+Auto-invoked:
+  Trigger: docs and code changed in the same workflow
+  Agent: god-docs-writer
+  Local syncs:
+    + docs-drift-check: <N claims checked, N drift items>
+  Artifacts: .godpowers/docs/UPDATE-LOG.md or no-op
+  Log: .godpowers/docs/UPDATE-LOG.md
+```
+
 ## Have-Nots
 
 Docs FAIL if:

@@ -37,6 +37,18 @@ User runs `/god-sync` after manual changes. Useful for:
    - Or: re-run reconciliation against current state to detect what changed
    - Recent commits for context
 
+Before spawning, show a visible auto-invoke card:
+
+```
+Auto-invoked:
+  Trigger: <manual /god-sync, recipe closeout, /god-mode final sync, or other source>
+  Agent: god-updater
+  Local syncs:
+    - pending: reverse-sync, pillars-sync, checkpoint-sync, context-refresh
+  Artifacts: pending
+  Log: .godpowers/SYNC-LOG.md
+```
+
 ## Verification
 
 After god-updater returns:
@@ -52,6 +64,21 @@ After god-updater returns:
 ```
 Sync complete.
 
+Sync status:
+  Trigger: /god-mode final sync
+  Agent: god-updater spawned
+  Local syncs:
+    + reverse-sync: <scanned N files, updated M footers, populated K review items>
+    + pillars-sync: <updated N pillar files, no-op, or proposed>
+    + checkpoint-sync: <CHECKPOINT.md updated or skipped>
+    + context-refresh: <updated AGENTS.md/tool pointers, no-op, or skipped by setting>
+  Artifacts: <changed files, no-op, or deferred>
+  Log: .godpowers/SYNC-LOG.md
+
+If this path ran only a local helper, say:
+  Agent: none, local runtime only
+  Why: this path called lib/reverse-sync.run directly
+
 Updated:
   - prd/PRD.md (added requirement P-MUST-12)
   - arch/ARCH.md (added ADR-007)
@@ -65,7 +92,13 @@ Updated:
 Have-nots: all passing
 SYNC-LOG.md updated.
 
-Suggested next: /god-status
+Current status:
+  State: <complete | partial | blocked | no-op>
+  Progress: <pct>% when available
+
+Next:
+  Recommended: /god-status
+  Why: verify the disk-derived state after sync.
 ```
 
 ## What this prevents

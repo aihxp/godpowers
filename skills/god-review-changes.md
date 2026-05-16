@@ -52,6 +52,23 @@ When showing "affected files," this skill cross-references
 `lib/linkage.queryByFile(projectRoot, file)` so the user sees which
 artifact IDs that file is linked to. Helps decide what to fix.
 
+## Proactive invocation
+
+Godpowers should suggest this skill automatically when
+`REVIEW-REQUIRED.md` gains pending entries from reverse-sync, design impact,
+runtime verification, docs drift, or security-sensitive changes.
+
+Default behavior is suggestion only:
+
+```text
+Proactive checks:
+  Reviews: <N> pending, suggest /god-review-changes
+```
+
+Do not auto-run the interactive walkthrough unless the user asks to address
+the pending items now. Do not auto-clear review items under default mode or
+`--yolo`.
+
 ## Output
 
 ```

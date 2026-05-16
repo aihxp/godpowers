@@ -30,7 +30,7 @@ Get multiple specialist perspectives on a single question.
    - Harden auditor (god-harden-auditor) - security implications
    - Launch strategist (god-launch-strategist) - go-to-market implications
 
-3. Spawn each selected persona IN PARALLEL via Task tool:
+3. Spawn each selected persona IN PARALLEL via the host platform's native agent spawning mechanism:
    - Each gets fresh context
    - Each receives ONLY the question and the relevant artifact subset
    - Each is instructed: respond as your specialist, do not soften or hedge

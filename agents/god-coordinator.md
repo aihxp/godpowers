@@ -134,7 +134,7 @@ For each operation, return to the spawning skill with:
 
 When you need work done IN a repo (version bump, patch slice, etc.),
 create a private handoff in that repo first, then spawn that repo's
-`god-orchestrator` via the Task tool with only a display-safe pointer.
+`god-orchestrator` via the host platform's native agent spawning mechanism with only a display-safe pointer.
 
 Per-repo handoff path:
 `.godpowers/runs/<run-id>/COORDINATOR-ORCHESTRATOR-HANDOFF.md`

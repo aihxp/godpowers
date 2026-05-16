@@ -111,6 +111,12 @@ After feature work, every artifact that was impacted needs to reflect reality.
   `drift-count`, `review-required-items`
 - Emit events: `linkage.snapshot`, `drift.detected` (per finding),
   `review-required.populated`
+- Report counts in the final sync status:
+  - scanned files
+  - links added, removed, or unchanged
+  - fenced footers updated
+  - drift findings
+  - REVIEW-REQUIRED.md items created
 
 ### Pillars sync (native context)
 - Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
@@ -122,6 +128,8 @@ After feature work, every artifact that was impacted needs to reflect reality.
   immediately and log the decision to `.godpowers/YOLO-DECISIONS.md`.
 - Never read every file in `agents/` as project context. Only files with
   `pillar:` frontmatter are Pillars files.
+- Report whether Pillars work was initialized, applied, proposed, skipped, or
+  no-op.
 
 ### AI-tool context refresh (always, unless never-ask)
 - Read `state.json` for `project.context-prompt-answered`
@@ -134,15 +142,35 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Idempotent: if content matches, no write occurs
 - Never touches content outside the `<!-- godpowers:begin -->` /
   `<!-- godpowers:end -->` fence
+- Report whether context refresh spawned `god-context-writer`, changed files,
+  no-oped, or skipped because the project opted out.
+
+### Checkpoint sync
+- After state changes, refresh `.godpowers/CHECKPOINT.md` from disk state using
+  `lib/checkpoint.syncFromState(projectRoot, { nextCommand, nextReason })`
+  when the runtime is available.
+- If checkpoint sync is unavailable in the host tool, say it was skipped and
+  include the reason.
+- Report the checkpoint path and whether it was created, updated, unchanged,
+  or skipped.
 
 ## Output
 
-Write summary to `.godpowers/SYNC-LOG.md` (append-only):
+Write summary to `.godpowers/SYNC-LOG.md` (append-only). The summary must
+include both user-visible status and machine-checkable counts:
 
 ```markdown
 ## Sync: [intent] [timestamp]
 
 Triggered by: [recipe name]
+
+Sync status:
+- Trigger: [manual /god-sync | /god-mode final sync | recipe closeout]
+- Agent: god-updater
+- Reverse-sync: scanned [N] files, updated [N] footers, created [N] review items
+- Pillars sync: [applied/proposed/no-op/skipped], [N] pillar files
+- Checkpoint sync: [created/updated/no-op/skipped] .godpowers/CHECKPOINT.md
+- Context refresh: [spawned god-context-writer/no-op/skipped], [N] files
 
 Updated:
 - prd/PRD.md: added requirement P-MUST-12
@@ -157,10 +185,31 @@ Updated:
 
 Have-nots re-validated: all passing.
 
-Suggested next: /god-status
+Next: /god-status
 ```
 
 Update PROGRESS.md with the latest tier statuses.
+
+Return a compact user-facing closeout in the same shape:
+
+```
+Sync complete.
+
+Sync status:
+  Trigger: <trigger>
+  Agent: god-updater
+  Local syncs:
+    + reverse-sync: <counts and result>
+    + pillars-sync: <counts and result>
+    + checkpoint-sync: <created, updated, no-op, or skipped>
+    + context-refresh: <spawned, no-op, or skipped>
+  Artifacts: <changed files or no-op>
+  Log: .godpowers/SYNC-LOG.md
+
+Next:
+  Recommended: /god-status
+  Why: confirm the disk-derived project state after sync.
+```
 
 ## Have-Nots
 

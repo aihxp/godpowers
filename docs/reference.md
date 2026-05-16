@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.10.
+Complete command, agent, and artifact reference for v1.6.11.
 
 ## Slash commands (106 total)
 
@@ -308,6 +308,13 @@ T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 Codex installs include matching `god-*.toml` metadata beside each
 `agents/god-*.md` file so specialist agents can be exposed as spawnable Codex
 agent types when the runtime reloads its agent registry.
+
+Spawning is platform-neutral at the skill layer. Commands say to spawn the
+named `god-*` specialist through the host platform's native agent mechanism.
+Claude Code, Codex, Cursor, Windsurf, Gemini, OpenCode, Copilot, Augment,
+Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, and Pi may expose that
+mechanism differently. The installed Markdown agent contract is the portable
+source; Codex TOML is the adapter for Codex's registry.
 
 ## Schemas
 

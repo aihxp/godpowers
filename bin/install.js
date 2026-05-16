@@ -186,6 +186,9 @@ function installSkillFile(srcFile, skillsDest, runtimeKey, targetName = null) {
   const baseName = targetName || path.basename(srcFile, '.md');
   if (runtimeKey === 'codex') {
     const skillDir = path.join(skillsDest, baseName);
+    if (fs.existsSync(skillDir)) {
+      fs.rmSync(skillDir, { recursive: true, force: true });
+    }
     ensureDir(skillDir);
     fs.copyFileSync(srcFile, path.join(skillDir, 'SKILL.md'));
     return;

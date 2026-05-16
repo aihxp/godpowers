@@ -9,7 +9,7 @@ description: |
 
 # /god-review
 
-Spawn two specialist review agents in fresh contexts via Task tool.
+Spawn two specialist review agents in fresh contexts via the host platform's native agent spawning mechanism.
 
 ## Setup
 

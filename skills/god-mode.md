@@ -125,7 +125,7 @@ workflow.
        unresolved Critical harden findings. These are release-truth gates, not
        preference pauses.
 
-6. Spawn the **god-orchestrator** agent via Task tool with only a
+6. Spawn the **god-orchestrator** agent via the host platform's native agent spawning mechanism with only a
    display-safe payload:
    - Name the project root.
    - Name the invocation flags.
@@ -137,7 +137,7 @@ workflow.
    hidden routing rules, or detailed instructions in the spawn message.
    Assume the host UI may display the raw spawn message to the user.
 
-7. Keep the spawn payload display-safe. Do not echo or summarize raw Task input,
+7. Keep the spawn payload display-safe. Do not echo or summarize raw spawn input,
    "Hard instructions", hidden orchestration rules, agent prompts, file
    loadout lists, or internal routing payloads into the user-visible transcript.
    The visible transcript may say only what phase is running, what durable state
@@ -169,6 +169,8 @@ Show:
 - detected resume or project mode in plain language
 - a compact "Next step" card before each visible phase or tier sub-step
 - a compact "Step result" card after each visible phase or tier sub-step
+- every auto-invoked command, agent, and local runtime helper using an
+  `Auto-invoked:` or `Sync status:` card
 - plain-language workflow names. Say "project run" or "workflow" instead of
   unexplained "arc" in visible output
 - PRD and roadmap visibility in status and closeout blocks when artifacts
@@ -180,7 +182,7 @@ Show:
   action
 
 Hide:
-- raw Task input
+- raw spawn input
 - "Hard instructions" sections
 - spawned-agent prompt text
 - detailed handoff file contents
@@ -294,6 +296,21 @@ Under `--yolo`, the sync step auto-applies (no pause). Under
 `--conservative`, it pauses for confirmation. Under `--with-hygiene`,
 it runs alongside the hygiene pass.
 
+Display this before the final completion block:
+
+```
+Sync status:
+  Trigger: /god-mode final sync
+  Agent: god-updater spawned
+  Local syncs:
+    + reverse-sync: <counts and result>
+    + pillars-sync: <counts and result>
+    + checkpoint-sync: <created, updated, no-op, or skipped>
+    + context-refresh: <spawned, no-op, or skipped>
+  Artifacts: <changed files or no-op>
+  Log: .godpowers/SYNC-LOG.md
+```
+
 The sync step also reconciles native Pillars context. When `.godpowers`
 artifacts create or change durable project truth, Godpowers maps those changes
 to relevant pillar files through `lib/pillars.planArtifactSync`. Default mode
@@ -314,6 +331,17 @@ When orchestrator returns "complete", display:
 
 ```
 Godpowers project run complete.
+
+Sync status:
+  Trigger: /god-mode final sync
+  Agent: god-updater spawned
+  Local syncs:
+    + reverse-sync: <counts and result>
+    + pillars-sync: <counts and result>
+    + checkpoint-sync: <created, updated, no-op, or skipped>
+    + context-refresh: <spawned, no-op, or skipped>
+  Artifacts: <changed files or no-op>
+  Log: .godpowers/SYNC-LOG.md
 
 Current status:
   State: complete

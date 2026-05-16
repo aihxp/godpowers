@@ -9,7 +9,7 @@ description: |
 
 # /god-harden
 
-Spawn the **god-harden-auditor** agent in a fresh context via Task tool.
+Spawn the **god-harden-auditor** agent in a fresh context via the host platform's native agent spawning mechanism.
 
 ## Setup
 

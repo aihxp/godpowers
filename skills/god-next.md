@@ -168,6 +168,42 @@ Planning visibility:
   Completion: <pct>% <basis from state.json or PROGRESS.md>
 ```
 
+## Proactive Sweep
+
+Before returning a suggestion, run the proactive auto-invoke policy from the
+master skill against disk state. This is read-only unless a Level 2 local helper
+has a direct trigger.
+
+Check these signals:
+- `.godpowers/CHECKPOINT.md` missing, stale, or conflicting with `state.json`
+- `.godpowers/REVIEW-REQUIRED.md` contains pending entries
+- `.godpowers/SYNC-LOG.md` missing after code or artifact edits
+- docs changed after code changed, or code changed after docs that claim
+  current behavior
+- frontend-visible files changed and a known local, preview, staging, or
+  production URL is evidenced
+- security-sensitive files changed
+- dependency files changed
+- full project run completed and hygiene has not run recently
+
+Display the result:
+
+```text
+Proactive checks:
+  Checkpoint: <fresh | refreshed | stale, suggest /god-locate>
+  Reviews: <none | N pending, suggest /god-review-changes>
+  Sync: <fresh | suggest /god-sync | local linkage scan ran>
+  Docs: <fresh | suggest /god-docs | drift-check spawned>
+  Runtime: <not-applicable | suggest /god-test-runtime | browser test spawned>
+  Security: <clear | suggest /god-harden>
+  Dependencies: <clear | suggest /god-update-deps>
+  Hygiene: <fresh | suggest /god-hygiene>
+```
+
+Do not auto-run Level 3 agents from standalone `/god-next` unless the user
+explicitly asked it to continue work. In standalone mode, Level 3 items become
+the recommended command or a proposition option.
+
 ## Process for Mode 4 (intent-based)
 
 ```
@@ -321,6 +357,16 @@ Previous tier had standards failures. Address before proceeding:
   - [failure 1]
   - [failure 2]
 Suggested: /god-redo [tier] OR /god-skip [tier] --reason="..."
+
+Proactive checks:
+  Checkpoint: [fresh | refreshed | stale]
+  Reviews: [none | N pending]
+  Sync: [fresh | suggested | local helper ran]
+  Docs: [fresh | suggested]
+  Runtime: [not-applicable | suggested | ran]
+  Security: [clear | suggested]
+  Dependencies: [clear | suggested]
+  Hygiene: [fresh | suggested]
 ```
 
 ## Proposition Closeout

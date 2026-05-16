@@ -190,6 +190,11 @@ pillar sync work with `lib/pillars.planArtifactSync(projectRoot, artifacts,
 apply the pillar updates immediately and log the action to
 `.godpowers/YOLO-DECISIONS.md`.
 
+Whenever Pillars sync is auto-invoked, show an auto-invoked status card. Say
+whether this was an agent spawn or a local runtime call. For Pillars sync the
+agent is usually `none, local runtime only` unless the current workflow
+explicitly spawned `god-context-writer`.
+
 Before or alongside that import, write `.godpowers/prep/INITIAL-FINDINGS.md`
 using `templates/INITIAL-FINDINGS.md`. This artifact records what Godpowers
 observed directly during init:
@@ -276,6 +281,44 @@ This is the third layer of decision support:
 1. **Routing** (`<runtimeRoot>/routing/<command>.yaml`): structural prerequisites and gates
 2. **Recipes** (`<runtimeRoot>/routing/recipes/<recipe>.yaml`): scenario-based sequences
 3. **Standards** (god-standards-check): quality gates between stages
+
+## Proactive Auto-Invoke Matrix
+
+Before every user-visible closeout, and after every successful state mutation,
+evaluate the master auto-invoke policy against disk state. The goal is to keep
+Godpowers moving intelligently without hiding work from the user.
+
+| Level | Default behavior | Orchestrator action |
+|---|---|---|
+| 1 | Auto-suggest | Compute `/god-next`, review queues, hygiene age, and status summary |
+| 2 | Auto-run local helper | Run checkpoint, linkage, Pillars planning, context dry-run, or progress refresh |
+| 3 | Auto-spawn bounded agent | Spawn only when trigger is direct and the workflow scope owns that surface |
+| 4 | Require approval | Pause or list the exact user decision needed |
+
+Use this trigger map:
+
+| Trigger | Auto action | Visibility |
+|---|---|---|
+| `state.json` or `PROGRESS.md` changed | refresh `.godpowers/CHECKPOINT.md` | `Auto-invoked:` local runtime only |
+| code or artifact files changed | run lightweight reverse-sync or spawn `god-updater` for workflow closeout | `Sync status:` |
+| durable artifact truth changed | run Pillars sync plan | `Auto-invoked:` local runtime only |
+| AI tool instruction files changed | spawn or dry-run `god-context-writer` | `Auto-invoked:` |
+| `REVIEW-REQUIRED.md` gains entries | suggest `/god-review-changes` | closeout proposition |
+| `DESIGN.md` or `PRODUCT.md` changed | spawn `god-design-reviewer` | gate card before propagation |
+| docs and code both changed | spawn `god-docs-writer` in drift-check mode when current workflow owns docs, otherwise suggest `/god-docs` | `Auto-invoked:` or proposition |
+| frontend-visible files changed and a known URL exists | spawn `god-browser-tester` inside build, design, launch, harden, or explicit runtime workflows | runtime status card |
+| frontend-visible files changed and no known URL exists | suggest `/god-test-runtime` with local URL setup, defer deployed URL | proposition |
+| security-sensitive files changed | auto-spawn only inside harden, hotfix, launch, or project run; otherwise suggest `/god-harden` | proposition |
+| dependency files changed | auto-spawn only inside update-deps, hygiene, or approved project run; otherwise suggest `/god-update-deps` | proposition |
+| full project run complete or hygiene stale | suggest `/god-hygiene` | proposition |
+
+Never use this matrix to auto-run Level 4 actions: deployed staging against a
+guessed URL, production launch, provider dashboard access, broad dependency
+upgrades, destructive repair, review clearing, Critical security acceptance, or
+git stage, commit, push, package, release, or publish.
+
+Every auto action must emit either `Auto-invoked:`, `Sync status:`, or a
+proposition explaining why it did not run.
 
 ## Detection-Driven Tier 1 Routing
 
@@ -496,8 +539,8 @@ requested or final sign-off begins.
 5. Spawn the appropriate specialist agent in a fresh context
 6. Verify their output exists on disk
 7. Run have-nots check on the artifact
-8. If pass: update PROGRESS.md, sync CHECKPOINT.md, print the "Step result"
-   card, then move to next sub-step
+8. If pass: update PROGRESS.md, sync CHECKPOINT.md, run the proactive
+   auto-invoke sweep, print the "Step result" card, then move to next sub-step
 9. If fail and repairable: print the failed result card, then enter the
    autonomous repair loop
 10. If fail and human-only: pause with the smallest needed question
@@ -522,7 +565,8 @@ For single-agent sub-steps:
 | Harden | god-harden-auditor | code | .godpowers/harden/FINDINGS.md |
 
 For all single-agent sub-steps:
-1. Spawn the agent in a fresh context (Task tool)
+1. Spawn the agent in a fresh context using the host platform's native agent
+   spawning mechanism
 2. Pass `--yolo` flag if active so the agent auto-picks defaults
 3. Wait for the agent to return
 4. Verify artifact exists on disk
@@ -602,6 +646,21 @@ Before declaring the project run complete, ALWAYS run /god-sync:
 3. Update SYNC-LOG.md with the project-run completion entry
 4. Update state.json with all final tier statuses
 
+Display the sync status before the final completion block:
+
+```
+Sync status:
+  Trigger: /god-mode final sync
+  Agent: god-updater spawned
+  Local syncs:
+    + reverse-sync: <counts and result>
+    + pillars-sync: <counts and result>
+    + checkpoint-sync: <created, updated, no-op, or skipped>
+    + context-refresh: <spawned, no-op, or skipped>
+  Artifacts: <changed files or no-op>
+  Log: .godpowers/SYNC-LOG.md
+```
+
 This step runs regardless of flags:
 - /god-mode -> sync runs
 - /god-mode --yolo -> sync runs (no pause; auto-applies)
@@ -638,6 +697,16 @@ What changed:
 
 Validation:
   + <command>: <result>
+
+Proactive checks:
+  Checkpoint: <fresh | refreshed | stale>
+  Reviews: <none | N pending, suggest /god-review-changes>
+  Sync: <fresh | suggested | local helper ran>
+  Docs: <fresh | suggested | drift-check spawned>
+  Runtime: <not-applicable | suggested | browser test spawned>
+  Security: <clear | suggested | harden spawned>
+  Dependencies: <clear | suggested | deps audit spawned>
+  Hygiene: <fresh | suggest /god-hygiene>
 
 Open items:
   1. <none, or deployed staging deferred, pending review, unstaged files, etc.>
@@ -785,6 +854,8 @@ Show:
 - concise phase status
 - before each visible tier/sub-step, a short "what will happen" card
 - after each visible tier/sub-step, a short "what happened" card
+- every auto-invoked command, agent, and local runtime helper using an
+  `Auto-invoked:` or `Sync status:` card
 - durable state detected from disk
 - commands being run and whether they passed or failed
 - scoped file changes
@@ -797,7 +868,7 @@ Show:
 - `Project run complete` or `PAUSE: external access required`
 
 Hide:
-- raw Task input
+- raw spawn input
 - "Hard instructions" sections
 - spawned-agent prompt text
 - system, developer, AGENTS.md, or internal policy recitations
@@ -808,6 +879,36 @@ When a private rule affects a pause, translate it into the smallest
 user-facing question. Do not expose the rule itself. Example: ask for
 `STAGING_APP_URL=<deployed staging origin>` at final sign-off rather than
 showing the Shipping Closure Protocol.
+
+### Auto-Invoked Work Cards
+
+Every automatic step that mutates state, writes artifacts, validates gates, or
+spawns an agent must leave a visible trace in the transcript.
+
+Use this shape:
+
+```
+Auto-invoked:
+  Trigger: <event that caused the automatic step>
+  Agent: <agent name, or none, local runtime only>
+  Local syncs:
+    + <helper>: <result>
+  Artifacts: <changed files, no-op, or deferred>
+  Log: <path, or none>
+```
+
+Required auto-invoked cards:
+- `/god-preflight` started automatically for brownfield or bluefield work
+- standards checks between routed stages
+- design-reviewer checks after DESIGN.md or PRODUCT.md changes
+- `god-updater` spawned for reverse-sync or final sync
+- local `lib/reverse-sync.run` calls, including `/god-scan`
+- Pillars sync through `lib/pillars.pillarizeExisting` or
+  `lib/pillars.applyArtifactSync`
+- checkpoint refresh through `lib/checkpoint.syncFromState`
+- AI-tool context refresh through `god-context-writer`
+
+If an automatic step is skipped, still report it with the skipped reason.
 
 ## Step Narration Protocol
 
@@ -850,7 +951,7 @@ Rules:
 - Use `lib/state.progressSummary(stateJson)` for the percentage and step count
   whenever state.json is available.
 - Use artifact paths and verification evidence from disk, not memory.
-- Do not print raw Task input, hidden instructions, or full file loadout lists.
+- Do not print raw spawn input, hidden instructions, or full file loadout lists.
 - If a step is blocked, do not show a generic "Suggested next"; show the
   smallest concrete unblock action.
 
