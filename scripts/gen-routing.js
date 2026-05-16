@@ -8,6 +8,11 @@ const fs = require('fs');
 const path = require('path');
 
 const OUT = path.join(__dirname, '..', 'routing');
+const SAFE_SYNC_PREREQ = {
+  check: 'safe-sync-clear',
+  autoComplete: '/god-reconcile Release Truth And Safe Sync',
+  humanRequired: true
+};
 
 const commands = [
   // Tier 1 (remaining)
@@ -46,6 +51,7 @@ const commands = [
   {
     cmd: '/god-deploy', tier: 3, agent: 'god-deploy-engineer', desc: 'Set up deploy pipeline',
     prereq: ['state:tier-2.build.status == done'],
+    extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-build',
     writes: ['.godpowers/deploy/STATE.md'],
     haveNots: ['D-01','D-02','D-03','D-04','D-05','D-06','D-07','D-08'],
@@ -54,6 +60,7 @@ const commands = [
   {
     cmd: '/god-observe', tier: 3, agent: 'god-observability-engineer', desc: 'Wire observability',
     prereq: ['state:tier-3.deploy.status == done'],
+    extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-deploy',
     writes: ['.godpowers/observe/STATE.md'],
     haveNots: ['OB-01','OB-02','OB-03','OB-04','OB-05','OB-06','OB-07','OB-08'],
@@ -62,6 +69,7 @@ const commands = [
   {
     cmd: '/god-harden', tier: 3, agent: 'god-harden-auditor', desc: 'Adversarial security review',
     prereq: ['state:tier-2.build.status == done'],
+    extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-build',
     writes: ['.godpowers/harden/FINDINGS.md'],
     haveNots: ['H-01','H-02','H-03','H-04','H-05','H-06','H-07','H-08','H-09','H-10','H-11'],
@@ -71,6 +79,7 @@ const commands = [
   {
     cmd: '/god-launch', tier: 3, agent: 'god-launch-strategist', desc: 'Launch the product',
     prereq: ['state:tier-3.harden.status == done', 'no-critical-findings'],
+    extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-harden',
     writes: ['.godpowers/launch/STATE.md'],
     haveNots: ['L-01','L-02','L-03','L-04','L-05','L-06','L-07','L-08'],
@@ -173,6 +182,7 @@ const commands = [
   {
     cmd: '/god-mode', tier: 0, agent: 'god-orchestrator', desc: 'Full autonomous arc',
     prereq: ['file:.godpowers/PROGRESS.md OR mode-A-greenfield'],
+    extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-init',
     secondarySpawns: ['god-auditor', 'god-pm', 'god-architect', 'god-roadmapper', 'god-stack-selector', 'god-repo-scaffolder', 'god-planner', 'god-executor', 'god-spec-reviewer', 'god-quality-reviewer', 'god-deploy-engineer', 'god-observability-engineer', 'god-harden-auditor', 'god-launch-strategist'],
     next: 'steady-state',
@@ -211,13 +221,12 @@ function generate(c) {
   const standards = c.haveNots && c.haveNots.length
     ? `\nstandards:\n  substitution-test: true\n  three-label-test: true\n${haveNots}`
     : '';
-  const prereq = c.prereq && c.prereq.length
-    ? c.prereq.map(p => {
-        if (c.autoCompletePrereq) {
-          return `    - check: ${p}\n      auto-complete: ${c.autoCompletePrereq}\n      human-required: true`;
-        }
-        return `    - check: ${p}`;
-      }).join('\n')
+  const prereqs = [
+    ...(c.prereq || []),
+    ...(c.extraPrereq || [])
+  ];
+  const prereq = prereqs.length
+    ? prereqs.map(p => formatPrereq(p, c)).join('\n')
     : '    []';
   const secondarySpawns = c.secondarySpawns && c.secondarySpawns.length
     ? `\n  secondary-spawns: [${c.secondarySpawns.join(', ')}]`
@@ -258,6 +267,21 @@ endoff:
   state-update: tier-${c.tier} updated for ${c.cmd}
   events: [agent.start, artifact.created, agent.end]${lifecycle}
 `;
+}
+
+function formatPrereq(prereq, command) {
+  const check = typeof prereq === 'string' ? prereq : prereq.check;
+  const autoComplete = typeof prereq === 'string'
+    ? command.autoCompletePrereq
+    : prereq.autoComplete;
+  const humanRequired = typeof prereq === 'string'
+    ? true
+    : prereq.humanRequired !== false;
+
+  if (autoComplete) {
+    return `    - check: ${check}\n      auto-complete: ${autoComplete}\n      human-required: ${humanRequired}`;
+  }
+  return `    - check: ${check}`;
 }
 
 let count = 0;

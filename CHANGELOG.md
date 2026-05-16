@@ -5,6 +5,35 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.4] - 2026-05-16
+
+Release gate propagation patch. Keeps the 1.6 command surface stable while
+making the safe sync and Critical harden gates apply to direct commands,
+`/god-mode`, and `/god-mode --yolo`.
+
+### Added
+- Added executable router support for `no-critical-findings`.
+- Added safe-sync prerequisites to `/god-observe`, `/god-harden`,
+  `/god-launch`, and `/god-mode`.
+- Added regression tests proving safe sync blocks direct Tier 3 commands and
+  `/god-mode`.
+- Added regression tests proving `/god-launch` blocks unresolved Critical
+  harden findings and allows passed harden gates.
+
+### Changed
+- `god-orchestrator` now explicitly evaluates router prerequisites before
+  command dispatch instead of relying only on structural tier order.
+- `/god-mode --yolo` now documents safe sync and unresolved Critical harden
+  findings as release-truth gates that cannot be bypassed.
+- Generated routing metadata now preserves per-prerequisite auto-complete
+  commands so future generated Tier 3 routes keep the safe sync gate.
+
+### Guardrails
+- This patch does not add slash commands, agents, workflows, recipes, schemas,
+  or public artifact formats.
+- `--yolo` can still auto-pick defaults, but it cannot auto-accept unresolved
+  release truth blockers.
+
 ## [1.6.3] - 2026-05-16
 
 Safe sync routing patch. Keeps the 1.6 command surface stable while making

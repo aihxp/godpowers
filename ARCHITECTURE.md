@@ -1,13 +1,13 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.3 (pure-skill model)
+> Status: STABLE v1.6.4 (pure-skill model)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.3 keeps the public surface stable while hardening safe-sync routing before
-Tier 3 work and preserving Codex specialist-agent metadata generation around
-the 1.6 domain precision layer.
+v1.6.4 keeps the public surface stable while hardening release-truth gates for
+safe sync and Critical harden findings, and preserving Codex specialist-agent
+metadata generation around the 1.6 domain precision layer.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The only CLI surface is `npx godpowers` for installation. All user-facing

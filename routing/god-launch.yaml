@@ -10,6 +10,9 @@ prerequisites:
     - check: state:tier-3.harden.status == done
       auto-complete: /god-harden
       human-required: true
+    - check: safe-sync-clear
+      auto-complete: /god-reconcile Release Truth And Safe Sync
+      human-required: true
     - check: no-critical-findings
       auto-complete: /god-harden
       human-required: true

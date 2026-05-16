@@ -10,6 +10,9 @@ prerequisites:
     - check: state:tier-2.build.status == done
       auto-complete: /god-build
       human-required: true
+    - check: safe-sync-clear
+      auto-complete: /god-reconcile Release Truth And Safe Sync
+      human-required: true
 
 execution:
   spawns: [god-harden-auditor]

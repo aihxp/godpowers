@@ -242,6 +242,11 @@ states that safe sync is a blocking red gate, suggest
 The blocker is cleared when `.godpowers/sync/SAFE-SYNC-DONE.md` or
 `.godpowers/sync/SAFE-SYNC-RESOLVED.md` exists.
 
+### Critical harden findings block launch
+If `.godpowers/harden/FINDINGS.md` says the launch gate is blocked, or lists
+unresolved Critical findings, `/god-launch` prerequisites fail through
+`no-critical-findings`. This applies in default mode and `--yolo`.
+
 ### Steady state with multiple workflow options
 If lifecycle-phase = steady-state-active, route by user intent if provided
 (use the User Intent Map below).

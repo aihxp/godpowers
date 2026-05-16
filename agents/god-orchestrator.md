@@ -223,6 +223,14 @@ When deciding what to spawn next, query the routing definition:
 - `standards.have-nots` -> which have-nots to verify
 - `success-path.next-recommended` -> what to suggest next
 
+Before spawning a command, evaluate `lib/router.js checkPrerequisites(command,
+projectRoot)`. Missing prerequisites are authoritative even when the tier
+order suggests the command is structurally next. If `safe-sync-clear` fails,
+route to `/god-reconcile Release Truth And Safe Sync` before deploy, observe,
+harden, launch, broad migration, or resume work. If `no-critical-findings`
+fails, launch remains blocked until harden is fixed and re-verified or risk is
+explicitly accepted in writing.
+
 Between every tier, run god-standards-check on the produced artifact (if
 the routing config has a `standards` section). Standards check uses fresh
 context, independent of the producing agent, so it catches drift the
@@ -646,11 +654,14 @@ Auto-resolve all pause categories EXCEPT:
 
 **Impossible preflight routing contradictions pause, even with --yolo.**
 
+**Unresolved safe sync blockers pause or route to reconcile, even with --yolo.**
+
 Rationale: shipping with a known Critical vulnerability is a category of risk
 that should never be auto-accepted. A preflight contradiction means the repo
 evidence does not support any safe next route. If god-harden-auditor returns
-Critical findings, or preflight cannot choose between mutually exclusive
-routes from evidence, --yolo does NOT skip. Pause for human resolution.
+Critical findings, unresolved safe sync blockers, or preflight cannot choose
+between mutually exclusive routes from evidence, --yolo does NOT skip. Pause
+for human resolution when no safe automatic reconcile route exists.
 
 These are the only --yolo carve-outs. All other pauses are auto-resolved with
 the agent's documented default, and all repairable mechanical failures are

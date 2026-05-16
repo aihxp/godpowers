@@ -133,13 +133,24 @@ function markPreDeployDone(projectRoot) {
   }
 }
 
+function writeSafeSyncPlan(projectRoot) {
+  fs.mkdirSync(path.join(projectRoot, '.godpowers', 'sync'), { recursive: true });
+  fs.writeFileSync(path.join(projectRoot, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
+    '# Release Truth And Safe Sync\n\nMissing: safe sync against origin/main\n');
+}
+
+function markTier3Ready(projectRoot) {
+  markPreDeployDone(projectRoot);
+  state.updateSubStep(projectRoot, 'tier-3', 'deploy', { status: 'done' });
+  state.updateSubStep(projectRoot, 'tier-3', 'observe', { status: 'done' });
+  state.updateSubStep(projectRoot, 'tier-3', 'harden', { status: 'done' });
+}
+
 test('suggestNext: safe sync plan blocks deploy with reconcile route', () => {
   router.clearCache();
   const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
   markPreDeployDone(proj);
-  fs.mkdirSync(path.join(proj, '.godpowers', 'sync'), { recursive: true });
-  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
-    '# Release Truth And Safe Sync\n\nMissing: safe sync against origin/main\n');
+  writeSafeSyncPlan(proj);
 
   const s = router.suggestNext(proj);
   if (s.command !== '/god-reconcile Release Truth And Safe Sync') {
@@ -156,9 +167,7 @@ test('checkPrerequisites: /god-deploy requires safe sync clear', () => {
   router.clearCache();
   const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
   markPreDeployDone(proj);
-  fs.mkdirSync(path.join(proj, '.godpowers', 'sync'), { recursive: true });
-  fs.writeFileSync(path.join(proj, '.godpowers', 'sync', 'SAFE-SYNC-PLAN.md'),
-    '# Release Truth And Safe Sync\n');
+  writeSafeSyncPlan(proj);
 
   const result = router.checkPrerequisites('/god-deploy', proj);
   if (result.satisfied) throw new Error('deploy prereqs should fail');
@@ -169,6 +178,28 @@ test('checkPrerequisites: /god-deploy requires safe sync clear', () => {
   if (!auto) throw new Error('expected safe-sync auto-complete');
   if (auto.autoCompleteCommand !== '/god-reconcile Release Truth And Safe Sync') {
     throw new Error(`wrong auto-complete: ${auto.autoCompleteCommand}`);
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('checkPrerequisites: safe sync blocks direct Tier 3 and god-mode routes', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-safe-sync-test-'));
+  markTier3Ready(proj);
+  fs.writeFileSync(path.join(proj, '.godpowers', 'PROGRESS.md'), '# Progress\n');
+  writeSafeSyncPlan(proj);
+
+  for (const command of ['/god-deploy', '/god-observe', '/god-harden', '/god-launch', '/god-mode']) {
+    const result = router.checkPrerequisites(command, proj);
+    if (result.satisfied) throw new Error(`${command} prereqs should fail`);
+    if (!result.missing.includes('safe-sync-clear')) {
+      throw new Error(`${command} missing safe-sync-clear gate`);
+    }
+    const auto = result.autoCompletable.find(item => item.check === 'safe-sync-clear');
+    if (!auto) throw new Error(`${command} missing safe-sync auto-complete`);
+    if (auto.autoCompleteCommand !== '/god-reconcile Release Truth And Safe Sync') {
+      throw new Error(`${command} wrong safe-sync auto-complete`);
+    }
   }
   fs.rmSync(proj, { recursive: true, force: true });
 });
@@ -201,6 +232,58 @@ test('suggestNext: checkpoint safe sync blocker routes to reconcile', () => {
   }
   if (s.evidence !== '.godpowers/CHECKPOINT.md') {
     throw new Error(`expected checkpoint evidence, got ${s.evidence}`);
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('checkPrerequisites: /god-launch blocks unresolved critical findings', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-critical-test-'));
+  markTier3Ready(proj);
+  fs.mkdirSync(path.join(proj, '.godpowers', 'harden'), { recursive: true });
+  fs.writeFileSync(path.join(proj, '.godpowers', 'harden', 'FINDINGS.md'), [
+    '# Security Findings',
+    '',
+    '| Severity | Count |',
+    '|----------|-------|',
+    '| Critical | 1 |',
+    '',
+    '**Launch gate**: BLOCKED',
+    '',
+    '### [CRITICAL-001] Auth bypass',
+    '- **Status**: Open'
+  ].join('\n'));
+
+  const result = router.checkPrerequisites('/god-launch', proj);
+  if (result.satisfied) throw new Error('launch prereqs should fail');
+  if (!result.missing.includes('no-critical-findings')) {
+    throw new Error(`expected no-critical-findings missing, got ${result.missing.join(',')}`);
+  }
+  if (router.evaluateCheck('no-critical-findings', proj) !== false) {
+    throw new Error('no-critical-findings should evaluate false');
+  }
+  fs.rmSync(proj, { recursive: true, force: true });
+});
+
+test('checkPrerequisites: /god-launch allows passed harden gate', () => {
+  router.clearCache();
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-critical-test-'));
+  markTier3Ready(proj);
+  fs.mkdirSync(path.join(proj, '.godpowers', 'harden'), { recursive: true });
+  fs.writeFileSync(path.join(proj, '.godpowers', 'harden', 'FINDINGS.md'), [
+    '# Security Findings',
+    '',
+    '| Severity | Count |',
+    '|----------|-------|',
+    '| Critical | 0 |',
+    '',
+    '**Launch gate**: PASSED'
+  ].join('\n'));
+
+  const result = router.checkPrerequisites('/god-launch', proj);
+  if (!result.satisfied) throw new Error(`launch prereqs should pass, missing ${result.missing.join(',')}`);
+  if (router.evaluateCheck('no-critical-findings', proj) !== true) {
+    throw new Error('no-critical-findings should evaluate true');
   }
   fs.rmSync(proj, { recursive: true, force: true });
 });
