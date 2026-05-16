@@ -310,12 +310,15 @@ Use this trigger map:
 | frontend-visible files changed and no known URL exists | suggest `/god-test-runtime` with local URL setup, defer deployed URL | proposition |
 | security-sensitive files changed | auto-spawn only inside harden, hotfix, launch, or project run; otherwise suggest `/god-harden` | proposition |
 | dependency files changed | auto-spawn only inside update-deps, hygiene, or approved project run; otherwise suggest `/god-update-deps` | proposition |
+| host automation support detected and no active templates are recorded | suggest `/god-automation-status` or `/god-automation-setup` | proposition |
 | full project run complete or hygiene stale | suggest `/god-hygiene` | proposition |
 
 Never use this matrix to auto-run Level 4 actions: deployed staging against a
 guessed URL, production launch, provider dashboard access, broad dependency
 upgrades, destructive repair, review clearing, Critical security acceptance, or
-git stage, commit, push, package, release, or publish.
+git stage, commit, push, package, release, publish, schedule creation, routine
+creation, background agent creation, API trigger creation, or CI workflow
+creation.
 
 Every auto action must emit either `Auto-invoked:`, `Sync status:`, or a
 proposition explaining why it did not run.

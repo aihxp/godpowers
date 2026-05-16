@@ -97,6 +97,7 @@ Proactive opportunities:
   Sync: fresh
   Docs: possible drift, suggest /god-docs
   Runtime: known local URL, suggest /god-test-runtime
+  Automation: available via codex-app, suggest /god-automation-setup
   Security: clear
   Dependencies: clear
   Hygiene: stale, suggest /god-hygiene
@@ -174,6 +175,8 @@ Report:
   `docs drift-check already logged`
 - Runtime: `not-applicable`, `known URL, suggest /god-test-runtime`, or
   `no known URL, defer deployed verification`
+- Automation: `not configured`, `<N> active`, or
+  `available via <provider>, suggest /god-automation-setup`
 - Security: `clear` or `sensitive files changed, suggest /god-harden`
 - Dependencies: `clear` or `dependency files changed, suggest /god-update-deps`
 - Hygiene: `fresh` or `stale, suggest /god-hygiene`

@@ -156,6 +156,7 @@ Proactive checks:
   Sync: <fresh | missing | stale | local helper ran | suggest /god-sync>
   Docs: <fresh | possible drift, suggest /god-docs>
   Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
+  Automation: <not configured | N active | available via provider, suggest /god-automation-setup>
   Security: <clear | sensitive files changed, suggest /god-harden>
   Dependencies: <clear | dependency files changed, suggest /god-update-deps>
   Hygiene: <fresh | stale, suggest /god-hygiene>
@@ -235,6 +236,8 @@ Automatic steps that especially need visible reporting:
 - DESIGN/PRODUCT change detection that spawns `god-design-reviewer`
 - `/god-scan` when it runs reverse-sync directly without an agent
 - checkpoint refresh after state mutations
+- automation provider detection in `/god-status`, `/god-next`,
+  `/god-automation-status`, and `/god-automation-setup`
 
 ### 13. Proactive Auto-Invoke Policy
 Godpowers should be proactive from disk evidence, not from guesswork. Before
@@ -252,6 +255,9 @@ Run or apply these by default in every relevant closeout:
   status shows stale docs, deps, or review queues.
 - Suggest `/god-locate` when `.godpowers/CHECKPOINT.md` is missing, stale, or
   conflicts with `state.json`.
+- Suggest `/god-automation-status` or `/god-automation-setup` when host-native
+  automation support is available and `.godpowers/automations.json` has no
+  active read-only templates.
 
 #### Level 2: Auto-run local helpers, visible and logged
 Run these local runtime helpers automatically when their trigger is present:
@@ -291,6 +297,8 @@ Never auto-run these from inference alone:
 - clearing `.godpowers/REVIEW-REQUIRED.md`
 - accepting Critical security findings
 - git stage, commit, push, package, release, or publish
+- schedule, routine, background agent, API trigger, or CI workflow creation
+  without explicit user approval
 
 Every auto-invoke decision must be explainable from one of these inputs:
 changed files, Godpowers artifacts, `state.json`, `PROGRESS.md`,

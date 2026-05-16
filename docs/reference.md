@@ -1,18 +1,22 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.12.
+Complete command, agent, and artifact reference for v1.6.13.
 
-## Slash commands (106 total)
+## Slash commands (108 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
+- `/god-automation-status` - Show host automation provider support.
+- `/god-automation-setup` - Prepare opt-in automation setup.
 - `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
 ### Installer CLI helpers
 - `godpowers status --project .` - Render the shared dashboard from disk state.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
+- `godpowers automation-status --project .` - Show automation provider support.
+- `godpowers automation-setup --project .` - Show a reviewed setup plan.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
 
 ### Lifecycle (Tier 0)

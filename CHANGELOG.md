@@ -5,6 +5,36 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.13] - 2026-05-16
+
+Host automation provider discovery and opt-in setup planning.
+
+### Added
+- Added `lib/automation-providers.js`, a shared provider detector for
+  host-native automation support.
+- Added `godpowers automation-status --project .` and
+  `godpowers automation-setup --project .` for opt-in automation support.
+- Added `/god-automation-status` and `/god-automation-setup` slash commands.
+- Added `docs/automation-providers.md` with provider classes, safe templates,
+  and approval rules.
+- Added automation provider tests covering provider classification, active
+  automation config, setup-plan rendering, and CLI JSON output.
+
+### Changed
+- The dashboard engine now reports automation support when host-native
+  automation providers are available.
+- The installer help now documents automation-status and automation-setup as
+  first-class read-only helper commands.
+- Godpowers command guidance now recommends automation setup when provider
+  support exists and no approved automation template is active.
+
+### Guardrails
+- Automation setup is opt-in only. Godpowers must not create schedules,
+  routines, background agents, API triggers, or CI workflows during install.
+- Default automation templates are read-only and must not commit, push,
+  publish, deploy, clear reviews, accept Critical security findings, or access
+  provider dashboards without explicit user approval.
+
 ## [1.6.12] - 2026-05-16
 
 Executable dashboard CLI and shared runtime status engine.

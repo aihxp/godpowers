@@ -1,20 +1,21 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.12 (pure-skill model plus dashboard CLI)
+> Status: STABLE v1.6.13 (pure-skill model plus dashboard and automation provider CLI)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.12 keeps the public surface stable while making status and next-action
-routing executable outside the slash command layer. Auto-invoked commands,
-spawned agents, local runtime helpers, platform-specific spawning limits, and
-dashboard progress must be reported visibly instead of implied as hidden
-background work.
+v1.6.13 keeps the public surface stable while making status, next-action
+routing, and automation provider support executable outside the slash command
+layer. Auto-invoked commands, spawned agents, local runtime helpers,
+platform-specific spawning limits, and dashboard progress must be reported
+visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only status
-helpers such as `godpowers status --project .` and `godpowers next --project .`.
-Durable project operations remain slash commands inside the AI coding tool.
+helpers such as `godpowers status --project .`, `godpowers next --project .`,
+and automation-provider inspection. Durable project operations remain slash
+commands inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
 Tekton, Argo, Buildkite, VSCode, Cargo, Poetry, Bazel, Nx, Helm, Terraform,
@@ -682,7 +683,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 106 skills, 39 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 108 skills, 39 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

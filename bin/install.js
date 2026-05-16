@@ -316,6 +316,8 @@ function parseArgs(argv) {
     switch (arg) {
       case 'status':
       case 'next':
+      case 'automation-status':
+      case 'automation-setup':
         opts.command = arg;
         break;
       case '--json':
@@ -571,10 +573,12 @@ function showHelp() {
   log('Commands:');
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
+  log('  automation-status    Show host automation provider support');
+  log('  automation-setup     Show an opt-in automation setup plan');
   log('');
   log('Options:');
-  log('  --project=<path>     Project root for status or next (default: cwd)');
-  log('  --json               Emit JSON for status or next');
+  log('  --project=<path>     Project root for status, next, or automation commands');
+  log('  --json               Emit JSON for status, next, or automation commands');
   log('  -g, --global         Install globally (to config directory)');
   log('  -l, --local          Install locally (to current directory)');
   log('  --claude             Install for Claude Code');
@@ -599,9 +603,25 @@ function showHelp() {
   log('Examples:');
   log('  npx godpowers status --project=.');
   log('  npx godpowers next --project=.');
+  log('  npx godpowers automation-status --project=.');
+  log('  npx godpowers automation-setup --project=.');
   log('  npx godpowers --claude --global');
   log('  npx godpowers --all');
   log('  npx godpowers --codex --cursor');
+}
+
+function runAutomationCommand(opts) {
+  const automation = require('../lib/automation-providers');
+  const result = opts.command === 'automation-setup'
+    ? automation.setupPlan(opts.project)
+    : automation.detect(opts.project);
+  if (opts.json) {
+    console.log(JSON.stringify(result, null, 2));
+  } else if (opts.command === 'automation-setup') {
+    console.log(automation.renderSetupPlan(result));
+  } else {
+    console.log(automation.render(result));
+  }
 }
 
 function runDashboardCommand(opts) {
@@ -633,6 +653,11 @@ function main() {
 
   if (opts.command === 'status' || opts.command === 'next') {
     runDashboardCommand(opts);
+    return;
+  }
+
+  if (opts.command === 'automation-status' || opts.command === 'automation-setup') {
+    runAutomationCommand(opts);
     return;
   }
 

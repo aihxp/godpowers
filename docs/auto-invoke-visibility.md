@@ -152,6 +152,8 @@ Spawn these only when the scope is bounded and the trigger is visible:
   security-sensitive files changed.
 - `god-deps-auditor` inside dependency workflows, or as a suggestion after
   dependency files changed.
+- `/god-automation-status` as a read-only provider report when automation
+  support may be available.
 
 ## Non-Candidates
 
@@ -164,6 +166,8 @@ Do not auto-invoke these without explicit user intent:
 - destructive repairs
 - review item clearing
 - git stage, commit, push, or publish
+- schedule, routine, background agent, API trigger, or CI workflow creation
+  without explicit user approval
 
 ## User Promise
 

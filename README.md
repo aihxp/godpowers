@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.12-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.13-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,10 +12,14 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.12 adds an executable dashboard engine and CLI status surface:
+Version 1.6.13 builds on the executable dashboard engine and CLI status surface:
 `godpowers status --project .` and `godpowers next --project .` now compute the
 same disk-derived progress, planning visibility, proactive checks, and next
 action used by `/god-status`, `/god-next`, and God Mode closeouts.
+It adds an opt-in automation-provider layer so Godpowers can detect host
+automation surfaces such as Codex App automations, Claude Routines, Cline
+schedules, Qwen loops, Cursor Background Agents, Copilot cloud agent, and
+scriptable CLI providers without silently creating background work.
 
 It fuses four disciplines into one unified workflow:
 
@@ -139,6 +143,8 @@ npx godpowers status --project=. --json
 | `/god-launch` | Launch (gated on harden) | god-launch-strategist |
 | `/god-harden` | Adversarial security review | god-harden-auditor |
 | `/god-status` | Re-derive state from disk | (built-in) |
+| `/god-automation-status` | Show host automation provider support | (built-in) |
+| `/god-automation-setup` | Prepare opt-in automation setup | (built-in) |
 | `/god-preflight` | Read-only intake audit before project-run readiness and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
@@ -196,6 +202,18 @@ action. `/god-status` and `/god-next` use the same shape so the project never
 ends in a vague "done" state. The dashboard is backed by
 `lib/dashboard.js`, so status and next-step commands share one executable
 source of disk truth instead of parallel Markdown-only contracts.
+
+Godpowers can also inspect automation support:
+
+```bash
+npx godpowers automation-status --project=.
+npx godpowers automation-setup --project=.
+```
+
+Automation setup is opt-in. The installer does not create schedules, routines,
+background agents, API triggers, or CI workflows. Safe starting templates are
+read-only status, checkpoint, review queue, hygiene, and release readiness
+reports.
 
 For existing codebases and org-constrained new projects, God Mode now runs a
 greenfield simulation audit and then actions it through a greenfieldification
@@ -319,7 +337,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 106 skills + 39 agents)](docs/reference.md)
+- [Command reference (all 108 skills + 39 agents)](docs/reference.md)
 - [Roadmap](docs/ROADMAP.md)
 - [1.5 Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)

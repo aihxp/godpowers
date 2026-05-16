@@ -1,19 +1,21 @@
-# Godpowers 1.6.12 Release
+# Godpowers 1.6.13 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.12 turns progress visibility into executable product behavior.
-The same dashboard logic now powers slash command closeouts, direct CLI status
-checks, JSON status output, and next-action recommendations from disk state.
+Godpowers 1.6.13 adds host automation provider discovery and opt-in setup
+planning. The same local runtime surface can now report Codex App automations,
+Claude Routines, Cline schedules, Qwen loops, Cursor Background Agents,
+Copilot cloud agent support, and scriptable CLI options without silently
+creating background work.
 
 ## What is stable
 
-- 106 slash commands
+- 108 slash commands
 - 39 specialist agents
 - 13 executable workflows
 - 36 intent recipes
 - 15-runtime installer
-- 453 package files in the npm tarball
+- 458 package files in the npm tarball
 - Codex installs with generated `god-*.toml` agent metadata files
 - Markdown specialist agent contracts at `<runtime>/agents/god-*.md`
 - Shared runtime bundle at `<runtime>/godpowers-runtime`
@@ -27,16 +29,15 @@ checks, JSON status output, and next-action recommendations from disk state.
 
 ## What is new
 
-- Added `lib/dashboard.js`, a shared executable status engine.
-- Added `godpowers status --project .`.
-- Added `godpowers next --project .`.
-- Added `--json` output for machine-readable status and next-step routing.
-- Dashboard output now reports current phase, tier position, percentage,
-  planning visibility, proactive checks, open items, and recommended action.
-- `/god-status`, `/god-next`, `/god-mode`, and `god-orchestrator` now reference
-  the same dashboard engine when local runtime execution is available.
-- Tests now cover dashboard computation, rendering, CLI output, review queue
-  detection, and git porcelain parsing.
+- Added `lib/automation-providers.js`, a shared automation provider detector.
+- Added `godpowers automation-status --project .`.
+- Added `godpowers automation-setup --project .`.
+- Added `/god-automation-status` and `/god-automation-setup`.
+- Added `docs/automation-providers.md`.
+- Dashboard output now reports automation support when a host-native provider
+  is available.
+- Tests now cover provider classification, active automation config,
+  setup-plan rendering, and CLI JSON output.
 
 ## Platform behavior
 
@@ -45,11 +46,12 @@ Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, and Pi all receive the same
 portable Markdown agent contracts. Codex also receives `god-*.toml` files as
 its registry adapter.
 
-The dashboard engine ships in the installed runtime bundle so host tools can
-use one shared implementation instead of parallel command-specific Markdown
-contracts. If a host platform cannot provide a true fresh-context agent spawn,
-Godpowers must say so visibly and report the work as local runtime only or
-simulated in current context.
+The dashboard and automation provider engines ship in the installed runtime
+bundle so host tools can use shared implementation code instead of parallel
+command-specific Markdown contracts. If a host platform cannot provide a true
+fresh-context agent spawn or durable scheduler, Godpowers must say so visibly
+and report the work as local runtime only, manual workflow only, or simulated
+in current context.
 
 ## Safety policy
 
@@ -62,6 +64,7 @@ Godpowers still must not auto-run these without explicit user intent:
 - deployed staging verification against a guessed URL
 - production launch
 - provider dashboard, admin console, DNS, credential, or secret checks
+- schedule, routine, background agent, API trigger, or CI workflow creation
 - broad dependency upgrades
 - destructive repair, rollback, reset, delete, or cleanup
 - clearing `.godpowers/REVIEW-REQUIRED.md`
@@ -73,10 +76,11 @@ Godpowers still must not auto-run these without explicit user intent:
 Release validation includes:
 
 - `node scripts/test-dashboard.js`
+- `node scripts/test-automation-providers.js`
 - `npm test`
 - `npm run test:audit`
 - `node scripts/check-package-contents.js`
 - `git diff --check`
 
-The `v1.6.12` git tag points to the release commit that matches the npm
-`godpowers@1.6.12` package.
+The `v1.6.13` git tag points to the release commit that matches the npm
+`godpowers@1.6.13` package.
