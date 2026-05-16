@@ -30,6 +30,7 @@ const REQUIRED_FILES = [
   'lib/state.js',
   'lib/feature-awareness.js',
   'lib/repo-doc-sync.js',
+  'lib/repo-surface-sync.js',
   'schema/workflow.v1.json',
   'routing/god-mode.yaml',
   'routing/god-export-otel.yaml',

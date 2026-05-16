@@ -5,6 +5,36 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.19] - 2026-05-16
+
+Repository surface sync and status truth closeout.
+
+### Added
+- Added `lib/repo-surface-sync.js` to detect structural drift across command
+  routing, package payload rules, agent handoffs, workflow metadata, recipe
+  routes, extension packs, and release policy checks.
+- Added `docs/repo-surface-sync.md` with auto-invoke, auto-spawn, and guardrail
+  behavior.
+- Added behavioral tests for missing route detection, explicit route stub
+  creation, sync logging, package checks, agent handoff checks, and current
+  repo freshness.
+
+### Changed
+- `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, and `/god-mode` now
+  document repo surface sync behavior.
+- Dashboard proactive checks now include a repo surface status line.
+- Feature awareness now records `repo-surface-sync` as a known runtime feature.
+- Package contents checks now require `lib/repo-surface-sync.js`.
+- README, release notes, command flows, release checklist, command reference,
+  and runtime docs now describe repo surface sync.
+
+### Guardrails
+- Detection is read-only by default.
+- Safe apply can create missing routing stubs only when `fixRouting` is
+  explicitly enabled.
+- Agent, workflow, recipe, extension, and release-policy ambiguity routes to
+  scoped specialists instead of being rewritten blindly.
+
 ## [1.6.17] - 2026-05-16
 
 Autonomous repository documentation sync.

@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.17-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.19-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,11 +12,11 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.17 adds autonomous repository documentation sync. `/god-sync`,
-`/god-docs`, `/god-doctor`, `/god-status`, and `/god-mode` can now detect stale
-README badges, public surface counts, release docs, contribution guidance,
-security policy, and Pillars context planning needs before a project run is
-declared complete.
+Version 1.6.19 sharpens Godpowers status truth and adds repository surface
+sync. Dashboards now name whether they came from `lib/dashboard.js` or a manual
+fallback, and Godpowers checks routing gaps, package payload drift, agent
+handoff drift, workflow metadata drift, recipe route drift, extension pack
+drift, and release-policy drift before closeout.
 
 It fuses four disciplines into one unified workflow:
 
@@ -194,12 +194,13 @@ durable `.godpowers` artifacts change project truth. The decision is logged to
 `.godpowers/YOLO-DECISIONS.md`.
 
 Every completing command now ends with a **Godpowers Dashboard**. It shows the
-current phase, tier, step count, percent complete, PRD and roadmap visibility,
+current phase, tier, step count, workflow progress, PRD and roadmap visibility,
 recent work, proactive checks, open items, and the single recommended next
 action. `/god-status` and `/god-next` use the same shape so the project never
 ends in a vague "done" state. The dashboard is backed by
-`lib/dashboard.js`, so status and next-step commands share one executable
-source of disk truth instead of parallel Markdown-only contracts.
+`lib/dashboard.js`, and the rendered output names that source when the runtime
+engine is available. Audit, hygiene, and remediation scores are reported as
+separate scores rather than being reused as workflow progress.
 
 Godpowers can also inspect automation support:
 
@@ -361,6 +362,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Command reference (all 109 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)
+- [Repository surface sync](docs/repo-surface-sync.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)

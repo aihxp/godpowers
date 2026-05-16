@@ -25,6 +25,9 @@ Before reading routing data or calling runtime modules, resolve the Godpowers ru
 4. For status output, load `<runtimeRoot>/lib/dashboard.js` and call
    `dashboard.compute(projectRoot)`. Use `dashboard.render(result)` for the
    shared dashboard section before adding route-specific detail.
+5. If the checkout runtime and installed runtime differ, say which runtime root
+   was used. Only call the output a manual disk scan when `lib/dashboard.js`
+   cannot be loaded at all.
 
 ## Three modes of invocation
 
@@ -347,11 +350,13 @@ Godpowers Next
 
 Godpowers Dashboard
 
+Source: runtime dashboard (lib/dashboard.js)
+
 Current status:
   State: proposal
   Phase: [plain-language phase] (tier [human ordinal] of [human total])
   Step: [current step label] (step [n] of [total steps])
-  Progress: [pct]% ([done] of [total] steps complete)
+  Progress: [pct]% workflow progress ([done] of [total] tracked steps complete)
   Worktree: [clean | modified files unstaged | staged changes | mixed]
   Index: [untouched | staged files listed]
 
@@ -359,7 +364,7 @@ Planning visibility:
   PRD: [done | pending | missing | deferred] [path when present]
   Roadmap: [done | pending | missing | deferred] [path when present]
   Current milestone: [roadmap milestone, phase, tier, or next planning gate]
-  Completion: [pct]% [basis from state.json, PROGRESS.md, or artifacts]
+  Completion basis: [state.json, PROGRESS.md, artifacts, or audit score source]
 
 Suggested next: [/god-X]
 

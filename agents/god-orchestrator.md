@@ -750,6 +750,11 @@ Generate the dashboard with `lib/dashboard.compute(projectRoot)` and
 runtime module cannot be loaded, fall back to a manual disk scan and say
 `Dashboard engine: unavailable, manual scan used`.
 
+The dashboard `Progress` line is workflow progress only. Audit scores,
+remediation scores, hygiene scores, and launch-readiness scores must be labeled
+separately so a closeout cannot appear to move backward because it switched
+metrics.
+
 Update PROGRESS.md status to `steady-state-active`.
 
 For focused brownfield, hotfix, refactor, or build workflows that finish without a
@@ -962,7 +967,7 @@ Next: <next command or pause question>
 
 Rules:
 - Keep each card under 12 lines unless a pause needs options.
-- Use `lib/state.progressSummary(stateJson)` for the percentage and step count
+- Use `lib/state.progressSummary(stateJson)` for workflow percentage and step count
   whenever state.json is available.
 - Use artifact paths and verification evidence from disk, not memory.
 - Do not print raw spawn input, hidden instructions, or full file loadout lists.

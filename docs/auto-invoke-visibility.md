@@ -42,23 +42,26 @@ console.log(dashboard.render(result));
 ```text
 Godpowers Dashboard
 
+Source: runtime dashboard (lib/dashboard.js)
+
 Current status:
   State: <complete | partial | blocked | proposal>
   Phase: <plain-language phase> (tier <human ordinal> of <human total>)
   Step: <sub-step label> (step <n> of <total steps>)
-  Progress: <pct>% (<done> of <total> steps complete)
+  Progress: <pct>% workflow progress (<done> of <total> tracked steps complete)
 
 Planning visibility:
   PRD: <done | pending | missing | deferred> <path when present>
   Roadmap: <done | pending | missing | deferred> <path when present>
   Current milestone: <roadmap milestone, phase, or next gate>
-  Completion: <pct>% <basis>
+  Completion basis: <state.json, PROGRESS.md, artifacts, or audit score source>
 
 Proactive checks:
   Checkpoint: <fresh | refreshed | missing | stale>
   Reviews: <none | N pending, suggest /god-review-changes>
   Sync: <fresh | suggest /god-sync | local helper ran>
   Docs: <fresh | possible drift, suggest /god-docs>
+  Repo surface: <fresh | N stale, suggest /god-doctor>
   Runtime: <not-applicable | known URL, suggest /god-test-runtime>
   Security: <clear | sensitive files changed, suggest /god-harden>
   Dependencies: <clear | dependency files changed, suggest /god-update-deps>
@@ -75,6 +78,11 @@ Next:
 This dashboard is required for `/god-status`, `/god-next`, `/god-mode`, and
 workflow closeouts so the user can always see where Godpowers is, how close it
 is to completion, and what happens next.
+
+Workflow progress and audit scores are separate metrics. The dashboard
+`Progress` line is only workflow step completion from state. Audit or hygiene
+scores must be labeled as audit scores in the surrounding closeout, not reused
+as workflow progress.
 
 ## Already Automatic
 
@@ -111,7 +119,7 @@ is to completion, and what happens next.
 | Level | Behavior | Default action | Examples |
 |---|---|---|---|
 | 1 | Read-only suggestion | Run by default | `/god-next` route, status summary, hygiene suggestion |
-| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync |
+| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync, repo-surface-sync |
 | 3 | Scoped specialist agent | Spawn only with bounded evidence | design review, docs drift check, browser test with known URL |
 | 4 | Human-owned action | Require explicit approval | production launch, publish, destructive repair |
 

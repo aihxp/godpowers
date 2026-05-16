@@ -126,6 +126,18 @@ helper writes only safe mechanical version, badge, and count claims. It should
 recommend `god-docs-writer` when narrative release, contribution, support, or
 security prose needs judgment.
 
+## Repo Surface Sync
+
+For initialized projects, `/god-doctor` calls `lib/repo-surface-sync.detect`
+as a read-only diagnostic. It reports structural drift across command routing,
+package payload rules, agent spawn targets, workflow metadata, recipe command
+routes, extension packs, and release policy checks.
+
+`/god-doctor --fix` may call
+`lib/repo-surface-sync.run(projectRoot, { fixRouting: true })` to create
+missing routing metadata for shipped slash-command skills. Other structural
+findings should recommend the scoped specialist named by the helper.
+
 ## Implementation
 
 Built-in, no spawned agent. Reads:
@@ -135,6 +147,8 @@ Built-in, no spawned agent. Reads:
 - `lib/feature-awareness.detect(projectRoot)` for existing-project upgrade
   awareness
 - `lib/repo-doc-sync.detect(projectRoot)` for repo documentation freshness
+- `lib/repo-surface-sync.detect(projectRoot)` for structural repo surface
+  freshness
 - `bin/install.js` VERSION constant
 
 ## Exit codes

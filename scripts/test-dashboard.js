@@ -52,6 +52,7 @@ test('compute reports not initialized and suggests /god-init', () => {
   assert(result.openItems.includes('No .godpowers/state.json found'), 'missing open item');
   const rendered = dashboard.render(result);
   assert(rendered.includes('Godpowers Dashboard'), 'render missing title');
+  assert(rendered.includes('Source: runtime dashboard (lib/dashboard.js)'), 'render missing source');
   assert(rendered.includes('Recommended: /god-init'), 'render missing init route');
 });
 
@@ -93,7 +94,9 @@ test('render includes current status, proactive checks, and next route', () => {
   const result = dashboard.compute(tmp, { git: false });
   const rendered = dashboard.render(result);
   assert(rendered.includes('Current status:'), 'missing current status');
+  assert(rendered.includes('Progress: 0% workflow progress'), `rendered: ${rendered}`);
   assert(rendered.includes('Planning visibility:'), 'missing planning visibility');
+  assert(rendered.includes('Completion basis: .godpowers/state.json workflow steps'), `rendered: ${rendered}`);
   assert(rendered.includes('Proactive checks:'), 'missing proactive checks');
   assert(rendered.includes('Recommended: /god-prd'), `rendered: ${rendered}`);
 });

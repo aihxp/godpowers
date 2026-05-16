@@ -54,12 +54,14 @@ installed Godpowers runtime adds capabilities.
 {
   "godpowers-features": {
     "feature-set-version": 1,
-    "runtime-version": "1.6.17",
+    "runtime-version": "1.6.19",
     "known": [
       "planning-system-migration",
       "source-system-sync-back",
       "feature-awareness",
-      "repo-documentation-sync"
+      "repo-documentation-sync",
+      "repo-surface-sync",
+      "dashboard-status-metric-labels"
     ],
     "last-awareness-refresh-at": "2026-05-16T12:00:00.000Z"
   }

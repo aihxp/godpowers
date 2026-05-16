@@ -6,6 +6,7 @@
 - [DECISION] Narrative release, contribution, support, and security policy prose remains owned by a maintainer or `god-docs-writer`.
 - [DECISION] Repo documentation sync writes `.godpowers/docs/REPO-DOC-SYNC.md` when it applies safe changes.
 - [DECISION] Repo documentation sync participates in Pillars by planning context updates for changed repo docs and by allowing `/god-sync` to apply those updates under the normal Pillars policy.
+- [DECISION] Repo documentation sync works alongside repo surface sync, which checks routing, package, agent, workflow, recipe, extension, and release-policy structure.
 
 ## Auto-Invoke Contract
 

@@ -38,9 +38,10 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - If PROGRESS.md says "done" but artifact is missing: FLAG as phantom resume
    - If artifact exists but PROGRESS.md says "pending": FLAG as untracked work
 8. Report the Godpowers Dashboard from `dashboard.render(result)`:
+   - Dashboard source: runtime dashboard or unavailable manual scan
    - Current mode and scale
    - Current phase, tier number, step label, and step number
-   - Progress summary: percentage, completed step count, current step number
+   - Workflow progress summary: percentage, completed step count, current step number
    - Planning visibility: PRD status, roadmap status, active milestone, and
      completion basis
    - What happened recently, using CHECKPOINT.md actions when available
@@ -55,10 +56,15 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
 If the runtime module is unavailable, fall back to the manual scan below and
 say `Dashboard engine: unavailable, manual scan used`.
 
+Never mix workflow progress with audit, hygiene, or remediation scores. If an
+audit score is relevant, label it separately as `Audit score`.
+
 ## Output Format
 
 ```text
 Godpowers Dashboard
+
+Source: runtime dashboard (lib/dashboard.js)
 
 Mode: A (greenfield)    Scale: medium
 Started: 2026-05-09
@@ -67,7 +73,7 @@ Current status:
   State: in progress
   Phase: Planning (tier 2 of 4, internal tier-1)
   Step: Architecture (step 3 of 13)
-  Progress: 15% (2 of 13 steps complete)
+  Progress: 15% workflow progress (2 of 13 tracked steps complete)
   Worktree: clean
   Index: untouched
 
@@ -75,7 +81,7 @@ Planning visibility:
   PRD: done .godpowers/prd/PRD.md
   Roadmap: pending
   Current milestone: Planning / Architecture
-  Completion: 15% based on PROGRESS.md tracked steps
+  Completion basis: .godpowers/state.json workflow steps
 
 What happened recently:
   1. PRD artifact verified on disk
@@ -173,6 +179,8 @@ Report:
 - Sync: `fresh`, `missing`, `stale`, or `suggest /god-sync`
 - Docs: `fresh`, `<N> stale, suggest /god-docs`, `possible drift, suggest
   /god-docs`, or `repo-doc-sync ran`
+- Repo surface: `fresh`, `<N> stale, suggest /god-doctor`, or
+  `repo-surface-sync ran`
 - Runtime: `not-applicable`, `known URL, suggest /god-test-runtime`, or
   `no known URL, defer deployed verification`
 - Automation: `not configured`, `<N> active`, or

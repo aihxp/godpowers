@@ -1,0 +1,101 @@
+{
+  "$schema": "https://godpowers.dev/schema/state.v1.json",
+  "version": "1.0.0",
+  "project": {
+    "name": "godpowers",
+    "started": "2026-05-16T00:00:00.000Z",
+    "detection-results": {
+      "requires-design": false,
+      "ui-frameworks": [],
+      "ui-signals": []
+    }
+  },
+  "mode": "B",
+  "mode-d-suite": false,
+  "mode-detected-from": [
+    "package-json-found",
+    "git-repo-found",
+    "existing-runtime-files-found",
+    "no-org-context-found",
+    "no-suite-detected"
+  ],
+  "mode-announced-as": "existing codebase",
+  "scale": "large",
+  "active-workstream": "main",
+  "tiers": {
+    "tier-0": {
+      "orchestration": {
+        "status": "in-flight"
+      },
+      "preflight": {
+        "status": "pending"
+      },
+      "archaeology": {
+        "status": "pending"
+      },
+      "tech-debt": {
+        "status": "pending"
+      },
+      "greenfield-simulation": {
+        "status": "pending"
+      },
+      "greenfieldify": {
+        "status": "pending"
+      },
+      "sync": {
+        "status": "pending"
+      }
+    },
+    "tier-1": {
+      "prd": {
+        "status": "pending"
+      },
+      "design": {
+        "status": "not-required"
+      },
+      "product": {
+        "status": "not-required"
+      },
+      "arch": {
+        "status": "pending"
+      },
+      "roadmap": {
+        "status": "pending"
+      },
+      "stack": {
+        "status": "pending"
+      }
+    },
+    "tier-2": {
+      "repo": {
+        "status": "pending"
+      },
+      "build": {
+        "status": "pending"
+      }
+    },
+    "tier-3": {
+      "deploy": {
+        "status": "pending"
+      },
+      "observe": {
+        "status": "pending"
+      },
+      "harden": {
+        "status": "pending"
+      },
+      "launch": {
+        "status": "pending"
+      }
+    }
+  },
+  "lifecycle-phase": "in-arc",
+  "linkage": {
+    "coverage-pct": 0,
+    "orphan-count": 0,
+    "drift-count": 0,
+    "review-required-items": 0
+  },
+  "yolo-decisions": [],
+  "lock": null
+}

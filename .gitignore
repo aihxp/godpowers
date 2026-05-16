@@ -7,4 +7,5 @@ coverage/
 dist/
 tmp/
 .claude/
+.codex/
 *.tgz

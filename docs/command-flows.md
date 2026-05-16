@@ -467,6 +467,24 @@ Auto-complete: `/god-init`
 
 ---
 
+## /god-sync (Tier 0: Closeout)
+
+**Prerequisites**: initialized `.godpowers/` project
+
+**Execution**:
+- `lib/feature-awareness.run(projectRoot)` for existing-project runtime awareness
+- `lib/repo-doc-sync.run(projectRoot)` for public repository documentation claims
+- `lib/repo-surface-sync.run(projectRoot)` for structural repository surface drift
+- `lib/source-sync.run(projectRoot)` when imported source systems have sync-back enabled
+- `god-updater`
+- Writes: `.godpowers/SYNC-LOG.md`, `.godpowers/docs/REPO-DOC-SYNC.md`, `.godpowers/surface/REPO-SURFACE-SYNC.md`, and touched artifacts
+
+**Standards**: artifact have-nots plus visible auto-invoke reporting
+
+**Success path**: `/god-status`
+
+---
+
 ## /god-audit (Tier 0: Audit-only)
 
 **Prerequisites**: `file:.godpowers/PROGRESS.md`

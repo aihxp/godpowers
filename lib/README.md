@@ -14,6 +14,7 @@ package-level integrations.
 | `checkpoint.js` | Create and inspect resumable checkpoint artifacts. |
 | `feature-awareness.js` | Detect and refresh existing-project awareness after runtime upgrades. |
 | `repo-doc-sync.js` | Detect and refresh mechanical repository documentation surfaces. |
+| `repo-surface-sync.js` | Detect structural drift across commands, routes, packages, agents, workflows, recipes, extensions, and release policy. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
 

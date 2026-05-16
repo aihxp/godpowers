@@ -1,0 +1,30 @@
+---
+pillar: quality
+status: active
+always_load: false
+covers: [tests, linting, validation, release gates, artifact checks]
+triggers: [test, lint, validation, audit, release, package, check]
+must_read_with: [repo]
+see_also: [security, deploy]
+---
+
+## Scope
+
+- [DECISION] This pillar captures quality gates for Godpowers changes.
+
+## Commands
+
+- [DECISION] `npm test` is the required full verification command.
+- [DECISION] `npm run test:audit` runs dependency audit, `git diff --check`, and documentation surface count tests.
+- [DECISION] `npm run pack:check` verifies the npm package contains required runtime files and excludes local-only files.
+- [DECISION] `npm run release:check` combines tests, audit checks, and package contents checks.
+
+## Standards
+
+- [DECISION] Artifact linter checks must catch em or en dashes, emojis, unlabeled paragraphs, phantom references, future-dated body timestamps, and selected PRD or ARCH failures.
+- [DECISION] CI tests Node `18`, Node `20`, and Node `22`.
+- [DECISION] Full release work must keep `CHANGELOG.md`, `README.md`, `RELEASE.md`, and package metadata aligned.
+
+## Watchouts
+
+- [HYPOTHESIS] The full test suite is intentionally broad and can surface unrelated drift from docs, packaging, workflows, routing, and installer behavior.

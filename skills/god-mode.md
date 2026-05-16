@@ -307,6 +307,7 @@ Sync status:
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
     + repo-doc-sync: <refreshed repo docs, recommended god-docs-writer, or no-op>
+    + repo-surface-sync: <checked structural surfaces, recommended scoped agents, or no-op>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>
     + context-refresh: <spawned, no-op, or skipped>
@@ -330,6 +331,11 @@ The mandatory final sync also receives repo documentation sync through
 security policy checks, and Pillars context planning arc-ready before the
 project run is declared complete.
 
+The mandatory final sync also receives repo surface sync through `/god-sync`.
+This keeps routes, packages, agent handoffs, workflow metadata, recipe routes,
+extension packs, and release policy checks aligned before the project run is
+declared complete.
+
 If `/god-mode` resumes an existing `.godpowers` project that lacks Pillars,
 it Pillar-izes the project before continuing. Existing `.godpowers` artifacts
 become managed source references in the relevant `agents/*.md` files.
@@ -352,6 +358,7 @@ Sync status:
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + reverse-sync: <counts and result>
     + repo-doc-sync: <refreshed repo docs, recommended god-docs-writer, or no-op>
+    + repo-surface-sync: <checked structural surfaces, recommended scoped agents, or no-op>
     + pillars-sync: <counts and result>
     + checkpoint-sync: <created, updated, no-op, or skipped>
     + context-refresh: <spawned, no-op, or skipped>

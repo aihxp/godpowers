@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.17.
+Complete command, agent, and artifact reference for v1.6.19.
 
 ## Slash commands (109 total)
 
@@ -19,6 +19,10 @@ Complete command, agent, and artifact reference for v1.6.17.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
+
+Dashboard status uses workflow progress from `.godpowers/state.json` tracked
+steps. Audit, hygiene, remediation, and launch-readiness scores are separate
+metrics and should be labeled separately in closeouts.
 
 ### Lifecycle (Tier 0)
 - `/god-init` - Initialize a Godpowers project. Detects mode (A/B/C/D) and scale.

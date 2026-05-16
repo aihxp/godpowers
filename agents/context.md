@@ -1,0 +1,38 @@
+---
+pillar: context
+status: active
+always_load: true
+covers: [project identity, domain language, product promise, user outcomes]
+triggers: [godpowers, slash commands, specialist agents, product context, domain]
+must_read_with: [repo]
+see_also: [arch, quality, deploy]
+---
+
+## Scope
+
+- [DECISION] This pillar captures durable product context for the Godpowers repository.
+
+## Context
+
+- [DECISION] Godpowers is an AI-powered development system delivered as slash commands and specialist agents inside AI coding tools.
+- [DECISION] The package name is `godpowers`, and the current repository version is `1.6.19`.
+- [DECISION] The primary audience is solo founders and small engineering teams using AI coding tools who need accountable production workflow discipline without enterprise process.
+- [DECISION] The product promise is one slash-command arc from idea to hardened, observable, launch-ready software with traceable artifacts on disk.
+- [DECISION] Godpowers uses a pure-skill model where `npx godpowers` installs runtime files and in-tool slash commands perform work.
+- [DECISION] The native context layer is Pillars: root `AGENTS.md` plus routed `agents/*.md` files.
+- [DECISION] Workflow state lives in `.godpowers/` and is authoritative for Godpowers command resumes.
+
+## Rules
+
+- [DECISION] Generated artifacts must label substantive sentences as `[DECISION]`, `[HYPOTHESIS]`, or `[OPEN QUESTION]`.
+- [DECISION] Generated text must avoid em dashes, en dashes, and emojis.
+- [DECISION] Claims must include Godpowers-specific evidence instead of generic AI tooling language.
+
+## Watchouts
+
+- [HYPOTHESIS] User adoption risk concentrates around whether agent spawning, installed runtime metadata, and local validation behave the same across supported AI coding tools.
+- [HYPOTHESIS] Documentation drift risk is high because the public surface includes 109 slash commands, 40 specialist agents, 13 workflows, and 36 intent recipes.
+
+## Gaps
+
+- [OPEN QUESTION] Which real-world AI coding tool should be treated as the first adoption canary after `1.6.19`? Owner: maintainer. Due: before the next public release.

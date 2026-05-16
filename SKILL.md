@@ -155,6 +155,7 @@ Proactive checks:
   Reviews: <none | N pending, suggest /god-review-changes>
   Sync: <fresh | missing | stale | local helper ran | suggest /god-sync>
   Docs: <fresh | N stale, suggest /god-docs | repo-doc-sync ran>
+  Repo surface: <fresh | N stale, suggest /god-doctor | repo-surface-sync ran>
   Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
   Automation: <not configured | N active | available via provider, suggest /god-automation-setup>
   Security: <clear | sensitive files changed, suggest /god-harden>
@@ -214,7 +215,7 @@ Auto-invoked:
   Trigger: <what caused this automatic step>
   Agent: <god-updater | god-context-writer | none, local runtime only>
   Local syncs:
-    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
+    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
   Artifacts: <changed files, no-op, or deferred>
   Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
 ```
@@ -243,6 +244,8 @@ Automatic steps that especially need visible reporting:
 - feature-awareness refresh during `/god-doctor`, `/god-context`,
   `/god-sync`, or `/god-mode`
 - repo documentation sync during `/god-sync`, `/god-docs`, `/god-doctor`,
+  `/god-status`, or `/god-mode`
+- repo surface sync during `/god-sync`, `/god-docs`, `/god-doctor`,
   `/god-status`, or `/god-mode`
 
 ### 13. Proactive Auto-Invoke Policy
@@ -284,6 +287,10 @@ Run these local runtime helpers automatically when their trigger is present:
   `lib/repo-doc-sync.run` during `/god-sync`, `/god-docs`, or `/god-mode`
   when README badges, public surface counts, release docs, contribution docs,
   or security policy may have drifted.
+- `lib/repo-surface-sync.detect` during `/god-status` and `/god-doctor`, and
+  `lib/repo-surface-sync.run` during `/god-sync`, `/god-docs`, or
+  `/god-mode` when command routing, package payload, agent handoffs, workflow
+  metadata, recipe routes, extension packs, or release policy may have drifted.
 - Context refresh dry-run after `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
   `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`,
   `.clinerules`, `.roo/`, or `.continue/` changes.
@@ -300,6 +307,9 @@ Spawn these agents only when the trigger is direct and scope is bounded:
 - `god-docs-writer` when repo-doc-sync reports narrative drift in
   `CHANGELOG.md`, `RELEASE.md`, `CONTRIBUTING.md`, `SECURITY.md`, or
   `SUPPORT.md` after local mechanical sync has finished.
+- `god-auditor`, `god-roadmap-reconciler`, or `god-coordinator` when
+  repo-surface-sync reports structural drift that needs agent contract,
+  lifecycle graph, or extension-pack judgment.
 - `god-browser-tester` when frontend-visible files changed and a known local,
   preview, staging, or production URL is evidenced.
 - `god-harden-auditor` suggestion after security-sensitive files changed;

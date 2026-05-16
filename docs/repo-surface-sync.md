@@ -1,0 +1,39 @@
+# Repository Surface Sync
+
+- [DECISION] Godpowers now checks structural repository surfaces as executable sync work.
+- [DECISION] `lib/repo-surface-sync.js` detects drift across command skills, routing metadata, package payload rules, agent spawn targets, workflow metadata, recipe command routes, extension packs, and release policy checks.
+- [DECISION] Detection is read-only by default.
+- [DECISION] The safe apply path only writes a sync log and may create missing routing stubs when `fixRouting` is explicitly enabled.
+- [DECISION] Structural findings appear in `/god-status`, `/god-doctor`, `/god-sync`, `/god-docs`, and `/god-mode` closeouts.
+
+## Auto-Invoke Contract
+
+- [DECISION] `/god-status` calls `lib/repo-surface-sync.detect(projectRoot)` and reports the proactive repo surface status.
+- [DECISION] `/god-doctor` calls `lib/repo-surface-sync.detect(projectRoot)` as a read-only diagnostic.
+- [DECISION] `/god-doctor --fix` may call `lib/repo-surface-sync.run(projectRoot, { fixRouting: true })` to create missing routing metadata only.
+- [DECISION] `/god-sync` calls `lib/repo-surface-sync.run(projectRoot)` so structural drift is logged before project closeout.
+- [DECISION] `/god-mode` receives repo surface sync through the mandatory final `/god-sync`.
+
+## Areas Covered
+
+- [DECISION] Routing surface sync checks that every `skills/god-*.md` command has matching `routing/god-*.yaml` metadata.
+- [DECISION] Package and installer sync checks `package.json.files`, package content checks, package lock version, and required runtime helper files.
+- [DECISION] Agent contract sync checks that routed specialist spawns resolve to real `agents/god-*.md` files.
+- [DECISION] Workflow and recipe graph sync checks parseable workflow metadata and recipe command routes.
+- [DECISION] Extension pack sync checks manifest validation, package name and version agreement, peer dependency agreement, and provided file existence.
+- [DECISION] Release policy sync checks that repo documentation sync is fresh and that the release checklist names repo surface sync.
+
+## Auto-Spawn Policy
+
+- [DECISION] Local structural checks report `Agent: none, local runtime only`.
+- [DECISION] Missing or ambiguous agent handoffs recommend `god-auditor`.
+- [DECISION] Workflow or recipe lifecycle ambiguity recommends `god-roadmap-reconciler`.
+- [DECISION] Extension pack drift recommends `god-coordinator`.
+- [DECISION] Release prose drift recommends `god-docs-writer`.
+
+## Guardrails
+
+- [DECISION] Repo surface sync does not publish, tag, stage, commit, delete, or rewrite broad package payload policy.
+- [DECISION] Repo surface sync does not invent agent contracts or workflow intent.
+- [DECISION] Repo surface sync logs to `.godpowers/surface/REPO-SURFACE-SYNC.md` when run with logging enabled.
+- [DECISION] Findings that require judgment remain recommendations for scoped specialist agents.

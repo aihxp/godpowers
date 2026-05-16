@@ -39,14 +39,19 @@ User runs `/god-sync` after manual changes. Useful for:
    counts, release references, contribution docs, and security policy are
    checked before sync closes. Safe mechanical updates are local runtime work.
    Narrative drift should recommend or spawn `god-docs-writer`.
-5. If repo documentation changed durable project truth, plan or apply Pillars
+5. Call `lib/repo-surface-sync.run(projectRoot)` so command routing, package
+   payload, agent handoffs, workflow metadata, recipe routes, extension packs,
+   and release policy are checked before sync closes. Structural drift should
+   recommend scoped agents such as `god-auditor`, `god-roadmap-reconciler`, or
+   `god-coordinator`.
+6. If repo documentation changed durable project truth, plan or apply Pillars
    updates through `lib/pillars.planArtifactSync` or
    `lib/pillars.applyArtifactSync` under the active Pillars policy.
-6. If `state.json` contains enabled `source-systems`, auto-invoke
+7. If `state.json` contains enabled `source-systems`, auto-invoke
    `lib/source-sync.run(projectRoot)` so current Godpowers progress is written
    back to imported GSD, BMAD, or Superpowers companion files. Report this as
    `Agent: none, local runtime only`.
-7. Spawn god-updater in fresh context with:
+8. Spawn god-updater in fresh context with:
    - The reconciliation verdict (if available from a prior /god-reconcile)
    - Or: re-run reconciliation against current state to detect what changed
    - Recent commits for context
@@ -58,7 +63,7 @@ Auto-invoked:
   Trigger: <manual /god-sync, recipe closeout, /god-mode final sync, or other source>
   Agent: god-updater
   Local syncs:
-    - pending: feature-awareness, reverse-sync, source-sync, repo-doc-sync, pillars-sync, checkpoint-sync, context-refresh
+    - pending: feature-awareness, reverse-sync, source-sync, repo-doc-sync, repo-surface-sync, pillars-sync, checkpoint-sync, context-refresh
   Artifacts: pending
   Log: .godpowers/SYNC-LOG.md
 ```
@@ -86,6 +91,7 @@ Sync status:
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
     + source-sync: <written GSD/BMAD/Superpowers companion files, no-op, or skipped>
     + repo-doc-sync: <refreshed README badges/counts, recommended god-docs-writer, or no-op>
+    + repo-surface-sync: <checked routes/package/agents/workflows/extensions, recommended scoped agents, or no-op>
     + pillars-sync: <updated N pillar files, no-op, or proposed>
     + checkpoint-sync: <CHECKPOINT.md updated or skipped>
     + context-refresh: <updated AGENTS.md/tool pointers, no-op, or skipped by setting>
@@ -131,6 +137,7 @@ Next:
 | Lost threads | Active threads get progress notes |
 | Pillars drift | Keeps `agents/*.md` aligned with current `.godpowers` artifacts |
 | Repo docs drift | Keeps README badges, repo docs, and release surfaces aligned |
+| Repo surface drift | Keeps routes, packages, agents, workflows, recipes, and extensions aligned |
 
 The loop:
 

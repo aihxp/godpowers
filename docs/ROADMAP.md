@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.17
+> Current shipped: v1.6.19
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.17)
+### Current surface (v1.6.19)
 
 What works today:
 - **109 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -26,7 +26,9 @@ What works today:
   (with T3 Code transparently inheriting the underlying agent)
 - **Executable dashboard engine**: `lib/dashboard.js` powers `/god-status`,
   `/god-next`, God Mode closeouts, `godpowers status --project .`,
-  `godpowers next --project .`, and JSON status output.
+  `godpowers next --project .`, and JSON status output. Rendered dashboards
+  name the runtime source, label workflow progress, and keep audit scores out
+  of the workflow percentage.
 - **Automation provider detection**: `lib/automation-providers.js` powers
   `/god-automation-status`, `/god-automation-setup`,
   `godpowers automation-status --project .`, and
@@ -44,6 +46,9 @@ What works today:
 - **Repo documentation sync**: README badges, public surface counts, release
   docs, contribution guidance, security policy checks, and Pillars planning
   are checked during sync, docs, doctor, status, and god-mode closeouts.
+- **Repo surface sync**: command routing, package payloads, agent handoffs,
+  workflow metadata, recipe routes, extension packs, and release policy checks
+  are checked during sync, docs, doctor, status, and god-mode closeouts.
 - **Codex agent metadata**: all 40 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route
@@ -58,7 +63,7 @@ What works today:
   coordinator spawns
 - **Human-readable progress reports**: `/god-status`, `/god-locate`,
   `/god-next`, `/god-mode`, `CHECKPOINT.md`, and `PROGRESS.md` now surface
-  percent complete, current step, recent work, and what happens next
+  workflow progress, current step, recent work, and what happens next
 - **Proposition closeouts**: proposal, diagnostic, audit, lifecycle, status,
   reconciliation, and decision-support outputs now end with concrete next
   choices such as partial implementation, complete implementation, discussion,
