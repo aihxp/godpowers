@@ -36,6 +36,7 @@ const RUNTIMES = {
     configDir: path.join(os.homedir(), '.codex'),
     skillsDir: 'skills',
     configFile: 'config.toml',
+    agentMetadata: 'toml',
   },
   cursor: {
     name: 'Cursor',
@@ -182,6 +183,84 @@ function installSkillFile(srcFile, skillsDest, runtimeKey, targetName = null) {
   fs.copyFileSync(srcFile, path.join(skillsDest, `${baseName}.md`));
 }
 
+function parseAgentFrontmatter(content) {
+  const fallback = { name: null, description: null };
+  if (!content.startsWith('---\n')) return fallback;
+
+  const end = content.indexOf('\n---', 4);
+  if (end === -1) return fallback;
+
+  const lines = content.slice(4, end).split('\n');
+  const parsed = { ...fallback };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const nameMatch = line.match(/^name:\s*(.+)\s*$/);
+    if (nameMatch) {
+      parsed.name = nameMatch[1].replace(/^["']|["']$/g, '');
+      continue;
+    }
+
+    if (line === 'description: |') {
+      const desc = [];
+      i++;
+      while (i < lines.length && /^ {2}/.test(lines[i])) {
+        desc.push(lines[i].slice(2));
+        i++;
+      }
+      i--;
+      parsed.description = desc.join('\n').trim();
+      continue;
+    }
+
+    const descMatch = line.match(/^description:\s*(.+)\s*$/);
+    if (descMatch) {
+      parsed.description = descMatch[1].replace(/^["']|["']$/g, '');
+    }
+  }
+
+  return parsed;
+}
+
+function stripFrontmatter(content) {
+  if (!content.startsWith('---\n')) return content.trim();
+  const end = content.indexOf('\n---', 4);
+  if (end === -1) return content.trim();
+  return content.slice(end + 4).trim();
+}
+
+function tomlString(value) {
+  return JSON.stringify(value || '');
+}
+
+function tomlLiteral(value) {
+  return `'''\n${(value || '').replace(/'''/g, "'''\\'''")}\n'''`;
+}
+
+function writeCodexAgentToml(srcFile, agentsDest) {
+  const content = fs.readFileSync(srcFile, 'utf8');
+  const frontmatter = parseAgentFrontmatter(content);
+  const name = frontmatter.name || path.basename(srcFile, '.md');
+  const description = frontmatter.description || `Godpowers specialist agent: ${name}.`;
+  const instructions = stripFrontmatter(content);
+  const toml = [
+    `name = ${tomlString(name)}`,
+    `description = ${tomlString(description)}`,
+    'sandbox_mode = "workspace-write"',
+    `developer_instructions = ${tomlLiteral(instructions)}`,
+    ''
+  ].join('\n');
+
+  fs.writeFileSync(path.join(agentsDest, `${name}.toml`), toml);
+}
+
+function installAgentFile(srcFile, agentsDest, runtime) {
+  fs.copyFileSync(srcFile, path.join(agentsDest, path.basename(srcFile)));
+  if (runtime.agentMetadata === 'toml') {
+    writeCodexAgentToml(srcFile, agentsDest);
+  }
+}
+
 function removeSkillEntry(skillsDir, entry) {
   const entryPath = path.join(skillsDir, entry.name);
   if (entry.isDirectory()) {
@@ -289,11 +368,13 @@ function installForRuntime(runtimeKey, srcDir) {
     let count = 0;
     for (const file of fs.readdirSync(agentsSrc)) {
       if (file.endsWith('.md')) {
-        fs.copyFileSync(path.join(agentsSrc, file), path.join(agentsDest, file));
+        const srcFile = path.join(agentsSrc, file);
+        installAgentFile(srcFile, agentsDest, runtime);
         count++;
       }
     }
-    success(`Installed ${count} specialist agents to agents/`);
+    const shape = runtime.agentMetadata === 'toml' ? 'agents/ with Codex metadata' : 'agents/';
+    success(`Installed ${count} specialist agents to ${shape}`);
   }
 
   // 3. Install the master SKILL.md (always-on context)

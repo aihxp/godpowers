@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.1.
+Complete command, agent, and artifact reference for v1.6.2.
 
 ## Slash commands (106 total)
 
@@ -304,6 +304,10 @@ npx godpowers --help               Help
 Supported runtimes (15): Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
 Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi.
 T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
+
+Codex installs include matching `god-*.toml` metadata beside each
+`agents/god-*.md` file so specialist agents can be exposed as spawnable Codex
+agent types when the runtime reloads its agent registry.
 
 ## Schemas
 

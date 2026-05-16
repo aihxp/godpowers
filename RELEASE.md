@@ -1,11 +1,11 @@
-# Godpowers 1.6.1 Release
+# Godpowers 1.6.2 Release
 
-Date: 2026-05-15
+Date: 2026-05-16
 
-Godpowers 1.6.1 hardens the release and package path around the 1.6 domain
-precision release. The goal of this patch is to make tests, audit checks,
-package contents, E2E smoke coverage, npm publishing, and GitHub release
-metadata easier to verify before anything reaches users.
+Godpowers 1.6.2 hardens Codex agent integration around the stable 1.6 domain
+precision release. The goal of this patch is to make every installed
+Godpowers specialist agent spawnable in Codex sessions that require per-agent
+metadata, without changing the public command surface.
 
 ## What is stable
 
@@ -14,6 +14,7 @@ metadata easier to verify before anything reaches users.
 - 13 executable workflows
 - 36 intent recipes
 - 15-runtime installer
+- Codex installs with 39 generated `god-*.toml` agent metadata files
 - Native Pillars project context through `AGENTS.md` and `agents/*.md`
 - `.godpowers/` workflow state and artifact layout
 - Core schemas: intent, state, events, workflow, routing, recipes, extension
@@ -24,24 +25,22 @@ metadata easier to verify before anything reaches users.
 
 ## What is new
 
-- `npm run release:check` now runs tests, audit checks, and package contents
-  verification as a single pre-release gate.
-- `npm run pack:check` now asserts required npm payload files and rejects
-  local-only files instead of relying on visual dry-run output.
-- CI now installs with `npm ci`, runs audit checks, runs E2E smoke explicitly,
-  and keeps package validation tied to local scripts.
-- `docs/RELEASE-CHECKLIST.md` documents the expected release flow, tag flow,
-  npm provenance path, and post-release verification.
-- `/god-mode` full-arc has a plan-mode E2E smoke test that verifies 10 jobs,
-  7 waves, and a generated `.godpowers/runs/.../plan.yaml` artifact.
-- Stale placeholder docs for runtime libraries, references, and test strategy
-  now describe the implemented system.
+- Codex runtime support now declares an `agentMetadata: "toml"` capability in
+  the installer.
+- Codex installs generate a matching TOML metadata file for every
+  `agents/god-*.md` source file.
+- Codex metadata includes agent name, description, workspace-write sandbox
+  mode, and developer instructions derived from the markdown agent spec.
+- Install smoke tests now verify all 39 Codex metadata files, plus
+  runtime-specific install surfaces for all 15 supported runtimes.
+- Claude Code, Pi, and the other non-Codex runtimes keep their existing
+  markdown agent install behavior.
 
-## What 1.6.1 means
+## What 1.6.2 means
 
-Godpowers 1.6.1 does not expand the public command surface. It tightens the
-release discipline around the existing surface so local checks, CI checks, npm
-payload contents, git tags, and GitHub release metadata agree.
+Godpowers 1.6.2 does not expand the public command surface. It tightens the
+runtime compatibility path so the installed Codex agent registry can see the
+same Godpowers agents already shipped in `agents/*.md`.
 
 The domain glossary remains preparation context. PRD, ARCH, ROADMAP, STACK,
 docs, and Pillars files still carry durable decisions for their own domains.
@@ -51,8 +50,8 @@ docs, and Pillars files still carry durable decisions for their own domains.
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.1` git tag points to the release commit that matches the npm
-`godpowers@1.6.1` package. Public publishes should prefer the tag-triggered
+The `v1.6.2` git tag points to the release commit that matches the npm
+`godpowers@1.6.2` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

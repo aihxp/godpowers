@@ -5,6 +5,32 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-05-16
+
+Codex agent metadata compatibility patch. Keeps the public command surface
+stable while making installed Godpowers specialist agents spawnable in Codex
+sessions that require per-agent TOML metadata.
+
+### Added
+- Added Codex agent metadata generation during `--codex` installs. Every
+  `agents/god-*.md` file now gets a matching `god-*.toml` file with name,
+  description, sandbox mode, and developer instructions.
+- Added install smoke coverage that verifies all 39 Godpowers agents receive
+  Codex metadata.
+- Added `--all` installer coverage for all 15 supported runtimes, including
+  Claude Code, Codex, and Pi.
+
+### Changed
+- Codex runtime support now declares its agent metadata behavior explicitly in
+  the installer instead of relying on an inline special case.
+- Non-Codex runtimes keep their existing markdown agent install format.
+
+### Guardrails
+- This patch does not add slash commands, agents, workflows, recipes, schemas,
+  or public artifact formats.
+- The Codex metadata is generated from the existing agent markdown specs so the
+  Godpowers agent source of truth stays in `agents/*.md`.
+
 ## [1.6.1] - 2026-05-15
 
 Release hardening patch. Keeps the 1.6 domain precision surface stable while

@@ -33,6 +33,28 @@ function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'assertion failed');
 }
 
+const RUNTIME_SURFACES = {
+  claude: { dir: '.claude', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  codex: { dir: '.codex', skillsDir: 'skills', skillFile: path.join('god-mode', 'SKILL.md'), codexAgents: true },
+  cursor: { dir: '.cursor', skillsDir: 'rules', skillFile: 'god-mode.md' },
+  windsurf: { dir: '.windsurf', skillsDir: 'rules', skillFile: 'god-mode.md' },
+  opencode: { dir: '.opencode', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  gemini: { dir: '.gemini', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  copilot: { dir: '.copilot', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  augment: { dir: '.augment', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  trae: { dir: '.trae', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  cline: { dir: '.cline', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  kilo: { dir: '.kilo', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  antigravity: { dir: '.antigravity', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  qwen: { dir: '.qwen', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  codebuddy: { dir: '.codebuddy', skillsDir: 'skills', skillFile: 'god-mode.md' },
+  pi: { dir: '.pi', skillsDir: 'skills', skillFile: 'god-mode.md' }
+};
+
+function godAgentSourceFiles() {
+  return fs.readdirSync(path.join(ROOT, 'agents')).filter(f => /^god-.*\.md$/.test(f));
+}
+
 console.log('\n  Install + init smoke test\n');
 
 // 1. Run the installer with a fake HOME -----------------------------------
@@ -75,6 +97,75 @@ test('installer writes Codex commands as skill directories', () => {
   assert(!fs.existsSync(path.join(skillsDir, 'god-next.md')),
     'Codex should not receive flat god-next.md');
   fs.rmSync(codexHome, { recursive: true, force: true });
+});
+
+test('installer writes Codex agent metadata for spawnable agents', () => {
+  const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-codex-agents-'));
+  execFileSync('node', [INSTALLER, '--codex', '--global'], {
+    env: { ...process.env, HOME: codexHome },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  const agentsDir = path.join(codexHome, '.codex', 'agents');
+  const agentFiles = godAgentSourceFiles();
+  const tomlFiles = fs.readdirSync(agentsDir).filter(f => /^god-.*\.toml$/.test(f));
+  assert(tomlFiles.length === agentFiles.length,
+    `expected ${agentFiles.length} Codex agent metadata files, got ${tomlFiles.length}`);
+  for (const agentFile of agentFiles) {
+    const agentName = path.basename(agentFile, '.md');
+    const tomlPath = path.join(agentsDir, `${agentName}.toml`);
+    assert(fs.existsSync(tomlPath), `${agentName}.toml missing`);
+    const toml = fs.readFileSync(tomlPath, 'utf8');
+    assert(toml.includes(`name = "${agentName}"`),
+      `${agentName}.toml missing name`);
+    assert(toml.includes('description = '),
+      `${agentName}.toml missing description`);
+    assert(toml.includes('sandbox_mode = "workspace-write"'),
+      `${agentName}.toml missing sandbox mode`);
+    assert(toml.includes('developer_instructions ='),
+      `${agentName}.toml missing instructions`);
+  }
+  assert(fs.existsSync(path.join(agentsDir, 'god-orchestrator.md')),
+    'god-orchestrator.md missing');
+  fs.rmSync(codexHome, { recursive: true, force: true });
+});
+
+test('installer --all writes runtime-specific skill and agent surfaces', () => {
+  const allHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-all-runtimes-'));
+  execFileSync('node', [INSTALLER, '--all'], {
+    env: { ...process.env, HOME: allHome },
+    encoding: 'utf8',
+    timeout: 60_000
+  });
+  const expectedAgents = godAgentSourceFiles().length;
+  for (const [runtime, surface] of Object.entries(RUNTIME_SURFACES)) {
+    const runtimeDir = path.join(allHome, surface.dir);
+    const skillPath = path.join(runtimeDir, surface.skillsDir, surface.skillFile);
+    assert(fs.existsSync(skillPath), `${runtime} god-mode skill missing`);
+    assert(fs.existsSync(path.join(runtimeDir, surface.skillsDir)),
+      `${runtime} skills dir missing`);
+    assert(fs.existsSync(path.join(runtimeDir, 'agents', 'god-orchestrator.md')),
+      `${runtime} god-orchestrator agent missing`);
+    assert(fs.existsSync(path.join(runtimeDir, 'agents', 'god-pm.md')),
+      `${runtime} god-pm agent missing`);
+    assert(fs.existsSync(path.join(runtimeDir, 'godpowers-runtime', 'lib', 'router.js')),
+      `${runtime} runtime bundle missing router`);
+    assert(fs.existsSync(path.join(runtimeDir, 'GODPOWERS_VERSION')),
+      `${runtime} version marker missing`);
+
+    const metadataPath = path.join(runtimeDir, 'agents', 'god-orchestrator.toml');
+    if (surface.codexAgents) {
+      const tomlCount = fs.readdirSync(path.join(runtimeDir, 'agents'))
+        .filter(f => /^god-.*\.toml$/.test(f)).length;
+      assert(tomlCount === expectedAgents,
+        `${runtime} expected ${expectedAgents} agent metadata files, got ${tomlCount}`);
+      assert(fs.existsSync(metadataPath), `${runtime} god-orchestrator metadata missing`);
+    } else {
+      assert(!fs.existsSync(metadataPath),
+        `${runtime} should not receive Codex agent metadata`);
+    }
+  }
+  fs.rmSync(allHome, { recursive: true, force: true });
 });
 
 test('installer wrote ~/.claude/agents/ with at least 30 god-* files', () => {
@@ -229,8 +320,13 @@ test('uninstaller removes Codex skill directories', () => {
     timeout: 30_000
   });
   const skillsDir = path.join(home, '.codex', 'skills');
+  const agentsDir = path.join(home, '.codex', 'agents');
   assert(!fs.existsSync(path.join(skillsDir, 'god-next')), 'god-next should be removed');
   assert(!fs.existsSync(path.join(skillsDir, 'godpowers')), 'godpowers should be removed');
+  assert(!fs.existsSync(path.join(agentsDir, 'god-orchestrator.md')),
+    'god-orchestrator.md should be removed');
+  assert(!fs.existsSync(path.join(agentsDir, 'god-orchestrator.toml')),
+    'god-orchestrator.toml should be removed');
   fs.rmSync(home, { recursive: true, force: true });
 });
 
