@@ -12,11 +12,21 @@ Owner: [user]
 - [doc path] - [last modified] - [brief description]
 - [...]
 
+### Template and workflow surfaces reviewed
+- templates/ - [last modified] - [artifact templates affected by current behavior]
+- docs/ - [last modified] - [user-facing runtime and command docs]
+- routing/ - [last modified] - [recipes and command routing claims]
+- workflows/ - [last modified] - [workflow metadata claims]
+
 ### Code surface
 - Public APIs: [count]
 - CLI commands: [count]
 - Env vars: [count]
 - Slash commands (if Godpowers project): [count]
+- Specialist agents (if Godpowers project): [count]
+- Workflows and recipes (if Godpowers project): [count]
+- Host guarantee status: [full | degraded | unknown | not checked]
+- Dogfood status: [not-run | pass | fail | not applicable]
 
 ## Verified Claims
 
@@ -37,6 +47,7 @@ For each existing doc, every claim was checked against code.
 ## Updated
 
 - [Doc path]: [what changed and why]
+- [Template path]: [what changed and why]
 
 ## Created
 
@@ -62,3 +73,6 @@ Every code example in docs was actually run.
 - [ ] Three-label test passed
 - [ ] Diagrams reflect current state (not past or future)
 - [ ] Runbooks executed before commit
+- [ ] Repo documentation sync ran or was intentionally deferred
+- [ ] Repo surface sync ran or was intentionally deferred
+- [ ] Host guarantee and dogfood claims match current runtime behavior

@@ -78,6 +78,22 @@ the Decisions Log. Fail.
 ### O-06 YOLO decisions silent
 --yolo flag was used but no YOLO-DECISIONS log was emitted. Fail.
 
+### O-07 Invisible auto-invoke
+Automatic local helper or specialist work ran without reporting the trigger,
+agent status, helper result, changed artifacts, and next route. Fail.
+
+### O-08 Stale dashboard closeout
+A command completed without a disk-derived dashboard, action brief, or
+recommended next command. Fail.
+
+### O-09 Sync-back ambiguity
+Imported GSD, BMAD, or Superpowers context exists but the project does not say
+whether managed sync-back is enabled, disabled, or not applicable. Fail.
+
+### O-10 Host guarantees hidden
+The workflow relies on shell, git, npm, release tooling, or fresh-context
+agent spawning without reporting host guarantee level. Fail.
+
 ---
 
 ## Tier 1: Planning Have-Nots

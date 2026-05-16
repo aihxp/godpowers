@@ -30,6 +30,17 @@ cat <<'EOF'
 A Godpowers project is active in this directory.
 EOF
 
+# Prefer the shared dashboard action brief when the installed CLI is available.
+# This keeps hook orientation aligned with /god-status and /god-next.
+if command -v godpowers >/dev/null 2>&1; then
+  BRIEF="$(godpowers status --project . --brief 2>/dev/null | head -30 || true)"
+  if [ -n "$BRIEF" ]; then
+    echo ""
+    echo "$BRIEF"
+    echo ""
+  fi
+fi
+
 # Prefer CHECKPOINT.md (the orient-a-new-session pin) when present
 if [ -f "$CHECKPOINT_FILE" ]; then
   echo ""
@@ -69,6 +80,7 @@ Next step: run /god-next  (it inspects disk state and proposes the next command)
 Or:       /god-mode for the full autonomous project run
 Or:       /god-help to see the catalog
 Or:       /god-status for the full project snapshot
+Or:       /god-context refresh after installing a newer Godpowers runtime
 
 Disk state is authoritative. Conversation memory is not.
 EOF

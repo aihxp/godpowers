@@ -3,8 +3,10 @@ name: god-reconcile
 description: |
   Comprehensive reconciliation across all impacted artifacts before doing
   feature work. Checks PRD, ARCH, ROADMAP, STACK, REPO, DEPLOY, OBSERVE,
-  HARDEN, LAUNCH, BACKLOG, SEEDS, TODOS, THREADS in parallel. Replaces
-  /god-roadmap-check (kept for back-compat; this is the comprehensive version).
+  HARDEN, LAUNCH, BACKLOG, SEEDS, TODOS, THREADS, repository documentation,
+  repository surface, runtime feature awareness, source-system sync-back, and
+  host capabilities in parallel. Replaces /god-roadmap-check (kept for
+  back-compat; this is the comprehensive version).
 
   Triggers on: "god reconcile", "/god-reconcile", "check all", "full check",
   "where does this fit", "what does this touch"
@@ -35,7 +37,7 @@ User runs `/god-reconcile` with an intent description. Useful for:
 ## Verification
 
 After god-reconciler returns:
-1. Verify all 13 artifact statuses are reported (no silent skips)
+1. Verify all core artifact and runtime surface statuses are reported (no silent skips)
 2. Display structured verdict to user
 3. Present recommended sequence (preflight + main work + post-work)
 4. Await user decision
@@ -69,6 +71,13 @@ Capture:
   TODOS:      [status] [match if any]
   THREADS:    [status] [match if any]
 
+Runtime and repository surfaces:
+  REPO DOCS:  [fresh | needs-mechanical-sync | needs-docs-writer]
+  SURFACE:    [fresh | needs-surface-sync | needs-safe-fix | needs-human-review]
+  FEATURES:   [fresh | needs-awareness-refresh | needs-migration-judgment]
+  SOURCE:     [not-applicable | fresh | needs-sync-back | blocked-by-conflict]
+  HOST:       [full | degraded | unknown]
+
 Recommended sequence:
   Preflight:  [/god-redo prd, /god-arch delta-only]
   Main work:  [/god-feature scoped to Milestone 2]
@@ -86,7 +95,7 @@ Recommended: [one option and why]
 
 | | /god-roadmap-check | /god-reconcile |
 |---|---|---|
-| Scope | ROADMAP only | All 13 artifacts |
+| Scope | ROADMAP only | Core artifacts plus runtime and repository surfaces |
 | Use | Quick check | Comprehensive |
 | Auto-invoked | by feature-addition recipes (legacy) | by feature-addition recipes (preferred) |
 | Replaces | -- | /god-roadmap-check (kept for back-compat) |

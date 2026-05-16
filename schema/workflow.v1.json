@@ -27,7 +27,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "pattern": "^/god-[a-z-]+$"
+        "pattern": "^/god-[a-z-]+(\\s.*)?$"
       }
     },
     "jobs": {
@@ -86,10 +86,39 @@
             "additionalProperties": true
           }
         },
+        "local-helpers": {
+          "type": "array",
+          "description": "Visible local runtime helpers that run in this job without specialist-agent judgment.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "checkpoint-sync",
+              "feature-awareness",
+              "host-capabilities",
+              "repo-doc-sync",
+              "repo-surface-sync",
+              "route-quality-sync",
+              "recipe-coverage-sync",
+              "release-surface-sync",
+              "dogfood-runner",
+              "source-sync-back",
+              "pillars-sync-plan"
+            ]
+          }
+        },
         "per": { "type": "string", "enum": ["slice", "wave"] },
         "parallel-by": { "type": "string", "enum": ["slice", "wave"] },
         "on-pass": { "type": "string" },
-        "skip-when": { "type": "string" }
+        "on-fail": { "type": "string" },
+        "skip-when": { "type": "string" },
+        "verification": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "closure": {
+          "type": "object",
+          "additionalProperties": true
+        }
       }
     }
   }

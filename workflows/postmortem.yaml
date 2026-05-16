@@ -29,3 +29,16 @@ jobs:
     with:
       mode: runbook-updates
     skip-when: no-runbook-gaps-identified
+
+  postmortem-sync:
+    tier: 0
+    needs: postmortem-runbook-update
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - repo-doc-sync
+      - repo-surface-sync
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

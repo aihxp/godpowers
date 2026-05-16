@@ -137,11 +137,11 @@ PASS. Token usage counts and component implementations correctly listed.
 
 ### Step 7: Deliberate em dash injection
 
-Appended `\nThis line has an em dash — in it.\n` to PRD.md.
+Appended `\nThis line has an em dash \u2014 in it.\n` to PRD.md.
 
 ```
 Errors: 1 Warnings: 0
-  E U-08 line 128: Em or en dash detected ("—"). Use comma, colon,
+  E U-08 line 128: Em or en dash detected ("\u2014"). Use comma, colon,
     semicolon, parentheses, or hyphen instead.
 ```
 

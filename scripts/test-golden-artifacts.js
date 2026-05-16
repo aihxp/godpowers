@@ -167,8 +167,8 @@ test('CLI STACK DECISION names a flip point', () => {
 for (const fx of FIXTURES) {
   test(`no em/en dashes in ${fx.name}`, () => {
     const txt = read(fx.p);
-    const hasEm = txt.includes('—');
-    const hasEn = txt.includes('–');
+    const hasEm = txt.includes('\u2014');
+    const hasEn = txt.includes('\u2013');
     assert(!hasEm, `em dash in ${fx.p}`);
     assert(!hasEn, `en dash in ${fx.p}`);
   });

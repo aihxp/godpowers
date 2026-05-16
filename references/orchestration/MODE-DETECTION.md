@@ -1,6 +1,7 @@
 # Mode Detection
 
-> How god-orchestrator decides which mode (A/B/C/D) to use.
+> How god-orchestrator decides which mode (A/B/C/E) to use, and when Mode D
+> suite coordination also applies.
 
 ## Mode A: Greenfield (default)
 
@@ -17,6 +18,8 @@
 - Some `.godpowers/<tier>/<artifact>` files already exist
 - OR existing codebase signals: package.json, Dockerfile, .github/workflows
 - User describes an existing project they want to add Godpowers to
+- GSD, BMAD, or Superpowers planning context is detected and should be imported
+  into Godpowers preparation artifacts
 
 **Behavior**:
 1. For each canonical artifact path: check existence on disk
@@ -30,6 +33,8 @@ Codebase signals (for inferring partial completion):
 - `.github/workflows/` or `.gitlab-ci.yml` exists -> CI present
 - `tests/` or `*.test.*` files exist -> Build tier in progress
 - `Dockerfile` + deploy config -> Deploy tier may be done
+- `.planning/`, `.gsd/`, `_bmad-output/`, `.bmad/`, or Superpowers specs ->
+  source-system import and managed sync-back may be needed
 
 ## Mode C: Audit
 
@@ -39,14 +44,34 @@ Codebase signals (for inferring partial completion):
 
 **Behavior**: run god-auditor on all existing artifacts. Build nothing.
 
-## Mode D: Multi-repo (FUTURE WORK)
+## Mode E: Bluefield
+
+**Signals**:
+- User is starting new code inside an existing organization or platform.
+- Parent or sibling directories contain org standards, shared packages,
+  deployment conventions, or platform contracts.
+- User names shared constraints such as approved infrastructure, design system,
+  compliance baseline, or internal libraries.
+
+**Behavior**:
+1. Load org context with `/god-org-context`.
+2. Run `/god-preflight` against the surrounding environment.
+3. Run a greenfield simulation audit against the org constraints.
+4. Use `god-greenfieldifier` to plan approved artifact updates.
+5. Continue the normal arc with the org constraints respected.
+
+## Mode D: Multi-repo suite membership
 
 **Signals**:
 - Working directory contains workspace config (pnpm-workspace.yaml, nx.json, lerna.json, turbo.json)
 - OR multiple sub-repos with their own `.git/`
 - User describes a system spanning multiple repos
+- `.godpowers/suite/` exists or sibling repos share byte-identical managed files
 
-**Status**: documented but not implemented in v0.4. Falls back to Mode A or B for the current repo.
+**Behavior**: Mode D is not a replacement for A/B/C/E. It is suite membership
+managed by `god-coordinator` as a Tier-0 peer. Each repo still runs one of
+A/B/C/E underneath, while `/god-suite-*` commands handle cross-repo status,
+sync, patch, and release planning.
 
 ## Worked example
 
@@ -72,3 +97,11 @@ Reports to user:
 > Setting Mode B (gap-fill). I'll work backward to fill missing artifacts.
 > First: I need to understand what this codebase does. Let me start with
 > /god-explore or you can describe it briefly."
+
+## Existing Godpowers projects after upgrades
+
+When `.godpowers/state.json` already exists, mode detection should also run
+feature awareness. The safe local helper records the installed Godpowers
+feature set, refreshes managed AI-tool context fences, and reports missing
+planning-system import or sync-back opportunities. It does not overwrite
+product artifacts.

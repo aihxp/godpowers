@@ -92,7 +92,7 @@ is preparation context for PRD, ARCH, ROADMAP, STACK, and docs. It does not
 replace those artifacts.
 
 ### Have-nots
-99 named failure modes. ~30 are mechanical (regex-checkable);
+156 named failure modes. ~30 are mechanical (regex-checkable);
 the rest are interpretive. Examples:
 - P-01: Generic problem statement (passes substitution test)
 - A-04: ADR without flip point
@@ -166,6 +166,20 @@ Story-file workflow (`/god-story` family) and Mode D suite workflows
 (`/god-suite-*`) layer on top of these. Each is a declarative YAML in
 `workflows/`. The orchestrator reads them.
 
+## Dashboard And Local Helpers
+
+Every command closeout should be traceable to disk state. The dashboard reports
+workflow progress, the current phase, the action brief, host guarantees, and
+proactive checks for docs, repo surface, runtime, security, dependencies, and
+hygiene.
+
+Some automatic work is local helper work, not agent work. Checkpoint sync,
+repo documentation sync, repo surface sync, feature awareness, host capability
+detection, and dogfood fixture execution run as visible local runtime steps
+when their triggers are direct. Specialist agents are reserved for bounded
+work that needs judgment, such as docs drift review, design review, browser
+testing, or dogfood failure triage.
+
 ## Modes
 
 | Mode | When |
@@ -202,15 +216,24 @@ Skill packs from npm. Each declares `apiVersion: godpowers/v1` and
 `engines.godpowers: "^1.0.0"`. Lazy-activated: pack files don't load until
 their slash command is invoked.
 
-First-party packs (scaffolded in v0.4, full in v0.8):
+First-party pack examples:
 - `@godpowers/security-pack` - SOC 2, HIPAA, PCI
 - `@godpowers/launch-pack` - Show HN, PH, IH, OSS
 - `@godpowers/data-pack` - ETL, ML features, dashboards
+
+Use `npx godpowers extension-scaffold --name=@scope/pack --output=.` to create
+the manifest, package, README, skill, agent, and workflow skeleton for a new
+pack.
 
 ## How it composes with other AI workflow systems
 
 Godpowers does not assume it's the only AI workflow tool installed.
 It keeps its state in `.godpowers/` and never writes outside it.
+
+`/god-init`, `/god-migrate`, and feature awareness detect GSD, BMAD, and
+Superpowers context. Imported context becomes preparation material for native
+Godpowers artifacts, while `/god-sync` can write managed companion files back
+to the source system so teams can return to that workflow if needed.
 
 See [references/shared/ORCHESTRATORS.md](../references/shared/ORCHESTRATORS.md)
 for the coexistence rules and migration paths. For acknowledgement of

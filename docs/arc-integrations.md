@@ -1,9 +1,9 @@
-# Deep Arc Integrations
+# Deep Workflow Integrations
 
-> How the 21 workflows compose, hand off, and trigger each other across
-> a project's full lifecycle.
+> How 13 executable workflows, 40 intent recipes, and 110 slash commands
+> compose, hand off, and trigger each other across a project's full lifecycle.
 
-The arcs aren't isolated. They form a connected graph that follows real
+The workflows are not isolated. They form a connected graph that follows real
 project lifecycles: greenfield -> steady state -> incident -> recovery ->
 back to steady. This document walks every meaningful integration path.
 
@@ -54,7 +54,7 @@ back to steady. This document walks every meaningful integration path.
         /god-feature     /god-hotfix      /god-refactor
         /god-spike       /god-postmortem  /god-upgrade
         /god-docs        /god-update-deps /god-hygiene
-        /god-audit       /god-debug       ...
+        /god-audit       /god-debug       /god-dogfood
             |                 |                 |
             └─────────────────┼─────────────────┘
                               v
@@ -698,11 +698,18 @@ Every workflow follows the same shape:
 5. Agent writes artifact to .godpowers/<tier>/
 6. Skill verifies (artifact exists, have-nots pass)
 7. Skill updates state.json + events.jsonl
-8. Skill suggests next workflow based on:
+8. Local helpers refresh visible state when directly triggered:
+   - checkpoint sync
+   - repo documentation sync
+   - repo surface sync
+   - host capability detection
+   - dogfood runner when requested
+9. Skill suggests next workflow based on:
    - State of disk
    - Lifecycle phase
    - Outcome of this workflow
    - User intent (if disambiguation needed)
 ```
 
-This is the universal pattern. 21 workflows. 33 agents. One coherent system.
+This is the universal pattern. 13 executable workflows, 40 recipes, 110 slash
+commands, and 40 agents. One coherent system.

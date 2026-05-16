@@ -46,6 +46,7 @@ jobs:
     tier: 1
     needs: prd
     uses: god-architect@^1.0.0
+    local-helpers: [repo-doc-sync, host-capabilities]
   stack:
     tier: 1
     needs: arch
@@ -107,6 +108,15 @@ test('plan extracts agent name from uses string', () => {
   assert(prdStep.agent === 'god-pm', `agent: ${prdStep.agent}`);
 });
 
+test('plan exposes workflow local helpers', () => {
+  const dir = mkWorkflowDir();
+  const wf = runner.loadByName('simple', { dir });
+  const p = runner.plan(wf);
+  const archStep = p.steps.find(s => s.jobKey === 'arch');
+  assert(archStep.localHelpers.includes('repo-doc-sync'), `helpers: ${archStep.localHelpers}`);
+  assert(archStep.localHelpers.includes('host-capabilities'), `helpers: ${archStep.localHelpers}`);
+});
+
 test('plan summary contains a wave description', () => {
   const dir = mkWorkflowDir();
   const wf = runner.loadByName('simple', { dir });
@@ -126,6 +136,8 @@ test('writePlan creates .godpowers/runs/<id>/plan.yaml', () => {
   const text = fs.readFileSync(file, 'utf8');
   assert(/^workflow: simple/m.test(text), 'workflow name not in plan');
   assert(/wave-count: 3/.test(text), 'wave-count not in plan');
+  assert(/local-helpers: \[repo-doc-sync, host-capabilities\]/.test(text),
+    'local helpers not in plan');
 });
 
 test('readPlan returns null when missing', () => {

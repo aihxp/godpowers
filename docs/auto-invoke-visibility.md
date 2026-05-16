@@ -55,6 +55,7 @@ Action brief:
   Why: <one sentence tied to disk state>
   Readiness: <ready | needs attention>
   Attention: <none or top blockers, with overflow count>
+  Host guarantees: <full | degraded | unknown>
 
 Planning visibility:
   PRD: <done | pending | missing | deferred> <path when present>
@@ -68,6 +69,8 @@ Proactive checks:
   Sync: <fresh | suggest /god-sync | local helper ran>
   Docs: <fresh | possible drift, suggest /god-docs>
   Repo surface: <fresh | N stale, suggest /god-doctor>
+  Host guarantees: <full | degraded | unknown>
+  Dogfood: <not-run | pass | fail | suggest /god-dogfood>
   Runtime: <not-applicable | known URL, suggest /god-test-runtime>
   Security: <clear | sensitive files changed, suggest /god-harden>
   Dependencies: <clear | dependency files changed, suggest /god-update-deps>
@@ -102,6 +105,8 @@ as workflow progress.
 | Reverse-sync | `/god-sync`, `/god-scan`, code-touching workflows | Show whether an agent ran or local runtime only |
 | Pillars sync | Artifact truth changes | Show changed pillar files or no-op |
 | Repo documentation sync | `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, `/god-mode` | Show local fixes and prose agent recommendations |
+| Host capability detection | `/god-status`, `/god-next`, `/god-doctor`, `/god-sync`, release closeout | Show full, degraded, or unknown host guarantees |
+| Dogfood runner | `/god-dogfood`, `npx godpowers dogfood`, release readiness checks | Show scenario names, pass/fail counts, and fixture paths |
 | Checkpoint sync | State mutation checkpoints | Show `.godpowers/CHECKPOINT.md` created, updated, no-op, or skipped |
 | Context refresh | `/god-sync`, `/god-init`, `/god-context` | Show `god-context-writer` spawn or no-op |
 | Standards checks | Routed stage boundaries | Show gate, artifact, pass/fail, and next route |
@@ -122,6 +127,8 @@ as workflow progress.
 | `/god-review-changes` suggestion | When REVIEW-REQUIRED.md gains entries | Gives the user a concrete review path | Do not auto-clear review items |
 | `/god-hygiene` suggestion | After a full project run or every 30 days | Keeps docs, deps, and quality current | Suggest by default, auto-run only when requested |
 | Runtime verification | After frontend-visible changes | Catches blank screens and layout regressions | Auto-run only when local app target is known |
+| Host capability detection | Dashboard, next-route, doctor, sync, and release surfaces | Makes host limits explicit before users rely on automation | Read-only only |
+| Dogfood runner | Before release, after migration/sync-back/host/extension/suite changes, or by user request | Exercises messy-project fixtures that unit tests cannot represent | Run only shipped fixtures unless user supplies a project |
 | Automation setup execution | After exact provider, template, cadence, and scope approval | Lets the host LLM configure safe automation for the user | Record only after host setup succeeds |
 
 ## Proactive Matrix
@@ -129,8 +136,8 @@ as workflow progress.
 | Level | Behavior | Default action | Examples |
 |---|---|---|---|
 | 1 | Read-only suggestion | Run by default | `/god-next` route, status summary, hygiene suggestion |
-| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync |
-| 3 | Scoped specialist agent | Spawn only with bounded evidence | design review, docs drift check, browser test with known URL |
+| 2 | Local helper | Run when directly triggered | checkpoint sync, linkage scan, Pillars sync plan, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync, host-capabilities, dogfood-runner |
+| 3 | Scoped specialist agent | Spawn only with bounded evidence | design review, docs drift check, browser test with known URL, dogfood failure triage |
 | 4 | Human-owned action | Require explicit approval | production launch, publish, destructive repair |
 
 ## Level 1 Auto-Suggest
@@ -156,6 +163,10 @@ Run these automatically when the trigger is direct, then display an
 - Pillars sync planning after durable artifact truth changes.
 - Context refresh dry-run after AI tool instruction files change.
 - Progress recomputation after commands that change artifacts.
+- Host capability detection when dashboard, next-route, doctor, sync, or
+  release surfaces need host guarantee language.
+- Dogfood runner when `/god-dogfood`, `npx godpowers dogfood`, or release
+  readiness checks directly request fixture execution.
 
 ## Level 3 Auto-Spawn Agents
 
@@ -176,6 +187,8 @@ Spawn these only when the scope is bounded and the trigger is visible:
 - `god-automation-engineer` after approved complex automation setup.
 - `/god-automation-status` as a read-only provider report when automation
   support may be available.
+- `god-greenfieldifier`, `god-context-writer`, or `god-coordinator` after a
+  bounded dogfood scenario fails in migration, context, or Mode D suite scope.
 
 ## Non-Candidates
 

@@ -14,7 +14,7 @@ metadata:
     greenfield simulation audit against those constraints, then runs a
     user-approved greenfieldification pass before the full project run.
 
-on: [/god-bluefield, /god-mode --bluefield]
+on: [/god-mode --bluefield]
 
 jobs:
   org-context:
@@ -128,3 +128,18 @@ jobs:
     tier: 3
     needs: harden
     uses: god-launch-strategist@^1.0.0
+
+  final-sync:
+    tier: 0
+    needs: launch
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - feature-awareness
+      - repo-doc-sync
+      - repo-surface-sync
+      - host-capabilities
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

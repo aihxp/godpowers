@@ -410,11 +410,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-reconcile`, auto-invoked by feature-addition recipes |
-| **Inputs** | All 14 artifact categories (graceful for missing): PRD, ARCH, ROADMAP, STACK, REPO, BUILD, DEPLOY, OBSERVE, HARDEN, LAUNCH, BACKLOG, SEEDS, TODOS, THREADS |
+| **Inputs** | All 14 core artifact categories (graceful for missing) plus repo docs, repo surface, feature awareness, source sync-back, and host capability |
 | **Outputs** | Multi-dimensional verdict (returned to caller, optionally written to .godpowers/reconciliation/) |
 | **Downstream consumers** | Orchestrating skill (decides preflight commands), god-updater (knows what to update post-work) |
-| **Artifact awareness** | ALL artifacts (it's the meta-aware agent) |
-| **Handoff** | Returns 6-status verdict per artifact + synthesis recommendation |
+| **Artifact awareness** | ALL core artifacts plus local runtime and repository surfaces |
+| **Handoff** | Returns status verdicts per artifact and surface plus synthesis recommendation |
 | **Standards check** | YES (verifies its own thoroughness) |
 
 ### god-updater
@@ -422,11 +422,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-sync`, auto-invoked at end of feature-addition recipes, mandatory at end of /god-mode |
-| **Inputs** | Reconciliation verdict (or re-runs reconciliation), recent commits |
-| **Outputs** | Updates to any/all 14 artifacts as needed, `.godpowers/SYNC-LOG.md` (append-only) |
+| **Inputs** | Reconciliation verdict (or re-runs reconciliation), changed files, trigger type, recent commits |
+| **Outputs** | Updates to any/all core artifacts, local sync logs, feature awareness, source-system summaries, and `.godpowers/SYNC-LOG.md` (append-only) |
 | **Downstream consumers** | (no specific consumers; this is the closure step) |
-| **Artifact awareness** | ALL artifacts |
-| **Handoff** | Returns when all touched artifacts pass have-nots and SYNC-LOG.md is appended |
+| **Artifact awareness** | ALL core artifacts plus local runtime and repository surfaces |
+| **Handoff** | Returns when all touched artifacts pass have-nots, local sync surfaces are reported, and SYNC-LOG.md is appended |
 | **Standards check** | YES (per-artifact, per-tier) |
 
 ### god-roadmap-reconciler (legacy, narrower scope)
@@ -564,44 +564,44 @@ Which agents are aware of which artifacts (read-only, NOT including their own ou
 
 | Agent | PRD | ARCH | ROADMAP | STACK | REPO | BUILD | DEPLOY | OBSERVE | HARDEN | LAUNCH | BACKLOG | SEEDS | TODOS | THREADS |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| god-orchestrator | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| god-orchestrator | read | read | read | read | read | read | read | read | read | read | read | read | read | read |
 | god-pm | (writes) | | | | | | | | | | | | | |
-| god-architect | ✓ | (writes) | | | | | | | | | | | | |
-| god-roadmapper | ✓ | ✓ | (writes) | | | | | | | | | | | |
-| god-stack-selector | | ✓ | | (writes) | | | | | | | | | | |
-| god-repo-scaffolder | | | | ✓ | (writes) | | | | | | | | | |
-| god-planner | | ✓ | ✓ | ✓ | | (writes plan) | | | | | | | | |
-| god-executor | | (excerpt) | | ✓ | | (slice) | | | | | | | | |
-| god-spec-reviewer | ✓ | | | | | (slice) | | | | | | | | |
+| god-architect | read | (writes) | | | | | | | | | | | | |
+| god-roadmapper | read | read | (writes) | | | | | | | | | | | |
+| god-stack-selector | | read | | (writes) | | | | | | | | | | |
+| god-repo-scaffolder | | | | read | (writes) | | | | | | | | | |
+| god-planner | | read | read | read | | (writes plan) | | | | | | | | |
+| god-executor | | (excerpt) | | read | | (slice) | | | | | | | | |
+| god-spec-reviewer | read | | | | | (slice) | | | | | | | | |
 | god-quality-reviewer | | | | | | (slice) | | | | | | | | |
-| god-deploy-engineer | | ✓ | | ✓ | | ✓ | (writes) | | | | | | | |
-| god-observability-engineer | ✓ | ✓ | | | | | ✓ | (writes) | | | | | | |
-| god-harden-auditor | | | | | | code | ✓ | | (writes) | | | | | |
-| god-launch-strategist | ✓ | | | | | | | | ✓ | (writes) | | | | |
+| god-deploy-engineer | | read | | read | | read | (writes) | | | | | | | |
+| god-observability-engineer | read | read | | | | | read | (writes) | | | | | | |
+| god-harden-auditor | | | | | | code | read | | (writes) | | | | | |
+| god-launch-strategist | read | | | | | | | | read | (writes) | | | | |
 | god-debugger | | | | | | code | | | | | | | | |
 | god-incident-investigator | | | | | | code | | | | | | | | |
 | god-spike-runner | | | | | | | | | | | | | | |
-| god-migration-strategist | | | | ✓ | | ✓ | ✓ | ✓ | | | | | | |
-| god-docs-writer | ✓ | ✓ | ✓ | ✓ | code | code | | | | | | | | |
-| god-deps-auditor | | | | ✓ | code | | | | | | | | | |
+| god-migration-strategist | | | | read | | read | read | read | | | | | | |
+| god-docs-writer | read | read | read | read | code | code | | | | | | | | |
+| god-deps-auditor | | | | read | code | | | | | | | | | |
 | god-explorer | (varies) | | | | | | | | | | | | | |
-| god-retrospective | ✓ | | ✓ | | | ✓ | | | | | | | | |
-| god-auditor | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | | | | |
+| god-retrospective | read | | read | | | read | | | | | | | | |
+| god-auditor | read | read | read | read | read | read | read | read | read | read | | | | |
 | god-standards-check | (just the artifact being checked) | | | | | | | | | | | | | |
 | god-archaeologist | | | | | code+git | | | | | | | | | |
 | god-reconstructor | (writes all) | | | | | | | | | | | | | |
-| god-debt-assessor | | | | ✓ | code | | | | | | | | | |
+| god-debt-assessor | | | | read | code | | | | | | | | | |
 | god-org-context-loader | | | | (writes org-context) | | | | | | | | | | |
-| **god-reconciler** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **god-updater** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **god-reconciler** | read | read | read | read | read | read | read | read | read | read | read | read | read | read |
+| **god-updater** | read | read | read | read | read | read | read | read | read | read | read | read | read | read |
 
 Legend:
-- ✓ = reads
+- read = reads
 - (writes) = primary output
 - code = reads source code (not a `.godpowers/` artifact)
 - (slice) = reads only the relevant slice/excerpt
 
-The two agents with full awareness of all 14 artifacts are **god-reconciler** and **god-updater**. They're the meta-aware agents that close the consistency loop.
+The two agents with full awareness of all core artifacts plus runtime and repository sync surfaces are **god-reconciler** and **god-updater**. They're the meta-aware agents that close the consistency loop.
 
 ---
 

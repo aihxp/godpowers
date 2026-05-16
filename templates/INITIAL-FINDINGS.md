@@ -29,6 +29,9 @@
 - [HYPOTHESIS] BMAD context found: [paths or "none detected"].
 - [HYPOTHESIS] Pillars context health: [present / partial / initialized].
 - [HYPOTHESIS] Imported context artifact: [.godpowers/prep/IMPORTED-CONTEXT.md or "not created"].
+- [HYPOTHESIS] Source-system sync-back path: [managed path or "not applicable"].
+- [HYPOTHESIS] Host capability guarantee: [full / degraded / unknown].
+- [HYPOTHESIS] Dogfood scenario relevance: [migration / sync-back / host / extension / suite / not applicable].
 
 ## Planning Implications
 
@@ -54,3 +57,5 @@
 - [DECISION] If this artifact conflicts with `.godpowers/intent.yaml`, `.godpowers/state.json`, `PROGRESS.md`, or a completed Godpowers artifact, the Godpowers artifact wins.
 - [DECISION] Pillars files under `agents/*.md` are the native project context layer for Godpowers commands.
 - [DECISION] Imported GSD, Superpowers, and BMAD signals must be converted into Godpowers-native artifacts, not preserved as parallel state.
+- [DECISION] Managed sync-back files may be written only by Godpowers-owned fences or companion paths.
+- [DECISION] Host capability and dogfood findings inform routing, but completed Godpowers artifacts remain authoritative.

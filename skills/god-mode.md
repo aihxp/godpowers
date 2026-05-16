@@ -286,10 +286,13 @@ Default. Skip the hygiene pass. Use when iterating quickly.
 ## Mandatory final sync
 
 Regardless of flags, `/god-mode` always runs `/god-sync` before declaring
-complete. This ensures all 14 artifact categories are in a consistent state:
+complete. This ensures all 14 core artifact categories and local sync surfaces
+are in a consistent state:
 
 - 10 Tier 0-3 artifacts validated (have-nots passing)
 - 4 capture artifacts noted as `not-yet-created` (graceful handling)
+- repo-doc, repo-surface, feature awareness, source sync-back, host capability,
+  checkpoint, Pillars, and context refresh statuses reported
 - SYNC-LOG.md updated with project-run completion entry
 - state.json reflects final tier statuses
 

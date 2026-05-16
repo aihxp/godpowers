@@ -8,6 +8,7 @@
 
 - [DECISION] Source system: [GSD / Superpowers / BMAD / other].
 - [DECISION] Source path: [relative path].
+- [DECISION] Managed sync-back path: [relative path or "not enabled"].
 - [HYPOTHESIS] Useful signal: [what this source appears to clarify].
 - [HYPOTHESIS] Confidence: [high / medium / low] because [brief reason].
 
@@ -39,3 +40,4 @@
 - [DECISION] This artifact must not override native Pillars files under `agents/*.md`.
 - [DECISION] If imported context conflicts with user intent or a Godpowers artifact, the Godpowers artifact wins and the conflict becomes an open question.
 - [DECISION] PRD, architecture, roadmap, and stack agents should cite imported signals as `[HYPOTHESIS]` until confirmed by Godpowers artifacts or the user.
+- [DECISION] Sync-back must preserve source-system context through managed companion files or fences, not by overwriting arbitrary source-system artifacts.

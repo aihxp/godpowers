@@ -275,7 +275,7 @@ Specific small drifts found:
 
 3. Five external integrations are all detect-and-delegate, no vendored
    copies. Confirmed by grepping for the libraries' source-file
-   signatures across the repo — only thin bridges in `lib/*-bridge.js`.
+   signatures across the repo, only thin bridges in `lib/*-bridge.js`.
 
 4. 15 runtime configDir paths in `bin/install.js`. None overlap. All
    use `~/.X` convention. Pi additionally writes to `.pi/skills/`

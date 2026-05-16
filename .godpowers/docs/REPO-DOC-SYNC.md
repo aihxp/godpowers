@@ -34,3 +34,21 @@
 - [DECISION] Refreshed skills/god-version.md for god-version-surface.
 - [DECISION] Refreshed skills/god-doctor.md for god-doctor-skill-count.
 - [HYPOTHESIS] god-docs-writer should review CHANGELOG.md, RELEASE.md.
+
+## 2026-05-16T18:22:23.515Z
+
+- [DECISION] Repo documentation sync status before apply was stale.
+- [DECISION] Repo documentation sync status after apply is stale.
+- [DECISION] Refreshed README.md for readme-version-badge.
+- [DECISION] Refreshed USERS.md for users-version.
+- [DECISION] Refreshed ARCHITECTURE.md for architecture-version.
+- [DECISION] Refreshed docs/ROADMAP.md for roadmap-version.
+- [DECISION] Refreshed docs/reference.md for reference-version.
+- [HYPOTHESIS] god-docs-writer should review CHANGELOG.md, RELEASE.md.
+
+## 2026-05-16T18:22:36.759Z
+
+- [DECISION] Repo documentation sync status before apply was stale.
+- [DECISION] Repo documentation sync status after apply is stale.
+- [DECISION] No mechanical repo documentation files were changed.
+- [HYPOTHESIS] god-docs-writer should review CHANGELOG.md, RELEASE.md.

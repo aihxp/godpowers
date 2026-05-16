@@ -157,6 +157,57 @@
       },
       "additionalProperties": false
     },
+    "host-capabilities": {
+      "type": "object",
+      "description": "Most recent host guarantee report used by dashboard and release readiness surfaces.",
+      "properties": {
+        "host": { "type": "string" },
+        "level": {
+          "type": "string",
+          "enum": ["full", "degraded", "unknown"]
+        },
+        "gaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "checked-at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    },
+    "dashboard": {
+      "type": "object",
+      "description": "Optional cached dashboard summary. Runtime recomputes from disk when present data is stale.",
+      "properties": {
+        "last-rendered-at": { "type": "string", "format": "date-time" },
+        "action-brief": {
+          "type": "object",
+          "properties": {
+            "next": { "type": "string" },
+            "why": { "type": "string" },
+            "readiness": { "type": "string", "enum": ["ready", "needs attention"] },
+            "attention": { "type": "array", "items": { "type": "string" } },
+            "host-guarantees": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "dogfood": {
+      "type": "object",
+      "description": "Most recent deterministic messy-repo fixture run summary.",
+      "properties": {
+        "status": { "type": "string", "enum": ["not-run", "pass", "fail"] },
+        "total": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "last-run-at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
     "yolo-decisions": {
       "type": "array",
       "description": "Auto-decisions made under --yolo. Mirrored to YOLO-DECISIONS.md.",

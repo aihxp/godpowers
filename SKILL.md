@@ -120,9 +120,9 @@ When the runtime bundle is available, compute this with
 `lib/dashboard.compute(projectRoot)` and render it with
 `lib/dashboard.render(result)`. The executable dashboard engine is the shared
 source for phase, tier, step, progress, PRD and roadmap visibility, proactive
-checks, open items, and the next route. If the runtime module is unavailable,
-fall back to a manual disk scan and say `Dashboard engine: unavailable, manual
-scan used`.
+checks, host guarantees, open items, and the next route. If the runtime module
+is unavailable, fall back to a manual disk scan and say `Dashboard engine:
+unavailable, manual scan used`.
 
 Use this shape:
 
@@ -136,6 +136,13 @@ Current status:
   Progress: <pct>% (<done> of <total> steps complete) when available
   Worktree: <clean | modified files unstaged | staged changes | mixed>
   Index: <untouched | staged files listed>
+
+Action brief:
+  Next: <recommended command or user decision>
+  Why: <route reason tied to disk state>
+  Readiness: <ready | needs attention>
+  Attention: <top blockers or none>
+  Host guarantees: <full | degraded | unknown with host and first gap>
 
 Planning visibility:
   PRD: <done | pending | missing | deferred> <artifact path when present>
@@ -156,6 +163,7 @@ Proactive checks:
   Sync: <fresh | missing | stale | local helper ran | suggest /god-sync>
   Docs: <fresh | N stale, suggest /god-docs | repo-doc-sync ran>
   Repo surface: <fresh | N stale, suggest /god-doctor | repo-surface-sync ran>
+  Host: <full | degraded | unknown with host and first gap>
   Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
   Automation: <not configured | N active | available via provider, suggest /god-automation-setup>
   Security: <clear | sensitive files changed, suggest /god-harden>
@@ -215,7 +223,7 @@ Auto-invoked:
   Trigger: <what caused this automatic step>
   Agent: <god-updater | god-context-writer | none, local runtime only>
   Local syncs:
-    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | route-quality-sync | recipe-coverage-sync | release-surface-sync | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
+    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | route-quality-sync | recipe-coverage-sync | release-surface-sync | host-capabilities | dogfood-runner | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
   Artifacts: <changed files, no-op, or deferred>
   Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
 ```
@@ -250,6 +258,10 @@ Automatic steps that especially need visible reporting:
 - route-quality sync, recipe-coverage sync, and release-surface sync through
   repo-surface sync during `/god-sync`, `/god-docs`, `/god-doctor`,
   `/god-status`, or `/god-mode`
+- host capability detection during `/god-status`, `/god-next`, and closeout
+  dashboards
+- dogfood runner execution during `/god-dogfood`, release checks, or explicit
+  dogfood requests
 
 ### 13. Proactive Auto-Invoke Policy
 Godpowers should be proactive from disk evidence, not from guesswork. Before
@@ -297,6 +309,10 @@ Run these local runtime helpers automatically when their trigger is present:
 - `lib/route-quality-sync.detect`, `lib/recipe-coverage-sync.detect`, and
   `lib/release-surface-sync.detect` through repo-surface sync when route
   spawns, high-frequency recipes, or release-facing surfaces may have drifted.
+- `lib/host-capabilities.detect` during dashboard computation so runtime
+  guarantees are visible before Godpowers claims autonomy.
+- `lib/dogfood-runner.runAll` during explicit `/god-dogfood`, release checks,
+  or user-requested dogfood verification.
 - Context refresh dry-run after `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`,
   `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`,
   `.clinerules`, `.roo/`, or `.continue/` changes.
@@ -332,6 +348,10 @@ Spawn these agents only when the trigger is direct and scope is bounded:
   artifacts after local import.
 - `god-greenfieldifier` when feature-awareness detects unimported or imported
   source-system context that is low confidence or conflicting.
+- `god-greenfieldifier` when dogfood migration scenarios fail.
+- `god-context-writer` when host capability dogfood scenarios fail.
+- `god-coordinator` when extension authoring or suite release dogfood
+  scenarios fail.
 
 #### Level 4: Explicit approval required
 Never auto-run these from inference alone:

@@ -643,10 +643,13 @@ ecosystem.
 Before declaring the project run complete, ALWAYS run /god-sync:
 
 1. Spawn god-updater in fresh context
-2. Verify final consistency across all 14 artifact categories:
+2. Verify final consistency across all 14 core artifact categories and local
+   sync surfaces:
    - All Tier 1-3 artifacts written and pass have-nots
    - Capture artifacts (BACKLOG, SEEDS, TODOS, THREADS) noted as
      "not-yet-created" if absent (graceful, not a failure)
+   - Repo docs, repo surface, feature awareness, source sync-back, host
+     capability, checkpoint, Pillars, and context refresh statuses reported
 3. Update SYNC-LOG.md with the project-run completion entry
 4. Update state.json with all final tier statuses
 
@@ -685,19 +688,28 @@ Godpowers project run complete.
 
 Godpowers Dashboard
 
+Source: runtime dashboard (lib/dashboard.js)
+
 Current status:
   State: complete
   Phase: <plain-language phase> (tier <human ordinal> of <human total>)
   Step: <sub-step label> (step <n> of <total steps>)
-  Progress: <pct>% (<done> of <total> steps complete)
+  Progress: <pct>% workflow progress (<done> of <total> tracked steps complete)
   Worktree: <clean | modified files unstaged | staged changes | mixed>
   Index: <untouched | staged files listed>
+
+Action brief:
+  Next: <one command or user decision>
+  Why: <one sentence tied to disk state>
+  Readiness: <ready | needs attention>
+  Attention: <none or top blockers>
+  Host guarantees: <full | degraded | unknown>
 
 Planning visibility:
   PRD: <done | pending | missing | deferred> <artifact path when present>
   Roadmap: <done | pending | missing | deferred> <artifact path when present>
   Current milestone: <roadmap milestone, tier, or next planning gate when known>
-  Completion: <pct>% <brief basis, for example done steps over total tracked steps>
+  Completion basis: <state.json, PROGRESS.md, artifacts, or audit score source>
 
 What changed:
   1. <highest-signal user-visible change>
@@ -711,6 +723,9 @@ Proactive checks:
   Reviews: <none | N pending, suggest /god-review-changes>
   Sync: <fresh | suggested | local helper ran>
   Docs: <fresh | suggested | drift-check spawned>
+  Repo surface: <fresh | stale, suggest /god-doctor>
+  Host: <full | degraded | unknown>
+  Dogfood: <not-run | pass | fail | suggest /god-dogfood>
   Runtime: <not-applicable | suggested | browser test spawned>
   Security: <clear | suggested | harden spawned>
   Dependencies: <clear | suggested | deps audit spawned>

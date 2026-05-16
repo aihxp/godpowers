@@ -132,7 +132,7 @@ won't complain.
 
 When you run `/god-feature` during a `/god-mode` arc (mid-development):
 
-1. `/god-reconcile` runs first (all 14 artifacts)
+1. `/god-reconcile` runs first (all 14 core artifacts plus runtime and repository surfaces)
 2. For not-yet-created artifacts: status is `not-yet-created` (no impact)
 3. For created artifacts: status is `present`, `missing-requirement`,
    `needs-delta`, etc.

@@ -71,3 +71,18 @@ jobs:
         - uses: god-quality-reviewer@^1.0.0
     on-pass: commit-atomic
     skip-when: not-100pct-migrated
+
+  migration-sync:
+    tier: 0
+    needs: migration-contract
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - source-sync-back
+      - repo-doc-sync
+      - repo-surface-sync
+      - host-capabilities
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

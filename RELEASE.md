@@ -1,11 +1,11 @@
-# Godpowers 1.6.22 Release
+# Godpowers 1.6.23 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.22 turns the remaining "needs more real use" risks into
-executable surfaces. It adds deterministic messy-repo dogfooding, dashboard
-host guarantees, compact status output, extension authoring scaffolds, and
-Mode D suite release dry-run planning.
+Godpowers 1.6.23 hardens the repository after a full file-by-file audit. It
+aligns release gates, documentation sync, repository surface sync, feature
+awareness, source-system sync-back, host guarantees, dashboard closeouts, and
+package publishing into one verified release surface.
 
 ## What is stable
 
@@ -34,79 +34,60 @@ Mode D suite release dry-run planning.
 - Messy-repo dogfood scenarios
 - Extension authoring scaffold helper
 - Mode D suite release dry-run planner
+- Release gate enforcement through `npm run release:check`
 
 ## What is new
 
-- Added `lib/dogfood-runner.js`, `/god-dogfood`, and CLI `dogfood`.
-- Added dogfood fixtures for half-migrated GSD import and sync-back, full and
-  degraded host guarantees, extension scaffold validation, and suite release
-  dry-run planning.
-- Added `lib/host-capabilities.js` and dashboard host guarantee reporting.
-- Added compact dashboard output through `--brief`.
-- Added `lib/extension-authoring.js` and CLI `extension-scaffold`.
-- Added `suiteState.planRelease` for Mode D dependent impact planning before
-  mutation.
+- Added `.planning/2026-05-16-surface-sync-status.md` to record the current
+  `.github/workflows`, `.planning`, and `agents` sync status without rewriting
+  historical planning evidence.
+- Expanded `god-reconciler` so feature reconciliation includes repository
+  documentation, repository surface, runtime feature awareness, source-system
+  sync-back, and host capability checks.
+- Expanded `god-updater` so closeout reports repo-doc sync, repo-surface sync,
+  feature awareness, source-system sync-back, host capability, dashboard
+  refresh, checkpoint sync, Pillars sync, and context refresh.
+- Updated workflow release jobs so root and first-party pack publishing run
+  the complete release gate first.
+- Updated `prepublishOnly` so local npm publish attempts also run the complete
+  release gate.
 
-## Automation surface behavior
+## Repairs
 
-For a Godpowers repository, the helper checks:
-
-- every routed specialist spawn resolves to a real agent or built-in runtime
-  owner
-- every agent-spawning route declares `agent.start` and `agent.end`
-- every durable-writing route declares standards coverage or an approved
-  exemption
-- high-frequency work has discoverable intent recipes
-- release-facing version surfaces agree with `package.json`
-- package content checks require load-bearing runtime helper files
-- release checklist policy names the current sync guards
-- release gates include dogfood, extension publish, Mode D suite, and installer
-  smoke checks
-- dogfood fixtures cover migration, host guarantees, extension authoring, and
-  suite release dry-runs
-- host guarantees are visible in dashboard and compact dashboard output
-
-Detection is read-only by default. Applying sync writes logs and leaves
-judgment-heavy rewrites to scoped specialists.
-
-## Auto-invoke and auto-spawn policy
-
-Safe repo surface sync is local runtime work and must be reported as:
-
-```text
-Agent: none, local runtime only
-```
-
-Godpowers recommends scoped specialists only when judgment is needed:
-
-- `god-auditor` for agent contract or handoff drift
-- `god-roadmap-reconciler` for workflow or recipe lifecycle drift
-- `god-coordinator` for extension pack drift
-- `god-docs-writer` for release prose drift
-- `god-greenfieldifier` for dogfood migration failures
-- `god-context-writer` for host capability failures
+- Repaired stale current-version claims in README, architecture, roadmap,
+  reference docs, `/god-version`, and agent context.
+- Repaired stale `/god-reconcile` docs so the command and specialist agent
+  describe the same expanded sync surfaces.
+- Repaired final sync docs so `/god-mode`, `god-orchestrator`, and agent specs
+  all describe core artifacts plus local runtime and repository sync surfaces.
+- Removed literal forbidden dash and emoji characters from primary source files
+  while keeping validator tests intact through Unicode escape sequences.
+- Repaired release documentation drift around package contents, route quality,
+  recipe coverage, release-surface checks, dogfood, host guarantees, extension
+  authoring, and Mode D suite release dry-runs.
 
 ## Validation
 
 Release validation includes:
 
-- `node scripts/test-dogfood-runner.js`
-- `node scripts/test-host-capabilities.js`
-- `node scripts/test-extension-authoring.js`
+- source audit over 639 tracked plus untracked source files
+- `node scripts/validate-skills.js`
+- `bash scripts/smoke.sh`
+- `node scripts/test-agent-validator.js`
+- `node scripts/test-artifact-linter.js`
+- `node scripts/test-repo-doc-sync.js`
 - `node scripts/test-repo-surface-sync.js`
 - `node scripts/test-automation-surface-sync.js`
-- `node scripts/test-repo-doc-sync.js`
 - `node scripts/test-feature-awareness.js`
-- `node scripts/test-dashboard.js`
+- `node scripts/test-host-capabilities.js`
+- `node scripts/test-dogfood-runner.js`
+- `node scripts/test-extension-authoring.js`
 - `node scripts/test-mode-d.js`
 - `node scripts/test-extensions-publish.js`
 - `node scripts/test-install-smoke.js`
-- `node scripts/test-context-writer.js`
-- `node scripts/test-planning-systems.js`
-- `node scripts/test-doc-surface-counts.js`
-- `node scripts/validate-skills.js`
+- `npm audit --omit=dev`
 - `git diff --check`
 - `npm run release:check`
 
-The `v1.6.22` tag should point to the release commit that matches the npm
-`godpowers@1.6.22` package.
+The `v1.6.23` tag should point to the release commit that matches the npm
+`godpowers@1.6.23` package.

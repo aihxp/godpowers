@@ -20,3 +20,15 @@ jobs:
     uses: god-auditor@^1.0.0
     with:
       mode: full-audit
+
+  audit-closeout:
+    tier: 0
+    needs: audit-score
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - repo-doc-sync
+      - repo-surface-sync
+      - host-capabilities
+    with:
+      action: audit-closeout
+      dashboard: action-brief

@@ -4,8 +4,9 @@ description: |
   After feature work, syncs all affected artifacts: PRD (add requirement),
   ARCH (add ADR/delta), ROADMAP (mark progress, append entries), STACK
   (add deps), DEPLOY/OBSERVE/HARDEN/LAUNCH (note new surface), TODOS
-  (resolve superseded), THREADS (update). Re-validates have-nots after
-  each update.
+  (resolve superseded), THREADS (update), repository documentation, runtime
+  feature awareness, source-system sync-back, host capability notes, and
+  repository surface checks. Re-validates have-nots after each update.
 
   Spawned by: /god-sync, end of feature-addition recipe execution
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
@@ -20,6 +21,9 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - The reconciliation verdict (from god-reconciler) showing which artifacts changed
 - Description of what was just done (commits, slice plans, etc.)
 - Project root
+- Changed files, when the caller can provide them
+- Trigger type: manual `/god-sync`, closeout from `/god-mode`, release work,
+  migration import, hotfix, or docs-only sync
 
 ## Operations (per artifact, conditional)
 
@@ -118,6 +122,74 @@ After feature work, every artifact that was impacted needs to reflect reality.
   - drift findings
   - REVIEW-REQUIRED.md items created
 
+### Repository documentation sync
+- Call `lib/repo-doc-sync.run(projectRoot, { changedFiles })` when the runtime
+  is available. Use detect-only mode when the caller is in read-only audit mode.
+- Safe mechanical fixes may update version badges, package description counts,
+  README command counts, reference counts, and shipped-version markers.
+- Narrative drift in release notes, changelog, contribution policy, security
+  policy, or support docs must spawn or recommend `god-docs-writer`.
+- Emit or preserve the local log at `.godpowers/docs/REPO-DOC-SYNC.md`.
+- Report:
+  - status: fresh, stale, applied, or skipped
+  - safe fixes applied
+  - narrative paths requiring a docs writer
+  - Pillars sync plan count when touched docs affect portable context
+
+### Repository surface sync
+- Call `lib/repo-surface-sync.run(projectRoot, { changedFiles })` when the
+  runtime is available.
+- This checks routing, package file entries, package content checks, agent
+  contracts, workflow metadata, recipe coverage, extension publish readiness,
+  route quality, release surface, and repository documentation drift.
+- Safe local fixes may write missing routing stubs only when explicitly allowed
+  by the caller.
+- Emit or preserve the local log at `.godpowers/surface/REPO-SURFACE-SYNC.md`.
+- Report:
+  - status: fresh, stale, applied, or skipped
+  - stale checks by area
+  - spawn recommendations
+  - whether route, recipe, release, and documentation sub-checks were fresh
+
+### Runtime feature awareness
+- Call `lib/feature-awareness.run(projectRoot)` for existing `.godpowers`
+  projects when the runtime is available.
+- Record the installed runtime version, the current feature-set version, and
+  known feature IDs into `.godpowers/state.json`.
+- Refresh AI-tool context fences only through `god-context-writer` or
+  `lib/context-writer.js`; do not hand-edit outside managed fences.
+- If low-confidence imported planning systems or sync-back conflicts are
+  detected, spawn or recommend `god-greenfieldifier`.
+- Report:
+  - runtime version
+  - missing features before refresh
+  - whether state changed
+  - context files refreshed or skipped
+
+### Source-system sync-back
+- Call `lib/source-sync.run(projectRoot)` when `.godpowers/state.json`
+  declares GSD, BMAD, Superpowers, or other source-system records.
+- Write only managed Godpowers summary sections back to source systems.
+- Preserve user-authored source-system content outside managed sections.
+- If source-system confidence is low or conflicts are present, recommend
+  `god-greenfieldifier` before writing.
+- Report:
+  - source systems found
+  - summaries written, unchanged, skipped, or blocked
+  - conflict count
+
+### Host capability and dashboard refresh
+- Call `lib/host-capabilities.detect(projectRoot)` when available and include
+  the guarantee level in closeouts.
+- Call `lib/dashboard.compute(projectRoot)` and `lib/dashboard.render(result)`
+  for user-facing status when available.
+- Treat host guarantee gaps as visible runtime facts, not fatal failures.
+- Report:
+  - host name
+  - guarantee level: full, degraded, or unknown
+  - top gap, when present
+  - dashboard readiness and attention line
+
 ### Pillars sync (native context)
 - Call `lib/pillars.pillarizeExisting(projectRoot)` if Pillars is absent or
   partial.
@@ -171,6 +243,11 @@ Sync status:
 - Pillars sync: [applied/proposed/no-op/skipped], [N] pillar files
 - Checkpoint sync: [created/updated/no-op/skipped] .godpowers/CHECKPOINT.md
 - Context refresh: [spawned god-context-writer/no-op/skipped], [N] files
+- Repo docs sync: [fresh/applied/stale/skipped], [N] safe fixes, [N] docs-writer paths
+- Repo surface sync: [fresh/applied/stale/skipped], [N] stale checks, [N] spawn recommendations
+- Feature awareness: [fresh/applied/skipped], runtime [version], [N] new features recorded
+- Source sync-back: [written/unchanged/blocked/skipped], [N] source systems
+- Host capabilities: [full/degraded/unknown], [top gap or none]
 
 Updated:
 - prd/PRD.md: added requirement P-MUST-12
@@ -201,8 +278,13 @@ Sync status:
   Local syncs:
     + reverse-sync: <counts and result>
     + pillars-sync: <counts and result>
+    + repo-doc-sync: <fresh, applied, stale, or skipped>
+    + repo-surface-sync: <fresh, applied, stale, or skipped>
+    + feature-awareness: <fresh, applied, or skipped>
+    + source-sync-back: <written, unchanged, blocked, or skipped>
     + checkpoint-sync: <created, updated, no-op, or skipped>
     + context-refresh: <spawned, no-op, or skipped>
+    + host-capabilities: <full, degraded, or unknown>
   Artifacts: <changed files or no-op>
   Log: .godpowers/SYNC-LOG.md
 

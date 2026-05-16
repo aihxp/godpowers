@@ -54,3 +54,16 @@ jobs:
       action: route-to
       target: /god-upgrade
       per: major-version-bump
+
+  deps-sync:
+    tier: 0
+    needs: [deps-patch-batch, deps-minor-per-package, deps-major-handoff]
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - repo-doc-sync
+      - repo-surface-sync
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

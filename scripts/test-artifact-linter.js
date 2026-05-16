@@ -49,12 +49,12 @@ console.log('\n  Have-nots validator + artifact linter behavioral tests\n');
 // ============================================================================
 
 test('U-08 catches em dash in body content', () => {
-  const findings = validator.checkEmEnDash('A normal sentence — with an em dash.');
+  const findings = validator.checkEmEnDash('A normal sentence \u2014 with an em dash.');
   if (!hasFinding(findings, 'U-08')) throw new Error('em dash not caught');
 });
 
 test('U-08 catches en dash', () => {
-  const findings = validator.checkEmEnDash('Pages 10–15 of the spec.');
+  const findings = validator.checkEmEnDash('Pages 10\u201315 of the spec.');
   if (!hasFinding(findings, 'U-08')) throw new Error('en dash not caught');
 });
 
@@ -64,7 +64,7 @@ test('U-08 finds zero in clean content', () => {
 });
 
 test('U-08 reports correct line number', () => {
-  const content = 'Line 1\nLine 2 with — em dash\nLine 3';
+  const content = 'Line 1\nLine 2 with \u2014 em dash\nLine 3';
   const findings = validator.checkEmEnDash(content);
   if (findings[0].line !== 2) throw new Error(`expected line 2, got ${findings[0].line}`);
 });
@@ -74,12 +74,12 @@ test('U-08 reports correct line number', () => {
 // ============================================================================
 
 test('U-09 catches face emoji', () => {
-  const findings = validator.checkEmoji('Status: shipped 🚀 successfully');
+  const findings = validator.checkEmoji('Status: shipped \u{1F680} successfully');
   if (!hasFinding(findings, 'U-09')) throw new Error('emoji not caught');
 });
 
 test('U-09 catches multiple emoji on same line', () => {
-  const findings = validator.checkEmoji('Done ✅ and ready 🎉 to go');
+  const findings = validator.checkEmoji('Done \u2705 and ready \u{1F389} to go');
   if (findings.length < 2) throw new Error(`expected 2+, got ${findings.length}`);
 });
 
@@ -421,7 +421,7 @@ _Avoid_: purchase`;
 test('runChecks combines universal + artifact-specific findings', () => {
   const content = `# PRD
 
-This sentence has — an em dash and is not labeled.
+This sentence has \u2014 an em dash and is not labeled.
 
 ## Scope and No-Gos
 empty section here`;
@@ -494,7 +494,7 @@ test('linter lintFile catches errors in broken PRD', () => {
 
 ## Problem Statement
 
-This has — em dash and no label.
+This has \u2014 em dash and no label.
 
 ## Success Metrics
 
@@ -556,7 +556,7 @@ test('end-to-end: violating PRD produces expected error set', () => {
 
 ## Problem Statement
 
-Users want a thing — without specifics.
+Users want a thing \u2014 without specifics.
 
 ## Success Metrics
 

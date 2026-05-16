@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.23] - 2026-05-16
+
+Full repository audit, release gate hardening, and documentation repair.
+
+### Added
+- Added `.planning/2026-05-16-surface-sync-status.md` to record the current
+  `.github/workflows`, `.planning`, and `agents` sync status without rewriting
+  historical planning evidence.
+- Expanded `god-reconciler` and `god-updater` contracts so repo docs, repo
+  surface, runtime feature awareness, source-system sync-back, host capability,
+  and dashboard refresh are checked and reported as part of the same loop.
+- Documented the audited source scan across root docs, `.github`, `.godpowers`,
+  `.planning`, agents, docs, examples, extensions, fixtures, hooks, lib,
+  references, routing, schema, scripts, skills, templates, tests, and workflows.
+
+### Changed
+- Release workflows now run `npm run release:check` before publishing the root
+  package or first-party extension packs.
+- `prepublishOnly` now runs the full release gate instead of only `npm test`.
+- `/god-reconcile`, `/god-mode`, the orchestrator, agent specs, and roadmap
+  now describe the expanded local sync surfaces consistently.
+- Version, badge, roadmap, architecture, user-support, and reference surfaces
+  now align to 1.6.23.
+
+### Fixed
+- Repaired stale 1.6.19 and 1.6.22 current-version claims in runtime docs.
+- Removed literal forbidden dash and emoji characters from primary source
+  files while preserving validator coverage through Unicode escape sequences.
+- Repaired release documentation drift around package contents, route quality,
+  recipe coverage, release-surface checks, dogfood, host guarantees, extension
+  authoring, and Mode D suite release dry-runs.
+
+### Guardrails
+- Primary source scan now covers 639 tracked plus untracked source files and
+  verifies zero forbidden dash characters, zero emoji characters, zero invalid
+  JSON files, zero CRLF files, zero missing final newlines, and zero zero-byte
+  files.
+- `npm run release:check` remains the one-command release gate before commit,
+  tag, npm publish, and GitHub release creation.
+
 ## [1.6.22] - 2026-05-16
 
 Dogfooding, host guarantees, extension authoring, and suite release dry-runs.

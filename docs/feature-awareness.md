@@ -27,6 +27,8 @@ installed Godpowers runtime adds capabilities.
 - missing feature IDs in `state.json`
 - missing managed `AGENTS.md` or tool pointer fences
 - unimported GSD, BMAD, or Superpowers planning evidence
+- missing dogfood, host capability, extension-authoring, or suite dry-run
+  awareness on upgraded projects
 - `god-greenfieldifier` recommendation when migration evidence is low
   confidence or conflicting
 
@@ -54,7 +56,7 @@ installed Godpowers runtime adds capabilities.
 {
   "godpowers-features": {
     "feature-set-version": 1,
-    "runtime-version": "1.6.19",
+    "runtime-version": "1.6.23",
     "known": [
       "planning-system-migration",
       "source-system-sync-back",
@@ -63,7 +65,12 @@ installed Godpowers runtime adds capabilities.
       "repo-surface-sync",
       "route-quality-sync",
       "recipe-coverage-sync",
-      "release-surface-sync"
+      "release-surface-sync",
+      "dashboard-action-brief",
+      "host-capabilities",
+      "dogfood-runner",
+      "extension-authoring",
+      "suite-release-dry-run"
     ],
     "last-awareness-refresh-at": "2026-05-16T12:00:00.000Z"
   }

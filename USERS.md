@@ -1,6 +1,6 @@
 # Users and Community
 
-Godpowers is at v1.6.22. Stable release.
+Godpowers is at v1.6.23. Stable release.
 
 ## Track record
 
@@ -13,6 +13,9 @@ The next credibility milestone is not another command count increase. It is a
 real `/god-mode` run on an unfamiliar codebase that produces shipped or
 ship-ready work.
 
+Before claiming a case study, also run `npx godpowers dogfood` and record
+whether the shipped fixture suite still passes on the local host.
+
 When that happens, record:
 - Repository shape and project type
 - Wall-clock time
@@ -20,6 +23,8 @@ When that happens, record:
 - Number of pauses and why they happened
 - Failed assumptions or repairs
 - Validation commands and results
+- Host guarantee level from `/god-status` or `godpowers status --brief`
+- Dogfood result from `npx godpowers dogfood`
 - What actually shipped, or what blocked shipment
 
 ## Adopt carefully
@@ -49,6 +54,8 @@ If you ship something with Godpowers, write it up. We'll feature you here.
 - First /god-upgrade migration completed
 - First skill pack contributed by the community
 - First team using `/god-sprint` for cadence
+- First external extension pack scaffolded, tested, and published
+- First Mode D suite release dry-run validated against real dependent repos
 
 ## Composability stories
 

@@ -18,8 +18,10 @@ We welcome contributions in these areas:
 
 ### High value
 - Per-tier reference files (antipattern catalogs, worked examples)
-- Real integration tests (something that actually exercises the workflow)
-- Mode D (multi-repo) implementation
+- Real integration tests and messy-repo dogfood scenarios
+- Mode D suite hardening, cross-repo release edge cases, and dependent impact tests
+- Host capability tests for AI coding tools with different spawning guarantees
+- Extension pack examples and extension authoring tests
 - New specialist agents for domain-specific work
 - Bug fixes
 - Documentation improvements
@@ -57,6 +59,9 @@ All contributions must pass these checks before merge:
 ### Tests
 - All smoke checks pass: `bash scripts/smoke.sh`
 - All skill validation passes: `node scripts/validate-skills.js`
+- Full release gate passes: `npm run release:check`
+- Dogfood scenarios pass when migration, host, extension, suite, or release surfaces change: `node scripts/test-dogfood-runner.js`
+- Package payload checks pass when runtime files, fixtures, routing, or docs change: `npm run pack:check`
 - New agents added to relevant test loops
 
 ## Commit Messages
@@ -82,12 +87,17 @@ Examples:
 Releases are manual and explicit:
 ```
 npm version patch --no-git-tag-version
-npm test
 npm run release:check
+rm -f godpowers-*.tgz
+npm cache clean --force
 npm pack
-git push --follow-tags
+git add -A
+git commit -m "Release godpowers X.Y.Z"
+git tag -a vX.Y.Z -m "Godpowers X.Y.Z"
+git push origin main
+git push origin vX.Y.Z
 gh release create vX.Y.Z --title "vX.Y.Z" --notes-file RELEASE.md
-npm publish --provenance
+npm publish godpowers-X.Y.Z.tgz --access public
 ```
 
 Repo documentation sync must be clean before publishing. It keeps README
@@ -105,7 +115,7 @@ competitor. If the sentence still reads true, it decides nothing. Rewrite.
 ## Adding a New Specialist Agent
 
 1. Create `agents/god-<name>.md` with required sections
-2. Add to the routing test loop in `scripts/smoke.sh`
+2. Add or update routing metadata if the agent is spawned by a command
 3. Add to `bin/install.js` if it needs special install handling (rare)
 4. Add CHANGELOG entry under [Unreleased]
 5. Update README's command table if it has a new slash command
@@ -115,9 +125,11 @@ competitor. If the sentence still reads true, it decides nothing. Rewrite.
 1. Create `skills/god-<name>.md` with frontmatter + thin orchestration
 2. The skill should spawn the right specialist agent (don't do work in skills)
 3. Add `On Completion` section suggesting the next command
-4. Add to `/god-next` routing logic if appropriate
-5. Add to README command table
-6. Add CHANGELOG entry
+4. Create `routing/god-<name>.yaml` with atomic spawn tokens and trace events when agents are spawned
+5. Add to `/god-next` routing logic if appropriate
+6. Add to README command table
+7. Add CHANGELOG entry
+8. Add dogfood or release-surface coverage if the command touches migration, host guarantees, extensions, suites, package contents, or release behavior
 
 ## Reporting Bugs
 

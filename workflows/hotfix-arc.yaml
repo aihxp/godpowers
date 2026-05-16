@@ -57,3 +57,17 @@ jobs:
     with:
       action: schedule-postmortem
       due: 48h
+
+  hotfix-sync:
+    tier: 0
+    needs: hotfix-postmortem-trigger
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - source-sync-back
+      - repo-doc-sync
+      - repo-surface-sync
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

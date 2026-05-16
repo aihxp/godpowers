@@ -126,8 +126,12 @@ Skill packs add specialized agents:
 - `@godpowers/launch-pack` - Show HN, Product Hunt, Indie Hackers, OSS strategists
 - `@godpowers/data-pack` - ETL, ML feature, dashboard specialists
 
-In v0.8, install via `/god-extension-add @godpowers/security-pack`.
-For now, scaffolds live in `extensions/` and demonstrate the model.
+Install packs with `/god-extension-add @godpowers/security-pack`. To author a
+new pack, start from the shipped scaffold:
+
+```bash
+npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
+```
 
 ## Disk-authoritative state
 
@@ -159,6 +163,6 @@ survives focused repair attempts or the blocker is genuinely human-only.
 ## Where to next
 
 - [Concepts](concepts.md) - the vocabulary and mental model
-- [Reference](reference.md) - all 60+ commands
+- [Reference](reference.md) - all 110 slash commands and CLI helpers
 - [Tutorial: First Project](tutorials/first-project.md) - end-to-end walkthrough
 - [Composing with other tools](../references/shared/ORCHESTRATORS.md) - coexistence with other AI workflow systems

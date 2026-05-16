@@ -65,6 +65,26 @@
           "type": "array",
           "items": { "type": "string" },
           "description": "Agents spawned by primary agent (e.g., reviewers)"
+        },
+        "local-helpers": {
+          "type": "array",
+          "description": "Visible local runtime helpers this command may run without spawning a specialist agent.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "checkpoint-sync",
+              "feature-awareness",
+              "host-capabilities",
+              "repo-doc-sync",
+              "repo-surface-sync",
+              "route-quality-sync",
+              "recipe-coverage-sync",
+              "release-surface-sync",
+              "dogfood-runner",
+              "source-sync-back",
+              "pillars-sync-plan"
+            ]
+          }
         }
       }
     },

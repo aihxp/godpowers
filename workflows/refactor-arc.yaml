@@ -57,3 +57,17 @@ jobs:
     uses: god-deploy-engineer@^1.0.0
     with:
       mode: gradual-rollout
+
+  refactor-sync:
+    tier: 0
+    needs: refactor-deploy
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - source-sync-back
+      - repo-doc-sync
+      - repo-surface-sync
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

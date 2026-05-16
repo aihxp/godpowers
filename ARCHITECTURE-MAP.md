@@ -1,7 +1,7 @@
 # Godpowers Architecture Map
 
 > Visual reference for how everything connects.
-> 4 layers, 64 slash commands, 33 agents, 21 workflows, 200 have-nots.
+> 4 layers, 110 slash commands, 40 agents, 13 workflows, 40 recipes, executable release gates.
 
 ---
 
@@ -11,7 +11,7 @@
    Layer 1: SLASH COMMANDS (skills/)              <- User surface
    ┌─────────────────────────────────────────────┐
    │  /god-mode  /god-prd  /god-arch  /god-build │
-   │  /god-feature  /god-hotfix  /god-spike  ... │
+   │  /god-feature  /god-hotfix  /god-dogfood ... │
    └─────────────────────────────────────────────┘
                        |
                        | Each skill spawns
@@ -34,10 +34,11 @@
                        |
                        | Validated against
                        v
-   Layer 4: SCHEMAS + REFERENCES (validation)     <- Knowledge
+   Layer 4: SCHEMAS + REFERENCES + GATES          <- Knowledge
    ┌─────────────────────────────────────────────┐
    │  schema/{intent,state,events,workflow}.json │
-   │  references/HAVE-NOTS.md (200 named)        │
+   │  references/HAVE-NOTS.md                    │
+   │  release, route, doc, dogfood gate helpers  │
    │  references/{planning,building,...}/        │
    └─────────────────────────────────────────────┘
 ```
@@ -46,15 +47,16 @@
 
 ## Skill -> Agent Mapping (the spawn graph)
 
-### Lifecycle commands (no agent, built-in)
+### Lifecycle commands
 ```
-/god-init         -> god-orchestrator (mode/scale detect)
+/god-init         -> built-in + import detection
 /god-status       -> reads state.json directly
-/god-next         -> built-in routing logic
+/god-next         -> built-in routing logic + action brief
 /god-help         -> built-in
-/god-doctor       -> built-in + spawns god-auditor
+/god-doctor       -> built-in + scoped specialist suggestions
 /god-version      -> built-in
 /god-lifecycle    -> built-in (reads disk)
+/god-dogfood      -> built-in fixture runner, specialists on failure
 ```
 
 ### Tier 1: Planning
@@ -127,6 +129,27 @@
                   -> god-executor (batched patch)
                   -> god-executor (per-package minor)
                   -> [routes major versions to /god-upgrade]
+```
+
+### Migration, awareness, and sync
+```
+/god-migrate      -> local planning-system import
+                  -> god-greenfieldifier when import judgment is needed
+/god-sync         -> god-updater
+                  -> local reverse-sync, source-sync, repo-doc-sync,
+                     repo-surface-sync, route-quality-sync,
+                     recipe-coverage-sync, release-surface-sync
+/god-context      -> god-context-writer
+                  -> feature-awareness and Pillars context refresh
+```
+
+### Mode D suite commands
+```
+/god-suite-init    -> built-in suite registration
+/god-suite-status  -> built-in suite state view
+/god-suite-sync    -> god-coordinator
+/god-suite-patch   -> god-coordinator
+/god-suite-release -> god-coordinator + suite release dry-run planning
 ```
 
 ### Recovery
@@ -455,23 +478,23 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v0.15.3)
+├── package.json (v1.6.23)
 ├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
 │
-├── skills/                        <- 105 core slash commands
+├── skills/                        <- 110 core slash commands
 │   ├── god-mode.md, god-init.md, god-prd.md, god-arch.md, ...
 │   └── (one .md per slash command)
 │
-├── agents/                        <- 38 core specialist agents
+├── agents/                        <- 40 core specialist agents
 │   ├── god-orchestrator.md, god-pm.md, god-architect.md, ...
 │   └── (one .md per agent)
 │
 ├── workflows/                     <- 13 executable workflow YAMLs
 │   ├── full-arc.yaml, feature-arc.yaml, hotfix-arc.yaml, ...
 │
-├── templates/                     <- 11 artifact templates
+├── templates/                     <- 15 artifact templates
 │   ├── PRD.md, ARCH.md, ROADMAP.md, ...
 │
 ├── references/
@@ -488,12 +511,16 @@ godpowers/
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (42 modules)
+├── lib/                           <- Real JS runtime (56 modules)
 │   ├── state.js                   <- state model + drift detection
 │   ├── events.js                  <- OTel-shape event log + hash chain
 │   ├── router.js                  <- command routing
 │   ├── recipes.js                 <- intent recipes
 │   ├── workflow-runner.js         <- executable workflow plans
+│   ├── dashboard.js               <- shared status and action brief engine
+│   ├── dogfood-runner.js          <- messy-repo dogfood gate
+│   ├── host-capabilities.js       <- host guarantee detection
+│   ├── extension-authoring.js     <- extension scaffold helper
 │   └── otel-exporter.js           <- OTLP/JSON export
 │
 ├── hooks/                         <- 2 hooks
@@ -505,16 +532,22 @@ godpowers/
 │   ├── launch-pack/               <- Show HN, PH, IH, OSS strategists
 │   └── data-pack/                 <- ETL, ML, dashboards
 │
+├── fixtures/
+│   └── dogfood/                   <- messy-repo dogfood scenarios
+│
 ├── tests/
 │   ├── lib/                       <- replay, fixture, runner
 │   ├── fixtures/                  <- Sample projects
 │   └── integration/               <- E2E test scaffolds
 │
 ├── scripts/
-│   ├── smoke.sh                   <- 322 structural checks
-│   ├── validate-skills.js         <- 212 content checks
+│   ├── smoke.sh                   <- structural smoke checks
+│   ├── validate-skills.js         <- skill content checks
+│   ├── test-dogfood-runner.js     <- dogfood gate
+│   ├── test-host-capabilities.js  <- host guarantee gate
+│   ├── test-extension-authoring.js <- extension scaffold gate
 │   ├── test-runtime.js            <- 13 unit tests for lib/
-│   └── release.sh                 <- Tag + npm publish flow
+│   └── check-package-contents.js  <- npm payload gate
 │
 ├── docs/
 │   ├── getting-started.md
@@ -536,25 +569,27 @@ godpowers/
 
 ---
 
-## Numbers (as of v0.15.3)
+## Numbers (as of v1.6.23)
 
 | Component | Count |
 |-----------|-------|
 | Layers | 4 |
 | Tiers | 4 (0-3) |
 | Sub-steps (per tier) | 13: PRD, ARCH, ROADMAP, STACK, **DESIGN, PRODUCT**, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration |
-| Slash commands | 105 |
-| Specialist agents | 38 |
+| Slash commands | 110 |
+| Specialist agents | 40 |
 | Workflows (core YAMLs) | 13 |
-| Have-nots | 99 documented + 30+ mechanically validated by linter |
-| Templates | 12 |
-| Reference documents | 24+ |
+| Intent recipes | 40 |
+| Have-nots | 156 documented + 30+ mechanically validated by linter |
+| Templates | 15 |
+| Reference documents | 37 |
 | JSON Schemas | 7 |
-| **JS runtime modules** | **42** |
+| **JS runtime modules** | **56** |
 | **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
-| Documentation pages | 18 under docs/ plus reference material |
-| **Test suites** | **36+ test files** |
+| Dogfood scenarios | 5 |
+| Documentation pages | 29 under docs/ plus reference material |
+| **Test suites** | **52 script files plus integration tests** |
 | **Tests** | **Full behavioral suite gated by npm test** |
 | Supported AI runtimes | 15+ |
 | Verification axes | **3**: static (lint, design-spec, have-nots), linkage (drift, reverse-sync), runtime (headless browser audit + functional test) |

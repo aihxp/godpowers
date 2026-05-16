@@ -1,7 +1,7 @@
 # Repository Documentation Sync
 
 - [DECISION] Godpowers now treats repository documentation freshness as an executable local helper rather than only a manual release chore.
-- [DECISION] `lib/repo-doc-sync.js` detects stale mechanical claims across `README.md`, badges, `USERS.md`, `ARCHITECTURE.md`, `docs/ROADMAP.md`, `docs/reference.md`, `/god-version`, and `/god-doctor`.
+- [DECISION] `lib/repo-doc-sync.js` detects stale mechanical claims across `README.md`, badges, `USERS.md`, `ARCHITECTURE.md`, `docs/`, `templates/`, `/god-version`, and `/god-doctor`.
 - [DECISION] `lib/repo-doc-sync.js` can refresh safe count and version claims without spawning an agent.
 - [DECISION] Narrative release, contribution, support, and security policy prose remains owned by a maintainer or `god-docs-writer`.
 - [DECISION] Repo documentation sync writes `.godpowers/docs/REPO-DOC-SYNC.md` when it applies safe changes.

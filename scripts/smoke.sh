@@ -85,7 +85,7 @@ for path in [sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]]:
     for fp in files:
         with open(fp, 'r', encoding='utf-8', errors='ignore') as f:
             for i, line in enumerate(f, 1):
-                if '–' in line or '—' in line:
+                if '\u2013' in line or '\u2014' in line:
                     hits.append(f'{fp}:{i}')
 print('\n'.join(hits))
 " "$ROOT/SKILL.md" "$ROOT/skills" "$ROOT/agents" "$ROOT/README.md" 2>/dev/null)"

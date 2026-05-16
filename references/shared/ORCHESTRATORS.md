@@ -42,18 +42,47 @@ codebase mappers, story trackers). The rules below let them coexist.
 ## Migration into Godpowers
 
 If you arrive at Godpowers carrying artifacts from another system,
-`/god-init` Mode B (gap-fill) reads what exists and maps it forward:
+`/god-init` Mode B (gap-fill) and `/god-migrate` read what exists and map it
+forward:
 
-- Existing PRD-like documents -> `.godpowers/prd/PRD.md` (after
-  substitution-test rewrite if needed)
+- GSD `.planning/` or `.gsd/` context -> `.godpowers/prep/IMPORTED-CONTEXT.md`
+  and optional native seed artifacts
+- BMAD `_bmad-output/` or `.bmad/` context -> imported preparation context and
+  open questions for PRD, architecture, roadmap, and stack
+- Superpowers specs or plans -> imported preparation context and native
+  Godpowers seed artifacts when confidence is high
+- Existing PRD-like documents -> `.godpowers/prd/PRD.md` after
+  substitution-test rewrite if needed
 - Existing ADRs -> `.godpowers/arch/adr/`
-- Existing roadmap / milestones -> `.godpowers/roadmap/ROADMAP.md`
-- Existing story / ticket files -> `.godpowers/stories/STORY-*.md`
-  (via `/god-story`)
+- Existing roadmap or milestones -> `.godpowers/roadmap/ROADMAP.md`
+- Existing story or ticket files -> `.godpowers/stories/STORY-*.md` through
+  `/god-story`
 
-Mode B does not delete the source files. It produces Godpowers
-artifacts alongside them. Once parity is reached, you can retire the
-older system at your own pace.
+Mode B does not delete the source files. It produces Godpowers artifacts
+alongside them. Once parity is reached, you can retire the older system at
+your own pace.
+
+## Managed sync-back
+
+Godpowers can keep a source system informed without making that source system
+authoritative. `/god-sync` writes managed companion files such as:
+
+- `.planning/GODPOWERS-SYNC.md`
+- `_bmad-output/GODPOWERS-SYNC.md`
+- `docs/superpowers/GODPOWERS-SYNC.md`
+
+The sync-back file is a bridge, not a second source of truth. It should contain
+the current Godpowers status, imported-context mapping, open conflicts, and the
+next safe route back into either system. It must be fenced or companion-owned
+so Godpowers does not overwrite arbitrary GSD, BMAD, or Superpowers artifacts.
+
+## Existing Godpowers projects after upgrades
+
+Feature awareness is the upgrade path for projects that are already
+Godpowers-native. `/god-context refresh`, `/god-sync`, `/god-doctor --fix`, and
+God Mode resume can record the current runtime feature set, refresh managed AI
+tool fences, and point out missing migration, sync-back, dogfood, host
+capability, extension-authoring, or suite-release readiness.
 
 ## Migration out of Godpowers
 
@@ -64,7 +93,9 @@ frontmatter. There's no proprietary binary state. To leave:
 2. Strip the fenced "Implementation Linkage" footers if the target
    system doesn't understand them (they're recoverable from code
    annotations).
-3. Delete `.godpowers/`.
+3. Use the most recent managed sync-back file as the return-path summary if the
+   target system is GSD, BMAD, or Superpowers.
+4. Delete `.godpowers/`.
 
 ## What Godpowers does not try to be
 

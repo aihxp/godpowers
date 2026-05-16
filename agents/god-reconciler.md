@@ -3,9 +3,10 @@ name: god-reconciler
 description: |
   Comprehensive reconciliation across ALL impacted artifacts before feature
   work. Checks PRD, ARCH, ROADMAP, STACK, REPO, DEPLOY, OBSERVE, HARDEN,
-  LAUNCH, BACKLOG, SEEDS, TODOS, THREADS in parallel. Returns multi-
-  dimensional verdict so user knows every place the work intersects with
-  existing artifacts.
+  LAUNCH, BACKLOG, SEEDS, TODOS, THREADS, repository documentation,
+  repository surface, feature awareness, host capability, and source-system
+  sync-back in parallel. Returns multi-dimensional verdict so user knows every
+  place the work intersects with existing artifacts.
 
   Spawned by: /god-reconcile, recipe execution (feature-addition category)
 tools: Read, Bash, Grep, Glob, Task
@@ -25,6 +26,8 @@ A feature addition often impacts multiple artifacts:
 - STACK may need a new dependency
 - BACKLOG may already capture the intent
 - SEEDS may trigger a planted seed
+- README, release notes, schemas, workflows, recipes, and installed-project
+  feature awareness may need mechanical sync
 
 If we don't check all of these, we get drift. Roadmap says one thing, PRD
 says another, code does a third.
@@ -120,6 +123,38 @@ For each artifact below, check (in parallel where possible):
 - Is there an active thread about this topic?
 - Verdict: no-thread / active-thread (with thread name)
 
+### Runtime and repository surface artifacts
+
+#### REPO DOCS (`README.md`, `CHANGELOG.md`, `RELEASE.md`, docs, support files)
+- Does this work change public counts, badges, release status, install
+  guidance, contributor guidance, or support policy?
+- Verdict: fresh / needs-mechanical-sync / needs-docs-writer
+- If narrative release or support docs need judgment: recommend
+  `god-docs-writer`.
+
+#### REPO SURFACE (`skills/`, `agents/`, `routing/`, `workflows/`, `schema/`, `package.json`)
+- Did the work add, rename, remove, or change a command, agent, workflow,
+  recipe, schema, package file entry, extension, or release helper?
+- Verdict: fresh / needs-surface-sync / needs-safe-fix / needs-human-review
+- If stale checks are mechanical: recommend `lib/repo-surface-sync.run`.
+
+#### FEATURE AWARENESS (`.godpowers/state.json`, context fences)
+- Does an existing Godpowers project need to learn about new runtime features?
+- Verdict: fresh / needs-awareness-refresh / needs-migration-judgment
+- If imported planning systems have low confidence or conflicts: recommend
+  `god-greenfieldifier`.
+
+#### SOURCE SYSTEM SYNC-BACK (GSD, BMAD, Superpowers)
+- Did migrated source-system summaries need managed sync-back?
+- Verdict: not-applicable / fresh / needs-sync-back / blocked-by-conflict
+- If conflicts exist: recommend greenfieldifier review before writes.
+
+#### HOST CAPABILITY (`lib/host-capabilities.js`)
+- Does the work depend on a host feature such as fresh-context spawning,
+  local shell, GitHub CLI, npm, or extension authoring?
+- Verdict: full / degraded / unknown
+- If degraded: include the missing guarantee in the recommendation.
+
 ## Output
 
 Return structured JSON to the orchestrating skill:
@@ -141,6 +176,11 @@ Return structured JSON to the orchestrating skill:
   "seeds": { "status": "no-seeds" },
   "todos": { "status": "supersedes-todo", "match": "P1: refactor auth middleware" },
   "threads": { "status": "active-thread", "match": "auth migration" },
+  "repo_docs": { "status": "needs-mechanical-sync", "action": "run repo-doc-sync" },
+  "repo_surface": { "status": "needs-surface-sync", "action": "run repo-surface-sync" },
+  "feature_awareness": { "status": "needs-awareness-refresh", "action": "run feature-awareness" },
+  "source_sync_back": { "status": "not-applicable" },
+  "host_capability": { "status": "degraded", "gap": "fresh-context agent spawn not detected" },
   "recommendation": {
     "primary-action": "/god-feature scoped to Milestone 2",
     "preflight": [
@@ -148,7 +188,7 @@ Return structured JSON to the orchestrating skill:
       "/god-arch with mode=delta-only (add component + ADR)"
     ],
     "post-work": [
-      "/god-sync (update all affected artifacts)"
+      "/god-sync (update all affected artifacts and local sync surfaces)"
     ]
   }
 }
@@ -175,12 +215,17 @@ Where this intersects existing artifacts:
   SEEDS:      no triggers
   TODOS:      supersedes "refactor auth middleware"
   THREADS:    relates to active thread "auth migration"
+  REPO DOCS:  needs mechanical sync
+  SURFACE:    needs repo-surface sync
+  FEATURES:   awareness refresh needed
+  SOURCE:     no sync-back needed
+  HOST:       degraded - fresh-context agent spawn not detected
 
 Recommended sequence:
   1. /god-redo prd            (add requirement)
   2. /god-arch delta-only     (architecture delta)
   3. /god-feature             (build it, scoped to Milestone 2)
-  4. /god-sync                (update all touched artifacts)
+  4. /god-sync                (update all touched artifacts and local sync surfaces)
 
 Run this sequence? (yes / show alternatives / cancel)
 ```
@@ -224,6 +269,8 @@ For feature-addition category recipes: ALWAYS reconcile.
 Reconciliation FAILS if:
 - Returns "all covered" without checking each artifact
 - Skips an artifact silently (must report status for each)
+- Skips repo docs, repo surface, feature awareness, source sync-back, or host
+  capability when the work affects them
 - Recommends bypass without justification
 - Missing prerequisite check
 - Doesn't surface ambiguous cases

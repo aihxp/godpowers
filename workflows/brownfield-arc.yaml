@@ -14,7 +14,7 @@ metadata:
     audit, then a user-approved greenfieldification pass before normal project-run
     workflows.
 
-on: [/god-brownfield, /god-mode --brownfield]
+on: [/god-mode --brownfield]
 
 jobs:
   preflight:
@@ -84,3 +84,19 @@ jobs:
     uses: god-orchestrator@^1.0.0
     with:
       action: brownfield-to-steady
+
+  final-sync:
+    tier: 0
+    needs: steady-state-handoff
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - feature-awareness
+      - source-sync-back
+      - repo-doc-sync
+      - repo-surface-sync
+      - host-capabilities
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

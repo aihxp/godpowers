@@ -19,10 +19,12 @@ see_also: [quality, deploy, security]
 - [DECISION] `agents/` contains specialist agent markdown files and project Pillars files.
 - [DECISION] `routing/` contains command routing YAML files and `routing/recipes/` contains fuzzy-intent recipes.
 - [DECISION] `workflows/` contains workflow YAML definitions used by `lib/workflow-runner.js`.
-- [DECISION] `lib/` contains runtime helpers for state, routing, workflow planning, artifact linting, linkage, events, locks, checkpoints, and Pillars.
+- [DECISION] `schema/` contains JSON schemas for state, events, intent, routing, recipes, workflows, and extension manifests.
+- [DECISION] `lib/` contains runtime helpers for state, routing, workflow planning, artifact linting, linkage, events, locks, checkpoints, Pillars, feature awareness, repository sync, host capabilities, dogfood, extension authoring, and suite state.
 - [DECISION] `scripts/` contains validation and release checks.
 - [DECISION] `tests/` contains integration fixtures and workflow smoke tests.
 - [DECISION] `templates/` and `references/` contain artifact scaffolds and have-nots guidance.
+- [DECISION] `fixtures/dogfood/` contains deterministic messy-repo scenarios for release and autonomy readiness.
 
 ## Commands
 
@@ -35,7 +37,7 @@ see_also: [quality, deploy, security]
 
 - [DECISION] Do not add production dependencies unless the installer or runtime need them.
 - [DECISION] Keep the public operation model slash-command based.
-- [DECISION] Treat `bin/install.js` as the install and distribution surface, not as an operational CLI.
+- [DECISION] Treat `bin/install.js` as the install and distribution surface, with only narrow operational helpers for status, next route, automation status, dogfood, and extension scaffolding.
 
 ## Watchouts
 

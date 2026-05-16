@@ -32,8 +32,8 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Verify pack publishability (full root test suite)
-        run: npm test
+      - name: Verify pack publishability
+        run: npm run release:check
 
       - name: Publish pack
         working-directory: extensions/${{ inputs.pack }}

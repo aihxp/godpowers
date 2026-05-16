@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.22
+> Current shipped: v1.6.23
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.22)
+### Current surface (v1.6.23)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -101,7 +101,9 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- Full CI suite with 38+ behavioral test files and extension-pack publish gates
+- Full CI suite with 52 script files, integration tests, dogfood runner,
+  host capability, extension authoring, Mode D, installer smoke, and
+  extension-pack publish gates
 - Release gate with full tests, audit checks, E2E smoke, and package contents
   verification
 
@@ -181,8 +183,8 @@ Shipped:
   every PR + main push. Separate package job verifies npm pack
   cleanliness.
 - **npm publish prep**: `files` array fixed (routing/, workflows/,
-  extensions/, INSPIRATION.md were missing); `prepublishOnly` runs
-  the full test suite before any publish. Tarball: 364KB / 439 files.
+  extensions/, INSPIRATION.md were missing); `prepublishOnly` now runs
+  `npm run release:check` before any publish. Tarball: 364KB / 439 files.
 
 ### v0.15.0 (shipped 2026-05-11) - Distribution + OTel + first-party packs
 
@@ -266,8 +268,9 @@ adoption evidence:
 - **Documentation site at godpowers.dev**. Built from `docs/`.
 - **Migration helper from v0.x projects**. One command that explains and
   applies the current Pillars plus `.godpowers` layout.
-- **Pack author guide**. Public extension authoring docs and compatibility
-  tests.
+- **External extension adoption**. Collect third-party pack examples, publish
+  author friction reports, and grow marketplace compatibility cases from real
+  use.
 
 ---
 
@@ -285,7 +288,7 @@ adoption evidence:
 
 ## CLI surface (stable)
 
-The CLI stays minimal. Only these CLI commands exist:
+The CLI stays minimal. These commands are stable and supported:
 
 ```bash
 npx godpowers                    # Interactive install (defaults to claude --global)
@@ -293,6 +296,10 @@ npx godpowers --claude --global  # Install for specific runtime
 npx godpowers --all              # Install for all 15 runtimes
 npx godpowers --uninstall        # Remove
 npx godpowers --migrate          # One-shot upgrade
+npx godpowers status --project . # Render dashboard from disk state
+npx godpowers next --project .   # Recommend the next route from disk state
+npx godpowers dogfood            # Run built-in messy-repo scenarios
+npx godpowers extension-scaffold --name=@scope/pack --output=.
 npx godpowers --help             # Show install help
 ```
 
@@ -307,6 +314,6 @@ All other operations are slash commands inside the AI tool.
 | v1.0 | No new features without adoption evidence |
 | v1.0 | No schema churn |
 | v1.0 | No command family expansion |
-| All | No `godpowers` CLI binary beyond install. Slash commands only. |
+| All | No broad `godpowers` CLI beyond install, read-only status, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
 
 Discipline: a release that does too much is a release that ships late.

@@ -33,6 +33,12 @@ Beyond what was inherited, godpowers added:
   for the case where Impeccable is not installed
 - **AI-tool context writer** that maintains fenced sections in
   AGENTS.md / CLAUDE.md / GEMINI.md and 11 other tool-specific paths
+- **Feature awareness and host guarantee reporting** so existing projects and
+  AI coding hosts can state what Godpowers capabilities are actually available
+- **Messy-repo dogfood fixtures** for GSD migration, sync-back, extension
+  authoring, host capability, and Mode D suite release dry-run behavior
+- **Autonomous repo documentation and surface sync** for badges, route
+  metadata, recipes, package payloads, release gates, and extension packs
 
 ## Why this is the only mention
 

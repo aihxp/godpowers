@@ -170,6 +170,10 @@ test('VALID_EVENT_NAMES exposes the vocabulary set', () => {
     'vocabulary missing agent.start');
   assert(events.VALID_EVENT_NAMES.has('artifact.created'),
     'vocabulary missing artifact.created');
+  assert(events.VALID_EVENT_NAMES.has('local-helper.run'),
+    'vocabulary missing local-helper.run');
+  assert(events.VALID_EVENT_NAMES.has('host-capabilities.detect'),
+    'vocabulary missing host-capabilities.detect');
 });
 
 console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);

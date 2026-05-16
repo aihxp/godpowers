@@ -15,8 +15,31 @@ metadata:
 on: [/god-docs]
 
 jobs:
+  mechanical-doc-sync:
+    tier: 0
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - repo-doc-sync
+      - repo-surface-sync
+      - host-capabilities
+    with:
+      action: local-helper-sync
+      scope: docs-and-repo-surface
+
   docs-update:
     tier: 1
+    needs: mechanical-doc-sync
     uses: god-docs-writer@^1.0.0
     with:
       template: DOCS-UPDATE-LOG.md
+
+  docs-closure:
+    tier: 0
+    needs: docs-update
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: docs-closeout
+      dashboard: action-brief

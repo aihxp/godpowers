@@ -74,6 +74,9 @@ Confirm the npm payload excludes:
 - Create a `vX.Y.Z` git tag on the release commit.
 - Push the tag.
 - Prefer the tag-triggered GitHub publish workflow for npm provenance.
+- If the workflow cannot run, publish the verified tarball with
+  `npm publish godpowers-X.Y.Z.tgz --access public` and record that provenance
+  is unavailable for that publish.
 - Verify `npm view godpowers@latest version` after publish.
 - Verify the local installer can install the published version.
 

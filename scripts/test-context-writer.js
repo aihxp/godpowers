@@ -172,8 +172,8 @@ test('buildCanonicalContent stays under 30 lines', () => {
 
 test('buildCanonicalContent has no em dashes, en dashes, or emojis', () => {
   const content = cw.buildCanonicalContent(FAKE_STATE);
-  if (content.includes('—')) throw new Error('em dash present');
-  if (content.includes('–')) throw new Error('en dash present');
+  if (content.includes('\u2014')) throw new Error('em dash present');
+  if (content.includes('\u2013')) throw new Error('en dash present');
   // Spot-check for common emoji ranges (faces, symbols)
   if (/[\u{1F300}-\u{1FAFF}]/u.test(content)) throw new Error('emoji present');
 });

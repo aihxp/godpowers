@@ -4,7 +4,7 @@
 
 ## 1. The Date-Hopeful Roadmap
 
-**Sample**: "M-1: Auth — early Q3"
+**Sample**: "M-1: Auth, early Q3"
 
 **Why it fails**: "Early Q3" is not a gate, not a date, not a measurable
 state. The team treats it as soft, slippage compounds, and by mid-Q3 the

@@ -9,6 +9,8 @@ Started: [ISO 8601 timestamp]
 Last updated: [ISO 8601 timestamp]
 Progress: [0-100]% ([completed] of [total] steps complete; current step [n] of [total])
 Current: [Tier N label] / [sub-step label]
+Host guarantees: [full | degraded | unknown]
+Action brief: [next command or user decision; readiness; top attention item]
 
 ## Project Description
 
@@ -33,6 +35,12 @@ What happened:
 3. [Verification result]
 
 Next: [Next command or pause question]
+
+Release readiness signals:
+- Host capability status: [full | degraded | unknown | not checked]
+- Dogfood status: [not-run | pass | fail | not applicable]
+- Repo documentation sync: [fresh | drift detected | not checked]
+- Repo surface sync: [fresh | drift detected | not checked]
 
 ## Tier Status
 

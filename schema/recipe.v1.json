@@ -27,7 +27,8 @@
           "enum": [
             "starting", "planning", "building", "shipping",
             "production", "maintaining", "recovering", "collaborating",
-            "knowledge", "feature-addition", "configuration", "meta"
+            "knowledge", "feature-addition", "configuration", "meta",
+            "migration", "release", "extension", "suite", "dogfood"
           ]
         },
         "description": { "type": "string" }

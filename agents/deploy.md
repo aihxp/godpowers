@@ -14,11 +14,13 @@ see_also: [security, observe]
 
 ## Release Surface
 
-- [DECISION] Godpowers deploys as an npm package published from tag-triggered GitHub Actions.
-- [DECISION] `.github/workflows/ci.yml` runs tests, audit checks, E2E smoke, and package checks on pushes and pull requests to `main`.
-- [DECISION] `.github/workflows/publish.yml` publishes tagged releases to npm with provenance.
+- [DECISION] Godpowers deploys as an npm package published from tag-triggered GitHub Actions when provenance is available.
+- [DECISION] `.github/workflows/ci.yml` runs the full matrix test suite and the Node 20 release gate on pushes and pull requests to `main`.
+- [DECISION] `.github/workflows/publish.yml` runs `npm run release:check` before publishing tagged releases to npm with provenance.
+- [DECISION] `.github/workflows/publish-pack.yml` runs `npm run release:check` before publishing first-party extension packs.
 - [DECISION] `package.json` exposes `bin.godpowers` at `./bin/install.js`.
+- [DECISION] Manual tarball publish is a fallback only when the tag-triggered workflow cannot run, and provenance is unavailable for that publish.
 
 ## Watchouts
 
-- [HYPOTHESIS] A release cannot be fully published locally without `NPM_TOKEN` and tag-triggered GitHub Actions access.
+- [HYPOTHESIS] A release is incomplete until git tag, GitHub release, npm version, package tarball, README badges, CHANGELOG, RELEASE, and local install verification agree.

@@ -102,3 +102,22 @@ jobs:
       max-new-access-items-per-pause: 1
       origin-evidence-required: true
       no-inferred-domains: true
+
+  final-sync:
+    tier: 0
+    needs: launch
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - feature-awareness
+      - source-sync-back
+      - repo-doc-sync
+      - repo-surface-sync
+      - route-quality-sync
+      - recipe-coverage-sync
+      - release-surface-sync
+      - host-capabilities
+      - checkpoint-sync
+      - pillars-sync-plan
+    with:
+      action: final-sync
+      dashboard: action-brief

@@ -42,11 +42,11 @@ DESIGN-specific (via `lib/design-spec`):
 
 ### Mechanical vs interpretive
 
-Of the 99 documented have-nots in `references/HAVE-NOTS.md`:
+Of the 156 documented have-nots in `references/HAVE-NOTS.md`:
 - **~30 are mechanical** (regex-checkable; in `lib/have-nots-validator.js`)
-- **~69 are interpretive** (judgment-required; documented for human + AI review)
+- **~126 are interpretive** (judgment-required; documented for human + AI review)
 
-The mechanical 30 are caught by `/god-lint`. The interpretive 69 are
+The mechanical 30 are caught by `/god-lint`. The interpretive checks are
 the responsibility of `god-auditor` (retroactive scoring) and the
 two-stage code review (`god-spec-reviewer` + `god-quality-reviewer`).
 
@@ -207,7 +207,7 @@ catches breakage.
 - `lib/browser-bridge.js` - runtime backend cascade
 - `lib/runtime-audit.js` - design verification on rendered DOM
 - `lib/runtime-test.js` - PRD acceptance flow assertions
-- `references/HAVE-NOTS.md` - the catalog of 99 named failure modes
+- `references/HAVE-NOTS.md` - the catalog of 156 named failure modes
 - [change-propagation.md](./change-propagation.md) - how findings flow
 - [linkage.md](./linkage.md) - stable IDs and discovery mechanisms
 - [design-md.md](./design-md.md) - DESIGN.md format and lifecycle

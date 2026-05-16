@@ -15,10 +15,14 @@ projects from raw idea to hardened production.
 
 - `SKILL.md` is the main entry point, loaded by AI coding tools
 - `skills/` contains individual command skills (one per file)
+- `routing/` contains command routing metadata and intent recipes
+- `workflows/` contains executable workflow YAML
 - `references/` contains per-tier reference material (antipatterns, examples)
 - `bin/` contains the CLI installer and `god` command
+- `lib/` contains executable runtime helpers, sync checks, dogfood, dashboard, and release logic
 - `scripts/` contains validation and testing scripts
 - `templates/` contains artifact templates
+- `fixtures/dogfood/` contains messy-repo release dogfood scenarios
 
 ## Conventions
 
@@ -27,6 +31,8 @@ projects from raw idea to hardened production.
 - Every tier skill documents its have-nots (failure modes)
 - Artifacts are written to `.godpowers/<tier>/` paths
 - State is tracked in `.godpowers/PROGRESS.md`
+- Dashboard state is computed by `lib/dashboard.js`
+- Repo docs, repo surface, route quality, recipe coverage, release surface, host capability, and dogfood checks are executable release gates
 - Disk state is authoritative; conversation memory is not
 
 ## Quality Rules

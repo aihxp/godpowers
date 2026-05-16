@@ -15,7 +15,7 @@ see_also: [arch, quality, deploy]
 ## Context
 
 - [DECISION] Godpowers is an AI-powered development system delivered as slash commands and specialist agents inside AI coding tools.
-- [DECISION] The package name is `godpowers`, and the current repository version is `1.6.19`.
+- [DECISION] The package name is `godpowers`, and the current repository version is `1.6.23`.
 - [DECISION] The primary audience is solo founders and small engineering teams using AI coding tools who need accountable production workflow discipline without enterprise process.
 - [DECISION] The product promise is one slash-command arc from idea to hardened, observable, launch-ready software with traceable artifacts on disk.
 - [DECISION] Godpowers uses a pure-skill model where `npx godpowers` installs runtime files and in-tool slash commands perform work.
@@ -31,11 +31,12 @@ see_also: [arch, quality, deploy]
 ## Watchouts
 
 - [HYPOTHESIS] User adoption risk concentrates around whether agent spawning, installed runtime metadata, and local validation behave the same across supported AI coding tools.
-- [HYPOTHESIS] Documentation drift risk is high because the public surface includes 109 slash commands, 40 specialist agents, 13 workflows, and 40 intent recipes.
+- [HYPOTHESIS] Documentation drift risk is high because the public surface includes 110 slash commands, 40 specialist agents, 13 workflows, and 40 intent recipes.
+- [HYPOTHESIS] Adoption risk also concentrates around whether dogfood, host guarantees, extension authoring, and suite release dry-runs behave consistently across supported hosts.
 
 ## Gaps
 
-- [OPEN QUESTION] Which real-world AI coding tool should be treated as the first adoption canary after `1.6.19`? Owner: maintainer. Due: before the next public release.
+- [OPEN QUESTION] Which external messy repository should be treated as the first adoption canary after `1.6.23`? Owner: maintainer. Due: before the next public release.
 
 <!-- godpowers:pillar-sync:begin -->
 ## Godpowers artifact sources

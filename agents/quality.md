@@ -17,13 +17,14 @@ see_also: [security, deploy]
 - [DECISION] `npm test` is the required full verification command.
 - [DECISION] `npm run test:audit` runs dependency audit, `git diff --check`, and documentation surface count tests.
 - [DECISION] `npm run pack:check` verifies the npm package contains required runtime files and excludes local-only files.
-- [DECISION] `npm run release:check` combines tests, audit checks, and package contents checks.
+- [DECISION] `npm run release:check` combines the full test suite, audit checks, and package contents checks.
+- [DECISION] The full test suite includes repo-doc sync, repo-surface sync, automation surface sync, host capabilities, extension authoring, dogfood, Mode D, installer smoke, workflow runner, OTel, and extension publish-readiness checks.
 
 ## Standards
 
 - [DECISION] Artifact linter checks must catch em or en dashes, emojis, unlabeled paragraphs, phantom references, future-dated body timestamps, and selected PRD or ARCH failures.
 - [DECISION] CI tests Node `18`, Node `20`, and Node `22`.
-- [DECISION] Full release work must keep `CHANGELOG.md`, `README.md`, `RELEASE.md`, and package metadata aligned.
+- [DECISION] Full release work must keep `CHANGELOG.md`, `README.md`, `RELEASE.md`, package metadata, GitHub release notes, npm version, and local installed runtime aligned.
 
 ## Watchouts
 

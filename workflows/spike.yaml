@@ -21,3 +21,14 @@ jobs:
     with:
       template: SPIKE.md
       time-box: 1d
+
+  spike-closeout:
+    tier: 0
+    needs: spike-run
+    uses: god-orchestrator@^1.0.0
+    local-helpers:
+      - checkpoint-sync
+      - host-capabilities
+    with:
+      action: spike-closeout
+      dashboard: action-brief

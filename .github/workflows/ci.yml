@@ -47,8 +47,8 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: npm pack dry-run
-        run: npm run pack:check
+      - name: Run release gate
+        run: npm run release:check
 
       - name: Verify install script entry
         run: node -e "const pkg = require('./package.json'); if (!pkg.bin || !pkg.bin.godpowers) { console.error('package.json bin.godpowers missing'); process.exit(1); }"

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Godpowers PreToolUse Safety Hook
 # Runs before destructive tool calls in a Godpowers project.
-# Warns on: rm -rf, git reset --hard, force push to main, deleting .godpowers/
+# Warns on: rm -rf, git reset --hard, force push to main, deleting .godpowers/,
+# and irreversible public release actions.
 
 set -euo pipefail
 
@@ -29,6 +30,17 @@ case "$TOOL_INPUT" in
   *"git push --force"*)
     echo "WARNING: Force pushing. If pushing to main/master, this can"
     echo "destroy collaborators' work."
+    exit 1
+    ;;
+  *"npm publish"*)
+    echo "WARNING: npm publish is a public release action."
+    echo "Confirm release checklist, repo-doc-sync, repo-surface-sync,"
+    echo "release-surface-sync, package contents, and installer smoke first."
+    exit 1
+    ;;
+  *"gh release create"*)
+    echo "WARNING: gh release create publishes public release notes."
+    echo "Confirm README, badges, CHANGELOG, RELEASE, package, tag, and npm version agree."
     exit 1
     ;;
   *"rm -rf node_modules"*)
