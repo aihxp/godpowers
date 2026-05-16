@@ -147,6 +147,17 @@ Display: "Suggested next: /god-arch
           Why: PRD is complete; architecture is the next gate"
 ```
 
+When the suggestion is based on state.json, also show the immediate route:
+
+```
+Path ahead:
+  1. Current: <tier>/<substep> - <status>
+  2. Next: /god-X - <why>
+  3. Then: /god-Y - <next gate, if known>
+```
+
+Keep the route to 3 lines unless the user asks for the full plan.
+
 ## Process for Mode 4 (intent-based)
 
 ```
@@ -280,9 +291,15 @@ recommending archaeology, reconstruction, arc-ready, pillars, or refactor work.
 Godpowers Next
 
 Current state: [where we are]
+Progress: [pct]% ([done] of [total] steps complete; current step [n] of [total])
 Suggested next: [/god-X]
 
 Why: [one-line reason]
+
+Path ahead:
+  1. Current: [tier/substep] - [status]
+  2. Next: [/god-X] - [why]
+  3. Then: [/god-Y or "recompute after gate"]
 
 [If prereqs missing]:
 Pre-flight: missing [prereq]

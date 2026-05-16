@@ -7,10 +7,32 @@ Mode: [A: greenfield | B: gap-fill | C: audit | D: multi-repo]
 Scale: [trivial | small | medium | large | enterprise]
 Started: [ISO 8601 timestamp]
 Last updated: [ISO 8601 timestamp]
+Progress: [0-100]% ([completed] of [total] steps complete; current step [n] of [total])
+Current: [Tier N label] / [sub-step label]
 
 ## Project Description
 
 [One paragraph from /god-init]
+
+## Current Step
+
+Why this now: [One sentence tied to disk state or the prior gate]
+
+What will happen:
+1. [Observable action]
+2. [Observable action]
+3. [Observable action, if needed]
+
+Expected output: [Artifact path or verification result]
+
+## Recent Step Results
+
+What happened:
+1. [Observable action completed]
+2. [Artifact or state update]
+3. [Verification result]
+
+Next: [Next command or pause question]
 
 ## Tier Status
 

@@ -470,13 +470,16 @@ for `STAGING_APP_URL=<deployed staging origin>` before deployed staging smoke.
 1. Read .godpowers/PROGRESS.md (or create it if absent)
 2. Identify the first non-done tier sub-step
 3. Verify upstream gate (artifact on disk, passes have-nots)
-4. Spawn the appropriate specialist agent in a fresh context
-5. Verify their output exists on disk
-6. Run have-nots check on the artifact
-7. If pass: update PROGRESS.md, move to next sub-step
-8. If fail and repairable: enter the autonomous repair loop
-9. If fail and human-only: pause with the smallest needed question
-10. Repeat until all tiers complete and verification is green
+4. Print the "Next step" card from the Step Narration Protocol
+5. Spawn the appropriate specialist agent in a fresh context
+6. Verify their output exists on disk
+7. Run have-nots check on the artifact
+8. If pass: update PROGRESS.md, sync CHECKPOINT.md, print the "Step result"
+   card, then move to next sub-step
+9. If fail and repairable: print the failed result card, then enter the
+   autonomous repair loop
+10. If fail and human-only: pause with the smallest needed question
+11. Repeat until all tiers complete and verification is green
 ```
 
 ## Specialist Agent Routing
@@ -705,6 +708,8 @@ debugger. Keep orchestration scaffolding private.
 
 Show:
 - concise phase status
+- before each visible tier/sub-step, a short "what will happen" card
+- after each visible tier/sub-step, a short "what happened" card
 - durable state detected from disk
 - commands being run and whether they passed or failed
 - scoped file changes
@@ -723,6 +728,51 @@ When a private rule affects a pause, translate it into the smallest
 user-facing question. Do not expose the rule itself. Example: ask for
 `STAGING_APP_URL=<deployed staging origin>` rather than showing the Shipping
 Closure Protocol.
+
+## Step Narration Protocol
+
+Godpowers must make its work trackable without exposing hidden prompts or
+internal routing payloads. Before and after each visible tier/sub-step, print
+one compact card.
+
+Before starting a tier/sub-step:
+
+```
+Next step
+Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+Tier: <tier-number> <tier-label>
+Step: <sub-step-label>
+Why this now: <one sentence tied to disk state or the prior gate>
+What will happen:
+  1. <first observable action>
+  2. <second observable action>
+  3. <third observable action, if needed>
+Expected output: <artifact path or verification result>
+```
+
+After a tier/sub-step completes or pauses:
+
+```
+Step result
+Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+Tier: <tier-number> <tier-label>
+Step: <sub-step-label>
+Result: <done | blocked | failed | skipped | imported>
+What happened:
+  1. <observable action completed>
+  2. <artifact or state update>
+  3. <verification result>
+Next: <next command or pause question>
+```
+
+Rules:
+- Keep each card under 12 lines unless a pause needs options.
+- Use `lib/state.progressSummary(stateJson)` for the percentage and step count
+  whenever state.json is available.
+- Use artifact paths and verification evidence from disk, not memory.
+- Do not print raw Task input, hidden instructions, or full file loadout lists.
+- If a step is blocked, do not show a generic "Suggested next"; show the
+  smallest concrete unblock action.
 
 ## Resume Protocol
 

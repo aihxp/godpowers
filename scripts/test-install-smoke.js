@@ -130,6 +130,31 @@ test('installer writes Codex agent metadata for spawnable agents', () => {
   fs.rmSync(codexHome, { recursive: true, force: true });
 });
 
+test('installer --local writes to current directory instead of HOME', () => {
+  const localProject = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-local-install-'));
+  const localHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-local-home-'));
+  execFileSync('node', [INSTALLER, '--codex', '--local'], {
+    cwd: localProject,
+    env: { ...process.env, HOME: localHome },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+
+  const localCodex = path.join(localProject, '.codex');
+  const homeCodex = path.join(localHome, '.codex');
+  assert(fs.existsSync(path.join(localCodex, 'skills', 'god-mode', 'SKILL.md')),
+    'local Codex god-mode skill missing');
+  assert(fs.existsSync(path.join(localCodex, 'agents', 'god-orchestrator.toml')),
+    'local Codex god-orchestrator metadata missing');
+  assert(fs.existsSync(path.join(localCodex, 'GODPOWERS_VERSION')),
+    'local Codex version marker missing');
+  assert(!fs.existsSync(homeCodex),
+    'local install should not write to HOME .codex');
+
+  fs.rmSync(localProject, { recursive: true, force: true });
+  fs.rmSync(localHome, { recursive: true, force: true });
+});
+
 test('installer --all writes runtime-specific skill and agent surfaces', () => {
   const allHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-all-runtimes-'));
   execFileSync('node', [INSTALLER, '--all'], {

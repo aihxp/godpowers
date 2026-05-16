@@ -1,11 +1,10 @@
-# Godpowers 1.6.6 Release
+# Godpowers 1.6.7 Release
 
 Date: 2026-05-16
 
-Godpowers 1.6.6 extends transcript-safe spawn handling beyond `/god-mode`.
-The goal of this patch is to keep Codex-visible spawn messages small and safe
-for `/god-init` and Mode D suite coordination while preserving the same
-orchestrator and coordinator behavior.
+Godpowers 1.6.7 makes the live workflow easier to track. The goal of this
+patch is to answer "what is Godpowers doing, how far along is it, what just
+happened, and what happens next" from disk state.
 
 ## What is stable
 
@@ -27,29 +26,36 @@ orchestrator and coordinator behavior.
 
 ## What is new
 
-- `/god-init` now writes detailed initialization context to
-  `.godpowers/runs/<run-id>/INIT-ORCHESTRATOR-HANDOFF.md` before spawning
-  `god-orchestrator`.
-- `/god-suite-init`, `/god-suite-release`, and `/god-suite-patch` now write
-  suite coordination context to
-  `.godpowers/runs/<run-id>/COORDINATOR-HANDOFF.md` before spawning
-  `god-coordinator`.
-- `god-coordinator` now writes per-repo orchestrator context to
-  `.godpowers/runs/<run-id>/COORDINATOR-ORCHESTRATOR-HANDOFF.md` before
-  spawning a target repo's `god-orchestrator`.
-- `god-orchestrator` now treats handoff files as a general caller protocol,
-  not only as a `/god-mode` protocol.
-- `/god-hygiene` routing no longer lists `god-orchestrator` as a secondary
-  spawn because the skill only runs artifact, dependency, and documentation
-  audits.
+- `lib/state.progressSummary` computes percentage complete, completed step
+  count, total step count, current step number, and current tier/sub-step from
+  `state.json`.
+- `CHECKPOINT.md` can persist progress frontmatter and now includes
+  "What happened recently" and "What happens next" sections.
+- `god-orchestrator` now has a Step Narration Protocol for compact
+  "Next step" and "Step result" cards around visible tier/sub-step work.
+- `/god-mode`, `/god-next`, `/god-status`, and `/god-locate` now document
+  progress, path-ahead, recent-work, and next-action summaries.
+- `templates/PROGRESS.md` now includes a current step plan and recent step
+  result shape.
+- Package publication now allowlists `agents/god-*.md`, preventing local
+  Pillars files under `agents/` from entering the npm payload.
+- Package contents checks now fail if non-specialist files under `agents/`
+  would be published.
+- `AGENTS.md` now includes the Pillars Protocol for loading durable project
+  context and workflow-state files.
+- Installer local mode now resolves runtime destinations under the current
+  directory and installs only `god-*.md` specialist agent files.
 
-## What 1.6.6 means
+## What 1.6.7 means
 
-Godpowers 1.6.6 does not expand the public command surface. It fixes more
-Codex spawn integration paths so the right agent is still started, but the host
-UI only sees a small pointer to disk state instead of raw project description,
-suite metadata, release notes, patch directives, dependency graphs, routing
-rules, or local-file details.
+Godpowers 1.6.7 does not expand the public command surface. It makes the
+existing arc more legible by showing a disk-derived progress report, a short
+plan before visible work starts, and a short result after work completes or
+pauses.
+
+The release also tightens npm packaging around specialist agents. Local
+project Pillars can live under `agents/` during development, but only
+`agents/god-*.md` files are packaged as Godpowers specialist agents.
 
 Safe sync and unresolved Critical harden findings remain release-truth gates.
 Per-repo Quarterback ownership remains intact for Mode D suite work.
@@ -59,8 +65,8 @@ Per-repo Quarterback ownership remains intact for Mode D suite work.
 During the 1.x stability window, do not add broad new command families, change
 schema formats, or rename public artifacts without evidence from real use.
 
-The `v1.6.6` git tag points to the release commit that matches the npm
-`godpowers@1.6.6` package. Public publishes should prefer the tag-triggered
+The `v1.6.7` git tag points to the release commit that matches the npm
+`godpowers@1.6.7` package. Public publishes should prefer the tag-triggered
 GitHub workflow so npm provenance, git history, and release notes stay aligned.
 
 Allowed changes:

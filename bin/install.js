@@ -118,6 +118,16 @@ const RUNTIMES = {
   },
 };
 
+function resolveRuntime(runtimeKey, opts = {}) {
+  const runtime = RUNTIMES[runtimeKey];
+  if (!runtime) return null;
+  const resolved = { ...runtime };
+  if (opts.local && !opts.global) {
+    resolved.configDir = path.join(process.cwd(), path.basename(runtime.configDir));
+  }
+  return resolved;
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -331,8 +341,8 @@ function parseArgs(argv) {
 // Install
 // ---------------------------------------------------------------------------
 
-function installForRuntime(runtimeKey, srcDir) {
-  const runtime = RUNTIMES[runtimeKey];
+function installForRuntime(runtimeKey, srcDir, opts = {}) {
+  const runtime = resolveRuntime(runtimeKey, opts);
   if (!runtime) {
     error(`Unknown runtime: ${runtimeKey}`);
     return false;
@@ -367,7 +377,7 @@ function installForRuntime(runtimeKey, srcDir) {
     ensureDir(agentsDest);
     let count = 0;
     for (const file of fs.readdirSync(agentsSrc)) {
-      if (file.endsWith('.md')) {
+      if (/^god-.*\.md$/.test(file)) {
         const srcFile = path.join(agentsSrc, file);
         installAgentFile(srcFile, agentsDest, runtime);
         count++;
@@ -456,8 +466,8 @@ function installForRuntime(runtimeKey, srcDir) {
 // Uninstall
 // ---------------------------------------------------------------------------
 
-function uninstallForRuntime(runtimeKey) {
-  const runtime = RUNTIMES[runtimeKey];
+function uninstallForRuntime(runtimeKey, opts = {}) {
+  const runtime = resolveRuntime(runtimeKey, opts);
   if (!runtime) {
     error(`Unknown runtime: ${runtimeKey}`);
     return false;
@@ -580,16 +590,16 @@ function main() {
 
   const srcDir = path.resolve(__dirname, '..');
 
-  // Detect non-interactive and default to claude global
+  // Detect non-interactive and default to Claude Code.
   if (opts.runtimes.length === 0 && !opts.all) {
     if (!process.stdin.isTTY) {
-      warn('Non-interactive terminal detected, defaulting to Claude Code global install');
+      warn('Non-interactive terminal detected, defaulting to Claude Code install');
       opts.runtimes = ['claude'];
-      opts.global = true;
+      if (!opts.local) opts.global = true;
     } else {
       // Interactive mode: default to claude
       opts.runtimes = ['claude'];
-      opts.global = true;
+      if (!opts.local) opts.global = true;
     }
   }
 
@@ -601,7 +611,7 @@ function main() {
   if (opts.uninstall) {
     let removed = 0;
     for (const runtime of opts.runtimes) {
-      if (uninstallForRuntime(runtime)) {
+      if (uninstallForRuntime(runtime, opts)) {
         removed++;
       }
     }
@@ -617,7 +627,7 @@ function main() {
 
   let installed = 0;
   for (const runtime of opts.runtimes) {
-    if (installForRuntime(runtime, srcDir)) {
+    if (installForRuntime(runtime, srcDir, opts)) {
       installed++;
     }
   }
@@ -625,7 +635,7 @@ function main() {
   if (installed > 0) {
     // Count slash commands for verification message
     const skillsCount = fs.readdirSync(path.join(srcDir, 'skills')).filter(f => f.endsWith('.md')).length;
-    const agentsCount = fs.readdirSync(path.join(srcDir, 'agents')).filter(f => f.endsWith('.md')).length;
+    const agentsCount = fs.readdirSync(path.join(srcDir, 'agents')).filter(f => /^god-.*\.md$/.test(f)).length;
 
     log('');
     log(`\x1b[32mDone!\x1b[0m Installed Godpowers v${VERSION} for ${installed} runtime(s).`);

@@ -33,6 +33,9 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - If artifact exists but PROGRESS.md says "pending": FLAG as untracked work
 6. Report:
    - Current mode and scale
+   - Progress summary: percentage, completed step count, current step number
+   - What happened recently, using CHECKPOINT.md actions when available
+   - What happens next, using routing and disk state
    - Per-tier status (with disk verification)
    - Any inconsistencies between PROGRESS.md and disk
    - Suggested next action
@@ -45,6 +48,17 @@ Godpowers Status
 
 Mode: A (greenfield)    Scale: medium
 Started: 2026-05-09
+Progress: 15% (2 of 13 steps complete; current step 3 of 13)
+Current: Tier 1 Planning / Architecture
+
+What happened recently:
+  1. PRD artifact verified on disk
+  2. Tier state refreshed from state.json
+
+What happens next:
+  1. Run /god-arch
+  2. Verify architecture artifact
+  3. Recompute next gate with /god-next
 
 Tier 1: Planning
   + PRD           done     .godpowers/prd/PRD.md (lint clean: 0 errors)

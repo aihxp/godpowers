@@ -5,6 +5,45 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.7] - 2026-05-16
+
+Progress visibility patch. Makes Godpowers easier to follow while preserving
+the stable 1.6 command surface.
+
+### Added
+- Added `lib/state.progressSummary`, `orderedSubSteps`, and
+  `renderProgressLine` so commands can report percentage complete, completed
+  step count, total step count, and current step number from state.json.
+- Added checkpoint frontmatter fields for `progress-pct`,
+  `progress-complete`, `progress-total`, and `current-step`.
+- Added `CHECKPOINT.md` sections for recent work and what happens next.
+- Added a Step Narration Protocol for `god-orchestrator` so visible
+  tier/sub-step work gets compact "Next step" and "Step result" cards.
+- Added `/god-mode`, `/god-next`, `/god-status`, and `/god-locate` guidance
+  for progress, path-ahead, recent work, and next-action summaries.
+- Added `PROGRESS.md` template sections for the current step plan and recent
+  step results.
+- Added root `AGENTS.md` Pillars Protocol guidance so coding agents know which
+  project context and workflow-state files are authoritative.
+- Added installer coverage for `--local` Codex installs.
+- Added regression coverage for progress math, checkpoint progress rendering,
+  checkpoint progress preservation, and checkpoint step summaries.
+
+### Changed
+- Package publication now allowlists `agents/god-*.md` instead of the entire
+  `agents/` directory so local Pillars files do not enter the npm payload.
+- Package contents checks now fail when non-specialist files under `agents/`
+  would be included in the npm package.
+- The installer now resolves local runtime destinations when `--local` is used
+  and only installs specialist agent files matching `god-*.md`.
+
+### Guardrails
+- This patch does not add slash commands, specialist agents, workflows,
+  recipes, schemas, or public artifact formats.
+- Progress percentages are derived from disk state, not conversation memory.
+- Optional or intentionally skipped steps count as complete when their state
+  is `imported`, `skipped`, or `not-required`.
+
 ## [1.6.6] - 2026-05-16
 
 Non-God-Mode handoff privacy patch. Extends the display-safe handoff pattern

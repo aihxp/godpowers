@@ -40,6 +40,7 @@ GODPOWERS LOCATE
 
 Project: <name>  Mode: <A/B/C/E>  Suite: <yes/no>
 Lifecycle: <phase>  Current: <tier>/<substep>
+Progress: <pct>% (<complete> of <total> steps complete; current step <n> of <total>)
 
 Last action: <name> by <actor> at <ts>
 Last user instruction: <if available>
@@ -54,6 +55,14 @@ Recent events (last 5):
 - <event>
 - <event>
 - ...
+
+What happened recently:
+- <checkpoint action or event summary>
+- <checkpoint action or event summary>
+
+What happens next:
+- <next command>
+- <one-line reason>
 
 Next suggested: <command>
   Reason: <why>
@@ -73,8 +82,12 @@ Drift check:
 3. If state.json is missing: project is broken; run `/god-doctor`.
 4. Compute age of CHECKPOINT last-update; flag staleness if > 1 hour
    or > 100 events since last checkpoint write.
-5. Produce single-screen orientation summary.
-6. Append `op:locate` event to events.jsonl.
+5. Compute progress from `lib/state.progressSummary(stateJson)` and show
+   percentage, complete count, total count, and current step number.
+6. Summarize "what happened recently" from CHECKPOINT.md actions or recent
+   events, then summarize "what happens next" from routing.
+7. Produce single-screen orientation summary.
+8. Append `op:locate` event to events.jsonl.
 
 ## Difference from /god-status
 

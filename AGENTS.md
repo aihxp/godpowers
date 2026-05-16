@@ -35,3 +35,13 @@ projects from raw idea to hardened production.
 - No emojis (use `+`, `-`, `x`, `!` for status indicators)
 - Every sentence in generated artifacts must be labeled: DECISION, HYPOTHESIS, or OPEN QUESTION
 - Every claim must fail the substitution test (swap in a competitor, sentence must break)
+
+<!-- pillars:begin -->
+## Godpowers Pillars Protocol
+
+- [DECISION] Load `agents/context.md` and `agents/repo.md` before Godpowers commands make durable project decisions.
+- [DECISION] Load additional `agents/*.md` pillar files only when their frontmatter matches the task.
+- [DECISION] Treat `.godpowers/state.json`, `.godpowers/PROGRESS.md`, and `.godpowers/CHECKPOINT.md` as workflow state.
+- [DECISION] Treat Pillars files as portable project context for any coding agent that opens this repository.
+- [DECISION] Disk state wins over conversation memory when these sources disagree.
+<!-- pillars:end -->

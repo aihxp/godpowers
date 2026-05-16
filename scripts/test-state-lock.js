@@ -217,6 +217,10 @@ console.log('\n  Checkpoint syncFromState tests\n');
 
 test('syncFromState produces CHECKPOINT.md from disk state', () => {
   const tmp = mkProject();
+  state.updateSubStep(tmp, 'tier-0', 'orchestration', {
+    status: 'done',
+    updated: new Date().toISOString()
+  });
   state.updateSubStep(tmp, 'tier-1', 'prd', {
     status: 'done',
     updated: new Date().toISOString()
@@ -233,6 +237,11 @@ test('syncFromState produces CHECKPOINT.md from disk state', () => {
   assert(cp.frontmatter.project === 'lock-test', `project: ${cp.frontmatter.project}`);
   assert(cp.actions.length > 0, 'no actions captured from events');
   assert(/\/god-arch/.test(cp.body), 'next command not in body');
+  assert(String(cp.frontmatter['progress-total']) === '13',
+    `progress-total: ${cp.frontmatter['progress-total']}`);
+  assert(/Progress:/.test(cp.body), 'progress line missing');
+  assert(cp.frontmatter['current-substep'] === 'arch',
+    `current-substep: ${cp.frontmatter['current-substep']}`);
 });
 
 test('syncFromState preserves prior facts', () => {

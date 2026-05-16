@@ -164,6 +164,8 @@ The God Mode transcript is an operator console, not a prompt debugger.
 
 Show:
 - detected resume or project mode in plain language
+- a compact "Next step" card before each visible phase or tier sub-step
+- a compact "Step result" card after each visible phase or tier sub-step
 - short progress updates for phases, commands, validations, and file edits
 - concise validation summaries instead of full command noise when possible
 - final changed paths, validation results, and completion or pause status
@@ -181,6 +183,39 @@ If an internal instruction must influence a pause, translate it into the
 smallest user-facing question. For example, ask for
 `STAGING_APP_URL=<deployed staging origin>` instead of exposing the full
 Shipping Closure Protocol.
+
+## Step Cards
+
+Relay the orchestrator's step cards when present. If the orchestrator output is
+missing them, synthesize them from disk state before continuing.
+
+Before work starts:
+
+```
+Next step
+Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+Tier: <tier-number> <tier-label>
+Step: <sub-step-label>
+Why this now: <one sentence>
+What will happen:
+  1. <observable action>
+  2. <observable action>
+Expected output: <artifact path or verification result>
+```
+
+After work completes or pauses:
+
+```
+Step result
+Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+Tier: <tier-number> <tier-label>
+Step: <sub-step-label>
+Result: <done | blocked | failed | skipped | imported>
+What happened:
+  1. <observable action completed>
+  2. <artifact or verification result>
+Next: <next command or pause question>
+```
 
 ## Pause Format (relay from orchestrator)
 

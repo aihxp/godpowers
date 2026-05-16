@@ -64,6 +64,8 @@ test('write creates CHECKPOINT.md with frontmatter and body', () => {
   const raw = fs.readFileSync(file, 'utf8');
   assert(raw.startsWith('---'), 'no frontmatter');
   assert(/^## Where you are/m.test(raw), 'missing Where-you-are');
+  assert(/^## What happened recently/m.test(raw), 'missing What-happened');
+  assert(/^## What happens next/m.test(raw), 'missing What-happens-next');
   assert(/^## Next suggested command/m.test(raw), 'missing Next-suggested');
   assert(/^## Last actions/m.test(raw), 'missing Last-actions');
   assert(/^## Held facts/m.test(raw), 'missing Held-facts');
@@ -112,6 +114,70 @@ test('mode-d-suite roundtrips as boolean', () => {
   assert(got.frontmatter['mode-d-suite'] === true ||
          got.frontmatter['mode-d-suite'] === 'true',
     `mode-d-suite: ${got.frontmatter['mode-d-suite']}`);
+});
+
+test('write includes optional progress report in frontmatter and body', () => {
+  const tmp = mkProject();
+  checkpoint.write(tmp, {
+    project: 'progress',
+    currentTier: 'tier-1',
+    currentSubstep: 'arch',
+    progress: {
+      percent: 15,
+      completed: 2,
+      total: 13,
+      currentStep: 3
+    }
+  });
+  const got = checkpoint.read(tmp);
+  assert(String(got.frontmatter['progress-pct']) === '15',
+    `progress-pct: ${got.frontmatter['progress-pct']}`);
+  assert(String(got.frontmatter['progress-total']) === '13',
+    `progress-total: ${got.frontmatter['progress-total']}`);
+  assert(/Progress: \*\*15%\*\*/.test(got.body),
+    `missing progress in body: ${got.body}`);
+  assert(/current step 3 of 13/.test(got.body),
+    `missing current step in body: ${got.body}`);
+});
+
+test('write includes recent actions and next summary sections', () => {
+  const tmp = mkProject();
+  checkpoint.write(tmp, {
+    project: 'summary',
+    actions: [
+      '[2026-01-01T00:00:00.000Z] tester: first',
+      '[2026-01-02T00:00:00.000Z] tester: second'
+    ],
+    nextCommand: '/god-arch',
+    nextReason: 'PRD is complete'
+  });
+  const got = checkpoint.read(tmp);
+  assert(/## What happened recently/.test(got.body),
+    `missing recent section: ${got.body}`);
+  assert(/tester: first/.test(got.body), `missing action: ${got.body}`);
+  assert(/## What happens next/.test(got.body),
+    `missing next section: ${got.body}`);
+  assert(/\/god-arch/.test(got.body), `missing command: ${got.body}`);
+  assert(/PRD is complete/.test(got.body), `missing reason: ${got.body}`);
+});
+
+test('recordAction preserves existing progress report', () => {
+  const tmp = mkProject();
+  checkpoint.write(tmp, {
+    project: 'progress-preserve',
+    progress: {
+      percent: 15,
+      completed: 2,
+      total: 13,
+      currentStep: 3
+    }
+  });
+  checkpoint.recordAction(tmp, { actor: 'tester', name: 'kept-progress' });
+  const got = checkpoint.read(tmp);
+  assert(String(got.frontmatter['progress-pct']) === '15',
+    `progress-pct: ${got.frontmatter['progress-pct']}`);
+  assert(/Progress: \*\*15%\*\*/.test(got.body),
+    `progress body lost: ${got.body}`);
 });
 
 test('recordAction prepends and trims to MAX_ACTIONS', () => {

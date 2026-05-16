@@ -72,6 +72,9 @@ function main() {
   if (pack.name !== 'godpowers') {
     throw new Error(`expected package name godpowers, got ${pack.name}`);
   }
+  const nonSpecialistAgents = [...files].filter(file =>
+    file.startsWith('agents/') && !/^agents\/god-.*\.md$/.test(file)
+  );
   if (pack.entryCount < 400) {
     throw new Error(`expected at least 400 package entries, got ${pack.entryCount}`);
   }
@@ -80,6 +83,9 @@ function main() {
   }
   if (forbidden.length > 0) {
     throw new Error(`package includes local-only files:\n  - ${forbidden.join('\n  - ')}`);
+  }
+  if (nonSpecialistAgents.length > 0) {
+    throw new Error(`package includes non-specialist agent files:\n  - ${nonSpecialistAgents.join('\n  - ')}`);
   }
 
   console.log(`  + package contents verified: ${pack.entryCount} files`);

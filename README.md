@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.6-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.7-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,11 +12,10 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.6 keeps the stable Godpowers surface while making more Codex
-orchestrator spawns transcript-safe: `/god-mode`, `/god-init`, and Mode D
-suite coordinator paths now use private handoff files with small display-safe
-pointers. Safe-sync and unresolved Critical harden findings still gate direct
-Tier 3 commands, `/god-mode`, and `/god-mode --yolo`.
+Version 1.6.7 keeps the stable Godpowers surface while making the live arc
+easier to follow: progress reports now show percent complete, current step,
+recent work, and what happens next. The orchestrator also documents compact
+"Next step" and "Step result" cards around visible tier/sub-step work.
 
 It fuses four disciplines into one unified workflow:
 

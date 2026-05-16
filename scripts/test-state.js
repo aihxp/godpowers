@@ -174,5 +174,54 @@ test('mode + mode-d-suite fields survive round-trip', () => {
     `announced-as lost: ${got['mode-announced-as']}`);
 });
 
+test('progressSummary reports default 13-step arc position', () => {
+  const tmp = mkProject();
+  const s = state.init(tmp, 'progress');
+  const p = state.progressSummary(s);
+  assert(p.total === 13, `total: ${p.total}`);
+  assert(p.completed === 0, `completed: ${p.completed}`);
+  assert(p.percent === 0, `percent: ${p.percent}`);
+  assert(p.currentStep === 1, `currentStep: ${p.currentStep}`);
+  assert(p.current.tierKey === 'tier-0', `tier: ${p.current.tierKey}`);
+  assert(p.current.subStepKey === 'orchestration',
+    `substep: ${p.current.subStepKey}`);
+});
+
+test('progressSummary advances to first pending step after completed work', () => {
+  const tmp = mkProject();
+  state.init(tmp, 'progress-advance');
+  state.updateSubStep(tmp, 'tier-0', 'orchestration', { status: 'done' });
+  state.updateSubStep(tmp, 'tier-1', 'prd', { status: 'done' });
+  const p = state.progressSummary(state.read(tmp));
+  assert(p.total === 13, `total: ${p.total}`);
+  assert(p.completed === 2, `completed: ${p.completed}`);
+  assert(p.percent === 15, `percent: ${p.percent}`);
+  assert(p.currentStep === 3, `currentStep: ${p.currentStep}`);
+  assert(p.current.tierKey === 'tier-1', `tier: ${p.current.tierKey}`);
+  assert(p.current.subStepKey === 'arch', `substep: ${p.current.subStepKey}`);
+});
+
+test('progressSummary treats skipped imported and not-required as complete', () => {
+  const tmp = mkProject();
+  state.init(tmp, 'progress-complete-statuses');
+  state.updateSubStep(tmp, 'tier-1', 'design', { status: 'not-required' });
+  state.updateSubStep(tmp, 'tier-1', 'product', { status: 'skipped' });
+  state.updateSubStep(tmp, 'tier-2', 'repo', { status: 'imported' });
+  const p = state.progressSummary(state.read(tmp));
+  assert(p.completed === 3, `completed: ${p.completed}`);
+  assert(p.percent === 23, `percent: ${p.percent}`);
+});
+
+test('renderProgressLine includes percent and current step', () => {
+  const tmp = mkProject();
+  state.init(tmp, 'progress-line');
+  state.updateSubStep(tmp, 'tier-0', 'orchestration', { status: 'done' });
+  const line = state.renderProgressLine(state.progressSummary(state.read(tmp)));
+  assert(/Progress: 8%/.test(line), `line: ${line}`);
+  assert(/1 of 13 steps complete/.test(line), `line: ${line}`);
+  assert(/current step 2 of 13/.test(line), `line: ${line}`);
+  assert(/Planning \/ PRD/.test(line), `line: ${line}`);
+});
+
 console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
 process.exit(failed > 0 ? 1 : 0);
