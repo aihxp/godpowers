@@ -676,12 +676,16 @@ across all 14 categories.
 
 After Launch completes, write a transition message:
 
-```
+```text
 Godpowers project run complete.
+
+Godpowers Dashboard
 
 Current status:
   State: complete
-  Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
+  Phase: <plain-language phase> (tier <human ordinal> of <human total>)
+  Step: <sub-step label> (step <n> of <total steps>)
+  Progress: <pct>% (<done> of <total> steps complete)
   Worktree: <clean | modified files unstaged | staged changes | mixed>
   Index: <untouched | staged files listed>
 
@@ -736,6 +740,11 @@ Proposition:
   3. Commit release-ready changes: stage only the intended files, then commit
   4. Run deployed staging: provide STAGING_APP_URL=<deployed staging origin> when needed
 ```
+
+Generate the dashboard with `lib/dashboard.compute(projectRoot)` and
+`lib/dashboard.render(result)` when the runtime bundle is available. If the
+runtime module cannot be loaded, fall back to a manual disk scan and say
+`Dashboard engine: unavailable, manual scan used`.
 
 Update PROGRESS.md status to `steady-state-active`.
 
@@ -860,7 +869,8 @@ Show:
 - commands being run and whether they passed or failed
 - scoped file changes
 - final validation summary
-- final current status from disk, including progress, lifecycle, open items,
+- final Godpowers Dashboard from disk, including phase, tier, step, progress,
+  lifecycle, planning visibility, proactive checks, open items,
   worktree/index state, and recommended next action
 - plain-language workflow names. Say "project run" or "workflow" instead of
   unexplained "arc" in visible output
@@ -918,11 +928,11 @@ one compact card.
 
 Before starting a tier/sub-step:
 
-```
+```text
 Next step
-Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
-Tier: <tier-number> <tier-label>
+Phase: <plain-language phase> (tier <human ordinal> of <human total>)
 Step: <sub-step-label>
+Progress: <pct>% (<done> of <total> steps complete; step <n> of <total>)
 Why this now: <one sentence tied to disk state or the prior gate>
 What will happen:
   1. <first observable action>
@@ -933,11 +943,11 @@ Expected output: <artifact path or verification result>
 
 After a tier/sub-step completes or pauses:
 
-```
+```text
 Step result
-Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
-Tier: <tier-number> <tier-label>
+Phase: <plain-language phase> (tier <human ordinal> of <human total>)
 Step: <sub-step-label>
+Progress: <pct>% (<done> of <total> steps complete; step <n> of <total>)
 Result: <done | blocked | failed | skipped | imported>
 What happened:
   1. <observable action completed>

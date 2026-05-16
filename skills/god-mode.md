@@ -178,8 +178,9 @@ Show:
 - short progress updates for phases, commands, validations, and file edits
 - concise validation summaries instead of full command noise when possible
 - final changed paths, validation results, and completion or pause status
-- final current status, open items, worktree/index state, and recommended next
-  action
+- final Godpowers Dashboard from disk, including phase, tier, step, progress,
+  planning visibility, proactive checks, open items, worktree/index state, and
+  recommended next action
 
 Hide:
 - raw spawn input
@@ -202,11 +203,11 @@ missing them, synthesize them from disk state before continuing.
 
 Before work starts:
 
-```
+```text
 Next step
-Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
-Tier: <tier-number> <tier-label>
+Phase: <plain-language phase> (tier <human ordinal> of <human total>)
 Step: <sub-step-label>
+Progress: <pct>% (<done> of <total> steps complete; step <n> of <total>)
 Why this now: <one sentence>
 What will happen:
   1. <observable action>
@@ -216,11 +217,11 @@ Expected output: <artifact path or verification result>
 
 After work completes or pauses:
 
-```
+```text
 Step result
-Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>)
-Tier: <tier-number> <tier-label>
+Phase: <plain-language phase> (tier <human ordinal> of <human total>)
 Step: <sub-step-label>
+Progress: <pct>% (<done> of <total> steps complete; step <n> of <total>)
 Result: <done | blocked | failed | skipped | imported>
 What happened:
   1. <observable action completed>

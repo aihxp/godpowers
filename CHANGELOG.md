@@ -5,6 +5,37 @@ All notable changes to Godpowers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.12] - 2026-05-16
+
+Executable dashboard CLI and shared runtime status engine.
+
+### Added
+- Added `lib/dashboard.js`, a shared executable engine for project status,
+  progress percentage, tier position, planning visibility, proactive checks,
+  open items, and recommended next command.
+- Added `godpowers status --project .` for human, CI, and host-runtime status
+  checks outside the slash command layer.
+- Added `godpowers next --project .` for direct next-action routing from disk
+  state.
+- Added `--json` output for the new status and next commands.
+- Added dashboard behavioral tests, CLI status and next tests, and git
+  porcelain parsing tests.
+
+### Changed
+- `/god-status`, `/god-next`, `/god-mode`, and `god-orchestrator` now point to
+  the shared dashboard engine when local runtime execution is available.
+- The installer help now documents status and next as first-class commands.
+- Release documentation now names the executable dashboard contract instead of
+  treating progress visibility as Markdown-only guidance.
+
+### Fixed
+- Fixed git porcelain parsing so leading-space worktree entries such as
+  ` M README.md` do not clip filenames in dashboard output.
+
+### Validation
+- Added tests prove dashboard computation, dashboard rendering, CLI JSON
+  output, proactive review suggestions, and staged path reporting.
+
 ## [1.6.11] - 2026-05-16
 
 Auto-invoke visibility and platform-neutral spawning patch.

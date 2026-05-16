@@ -1,18 +1,20 @@
 # Godpowers Architecture (v1 Design Target)
 
-> Status: STABLE v1.6.11 (pure-skill model)
+> Status: STABLE v1.6.12 (pure-skill model plus dashboard CLI)
 > Authors: Godpowers Team
 > Last updated: 2026-05-12
 
 This document is the canonical design for Godpowers as a coherent product.
-v1.6.11 keeps the public surface stable while making automatic work easier to
-understand across supported AI coding tools: auto-invoked commands, spawned
-agents, local runtime helpers, and platform-specific spawning limits must be
-reported visibly instead of implied as hidden background work.
+v1.6.12 keeps the public surface stable while making status and next-action
+routing executable outside the slash command layer. Auto-invoked commands,
+spawned agents, local runtime helpers, platform-specific spawning limits, and
+dashboard progress must be reported visibly instead of implied as hidden
+background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
-The only CLI surface is `npx godpowers` for installation. All user-facing
-operations are slash commands inside the AI coding tool.
+The CLI surface is `npx godpowers` for installation plus read-only status
+helpers such as `godpowers status --project .` and `godpowers next --project .`.
+Durable project operations remain slash commands inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
 Tekton, Argo, Buildkite, VSCode, Cargo, Poetry, Bazel, Nx, Helm, Terraform,

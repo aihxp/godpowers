@@ -300,6 +300,9 @@ function removeSkillEntry(skillsDir, entry) {
 function parseArgs(argv) {
   const args = argv.slice(2);
   const opts = {
+    command: null,
+    project: process.cwd(),
+    json: false,
     runtimes: [],
     global: false,
     local: false,
@@ -308,8 +311,22 @@ function parseArgs(argv) {
     uninstall: false,
   };
 
-  for (const arg of args) {
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
     switch (arg) {
+      case 'status':
+      case 'next':
+        opts.command = arg;
+        break;
+      case '--json':
+        opts.json = true;
+        break;
+      case '--project':
+        if (args[i + 1]) {
+          opts.project = path.resolve(args[i + 1]);
+          i++;
+        }
+        break;
       case '-g':
       case '--global':
         opts.global = true;
@@ -330,7 +347,9 @@ function parseArgs(argv) {
         opts.uninstall = true;
         break;
       default:
-        if (arg.startsWith('--') && RUNTIMES[arg.slice(2)]) {
+        if (arg.startsWith('--project=')) {
+          opts.project = path.resolve(arg.slice('--project='.length));
+        } else if (arg.startsWith('--') && RUNTIMES[arg.slice(2)]) {
           opts.runtimes.push(arg.slice(2));
         }
         break;
@@ -548,8 +567,14 @@ function uninstallForRuntime(runtimeKey, opts = {}) {
 
 function showHelp() {
   console.log(BANNER);
-  log('Usage: npx godpowers [options]\n');
+  log('Usage: npx godpowers [command] [options]\n');
+  log('Commands:');
+  log('  status               Show the Godpowers Dashboard for a project');
+  log('  next                 Show the dashboard and recommended next command');
+  log('');
   log('Options:');
+  log('  --project=<path>     Project root for status or next (default: cwd)');
+  log('  --json               Emit JSON for status or next');
   log('  -g, --global         Install globally (to config directory)');
   log('  -l, --local          Install locally (to current directory)');
   log('  --claude             Install for Claude Code');
@@ -572,9 +597,26 @@ function showHelp() {
   log('  -h, --help           Show this help message');
   log('');
   log('Examples:');
+  log('  npx godpowers status --project=.');
+  log('  npx godpowers next --project=.');
   log('  npx godpowers --claude --global');
   log('  npx godpowers --all');
   log('  npx godpowers --codex --cursor');
+}
+
+function runDashboardCommand(opts) {
+  const dashboard = require('../lib/dashboard');
+  const result = dashboard.compute(opts.project);
+  if (opts.json) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    console.log(dashboard.render(result));
+    if (opts.command === 'next') {
+      console.log('');
+      console.log('Suggested next command:');
+      console.log(`  ${result.next && result.next.command ? result.next.command : 'describe the next intent'}`);
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -587,6 +629,11 @@ function main() {
   if (opts.help) {
     showHelp();
     process.exit(0);
+  }
+
+  if (opts.command === 'status' || opts.command === 'next') {
+    runDashboardCommand(opts);
+    return;
   }
 
   console.log(BANNER);

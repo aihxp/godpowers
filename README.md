@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.11-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.12-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -12,10 +12,10 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Version 1.6.11 keeps the stable Godpowers surface while making automatic work
-more visible and portable: syncs, proactive checks, and specialist spawning now
-report what ran, what changed, and which host-platform agent mechanism is being
-used.
+Version 1.6.12 adds an executable dashboard engine and CLI status surface:
+`godpowers status --project .` and `godpowers next --project .` now compute the
+same disk-derived progress, planning visibility, proactive checks, and next
+action used by `/god-status`, `/god-next`, and God Mode closeouts.
 
 It fuses four disciplines into one unified workflow:
 
@@ -109,6 +109,16 @@ This reads `.godpowers/PROGRESS.md`, scans disk, reconciles any drift, and
 suggests the next logical command. The SessionStart hook does the same thing
 when you open a new session in a Godpowers project.
 
+The same status engine is available from the installer CLI for humans, CI,
+Codex, Claude, Cursor, Gemini, OpenCode, Windsurf, Antigravity, and any host
+runtime that can execute Node:
+
+```bash
+npx godpowers status --project=.
+npx godpowers next --project=.
+npx godpowers status --project=. --json
+```
+
 ### Slash Commands
 
 | Command | What it does | Spawns agent |
@@ -178,6 +188,14 @@ instead of asking for the project description again.
 Under `--yolo`, Godpowers also auto-applies Pillars sync proposals when
 durable `.godpowers` artifacts change project truth. The decision is logged to
 `.godpowers/YOLO-DECISIONS.md`.
+
+Every completing command now ends with a **Godpowers Dashboard**. It shows the
+current phase, tier, step count, percent complete, PRD and roadmap visibility,
+recent work, proactive checks, open items, and the single recommended next
+action. `/god-status` and `/god-next` use the same shape so the project never
+ends in a vague "done" state. The dashboard is backed by
+`lib/dashboard.js`, so status and next-step commands share one executable
+source of disk truth instead of parallel Markdown-only contracts.
 
 For existing codebases and org-constrained new projects, God Mode now runs a
 greenfield simulation audit and then actions it through a greenfieldification

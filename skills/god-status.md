@@ -15,8 +15,12 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
 
 1. Check if `.godpowers/PROGRESS.md` exists
    - If not: "No Godpowers project found. Run `god init` to start."
-2. Read PROGRESS.md for recorded state
-3. Scan ALL artifact paths on disk:
+2. Resolve the runtime root and load `<runtimeRoot>/lib/dashboard.js`.
+3. Call `dashboard.compute(projectRoot)` and use the returned object as the
+   primary dashboard source.
+4. Read PROGRESS.md for recorded state when state.json is missing or when you
+   need to explain legacy progress.
+5. Scan ALL artifact paths on disk:
    - `.godpowers/prd/PRD.md`
    - `.godpowers/arch/ARCH.md`
    - `.godpowers/roadmap/ROADMAP.md`
@@ -29,12 +33,13 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - `.godpowers/harden/FINDINGS.md`
    - `.godpowers/SYNC-LOG.md`
    - `.godpowers/CHECKPOINT.md`
-4. For each artifact found: run a lightweight have-nots check
-5. Compare disk state to PROGRESS.md state:
+6. For each artifact found: run a lightweight have-nots check
+7. Compare disk state to PROGRESS.md state:
    - If PROGRESS.md says "done" but artifact is missing: FLAG as phantom resume
    - If artifact exists but PROGRESS.md says "pending": FLAG as untracked work
-6. Report:
+8. Report the Godpowers Dashboard from `dashboard.render(result)`:
    - Current mode and scale
+   - Current phase, tier number, step label, and step number
    - Progress summary: percentage, completed step count, current step number
    - Planning visibility: PRD status, roadmap status, active milestone, and
      completion basis
@@ -45,17 +50,26 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - Per-tier status (with disk verification)
    - Any inconsistencies between PROGRESS.md and disk
    - Suggested next action
-7. If inconsistencies found: offer to repair PROGRESS.md to match disk truth
+9. If inconsistencies found: offer to repair PROGRESS.md to match disk truth
+
+If the runtime module is unavailable, fall back to the manual scan below and
+say `Dashboard engine: unavailable, manual scan used`.
 
 ## Output Format
 
-```
-Godpowers Status
+```text
+Godpowers Dashboard
 
 Mode: A (greenfield)    Scale: medium
 Started: 2026-05-09
-Progress: 15% (2 of 13 steps complete; current step 3 of 13)
-Current: Tier 1 Planning / Architecture
+
+Current status:
+  State: in progress
+  Phase: Planning (tier 2 of 4, internal tier-1)
+  Step: Architecture (step 3 of 13)
+  Progress: 15% (2 of 13 steps complete)
+  Worktree: clean
+  Index: untouched
 
 Planning visibility:
   PRD: done .godpowers/prd/PRD.md
@@ -121,7 +135,12 @@ Suite (Mode D) status:
   This repo is a sibling of suite "my-products" (hub: ../hub)
   Run /god-suite-status to see all 3 repos and meta-linter findings.
 
-Next: god roadmap
+Open items:
+  1. Roadmap and stack are still pending
+
+Next:
+  Recommended: /god-roadmap
+  Why: architecture is done and the roadmap is the next planning gate.
 ```
 
 ## Proposition Closeout

@@ -112,12 +112,28 @@ that edits code or artifacts, do not stop at "complete" plus validation. End
 with a disk-derived closeout that tells the user the current state and what is
 next.
 
+Every closeout must include a **Godpowers Dashboard**. This dashboard is the
+same mental model across `/god-status`, `/god-next`, `/god-mode`, and every
+command that completes, pauses, or proposes work.
+
+When the runtime bundle is available, compute this with
+`lib/dashboard.compute(projectRoot)` and render it with
+`lib/dashboard.render(result)`. The executable dashboard engine is the shared
+source for phase, tier, step, progress, PRD and roadmap visibility, proactive
+checks, open items, and the next route. If the runtime module is unavailable,
+fall back to a manual disk scan and say `Dashboard engine: unavailable, manual
+scan used`.
+
 Use this shape:
 
 ```
+Godpowers Dashboard
+
 Current status:
   State: <complete | partial | blocked | complete with deferred item>
-  Progress: <pct>% (<done> of <total> steps complete; current step <n> of <total>) when available
+  Phase: <plain-language phase> (tier <human ordinal> of <human total>) when available
+  Step: <sub-step label> (<step n> of <total steps>) when available
+  Progress: <pct>% (<done> of <total> steps complete) when available
   Worktree: <clean | modified files unstaged | staged changes | mixed>
   Index: <untouched | staged files listed>
 
@@ -134,8 +150,18 @@ What changed:
 Validation:
   + <command>: <result>
 
+Proactive checks:
+  Checkpoint: <fresh | refreshed | missing | stale | conflicts with state.json>
+  Reviews: <none | N pending, suggest /god-review-changes>
+  Sync: <fresh | missing | stale | local helper ran | suggest /god-sync>
+  Docs: <fresh | possible drift, suggest /god-docs>
+  Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
+  Security: <clear | sensitive files changed, suggest /god-harden>
+  Dependencies: <clear | dependency files changed, suggest /god-update-deps>
+  Hygiene: <fresh | stale, suggest /god-hygiene>
+
 Open items:
-  1. <deferred staging, unstaged files, pending review, or none>
+  1. <deferred staging, unstaged files, pending review, blocker, or none>
 
 Next:
   Recommended: <one concrete command or user decision>
@@ -149,6 +175,11 @@ pre-existing unrelated changes, say the index was left untouched and recommend
 a scoped review or staging command rather than implying the project is fully
 shipped.
 
+When the command only recommends work, keep the same dashboard but set
+`State: proposal` and end with the proposition block from Section 9. When the
+command pauses, set `State: blocked` or `State: paused` and make `Next` the
+one exact user decision needed to continue.
+
 ### 11. User-Facing Vocabulary
 Godpowers may use internal words such as "arc" in routing, recipes, and agent
 implementation notes. Do not require the user to decode that word in visible
@@ -158,7 +189,7 @@ Use these plain-language substitutions in user-facing responses:
 - Say "project run" or "workflow" instead of "arc".
 - Say "phase" or "current step" instead of "tier" unless the user has asked
   for tier details. If tier detail helps, say both, for example
-  "Planning, Tier 1".
+  "Planning phase, tier 2 of 4".
 - Say "current milestone" or "roadmap step" when ROADMAP.md has a matching
   milestone.
 - If you must use "arc", define it once as "the end-to-end project workflow"

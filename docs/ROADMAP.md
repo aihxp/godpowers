@@ -1,9 +1,9 @@
 # Godpowers Implementation Roadmap
 
 > Status: ACTIVE
-> Model: Pure-skill (slash commands inside the AI tool). CLI is install-only.
+> Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-16
-> Current shipped: v1.6.11
+> Current shipped: v1.6.12
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 1.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v1.6.11)
+### Current surface (v1.6.12)
 
 What works today:
 - **106 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -24,6 +24,9 @@ What works today:
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
   (with T3 Code transparently inheriting the underlying agent)
+- **Executable dashboard engine**: `lib/dashboard.js` powers `/god-status`,
+  `/god-next`, God Mode closeouts, `godpowers status --project .`,
+  `godpowers next --project .`, and JSON status output.
 - **Codex agent metadata**: all 39 Godpowers specialist agents install with
   matching TOML metadata files for Codex spawnability
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route

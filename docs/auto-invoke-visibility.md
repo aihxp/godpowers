@@ -25,6 +25,57 @@ Auto-invoked:
 Use `Sync status:` when the automatic work is part of `/god-sync`,
 `/god-scan`, or a final `/god-mode` sync.
 
+## Godpowers Dashboard
+
+Every command that completes, pauses, or proposes work must finish with the
+same status model:
+
+When the runtime bundle is available, this model is computed by
+`lib/dashboard.js`:
+
+```js
+const dashboard = require('./lib/dashboard');
+const result = dashboard.compute(projectRoot);
+console.log(dashboard.render(result));
+```
+
+```text
+Godpowers Dashboard
+
+Current status:
+  State: <complete | partial | blocked | proposal>
+  Phase: <plain-language phase> (tier <human ordinal> of <human total>)
+  Step: <sub-step label> (step <n> of <total steps>)
+  Progress: <pct>% (<done> of <total> steps complete)
+
+Planning visibility:
+  PRD: <done | pending | missing | deferred> <path when present>
+  Roadmap: <done | pending | missing | deferred> <path when present>
+  Current milestone: <roadmap milestone, phase, or next gate>
+  Completion: <pct>% <basis>
+
+Proactive checks:
+  Checkpoint: <fresh | refreshed | missing | stale>
+  Reviews: <none | N pending, suggest /god-review-changes>
+  Sync: <fresh | suggest /god-sync | local helper ran>
+  Docs: <fresh | possible drift, suggest /god-docs>
+  Runtime: <not-applicable | known URL, suggest /god-test-runtime>
+  Security: <clear | sensitive files changed, suggest /god-harden>
+  Dependencies: <clear | dependency files changed, suggest /god-update-deps>
+  Hygiene: <fresh | stale, suggest /god-hygiene>
+
+Open items:
+  1. <none, blocker, deferred verification, or pending review>
+
+Next:
+  Recommended: <one command or user decision>
+  Why: <one sentence tied to disk state>
+```
+
+This dashboard is required for `/god-status`, `/god-next`, `/god-mode`, and
+workflow closeouts so the user can always see where Godpowers is, how close it
+is to completion, and what happens next.
+
 ## Already Automatic
 
 | Area | Current trigger | Visibility requirement |

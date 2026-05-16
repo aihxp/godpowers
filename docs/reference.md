@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v1.6.11.
+Complete command, agent, and artifact reference for v1.6.12.
 
 ## Slash commands (106 total)
 
@@ -9,6 +9,11 @@ Complete command, agent, and artifact reference for v1.6.11.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
 - `/god-lifecycle` - Show project phase and contextually appropriate workflows.
+
+### Installer CLI helpers
+- `godpowers status --project .` - Render the shared dashboard from disk state.
+- `godpowers next --project .` - Render the dashboard and show the recommended next command.
+- `godpowers status --project . --json` - Emit machine-readable dashboard state.
 
 ### Lifecycle (Tier 0)
 - `/god-init` - Initialize a Godpowers project. Detects mode (A/B/C/D) and scale.

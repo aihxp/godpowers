@@ -22,6 +22,9 @@ Before reading routing data or calling runtime modules, resolve the Godpowers ru
 1. If `<projectRoot>/lib/router.js` exists, use the repository checkout runtime at `<projectRoot>`.
 2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill, such as `~/.claude`, `~/.codex`, `~/.cursor`, `~/.windsurf`, or `~/.gemini`.
 3. Read routing definitions from `<runtimeRoot>/routing/*.yaml` and recipes from `<runtimeRoot>/routing/recipes/*.yaml`.
+4. For status output, load `<runtimeRoot>/lib/dashboard.js` and call
+   `dashboard.compute(projectRoot)`. Use `dashboard.render(result)` for the
+   shared dashboard section before adding route-specific detail.
 
 ## Three modes of invocation
 
@@ -333,11 +336,31 @@ recommending archaeology, reconstruction, project-run readiness, pillars, or ref
 
 ## Output Format
 
-```
+`/god-next` must emit the same Godpowers Dashboard shape used by
+`/god-status`, then add routing detail and the proposition block.
+Prefer the executable `lib/dashboard.js` output over manually recomputing the
+same fields. If the module is unavailable, say
+`Dashboard engine: unavailable, manual scan used`.
+
+```text
 Godpowers Next
 
-Current state: [where we are]
-Progress: [pct]% ([done] of [total] steps complete; current step [n] of [total])
+Godpowers Dashboard
+
+Current status:
+  State: proposal
+  Phase: [plain-language phase] (tier [human ordinal] of [human total])
+  Step: [current step label] (step [n] of [total steps])
+  Progress: [pct]% ([done] of [total] steps complete)
+  Worktree: [clean | modified files unstaged | staged changes | mixed]
+  Index: [untouched | staged files listed]
+
+Planning visibility:
+  PRD: [done | pending | missing | deferred] [path when present]
+  Roadmap: [done | pending | missing | deferred] [path when present]
+  Current milestone: [roadmap milestone, phase, tier, or next planning gate]
+  Completion: [pct]% [basis from state.json, PROGRESS.md, or artifacts]
+
 Suggested next: [/god-X]
 
 Why: [one-line reason]
@@ -359,14 +382,21 @@ Previous tier had standards failures. Address before proceeding:
 Suggested: /god-redo [tier] OR /god-skip [tier] --reason="..."
 
 Proactive checks:
-  Checkpoint: [fresh | refreshed | stale]
-  Reviews: [none | N pending]
-  Sync: [fresh | suggested | local helper ran]
-  Docs: [fresh | suggested]
-  Runtime: [not-applicable | suggested | ran]
-  Security: [clear | suggested]
-  Dependencies: [clear | suggested]
-  Hygiene: [fresh | suggested]
+  Checkpoint: [fresh | refreshed | missing | stale]
+  Reviews: [none | N pending, suggest /god-review-changes]
+  Sync: [fresh | missing | stale | local helper ran | suggest /god-sync]
+  Docs: [fresh | possible drift, suggest /god-docs]
+  Runtime: [not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification]
+  Security: [clear | sensitive files changed, suggest /god-harden]
+  Dependencies: [clear | dependency files changed, suggest /god-update-deps]
+  Hygiene: [fresh | stale, suggest /god-hygiene]
+
+Open items:
+  1. [missing prerequisite, blocker, pending review, or none]
+
+Next:
+  Recommended: [/god-X or exact user decision]
+  Why: [one sentence tied to disk state]
 ```
 
 ## Proposition Closeout
