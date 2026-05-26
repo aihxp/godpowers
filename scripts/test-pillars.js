@@ -8,20 +8,8 @@ const path = require('path');
 const os = require('os');
 
 const pillars = require('../lib/pillars');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-pillars-test-'));
@@ -246,5 +234,4 @@ test('generated content has no em dashes, en dashes, or emojis', () => {
   if (/[\u{1F300}-\u{1FAFF}]/u.test(content)) throw new Error('emoji present');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

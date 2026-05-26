@@ -18,38 +18,8 @@ const os = require('os');
 const browserBridge = require('../lib/browser-bridge');
 const runtimeAudit = require('../lib/runtime-audit');
 const runtimeTest = require('../lib/runtime-test');
+const { test, report, asyncTest } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    const result = fn();
-    if (result && typeof result.then === 'function') {
-      // Async: caller passes in async fn but we don't await here in this simple harness;
-      // tests that need awaits should resolve synchronously via mocks
-      result.then(() => { console.log(`  + ${name}`); passed++; })
-        .catch(e => { console.error(`  x ${name}: ${e.message}`); failed++; });
-    } else {
-      console.log(`  + ${name}`);
-      passed++;
-    }
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
-
-async function asyncTest(name, fn) {
-  try {
-    await fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-runtime-test-'));
@@ -254,6 +224,5 @@ typography:
   // Wait briefly for any pending async tests to log
   await new Promise(r => setTimeout(r, 50));
 
-  console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-  if (failed > 0) process.exit(1);
+  report();
 })();

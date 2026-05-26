@@ -1,10 +1,11 @@
-# Godpowers 2.0.2 Release
+# Godpowers 2.0.3 Release
 
 Date: 2026-05-26
 
-Godpowers 2.0.2 is the release hardening patch. It keeps the 2.0 proof,
-request-trace, and command surfaces stable while tightening the package
-runtime, maintainer validation, and release-readiness checks.
+Godpowers 2.0.3 is the maintenance hardening patch. It keeps the 2.0 proof,
+request-trace, and command surfaces stable while reducing installer size,
+removing copied test harnesses, making workflow agent ranges executable, and
+adding async file APIs for future runtime migration.
 
 ## What is stable
 
@@ -36,27 +37,35 @@ runtime, maintainer validation, and release-readiness checks.
 
 ## What is new
 
-- Added `scripts/run-tests.js` as the maintained full-suite runner behind
-  `npm test`.
-- Added `scripts/static-check.js` and `npm run lint` for dependency-free
-  JavaScript syntax and release-gate structure checks.
-- Added dedicated YAML parser coverage for the supported dependency-free YAML
-  subset.
-- Updated README, validation docs, release checklist, repo surface docs,
-  changelog, release notes, package metadata, and lockfile for `2.0.2`.
+- Split installer runtime definitions, argument parsing, and install core logic
+  out of `bin/install.js`.
+- Migrated test files to the shared `scripts/test-harness.js` helper and made
+  static checks reject future copied harness boilerplate.
+- Added async state, intent, and workflow plan APIs beside existing synchronous
+  APIs.
+- Added executable workflow agent reference validation for `god-agent@range`
+  entries.
+- Added `lib/skill-surface.js` so individual `skills/` files are the source of
+  truth for slash-command metadata.
+- Moved detailed God Mode transcript, flag, sync, and completion templates into
+  `references/orchestration/GOD-MODE-RUNBOOK.md`.
+- Added JSDoc typedef contracts to load-bearing runtime modules.
+- Updated README, validation docs, release checklist, changelog, release notes,
+  package metadata, and lockfile for `2.0.3`.
 
 ## Guardrails
 
+- The public slash-command surface remains frozen.
 - The runtime remains dependency-free.
-- The supported YAML subset is documented and covered by tests.
-- Router `file:` checks reject absolute paths and traversal outside the
-  project root.
-- Installer recursive copy preserves symlinks instead of dereferencing them.
-- Release and repo surface sync detectors recognize delegated test wiring
-  through `scripts/run-tests.js`.
-- Budget block removal only removes the top-level `budgets` block.
-- Package contents checks require the runtime helper files shipped by this
-  patch.
+- `bin/install.js` stays a thin CLI entry point and delegates install behavior
+  to `lib/installer-core.js`.
+- `scripts/static-check.js` verifies async APIs, JSDoc typedefs, agent-ref test
+  coverage, shared harness adoption, skill metadata source parsing, and God
+  Mode runbook delegation.
+- Workflow `uses:` ranges now fail fast if they do not satisfy the current
+  agent contract version.
+- Existing synchronous APIs remain available while async APIs provide the safe
+  migration path.
 
 ## Validation
 
@@ -67,11 +76,9 @@ Release validation includes:
 - `npm run pack:check`
 - `npm run release:check`
 - `npm pack --json`
-- local uninstall of previous runtime installs
-- local reinstall from the generated tarball
-- npm publish with provenance when available
-- `node scripts/verify-published-install.js godpowers@latest`
-- GitHub release creation for `v2.0.2`
+- local install smoke tests across supported runtime shapes
+- npm publish when registry credentials are available
+- GitHub release creation for `v2.0.3`
 
-The `v2.0.2` tag should point to the release commit that matches the npm
-`godpowers@2.0.2` package.
+The `v2.0.3` tag should point to the release commit that matches the npm
+`godpowers@2.0.3` package.

@@ -15,20 +15,8 @@ const os = require('os');
 
 const validator = require('../lib/have-nots-validator');
 const linter = require('../lib/artifact-linter');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-linter-test-'));
@@ -617,5 +605,4 @@ test('end-to-end: clean PRD produces zero errors', () => {
   }
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

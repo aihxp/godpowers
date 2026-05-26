@@ -75,15 +75,84 @@ test('full test runner includes YAML parser coverage', () => {
   if (!commands.some(command => command.includes('scripts/test-yaml-parser.js'))) {
     throw new Error('scripts/test-yaml-parser.js is missing from TEST_COMMANDS');
   }
+  if (!commands.some(command => command.includes('scripts/test-agent-refs.js'))) {
+    throw new Error('scripts/test-agent-refs.js is missing from TEST_COMMANDS');
+  }
+  if (!commands.some(command => command.includes('scripts/test-skill-source-sync.js'))) {
+    throw new Error('scripts/test-skill-source-sync.js is missing from TEST_COMMANDS');
+  }
 });
 
 test('install file helpers stay outside bin/install.js', () => {
   const installer = fs.readFileSync(path.join(ROOT, 'bin', 'install.js'), 'utf8');
-  if (!installer.includes("require('../lib/installer-files')")) {
-    throw new Error('bin/install.js does not import installer file helpers');
+  if (!installer.includes("require('../lib/installer-core')")) {
+    throw new Error('bin/install.js does not delegate installer core behavior');
   }
   if (/function\s+copyRecursive\s*\(/.test(installer)) {
     throw new Error('copyRecursive should live in lib/installer-files.js');
+  }
+  if (installer.split('\n').length > 350) {
+    throw new Error('bin/install.js should remain a thin CLI entry point');
+  }
+});
+
+test('test files use the shared harness', () => {
+  const offenders = walk(path.join(ROOT, 'scripts'))
+    .filter(file => /scripts\/test-.*\.js$/.test(file) && !file.endsWith('test-harness.js'))
+    .filter(file => /let passed = 0|function\s+test\s*\(/.test(fs.readFileSync(file, 'utf8')));
+  if (offenders.length > 0) {
+    throw new Error(`duplicated harness in ${offenders.map(file => path.relative(ROOT, file)).join(', ')}`);
+  }
+});
+
+test('async file APIs exist on load-bearing modules', () => {
+  const state = require('../lib/state');
+  const intent = require('../lib/intent');
+  const workflows = require('../lib/workflow-runner');
+  for (const [name, fn] of [
+    ['state.readAsync', state.readAsync],
+    ['state.writeAsync', state.writeAsync],
+    ['intent.readAsync', intent.readAsync],
+    ['workflow.writePlanAsync', workflows.writePlanAsync],
+    ['workflow.readPlanAsync', workflows.readPlanAsync]
+  ]) {
+    if (typeof fn !== 'function') throw new Error(`${name} missing`);
+  }
+});
+
+test('public runtime modules expose JSDoc type contracts', () => {
+  const modules = [
+    'lib/state.js',
+    'lib/intent.js',
+    'lib/workflow-runner.js',
+    'lib/agent-refs.js',
+    'lib/installer-core.js'
+  ];
+  const missing = modules.filter((rel) => {
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    return !/@typedef/.test(text);
+  });
+  if (missing.length > 0) {
+    throw new Error(`missing @typedef in ${missing.join(', ')}`);
+  }
+});
+
+test('god-mode delegates long-form runbook content', () => {
+  const skill = fs.readFileSync(path.join(ROOT, 'skills', 'god-mode.md'), 'utf8');
+  const runbook = path.join(ROOT, 'references', 'orchestration', 'GOD-MODE-RUNBOOK.md');
+  if (skill.split('\n').length > 220) {
+    throw new Error('skills/god-mode.md should stay as a concise dispatch contract');
+  }
+  if (!fs.existsSync(runbook)) {
+    throw new Error('God Mode runbook reference missing');
+  }
+});
+
+test('skill metadata source of truth is executable', () => {
+  const surface = require('../lib/skill-surface');
+  const commands = surface.commandNames();
+  if (!commands.includes('/god-mode') || commands.length < 100) {
+    throw new Error(`unexpected command surface: ${commands.length}`);
   }
 });
 

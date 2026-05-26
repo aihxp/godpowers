@@ -11,20 +11,8 @@ const intent = require('../lib/intent');
 const state = require('../lib/state');
 const events = require('../lib/events');
 const workflowParser = require('../lib/workflow-parser');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 console.log('\n  Runtime smoke tests\n');
 
@@ -136,5 +124,4 @@ test('state.detectDrift returns empty when no artifacts', () => {
 // Cleanup
 fs.rmSync(tmp, { recursive: true, force: true });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

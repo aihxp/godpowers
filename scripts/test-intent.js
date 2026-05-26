@@ -20,14 +20,8 @@ const path = require('path');
 const os = require('os');
 
 const intent = require('../lib/intent');
+const { test, asyncTest, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'assertion failed');
@@ -94,6 +88,15 @@ test('read parses a written intent.yaml', () => {
   const got = intent.read(tmp);
   assert(got && got.metadata.name === 'roundtrip',
     `read failed: ${JSON.stringify(got)}`);
+});
+
+asyncTest('readAsync parses a written intent.yaml', async () => {
+  const tmp = mkProject();
+  writeIntent(tmp,
+    'apiVersion: godpowers/v1\nkind: Project\nmetadata:\n  name: async-roundtrip\nmode: A\nscale: small');
+  const got = await intent.readAsync(tmp);
+  assert(got && got.metadata.name === 'async-roundtrip',
+    `async read failed: ${JSON.stringify(got)}`);
 });
 
 test('validate accepts a minimal valid intent', () => {
@@ -174,5 +177,4 @@ test('validate rejects null intent', () => {
   assert(errors.length > 0, 'null intent not rejected');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

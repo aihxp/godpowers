@@ -21,18 +21,9 @@ const path = require('path');
 const os = require('os');
 
 const events = require('../lib/events');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-events-test-'));
@@ -176,5 +167,4 @@ test('VALID_EVENT_NAMES exposes the vocabulary set', () => {
     'vocabulary missing host-capabilities.detect');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

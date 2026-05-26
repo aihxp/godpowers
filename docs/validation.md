@@ -25,6 +25,18 @@ The lint layer. Mechanical checks against the catalog of failure modes.
 - [DECISION] `scripts/static-check.js` runs `node --check` across JavaScript
   files and verifies the release gate still includes parser coverage and
   installer helper extraction.
+- [DECISION] `scripts/static-check.js` rejects copied test harness boilerplate
+  outside `scripts/test-harness.js`.
+- [DECISION] `scripts/static-check.js` verifies async file APIs exist on
+  load-bearing state, intent, and workflow plan modules.
+- [DECISION] `scripts/static-check.js` verifies executable skill metadata
+  source-of-truth parsing through `lib/skill-surface.js`.
+- [DECISION] `scripts/static-check.js` keeps `skills/god-mode.md` as a concise
+  dispatch contract and checks that the detailed runbook lives in
+  `references/orchestration/GOD-MODE-RUNBOOK.md`.
+- [DECISION] `scripts/test-agent-refs.js` makes workflow `uses:
+  god-agent@range` references executable by validating their SemVer ranges
+  against the current agent contract.
 - [DECISION] `npm run release:check` remains the maintainer command before a
   public package release because it runs the full test gate, audit gate, and
   package contents gate.

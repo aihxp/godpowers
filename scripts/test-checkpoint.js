@@ -24,18 +24,9 @@ const os = require('os');
 
 const checkpoint = require('../lib/checkpoint');
 const events = require('../lib/events');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-cp-test-'));
@@ -330,5 +321,4 @@ test('verifyChain reports break when a line is deleted', () => {
   assert(!r.valid, 'expected chain to break after deletion');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.3] - 2026-05-26
+
+### Added
+- Added async state, intent, and workflow plan APIs as the first supported path
+  away from synchronous-only runtime file I/O.
+- Added executable workflow agent reference validation so `uses:
+  god-agent@range` entries are checked against the current agent contract.
+- Added `lib/skill-surface.js` and source-sync tests so individual skill files
+  are the source of truth for slash-command metadata.
+
+### Changed
+- Migrated test files to the shared test harness and made static checks reject
+  new copied harness boilerplate.
+- Split installer runtime definitions, argument parsing, and install core logic
+  out of `bin/install.js`.
+- Moved long-form `/god-mode` operator templates into
+  `references/orchestration/GOD-MODE-RUNBOOK.md`.
+- Added JSDoc typedef contracts to load-bearing runtime modules.
+
 ## [2.0.2] - 2026-05-26
 
 ### Added

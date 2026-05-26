@@ -17,6 +17,7 @@ const os = require('os');
 let passed = 0;
 let failed = 0;
 const tmpDirs = [];
+const pending = [];
 
 function test(name, fn) {
   try {
@@ -27,6 +28,21 @@ function test(name, fn) {
     console.error(`  x ${name}: ${e.message}`);
     failed++;
   }
+}
+
+async function asyncTest(name, fn) {
+  const run = (async () => {
+    try {
+      await fn();
+      console.log(`  + ${name}`);
+      passed++;
+    } catch (e) {
+      console.error(`  x ${name}: ${e.message}`);
+      failed++;
+    }
+  })();
+  pending.push(run);
+  return run;
 }
 
 function assert(cond, msg) {
@@ -58,14 +74,31 @@ function cleanup() {
   tmpDirs.length = 0;
 }
 
-function report(label) {
+function finishReport() {
   cleanup();
   console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
   if (failed > 0) process.exit(1);
+}
+
+function report(label) {
+  if (pending.length > 0) {
+    return Promise.allSettled(pending).then(finishReport);
+  }
+  finishReport();
+  return undefined;
 }
 
 function getCounters() {
   return { passed, failed };
 }
 
-module.exports = { test, assert, mkProject, writeRel, cleanup, report, getCounters };
+module.exports = {
+  test,
+  asyncTest,
+  assert,
+  mkProject,
+  writeRel,
+  cleanup,
+  report,
+  getCounters
+};

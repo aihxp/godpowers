@@ -8,20 +8,8 @@ const path = require('path');
 const os = require('os');
 
 const ca = require('../lib/cross-artifact-impact');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-cross-artifact-test-'));
@@ -133,5 +121,4 @@ test('IMPACT_RULES has rules for major artifact types', () => {
   if (!ca.IMPACT_RULES.design) throw new Error('DESIGN rules missing');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

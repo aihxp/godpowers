@@ -10,20 +10,8 @@ const os = require('os');
 const linkage = require('../lib/linkage');
 const reverseSync = require('../lib/reverse-sync');
 const reviewRequired = require('../lib/review-required');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-rsync-test-'));
@@ -214,5 +202,4 @@ test('run is idempotent (no duplicate fences after re-run)', () => {
   if (beginCount !== 1) throw new Error(`expected 1 fence-begin, got ${beginCount}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

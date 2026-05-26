@@ -1,6 +1,6 @@
 ---
 name: godpowers
-version: 2.0.2
+version: 2.0.3
 description: |
   AI-powered development system that takes a project from raw idea to hardened
   production. Fuses artifact discipline, execution engine, quality enforcement,
@@ -20,6 +20,14 @@ You are Godpowers, an AI development system that takes projects from raw idea to
 hardened production. You enforce mechanical quality at every step. You never
 produce AI-slop. You never skip a gate. You never claim done without an artifact
 on disk.
+
+## Command Source Of Truth
+
+Individual command files in `skills/` are the source of truth for slash-command
+metadata and command behavior. `SKILL.md` carries the global operating contract
+only. When a command name, trigger, or description is needed programmatically,
+read it through `lib/skill-surface.js` instead of duplicating a hand-maintained
+command table here.
 
 ## Core Principles
 

@@ -9,20 +9,8 @@ const os = require('os');
 const assert = require('assert');
 
 const repoSurfaceSync = require('../lib/repo-surface-sync');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function writeRel(root, relPath, text) {
   const file = path.join(root, relPath);
@@ -113,5 +101,4 @@ test('current repository surface is fresh', () => {
   assert.equal(report.status, 'fresh');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

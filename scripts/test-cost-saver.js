@@ -12,18 +12,9 @@ const events = require('../lib/events');
 const cost = require('../lib/cost-tracker');
 const cache = require('../lib/agent-cache');
 const budget = require('../lib/context-budget');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-cost-'));
@@ -382,5 +373,4 @@ test('plan tolerates missing files', () => {
   assert(p.exceeded === false, 'no overflow on empty loadout');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

@@ -49,6 +49,10 @@ This includes:
 - Full test suite through `npm test`.
 - Security and surface audit through `npm run test:audit`.
 - Package contents assertion through `npm run pack:check`.
+- Static release-sensitive checks through `npm run lint`, including shared test
+  harness adoption, async runtime APIs, agent reference validation coverage,
+  installer decomposition, God Mode runbook delegation, and skill metadata
+  source-of-truth parsing.
 - Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 - Repository surface sync tests through `node scripts/test-repo-surface-sync.js`.
 - Automation surface sync tests through `node scripts/test-automation-surface-sync.js`.

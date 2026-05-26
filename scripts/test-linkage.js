@@ -13,20 +13,8 @@ const os = require('os');
 const linkage = require('../lib/linkage');
 const scanner = require('../lib/code-scanner');
 const drift = require('../lib/drift-detector');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-linkage-test-'));
@@ -396,5 +384,4 @@ colors:
   if (result.summary.errors === 0) throw new Error('expected errors');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

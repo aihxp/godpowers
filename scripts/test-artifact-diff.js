@@ -4,20 +4,8 @@
  */
 
 const diff = require('../lib/artifact-diff');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 console.log('\n  Artifact diff behavioral tests\n');
 
@@ -181,5 +169,4 @@ test('end-to-end: PRD evolution with multiple regressions', () => {
   if (!reduced) throw new Error('acceptance reduction not detected');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

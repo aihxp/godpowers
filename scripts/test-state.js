@@ -17,7 +17,7 @@ const path = require('path');
 const os = require('os');
 
 const state = require('../lib/state');
-const { test, assert, mkProject, report } = require('./test-harness');
+const { test, asyncTest, assert, mkProject, report } = require('./test-harness');
 
 console.log('\n  State module behavioral tests\n');
 
@@ -54,6 +54,27 @@ test('read round-trips written state', () => {
   const got = state.read(tmp);
   assert(got.project.name === 'roundtrip', 'roundtrip name mismatch');
   assert(got.$schema === original.$schema, 'roundtrip schema mismatch');
+});
+
+asyncTest('async read/write round-trips written state', async () => {
+  const tmp = mkProject();
+  await state.writeAsync(tmp, {
+    project: { name: 'async-roundtrip' },
+    tiers: {}
+  });
+  const got = await state.readAsync(tmp);
+  assert(got.project.name === 'async-roundtrip', 'async roundtrip name mismatch');
+  assert(got.$schema === 'https://godpowers.dev/schema/state.v1.json',
+    'async write did not normalize schema');
+});
+
+asyncTest('initAsync and updateSubStepAsync persist state', async () => {
+  const tmp = mkProject();
+  await state.initAsync(tmp, 'async-init');
+  const updated = await state.updateSubStepAsync(tmp, 'tier-1', 'prd', { status: 'done' });
+  assert(updated.status === 'done', 'async sub-step update failed');
+  const got = await state.readAsync(tmp);
+  assert(got.tiers['tier-1'].prd.status === 'done', 'async update not persisted');
 });
 
 test('write rejects state without project.name', () => {

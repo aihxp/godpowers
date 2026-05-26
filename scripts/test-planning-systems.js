@@ -10,20 +10,8 @@ const os = require('os');
 const planningSystems = require('../lib/planning-systems');
 const sourceSync = require('../lib/source-sync');
 const state = require('../lib/state');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed += 1;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed += 1;
-  }
-}
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'assertion failed');
@@ -141,5 +129,4 @@ test('sourceSync is idempotent', () => {
   assert(count === 1, `expected one fence, got ${count}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

@@ -9,20 +9,8 @@ const os = require('os');
 const assert = require('assert');
 
 const authoring = require('../lib/extension-authoring');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 console.log('\n  Extension authoring behavioral tests\n');
 
@@ -53,5 +41,4 @@ test('scaffold does not overwrite files unless requested', () => {
   assert.equal(fs.readFileSync(path.join(first.path, 'README.md'), 'utf8'), '# custom\n');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

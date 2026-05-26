@@ -16,20 +16,8 @@ const crossRepoLinkage = require('../lib/cross-repo-linkage');
 const metaLinter = require('../lib/meta-linter');
 const suiteState = require('../lib/suite-state');
 const linkage = require('../lib/linkage');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkSuite() {
   // Build a suite: hub at root, siblings as subdirs of hub
@@ -350,5 +338,4 @@ test('planRelease blocks unknown suite repo', () => {
   if (plan.blockers.length !== 1) throw new Error('blocker missing');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

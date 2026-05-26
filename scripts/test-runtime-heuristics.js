@@ -13,20 +13,8 @@ const os = require('os');
 
 const audit = require('../lib/runtime-audit');
 const tester = require('../lib/runtime-test');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-runtime-heuristics-'));
@@ -303,5 +291,4 @@ test('visualRegression delta tolerance 5%', () => {
   if (result.changed) throw new Error('2% delta should not flag changed');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

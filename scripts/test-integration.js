@@ -16,20 +16,8 @@ const detector = require('../lib/design-detector');
 const scanner = require('../lib/code-scanner');
 const reverseSync = require('../lib/reverse-sync');
 const linkage = require('../lib/linkage');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkProject() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-integration-test-'));
@@ -172,5 +160,4 @@ test('end-to-end: UI project triggers design tier (detector returns true)', () =
   if (!r.frameworks.includes('react')) throw new Error('react missed');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

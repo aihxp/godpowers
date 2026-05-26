@@ -10,24 +10,9 @@ const cp = require('child_process');
 
 const automation = require('../lib/automation-providers');
 const dashboard = require('../lib/dashboard');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-automation-test-'));
@@ -189,5 +174,4 @@ test('CLI automation-status emits JSON provider report', () => {
   assert(Array.isArray(parsed.safeTemplates), 'safeTemplates should be an array');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

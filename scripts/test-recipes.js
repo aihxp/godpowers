@@ -9,20 +9,8 @@ const os = require('os');
 
 const recipes = require('../lib/recipes');
 const state = require('../lib/state');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 console.log('\n  Recipes tests\n');
 
@@ -171,5 +159,4 @@ test('all recipes have at least one sequence step', () => {
 // Cleanup
 fs.rmSync(tmp, { recursive: true, force: true });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

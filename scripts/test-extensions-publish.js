@@ -23,19 +23,13 @@ const os = require('os');
 const { execSync } = require('child_process');
 
 const ext = require('../lib/extensions');
+const { test, report } = require('./test-harness');
 
 const ROOT = path.resolve(__dirname, '..');
 const PACKS_DIR = path.join(ROOT, 'extensions');
 const ROOT_PKG = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 const GODPOWERS_VERSION = ROOT_PKG.version;
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'assertion failed');
@@ -206,5 +200,4 @@ for (const packDir of packs) {
   });
 }
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

@@ -14,19 +14,7 @@ const http = require('http');
 const events = require('../lib/events');
 const cost = require('../lib/cost-tracker');
 const otel = require('../lib/otel-exporter');
-
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-async function asyncTest(name, fn) {
-  try { await fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
+const { test, asyncTest, report } = require('./test-harness');
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg || 'assertion failed');
@@ -246,6 +234,5 @@ function buildRun(tmp) {
     }
   });
 
-  console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-  process.exit(failed > 0 ? 1 : 0);
+  report();
 })();

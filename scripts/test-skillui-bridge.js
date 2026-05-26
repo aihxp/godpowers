@@ -8,20 +8,8 @@ const path = require('path');
 const os = require('os');
 
 const bridge = require('../lib/skillui-bridge');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-skillui-test-'));
@@ -208,5 +196,4 @@ test('isInstalled returns boolean', () => {
   if (typeof r !== 'boolean') throw new Error('not boolean');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

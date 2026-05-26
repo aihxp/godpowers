@@ -19,31 +19,8 @@ const driver = require('../lib/agent-browser-driver');
 const bridge = require('../lib/browser-bridge');
 const audit = require('../lib/runtime-audit');
 const tester = require('../lib/runtime-test');
+const { test, report, asyncTest } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
-
-async function asyncTest(name, fn) {
-  try {
-    await fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function makeMockAgentBrowser() {
   // Mock object that has the agent-browser driver shape (no $, has snapshot/goto/getStyles)
@@ -213,7 +190,4 @@ test('driver.newPage returns the driver itself (single-session model)', async ()
 });
 
 // Wait for async tests to log
-setTimeout(() => {
-  console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-  if (failed > 0) process.exit(1);
-}, 100);
+setTimeout(report, 100);

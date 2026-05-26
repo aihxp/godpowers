@@ -13,24 +13,9 @@ const cp = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const quickProof = require('../lib/quick-proof');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function read(relPath) {
   return fs.readFileSync(path.join(ROOT, relPath), 'utf8');
@@ -230,5 +215,4 @@ test('new proof docs do not contain banned dash characters or decorative emoji',
   }
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

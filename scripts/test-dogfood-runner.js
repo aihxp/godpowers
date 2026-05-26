@@ -5,20 +5,8 @@
 
 const assert = require('assert');
 const dogfood = require('../lib/dogfood-runner');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 console.log('\n  Dogfood runner behavioral tests\n');
 
@@ -46,5 +34,4 @@ test('renders a compact dogfood report', () => {
   assert(!/[\u2013\u2014]/.test(rendered), 'render contains banned dash');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

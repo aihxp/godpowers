@@ -18,18 +18,10 @@ const os = require('os');
 
 const state = require('../lib/state');
 const lock = require('../lib/state-lock');
+const checkpoint = require('../lib/checkpoint');
+const events = require('../lib/events');
+const { test, asyncTest, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-lock-test-'));
@@ -168,7 +160,7 @@ test('reclaim succeeds on stale lock', () => {
   assert(r.previousHolder === 'ghost', `previousHolder: ${r.previousHolder}`);
 });
 
-test('withLock acquires, runs callback, releases', async () => {
+asyncTest('withLock acquires, runs callback, releases', async () => {
   const tmp = mkProject();
   let ran = false;
   const result = await lock.withLock(tmp, { holder: 'alice' }, async () => {
@@ -181,7 +173,7 @@ test('withLock acquires, runs callback, releases', async () => {
   assert(lock.peek(tmp) === null, 'lock not released after withLock');
 });
 
-test('withLock releases even if callback throws', async () => {
+asyncTest('withLock releases even if callback throws', async () => {
   const tmp = mkProject();
   let threw = false;
   try {
@@ -195,7 +187,7 @@ test('withLock releases even if callback throws', async () => {
   assert(lock.peek(tmp) === null, 'lock not released after error');
 });
 
-test('withLock throws LOCK_UNAVAILABLE on conflict', async () => {
+asyncTest('withLock throws LOCK_UNAVAILABLE on conflict', async () => {
   const tmp = mkProject();
   lock.acquire(tmp, { holder: 'alice' });
   let caught = null;
@@ -209,9 +201,6 @@ test('withLock throws LOCK_UNAVAILABLE on conflict', async () => {
 });
 
 // Checkpoint syncFromState
-
-const checkpoint = require('../lib/checkpoint');
-const events = require('../lib/events');
 
 console.log('\n  Checkpoint syncFromState tests\n');
 
@@ -262,5 +251,4 @@ test('syncFromState prepends extraFacts', () => {
   assert(cp.facts[0] === 'new fact', `first fact: ${cp.facts[0]}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

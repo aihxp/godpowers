@@ -29,18 +29,9 @@ const fs = require('fs');
 const path = require('path');
 
 const linter = require('../lib/artifact-linter');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
 
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
 
 function exists(p) { return fs.existsSync(p); }
 function read(p) { return fs.readFileSync(p, 'utf8'); }
@@ -200,5 +191,4 @@ test('SaaS DESIGN.md exists and has the canonical sections', () => {
     `DESIGN.md missing core domains; only ${presentCount}/4 detected in headings: ${headings.join(', ')}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report();

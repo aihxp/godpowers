@@ -12,20 +12,8 @@ const os = require('os');
 const linkage = require('../lib/linkage');
 const impact = require('../lib/impact');
 const reviewRequired = require('../lib/review-required');
+const { test, report } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
 
 function mkTmp() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-impact-test-'));
@@ -313,5 +301,4 @@ test('appendRejection is append-only', () => {
   if (!content.includes('second')) throw new Error('second lost');
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report();

@@ -10,20 +10,8 @@ const os = require('os');
 const state = require('../lib/state');
 const awareness = require('../lib/feature-awareness');
 const contextWriter = require('../lib/context-writer');
+const { test, report, assert } = require('./test-harness');
 
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (err) {
-    console.error(`  x ${name}: ${err.message}`);
-    failed++;
-  }
-}
 
 function mkProject() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-feature-awareness-'));
@@ -31,9 +19,6 @@ function mkProject() {
   return tmp;
 }
 
-function assert(condition, message) {
-  if (!condition) throw new Error(message || 'assertion failed');
-}
 
 console.log('\n  Feature-awareness behavioral tests\n');
 
@@ -125,9 +110,4 @@ test('detect recommends god-greenfieldifier for low confidence source systems', 
   assert(result.spawnRecommendation.agent === 'god-greenfieldifier', 'wrong agent');
 });
 
-if (failed > 0) {
-  console.error(`\n  Results: ${passed} passed, ${failed} failed\n`);
-  process.exit(1);
-}
-
-console.log(`\n  Results: ${passed} passed, 0 failed\n`);
+report();

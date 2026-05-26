@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-26
-> Current shipped: v2.0.2
+> Current shipped: v2.0.3
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.0.2)
+### Current surface (v2.0.3)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -88,6 +88,10 @@ What works today:
   `scripts/run-tests.js`, static checks run through `scripts/static-check.js`,
   the dependency-free YAML subset has dedicated coverage, router file checks
   reject traversal, and installer recursive copy preserves symlinks.
+- **Maintenance hardening**: installer runtime logic lives in `lib/`, workflow
+  agent references validate semver ranges, test files share one harness,
+  `skills/` is the executable command metadata source, and async state, intent,
+  and workflow plan APIs provide the migration path away from sync-only I/O.
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route
   unresolved safe sync gates to `/god-reconcile Release Truth And Safe Sync`
 - **Direct release gate enforcement**: Tier 3 commands, `/god-mode`, and
@@ -135,6 +139,28 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 ---
 
 ## Stability window
+
+### v2.0.3 - Maintenance Hardening Stable
+
+**Theme**: keep the public command surface frozen while reducing maintenance
+risk in installer, tests, workflow metadata, God Mode docs, and runtime file
+APIs.
+
+Changed in 2.0.3:
+
+- `bin/install.js` is a thin CLI entry point backed by installer modules in
+  `lib/`.
+- Test files use `scripts/test-harness.js`, and static checks reject copied
+  harness boilerplate.
+- Workflow `uses: god-agent@range` entries are validated against the current
+  agent contract.
+- `lib/skill-surface.js` makes individual `skills/` files the command metadata
+  source of truth.
+- `skills/god-mode.md` delegates long-form operator templates to
+  `references/orchestration/GOD-MODE-RUNBOOK.md`.
+- State, intent, and workflow plan modules expose async APIs beside the
+  existing synchronous APIs.
+- Runtime modules gained JSDoc typedef contracts for public boundaries.
 
 ### v2.0.2 - Release Hardening Stable
 
