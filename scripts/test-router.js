@@ -9,20 +9,7 @@ const os = require('os');
 
 const router = require('../lib/router');
 const state = require('../lib/state');
-
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
+const { test, report } = require('./test-harness');
 
 console.log('\n  Router tests\n');
 
@@ -302,6 +289,23 @@ test('evaluateCheck: file:path returns false for missing', () => {
   }
 });
 
+test('evaluateCheck: file:path rejects traversal outside project', () => {
+  router.clearCache();
+  const outside = path.join(path.dirname(tmp), 'godpowers-router-outside.txt');
+  fs.writeFileSync(outside, 'outside');
+  try {
+    const rel = path.relative(tmp, outside);
+    if (router.evaluateCheck(`file:${rel}`, tmp) !== false) {
+      throw new Error('relative traversal should be false');
+    }
+    if (router.evaluateCheck(`file:${outside}`, tmp) !== false) {
+      throw new Error('absolute path should be false');
+    }
+  } finally {
+    fs.rmSync(outside, { force: true });
+  }
+});
+
 test('evaluateCheck: state:tier-1.prd.status == done', () => {
   router.clearCache();
   // PRD was set to done in earlier test
@@ -385,5 +389,4 @@ test('getNextCommand evaluates no-ui-detected for backend project', () => {
   if (next !== '/god-repo') throw new Error('expected /god-repo for backend, got ' + next);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-if (failed > 0) process.exit(1);
+report('Router tests');

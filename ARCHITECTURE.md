@@ -1,16 +1,17 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.0.1 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, and request-trace review)
+> Status: STABLE v2.0.2 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, and release hardening)
 > Authors: Godpowers Team
-> Last updated: 2026-05-22
+> Last updated: 2026-05-26
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.0.1 keeps the public slash-command surface stable while adding
-request-trace review guardrails to the executable proof baseline. Auto-invoked commands, spawned agents,
-local runtime helpers, platform-specific spawning limits, migration imports,
-sync-back writes, feature-awareness refreshes, repo documentation sync, repo
-surface sync, quick proof runs, dogfood runs, canary reports, and dashboard
-progress must be reported visibly instead of implied as hidden background work.
+v2.0.2 keeps the public slash-command surface stable while hardening release
+validation, parser coverage, router checks, installer copy behavior, and the
+request-trace review baseline. Auto-invoked commands, spawned agents, local
+runtime helpers, platform-specific spawning limits, migration imports, sync-back
+writes, feature-awareness refreshes, repo documentation sync, repo surface sync,
+quick proof runs, dogfood runs, canary reports, and dashboard progress must be
+reported visibly instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only proof and

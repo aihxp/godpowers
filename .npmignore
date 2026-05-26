@@ -2,20 +2,27 @@
 node_modules/
 .git/
 .github/
+.planning/
+.godpowers/
 docs/RFC/
 docs/ROADMAP.md
 ARCHITECTURE.md
+ARCHITECTURE-MAP.md
 CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+SUPPORT.md
+USERS.md
 .gitignore
 .npmignore
 
 # Test infrastructure
 tests/
-scripts/smoke.sh
-scripts/validate-skills.js
+scripts/
 
 # Dev artifacts
 *.log
+*.tgz
 .DS_Store
 .env
 .env.*

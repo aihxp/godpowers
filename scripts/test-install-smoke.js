@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { execFileSync } = require('child_process');
+const installerFiles = require('../lib/installer-files');
 
 const ROOT = path.resolve(__dirname, '..');
 const INSTALLER = path.join(ROOT, 'bin', 'install.js');
@@ -221,6 +222,23 @@ test('installer wrote runtime bundle with lib next to workflow data', () => {
   assert(fs.existsSync(path.join(runtimeDir, 'routing', 'god-mode.yaml')), 'runtime routing missing');
   assert(fs.existsSync(path.join(runtimeDir, 'workflows', 'full-arc.yaml')), 'runtime workflow missing');
   assert(fs.existsSync(path.join(runtimeDir, 'package.json')), 'runtime package.json missing');
+});
+
+test('copyRecursive preserves symlinks without dereferencing them', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-copy-symlink-'));
+  const src = path.join(root, 'src');
+  const dest = path.join(root, 'dest');
+  fs.mkdirSync(src, { recursive: true });
+  fs.writeFileSync(path.join(src, 'target.txt'), 'target');
+  fs.symlinkSync('target.txt', path.join(src, 'link.txt'));
+
+  installerFiles.copyRecursive(src, dest);
+
+  const copiedLink = path.join(dest, 'link.txt');
+  assert(fs.lstatSync(copiedLink).isSymbolicLink(), 'copied link is not a symlink');
+  assert(fs.readlinkSync(copiedLink) === 'target.txt',
+    `link target: ${fs.readlinkSync(copiedLink)}`);
+  fs.rmSync(root, { recursive: true, force: true });
 });
 
 test('installed OTel exporter reports package version', () => {

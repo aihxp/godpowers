@@ -15,27 +15,9 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const crypto = require('crypto');
 
 const state = require('../lib/state');
-
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try { fn(); console.log(`  + ${name}`); passed++; }
-  catch (e) { console.error(`  x ${name}: ${e.message}`); failed++; }
-}
-
-function mkProject() {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-state-test-'));
-  fs.mkdirSync(path.join(tmp, '.godpowers'), { recursive: true });
-  return tmp;
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
+const { test, assert, mkProject, report } = require('./test-harness');
 
 console.log('\n  State module behavioral tests\n');
 
@@ -223,5 +205,4 @@ test('renderProgressLine includes percent and current step', () => {
   assert(/Planning \/ PRD/.test(line), `line: ${line}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report('State module behavioral tests');

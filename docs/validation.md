@@ -13,6 +13,37 @@ orthogonal axes, all running in parallel:
 
 The lint layer. Mechanical checks against the catalog of failure modes.
 
+### Repository gate checks
+
+- [DECISION] `npm test` delegates to `scripts/run-tests.js` so the full test
+  sequence is maintained as data instead of a long package script.
+- [DECISION] `scripts/run-tests.js` includes the skill validator, static
+  checks, YAML parser coverage, route checks, repo surface checks, installer
+  smoke tests, Mode D tests, dogfood tests, package extension tests, and the
+  integration smoke test.
+- [DECISION] `npm run lint` delegates to `scripts/static-check.js`.
+- [DECISION] `scripts/static-check.js` runs `node --check` across JavaScript
+  files and verifies the release gate still includes parser coverage and
+  installer helper extraction.
+- [DECISION] `npm run release:check` remains the maintainer command before a
+  public package release because it runs the full test gate, audit gate, and
+  package contents gate.
+
+### Dependency-free YAML subset
+
+- [DECISION] Godpowers keeps runtime YAML parsing dependency-free for now.
+- [DECISION] `lib/intent.parseSimpleYaml` supports the subset used by
+  `intent.yaml`, routing files, workflow files, extension manifests, and
+  release surface checks.
+- [DECISION] The supported subset includes top-level scalars, nested objects,
+  arrays of scalars, arrays of objects, quoted strings with colons or hashes,
+  inline arrays with quoted commas, and literal or folded block scalars.
+- [HYPOTHESIS] A production dependency such as a full YAML parser should only
+  be added if a future route, workflow, or extension manifest needs YAML
+  features outside this documented subset.
+- [DECISION] `scripts/test-yaml-parser.js` is the regression suite for the
+  supported subset.
+
 ### What it checks
 
 Universal (apply to all artifacts):

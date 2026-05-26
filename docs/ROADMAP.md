@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
-> Last updated: 2026-05-22
-> Current shipped: v2.0.1
+> Last updated: 2026-05-26
+> Current shipped: v2.0.2
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.0.1)
+### Current surface (v2.0.2)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -84,6 +84,10 @@ What works today:
   changed public behavior, expected files, and verification before editing,
   while reviewers block speculative flexibility, unrelated cleanup, and
   untraceable diff churn.
+- **Release hardening**: the full test gate is maintained in
+  `scripts/run-tests.js`, static checks run through `scripts/static-check.js`,
+  the dependency-free YAML subset has dedicated coverage, router file checks
+  reject traversal, and installer recursive copy preserves symlinks.
 - **Safe-sync release truth routing**: `/god-next` and `/god-deploy` route
   unresolved safe sync gates to `/god-reconcile Release Truth And Safe Sync`
 - **Direct release gate enforcement**: Tier 3 commands, `/god-mode`, and
@@ -131,6 +135,28 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 ---
 
 ## Stability window
+
+### v2.0.2 - Release Hardening Stable
+
+**Theme**: keep the public command surface frozen while hardening release,
+routing, parser, installer, and validation internals.
+
+Changed in 2.0.2:
+
+- The full test suite now runs through `scripts/run-tests.js`, with package
+  and release checks reading that delegated runner.
+- `npm run lint` runs dependency-free static checks through
+  `scripts/static-check.js`.
+- The dependency-free YAML subset has dedicated coverage for quoted colons,
+  inline comments, inline arrays, object arrays, and block scalars.
+- Router `file:` predicates reject absolute paths and parent traversal before
+  reading project-relative files.
+- Installer recursive copy handles symlinks explicitly through shared helper
+  code.
+- Budget YAML updates now target the top-level `budgets:` block without broad
+  regex deletion.
+- Root docs and validation docs describe the release gate, parser limits, and
+  delegated runner contract.
 
 ### v2.0.1 - Request-Trace Review Stable
 

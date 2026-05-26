@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-05-26
+
+### Added
+- Added `scripts/run-tests.js` as the maintained full-suite runner behind
+  `npm test`.
+- Added `scripts/static-check.js` and `npm run lint` for dependency-free
+  JavaScript syntax and release-gate structure checks.
+- Added dedicated YAML parser coverage for the supported dependency-free YAML
+  subset.
+
+### Changed
+- Hardened `lib/intent.parseSimpleYaml` for quoted colons, quoted hashes,
+  quoted commas in inline arrays, scalar arrays, object arrays, and folded
+  block scalars.
+- Moved installer copy helpers into `lib/installer-files.js` and preserved
+  symlinks during recursive copies.
+- Updated release and repo surface sync detectors to recognize delegated test
+  runners instead of requiring every test filename inside `package.json`.
+- Tightened budget block removal so only the top-level `budgets` block is
+  removed.
+
+### Fixed
+- Rejected router `file:` checks that point outside the project root.
+- Corrected the `/god-build` repository prerequisite auto-complete route from
+  `/god-roadmap` to `/god-repo`.
+- Aligned `SKILL.md` frontmatter version with package version `2.0.2`.
+
 ## [2.0.1] - 2026-05-22
 
 Request-trace review guardrails.

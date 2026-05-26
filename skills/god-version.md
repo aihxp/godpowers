@@ -14,12 +14,12 @@ Print version and a short capability summary.
 ## Output
 
 ```
-Godpowers v2.0.0
+Godpowers v2.0.2
 Install: /Users/.../.claude/  (matches package.json)
 Surface: 110 skills, 40 agents, 13 workflows, 40 recipes
 Schema: intent.v1, state.v1, events.v1, workflow.v1, routing.v1, recipe.v1
 External integrations available: impeccable, agent-browser (others lazy)
-Feature awareness: planning-system migration, source-system sync-back, context refresh, dashboard status labels, repo documentation sync, repo surface sync
+Feature awareness: planning-system migration, source-system sync-back, context refresh, dashboard status labels, repo documentation sync, repo surface sync, quick proof, request trace, release hardening
 ```
 
 ## Subcommands

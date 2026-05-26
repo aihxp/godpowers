@@ -60,7 +60,8 @@ This includes:
 - Installer smoke tests through `node scripts/test-install-smoke.js`.
 
 Before publish, confirm release-surface sync still sees those dogfood,
-extension, suite, and installer gates in `package.json`.
+extension, suite, and installer gates through `package.json` or the delegated
+test runner in `scripts/run-tests.js`.
 
 ## Package Surface
 

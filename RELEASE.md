@@ -1,11 +1,10 @@
-# Godpowers 2.0.1 Release
+# Godpowers 2.0.2 Release
 
-Date: 2026-05-22
+Date: 2026-05-26
 
-Godpowers 2.0.1 is the request-trace review release. It keeps the 2.0
-executable proof surface stable while tightening existing build and review
-workflows so implementation diffs stay narrow, verifiable, and tied to the
-user request.
+Godpowers 2.0.2 is the release hardening patch. It keeps the 2.0 proof,
+request-trace, and command surfaces stable while tightening the package
+runtime, maintainer validation, and release-readiness checks.
 
 ## What is stable
 
@@ -37,44 +36,42 @@ user request.
 
 ## What is new
 
-- Added request-trace discipline to `god-executor`: assumptions, public
-  behavior, expected files, and verification command must be explicit before
-  implementation.
-- Added scope and request-trace checks to `god-spec-reviewer`.
-- Added simplicity and surgicality checks to `god-quality-reviewer`.
-- Added `request-trace-review` to runtime feature awareness.
-- Updated README, reference docs, roadmap, architecture, quality pillar,
-  changelog, package metadata, and lockfile for `2.0.1`.
+- Added `scripts/run-tests.js` as the maintained full-suite runner behind
+  `npm test`.
+- Added `scripts/static-check.js` and `npm run lint` for dependency-free
+  JavaScript syntax and release-gate structure checks.
+- Added dedicated YAML parser coverage for the supported dependency-free YAML
+  subset.
+- Updated README, validation docs, release checklist, repo surface docs,
+  changelog, release notes, package metadata, and lockfile for `2.0.2`.
 
 ## Guardrails
 
-- Quick proof is read-only and deterministic.
-- Quick proof reports the user's current host guarantees separately from the
-  shipped fixture state.
-- Package contents checks require the quick-proof module and fixture state.
-- Build and review commands keep the public command surface unchanged.
-- Reviewers reject speculative abstraction, unrelated cleanup, and diff churn
-  that cannot be traced to the request, slice plan, failing test, or
-  implementation-caused cleanup.
-- Published install verification checks quick proof, status, next, Claude
-  install, and Codex metadata install against the registry artifact.
-- The adoption canary harness captures CLI-verifiable signals only. Host slash
-  commands such as `/god-preflight`, `/god-audit`, and `/god-reconstruct` still
-  require an AI coding host.
+- The runtime remains dependency-free.
+- The supported YAML subset is documented and covered by tests.
+- Router `file:` checks reject absolute paths and traversal outside the
+  project root.
+- Installer recursive copy preserves symlinks instead of dereferencing them.
+- Release and repo surface sync detectors recognize delegated test wiring
+  through `scripts/run-tests.js`.
+- Budget block removal only removes the top-level `budgets` block.
+- Package contents checks require the runtime helper files shipped by this
+  patch.
 
 ## Validation
 
 Release validation includes:
 
-- `npm run test:quick-proof`
-- `node scripts/run-adoption-canary.js <repo> --output=<report>`
+- `npm test`
+- `npm run test:audit`
+- `npm run pack:check`
 - `npm run release:check`
 - `npm pack --json`
 - local uninstall of previous runtime installs
 - local reinstall from the generated tarball
 - npm publish with provenance when available
 - `node scripts/verify-published-install.js godpowers@latest`
-- GitHub release creation for `v2.0.1`
+- GitHub release creation for `v2.0.2`
 
-The `v2.0.1` tag should point to the release commit that matches the npm
-`godpowers@2.0.1` package.
+The `v2.0.2` tag should point to the release commit that matches the npm
+`godpowers@2.0.2` package.

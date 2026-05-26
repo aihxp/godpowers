@@ -11,7 +11,7 @@ prerequisites:
       auto-complete: /god-roadmap
       human-required: true
     - check: state:tier-2.repo.status == done
-      auto-complete: /god-roadmap
+      auto-complete: /god-repo
       human-required: true
 
 execution:

@@ -24,6 +24,7 @@
 - [DECISION] Route quality sync checks atomic spawn tokens, routed agent resolution, approved contextual exits, standards coverage, and agent trace event coverage.
 - [DECISION] Recipe coverage sync checks high-frequency intent routes for release maintenance, docs drift, context refresh, story work, and automation setup.
 - [DECISION] Release surface sync checks README badges, changelog, release notes, release checklist policy, package lock version, package payload guardrails, dogfood tests, extension publish tests, Mode D suite tests, and installer smoke tests.
+- [DECISION] Release surface sync accepts delegated test wiring through `scripts/run-tests.js` when `package.json` points `npm test` at that runner.
 - [DECISION] Suite readiness sync checks Mode D helper presence, suite command skill and routing coverage, roadmap documentation, and release test wiring.
 - [DECISION] Release policy sync checks that repo documentation sync is fresh and that the release checklist names repo surface sync.
 

@@ -123,6 +123,34 @@ test('applyOff preserves non-budgets content', () => {
   assert(i.scale === 'small', `lost scale: ${i.scale}`);
 });
 
+test('applyOff removes only the top-level budgets block', () => {
+  const tmp = mkProject();
+  fs.writeFileSync(path.join(tmp, '.godpowers', 'intent.yaml'), [
+    'apiVersion: godpowers/v1',
+    'kind: Project',
+    'metadata:',
+    '  name: t',
+    '  budgets: keep-this-word',
+    'mode: A',
+    'budgets: # managed block',
+    '  cache: true',
+    '  agents:',
+    '    god-pm:',
+    '      max-tokens: 120000',
+    'scale: small',
+    ''
+  ].join('\n'));
+
+  budget.applyOff(tmp);
+  const raw = fs.readFileSync(path.join(tmp, '.godpowers', 'intent.yaml'), 'utf8');
+  assert(raw.includes('  budgets: keep-this-word'), 'nested metadata field should remain');
+  assert(!raw.includes('max-tokens: 120000'), 'top-level budgets block should be removed');
+  const i = intent.read(tmp);
+  assert(i.metadata.budgets === 'keep-this-word',
+    `metadata budgets: ${i.metadata.budgets}`);
+  assert(i.scale === 'small', `scale: ${i.scale}`);
+});
+
 test('set merges per-agent overrides under agents key', () => {
   const tmp = mkProject();
   writeBaselineIntent(tmp);

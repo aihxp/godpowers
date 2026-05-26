@@ -10,36 +10,7 @@ const cp = require('child_process');
 
 const dashboard = require('../lib/dashboard');
 const state = require('../lib/state');
-
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`  + ${name}`);
-    passed++;
-  } catch (e) {
-    console.error(`  x ${name}: ${e.message}`);
-    failed++;
-  }
-}
-
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg || 'assertion failed');
-}
-
-function mkProject() {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-dashboard-test-'));
-  fs.mkdirSync(path.join(tmp, '.godpowers'), { recursive: true });
-  return tmp;
-}
-
-function writeRel(root, relPath, text) {
-  const file = path.join(root, relPath);
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, text);
-}
+const { test, assert, mkProject, writeRel, report } = require('./test-harness');
 
 console.log('\n  Dashboard engine behavioral tests\n');
 
@@ -168,5 +139,4 @@ test('CLI next can emit JSON with the recommended route', () => {
   assert(parsed.progress.total === 13, `total: ${parsed.progress.total}`);
 });
 
-console.log(`\n  Results: ${passed} passed, ${failed} failed\n`);
-process.exit(failed > 0 ? 1 : 0);
+report('Dashboard engine behavioral tests');

@@ -10,6 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { ensureDir, copyRecursive, copyRuntimeBundle } = require('../lib/installer-files');
 
 const VERSION = require('../package.json').version;
 
@@ -146,40 +147,6 @@ function warn(msg) {
 
 function error(msg) {
   console.error(`  \x1b[31mx\x1b[0m ${msg}`);
-}
-
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
-
-function copyRecursive(src, dest) {
-  ensureDir(dest);
-  const entries = fs.readdirSync(src, { withFileTypes: true });
-  for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
-    if (entry.isDirectory()) {
-      copyRecursive(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
-  }
-}
-
-function copyRuntimeBundle(srcDir, destDir) {
-  ensureDir(destDir);
-  for (const dir of ['lib', 'routing', 'workflows', 'schema', 'templates', 'references']) {
-    const src = path.join(srcDir, dir);
-    if (fs.existsSync(src)) {
-      copyRecursive(src, path.join(destDir, dir));
-    }
-  }
-  const packageJson = path.join(srcDir, 'package.json');
-  if (fs.existsSync(packageJson)) {
-    fs.copyFileSync(packageJson, path.join(destDir, 'package.json'));
-  }
 }
 
 function installSkillFile(srcFile, skillsDest, runtimeKey, targetName = null) {
@@ -763,17 +730,13 @@ function main() {
 
   const srcDir = path.resolve(__dirname, '..');
 
-  // Detect non-interactive and default to Claude Code.
+  // Default to Claude Code when no runtime is specified.
   if (opts.runtimes.length === 0 && !opts.all) {
     if (!process.stdin.isTTY) {
       warn('Non-interactive terminal detected, defaulting to Claude Code install');
-      opts.runtimes = ['claude'];
-      if (!opts.local) opts.global = true;
-    } else {
-      // Interactive mode: default to claude
-      opts.runtimes = ['claude'];
-      if (!opts.local) opts.global = true;
     }
+    opts.runtimes = ['claude'];
+    if (!opts.local) opts.global = true;
   }
 
   if (opts.all) {
