@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.1.0
+> Current shipped: v2.1.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.1.0)
+### Current surface (v2.1.1)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -140,6 +140,19 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 ---
 
 ## Stability window
+
+### v2.1.1 - Documentation and Off-Switch Safety Patch
+
+**Theme**: reconcile documentation and make the context off-switch safer,
+without changing the public command surface.
+
+Changed in 2.1.1:
+
+- The context off-switch empties the canonical `AGENTS.md` instead of deleting
+  it; auto-generated pointer files are still removed when only the fence remains.
+- Documentation: removed unverifiable external impeccable counts, reconciled the
+  project-mode taxonomy (A/B/C/E primary, D as the orthogonal suite overlay),
+  documented every `lib/` module, and clarified artifact-category counts.
 
 ### v2.1.0 - Security and Drift Hardening Stable
 

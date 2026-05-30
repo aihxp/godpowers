@@ -1,6 +1,6 @@
 ---
 name: godpowers
-version: 2.1.0
+version: 2.1.1
 description: |
   AI-powered development system that takes a project from raw idea to hardened
   production. Fuses artifact discipline, execution engine, quality enforcement,

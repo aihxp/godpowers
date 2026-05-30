@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-05-30
+
 ### Changed
 - The context off-switch now empties the canonical `AGENTS.md` instead of
   deleting it; auto-generated pointer files (`CLAUDE.md`, `.cursorrules`, etc.)

@@ -1,11 +1,11 @@
-# Godpowers 2.1.0 Release
+# Godpowers 2.1.1 Release
 
 Date: 2026-05-30
 
-Godpowers 2.1.0 is the security and drift hardening release. It keeps the 2.0
-proof, request-trace, and command surfaces stable while closing a
-command-injection vector, hardening runtime file handling and the installer,
-and reconciling documentation drift across the repository.
+Godpowers 2.1.1 is a documentation and off-switch safety patch on top of the
+2.1.0 security release. The public slash-command surface, runtime behavior, and
+artifact layout are unchanged except for one safety improvement to the context
+off-switch.
 
 ## What is stable
 
@@ -15,45 +15,25 @@ and reconciling documentation drift across the repository.
 - 40 intent recipes
 - 15-runtime installer
 - Codex installs with generated `god-*.toml` agent metadata files
-- Markdown specialist agent contracts at `<runtime>/agents/god-*.md`
 - Shared runtime bundle at `<runtime>/godpowers-runtime`
 - Native Pillars project context through `AGENTS.md` and `agents/*.md`
 - `.godpowers/` workflow state and artifact layout
-- Dashboard action briefs for next-step compression
-- Dashboard host guarantees for full, degraded, and unknown runtime capability
-- `godpowers status --project .` and `godpowers next --project .`
-- `godpowers quick-proof --project .`
-- Planning-system migration for GSD, BMAD, and Superpowers
-- Repository documentation, repository surface, route quality, recipe coverage,
-  and release surface sync checks
-- Messy-repo dogfood scenarios
-- Extension authoring scaffold helper
-- Mode D suite release dry-run planner
+- `godpowers status --project .`, `godpowers next --project .`, and
+  `godpowers quick-proof --project .`
 - Release gate enforcement through `npm run release:check`
+- The 2.1.0 security hardening (argv-only browser exec, corrupt-file parse
+  guards, clean-replace installs, prototype-pollution guards)
 
 ## What is new
 
-- Closed a command-injection vector in `lib/agent-browser-driver.js`. CLI
-  arguments now flow through an argv array with the shell disabled, so URLs,
-  selectors, and eval expressions sourced from project content or CLI flags
-  cannot be interpreted as shell syntax.
-- Guarded runtime JSON parsing of `state.json` and `events.jsonl` against
-  corrupt or partially-written files, replacing uncaught crashes with clear
-  errors or skipped torn lines.
-- Corrected the review registry path to `.godpowers/REVIEW-REQUIRED.md` so the
-  dashboard and automation see review items and the off-switch no longer
-  deletes a repo-root file.
-- Made data-directory and runtime-bundle installs a clean replace so version
-  upgrades never leave behind files that no longer ship.
-- Narrowed `agent-cache` deletion scope, added extension-scaffold name
-  validation, added prototype-pollution guards to the YAML/manifest parser and
-  router, and limited installer symlink reproduction to the source tree.
-- Added a skill/agent prose reference validator wired into the agent-ref test
-  gate, wired have-not `A-13` into the architecture gate, and softened brittle
-  exact-count tests to floors.
-- Reconciled documentation drift across README, ARCHITECTURE, ARCHITECTURE-MAP,
-  docs, references, and skills (counts, linkage paths, HAVE-NOTS tally, stale
-  sample output).
+- The context off-switch now empties the canonical `AGENTS.md` instead of
+  deleting it; auto-generated pointer files (`CLAUDE.md`, `.cursorrules`, etc.)
+  are still removed when only the Godpowers fence remains.
+- Documentation reconciliation: removed unverifiable external impeccable
+  rule/finding counts; aligned the project-mode taxonomy with the runtime
+  (A/B/C/E primary modes, with D as the orthogonal multi-repo suite overlay);
+  documented every `lib/` module; and clarified how the artifact-category counts
+  relate.
 
 ## Guardrails
 
@@ -61,10 +41,6 @@ and reconciling documentation drift across the repository.
 - The runtime remains dependency-free.
 - `bin/install.js` stays a thin CLI entry point and delegates install behavior
   to `lib/installer-core.js`.
-- Every `child_process` call site uses an argv array with the shell disabled.
-- `scripts/static-check.js` continues to verify async APIs, JSDoc typedefs,
-  agent-ref test coverage, shared harness adoption, skill metadata source
-  parsing, and God Mode runbook delegation.
 
 ## Validation
 
@@ -77,7 +53,7 @@ Release validation includes:
 - `npm pack --json`
 - local install smoke tests across supported runtime shapes
 - npm publish when registry credentials are available
-- GitHub release creation for `v2.1.0`
+- GitHub release creation for `v2.1.1`
 
-The `v2.1.0` tag should point to the release commit that matches the npm
-`godpowers@2.1.0` package.
+The `v2.1.1` tag should point to the release commit that matches the npm
+`godpowers@2.1.1` package.

@@ -1,10 +1,10 @@
 # Users and Community
 
-Godpowers is at v2.1.0. Stable release.
+Godpowers is at v2.1.1. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. The 2.1.0 line ships an
+Currently zero recorded production users. Be honest. The 2.1.1 line ships an
 executable proof path with release and maintenance hardening, but real users
 will reveal which gaps actually matter.
 
