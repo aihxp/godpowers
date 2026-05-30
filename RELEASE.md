@@ -9,10 +9,10 @@ off-switch.
 
 ## What is stable
 
-- 110 slash commands
+- 111 slash commands
 - 40 specialist agents
 - 13 executable workflows
-- 40 intent recipes
+- 41 intent recipes
 - 15-runtime installer
 - Codex installs with generated `god-*.toml` agent metadata files
 - Shared runtime bundle at `<runtime>/godpowers-runtime`

@@ -248,7 +248,7 @@ function runInstall(opts, srcDir) {
   log(`\x1b[32mDone!\x1b[0m Installed Godpowers v${VERSION} for ${installed} runtime(s).`);
   log('');
   log(`\x1b[36mInstalled:\x1b[0m`);
-  log(`  ${surface.skills} slash commands (try: /god-mode, /god-next, /god-status)`);
+  log(`  ${surface.skills} slash commands (try: /god-mode, /god-next, /god-status, /god-progress)`);
   log(`  ${surface.agents} specialist agents`);
   log('  Templates and references for artifact discipline');
   log('');

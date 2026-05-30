@@ -20,7 +20,7 @@ What works today:
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
-- **13 executable workflows** and **40 intent recipes**
+- **13 executable workflows** and **41 intent recipes**
 - **15-runtime installer**: Claude, Codex, Cursor, Windsurf, Gemini, OpenCode,
   Copilot, Augment, Trae, Cline, Kilo, Antigravity, Qwen, CodeBuddy, Pi
   (with T3 Code transparently inheriting the underlying agent)

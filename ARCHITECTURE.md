@@ -309,13 +309,13 @@ commands inside the AI coding tool.
 ### Route Topology And Automation Audit (2026-05-16)
 
 [DECISION] The route graph is currently complete at the file level: 110
-`skills/*.md` command files match 110 `routing/*.yaml` route files (109
+`skills/*.md` command files match 111 `routing/*.yaml` route files (110
 `god-*` commands plus the `god` front door).
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
-agents, 13 workflow YAML files, and 40 intent recipes.
+agents, 13 workflow YAML files, and 41 intent recipes.
 
-[DECISION] The current route graph has 58 built-in or local-runtime command
+[DECISION] The current route graph has 59 built-in or local-runtime command
 routes and 52 agent-routed command routes.
 
 [DECISION] Eighteen command routes declare secondary or parallel spawns:
@@ -326,7 +326,7 @@ routes and 52 agent-routed command routes.
 
 [DECISION] All workflow `uses:` targets resolve to shipped agent files.
 
-[DECISION] All 40 recipes contain at least one slash-command route, and every
+[DECISION] All 41 recipes contain at least one slash-command route, and every
 recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |

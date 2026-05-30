@@ -1,7 +1,7 @@
 # Godpowers Architecture Map
 
 > Visual reference for how everything connects.
-> 4 layers, 110 slash commands, 40 agents, 13 workflows, 40 recipes, executable release gates.
+> 4 layers, 111 slash commands, 40 agents, 13 workflows, 41 recipes, executable release gates.
 
 ---
 

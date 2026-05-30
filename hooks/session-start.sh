@@ -80,6 +80,7 @@ Next step: run /god-next  (it inspects disk state and proposes the next command)
 Or:       /god-mode for the full autonomous project run
 Or:       /god-help to see the catalog
 Or:       /god-status for the full project snapshot
+Or:       /god-progress for deliverable progress (requirements done / left)
 Or:       /god-context refresh after installing a newer Godpowers runtime
 
 Disk state is authoritative. Conversation memory is not.
