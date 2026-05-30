@@ -17,8 +17,10 @@ const {
   uninstallForRuntime,
   countInstalledSurface
 } = require('../lib/installer-core');
+const { describeProfiles } = require('../lib/install-profiles');
+const identity = require('../lib/package-identity');
 
-const VERSION = require('../package.json').version;
+const VERSION = identity.PACKAGE_VERSION;
 
 const BANNER = `
   GODPOWERS v${VERSION}
@@ -80,6 +82,8 @@ function showHelp() {
   log('  --codebuddy          Install for CodeBuddy');
   log('  --pi                 Install for Pi');
   log('  --all                Install for all 15 runtimes');
+  log('  --profile=<name>     Install profile: core, builder, maintainer, suite, or full');
+  log('  --minimal            Alias for --profile=core');
   log('  -u, --uninstall      Uninstall Godpowers');
   log('  -h, --help           Show this help message');
   log('');
@@ -92,6 +96,7 @@ function showHelp() {
   log('  npx godpowers dogfood');
   log('  npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.');
   log('  npx godpowers --claude --global');
+  log('  npx godpowers --claude --global --profile=core');
   log('  npx godpowers --all');
   log('  npx godpowers --codex --cursor');
 }
@@ -243,10 +248,11 @@ function runInstall(opts, srcDir) {
     process.exit(1);
   }
 
-  const surface = countInstalledSurface(srcDir);
+  const surface = countInstalledSurface(srcDir, opts);
   log('');
   log(`\x1b[32mDone!\x1b[0m Installed Godpowers v${VERSION} for ${installed} runtime(s).`);
   log('');
+  log(`\x1b[36mProfile:\x1b[0m ${describeProfiles(opts.profile)}`);
   log(`\x1b[36mInstalled:\x1b[0m`);
   log(`  ${surface.skills} slash commands (try: /god-mode, /god-next, /god-status, /god-progress)`);
   log(`  ${surface.agents} specialist agents`);
@@ -258,7 +264,7 @@ function runInstall(opts, srcDir) {
   log(`     Or:   \x1b[36m/god-next\x1b[0m to see what to run next`);
   log(`     Or:   \x1b[36m/god-init\x1b[0m to start a new project`);
   log('');
-  log(`\x1b[36mDocs:\x1b[0m https://github.com/godpowers/godpowers`);
+  log(`\x1b[36mDocs:\x1b[0m ${identity.HOMEPAGE_URL}`);
   log('');
 }
 

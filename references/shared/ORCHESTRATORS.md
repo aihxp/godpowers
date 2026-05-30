@@ -45,7 +45,7 @@ If you arrive at Godpowers carrying artifacts from another system,
 `/god-init` Mode B (gap-fill) and `/god-migrate` read what exists and map it
 forward:
 
-- GSD `.planning/` or `.gsd/` context -> `.godpowers/prep/IMPORTED-CONTEXT.md`
+- legacy planning `.planning/` or `.legacy-planning/` context -> `.godpowers/prep/IMPORTED-CONTEXT.md`
   and optional native seed artifacts
 - BMAD `_bmad-output/` or `.bmad/` context -> imported preparation context and
   open questions for PRD, architecture, roadmap, and stack
@@ -74,7 +74,7 @@ authoritative. `/god-sync` writes managed companion files such as:
 The sync-back file is a bridge, not a second source of truth. It should contain
 the current Godpowers status, imported-context mapping, open conflicts, and the
 next safe route back into either system. It must be fenced or companion-owned
-so Godpowers does not overwrite arbitrary GSD, BMAD, or Superpowers artifacts.
+so Godpowers does not overwrite arbitrary legacy planning, BMAD, or Superpowers artifacts.
 
 ## Existing Godpowers projects after upgrades
 
@@ -94,7 +94,7 @@ frontmatter. There's no proprietary binary state. To leave:
    system doesn't understand them (they're recoverable from code
    annotations).
 3. Use the most recent managed sync-back file as the return-path summary if the
-   target system is GSD, BMAD, or Superpowers.
+   target system is legacy planning, BMAD, or Superpowers.
 4. Delete `.godpowers/`.
 
 ## What Godpowers does not try to be

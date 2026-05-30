@@ -1,14 +1,14 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.2.1 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, and deliverable progress tracking)
+> Status: STABLE v2.3.0 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, and accountability hardening)
 > Authors: Godpowers Team
 > Last updated: 2026-05-30
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.2.1 keeps the public slash-command surface stable and stabilizes
-deliverable progress tracking: requirement and roadmap-increment status derived
-from the linkage map, surfaced via `/god-progress` and the
-`.godpowers/REQUIREMENTS.md` ledger.
+v2.3.0 keeps the public slash-command surface stable and strengthens
+accountability hardening: source-grounded plans, package legitimacy checks,
+role-based install profiles, atomic persistence, and executor repair
+classification.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,

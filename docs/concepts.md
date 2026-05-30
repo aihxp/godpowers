@@ -232,7 +232,7 @@ pack.
 Godpowers does not assume it's the only AI workflow tool installed.
 It keeps its state in `.godpowers/` and never writes outside it.
 
-`/god-init`, `/god-migrate`, and feature awareness detect GSD, BMAD, and
+`/god-init`, `/god-migrate`, and feature awareness detect legacy planning, BMAD, and
 Superpowers context. Imported context becomes preparation material for native
 Godpowers artifacts, while `/god-sync` can write managed companion files back
 to the source system so teams can return to that workflow if needed.

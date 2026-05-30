@@ -89,15 +89,15 @@ test('detect suggests /god-migrate when foreign planning artifacts exist', () =>
   fs.writeFileSync(path.join(tmp, '.planning', 'PRD.md'), '# Legacy PRD\n\n- [ ] Build import.\n');
   const result = awareness.detect(tmp, { runtimeVersion: '1.6.16' });
   assert(result.actions.includes('suggest-god-migrate'), 'migration action missing');
-  assert(result.migrationCandidates.some((system) => system.id === 'gsd'), 'GSD candidate missing');
+  assert(result.migrationCandidates.some((system) => system.id === 'legacy-planning'), 'legacy planning candidate missing');
 });
 
 test('detect recommends god-greenfieldifier for low confidence source systems', () => {
   const tmp = mkProject();
   const s = state.init(tmp, 'aware-spawn');
   s['source-systems'] = [{
-    id: 'gsd',
-    name: 'GSD',
+    id: 'legacy-planning',
+    name: 'legacy planning',
     confidence: 'low',
     markers: ['.planning'],
     files: ['.planning/PRD.md'],

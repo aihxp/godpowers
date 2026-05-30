@@ -62,7 +62,7 @@ reflects what Godpowers observed during init: codebase shape, tests, docs,
 risks, and methodology systems detected.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read it before drafting the
-PRD. Use product signals from GSD, Superpowers, BMAD, or similar systems as
+PRD. Use product signals from legacy planning, Superpowers, BMAD, or similar systems as
 hypothesis-level input only.
 
 If `.godpowers/domain/GLOSSARY.md` exists, read it before drafting the PRD.

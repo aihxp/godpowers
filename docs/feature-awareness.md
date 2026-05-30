@@ -26,7 +26,7 @@ installed Godpowers runtime adds capabilities.
 - current installed runtime version
 - missing feature IDs in `state.json`
 - missing managed `AGENTS.md` or tool pointer fences
-- unimported GSD, BMAD, or Superpowers planning evidence
+- unimported legacy planning, BMAD, or Superpowers planning evidence
 - missing dogfood, host capability, extension-authoring, or suite dry-run
   awareness on upgraded projects
 - `god-greenfieldifier` recommendation when migration evidence is low
@@ -56,7 +56,7 @@ installed Godpowers runtime adds capabilities.
 {
   "godpowers-features": {
     "feature-set-version": 1,
-    "runtime-version": "2.2.1",
+    "runtime-version": "2.3.0",
     "known": [
       "planning-system-migration",
       "source-system-sync-back",

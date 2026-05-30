@@ -7,7 +7,9 @@
 Godpowers was shaped by ideas from several existing AI coding workflow
 systems. The four direct ancestors were:
 
-- **GSD** by Hanns Princivil ([github.com/aihxp/gsd](https://github.com/aihxp/gsd)) - pure-skill model, slash commands inside AI tools, TDD enforcement, critical-finding gate with autonomous-mode carve-out
+- **Prior internal planning-system experiments** - pure-skill model, slash
+  commands inside AI tools, TDD enforcement, critical-finding gate with
+  autonomous-mode carve-out
 - **Superpowers** by Anthropic ([github.com/anthropics/skills](https://github.com/anthropics/skills)) - subagent specialization with strict hand-off contracts, fresh-context isolation, two-stage review pipelines
 - **BMAD-METHOD** ([github.com/bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD)) - story-file workflow for incremental delivery, multi-phase methodology
 - **arc-ready / arc-anything** - artifact-quality discipline (substitution test, three-label test, named have-nots catalog)
@@ -35,7 +37,7 @@ Beyond what was inherited, godpowers added:
   AGENTS.md / CLAUDE.md / GEMINI.md and 11 other tool-specific paths
 - **Feature awareness and host guarantee reporting** so existing projects and
   AI coding hosts can state what Godpowers capabilities are actually available
-- **Messy-repo dogfood fixtures** for GSD migration, sync-back, extension
+- **Messy-repo dogfood fixtures** for legacy planning migration, sync-back, extension
   authoring, host capability, and Mode D suite release dry-run behavior
 - **Autonomous repo documentation and surface sync** for badges, route
   metadata, recipes, package payloads, release gates, and extension packs

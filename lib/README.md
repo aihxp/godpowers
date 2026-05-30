@@ -22,6 +22,7 @@ package-level integrations.
 | `dogfood-runner.js` | Run deterministic messy-repo scenarios against migration, host, extension, and suite release behavior. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
+| `atomic-write.js` | Write load-bearing files through temp-file validation and atomic rename. |
 | `fs-async.js` | Promise-based file read/write helpers for non-blocking runtime paths. |
 
 ## Events and observability
@@ -45,6 +46,7 @@ package-level integrations.
 | `agent-cache.js` | Cache agent metadata for faster routing. |
 | `agent-validator.js` | Validate agent frontmatter and contracts. |
 | `agent-refs.js` | Validate workflow agent references and scan skill/agent prose for phantom references. |
+| `executor-repair.js` | Classify executor repair decisions as retry, decompose, prune, or escalate. |
 | `skill-surface.js` | Derive slash-command metadata from the individual `skills/` files. |
 
 ## Artifact quality
@@ -63,7 +65,7 @@ package-level integrations.
 |--------|---------|
 | `context-writer.js` | Produce tool-specific context files. |
 | `context-budget.js` | Keep generated context within budget. |
-| `planning-systems.js` | Detect and import GSD, BMAD, and Superpowers planning context. |
+| `planning-systems.js` | Detect and import legacy planning, BMAD, and Superpowers planning context. |
 | `source-sync.js` | Write managed Godpowers progress back to source-system companion files. |
 | `design-detector.js` | Detect design-system conventions. |
 | `design-spec.js` | Normalize design specifications. |
@@ -74,6 +76,7 @@ package-level integrations.
 | `impeccable-bridge.js` | Bridge runtime checks into impeccable quality workflows. |
 | `extensions.js` | Load and validate extension packs. |
 | `extension-authoring.js` | Scaffold publishable extension packs with manifest, package, README, skill, agent, and workflow files. |
+| `package-legitimacy.js` | Assess third-party package metadata for existence, typo risk, recency, and repository signals. |
 | `pillars.js` | Manage the Pillars project-context layer (`AGENTS.md` plus routed `agents/*.md`). |
 
 ## Repository and graph helpers
@@ -81,6 +84,7 @@ package-level integrations.
 | Module | Purpose |
 |--------|---------|
 | `code-scanner.js` | Scan source trees for routing and quality evidence. |
+| `source-grounding.js` | Check that build plans cite existing files and symbols before execution starts. |
 | `cross-artifact-impact.js` | Detect relationships between changed artifacts. |
 | `cross-repo-linkage.js` | Track suite-level repository relationships. |
 | `drift-detector.js` | Detect context drift between artifacts and implementation. |
@@ -98,7 +102,9 @@ package-level integrations.
 | `installer-core.js` | Install and uninstall the Godpowers surface for each runtime. |
 | `installer-files.js` | File-copy helpers shared by the installer and its tests. |
 | `installer-args.js` | Parse `bin/install.js` arguments and subcommands. |
+| `install-profiles.js` | Select smaller role-specific slash-command install surfaces. |
 | `installer-runtimes.js` | Map supported runtimes to their config directories. |
+| `package-identity.js` | Centralize package name, version, repository, docs, and command identity. |
 | `automation-providers.js` | Detect and configure host-native automation providers. |
 | `dashboard.js` | Compute the next-step action brief and host guarantee line. |
 | `quick-proof.js` | Render the shipped proof fixture for `godpowers quick-proof`. |

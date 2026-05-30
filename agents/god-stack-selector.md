@@ -65,6 +65,9 @@ Rules:
 3. For each category:
    - List 2-3 viable candidates
    - Score on: fit-for-requirements, maturity, ecosystem health, team familiarity, total cost
+   - For package-backed choices, run or request the package legitimacy gate:
+     registry existence, package age, repository signal, maintainer signal,
+     typo-squat risk, and known vulnerability status where available
    - Document the **flip point**: condition under which you'd reverse this choice
    - Document the **lock-in cost**: how hard is it to switch (Low/Medium/High)
 4. Verify pairing compatibility (e.g., chosen ORM works with chosen DB)
@@ -103,6 +106,7 @@ Stack DECISION FAILS if:
 - High lock-in choice with likely flip point in <6 months
 - Pairing incompatibility (chosen ORM doesn't support chosen DB, etc.)
 - "Best practice" rationale without specific rationale tied to ARCH
+- Package-backed choice without legitimacy evidence or an accepted-risk note
 
 ## Pause Conditions
 

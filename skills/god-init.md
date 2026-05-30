@@ -36,7 +36,7 @@ needs to specify a mode.
      command. This happens before `/god-prd`, `/god-next`, or `/god-mode`
      continues.
    - Look for adjacent planning-system context:
-     - GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`
+     - legacy planning: `.legacy-planning/`, `.planning/`, `LEGACY-PLANNING.md`, `legacy-planning*.md`
      - Superpowers: `.superpowers/`, `superpowers/`, `SUPERPOWERS.md`,
        `.claude/skills/`, `.codex/skills/`
      - BMAD: `.bmad-core/`, `bmad-core/`, `.bmad/`, `BMAD.md`,
@@ -45,7 +45,7 @@ needs to specify a mode.
      `.godpowers/prep/IMPORTED-CONTEXT.md` as preparation context.
      Do not treat external planning-system files as source of truth.
    - Auto-invoke `lib/planning-systems.importPlanningContext(projectRoot)`
-     when GSD, Superpowers, or BMAD context is detected. Report this as
+     when legacy planning, Superpowers, or BMAD context is detected. Report this as
      `Agent: none, local runtime only`.
    - If import confidence is low, more than one source system appears to
      conflict, or canonical Godpowers seed artifacts cannot be created from
@@ -57,7 +57,7 @@ needs to specify a mode.
      - UI surfaces: `src/components/`, `app/`, `pages/`, `routes/`,
        `public/`, form-heavy flows, dashboards, editor surfaces, mobile
        shells, marketing pages, or other user-facing product experience
-     - Imported GSD, Superpowers, or BMAD context that mentions UX, screens,
+     - Imported legacy planning, Superpowers, or BMAD context that mentions UX, screens,
        journeys, components, brand, interaction states, or visual design
    - Record the result in `INITIAL-FINDINGS.md` so `/god-prd`, `/god-next`,
      and `/god-mode` can place `/god-design` after PRD and before
@@ -114,7 +114,7 @@ needs to specify a mode.
    - Run Mode Detection (announced in plain English; stored as A/B/C/E internally)
    - Run Scale Detection (trivial/small/medium/large/enterprise)
    - Write `.godpowers/prep/INITIAL-FINDINGS.md`
-   - Run planning-system context detection for GSD, Superpowers, and BMAD
+   - Run planning-system context detection for legacy planning, Superpowers, and BMAD
    - Write `.godpowers/prep/IMPORTED-CONTEXT.md` when useful context exists
    - Run automatic planning-system import through
      `lib/planning-systems.importPlanningContext(projectRoot)` and record
@@ -153,7 +153,7 @@ needs to specify a mode.
      PROGRESS.md
      prep/
        INITIAL-FINDINGS.md
-       IMPORTED-CONTEXT.md   # only when GSD / Superpowers / BMAD context exists
+       IMPORTED-CONTEXT.md   # only when legacy planning / Superpowers / BMAD context exists
      prd/
      arch/
        adr/
@@ -194,7 +194,7 @@ shape, framework and tooling signals, tests, CI, docs, AI-tool files, detected
 methodology systems, Pillars health, UI or product-experience signals, risk
 signals, and the reasoning behind the suggested next command.
 
-If GSD, Superpowers, BMAD, or similar planning context is detected, create
+If legacy planning, Superpowers, BMAD, or similar planning context is detected, create
 `.godpowers/prep/IMPORTED-CONTEXT.md`. This artifact is preparation context,
 not source of truth. It feeds PRD, architecture, roadmap, and stack decisions
 as hypothesis-level input only.

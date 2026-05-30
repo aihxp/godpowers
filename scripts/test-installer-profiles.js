@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const { execFileSync } = require('child_process');
+const profiles = require('../lib/install-profiles');
+const { parseArgs } = require('../lib/installer-args');
+const { test, assert, report } = require('./test-harness');
+
+const ROOT = path.resolve(__dirname, '..');
+const INSTALLER = path.join(ROOT, 'bin', 'install.js');
+
+test('parseArgs accepts --profile and --minimal', () => {
+  assert(parseArgs(['node', 'bin', '--profile=core']).profile === 'core');
+  assert(parseArgs(['node', 'bin', '--profile', 'builder']).profile === 'builder');
+  assert(parseArgs(['node', 'bin', '--minimal']).profile === 'core');
+});
+
+test('selectedSkillNames limits core surface', () => {
+  const names = fs.readdirSync(path.join(ROOT, 'skills'))
+    .filter(file => file.endsWith('.md'))
+    .map(file => path.basename(file, '.md'));
+  const selected = profiles.selectedSkillNames('core', names);
+  assert(selected.has('god-build'), 'core missing god-build');
+  assert(selected.has('god-status'), 'core missing god-status');
+  assert(!selected.has('god-suite-release'), 'core should not include suite release');
+});
+
+test('installer profile core installs fewer commands and writes marker', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-profile-core-'));
+  execFileSync('node', [INSTALLER, '--codex', '--global', '--profile=core'], {
+    env: { ...process.env, HOME: home },
+    encoding: 'utf8',
+    timeout: 30_000
+  });
+  const skillsDir = path.join(home, '.codex', 'skills');
+  assert(fs.existsSync(path.join(skillsDir, 'god-build', 'SKILL.md')), 'god-build missing');
+  assert(fs.existsSync(path.join(skillsDir, 'god-status', 'SKILL.md')), 'god-status missing');
+  assert(!fs.existsSync(path.join(skillsDir, 'god-suite-release', 'SKILL.md')),
+    'suite command should not be installed in core profile');
+  assert(fs.readFileSync(path.join(home, '.codex', 'GODPOWERS_PROFILE'), 'utf8') === 'core',
+    'profile marker mismatch');
+  fs.rmSync(home, { recursive: true, force: true });
+});
+
+test('unknown install profile is rejected by profile resolver', () => {
+  let threw = false;
+  try {
+    profiles.normalizeProfiles('wat');
+  } catch (_) {
+    threw = true;
+  }
+  assert(threw, 'unknown profile should throw');
+});
+
+report('Installer profile behavioral tests');

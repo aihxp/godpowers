@@ -38,7 +38,7 @@ Each command has:
   - `.godpowers/state.json`
   - `.godpowers/intent.yaml`
   - `.godpowers/prep/INITIAL-FINDINGS.md`
-  - `.godpowers/prep/IMPORTED-CONTEXT.md` when GSD, Superpowers, BMAD, or
+  - `.godpowers/prep/IMPORTED-CONTEXT.md` when legacy planning, Superpowers, BMAD, or
     similar planning context is detected
 
 **Standards check**: none (no artifacts produced yet)

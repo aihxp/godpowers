@@ -297,7 +297,7 @@ Run these local runtime helpers automatically when their trigger is present:
   `PROGRESS.md` mutation.
 - Lightweight reverse-sync or linkage scan after code or artifact edits.
 - Pillars sync planning after durable artifact truth changes.
-- `lib/planning-systems.importPlanningContext` when GSD, BMAD, or
+- `lib/planning-systems.importPlanningContext` when legacy planning, BMAD, or
   Superpowers planning context is detected during `/god-init` or
   `/god-migrate`.
 - `lib/source-sync.run` when `state.json` records enabled `source-systems`
@@ -351,7 +351,7 @@ Spawn these agents only when the trigger is direct and scope is bounded:
 - `god-automation-engineer` after the user approves provider, template,
   cadence, and scope for multi-template, write-capable, background-agent,
   scriptable-scheduler, or provider-uncertain automation setup.
-- `god-greenfieldifier` when imported GSD, BMAD, or Superpowers context has
+- `god-greenfieldifier` when imported legacy planning, BMAD, or Superpowers context has
   low confidence, conflicting systems, or missing canonical Godpowers seed
   artifacts after local import.
 - `god-greenfieldifier` when feature-awareness detects unimported or imported

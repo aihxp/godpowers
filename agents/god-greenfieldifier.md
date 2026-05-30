@@ -137,7 +137,7 @@ After approved rewrites:
 
 ## Rules
 
-- Imported GSD, Superpowers, BMAD, org context, and reconstructed artifacts are
+- Imported legacy planning, Superpowers, BMAD, org context, and reconstructed artifacts are
   evidence, not source of truth.
 - Never erase existing specific evidence to replace it with a generic
   greenfield default.

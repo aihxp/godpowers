@@ -30,6 +30,19 @@ Orchestrate the build via specialist agents.
 Spawn **god-planner** in fresh context with ROADMAP, ARCH, DECISION.
 Output: `.godpowers/build/PLAN.md` with vertical slices grouped into waves.
 
+After the planner returns, run the source-grounding preflight from
+`lib/source-grounding.js` against `.godpowers/build/PLAN.md`. The plan must
+distinguish existing files, existing symbols, new artifacts, and unchecked
+references before any executor starts.
+
+Block execution when:
+- A plan cites an existing file that does not exist.
+- A plan cites an existing symbol that cannot be found in the repo.
+- A cited reference is neither grounded nor declared as a new artifact.
+
+Allow execution only when missing references are corrected, marked as new
+artifacts, or explicitly accepted by the user as unchecked risk.
+
 ### Phase 2: Execute Waves
 
 For each wave in PLAN.md:
@@ -59,9 +72,10 @@ After all waves:
 2. Run linter. All clean.
 3. Run the package's typecheck/check command when present. All pass.
 4. If any verification command fails, do not mark Build complete. Re-enter
-   repair mode with the owning agent, pass the exact failing diagnostics, rerun
-   the command, and repeat until green or until the same root failure survives
-   3 repair attempts.
+   repair mode with the owning agent. Classify the failure as retry,
+   decompose, prune, or escalate. Pass the exact failing diagnostics, rerun the
+   command, and repeat until green or until the same root failure exhausts the
+   repair budget.
 5. Update PROGRESS.md: Build status = done
 6. If the build plan or implementation establishes durable conventions, plan
    pillar updates through `lib/pillars.planArtifactSync`. Under

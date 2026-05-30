@@ -13,7 +13,7 @@ console.log('\n  Dogfood runner behavioral tests\n');
 test('lists built-in messy-repo scenarios', () => {
   const scenarios = dogfood.listScenarios();
   const ids = scenarios.map((scenario) => scenario.id);
-  assert(ids.includes('half-migrated-gsd'));
+  assert(ids.includes('half-migrated-planning'));
   assert(ids.includes('host-degraded'));
   assert(ids.includes('host-full'));
   assert(ids.includes('extension-authoring'));

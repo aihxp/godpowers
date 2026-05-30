@@ -87,7 +87,7 @@ A command completed without a disk-derived dashboard, action brief, or
 recommended next command. Fail.
 
 ### O-09 Sync-back ambiguity
-Imported GSD, BMAD, or Superpowers context exists but the project does not say
+Imported legacy planning, BMAD, or Superpowers context exists but the project does not say
 whether managed sync-back is enabled, disabled, or not applicable. Fail.
 
 ### O-10 Host guarantees hidden

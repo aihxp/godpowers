@@ -144,7 +144,7 @@ For each artifact below, check (in parallel where possible):
 - If imported planning systems have low confidence or conflicts: recommend
   `god-greenfieldifier`.
 
-#### SOURCE SYSTEM SYNC-BACK (GSD, BMAD, Superpowers)
+#### SOURCE SYSTEM SYNC-BACK (legacy planning, BMAD, Superpowers)
 - Did migrated source-system summaries need managed sync-back?
 - Verdict: not-applicable / fresh / needs-sync-back / blocked-by-conflict
 - If conflicts exist: recommend greenfieldifier review before writes.

@@ -1,12 +1,12 @@
 {
-  "name": "Half migrated GSD project",
+  "name": "Half migrated planning project",
   "kind": "planning-migration",
   "actions": [
     "import-planning-context",
     "sync-back"
   ],
   "expectedSystems": [
-    "gsd"
+    "legacy-planning"
   ],
   "expectedFiles": [
     ".godpowers/prep/IMPORTED-CONTEXT.md",

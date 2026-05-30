@@ -50,7 +50,7 @@ User runs `/god-sync` after manual changes. Useful for:
    `lib/pillars.applyArtifactSync` under the active Pillars policy.
 7. If `state.json` contains enabled `source-systems`, auto-invoke
    `lib/source-sync.run(projectRoot)` so current Godpowers progress is written
-   back to imported GSD, BMAD, or Superpowers companion files. Report this as
+   back to imported legacy planning, BMAD, or Superpowers companion files. Report this as
    `Agent: none, local runtime only`.
 8. Spawn god-updater in fresh context with:
    - The reconciliation verdict (if available from a prior /god-reconcile)
@@ -90,7 +90,7 @@ Sync status:
   Local syncs:
     + reverse-sync: <scanned N files, updated M footers, populated K review items>
     + feature-awareness: <recorded runtime features, refreshed context, or no-op>
-    + source-sync: <written GSD/BMAD/Superpowers companion files, no-op, or skipped>
+    + source-sync: <written legacy planning/BMAD/Superpowers companion files, no-op, or skipped>
     + repo-doc-sync: <refreshed README badges/counts, recommended god-docs-writer, or no-op>
     + repo-surface-sync: <checked routes/package/agents/workflows/extensions, recommended scoped agents, or no-op>
     + route-quality-sync: <checked atomic spawns and contextual exits, no-op, or recommended god-auditor>

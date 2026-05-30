@@ -1,13 +1,13 @@
 # Planning System Migration
 
-Godpowers can detect GSD, BMAD, and Superpowers project context, migrate useful
+Godpowers can detect legacy planning, BMAD, and Superpowers project context, migrate useful
 signals into Godpowers, and write Godpowers progress back to the prior system.
 
 ## What Is Detected
 
 | System | Primary signals | Common files |
 |---|---|---|
-| GSD | `.planning/`, `.gsd/`, `GSD.md`, `gsd*.md` | `PROJECT.md`, `REQUIREMENTS.md`, `ROADMAP.md`, `STATE.md`, phase files |
+| legacy planning | `.planning/`, `.legacy-planning/`, `LEGACY-PLANNING.md`, `legacy-planning*.md` | `PROJECT.md`, `REQUIREMENTS.md`, `ROADMAP.md`, `STATE.md`, phase files |
 | BMAD | `_bmad/`, `_bmad-output/`, `.bmad-core/`, `.bmad/`, `BMAD.md` | `PRD.md`, `architecture.md`, epics, stories, `sprint-status.yaml`, `project-context.md` |
 | Superpowers | `docs/superpowers/`, `.superpowers/`, `SUPERPOWERS.md`, project-local skills | specs, plans, TDD and review skill files |
 
@@ -43,7 +43,7 @@ lib/source-sync.run(projectRoot)
 
 The sync-back writes companion files:
 
-- GSD: `.planning/GODPOWERS-SYNC.md` or `.gsd/GODPOWERS-SYNC.md`
+- legacy planning: `.planning/GODPOWERS-SYNC.md` or `.legacy-planning/GODPOWERS-SYNC.md`
 - BMAD: `_bmad-output/GODPOWERS-SYNC.md` or `.bmad/GODPOWERS-SYNC.md`
 - Superpowers: `docs/superpowers/GODPOWERS-SYNC.md` or `.superpowers/GODPOWERS-SYNC.md`
 
@@ -76,7 +76,7 @@ artifact is rewritten.
 
 ## Return Path
 
-Sync-back exists for teams that want the option to return to GSD, BMAD, or
+Sync-back exists for teams that want the option to return to legacy planning, BMAD, or
 Superpowers later. The companion file records current Godpowers progress,
 artifact headings, and the remaining decisions needed before switching systems.
 

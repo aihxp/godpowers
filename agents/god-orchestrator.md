@@ -161,7 +161,7 @@ Before each tier, check whether this repo is part of a registered suite:
 
 ## Planning-system context import
 
-During `/god-init`, scan for adjacent methodology artifacts from GSD,
+During `/god-init`, scan for adjacent methodology artifacts from legacy planning,
 Superpowers, BMAD, and similar systems. Treat them as preparation context,
 not as source of truth.
 
@@ -210,7 +210,7 @@ conflicts with user intent, state.json, PROGRESS.md, or completed Godpowers
 artifacts, the Godpowers artifact wins.
 
 Detection signals:
-- GSD: `.gsd/`, `.planning/`, `GSD.md`, `gsd*.md`
+- legacy planning: `.legacy-planning/`, `.planning/`, `LEGACY-PLANNING.md`, `legacy-planning*.md`
 - Superpowers: `.superpowers/`, `superpowers/`, `SUPERPOWERS.md`,
   `.claude/skills/`, `.codex/skills/`
 - BMAD: `.bmad-core/`, `bmad-core/`, `.bmad/`, `BMAD.md`,

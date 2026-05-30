@@ -16,7 +16,7 @@ Run deterministic messy-repo scenarios before release or after automation change
 
 - [DECISION] Use `/god-dogfood` before a release when migration, host autonomy,
   extension authoring, or Mode D suite release behavior changes.
-- [DECISION] Use `/god-dogfood` when a project already contains GSD, BMAD, or
+- [DECISION] Use `/god-dogfood` when a project already contains legacy planning, BMAD, or
   Superpowers context and you need confidence that Godpowers can import and
   sync back without deleting prior-system files.
 - [DECISION] Use `/god-dogfood` when host-spawn guarantees are unclear and the
@@ -44,7 +44,7 @@ npx godpowers dogfood --json
 
 ## Expected Coverage
 
-- [DECISION] The dogfood suite includes a half-migrated GSD project.
+- [DECISION] The dogfood suite includes a half-migrated legacy planning project.
 - [DECISION] The dogfood suite includes degraded and full host capability
   scenarios.
 - [DECISION] The dogfood suite includes extension scaffold validation.

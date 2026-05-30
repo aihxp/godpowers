@@ -1,11 +1,12 @@
-# Godpowers 2.2.1 Release
+# Godpowers 2.3.0 Release
 
 > Status: Ready for release
 > Date: 2026-05-30
 
-Godpowers 2.2.1 is a patch release for the 2.2 deliverable-progress line. It
-keeps the public slash-command surface stable and fixes ledger persistence,
-idempotence, and release-state reconciliation.
+Godpowers 2.3.0 is an accountability-hardening release for the 2.x line. It
+keeps the public slash-command surface stable while strengthening planning
+grounding, package legitimacy, install profiles, atomic persistence, and
+executor recovery.
 
 ## What's in this release
 
@@ -16,15 +17,18 @@ idempotence, and release-state reconciliation.
 
 ## Highlights
 
-- `.godpowers/REQUIREMENTS.md` no longer rewrites on timestamp-only no-op
-  regenerations, and the generated ledger no longer carries an extra blank line
-  at EOF.
-- `lib/reverse-sync.js` now persists deliverable summaries into
-  `state.json.deliverables`, matching the documented `/god-sync` behavior.
-- The Godpowers self-ledger now reports the shipped deliverable-progress feature
-  as done across roadmap, requirements ledger, and state cache.
-- Regression tests cover no-op ledger writes, state-cache persistence, and
-  no-op reverse-sync stability.
+- Source-grounded planning records existing files, existing symbols, planned new
+  artifacts, and unchecked references before build execution.
+- Package legitimacy checks give stack and dependency decisions a concrete npm
+  evidence gate before recommending package-backed choices.
+- Installer profiles let users install a smaller role-based command surface
+  with `--profile=<name>` or `--minimal`.
+- Atomic write helpers now protect core state and ledger writes from partial
+  file updates.
+- Executor repair classification names whether a failed attempt should retry,
+  decompose, prune, or escalate.
+- Public migration language now uses neutral legacy-planning terminology so
+  Godpowers is not confused with external workflow products.
 
 ## Validation
 
@@ -34,14 +38,14 @@ idempotence, and release-state reconciliation.
 
 ## Upgrade
 
-- `npm install -g godpowers@2.2.1` or `npx godpowers@2.2.1`
+- `npm install -g godpowers@2.3.0` or `npx godpowers@2.3.0`
 - Re-run `/god-context` in each project to refresh installed runtime metadata
-- No breaking changes; existing `.godpowers/` state is compatible. Projects gain
-  a `REQUIREMENTS.md` ledger the next time `/god-progress` or `/god-sync` runs.
+- No breaking changes; existing `.godpowers/` state is compatible. Users who
+  want a compact install can run `npx godpowers --profile=core`.
 
 ## Notes
 
-- GitHub release creation for `v2.2.1`
+- GitHub release creation for `v2.3.0`
 - The tag should match the npm package version
-- The `v2.2.1` tag should point to the release commit that matches the npm
-  `godpowers@2.2.1` package.
+- The `v2.3.0` tag should point to the release commit that matches the npm
+  `godpowers@2.3.0` package.

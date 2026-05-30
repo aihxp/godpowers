@@ -20,7 +20,7 @@
 
 ## Shipped Scenarios
 
-- [DECISION] `half-migrated-gsd` verifies GSD detection, imported prep
+- [DECISION] `half-migrated-planning` verifies legacy planning detection, imported prep
   context, PRD seed creation, and managed sync-back.
 - [DECISION] `host-degraded` verifies that Godpowers reports degraded runtime
   guarantees when fresh-context agent metadata is absent.

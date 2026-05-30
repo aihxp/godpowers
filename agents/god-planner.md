@@ -35,6 +35,12 @@ Plan the build.
    - **Slice name**: user-visible behavior
    - **Requirements**: the PRD requirement ids this slice delivers (so the
      executor can annotate the code and the deliverable ledger can trace it)
+   - **Source grounding**:
+     - Existing files this slice depends on
+     - Existing symbols, functions, classes, routes, commands, or APIs this
+       slice depends on
+     - New artifacts this slice will create
+     - Unchecked references that need human acceptance before execution
    - **Files to create/modify**: exact paths
    - **Tests to write FIRST**: with expected behavior
    - **Implementation steps**: ordered
@@ -55,6 +61,11 @@ Write `.godpowers/build/PLAN.md`:
 ## Wave 1 (parallel)
 ### Slice 1.1: User can create an account
 - Requirements: P-MUST-01
+- Source grounding:
+  - Existing files: src/auth/index.ts
+  - Existing symbols: createSession
+  - New artifacts: src/auth/signup.ts, src/auth/signup.test.ts
+  - Unchecked references: none
 - Files: src/auth/signup.ts, src/auth/signup.test.ts, src/db/users.ts
 - Tests first:
   - signup_creates_user_record
@@ -76,6 +87,9 @@ Write `.godpowers/build/PLAN.md`:
 - `.godpowers/build/PLAN.md` exists
 - Every slice has tests-first sequence
 - Every slice names the PRD requirement ids it delivers
+- Every slice separates existing references from new artifacts
+- Every existing reference is grounded by `lib/source-grounding.js` before
+  execution
 - Every member requirement id of the increment is covered by at least one slice
 - Every slice has verification criteria
 - Dependencies are explicit

@@ -17,7 +17,7 @@ prerequisites:
     - check: file:.godpowers/prep/INITIAL-FINDINGS.md
       reason: "Initial findings can show UI and product-experience signals"
     - check: file:.godpowers/prep/IMPORTED-CONTEXT.md
-      reason: "Imported GSD, Superpowers, or BMAD context can inform design hypotheses"
+      reason: "Imported legacy planning, Superpowers, or BMAD context can inform design hypotheses"
     - check: file:.godpowers/arch/ARCH.md
       reason: "ARCH names the UI surface that DESIGN applies to"
     - check: file:.godpowers/stack/DECISION.md

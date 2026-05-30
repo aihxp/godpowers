@@ -6,7 +6,7 @@
 
 ## Sources Detected
 
-- [DECISION] Source system: [GSD / Superpowers / BMAD / other].
+- [DECISION] Source system: [legacy planning / Superpowers / BMAD / other].
 - [DECISION] Source path: [relative path].
 - [DECISION] Managed sync-back path: [relative path or "not enabled"].
 - [HYPOTHESIS] Useful signal: [what this source appears to clarify].

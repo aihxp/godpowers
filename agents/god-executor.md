@@ -22,6 +22,8 @@ You receive:
 - The slice's dependencies (what must already exist)
 - Optional repair payload: failing command, error counts, focused diagnostics,
   and files implicated by a previous verification run
+- Optional source-grounding report: pass/fail status for existing files and
+  symbols cited by the slice plan
 
 ## TDD Sequence (mandatory)
 
@@ -73,6 +75,14 @@ requirement as "not started" even after you ship it.
 - **Unrelated cleanup**: VIOLATION. Do not reformat, rename, refactor, or
   delete adjacent code that is not required for this slice. Mention it as a
   follow-up instead.
+- **Ungrounded existing references**: VIOLATION. Do not implement against a
+  file, symbol, route, or API that the source-grounding preflight failed to
+  locate unless the plan explicitly declares it as a new artifact or the user
+  accepted it as unchecked risk.
+- **Unverified new dependency**: VIOLATION. Before installing or adding a new
+  third-party package, run the package legitimacy gate from
+  `lib/package-legitimacy.js` or record why network verification was unavailable
+  and who accepted the risk.
 
 ## Request Trace Discipline
 
@@ -122,8 +132,15 @@ happen.
 
 ## Repair Mode
 
-If invoked with a repair payload, stay narrowly focused on the failing command.
-Do not reopen PRD, ARCH, roadmap, or stack unless the diagnostic proves the
-artifact is stale. Fix code, config, imports, tests, generated types, or
-tooling until the command passes. If the same root failure survives 3 focused
-attempts, return the smallest human-only question needed to continue.
+If invoked with a repair payload, classify the failure before editing:
+
+| Strategy | Use when | Action |
+|---|---|---|
+| retry | The approach is right but a command, import, path, dependency, timeout, or environment failed | Make one focused adjustment and rerun the exact verification |
+| decompose | The task is too broad or the done criteria combines multiple outcomes | Split into at most 3 smaller verified steps for this run |
+| prune | A task is infeasible in this slice because a prerequisite is missing or out of scope | Skip only with a recorded reason and a downstream review marker |
+| escalate | The repair budget is exhausted or the fix changes architecture, product behavior, or user intent | Stop and return the smallest human-only decision needed |
+
+Log every repair decision in the slice closeout as
+`[Executor Repair - STRATEGY] task: reason`. Do not reopen PRD, ARCH, roadmap,
+or stack unless the diagnostic proves the artifact is stale.

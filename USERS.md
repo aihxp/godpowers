@@ -1,13 +1,12 @@
 # Users and Community
 
-Godpowers is at v2.2.1. Stable release.
+Godpowers is at v2.3.0. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. The 2.2 line adds
-deliverable progress tracking on top of the executable proof path, and 2.2.1
-stabilizes the ledger and reverse-sync cache. Real users will reveal which gaps
-actually matter.
+Currently zero recorded production users. Be honest. The 2.3 line adds
+accountability hardening on top of the executable proof path and deliverable
+progress tracking. Real users will reveal which gaps actually matter.
 
 ## Proof needed during freeze
 

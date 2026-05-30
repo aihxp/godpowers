@@ -57,6 +57,14 @@ Answer each with EVIDENCE from the code:
    - A planned requirement id with no annotation is a finding, because the
      deliverable ledger derives requirement status from those annotations.
 
+7. **Did the implementation honor source grounding and package legitimacy?**
+   - Did every existing file or symbol cited by the slice plan exist before
+     execution?
+   - Did new files appear only under the plan's new artifacts or expected file
+     list?
+   - If the slice added a dependency, is there package legitimacy evidence or
+     an explicit accepted-risk note?
+
 ## Output
 
 Return verdict to orchestrator:
@@ -83,6 +91,8 @@ Return verdict to orchestrator:
 - Every touched file has request-trace evidence
 - No speculative flexibility or unrelated cleanup entered the diff
 - Every planned requirement id carries its `// Implements: P-...` annotation
+- Source-grounding failures are resolved or explicitly accepted
+- New dependencies have legitimacy evidence or accepted-risk notes
 
 If FAIL: orchestrator returns the slice to god-executor with the failures.
 If PASS: orchestrator spawns god-quality-reviewer next.

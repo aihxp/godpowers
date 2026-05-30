@@ -24,7 +24,7 @@
 ## Methodology And AI Tool Signals
 
 - [HYPOTHESIS] AI instruction files found: [paths or "none detected"].
-- [HYPOTHESIS] GSD context found: [paths or "none detected"].
+- [HYPOTHESIS] Legacy planning context found: [paths or "none detected"].
 - [HYPOTHESIS] Superpowers context found: [paths or "none detected"].
 - [HYPOTHESIS] BMAD context found: [paths or "none detected"].
 - [HYPOTHESIS] Pillars context health: [present / partial / initialized].
@@ -56,6 +56,6 @@
 - [DECISION] Downstream agents may use this artifact as preparation context only.
 - [DECISION] If this artifact conflicts with `.godpowers/intent.yaml`, `.godpowers/state.json`, `PROGRESS.md`, or a completed Godpowers artifact, the Godpowers artifact wins.
 - [DECISION] Pillars files under `agents/*.md` are the native project context layer for Godpowers commands.
-- [DECISION] Imported GSD, Superpowers, and BMAD signals must be converted into Godpowers-native artifacts, not preserved as parallel state.
+- [DECISION] Imported legacy planning, Superpowers, and BMAD signals must be converted into Godpowers-native artifacts, not preserved as parallel state.
 - [DECISION] Managed sync-back files may be written only by Godpowers-owned fences or companion paths.
 - [DECISION] Host capability and dogfood findings inform routing, but completed Godpowers artifacts remain authoritative.

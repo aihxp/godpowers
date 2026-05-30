@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-05-30
+
+### Added
+- Added source-grounded planning helpers so build plans can name existing files,
+  existing symbols, planned new artifacts, and unchecked references before
+  execution begins.
+- Added package legitimacy checks for package-backed stack and dependency
+  replacement decisions, covering npm existence, typo risk, staleness, and
+  repository metadata.
+- Added role-based installer profiles (`core`, `builder`, `maintainer`,
+  `suite`, and `full`) plus `--minimal` as a compact alias for the core
+  surface.
+- Added atomic file-write helpers and wired them into state, checkpoint,
+  requirements, linkage, source-sync, reverse-sync, and async filesystem
+  persistence paths.
+- Added executor repair classification for retry, decomposition, pruning, and
+  escalation so failed implementation attempts leave clearer next actions.
+
+### Changed
+- Debranded legacy planning-system wording across public docs, runtime
+  detection, fixtures, tests, and sync-back surfaces to keep Godpowers distinct
+  from external workflow products.
+- Build, executor, planner, spec-reviewer, stack-selector, and dependency
+  auditor contracts now require source grounding or package legitimacy evidence
+  where those checks apply.
+
 ## [2.2.1] - 2026-05-30
 
 ### Fixed
@@ -323,7 +349,7 @@ Dogfooding, host guarantees, extension authoring, and suite release dry-runs.
 ### Added
 - Added `lib/dogfood-runner.js`, `/god-dogfood`, and `npx godpowers dogfood`
   for deterministic messy-repo dogfood scenarios.
-- Added `fixtures/dogfood/` scenarios for half-migrated GSD import,
+- Added `fixtures/dogfood/` scenarios for half-migrated legacy planning import,
   degraded and full host guarantees, extension scaffolding, and Mode D suite
   release dry-run planning.
 - Added `lib/host-capabilities.js` and dashboard host guarantee reporting for
@@ -499,7 +525,7 @@ Feature awareness for existing Godpowers projects.
 Planning-system migration and sync-back.
 
 ### Added
-- Added `lib/planning-systems.js` to detect GSD, BMAD, and Superpowers
+- Added `lib/planning-systems.js` to detect legacy planning, BMAD, and Superpowers
   planning context and convert useful signals into Godpowers prep and seed
   artifacts.
 - Added `lib/source-sync.js` to write current Godpowers progress back into
@@ -509,11 +535,11 @@ Planning-system migration and sync-back.
   ambiguous.
 - Added `docs/planning-system-migration.md` with detection signals, import
   mapping, sync-back destinations, conflict rules, and return-path guidance.
-- Added behavioral tests for GSD, BMAD, Superpowers, imported seed artifacts,
+- Added behavioral tests for legacy planning, BMAD, Superpowers, imported seed artifacts,
   state recording, and idempotent sync-back.
 
 ### Changed
-- `/god-init` now auto-invokes planning-system import when GSD, BMAD, or
+- `/god-init` now auto-invokes planning-system import when legacy planning, BMAD, or
   Superpowers evidence is detected.
 - `/god-sync` now auto-invokes source-system sync-back when `state.json`
   records enabled source systems.
@@ -708,7 +734,7 @@ of leaving the user to infer the next action.
   `/god-roadmap-check`.
 
 ### Changed
-- Proposal-style outputs now mirror the clearer GSD pattern: implement a small
+- Proposal-style outputs now mirror the clearer legacy planning pattern: implement a small
   slice, implement the full route, discuss more, inspect status, or run
   `/god-mode` only when that is safe.
 - `/god-next` and `/god-status` now explicitly distinguish partial progress,
@@ -1234,7 +1260,7 @@ routing, or the full autonomous arc starts.
 ### Documented
 - The full recent init preparation flow is now documented together:
   automatic AI-tool context for explicit `god init`, quiet context writes,
-  GSD / Superpowers / BMAD import into `IMPORTED-CONTEXT.md`, and direct
+  legacy planning / Superpowers / BMAD import into `IMPORTED-CONTEXT.md`, and direct
   Godpowers repo findings in `INITIAL-FINDINGS.md`.
 
 ## [0.15.7] - 2026-05-11
@@ -1243,7 +1269,7 @@ Planning import release. Lets `/god-init` preserve useful context from nearby
 planning systems without making those systems authoritative.
 
 ### Added
-- `/god-init` now detects GSD, Superpowers, BMAD, and similar planning context
+- `/god-init` now detects legacy planning, Superpowers, BMAD, and similar planning context
   during project preparation.
 - Added `.godpowers/prep/IMPORTED-CONTEXT.md` as a non-authoritative
   preparation artifact for imported product, delivery, architecture, and stack

@@ -250,7 +250,7 @@ Mode: [brownfield | bluefield]
 - This audit does not rewrite artifacts.
 - This audit must be followed by `god-greenfieldifier` in brownfield and
   bluefield workflows when the user wants the audit acted on.
-- This audit does not treat imported GSD, Superpowers, BMAD, or org context as
+- This audit does not treat imported legacy planning, Superpowers, BMAD, or org context as
   source of truth.
 - This audit does not block the project run unless it finds a Critical security or
   impossible planning contradiction.

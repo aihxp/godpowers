@@ -97,7 +97,7 @@ Skip `/god-mode` and run individual commands:
 ```
 
 After `/god-init`, Godpowers writes `.godpowers/prep/INITIAL-FINDINGS.md` with
-what it found in the codebase. If it detects GSD, Superpowers, BMAD, or similar
+what it found in the codebase. If it detects legacy planning, Superpowers, BMAD, or similar
 planning context, it also writes `.godpowers/prep/IMPORTED-CONTEXT.md` as
 supporting preparation material for PRD, architecture, roadmap, and stack
 decisions.

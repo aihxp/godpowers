@@ -174,7 +174,7 @@ After feature work, every artifact that was impacted needs to reflect reality.
 
 ### Source-system sync-back
 - Call `lib/source-sync.run(projectRoot)` when `.godpowers/state.json`
-  declares GSD, BMAD, Superpowers, or other source-system records.
+  declares legacy planning, BMAD, Superpowers, or other source-system records.
 - Write only managed Godpowers summary sections back to source systems.
 - Preserve user-authored source-system content outside managed sections.
 - If source-system confidence is low or conflicts are present, recommend

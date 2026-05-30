@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.2.1
+> Current shipped: v2.3.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.2.1)
+### Current surface (v2.3.0)
 
 What works today:
 - **111 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -44,7 +44,7 @@ What works today:
   godpowers@latest` checks quick proof, status, next, Claude install, and
   Codex metadata install against the registry artifact.
 - **Messy-repo dogfooding**: `/god-dogfood` and `npx godpowers dogfood` run
-  fixture scenarios for GSD migration, sync-back, host capabilities, extension
+  fixture scenarios for legacy planning migration, sync-back, host capabilities, extension
   authoring, and Mode D suite release dry-runs.
 - **Automation provider detection**: `lib/automation-providers.js` powers
   `/god-automation-status`, `/god-automation-setup`,
@@ -60,9 +60,12 @@ What works today:
   root-doc, docs, agent, skill, route, workflow, schema, template, reference,
   hook, runtime, script, test, fixture, GitHub workflow, package, registry,
   release, and install surface is checked.
-- **Planning-system migration**: `/god-init` and `/god-migrate` detect GSD,
+- **Planning-system migration**: `/god-init` and `/god-migrate` detect legacy planning,
   BMAD, and Superpowers, import prep context and seed artifacts, and
   `/god-sync` writes managed sync-back companion files.
+- **Accountability hardening**: source-grounded planning, role-based install
+  profiles, package legitimacy checks, atomic artifact writes, and executor
+  repair classification strengthen proof before and after implementation.
 - **Feature awareness**: existing `.godpowers` projects record the current
   runtime feature set and refresh AI-tool context after upgrades.
 - **Repo documentation sync**: README badges, public surface counts, release

@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.2.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -21,14 +21,12 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.2.1 keeps the proof loop executable. `npx godpowers quick-proof
---project=.` now renders a shipped fixture with real `.godpowers/state.json`,
-computed next action, missing-artifact visibility, and host guarantees. The
-2.0 line also ships a proof transcript, adoption canary harness, published npm
-install verifier, package checks that require the proof fixture to ship, and
-request-trace review guardrails for narrower implementation diffs. The 2.0.2
-release also hardens the dependency-free YAML subset, route file checks,
-installer file copying, and maintainer release gates.
+Version 2.3.0 keeps the proof loop executable and adds accountability
+hardening. Build plans can now be checked against real repository files and
+symbols before execution, package-backed stack choices can be screened for
+legitimacy, core ledger writes use atomic persistence, installer profiles let
+teams choose a smaller command surface, and failed executor attempts leave a
+clear repair classification.
 
 Maintainer hardening continues on the 2.x line without expanding the public
 command surface. The 2.1.0 patch closes a command-injection vector in the
@@ -78,6 +76,8 @@ should prove:
 - Planning artifacts, code changes, reviews, and launch checks can be inspected.
 - Host guarantees are explicit, including degraded or simulated agent behavior.
 - Release confidence covers tests, package contents, install surfaces, and docs.
+- Build plans cite real files and symbols before execution starts.
+- New dependencies have registry and legitimacy evidence before they enter the stack.
 
 ## Install
 
@@ -95,6 +95,19 @@ The installer copies:
 - Specialist agents to `<runtime>/agents/`
 - Codex agent metadata to `<runtime>/agents/*.toml`
 - SessionStart hook (Claude Code only) to `<runtime>/hooks/`
+
+Installer profiles keep the visible command surface calm:
+
+```bash
+npx godpowers --claude --global --profile=core
+npx godpowers --codex --local --profile=builder
+npx godpowers --all --profile=maintainer
+```
+
+Profiles are `core`, `builder`, `maintainer`, `suite`, and `full`. `full`
+preserves the complete command surface, while the smaller profiles install the
+commands most relevant to the role. `--minimal` is an alias for
+`--profile=core`.
 
 Agent spawning is host-native. Claude uses its native agent/task interface,
 Codex uses installed `agents/*.toml` metadata backed by the same Markdown agent
@@ -240,7 +253,7 @@ extension files, with parser coverage in `scripts/test-yaml-parser.js`.
 | `/god-automation-status` | Show host automation provider support | (built-in) |
 | `/god-automation-setup` | Prepare opt-in automation setup | (built-in) |
 | `/god-dogfood` | Run messy-repo dogfood scenarios for release and autonomy readiness | (built-in) |
-| `/god-migrate` | Detect GSD, BMAD, and Superpowers context; import and sync back | god-greenfieldifier when needed |
+| `/god-migrate` | Detect legacy planning, BMAD, and Superpowers context; import and sync back | god-greenfieldifier when needed |
 | `/god-preflight` | Read-only intake audit before project-run readiness and pillars | god-auditor |
 | `/god-audit` | Score artifacts against have-nots | god-auditor |
 | `/god-debug` | 4-phase systematic debug | god-debugger |
@@ -327,7 +340,7 @@ Godpowers can dogfood itself against shipped messy-repo fixtures:
 npx godpowers dogfood
 ```
 
-The dogfood suite covers a half-migrated GSD project, full and degraded host
+The dogfood suite covers a half-migrated legacy planning project, full and degraded host
 guarantee detection, extension scaffold validation, and a Mode D suite release
 dry-run. `/god-dogfood` reports failures with scoped specialist ownership
 rather than treating fixture checks as silent background work.
@@ -343,7 +356,7 @@ Godpowers can migrate from adjacent planning systems:
 /god-migrate
 ```
 
-This detects GSD `.planning/` or `.gsd/`, BMAD `_bmad-output/` or `.bmad/`,
+This detects legacy planning `.planning/` or `.legacy-planning/`, BMAD `_bmad-output/` or `.bmad/`,
 and Superpowers specs or plans. It writes
 `.godpowers/prep/IMPORTED-CONTEXT.md`, optional imported seed artifacts, and
 managed sync-back files such as `.planning/GODPOWERS-SYNC.md`,

@@ -34,8 +34,10 @@ The agent:
 1. Runs the appropriate audit tool for the stack (`npm audit`, `pip-audit`,
    etc.)
 2. Lists outdated and stale dependencies
-3. Classifies each: Critical CVE / Stale / Major behind / Minor behind / OK
-4. Writes AUDIT.md
+3. Runs package legitimacy checks for new replacement candidates before
+   recommending them
+4. Classifies each: Critical CVE / Stale / Major behind / Minor behind / OK
+5. Writes AUDIT.md
 
 ### Phase 2: Triage
 The agent presents the audit. Priority order:

@@ -36,7 +36,7 @@ If `.godpowers/prep/INITIAL-FINDINGS.md` exists, read it first for repo risks,
 existing tests, docs, CI, deploy, and suggested sequencing implications.
 
 If `.godpowers/prep/IMPORTED-CONTEXT.md` exists, read its delivery signals
-before sequencing work. Use imported GSD, Superpowers, BMAD, or similar
+before sequencing work. Use imported legacy planning, Superpowers, BMAD, or similar
 stories and plans as hypothesis-level input only. Convert imported terminology
 into Godpowers vocabulary. Do not preserve imported methodology terminology in
 Godpowers artifacts unless the user explicitly asked for it.

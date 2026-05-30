@@ -42,7 +42,7 @@ const REQUIRED_FILES = [
   'routing/god-mode.yaml',
   'routing/god-dogfood.yaml',
   'routing/god-export-otel.yaml',
-  'fixtures/dogfood/half-migrated-gsd/manifest.json',
+  'fixtures/dogfood/half-migrated-planning/manifest.json',
   'fixtures/dogfood/host-full/manifest.json',
   'fixtures/dogfood/extension-authoring/manifest.json',
   'fixtures/dogfood/suite-release-dry-run/manifest.json',

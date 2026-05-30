@@ -108,7 +108,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "enum": ["gsd", "bmad", "superpowers", "other"]
+            "enum": ["legacy-planning", "bmad", "superpowers", "other"]
           },
           "name": { "type": "string" },
           "confidence": {

@@ -50,7 +50,7 @@ GODPOWERS DOCTOR
 Install: claude (~/.claude/)
   [OK] 111 skills installed
   [OK] 40 agents installed
-  [OK] VERSION matches (2.2.1)
+  [OK] VERSION matches (2.3.0)
   [WARN] routing/god-doctor.yaml exists but skill file did not until now
 
 Project: /Users/.../my-project/.godpowers/
@@ -106,7 +106,7 @@ as a read-only diagnostic. It reports:
 - runtime version recorded in `state.json`
 - missing current Godpowers feature IDs
 - missing managed AI-tool context fences
-- unimported GSD, BMAD, or Superpowers evidence that should route to
+- unimported legacy planning, BMAD, or Superpowers evidence that should route to
   `/god-migrate`
 - `god-greenfieldifier` recommendation when migration evidence is low
   confidence or conflicting

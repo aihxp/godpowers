@@ -2,7 +2,7 @@ apiVersion: godpowers/v1
 kind: CommandRouting
 metadata:
   command: /god-migrate
-  description: Detect and migrate GSD, BMAD, and Superpowers planning context
+  description: Detect and migrate legacy planning, BMAD, and Superpowers planning context
   tier: 0
 
 prerequisites:
@@ -16,7 +16,7 @@ execution:
   context: current
   reads:
     - .planning/**
-    - .gsd/**
+    - .legacy-planning/**
     - _bmad-output/**
     - .bmad/**
     - docs/superpowers/**
@@ -29,7 +29,7 @@ execution:
     - .godpowers/build/STATE.md
     - .godpowers/state.json
     - .planning/GODPOWERS-SYNC.md
-    - .gsd/GODPOWERS-SYNC.md
+    - .legacy-planning/GODPOWERS-SYNC.md
     - _bmad-output/GODPOWERS-SYNC.md
     - .bmad/GODPOWERS-SYNC.md
     - docs/superpowers/GODPOWERS-SYNC.md

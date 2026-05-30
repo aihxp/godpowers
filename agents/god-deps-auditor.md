@@ -31,6 +31,15 @@ For each dependency, classify:
 - **Minor behind**: only minor/patch updates available
 - **Up to date**: no action needed
 
+For each new replacement candidate, run the package legitimacy gate before
+recommending it:
+- Registry existence
+- Package age and recent publish signal
+- Repository URL
+- Maintainer or ownership signal when visible
+- Typo-squat similarity to better-known packages
+- Known vulnerability status where available
+
 ### 2. Triage
 
 Priority order:
@@ -109,3 +118,5 @@ Deps audit FAILS if:
 - Changelog not consulted (so breaking changes unknown)
 - Lockfile not committed alongside package.json
 - Bulk update without per-package commits (loses bisect-ability)
+- Replacement package recommended without legitimacy evidence or accepted-risk
+  note

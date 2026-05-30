@@ -18,7 +18,7 @@
 - Some `.godpowers/<tier>/<artifact>` files already exist
 - OR existing codebase signals: package.json, Dockerfile, .github/workflows
 - User describes an existing project they want to add Godpowers to
-- GSD, BMAD, or Superpowers planning context is detected and should be imported
+- legacy planning, BMAD, or Superpowers planning context is detected and should be imported
   into Godpowers preparation artifacts
 
 **Behavior**:
@@ -33,7 +33,7 @@ Codebase signals (for inferring partial completion):
 - `.github/workflows/` or `.gitlab-ci.yml` exists -> CI present
 - `tests/` or `*.test.*` files exist -> Build tier in progress
 - `Dockerfile` + deploy config -> Deploy tier may be done
-- `.planning/`, `.gsd/`, `_bmad-output/`, `.bmad/`, or Superpowers specs ->
+- `.planning/`, `.legacy-planning/`, `_bmad-output/`, `.bmad/`, or Superpowers specs ->
   source-system import and managed sync-back may be needed
 
 ## Mode C: Audit

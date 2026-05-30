@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.2.1.
+Complete command, agent, and artifact reference for v2.3.0.
 
 ## Slash commands (111 total)
 
@@ -11,7 +11,7 @@ Complete command, agent, and artifact reference for v2.2.1.
 - `/god-progress` - Deliverable progress: which requirements and roadmap increments are done, in progress, or not started. Refreshes `.godpowers/REQUIREMENTS.md`.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
-- `/god-migrate` - Detect GSD, BMAD, and Superpowers context, import seeds, and sync back progress.
+- `/god-migrate` - Detect legacy planning, BMAD, and Superpowers context, import seeds, and sync back progress.
 - `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
 ### Installer CLI helpers
@@ -24,6 +24,8 @@ Complete command, agent, and artifact reference for v2.2.1.
 - `godpowers extension-scaffold --name=@scope/pack --output=.` - Create a publishable extension pack skeleton.
 - `godpowers status --project . --brief` - Render only the action brief, host guarantee, status, and next route.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
+- `npx godpowers --profile=core|builder|maintainer|suite|full` - Install a smaller role-specific slash-command surface.
+- `npx godpowers --minimal` - Install the `core` profile.
 
 Dashboard status uses workflow progress from `.godpowers/state.json` tracked
 steps. Audit, hygiene, remediation, and launch-readiness scores are separate
@@ -273,7 +275,7 @@ available.
   state.json               Project state
   links/                   Requirement-to-code linkage map
   prep/INITIAL-FINDINGS.md Godpowers init scan and suggested next rationale
-  prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
+  prep/IMPORTED-CONTEXT.md Optional legacy planning / Superpowers / BMAD preparation context
 
   prd/PRD.md               Product Requirements
   domain/GLOSSARY.md       Domain vocabulary and resolved ambiguities

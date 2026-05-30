@@ -31,17 +31,17 @@ function mkProject() {
 
 console.log('\n  Planning-system migration tests\n');
 
-test('detect finds GSD .planning artifacts', () => {
+test('detect finds legacy planning .planning artifacts', () => {
   const tmp = mkProject();
   write(path.join(tmp, '.planning', 'PROJECT.md'), '# Project\n\n## Users\n');
   write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Functional Requirements\n');
   write(path.join(tmp, '.planning', 'ROADMAP.md'), '# Roadmap\n\n## Phase 1\n');
 
   const result = planningSystems.detect(tmp);
-  const gsd = result.systems.find((system) => system.id === 'gsd');
-  assert(gsd, 'GSD not detected');
-  assert(gsd.files.some((file) => file.path === '.planning/REQUIREMENTS.md'), 'requirements missing');
-  assert(gsd.confidence === 'high', `unexpected confidence: ${gsd.confidence}`);
+  const legacyPlanning = result.systems.find((system) => system.id === 'legacy-planning');
+  assert(legacyPlanning, 'legacy planning not detected');
+  assert(legacyPlanning.files.some((file) => file.path === '.planning/REQUIREMENTS.md'), 'requirements missing');
+  assert(legacyPlanning.confidence === 'high', `unexpected confidence: ${legacyPlanning.confidence}`);
 });
 
 test('detect finds BMAD v6 output artifacts', () => {
@@ -78,7 +78,7 @@ test('importPlanningContext writes prep context and Godpowers seed artifacts', (
   assert(result.writtenArtifacts.includes('roadmap/ROADMAP.md'), 'roadmap seed not written');
 
   const imported = fs.readFileSync(path.join(tmp, '.godpowers', 'prep', 'IMPORTED-CONTEXT.md'), 'utf8');
-  assert(imported.includes('[DECISION] Source system: GSD.'), 'source not documented');
+  assert(imported.includes('[DECISION] Source system: legacy planning.'), 'source not documented');
   assert(imported.includes('[HYPOTHESIS]'), 'hypothesis labels missing');
 
   const nextState = state.read(tmp);
@@ -98,7 +98,7 @@ test('importPlanningContext preserves existing Godpowers artifacts by default', 
 
 test('sourceSync writes companion file and preserves existing STATE.md prose', () => {
   const tmp = mkProject();
-  write(path.join(tmp, '.planning', 'STATE.md'), '# GSD State\n\nNative state stays here.\n');
+  write(path.join(tmp, '.planning', 'STATE.md'), '# legacy planning State\n\nNative state stays here.\n');
   write(path.join(tmp, '.planning', 'REQUIREMENTS.md'), '# Requirements\n\n## Login\n');
   planningSystems.importPlanningContext(tmp);
 

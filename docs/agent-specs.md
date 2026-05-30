@@ -35,7 +35,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-mode`, `/god-init` (delegated), `/god-mode --yolo` |
-| **Inputs** | User intent, `.godpowers/state.json`, `.godpowers/PROGRESS.md`, optional `.godpowers/intent.yaml`, optional GSD / Superpowers / BMAD context |
+| **Inputs** | User intent, `.godpowers/state.json`, `.godpowers/PROGRESS.md`, optional `.godpowers/intent.yaml`, optional legacy planning / Superpowers / BMAD context |
 | **Outputs** | `.godpowers/state.json` (mode + scale), `.godpowers/PROGRESS.md`, `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md` |
 | **Downstream consumers** | All other agents read state.json |
 | **Artifact awareness** | All 14 artifact categories (it routes to specialists) |
