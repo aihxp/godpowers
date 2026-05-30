@@ -57,6 +57,12 @@ Your job: would you ship this code in production?
 - Any follow-up cleanup is reported separately instead of being smuggled into
   the diff
 
+### 7. Requirement Traceability
+- Code that delivers a planned PRD requirement bears an accurate
+  `// Implements: P-...` annotation
+- Flag missing or inaccurate annotations: the deliverable ledger derives
+  requirement status from them, so a gap here understates delivered work
+
 ## Output
 
 Return verdict to orchestrator:
@@ -71,6 +77,7 @@ Return verdict to orchestrator:
 - [PASS/FAIL] Performance: [evidence]
 - [PASS/FAIL] Maintainability: [evidence]
 - [PASS/FAIL] Simplicity and surgicality: [evidence]
+- [PASS/FAIL] Requirement traceability: [evidence]
 
 ### Verdict: PASS / FAIL
 
@@ -79,7 +86,7 @@ Return verdict to orchestrator:
 
 ## Pass Criteria
 
-ALL six dimensions must PASS. Any FAIL blocks the commit.
+ALL seven dimensions must PASS. Any FAIL blocks the commit.
 
 If FAIL: orchestrator returns the slice to god-executor.
 If PASS: orchestrator commits the slice atomically.

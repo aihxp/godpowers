@@ -41,6 +41,7 @@ GODPOWERS LOCATE
 Project: <name>  Mode: <A/B/C/E>  Suite: <yes/no>
 Lifecycle: <phase>  Current: <tier>/<substep>
 Progress: <pct>% (<complete> of <total> steps complete; current step <n> of <total>)
+Deliverables: <done>/<total> requirements done (state.json cache; full list in .godpowers/REQUIREMENTS.md)
 
 Last action: <name> by <actor> at <ts>
 Last user instruction: <if available>

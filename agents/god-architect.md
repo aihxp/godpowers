@@ -97,6 +97,9 @@ ADRs to `.godpowers/arch/adr/`.
    - Consequences (what this makes easier/harder)
 
 4. **NFR-to-Architecture Map** - every PRD NFR maps to an architectural choice.
+   Where a decision serves a specific PRD functional requirement, reference its
+   id (P-MUST-NN / P-SHOULD-NN / P-COULD-NN) so the rationale traces back to the
+   requirement it supports.
 
 5. **Trust Boundaries** - every external integration has a boundary. Auth/authz
    model documented. Data classification (sensitive vs public).

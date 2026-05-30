@@ -43,7 +43,16 @@ When a planned milestone is no longer needed:
 - Mark superseded with reason
 - Don't silently delete; preserve history
 
-### 5. Re-validate
+### 5. Preserve increment ids and fields
+When editing any increment, keep its structured fields intact:
+- Keep the increment id (`M-<slug>`) stable; never renumber or reassign it.
+- Preserve and update the `**Status**:` field (pending/building/done) to match
+  reality; do not drop it.
+- Preserve and update the `**Features (from PRD)**:` requirement-id list; do not
+  drop it. Add ids when an increment gains a requirement; never silently remove
+  shipped ones.
+
+### 6. Re-validate
 
 After any update, re-check roadmap have-nots:
 - R-01: milestone goal substitution-tested
@@ -60,6 +69,12 @@ Updated `.godpowers/roadmap/ROADMAP.md` with:
 - Diff annotations: what was added, removed, moved
 - Updated dates
 - Re-validated have-nots
+- Increment ids, `**Status**:` fields, and `**Features (from PRD)**:` lists
+  preserved
+
+After updating, the deliverable ledger can be refreshed via
+`lib/requirements.writeLedger(projectRoot)` (or `/god-progress`) so
+`.godpowers/REQUIREMENTS.md` reflects the roadmap changes.
 
 Append a `## Changelog` section at the bottom:
 

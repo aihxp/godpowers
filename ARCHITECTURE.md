@@ -82,6 +82,7 @@ Godpowers workflow state:
 | `.godpowers/state.json` | **Facts**: what was resolved/done | Cargo.lock, poetry.lock |
 | `.godpowers/runs/<id>/events.jsonl` | **History**: what happened | OpenTelemetry traces |
 | `.godpowers/domain/GLOSSARY.md` | **Vocabulary**: canonical project language and unresolved ambiguity | Domain glossary |
+| `.godpowers/REQUIREMENTS.md` | **Deliverables**: which requirements are done, in progress, or not started (derived by `lib/requirements.js`, cached in `state.json` `deliverables`) | Requirements traceability matrix |
 
 Every other architectural decision falls out from how these two layers relate:
 Pillars carries portable context, while `.godpowers` carries workflow state.

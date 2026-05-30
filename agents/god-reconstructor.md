@@ -40,6 +40,10 @@ From the code, derive:
 - **Target users**: who uses this? (from auth, user types, customer-facing strings)
 - **Success metrics**: what does the code measure? (from observability, logs, metrics)
 - **Functional requirements**: what features exist? (from routes, public APIs, UI)
+  - Assign every functional requirement a stable id, numbered sequentially
+    within its priority (P-MUST-01, P-MUST-02, P-SHOULD-01, P-COULD-01), placed
+    at the start of the bullet. These ids are load-bearing for the deliverable
+    ledger and the linkage map.
 - **Non-functional requirements**: what NFRs are enforced? (from rate limits, caching, indexes)
 - **Scope and no-gos**: what's deliberately NOT in the code?
 
@@ -68,6 +72,10 @@ From git history + current state:
 - **Next**: TODOs at module level, unimplemented endpoints, stubs
 - **Later**: high-level themes from issue tracker if accessible
 
+Give each delivery increment a stable `M-<slug>` id, a `**Status**:` field
+(pending/building/done), and a `**Features (from PRD)**:` list of the
+reconstructed requirement ids it delivers.
+
 Write to `.godpowers/roadmap/ROADMAP.md`. Mark Done section explicitly so we don't "rebuild" things that already exist.
 
 ### 4. Reconstruct STACK
@@ -79,6 +87,15 @@ From package.json/pyproject.toml/Cargo.toml/etc:
 - **Lock-in cost**: estimate based on usage depth
 
 Write to `.godpowers/stack/DECISION.md`.
+
+### 5. Regenerate the deliverable ledger
+
+After the PRD and ROADMAP are written (both carry the new ids), regenerate the
+deliverable ledger by calling `lib/requirements.writeLedger(projectRoot)` so
+`.godpowers/REQUIREMENTS.md` reflects the reconstructed state. Requirement
+status is derived from the linkage map (code that carries `// Implements: P-...`
+annotations), so reconstructed requirements without linked code will show as
+not started until that linkage exists.
 
 ## Outputs
 

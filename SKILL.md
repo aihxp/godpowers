@@ -121,8 +121,8 @@ with a disk-derived closeout that tells the user the current state and what is
 next.
 
 Every closeout must include a **Godpowers Dashboard**. This dashboard is the
-same mental model across `/god-status`, `/god-next`, `/god-mode`, and every
-command that completes, pauses, or proposes work.
+same mental model across `/god-status`, `/god-progress`, `/god-next`,
+`/god-mode`, and every command that completes, pauses, or proposes work.
 
 When the runtime bundle is available, compute this with
 `lib/dashboard.compute(projectRoot)` and render it with

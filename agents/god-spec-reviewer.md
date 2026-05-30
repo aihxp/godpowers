@@ -50,6 +50,13 @@ Answer each with EVIDENCE from the code:
    - Did the executor add future options, broad configurability, or generic
      interfaces that the current slice does not need?
 
+6. **Is each planned requirement id annotated in the code?**
+   - For each PRD requirement id listed in the slice plan (its `Requirements:`
+     field): does the code carry the corresponding `// Implements: P-...`
+     annotation that god-executor follows?
+   - A planned requirement id with no annotation is a finding, because the
+     deliverable ledger derives requirement status from those annotations.
+
 ## Output
 
 Return verdict to orchestrator:
@@ -75,6 +82,7 @@ Return verdict to orchestrator:
 - No scope creep without justification
 - Every touched file has request-trace evidence
 - No speculative flexibility or unrelated cleanup entered the diff
+- Every planned requirement id carries its `// Implements: P-...` annotation
 
 If FAIL: orchestrator returns the slice to god-executor with the failures.
 If PASS: orchestrator spawns god-quality-reviewer next.

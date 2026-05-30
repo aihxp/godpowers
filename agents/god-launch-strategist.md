@@ -19,6 +19,9 @@ Put the product in front of users.
 If Critical findings are unresolved, REFUSE to proceed and tell orchestrator
 to pause for human resolution.
 
+Confirm all P-MUST requirements show done in `.godpowers/REQUIREMENTS.md` before
+launch.
+
 ## Process
 
 ### 1. Landing Page Copy

@@ -33,6 +33,7 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - `.godpowers/harden/FINDINGS.md`
    - `.godpowers/SYNC-LOG.md`
    - `.godpowers/CHECKPOINT.md`
+   - `.godpowers/REQUIREMENTS.md`
 6. For each artifact found: run a lightweight have-nots check
 7. Compare disk state to PROGRESS.md state:
    - If PROGRESS.md says "done" but artifact is missing: FLAG as phantom resume

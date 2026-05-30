@@ -26,6 +26,8 @@ Before doing feature work, ask: does this overlap with ROADMAP.md?
 
 Parse milestones from Now / Next / Later sections. Extract:
 - Each milestone's goal and features
+- The increment's `**Status**:` field (pending/building/done)
+- The member PRD requirement ids from its `**Features (from PRD)**:` list
 - Status (in-progress / planned / themed)
 - Dependencies between milestones
 
@@ -35,6 +37,11 @@ For each milestone, check if the user intent overlaps:
 - **Keyword match**: do feature names overlap? ("export", "csv", "download")
 - **Semantic match**: same user-facing behavior described differently?
 - **Requirement match**: does PRD.md already include this requirement?
+
+Also weigh the increment's `**Status**:` and its member requirement ids: an
+increment marked `done`, or one whose `**Features (from PRD)**:` ids already
+cover the intent, signals already-done or already-committed work rather than
+something new.
 
 ### 3. Classify
 

@@ -101,11 +101,15 @@ canonical artifact loses existing concrete evidence.
 
 When approved, update all affected artifacts, not just the first one:
 
-- PRD: product goals, requirements, metrics, no-gos, open questions.
+- PRD: product goals, requirements, metrics, no-gos, open questions. Preserve or
+  assign stable requirement ids (P-MUST-NN / P-SHOULD-NN / P-COULD-NN); never
+  renumber or reuse a shipped id.
 - DESIGN: product experience, UI surface, accessibility, workflow, brand.
 - PRODUCT: screens, journeys, user promises, operational UX.
 - ARCH: components, trust boundaries, ADRs, NFR mappings.
-- ROADMAP: sequence, gates, dependencies, delivery increments.
+- ROADMAP: sequence, gates, dependencies, delivery increments. Keep increment
+  ids (`M-<slug>`) stable and preserve each increment's `**Status**:` field and
+  `**Features (from PRD)**:` requirement-id list.
 - STACK: decisions, flip points, org constraints, incompatibilities.
 - REPO: repository shape, CI, tests, security docs, install docs.
 - BUILD: build state, test expectations, review gates.
@@ -118,6 +122,10 @@ When approved, update all affected artifacts, not just the first one:
 
 After approved rewrites:
 
+- If the PRD or ROADMAP changed, refresh the deliverable ledger with
+  `lib/requirements.writeLedger(projectRoot)` so `.godpowers/REQUIREMENTS.md`
+  stays consistent with the rewritten ids and any `// Implements:` annotations
+  already in code.
 - Update `.godpowers/SYNC-LOG.md`.
 - Update `.godpowers/PROGRESS.md`.
 - Update `.godpowers/state.json` with:

@@ -33,6 +33,7 @@ title: "Short noun phrase"
 status: pending
 owner: <name>
 deps: []
+requirement: P-MUST-01   # optional; the PRD requirement id this story decomposes
 created: <ISO date>
 ---
 
@@ -61,6 +62,10 @@ As a [persona], I want [capability] so that [outcome].
 1. Read PRD.md and ARCH.md for context.
 2. If `--with-stories` from /god-feature: decompose the feature spec
    into 3-7 stories (don't exceed 10).
+   - When a story decomposes a specific PRD functional requirement, reference
+     that requirement id (set `requirement: P-MUST-01` in the frontmatter, or
+     mention it in the acceptance criteria) so the story traces back to the PRD
+     requirement and the deliverable ledger.
 3. Determine next ID number:
    - List `.godpowers/stories/<feature-slug>/STORY-*.md`
    - Use max + 1, zero-padded to 3 digits
