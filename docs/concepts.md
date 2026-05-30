@@ -185,12 +185,14 @@ testing, or dogfood failure triage.
 | Mode | When |
 |------|------|
 | A | Greenfield (no existing code, no .godpowers/) |
-| B | Gap-fill (existing project, missing artifacts) |
-| C | Audit-only (score existing artifacts) |
-| D | Multi-repo suites (hub + siblings; coordinated via `god-coordinator`) |
+| B | Gap-fill or brownfield (existing project, missing or partial artifacts) |
+| C | Audit-only (score existing artifacts, write nothing) |
+| E | Bluefield (empty dir plus org-context.yaml; org standards apply) |
 
-god-orchestrator detects mode automatically from disk signals. Mode D
-adds `god-coordinator` as a Tier-0 peer, never above.
+god-orchestrator detects the project mode automatically from disk signals.
+Mode D is orthogonal to A/B/C/E: it marks a multi-repo suite (hub plus
+siblings) and adds `god-coordinator` as a Tier-0 peer, never above, regardless
+of each repo's mode.
 
 ## Pauses
 

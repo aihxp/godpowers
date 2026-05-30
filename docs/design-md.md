@@ -163,7 +163,7 @@ Three layers:
    frontmatter schema, section order, token reference resolution,
    WCAG contrast on text-on-background components. Mechanical.
 2. **Anti-pattern detection** (when impeccable installed):
-   `npx impeccable detect DESIGN.md` runs 27 deterministic
+   `npx impeccable detect DESIGN.md` runs its deterministic
    anti-pattern rules.
 3. **Runtime audit** (when frontend exists): `/god-test-runtime audit`
    launches a headless browser, extracts computed styles, compares to

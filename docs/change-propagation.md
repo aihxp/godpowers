@@ -77,7 +77,7 @@ code change committed
        checks: design tokens still defined? STACK versions match?
        ARCH container responsibilities preserved?
   -> if impeccable installed and UI files touched:
-       npx impeccable detect (24 anti-pattern findings)
+       npx impeccable detect (anti-pattern findings)
   -> lib/reverse-sync.appendFooters
        writes fenced "Implementation Linkage" sections to PRD/ARCH/
        ROADMAP/STACK/DESIGN.md

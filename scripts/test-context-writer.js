@@ -245,10 +245,15 @@ test('clearAll removes fences from every target', () => {
   fs.mkdirSync(path.join(tmp, '.cursor'));
   cw.apply(tmp, FAKE_STATE);
   cw.clearAll(tmp);
-  // AGENTS.md was Godpowers-only, should be deleted
-  if (fs.existsSync(path.join(tmp, 'AGENTS.md'))) {
-    throw new Error('AGENTS.md should have been deleted (was Godpowers-only)');
+  // AGENTS.md is the canonical context file: emptied, never deleted.
+  const agentsAfter = path.join(tmp, 'AGENTS.md');
+  if (!fs.existsSync(agentsAfter)) {
+    throw new Error('AGENTS.md should be emptied, not deleted');
   }
+  if (fs.readFileSync(agentsAfter, 'utf8').includes('godpowers:begin')) {
+    throw new Error('AGENTS.md fence should have been removed');
+  }
+  // Auto-generated pointer files are deleted when only the fence remained.
   if (fs.existsSync(path.join(tmp, 'CLAUDE.md'))) {
     throw new Error('CLAUDE.md should have been deleted');
   }

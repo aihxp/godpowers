@@ -109,8 +109,9 @@ What works today:
   reconciliation, and decision-support outputs now end with concrete next
   choices such as partial implementation, complete implementation, discussion,
   inspection, or `/god-mode` when safe
-- **Mode A** (greenfield), **Mode B** (gap-fill), **Mode C** (audit),
-  **Mode D** (multi-repo suites with `god-coordinator` as Tier-0 peer)
+- **Mode A** (greenfield), **Mode B** (gap-fill or brownfield), **Mode C**
+  (audit), **Mode E** (bluefield); plus the orthogonal **Mode D** (multi-repo
+  suites with `god-coordinator` as a Tier-0 peer)
 - **Three-axis verification**: static (lint), linkage (drift), runtime (headless browser)
 - **Bidirectional linkage map** with 7 stable ID types
 - **Reverse-sync** writing fenced "Implementation Linkage" footers

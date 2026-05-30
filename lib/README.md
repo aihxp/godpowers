@@ -22,6 +22,7 @@ package-level integrations.
 | `dogfood-runner.js` | Run deterministic messy-repo scenarios against migration, host, extension, and suite release behavior. |
 | `budget.js` | Read and enforce configured budget controls. |
 | `cost-tracker.js` | Track token and cost estimates from event streams. |
+| `fs-async.js` | Promise-based file read/write helpers for non-blocking runtime paths. |
 
 ## Events and observability
 
@@ -43,6 +44,8 @@ package-level integrations.
 | `workflow-runner.js` | Execute workflow steps with validation hooks. |
 | `agent-cache.js` | Cache agent metadata for faster routing. |
 | `agent-validator.js` | Validate agent frontmatter and contracts. |
+| `agent-refs.js` | Validate workflow agent references and scan skill/agent prose for phantom references. |
+| `skill-surface.js` | Derive slash-command metadata from the individual `skills/` files. |
 
 ## Artifact quality
 
@@ -71,6 +74,7 @@ package-level integrations.
 | `impeccable-bridge.js` | Bridge runtime checks into impeccable quality workflows. |
 | `extensions.js` | Load and validate extension packs. |
 | `extension-authoring.js` | Scaffold publishable extension packs with manifest, package, README, skill, agent, and workflow files. |
+| `pillars.js` | Manage the Pillars project-context layer (`AGENTS.md` plus routed `agents/*.md`). |
 
 ## Repository and graph helpers
 
@@ -86,6 +90,18 @@ package-level integrations.
 | `reverse-sync.js` | Reflect implementation changes back into artifacts. |
 | `review-required.js` | Decide when review gates should block progress. |
 | `suite-state.js` | Manage state across registered project suites. |
+
+## Installer, dashboard, and CLI helpers
+
+| Module | Purpose |
+|--------|---------|
+| `installer-core.js` | Install and uninstall the Godpowers surface for each runtime. |
+| `installer-files.js` | File-copy helpers shared by the installer and its tests. |
+| `installer-args.js` | Parse `bin/install.js` arguments and subcommands. |
+| `installer-runtimes.js` | Map supported runtimes to their config directories. |
+| `automation-providers.js` | Detect and configure host-native automation providers. |
+| `dashboard.js` | Compute the next-step action brief and host guarantee line. |
+| `quick-proof.js` | Render the shipped proof fixture for `godpowers quick-proof`. |
 
 See `../ARCHITECTURE.md` for system design and `../docs/ROADMAP.md` for planned
 runtime work.

@@ -14,7 +14,14 @@ are in a consistent state (existing artifacts validated; missing capture
 artifacts noted as "not-yet-created"; conditional artifacts marked
 `not-required` for backend-only projects).
 
-## What `/god-mode` creates (up to 12 artifacts)
+**How the counts relate**: there are 14 core artifact categories: 10
+always-produced during the arc (PRD through Launch, Tiers 1-3) plus 4 lazy
+capture artifacts. Two UI-conditional design artifacts (DESIGN.md, PRODUCT.md)
+bring the total to 16 categories. The arc emits 10 of these (12 when a UI is
+present). The 3 Tier-0 files (`state.json`, `PROGRESS.md`, `intent.yaml`) are
+orchestration state, not counted as artifact categories.
+
+## What `/god-mode` creates (3 orchestration state files plus up to 12 arc artifacts)
 
 These are produced sequentially as the arc progresses:
 

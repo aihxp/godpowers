@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The context off-switch now empties the canonical `AGENTS.md` instead of
+  deleting it; auto-generated pointer files (`CLAUDE.md`, `.cursorrules`, etc.)
+  are still removed when only the Godpowers fence remains
+  (`lib/context-writer.js`).
+
+### Fixed
+- Documentation: dropped unverifiable external impeccable rule/finding counts;
+  reconciled the project-mode taxonomy (A/B/C/E primary modes, with D as the
+  orthogonal multi-repo suite overlay) in `concepts.md` and `ROADMAP.md`;
+  documented all `lib/` modules in `lib/README.md`; and clarified how the
+  artifact-category counts relate in `greenfield-coverage.md`.
+
 ## [2.1.0] - 2026-05-30
 
 ### Security
