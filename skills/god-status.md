@@ -44,6 +44,9 @@ Re-derive state from disk. Your memory is not authoritative. The file system is.
    - Workflow progress summary: percentage, completed step count, current step number
    - Planning visibility: PRD status, roadmap status, active milestone, and
      completion basis
+   - Deliverable progress: requirement and increment status from
+     `lib/requirements` (requirements done / in progress / not started, by
+     priority, and increment counts), or "none declared yet" before a PRD exists
    - What happened recently, using CHECKPOINT.md actions when available
    - Last sync status, using SYNC-LOG.md when available
    - Proactive opportunities based on the auto-invoke policy
@@ -82,6 +85,12 @@ Planning visibility:
   Roadmap: pending
   Current milestone: Planning / Architecture
   Completion basis: .godpowers/state.json workflow steps
+
+Deliverable progress:
+  Requirements: [########------------] 8/14 done (57%), 3 in progress, 3 not started
+  By priority: MUST 6/8, SHOULD 2/4, COULD 0/2
+  Increments: 2 done, 1 building, 1 pending
+  Ledger: .godpowers/REQUIREMENTS.md
 
 What happened recently:
   1. PRD artifact verified on disk
@@ -137,6 +146,7 @@ Linkage status (from .godpowers/links/):
   Drift: 1 (colors.removed referenced in src/old.css but missing in DESIGN.md)
   Pending reviews: 5 (see REVIEW-REQUIRED.md)
   Last scan: 2026-05-10T14:23:11Z
+  Requirement checklist: run /god-progress or open .godpowers/REQUIREMENTS.md
 
 Suite (Mode D) status:
   This repo is a sibling of suite "my-products" (hub: ../hub)

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Deliverable progress tracking, so a project run always communicates which
+  requirements are finished, which are in flight, and which are untouched:
+  - `/god-progress` reports requirement and roadmap-increment status (done / in
+    progress / not started, grouped by increment and priority) and refreshes a
+    human-readable `.godpowers/REQUIREMENTS.md` checklist the user can open or
+    share.
+  - Status is derived from disk by `lib/requirements.js` (PRD requirements +
+    ROADMAP increments + the linkage map + build state), so it cannot drift from
+    what is actually implemented.
+  - The Godpowers Dashboard (`/god-status`, `/god-next`, `/god-mode` closeout)
+    gains a `Deliverable progress` section, and `/god-mode` build steps report
+    requirement completion as it happens.
+  - PRD functional requirements now carry stable ids (`P-MUST-NN` /
+    `P-SHOULD-NN` / `P-COULD-NN`) and ROADMAP delivery increments carry
+    `M-slug` ids with a per-increment `Status` and the requirement ids they
+    deliver, so requirements map to increments and to implementing code.
+  - `reverse-sync` and `/god-sync` refresh the ledger and cache the summary in
+    `state.json.deliverables` whenever the linkage map changes.
+
 ## [2.1.1] - 2026-05-30
 
 ### Changed

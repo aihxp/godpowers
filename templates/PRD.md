@@ -26,15 +26,22 @@
 
 ## Functional Requirements
 
+> Each requirement carries a stable id: `P-MUST-NN`, `P-SHOULD-NN`, `P-COULD-NN`.
+> These ids are load-bearing. The roadmap groups them into delivery increments,
+> code and tests reference them (`// Implements: P-MUST-01`,
+> `describe('P-MUST-01: ...')`), and `/god-progress` derives
+> done / in-progress / not-started status from them. Number sequentially within
+> each priority. Never renumber or reuse a shipped id.
+
 ### MUST (V1 launch blockers)
-- [DECISION] [Requirement] -- Acceptance: [observable criterion]
-- [DECISION] [Requirement] -- Acceptance: [observable criterion]
+- P-MUST-01 [DECISION] [Requirement] -- Acceptance: [observable criterion]
+- P-MUST-02 [DECISION] [Requirement] -- Acceptance: [observable criterion]
 
 ### SHOULD (V1 if time permits)
-- [HYPOTHESIS] [Requirement] -- Acceptance: [criterion] -- Validation: [how we'll test if this matters]
+- P-SHOULD-01 [HYPOTHESIS] [Requirement] -- Acceptance: [criterion] -- Validation: [how we'll test if this matters]
 
 ### COULD (post-V1)
-- [HYPOTHESIS] [Requirement]
+- P-COULD-01 [HYPOTHESIS] [Requirement]
 
 ## Non-Functional Requirements
 
@@ -75,6 +82,7 @@ Before declaring done, verify:
 - [ ] Problem statement fails substitution test
 - [ ] Target user is specific (not "developers")
 - [ ] Every success metric has a number AND timeline
+- [ ] Every functional requirement has a stable id (P-MUST-NN / P-SHOULD-NN / P-COULD-NN)
 - [ ] Every requirement has acceptance criteria
 - [ ] No-gos section is non-empty
 - [ ] Every open question has owner AND due date

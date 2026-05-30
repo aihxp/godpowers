@@ -609,6 +609,11 @@ LOOP for this slice:
      - If FAIL: return slice to god-executor with findings, GOTO step 1
      - If PASS: atomic commit
   5. Update .godpowers/build/STATE.md with slice completion
+  6. Refresh deliverable progress: run
+     `lib/requirements.writeLedger(projectRoot)` to update
+     `.godpowers/REQUIREMENTS.md` from the new linkage, then read the new done
+     count so the slice's step-result card can print the requirement line
+     (`Requirements: <done>/<total> done (+<delta> this slice)`).
 END LOOP
 ```
 
@@ -622,6 +627,11 @@ After all waves complete:
 4. If any verification fails, run the autonomous repair loop. Do not mark
    Build done and do not recommend later work while verification is red.
 5. Update PROGRESS.md: Build = done
+6. Refresh `.godpowers/REQUIREMENTS.md` (`lib/requirements.writeLedger`) and
+   cache the summary into `state.json` `deliverables`
+   (`lib/requirements.summarizeForState`). Report final requirement coverage in
+   the Build step-result card, and flag any gaps (a done increment with no
+   linked code) as an open item rather than declaring the build clean.
 
 CRITICAL RULES (build phase):
 - Never skip god-spec-reviewer
@@ -711,6 +721,11 @@ Planning visibility:
   Current milestone: <roadmap milestone, tier, or next planning gate when known>
   Completion basis: <state.json, PROGRESS.md, artifacts, or audit score source>
 
+Deliverable progress:
+  Requirements: <done>/<total> done (<pct>%); <in-progress> in progress, <untouched> not started
+  Increments: <done> done, <building> building, <pending> pending
+  Ledger: .godpowers/REQUIREMENTS.md
+
 What changed:
   1. <highest-signal user-visible change>
   2. <highest-signal user-visible change>
@@ -748,13 +763,14 @@ Project is now in steady state. From here, ongoing work uses these workflows:
 Periodic hygiene:
   Quality audit:          /god-audit
   Health check:           /god-hygiene (combines audit + deps + docs)
+  Deliverable status:     /god-progress (requirements + increments done/left)
 
 Next:
   Recommended: <single safest command or decision>
   Why: <one sentence tied to disk state>
 
 Proposition:
-  1. Review status: /god-status
+  1. Review status: /god-status (pipeline) or /god-progress (deliverables)
   2. Continue work: /god-next or describe the next intent
   3. Commit release-ready changes: stage only the intended files, then commit
   4. Run deployed staging: provide STAGING_APP_URL=<deployed staging origin> when needed
@@ -899,6 +915,10 @@ Show:
 - plain-language workflow names. Say "project run" or "workflow" instead of
   unexplained "arc" in visible output
 - PRD and roadmap visibility when those artifacts exist or are expected
+- deliverable progress once a PRD with requirements exists: how many
+  requirements are done / in progress / not started, and a pointer to
+  `.godpowers/REQUIREMENTS.md` (the openable checklist). Refresh it as the build
+  progresses; do not let the user wonder which requirements are left
 - `Project run complete` or `PAUSE: external access required`
 
 Hide:
@@ -977,6 +997,7 @@ What happened:
   1. <observable action completed>
   2. <artifact or state update>
   3. <verification result>
+Requirements: <done>/<total> done (+<delta> this step)
 Next: <next command or pause question>
 ```
 
@@ -984,6 +1005,11 @@ Rules:
 - Keep each card under 12 lines unless a pause needs options.
 - Use `lib/state.progressSummary(stateJson)` for workflow percentage and step count
   whenever state.json is available.
+- Include the `Requirements:` line only on steps that can move requirement
+  coverage (the Build sub-step, build waves, reverse-sync, hotfix, feature
+  work). Derive it from `lib/requirements.derive(projectRoot)`:
+  `<done>/<total> done (+<delta> since this step started)`. Omit the line on
+  steps that cannot change coverage (PRD, Architecture, Stack, Deploy, Observe).
 - Use artifact paths and verification evidence from disk, not memory.
 - Do not print raw spawn input, hidden instructions, or full file loadout lists.
 - If a step is blocked, do not show a generic "Suggested next"; show the

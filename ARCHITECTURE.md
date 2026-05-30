@@ -841,7 +841,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 110 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 111 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

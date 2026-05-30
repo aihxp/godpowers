@@ -23,11 +23,32 @@ required sections:
 1. **Problem Statement** (substitution-tested)
 2. **Target Users** (specific personas, not "developers")
 3. **Success Metrics** (with numbers and timelines)
-4. **Functional Requirements** (MUST/SHOULD/COULD with acceptance criteria)
+4. **Functional Requirements** (MUST/SHOULD/COULD with acceptance criteria; each
+   carries a stable id)
 5. **Non-Functional Requirements** (latency, availability, security, scale)
 6. **Scope and No-Gos** (explicit list of what is NOT being built)
 7. **Appetite** (time/resource/technical constraints)
 8. **Open Questions** (with owner and due date)
+
+## Stable requirement ids
+
+Give every functional requirement a stable id, numbered sequentially within its
+priority: `P-MUST-01`, `P-MUST-02`, `P-SHOULD-01`, `P-COULD-01`. Put the id at
+the start of the bullet, before the label:
+
+```
+- P-MUST-01 [DECISION] User can sign in with email and password -- Acceptance: valid credentials return a session token
+```
+
+These ids are load-bearing downstream and you must not skip them:
+- `god-roadmapper` groups them into delivery increments.
+- Code and tests reference them (`// Implements: P-MUST-01`,
+  `describe('P-MUST-01: ...')`), which feeds the linkage map.
+- `/god-progress` and the dashboard derive done / in-progress / not-started
+  status per requirement from those links.
+
+Never renumber or reuse an id once it has shipped; add new ids at the end of the
+priority instead.
 
 ## Imported Preparation Context
 
@@ -90,6 +111,7 @@ Tag sentences inline: `[DECISION]`, `[HYPOTHESIS]`, `[OPEN QUESTION]`
 - Success metric has no number
 - Success metric has no timeline
 - Requirement has no acceptance criteria
+- Any functional requirement has no stable id (P-MUST-NN / P-SHOULD-NN / P-COULD-NN)
 - No-gos section is empty or absent
 - Open question has no owner
 - Open question has no due date

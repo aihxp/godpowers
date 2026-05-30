@@ -236,6 +236,7 @@ extension files, with parser coverage in `scripts/test-yaml-parser.js`.
 | `/god-launch` | Launch (gated on harden) | god-launch-strategist |
 | `/god-harden` | Adversarial security review | god-harden-auditor |
 | `/god-status` | Re-derive state from disk | (built-in) |
+| `/god-progress` | Deliverable progress: requirements and increments done / in progress / left | (built-in) |
 | `/god-automation-status` | Show host automation provider support | (built-in) |
 | `/god-automation-setup` | Prepare opt-in automation setup | (built-in) |
 | `/god-dogfood` | Run messy-repo dogfood scenarios for release and autonomy readiness | (built-in) |
@@ -303,6 +304,15 @@ ends in a vague "done" state. The dashboard is backed by
 `lib/dashboard.js`, and the rendered output names that source when the runtime
 engine is available. Audit, hygiene, and remediation scores are reported as
 separate scores rather than being reused as workflow progress.
+
+That dashboard reports **workflow progress** (which pipeline stage you are on).
+For **deliverable progress** (how much of the actual product is built), run
+`/god-progress`: it lists every PRD requirement as done, in progress, or not
+started, groups them by roadmap increment, and writes a `.godpowers/REQUIREMENTS.md`
+checklist you can open or share. Status is derived from the linkage map (code
+that implements each requirement), so it can never drift from what is actually
+on disk. The dashboard also surfaces a `Deliverable progress` line, and during a
+`/god-mode` build each step reports how many requirements moved to done.
 
 Godpowers can also inspect automation support:
 
@@ -386,6 +396,7 @@ Skill updates:   PROGRESS.md
 
 ```
 .godpowers/PROGRESS.md         Cross-tier progress ledger
+.godpowers/REQUIREMENTS.md     Requirement checklist (done / in progress / not started)
 .godpowers/prd/PRD.md          Product Requirements Document
 .godpowers/domain/GLOSSARY.md  Domain vocabulary and resolved ambiguities
 .godpowers/arch/ARCH.md        System Architecture
@@ -474,7 +485,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Getting Started](docs/getting-started.md)
 - [Quick Proof](docs/quick-proof.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 110 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 111 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Adoption Canary](docs/adoption-canary.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)

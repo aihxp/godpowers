@@ -15,7 +15,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 ### Current surface (v2.1.1)
 
 What works today:
-- **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **111 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)

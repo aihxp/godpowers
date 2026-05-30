@@ -74,6 +74,31 @@
       "description": "Slot for linkage map summary. Authoritative file is .godpowers/linkage.json.",
       "additionalProperties": true
     },
+    "deliverables": {
+      "type": "object",
+      "description": "Cached deliverable summary (requirement and roadmap-increment status). Recomputed fresh by lib/requirements.js from PRD + ROADMAP + linkage + build state; the human-readable ledger is .godpowers/REQUIREMENTS.md.",
+      "additionalProperties": true,
+      "properties": {
+        "updated": { "type": "string" },
+        "source": { "type": "string" },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "done": { "type": "integer", "minimum": 0 },
+            "in-progress": { "type": "integer", "minimum": 0 },
+            "untouched": { "type": "integer", "minimum": 0 },
+            "percent": { "type": "integer", "minimum": 0, "maximum": 100 }
+          }
+        },
+        "increments": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "gaps": { "type": "integer", "minimum": 0 }
+      }
+    },
     "source-systems": {
       "type": "array",
       "description": "Detected external planning systems imported into Godpowers and eligible for managed sync-back.",

@@ -113,6 +113,11 @@ After feature work, every artifact that was impacted needs to reflect reality.
   - Surfaces drift + impeccable findings to `REVIEW-REQUIRED.md`
 - Update `state.json.linkage` with current `coverage-pct`, `orphan-count`,
   `drift-count`, `review-required-items`
+- Refresh deliverable tracking from the updated linkage map:
+  - Call `lib/requirements.writeLedger(projectRoot)` to regenerate
+    `.godpowers/REQUIREMENTS.md`
+  - Cache the summary into `state.json.deliverables` via
+    `lib/requirements.summarizeForState`
 - Emit events: `linkage.snapshot`, `drift.detected` (per finding),
   `review-required.populated`
 - Report counts in the final sync status:
@@ -121,6 +126,7 @@ After feature work, every artifact that was impacted needs to reflect reality.
   - fenced footers updated
   - drift findings
   - REVIEW-REQUIRED.md items created
+  - requirement coverage: `<done>/<total> done` and any gaps
 
 ### Repository documentation sync
 - Call `lib/repo-doc-sync.run(projectRoot, { changedFiles })` when the runtime

@@ -8,6 +8,7 @@ Scale: [trivial | small | medium | large | enterprise]
 Started: [ISO 8601 timestamp]
 Last updated: [ISO 8601 timestamp]
 Progress: [0-100]% ([completed] of [total] steps complete; current step [n] of [total])
+Requirements: [done] of [total] done ([percent]%); [in-progress] in progress, [untouched] not started -- see .godpowers/REQUIREMENTS.md
 Current: [Tier N label] / [sub-step label]
 Host guarantees: [full | degraded | unknown]
 Action brief: [next command or user decision; readiness; top attention item]
@@ -41,6 +42,7 @@ Release readiness signals:
 - Dogfood status: [not-run | pass | fail | not applicable]
 - Repo documentation sync: [fresh | drift detected | not checked]
 - Repo surface sync: [fresh | drift detected | not checked]
+- Requirement coverage: [done]/[total] done; [gaps] gaps (see .godpowers/REQUIREMENTS.md)
 
 ## Tier Status
 

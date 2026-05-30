@@ -28,6 +28,7 @@ const TEST_COMMANDS = [
   [node, ['scripts/test-impact.js']],
   [node, ['scripts/test-reverse-sync.js']],
   [node, ['scripts/test-planning-systems.js']],
+  [node, ['scripts/test-requirements.js']],
   [node, ['scripts/test-feature-awareness.js']],
   [node, ['scripts/test-repo-doc-sync.js']],
   [node, ['scripts/test-repo-surface-sync.js']],

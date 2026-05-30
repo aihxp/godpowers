@@ -70,13 +70,20 @@ Rules:
 ## Process
 
 1. Read PRD (priorities) and ARCH (technical dependencies)
-2. List all features from PRD with their priority (MUST/SHOULD/COULD)
+2. List all requirements from PRD by their stable id
+   (P-MUST-NN / P-SHOULD-NN / P-COULD-NN) and priority
 3. Build dependency graph from ARCH (component A depends on component B)
 4. Topologically sort
-5. Group features into delivery increments:
-   - Each increment has a clear, substitution-tested goal
-   - Each increment has an observable completion gate
-   - Each increment is sized: S/M/L (no day-level precision without capacity input)
+5. Group requirements into delivery increments. Each increment gets:
+   - A stable id `M-<slug>` derived from the increment name
+   - An initial `Status: pending`. Status is later derived from the linkage map
+     (code linked to the increment's requirements); set `done` explicitly only
+     when the completion gate has been verified
+   - A clear, substitution-tested goal
+   - An observable completion gate
+   - A size: S/M/L (no day-level precision without capacity input)
+   - A Features list of the exact PRD requirement ids it delivers
+     (P-MUST-01, P-MUST-02, ...), so each requirement maps to one increment
 6. Assign Now/Next/Later horizons:
    - **Now**: building right now, committed
    - **Next**: planned next, flexible
@@ -92,11 +99,13 @@ as the structural starting point. Write `.godpowers/roadmap/ROADMAP.md`:
 
 ## Now
 ### Delivery Increment 1: [substitution-tested name]
+- ID: M-[slug]
+- Status: pending
 - Goal: [what users can do when this ships]
 - Gate: [observable completion criteria]
 - Size: S/M/L
-- Depends on: [list]
-- Features: [from PRD]
+- Depends on: [M-slug list]
+- Features (from PRD): [P-MUST-01, P-MUST-02, ...]
 
 ## Next
 [delivery increments]
@@ -111,6 +120,8 @@ Roadmap FAILS if:
 - Delivery increment goal passes substitution test
 - Completion gate is not observable
 - Feature appears that is not in the PRD
+- Any increment has no stable M-slug id
+- A committed (Now or Next) increment lists no PRD requirement ids
 - All increments the same size (no prioritization)
 - No dependency edges between increments
 - Day-level precision without capacity input

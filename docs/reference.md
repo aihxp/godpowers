@@ -2,12 +2,13 @@
 
 Complete command, agent, and artifact reference for v2.1.1.
 
-## Slash commands (110 total)
+## Slash commands (111 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
+- `/god-progress` - Deliverable progress: which requirements and roadmap increments are done, in progress, or not started. Refreshes `.godpowers/REQUIREMENTS.md`.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
 - `/god-migrate` - Detect GSD, BMAD, and Superpowers context, import seeds, and sync back progress.
