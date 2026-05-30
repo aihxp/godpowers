@@ -72,7 +72,7 @@ code change committed
          5. test description parsing
          6. manual entries via /god-link
   -> lib/code-scanner.applyScan
-       updates .godpowers/links/{forward,reverse}.json
+       updates .godpowers/links/{artifact-to-code,code-to-artifact}.json
   -> lib/drift-detector.detectAll
        checks: design tokens still defined? STACK versions match?
        ARCH container responsibilities preserved?

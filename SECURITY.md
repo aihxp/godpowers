@@ -8,7 +8,8 @@ responsibly.
 ### How to Report
 
 1. Do NOT open a public GitHub issue
-2. Email the maintainers (see project README for contact)
+2. Use GitHub's private vulnerability reporting:
+   https://github.com/aihxp/godpowers/security/advisories/new
 3. Include:
    - Description of the vulnerability
    - Steps to reproduce
@@ -55,9 +56,9 @@ When using Godpowers in a sensitive context:
 
 | Version | Supported |
 |---------|-----------|
-| 2.0.x   | Yes |
-| 1.6.x   | Security fixes only |
-| < 1.6   | No |
+| 2.1.x   | Yes |
+| 2.0.x   | Security fixes only |
+| < 2.0   | No |
 
 Godpowers repo documentation sync checks this table as part of release
 readiness, but support policy changes still require maintainer review.

@@ -21,8 +21,8 @@ Detect and fix drift between `state.json` and disk.
 | state.json says PRD done; PRD.md missing | mark PRD pending, alert user |
 | state.json says PRD pending; PRD.md exists and passes lint | mark PRD imported |
 | state.json file hash differs from current PRD.md hash | re-hash and update |
-| linkage.json entry points at deleted code file | remove entry, mark artifact for review |
-| linkage.json entry missing for an annotated code file | scan + add |
+| links/ entry points at deleted code file | remove entry, mark artifact for review |
+| links/ entry missing for an annotated code file | scan + add |
 | Schema version in state.json older than installed | migrate (if path exists) |
 | .trash/ contains items older than 30 days | offer to permanently delete |
 
@@ -60,7 +60,7 @@ Walk every drift item with the user, even safe-auto-fixes.
 
 Built-in. Reads + writes:
 - `.godpowers/state.json`
-- `.godpowers/linkage.json`
+- `.godpowers/links/`
 - `.godpowers/log` (appends repair event)
 
 Calls into `lib/drift-detector.js`, `lib/code-scanner.js`, `lib/reverse-sync.js`.

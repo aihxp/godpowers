@@ -60,4 +60,14 @@ test('all shipped workflow agent ranges satisfy the current contract', () => {
   assert(bad.length === 0, bad.join('\n'));
 });
 
+test('skill and agent prose contains no phantom god-* references', () => {
+  const root = path.join(__dirname, '..');
+  const unresolved = refs.findUnresolvedProseRefs(root);
+  const detail = unresolved
+    .map((u) => `  ${u.file}: ${u.token} (x${u.count})`)
+    .join('\n');
+  assert(unresolved.length === 0,
+    `unresolved god-* references in skill/agent prose:\n${detail}`);
+});
+
 report();

@@ -203,7 +203,12 @@ function runCommand(opts) {
 function applyDefaultRuntimeSelection(opts) {
   if (opts.runtimes.length > 0 || opts.all) return;
   if (!process.stdin.isTTY) {
-    warn('Non-interactive terminal detected, defaulting to Claude Code install');
+    // Refuse to perform a silent global install when there is no human to
+    // confirm and no explicit target was given (CI, piped, some npx contexts).
+    warn('No runtime selected and stdin is not a TTY.');
+    warn('Refusing a silent global install. Re-run with an explicit target,');
+    warn('for example:  npx godpowers --claude --global   (or --all).');
+    process.exit(1);
   }
   opts.runtimes = ['claude'];
   if (!opts.local) opts.global = true;

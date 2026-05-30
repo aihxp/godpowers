@@ -176,5 +176,5 @@ implementing files.
 
 - Reimplement impeccable's typography / color / motion design intelligence
 - Run reverse-sync (that's god-updater)
-- Compute change impact (that's god-impact-analyzer)
+- Compute change impact (that's /god-design-impact)
 - Review your own changes (that's god-design-reviewer)

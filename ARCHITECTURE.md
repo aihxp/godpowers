@@ -1,11 +1,11 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.0.3 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, and maintenance hardening)
+> Status: STABLE v2.1.0 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, and security and drift hardening)
 > Authors: Godpowers Team
-> Last updated: 2026-05-26
+> Last updated: 2026-05-30
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.0.3 keeps the public slash-command surface stable while hardening release
+v2.1.0 keeps the public slash-command surface stable while hardening release
 validation, parser coverage, router checks, installer decomposition, workflow
 agent references, async file APIs, and the request-trace review baseline.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
@@ -309,7 +309,8 @@ commands inside the AI coding tool.
 ### Route Topology And Automation Audit (2026-05-16)
 
 [DECISION] The route graph is currently complete at the file level: 110
-`skills/god-*.md` command files match 110 `routing/god-*.yaml` route files.
+`skills/*.md` command files match 110 `routing/*.yaml` route files (109
+`god-*` commands plus the `god` front door).
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
 agents, 13 workflow YAML files, and 40 intent recipes.
@@ -499,7 +500,7 @@ jobs:
   build:
     tier: 2
     needs: [roadmap, repo]
-    uses: god-build-orchestrator@^1.0.0    # composite: handles waves + reviews
+    uses: god-planner@^1.0.0    # plans slices into waves; god-executor runs them under review
 
   deploy:
     tier: 3
@@ -554,12 +555,20 @@ We ship five primitives. We do NOT invent a sixth.
 | **Prompt chaining** | PRD -> ARCH -> ROADMAP |
 | **Routing** | Scale=trivial routes to /god-fast |
 | **Parallelization** | Roadmap + Stack run in parallel after ARCH |
-| **Orchestrator-workers** | god-build-orchestrator spawns executors per slice |
+| **Orchestrator-workers** | god-planner plans slices; god-executor runs one per slice |
 | **Evaluator-optimizer** | god-executor + god-spec-reviewer + god-quality-reviewer loop |
 
 ---
 
 ## 5. Agent Contract (Plugin-Style)
+
+> STATUS: ASPIRATIONAL / NOT YET IMPLEMENTED. This section describes the
+> target plugin-style agent manifest (versioned contract, `engines`,
+> `contract.inputs/outputs`, `tools`, `events`). The agents shipped today use
+> flat frontmatter (`name`, `description`, `tools`); none carry the
+> `kind: Agent` contract block below, and `schema/agent-manifest.v1.json` does
+> not exist yet. Treat this as design intent, not current reality. See
+> Section 16 for the migration note.
 
 Agents are the unit of extension. Manifest is versioned (Helm pattern).
 
@@ -610,7 +619,7 @@ events:
 activation:
   spawned-by:
     - /god-prd
-    - god-build-orchestrator
+    - god-orchestrator
 ---
 
 # Body: instructions to the LLM
@@ -929,7 +938,7 @@ with clear error and suggested fix.
 | `state.v1.json` | v0.4 | v1.0 |
 | `events.v1.json` | v0.4 | v1.0 |
 | `workflow.v1.json` | v0.5 | v1.0 |
-| `agent-manifest.v1.json` | v0.5 | v1.0 |
+| `agent-manifest.v1.json` (planned, see Section 5) | v0.5 | v1.0 |
 | `extension-manifest.v1.json` | v0.8 | v1.0 |
 
 v1.0 freezes all schemas. v2.0 (if ever) is breaking. v1.x is

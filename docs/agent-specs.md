@@ -329,7 +329,7 @@ Each agent has these fields:
 | **Inputs** | Any artifact in `.godpowers/<tier>/`; for preflight mode, repo structure, org context, docs, tests, CI, deploy, and agent instruction signals |
 | **Outputs** | `.godpowers/preflight/PREFLIGHT.md` (preflight) OR `.godpowers/AUDIT-REPORT.md` (full audit) OR PASS/FAIL verdict (gate check) |
 | **Downstream consumers** | Orchestrator (for routing decisions), tier agents (for gate checks) |
-| **Artifact awareness** | All 200 have-nots; all tier artifact contracts; preflight lens for arc-ready, pillars, Godpowers, suite, and refactor risk |
+| **Artifact awareness** | All 156 have-nots; all tier artifact contracts; preflight lens for arc-ready, pillars, Godpowers, suite, and refactor risk |
 | **Handoff** | Returns score per artifact + prioritized remediation. |
 | **Standards check** | This IS the standards check |
 
@@ -763,7 +763,7 @@ added during the production-ready + design + linkage push.
 | **Inputs** | state.json (project name, mode, scale, linkage state), DESIGN.md and PRODUCT.md presence, detected AI tools |
 | **Outputs** | Fenced sections in AGENTS.md (canonical), CLAUDE.md, GEMINI.md, .cursor/rules/godpowers.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .roo/, .continue/ (only when their tool is detected) |
 | **Downstream consumers** | AI coding tools reading the project on cold session start |
-| **Artifact awareness** | Reads state.json + linkage.json; writes only inside `<!-- godpowers:begin --> ... <!-- godpowers:end -->` fences |
+| **Artifact awareness** | Reads state.json + .godpowers/links/; writes only inside `<!-- godpowers:begin --> ... <!-- godpowers:end -->` fences |
 | **Standards check** | Detect-then-write: never creates files for tools without their config dir; never overwrites user content outside the fence; idempotent |
 | **Handoff** | Returns compact success to `/god-init` and `/god-sync`; returns results summary only for explicit `/god-context` commands |
 

@@ -60,9 +60,8 @@ called drifts.
      last 3 events)
    - **info**: claim mentions facts not in CHECKPOINT held-facts
      (might be new, worth recording)
-6. Suggested actions: `/god-locate` to re-orient, `/god-repair`
-   for state drift, or accept the new facts via `/god-checkpoint
-   --record-facts`.
+6. Suggested actions: `/god-locate` to re-orient, or `/god-repair`
+   to reconcile state drift and record the new facts.
 
 ### Output
 

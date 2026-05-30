@@ -18,7 +18,7 @@ projects from raw idea to hardened production.
 - `routing/` contains command routing metadata and intent recipes
 - `workflows/` contains executable workflow YAML
 - `references/` contains per-tier reference material (antipatterns, examples)
-- `bin/` contains the CLI installer and `god` command
+- `bin/` contains the CLI installer (`npx godpowers`)
 - `lib/` contains executable runtime helpers, sync checks, dogfood, dashboard, and release logic
 - `scripts/` contains validation and testing scripts
 - `templates/` contains artifact templates

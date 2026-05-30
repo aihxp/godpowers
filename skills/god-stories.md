@@ -55,6 +55,6 @@ If dep cycles exist, surface them at the end.
 
 ## What this does NOT do
 
-- Modify any STORY.md (use /god-story-close, /god-story-block to change status)
+- Modify any STORY.md (use /god-story-close, /god-story-verify to change status)
 - Spawn agents (read-only)
 - Trigger reverse-sync

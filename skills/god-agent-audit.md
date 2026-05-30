@@ -1,7 +1,7 @@
 ---
 name: god-agent-audit
 description: |
-  Validates every `agents/*.md` against the agent contract:
+  Validates every `agents/god-*.md` against the agent contract:
   required frontmatter, recommended sections (Have-Nots, Inputs,
   Outputs, Handoff), hand-off targets exist, no dual-ownership of
   output paths. Lenient by design: most issues are warnings; only
@@ -50,7 +50,7 @@ opportunities, not failures.
 ```
 Agent audit
 
-37 agents audited
+40 agents audited
 0 errors, 2 warnings, 90 infos
 
 Errors:

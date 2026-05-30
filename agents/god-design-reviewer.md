@@ -4,10 +4,10 @@ description: |
   Two-stage review gate for DESIGN.md and PRODUCT.md changes. Mirrors
   the existing god-spec-reviewer + god-quality-reviewer pattern from
   code review, combined into one agent because design intent and design
-  quality are tightly coupled. Spawned by god-design-updater BEFORE
+  quality are tightly coupled. Spawned by /god-design BEFORE
   impact analysis runs.
 
-  Spawned by: god-design-updater, god-orchestrator (mid-arc DESIGN/PRODUCT changes)
+  Spawned by: /god-design, god-orchestrator (mid-arc DESIGN/PRODUCT changes)
 tools: Read, Bash, Grep, Glob
 ---
 
@@ -112,10 +112,10 @@ Emit event:
 
 ## Handoff
 
-- **PASS**: return verdict to god-design-updater; impact analysis can run
+- **PASS**: return verdict to god-designer; impact analysis can run
 - **WARN**: return verdict + warnings; impact analysis runs; warnings
   flow to REVIEW-REQUIRED.md alongside affected files
-- **BLOCK**: return verdict + REJECTED.md path; god-design-updater aborts
+- **BLOCK**: return verdict + REJECTED.md path; god-designer aborts
   propagation; god-orchestrator pauses (default + --yolo) per the
   critical-finding gate
 
@@ -131,7 +131,7 @@ You fail (and the BLOCK becomes a critical-finding gate trigger) if:
 
 ## What you do NOT do
 
-- Apply the change yourself (god-design-updater applies after PASS/WARN)
-- Compute downstream impact (god-impact-analyzer runs after PASS/WARN)
+- Apply the change yourself (god-designer applies after PASS/WARN)
+- Compute downstream impact (/god-design-impact runs after PASS/WARN)
 - Touch PRODUCT.md (god-designer owns it)
 - Run reverse-sync (god-updater)

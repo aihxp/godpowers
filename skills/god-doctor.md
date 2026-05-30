@@ -50,7 +50,7 @@ GODPOWERS DOCTOR
 Install: claude (~/.claude/)
   [OK] 110 skills installed
   [OK] 40 agents installed
-  [OK] VERSION matches (1.6.6)
+  [OK] VERSION matches (2.1.0)
   [WARN] routing/god-doctor.yaml exists but skill file did not until now
 
 Project: /Users/.../my-project/.godpowers/
@@ -144,7 +144,7 @@ findings should recommend the scoped specialist named by the helper.
 Built-in, no spawned agent. Reads:
 - `<runtime>/GODPOWERS_VERSION` (compare to package.json)
 - `<runtime>/skills/` and `<runtime>/agents/` listings
-- `.godpowers/state.json`, `intent.yaml`, `log`, `linkage.json`
+- `.godpowers/state.json`, `intent.yaml`, `log`, `links/`
 - `lib/feature-awareness.detect(projectRoot)` for existing-project upgrade
   awareness
 - `lib/repo-doc-sync.detect(projectRoot)` for repo documentation freshness

@@ -590,11 +590,12 @@ Updates applied without reading changelog for breaking changes. Fail.
 ## Reference Tally
 
 - Universal: 12
-- Tier 0 Orchestration: 6
+- Tier 0 Orchestration: 10
 - Tier 1 PRD: 15
-- Tier 1 Architecture: 12
+- Tier 1 Architecture: 13
 - Tier 1 Roadmap: 10
 - Tier 1 Stack: 5
+- Tier 1 Domain Glossary: 5
 - Tier 2 Repo: 8
 - Tier 2 Build: 12
 - Tier 3 Deploy: 8
@@ -607,7 +608,7 @@ Updates applied without reading changelog for breaking changes. Fail.
 - Workflow Docs: 5
 - Workflow Deps: 6
 
-**Total: 146 named have-nots.**
+**Total: 156 named have-nots.**
 
 Each is grep-testable. Each is a documented failure mode. Together they form
 the mechanical quality definition for Godpowers output.

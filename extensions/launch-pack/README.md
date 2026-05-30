@@ -11,7 +11,7 @@ Channel-specific launch strategists for Godpowers.
 | `/god-indie-hackers` | god-indie-hackers-strategist | Numbers-first, mistakes, real questions |
 | `/god-oss-release` | god-oss-release-strategist | README, SemVer, examples that run |
 
-Plus 4 workflows and 22 channel-specific have-nots.
+Plus 4 workflows and 23 channel-specific have-nots.
 
 ## When to use
 

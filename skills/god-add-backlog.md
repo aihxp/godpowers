@@ -2,7 +2,7 @@
 name: god-add-backlog
 description: |
   Add an idea to the backlog. Less urgent than a todo. Reviewed periodically
-  via /god-review-backlog. Captured in .godpowers/backlog/BACKLOG.md.
+  via /god-add-backlog list. Captured in .godpowers/backlog/BACKLOG.md.
 
   Triggers on: "god add backlog", "/god-add-backlog", "backlog this", "for later"
 ---

@@ -54,7 +54,7 @@ producing DESIGN.md in the
 | `/god-design optimize` | Performance improvements (impeccable optimize) |
 | `/god-design live` | Visual variant mode (impeccable live) |
 | `/god-design status` | Lint findings + drift report |
-| `/god-design impact "<change>"` | What-if analysis (delegates to god-impact-analyzer) |
+| `/god-design impact "<change>"` | What-if analysis (delegates to /god-design-impact) |
 
 ## Process
 
@@ -100,7 +100,7 @@ Project root:
 
 Inside `.godpowers/design/`:
 - `STATE.md` (lint history, version, impeccable command log)
-- `HISTORY.md` (append-only log of design changes; populated by god-design-updater)
+- `HISTORY.md` (append-only log of design changes; populated by god-designer)
 - `REJECTED.md` (append-only log of blocked changes; populated by god-design-reviewer)
 
 ## Output to events.jsonl

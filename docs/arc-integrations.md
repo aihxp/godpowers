@@ -493,7 +493,7 @@ Agent runs audit, writes findings
 ```
 
 **Why lazy**: a user with security-pack + launch-pack + data-pack
-installed has 30 extra skills, 10 extra agents, but none of them load
+installed has 10 extra skills, 10 extra agents, but none of them load
 into context until invoked. Zero cost when unused.
 
 ---

@@ -49,7 +49,7 @@ Spawn god-org-context-loader in fresh context. Agent creates or reads
 ## Effect on other commands
 
 Once org-context.yaml exists, downstream agents respect it:
-- /god-stack-selector prefers org-standard tools (won't choose Python if org-standard is TypeScript without explicit override)
+- god-stack-selector prefers org-standard tools (won't choose Python if org-standard is TypeScript without explicit override)
 - /god-arch respects org infrastructure (won't propose Kubernetes if org uses Vercel)
 - /god-deploy uses org's deploy platform
 - /god-observe uses org's observability stack

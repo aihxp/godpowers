@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-05-30
+
+### Security
+- Fixed a command-injection vector in `lib/agent-browser-driver.js`: CLI
+  arguments are now passed as an argv array with the shell disabled
+  (`execFileSync`), so URLs, selectors, and eval expressions sourced from
+  project content (`PRD.md`/`DESIGN.md`) or CLI flags can no longer be
+  interpreted as shell syntax.
+- Added prototype-pollution guards to the `intent.yaml`/manifest parser
+  (`lib/intent.js`) and the router state-path reader (`lib/router.js`).
+- Hardened the non-interactive installer: `npx godpowers` with no target in a
+  non-TTY shell now refuses and prints guidance instead of performing a silent
+  global install.
+- Added path-traversal validation to `extension-scaffold` names
+  (`lib/extension-authoring.js`).
+- `installer-files.copyRecursive` now only reproduces symlinks that stay within
+  the source tree.
+
+### Fixed
+- Guarded JSON parsing of `state.json` (`lib/state.js`) and `events.jsonl`
+  (`lib/events.js`) against corrupt or partially-written files: a clear,
+  actionable error or a skipped torn line instead of an uncaught crash on the
+  `status`/`next`/checkpoint paths.
+- Corrected the review registry path to `.godpowers/REVIEW-REQUIRED.md`
+  (`lib/review-required.js`) so the dashboard and automation count review items,
+  and so the off-switch no longer deletes a repo-root file.
+- `agent-cache.clear` no longer deletes unparseable entries during a narrow
+  (by-agent, expiry, or age) clear (`lib/agent-cache.js`).
+- Reconciled documentation drift: JS-module and script counts, the
+  `HAVE-NOTS.md` reference tally (now 156), linkage path naming
+  (`.godpowers/links/`), phantom command/agent references in skill and agent
+  prose, and stale sample output across docs and skills.
+
+### Changed
+- Data-directory and runtime-bundle installs are now a clean replace
+  (`lib/installer-core.js`), so a version upgrade never leaves behind files that
+  no longer ship.
+- Documented the state lock's advisory, single-process semantics
+  (`lib/state-lock.js`).
+- Softened brittle exact-count test assertions (full-arc step/wave counts,
+  core workflow count) to floors so valid workflow edits no longer break the
+  gate for non-bug reasons.
+
+### Added
+- A skill/agent prose reference validator
+  (`lib/agent-refs.findUnresolvedProseRefs`) wired into the agent-ref test gate,
+  catching phantom `/god-*` and agent references in markdown bodies that the
+  workflow `uses:` check cannot see.
+- Wired have-not `A-13` (ADR inflation) into the architecture gate
+  (`routing/god-arch.yaml`).
+
 ## [2.0.3] - 2026-05-26
 
 ### Added

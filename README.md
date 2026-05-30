@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.0.3-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -21,7 +21,7 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.0.3 keeps the proof loop executable. `npx godpowers quick-proof
+Version 2.1.0 keeps the proof loop executable. `npx godpowers quick-proof
 --project=.` now renders a shipped fixture with real `.godpowers/state.json`,
 computed next action, missing-artifact visibility, and host guarantees. The
 2.0 line also ships a proof transcript, adoption canary harness, published npm
@@ -30,8 +30,11 @@ request-trace review guardrails for narrower implementation diffs. The 2.0.2
 release also hardens the dependency-free YAML subset, route file checks,
 installer file copying, and maintainer release gates.
 
-Maintainer hardening continues on the 2.0 line without expanding the public
-command surface. The 2.0.3 patch range-checks workflow agent references,
+Maintainer hardening continues on the 2.x line without expanding the public
+command surface. The 2.1.0 patch closes a command-injection vector in the
+agent-browser driver, guards runtime file parsing against corrupt state,
+makes data-directory installs a clean replace, and reconciles documentation
+drift. The 2.0.3 patch range-checks workflow agent references,
 derives command metadata from the individual files in `skills/`, delegates
 installer runtime logic to `lib/`, moves the detailed God Mode runbook into
 `references/`, and exposes async file APIs for incremental migration away from

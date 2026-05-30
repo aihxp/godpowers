@@ -108,11 +108,13 @@ test('workflow-parser builds waves correctly', () => {
   if (!waves[0].includes('prd')) throw new Error('prd should be in first wave');
 });
 
-test('workflow-parser validates 13 core workflows', () => {
+test('workflow-parser validates the core workflows (>= 13)', () => {
   const workflowsDir = path.join(__dirname, '..', 'workflows');
   const all = workflowParser.loadAll(workflowsDir);
-  if (Object.keys(all).length !== 13) {
-    throw new Error(`expected 13 workflows, got ${Object.keys(all).length}`);
+  // Floor, not exact: adding a workflow should not fail this runtime check.
+  // The exact doc-vs-reality count is enforced by test-doc-surface-counts.js.
+  if (Object.keys(all).length < 13) {
+    throw new Error(`expected >= 13 workflows, got ${Object.keys(all).length}`);
   }
 });
 

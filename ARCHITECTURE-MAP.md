@@ -478,7 +478,7 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v1.6.24)
+├── package.json (v2.1.0)
 ├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
@@ -498,7 +498,7 @@ godpowers/
 │   ├── PRD.md, ARCH.md, ROADMAP.md, ...
 │
 ├── references/
-│   ├── HAVE-NOTS.md               <- 200 named failure modes (canonical)
+│   ├── HAVE-NOTS.md               <- 156 named failure modes (canonical)
 │   ├── orchestration/             <- Mode/scale detection patterns
 │   ├── planning/                  <- PRD/ARCH/ROADMAP/STACK anatomies + antipatterns
 │   ├── building/                  <- Vertical slices, waves
@@ -511,7 +511,7 @@ godpowers/
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (56 modules)
+├── lib/                           <- Real JS runtime (64 modules)
 │   ├── state.js                   <- state model + drift detection
 │   ├── events.js                  <- OTel-shape event log + hash chain
 │   ├── router.js                  <- command routing
@@ -569,7 +569,7 @@ godpowers/
 
 ---
 
-## Numbers (as of v1.6.24)
+## Numbers (as of v2.1.0)
 
 | Component | Count |
 |-----------|-------|
@@ -582,14 +582,14 @@ godpowers/
 | Intent recipes | 40 |
 | Have-nots | 156 documented + 30+ mechanically validated by linter |
 | Templates | 15 |
-| Reference documents | 37 |
+| Reference documents | 38 |
 | JSON Schemas | 7 |
-| **JS runtime modules** | **56** |
+| **JS runtime modules** | **64** |
 | **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
 | Dogfood scenarios | 5 |
-| Documentation pages | 29 under docs/ plus reference material |
-| **Test suites** | **52 script files plus integration tests** |
+| Documentation pages | 32 under docs/ plus reference material |
+| **Test suites** | **59 script files plus integration tests** |
 | **Tests** | **Full behavioral suite gated by npm test** |
 | Supported AI runtimes | 15+ |
 | Verification axes | **3**: static (lint, design-spec, have-nots), linkage (drift, reverse-sync), runtime (headless browser audit + functional test) |

@@ -28,9 +28,10 @@ All installed skills grouped by category. Categories match
 `docs/reference.md` order.
 
 ### 4. Where to go for more
-- Full reference: `<runtime>/godpowers-references/reference.md`
-- Concepts: `<runtime>/godpowers-references/concepts.md`
-- Roadmap: `<runtime>/godpowers-references/ROADMAP.md`
+- Full reference: https://github.com/aihxp/godpowers/blob/main/docs/reference.md
+- Concepts: https://github.com/aihxp/godpowers/blob/main/docs/concepts.md
+- Roadmap: https://github.com/aihxp/godpowers/blob/main/docs/ROADMAP.md
+- Installed have-nots catalog: `<runtime>/godpowers-references/HAVE-NOTS.md`
 
 ## Subcommands
 

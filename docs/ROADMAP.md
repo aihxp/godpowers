@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
-> Last updated: 2026-05-26
-> Current shipped: v2.0.3
+> Last updated: 2026-05-30
+> Current shipped: v2.1.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.0.3)
+### Current surface (v2.1.0)
 
 What works today:
 - **110 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -112,7 +112,7 @@ What works today:
 - **Mode A** (greenfield), **Mode B** (gap-fill), **Mode C** (audit),
   **Mode D** (multi-repo suites with `god-coordinator` as Tier-0 peer)
 - **Three-axis verification**: static (lint), linkage (drift), runtime (headless browser)
-- **Bidirectional linkage map** with 8 stable ID types
+- **Bidirectional linkage map** with 7 stable ID types
 - **Reverse-sync** writing fenced "Implementation Linkage" footers
 - **Native Pillars project context**: `AGENTS.md` plus routed
   `agents/*.md` pillar files created for every Godpowers project
@@ -128,7 +128,7 @@ What works today:
 - **Agent contract validation** via `lib/agent-validator.js` and `/god-agent-audit`
 - **AI-tool context writer** maintaining fenced sections in AGENTS.md / CLAUDE.md /
   GEMINI.md and 11 other tool-specific paths
-- Full CI suite with 55 script files, integration tests, quick proof tests,
+- Full CI suite with 59 script files, integration tests, quick proof tests,
   dogfood runner, host capability, extension authoring, Mode D, installer
   smoke, and extension-pack publish gates
 - Release gate with full tests, audit checks, E2E smoke, and package contents
@@ -139,6 +139,24 @@ See [CHANGELOG.md](../CHANGELOG.md) for full release history.
 ---
 
 ## Stability window
+
+### v2.1.0 - Security and Drift Hardening Stable
+
+**Theme**: keep the public command surface frozen while closing a security
+vector, hardening runtime robustness, and correcting documentation drift.
+
+Changed in 2.1.0:
+
+- Closed a command-injection vector in the agent-browser driver (argv exec,
+  shell disabled).
+- Guarded runtime JSON parsing (`state.json`, `events.jsonl`) against corrupt
+  or partially-written files.
+- Corrected the REVIEW-REQUIRED.md path, made data-directory installs a clean
+  replace, and narrowed cache/cleanup deletion scope.
+- Added a skill/agent prose reference validator and softened brittle exact-count
+  tests to floors.
+- Reconciled documentation drift (module/script counts, linkage paths,
+  HAVE-NOTS reference tally, stale sample output).
 
 ### v2.0.3 - Maintenance Hardening Stable
 

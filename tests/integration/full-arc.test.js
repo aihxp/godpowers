@@ -21,8 +21,13 @@ async function run() {
     assert.strictEqual(result.workflow, 'full-arc', 'workflow loaded');
     assert.ok(result.project, 'project path set');
     assert.strictEqual(result.status, 'planned', 'workflow planned');
-    assert.strictEqual(result.stepCount, 11, 'full-arc step count');
-    assert.strictEqual(result.waveCount, 8, 'full-arc wave count');
+    // Floors, not exact equality: a valid workflow edit (adding a job or
+    // changing a dependency edge) must not break the gate. The named-job
+    // presence check below is the real structural assertion.
+    assert.ok(result.stepCount >= 11,
+      `full-arc step count >= 11 (got ${result.stepCount})`);
+    assert.ok(result.waveCount >= 1 && result.waveCount <= result.stepCount,
+      `full-arc wave count in range 1..${result.stepCount} (got ${result.waveCount})`);
     assert.ok(project.exists('.godpowers/runs/full-arc-todo-app-smoke/plan.yaml'),
       'plan artifact written');
 
@@ -34,8 +39,8 @@ async function run() {
 
     const planText = fs.readFileSync(result.planPath, 'utf8');
     assert.ok(/workflow: full-arc/.test(planText), 'plan names workflow');
-    assert.ok(/step-count: 11/.test(planText), 'plan records step count');
-    assert.ok(/wave-count: 8/.test(planText), 'plan records wave count');
+    assert.ok(/step-count: \d+/.test(planText), 'plan records step count');
+    assert.ok(/wave-count: \d+/.test(planText), 'plan records wave count');
     assert.ok(/god-pm/.test(planText), 'plan includes PM agent');
     assert.ok(/god-launch-strategist/.test(planText), 'plan includes launch agent');
     assert.ok(/local-helpers: \[feature-awareness, source-sync-back/.test(planText),

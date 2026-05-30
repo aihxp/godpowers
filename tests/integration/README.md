@@ -9,7 +9,7 @@ is written under `.godpowers/runs/`.
 
 | Test | Coverage |
 |------|----------|
-| `full-arc.test.js` | `/god-mode` full-arc workflow loads, plans 10 jobs across 7 waves, and writes `plan.yaml`. |
+| `full-arc.test.js` | `/god-mode` full-arc workflow loads, plans 11 jobs across 8 waves, and writes `plan.yaml`. |
 
 ## Run
 

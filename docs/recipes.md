@@ -760,7 +760,7 @@ For any scenario you might face:
 4. **Is there urgency?** (hotfix vs feature)
 5. **What do you have today vs what's missing?**
 
-The 65 commands compose to handle all of these. If a scenario isn't here:
+The 110 commands compose to handle all of these. If a scenario isn't here:
 - Run `/god-next` and describe the situation
 - /god-next routes you to the right command
 - Or describe what you want; the AI tool's skill matching does the rest

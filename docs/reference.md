@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.0.3.
+Complete command, agent, and artifact reference for v2.1.0.
 
 ## Slash commands (110 total)
 
@@ -226,6 +226,7 @@ First-party packs on npm:
 - `god-archaeologist` - Deep code archaeology.
 - `god-reconstructor` - Reverse-engineer planning artifacts.
 - `god-reconciler` - Cross-artifact reconciliation.
+- `god-greenfieldifier` - Convert a greenfield audit into a brownfield/bluefield migration plan.
 
 ### Meta
 - `god-auditor` - Have-nots scorer.
@@ -293,7 +294,7 @@ available.
   migrations/<slug>/MIGRATION.md
   features/<slug>/PRD.md
 
-  linkage.json             Bidirectional artifact-to-code map
+  links/                   Bidirectional artifact-to-code map (two JSON files)
   REVIEW-REQUIRED.md       Pending propagation reviews
 
   codebase/                Codebase intelligence (mappers + archaeology)
