@@ -1,59 +1,55 @@
-# Godpowers 2.1.1 Release
+# Godpowers 2.2.0 Release
 
-Date: 2026-05-30
+> Status: Ready for release
+> Date: 2026-05-30
 
-Godpowers 2.1.1 is a documentation and off-switch safety patch on top of the
-2.1.0 security release. The public slash-command surface, runtime behavior, and
-artifact layout are unchanged except for one safety improvement to the context
-off-switch.
+Godpowers 2.2.0 adds deliverable progress tracking on top of the 2.1.1
+documentation and off-switch safety patch. It keeps the public slash-command
+surface stable and backward compatible.
 
-## What is stable
+## What's in this release
 
 - 111 slash commands
 - 40 specialist agents
 - 13 executable workflows
 - 41 intent recipes
-- 15-runtime installer
-- Codex installs with generated `god-*.toml` agent metadata files
-- Shared runtime bundle at `<runtime>/godpowers-runtime`
-- Native Pillars project context through `AGENTS.md` and `agents/*.md`
-- `.godpowers/` workflow state and artifact layout
-- `godpowers status --project .`, `godpowers next --project .`, and
-  `godpowers quick-proof --project .`
-- Release gate enforcement through `npm run release:check`
-- The 2.1.0 security hardening (argv-only browser exec, corrupt-file parse
-  guards, clean-replace installs, prototype-pollution guards)
 
-## What is new
+## Highlights
 
-- The context off-switch now empties the canonical `AGENTS.md` instead of
-  deleting it; auto-generated pointer files (`CLAUDE.md`, `.cursorrules`, etc.)
-  are still removed when only the Godpowers fence remains.
-- Documentation reconciliation: removed unverifiable external impeccable
-  rule/finding counts; aligned the project-mode taxonomy with the runtime
-  (A/B/C/E primary modes, with D as the orthogonal multi-repo suite overlay);
-  documented every `lib/` module; and clarified how the artifact-category counts
-  relate.
-
-## Guardrails
-
-- The public slash-command surface remains frozen.
-- The runtime remains dependency-free.
-- `bin/install.js` stays a thin CLI entry point and delegates install behavior
-  to `lib/installer-core.js`.
+- Deliverable progress tracking: the new `/god-progress` command and the
+  `.godpowers/REQUIREMENTS.md` ledger report which PRD requirements and roadmap
+  increments are done, in progress, or not started. Status is derived from the
+  linkage map by `lib/requirements.js`, so it cannot drift from the code that is
+  actually implemented.
+- Stable requirement and increment ids: PRD requirements carry
+  `P-MUST-NN`/`P-SHOULD-NN`/`P-COULD-NN`, and ROADMAP increments carry `M-slug`
+  ids with a per-increment `Status` and member requirement ids.
+- The build chain populates the ledger during real runs: `god-planner` names the
+  requirement ids each slice delivers, `god-executor` stamps `// Implements: P-...`
+  annotations, and the spec and quality reviewers verify them.
+- The dashboard (`/god-status`, `/god-next`, `/god-mode` closeout) gains a
+  `Deliverable progress` section, and a `whats-done` recipe routes natural
+  language like "how far along are we" to `/god-progress`.
+- Documentation reconciled with the shipped surface and version: accurate
+  counts and `/god-progress`/`REQUIREMENTS.md` awareness across README,
+  ARCHITECTURE, reference, linkage, recipes, and the artifact inventories.
 
 ## Validation
 
-Release validation includes:
+- `npm test` green across the full suite
+- `npm run lint` clean
+- `npm run release:check` green (tests, audit, package contents)
 
-- `npm test`
-- `npm run test:audit`
-- `npm run pack:check`
-- `npm run release:check`
-- `npm pack --json`
-- local install smoke tests across supported runtime shapes
-- npm publish when registry credentials are available
-- GitHub release creation for `v2.1.1`
+## Upgrade
 
-The `v2.1.1` tag should point to the release commit that matches the npm
-`godpowers@2.1.1` package.
+- `npm install -g godpowers@2.2.0` or `npx godpowers@2.2.0`
+- Re-run `/god-context` in each project to refresh installed runtime metadata
+- No breaking changes; existing `.godpowers/` state is compatible. Projects gain
+  a `REQUIREMENTS.md` ledger the next time `/god-progress` or `/god-sync` runs.
+
+## Notes
+
+- GitHub release creation for `v2.2.0`
+- The tag should match the npm package version
+- The `v2.2.0` tag should point to the release commit that matches the npm
+  `godpowers@2.2.0` package.

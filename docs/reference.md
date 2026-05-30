@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.1.1.
+Complete command, agent, and artifact reference for v2.2.0.
 
 ## Slash commands (111 total)
 
@@ -268,8 +268,10 @@ available.
 ```
 .godpowers/
   PROGRESS.md              Tier status
+  REQUIREMENTS.md          Deliverable ledger (requirements done / in progress / not started, from /god-progress)
   intent.yaml              Project intent
   state.json               Project state
+  links/                   Requirement-to-code linkage map
   prep/INITIAL-FINDINGS.md Godpowers init scan and suggested next rationale
   prep/IMPORTED-CONTEXT.md Optional GSD / Superpowers / BMAD preparation context
 

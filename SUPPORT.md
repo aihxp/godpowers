@@ -24,3 +24,7 @@ This is a community project maintained on a best-effort basis. Response times va
 - Host capabilities: docs/host-capabilities.md
 - Extension authoring: docs/extension-authoring.md
 - Suite release dry-run: docs/suite-release-dry-run.md
+- Linkage and deliverable tracking: docs/linkage.md
+
+The Reference (docs/reference.md) lists every slash command and artifact. See
+README.md for the full documentation index.

@@ -182,6 +182,27 @@ Per Q6 in the plan: a git pre-commit hook is optional and off by default.
 Linkage updates after meaningful commands; the hook would just trigger
 the same flow more eagerly.
 
+## Deriving requirement status
+
+The linkage map is the foundation for deliverable progress: which requirements
+are done, in progress, or not started. `lib/requirements.js` reads the PRD
+(declared `P-MUST-NN` / `P-SHOULD-NN` / `P-COULD-NN` ids), the ROADMAP
+(delivery increments and their member requirement ids), the forward linkage
+map (requirement id to implementing files), and build state, then derives a
+status per requirement:
+
+| Status | Condition |
+|---|---|
+| not started | no code is linked to the requirement |
+| in progress | code is linked, but its increment (or the build) is not done |
+| done | code is linked AND its increment is done (or the build is complete) |
+
+Reverse-sync regenerates the human-readable ledger `.godpowers/REQUIREMENTS.md`
+and caches a summary under `state.json` `deliverables` whenever the map changes.
+`/god-progress` surfaces this, and `/god-status` shows a deliverable-progress
+section. Because status is derived from the map (not hand-maintained), it
+cannot drift from the code that is actually linked.
+
 ## Drift detection
 
 `lib/drift-detector` runs on every `/god-sync` and `/god-scan`. It checks:
@@ -229,3 +250,5 @@ Findings flow to `REVIEW-REQUIRED.md`.
 - `lib/linkage.js` - core map manager
 - `lib/code-scanner.js` - all 6 discovery mechanisms
 - `lib/drift-detector.js` - drift checks
+- `lib/requirements.js` - derives requirement status and renders the ledger
+- `/god-progress` - deliverable progress report (`.godpowers/REQUIREMENTS.md`)

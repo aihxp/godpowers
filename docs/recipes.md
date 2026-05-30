@@ -704,6 +704,15 @@ Reads disk state, suggests the right command with reason.
 /god-status
 ```
 
+### "How far along are we? What's done vs left?"
+
+```
+/god-progress
+```
+Shows which PRD requirements and roadmap increments are done, in progress, or
+not started, derived from the linkage map. Refreshes the
+`.godpowers/REQUIREMENTS.md` checklist you can open or share.
+
 ### "Is the project healthy?"
 
 ```
@@ -816,6 +825,7 @@ If you know the command, here's where each one shines:
 | `/god-restore` | Recover from .trash |
 | `/god-doctor` | Diagnose install/state |
 | `/god-status` | Current state |
+| `/god-progress` | Deliverable progress (requirements done / left) |
 | `/god-next` | What's next |
 | `/god-lifecycle` | Project phase |
 | `/god-help` | Discoverable help |

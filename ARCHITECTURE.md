@@ -1,13 +1,14 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.1.1 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, and security and drift hardening)
+> Status: STABLE v2.2.0 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, and deliverable progress tracking)
 > Authors: Godpowers Team
 > Last updated: 2026-05-30
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.1.1 keeps the public slash-command surface stable while hardening release
-validation, parser coverage, router checks, installer decomposition, workflow
-agent references, async file APIs, and the request-trace review baseline.
+v2.2.0 keeps the public slash-command surface stable and adds deliverable
+progress tracking: requirement and roadmap-increment status derived from the
+linkage map, surfaced via `/god-progress` and the `.godpowers/REQUIREMENTS.md`
+ledger.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -309,15 +310,15 @@ commands inside the AI coding tool.
 
 ### Route Topology And Automation Audit (2026-05-16)
 
-[DECISION] The route graph is currently complete at the file level: 110
+[DECISION] The route graph is currently complete at the file level: 111
 `skills/*.md` command files match 111 `routing/*.yaml` route files (110
 `god-*` commands plus the `god` front door).
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
 agents, 13 workflow YAML files, and 41 intent recipes.
 
-[DECISION] The current route graph has 59 built-in or local-runtime command
-routes and 52 agent-routed command routes.
+[DECISION] The current route graph has 57 built-in or local-runtime command
+routes and 54 agent-routed command routes.
 
 [DECISION] Eighteen command routes declare secondary or parallel spawns:
 `/god-build`, `/god-design`, `/god-dogfood`, `/god-feature`, `/god-harden`,
@@ -332,13 +333,13 @@ recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
 |---------|---------------|---------------------------|
-| Skills | 110 | Every command has a user-facing skill file |
-| Routes | 110 | Every command has machine-readable routing metadata |
+| Skills | 111 | Every command has a user-facing skill file |
+| Routes | 111 | Every command has machine-readable routing metadata |
 | Agents | 40 | Spawn targets are available for specialist work |
 | Workflows | 13 | Arc execution has declarative DAGs |
-| Recipes | 40 | Fuzzy intent can route into command sequences |
-| Built-in routes | 58 | Local helpers need visible `Agent: none` cards |
-| Agent-routed routes | 52 | Spawned work needs visible spawn cards |
+| Recipes | 41 | Fuzzy intent can route into command sequences |
+| Built-in routes | 57 | Local helpers need visible `Agent: none` cards |
+| Agent-routed routes | 54 | Spawned work needs visible spawn cards |
 
 #### Current Automation Ladder
 

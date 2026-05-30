@@ -478,12 +478,12 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v2.1.1)
+├── package.json (v2.2.0)
 ├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
 │
-├── skills/                        <- 110 core slash commands
+├── skills/                        <- 111 core slash commands
 │   ├── god-mode.md, god-init.md, god-prd.md, god-arch.md, ...
 │   └── (one .md per slash command)
 │
@@ -511,13 +511,16 @@ godpowers/
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (64 modules)
+├── lib/                           <- Real JS runtime (65 modules)
 │   ├── state.js                   <- state model + drift detection
 │   ├── events.js                  <- OTel-shape event log + hash chain
 │   ├── router.js                  <- command routing
 │   ├── recipes.js                 <- intent recipes
 │   ├── workflow-runner.js         <- executable workflow plans
 │   ├── dashboard.js               <- shared status and action brief engine
+│   ├── requirements.js            <- deliverable ledger (requirement/increment status)
+│   ├── linkage.js                 <- requirement-to-code linkage map
+│   ├── reverse-sync.js            <- scan code, refresh linkage + ledger
 │   ├── dogfood-runner.js          <- messy-repo dogfood gate
 │   ├── host-capabilities.js       <- host guarantee detection
 │   ├── extension-authoring.js     <- extension scaffold helper
@@ -569,22 +572,22 @@ godpowers/
 
 ---
 
-## Numbers (as of v2.1.1)
+## Numbers (as of v2.2.0)
 
 | Component | Count |
 |-----------|-------|
 | Layers | 4 |
 | Tiers | 4 (0-3) |
 | Sub-steps (per tier) | 13: PRD, ARCH, ROADMAP, STACK, **DESIGN, PRODUCT**, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration |
-| Slash commands | 110 |
+| Slash commands | 111 |
 | Specialist agents | 40 |
 | Workflows (core YAMLs) | 13 |
-| Intent recipes | 40 |
+| Intent recipes | 41 |
 | Have-nots | 156 documented + 30+ mechanically validated by linter |
 | Templates | 15 |
 | Reference documents | 38 |
 | JSON Schemas | 7 |
-| **JS runtime modules** | **64** |
+| **JS runtime modules** | **65** |
 | **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
 | Dogfood scenarios | 5 |

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-05-30
+
 ### Added
 - Deliverable progress tracking, so a project run always communicates which
   requirements are finished, which are in flight, and which are untouched:
@@ -26,6 +28,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     deliver, so requirements map to increments and to implementing code.
   - `reverse-sync` and `/god-sync` refresh the ledger and cache the summary in
     `state.json.deliverables` whenever the linkage map changes.
+- A `whats-done` intent recipe so phrases like "how far along are we" and
+  "what's done" route to `/god-progress`.
+- A reconstructed self-ledger for Godpowers itself (`.godpowers/prd/PRD.md`,
+  `.godpowers/roadmap/ROADMAP.md`, `.godpowers/REQUIREMENTS.md`) via
+  `scripts/reconstruct-self-ledger.js`, so the project dogfoods its own
+  deliverable tracking.
+- `deliverable-progress-tracking` registered in the feature-awareness set so
+  existing projects learn about `/god-progress` on the next refresh.
+
+### Changed
+- Build agents thread requirement ids end to end: `god-planner` names the
+  requirement ids each slice delivers and `god-executor` stamps
+  `// Implements: P-...` annotations into code, which the reviewers now verify,
+  so the linkage map (and therefore the ledger) populates during real builds.
+- Sibling agents that produce or consume the PRD and ROADMAP
+  (`god-reconstructor`, `god-roadmap-updater`, `god-roadmap-reconciler`,
+  `god-greenfieldifier`, and others) now preserve stable requirement and
+  increment ids and refresh the ledger.
+- Reconciled documentation surface counts and version references to v2.2.0
+  (111 slash commands, 41 recipes) and added `/god-progress` and
+  `REQUIREMENTS.md` to command lists, artifact inventories, and the linkage doc.
 
 ## [2.1.1] - 2026-05-30
 
