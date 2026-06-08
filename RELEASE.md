@@ -1,9 +1,9 @@
-# Godpowers 2.3.0 Release
+# Godpowers 2.3.1 Release
 
 > Status: Ready for package verification
 > Date: 2026-06-08
 
-Godpowers 2.3.0 is an accountability and release-surface hardening release for
+Godpowers 2.3.1 is an accountability and release-surface hardening release for
 the 2.x line. It strengthens planning grounding, package legitimacy, install
 profiles, atomic persistence, executor recovery, extension authoring,
 front-door route coverage, host capability reporting, and dashboard behavior.
@@ -50,19 +50,19 @@ front-door route coverage, host capability reporting, and dashboard behavior.
 - `npm test` green across the full suite
 - `npm run lint` clean
 - `npm run release:check` green (tests, audit, package contents)
-- `npm pack` creates a local `godpowers-2.3.0.tgz` tarball for package
+- `npm pack` creates a local `godpowers-2.3.1.tgz` tarball for package
   inspection
 
 ## Upgrade
 
-- `npm install -g godpowers@2.3.0` or `npx godpowers@2.3.0`
+- `npm install -g godpowers@2.3.1` or `npx godpowers@2.3.1`
 - Re-run `/god-context` in each project to refresh installed runtime metadata
 - No breaking changes; existing `.godpowers/` state is compatible. Users who
   want a compact install can run `npx godpowers --profile=core`.
 
 ## Notes
 
-- GitHub release creation for `v2.3.0`
+- GitHub release creation for `v2.3.1`
 - The tag should match the npm package version
-- The `v2.3.0` tag should point to the release commit that matches the npm
-  `godpowers@2.3.0` package.
+- The `v2.3.1` tag should point to the release commit that matches the npm
+  `godpowers@2.3.1` package.

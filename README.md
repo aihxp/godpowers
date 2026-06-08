@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.1-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -21,12 +21,12 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.3.0 keeps the proof loop executable and adds accountability
-hardening. Build plans can now be checked against real repository files and
-symbols before execution, package-backed stack choices can be screened for
-legitimacy, core ledger writes use atomic persistence, installer profiles let
-teams choose a smaller command surface, and failed executor attempts leave a
-clear repair classification.
+Version 2.3.1 keeps the proof loop executable and adds release-surface
+hardening. Extension authors get `/god-extension-scaffold`, public starter
+paths are regression-tested against the actual router, host capability reports
+include optional code-intelligence tooling, clean user dashboards avoid
+maintainer-repo drift, and symlink handling is hardened across extension,
+planning-system, and cache paths.
 
 Maintainer hardening continues on the 2.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1] - 2026-06-08
+
 ### Added
 - Added `/god-extension-scaffold` as the slash-command entry point for
   extension pack authoring, with routing metadata, installer profile coverage,
