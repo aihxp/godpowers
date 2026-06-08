@@ -25,7 +25,9 @@ test('compute reports not initialized and suggests /god-init', () => {
     `repo surface: ${result.proactive.repoSurface}`);
   assert(result.proactive.docs === 'not-applicable', `docs: ${result.proactive.docs}`);
   assert(result.proactive.sync === 'not-applicable', `sync: ${result.proactive.sync}`);
-  assert(result.actionBrief.confidence === 'ready', `brief: ${result.actionBrief.confidence}`);
+  assert(result.actionBrief.recommended === '/god-init', `brief: ${result.actionBrief.recommended}`);
+  assert(result.actionBrief.blockers.every((blocker) => /^Host:/.test(blocker)),
+    `blockers: ${result.actionBrief.blockers.join('; ')}`);
   const rendered = dashboard.render(result);
   assert(rendered.includes('Godpowers Dashboard'), 'render missing title');
   assert(rendered.includes('Source: runtime dashboard (lib/dashboard.js)'), 'render missing source');
@@ -78,7 +80,8 @@ test('non-Godpowers projects do not show maintainer repo drift', () => {
     `blockers: ${result.actionBrief.blockers.join('; ')}`);
   assert(!result.actionBrief.blockers.some((blocker) => /^Docs:/.test(blocker)),
     `blockers: ${result.actionBrief.blockers.join('; ')}`);
-  assert(result.actionBrief.confidence === 'ready', `brief: ${result.actionBrief.confidence}`);
+  assert(result.actionBrief.blockers.every((blocker) => /^Host:/.test(blocker)),
+    `blockers: ${result.actionBrief.blockers.join('; ')}`);
 });
 
 test('render includes current status, proactive checks, and next route', () => {
