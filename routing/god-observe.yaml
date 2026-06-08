@@ -4,6 +4,7 @@ metadata:
   command: /god-observe
   description: Wire observability
   tier: 3
+  family: operate
 
 prerequisites:
   required:

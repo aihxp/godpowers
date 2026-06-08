@@ -4,6 +4,7 @@ metadata:
   command: /god-automation-setup
   description: Prepare opt-in host automation setup
   tier: 0
+  family: configure
 
 prerequisites:
   required: []

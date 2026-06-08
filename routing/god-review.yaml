@@ -4,6 +4,7 @@ metadata:
   command: /god-review
   description: Two-stage code review
   tier: 0
+  family: verify
 
 prerequisites:
   required:

@@ -33,6 +33,8 @@ function fixture() {
     '- Confirm release-surface-sync is fresh.'
   ].join('\n'));
   writeRel(tmp, 'scripts/check-package-contents.js', [
+    "'lib/command-families.js'",
+    "'lib/workflow-helper-groups.js'",
     "'lib/route-quality-sync.js'",
     "'lib/recipe-coverage-sync.js'",
     "'lib/release-surface-sync.js'"
@@ -103,6 +105,24 @@ test('route quality sync requires trace events for agent-spawning routes', () =>
   const report = routeQualitySync.detect(tmp);
   assert(report.stale.some((check) => check.id === 'missing-trace-events--god-write'));
   assert(report.stale.some((check) => check.id === 'agent-trace-policy'));
+});
+
+test('route quality sync requires typed outcomes for contextual exits', () => {
+  const tmp = fixture();
+  writeRel(tmp, 'routing/god-next.yaml', [
+    'apiVersion: godpowers/v1',
+    'kind: CommandRouting',
+    'metadata:',
+    '  command: /god-next',
+    'execution:',
+    '  spawns: [built-in]',
+    'success-path:',
+    '  next-recommended: varies',
+    'endoff:',
+    '  state-update: tier-0 updated for /god-next'
+  ].join('\n'));
+  const report = routeQualitySync.detect(tmp);
+  assert(report.stale.some((check) => check.id === 'missing-route-outcome--god-next'));
 });
 
 test('recipe coverage sync finds missing high-frequency recipes', () => {

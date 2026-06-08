@@ -96,6 +96,14 @@ Workflow progress and audit scores are separate metrics. The dashboard
 scores must be labeled as audit scores in the surrounding closeout, not reused
 as workflow progress.
 
+Workflow YAML may use `local-helper-groups` to avoid repeating closeout helper
+sets. Serialized plans must still expand those groups into explicit
+`local-helpers` so the transcript can show every local runtime action.
+
+Route closeouts that use contextual or choice-based next values must render
+their `success-path.outcome` type, label, reason, and allowed next commands.
+Flexible routing is allowed, but unexplained placeholders are not.
+
 ## Already Automatic
 
 | Area | Current trigger | Visibility requirement |

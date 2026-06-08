@@ -4,6 +4,7 @@ metadata:
   command: /god-extension-scaffold
   description: Create a publishable extension pack skeleton
   tier: 0
+  family: extend
 
 prerequisites:
   required: []

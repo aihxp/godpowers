@@ -4,6 +4,7 @@ metadata:
   command: /god-skip
   description: Explicit skip with audit
   tier: 0
+  family: recover
 
 prerequisites:
   required:

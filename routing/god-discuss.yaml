@@ -4,6 +4,13 @@ metadata:
   command: /god-discuss
   description: Pre-planning discussion
   tier: 0
+  family: start
+  trigger-precedence:
+    - trigger: think through
+      prefer: /god-explore
+      when: broad-idea
+      fallback: /god-discuss
+      reason: Broad ideation starts in explore while concrete decisions stay in discuss.
 
 prerequisites:
   required:
@@ -18,6 +25,11 @@ execution:
 
 success-path:
   next-recommended: varies
+  outcome:
+    type: contextual
+    label: Context-specific next route
+    reason: The next route depends on current disk state, command arguments, or user choice.
+    allowed-next: [/god-status, /god-next, /god-help]
 
 failure-path:
   on-error: /god-doctor

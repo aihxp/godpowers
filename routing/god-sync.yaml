@@ -4,6 +4,7 @@ metadata:
   command: /god-sync
   description: Sync all affected artifacts after feature work
   tier: 0
+  family: maintain
 
 prerequisites:
   required:

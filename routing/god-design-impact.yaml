@@ -4,6 +4,7 @@ metadata:
   command: /god-design-impact
   description: What-if analysis on DESIGN.md change
   tier: 1
+  family: start
 
 prerequisites:
   required:
@@ -16,6 +17,11 @@ execution:
 
 success-path:
   next-recommended: /god-design or /god-sync
+  outcome:
+    type: requires-selection
+    label: User selection required
+    reason: The route offers multiple valid next commands and the user should choose one.
+    allowed-next: [/god-design, /god-sync]
 
 failure-path:
   on-error: /god-doctor

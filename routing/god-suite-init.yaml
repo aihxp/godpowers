@@ -4,6 +4,7 @@ metadata:
   command: /god-suite-init
   description: Register a multi-repo suite (Mode D)
   tier: 0
+  family: collaborate
 
 prerequisites:
   required: []

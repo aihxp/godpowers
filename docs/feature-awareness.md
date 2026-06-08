@@ -56,7 +56,7 @@ installed Godpowers runtime adds capabilities.
 {
   "godpowers-features": {
     "feature-set-version": 1,
-    "runtime-version": "2.3.1",
+    "runtime-version": "2.4.0",
     "known": [
       "planning-system-migration",
       "source-system-sync-back",

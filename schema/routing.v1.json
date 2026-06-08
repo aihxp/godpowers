@@ -20,9 +20,29 @@
       "properties": {
         "command": {
           "type": "string",
-          "pattern": "^/god-[a-z-]+$"
+          "pattern": "^/god(?:-[a-z-]+)?$"
         },
         "description": { "type": "string" },
+        "family": {
+          "type": "string",
+          "enum": [
+            "start",
+            "continue",
+            "build",
+            "verify",
+            "operate",
+            "maintain",
+            "capture",
+            "recover",
+            "extend",
+            "collaborate",
+            "configure"
+          ]
+        },
+        "trigger-precedence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/TriggerPrecedence" }
+        },
         "tier": {
           "type": "integer",
           "minimum": 0,
@@ -110,7 +130,10 @@
       "properties": {
         "next-recommended": {
           "type": "string",
-          "pattern": "^/god-[a-z-]+$"
+          "pattern": "^(?:/god(?:-[a-z-]+)?(?:\\s.*)?|varies|varies-by-verdict|steady-state|session-end)(?:\\sor\\s/god-[a-z-]+(?:\\s.*)?)*$"
+        },
+        "outcome": {
+          "$ref": "#/$defs/RouteOutcome"
         },
         "alternatives": {
           "type": "array",
@@ -162,7 +185,7 @@
         },
         "auto-complete": {
           "type": "string",
-          "pattern": "^/god-[a-z-]+$",
+          "pattern": "^/god(?:-[a-z-]+)?(?:\\s.*)?$",
           "description": "Command to run if prerequisite missing"
         },
         "human-required": {
@@ -175,8 +198,43 @@
       "type": "object",
       "required": ["command"],
       "properties": {
-        "command": { "type": "string", "pattern": "^/god-[a-z-]+$" },
+        "command": { "type": "string", "pattern": "^/god(?:-[a-z-]+)?(?:\\s.*)?$" },
         "when": { "type": "string", "description": "Condition for this recommendation" }
+      }
+    },
+    "RouteOutcome": {
+      "type": "object",
+      "required": ["type", "label", "reason"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "contextual",
+            "verdict-based",
+            "steady-state",
+            "session-end",
+            "requires-selection",
+            "no-next-command",
+            "explicit-command"
+          ]
+        },
+        "label": { "type": "string" },
+        "reason": { "type": "string" },
+        "allowed-next": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "TriggerPrecedence": {
+      "type": "object",
+      "required": ["trigger", "prefer"],
+      "properties": {
+        "trigger": { "type": "string" },
+        "prefer": { "type": "string" },
+        "when": { "type": "string" },
+        "fallback": { "type": "string" },
+        "reason": { "type": "string" }
       }
     }
   }

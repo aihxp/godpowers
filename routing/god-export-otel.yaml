@@ -4,6 +4,7 @@ metadata:
   command: /god-export-otel
   description: Export Godpowers events to OpenTelemetry OTLP JSON traces
   tier: 0
+  family: operate
 
 prerequisites:
   required: []

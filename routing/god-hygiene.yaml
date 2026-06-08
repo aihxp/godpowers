@@ -4,6 +4,7 @@ metadata:
   command: /god-hygiene
   description: Composite health check
   tier: 0
+  family: verify
 
 prerequisites:
   required:

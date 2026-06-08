@@ -4,6 +4,7 @@ metadata:
   command: /god-launch
   description: Launch the product
   tier: 3
+  family: operate
 
 prerequisites:
   required:
@@ -31,6 +32,11 @@ standards:
 
 success-path:
   next-recommended: steady-state
+  outcome:
+    type: steady-state
+    label: Steady state
+    reason: The project run has completed and ongoing work should start from steady-state commands.
+    allowed-next: [/god-status, /god-feature, /god-hygiene]
 
   post-success-actions:
     - run: /god-scan

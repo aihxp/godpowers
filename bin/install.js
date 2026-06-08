@@ -18,6 +18,7 @@ const {
   countInstalledSurface
 } = require('../lib/installer-core');
 const { describeProfiles } = require('../lib/install-profiles');
+const commandFamilies = require('../lib/command-families');
 const identity = require('../lib/package-identity');
 
 const VERSION = identity.PACKAGE_VERSION;
@@ -54,6 +55,11 @@ function showHelp() {
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
+  log('');
+  log('Command families:');
+  for (const family of commandFamilies.COMMAND_FAMILIES) {
+    log(`  ${family.id.padEnd(12)} ${family.purpose}`);
+  }
   log('');
   log('Options:');
   log('  --project=<path>     Project root for status, next, proof, or automation commands');

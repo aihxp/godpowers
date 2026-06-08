@@ -4,6 +4,7 @@ metadata:
   command: /god-stories
   description: List STORY.md files grouped by status
   tier: 0
+  family: build
 
 prerequisites:
   required: []

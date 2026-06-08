@@ -4,6 +4,7 @@ metadata:
   command: /god-upgrade
   description: Framework migration
   tier: 0
+  family: maintain
 
 prerequisites:
   required:

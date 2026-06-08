@@ -4,6 +4,7 @@ metadata:
   command: /god-build
   description: Build slices with TDD enforcement and two-stage review
   tier: 2
+  family: build
 
 prerequisites:
   required:

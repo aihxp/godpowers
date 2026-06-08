@@ -93,7 +93,7 @@ Sync status:
     + source-sync: <written legacy planning/BMAD/Superpowers companion files, no-op, or skipped>
     + repo-doc-sync: <refreshed README badges/counts, recommended god-docs-writer, or no-op>
     + repo-surface-sync: <checked routes/package/agents/workflows/extensions, recommended scoped agents, or no-op>
-    + route-quality-sync: <checked atomic spawns and contextual exits, no-op, or recommended god-auditor>
+    + route-quality-sync: <checked atomic spawns and typed route outcomes, no-op, or recommended god-auditor>
     + recipe-coverage-sync: <checked high-frequency intent recipes, no-op, or recommended god-roadmap-reconciler>
     + release-surface-sync: <checked badges/changelog/release/package guards, no-op, or recommended god-docs-writer>
     + pillars-sync: <updated N pillar files, no-op, or proposed>

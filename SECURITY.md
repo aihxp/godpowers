@@ -56,11 +56,11 @@ When using Godpowers in a sensitive context:
 
 | Version | Supported |
 |---------|-----------|
-| 2.3.x   | Yes |
+| 2.4.x   | Yes |
+| 2.3.x   | Security fixes only |
 | 2.2.x   | Security fixes only |
 | 2.1.x   | Security fixes only |
-| 2.0.x   | Security fixes only |
-| < 2.0   | No |
+| < 2.1   | No |
 
 Godpowers repo documentation sync checks this table as part of release
 readiness, but support policy changes still require maintainer review.

@@ -4,6 +4,7 @@ metadata:
   command: /god-archaeology
   description: Deep brownfield code archaeology
   tier: 0
+  family: start
 
 prerequisites:
   required: []

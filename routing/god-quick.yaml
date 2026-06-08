@@ -4,6 +4,7 @@ metadata:
   command: /god-quick
   description: Small task with TDD
   tier: 0
+  family: build
 
 prerequisites:
   required:

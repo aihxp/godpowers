@@ -4,6 +4,7 @@ metadata:
   command: /god-arch
   description: Design system architecture
   tier: 1
+  family: start
 
 prerequisites:
   required:

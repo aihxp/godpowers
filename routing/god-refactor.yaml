@@ -4,6 +4,7 @@ metadata:
   command: /god-refactor
   description: Safe refactor with TDD
   tier: 0
+  family: build
 
 prerequisites:
   required:

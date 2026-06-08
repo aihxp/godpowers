@@ -4,6 +4,7 @@ metadata:
   command: /god-build-agent
   description: Generate custom specialist agent
   tier: 0
+  family: extend
 
 prerequisites:
   required: []

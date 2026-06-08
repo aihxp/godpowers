@@ -4,6 +4,7 @@ metadata:
   command: /god-docs
   description: Documentation work
   tier: 0
+  family: maintain
 
 prerequisites:
   required:

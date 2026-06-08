@@ -4,6 +4,7 @@ metadata:
   command: /god-suite-release
   description: Coordinate release across suite siblings
   tier: 3
+  family: collaborate
 
 prerequisites:
   required:

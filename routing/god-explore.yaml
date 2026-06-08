@@ -4,6 +4,7 @@ metadata:
   command: /god-explore
   description: Pre-init Socratic ideation
   tier: 0
+  family: start
 
 prerequisites:
   required:

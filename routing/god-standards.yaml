@@ -4,6 +4,7 @@ metadata:
   command: /god-standards
   description: Artifact standards check (substitution/three-label/have-nots)
   tier: 0
+  family: verify
 
 prerequisites:
   required: []

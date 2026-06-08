@@ -43,8 +43,10 @@ async function run() {
     assert.ok(/wave-count: \d+/.test(planText), 'plan records wave count');
     assert.ok(/god-pm/.test(planText), 'plan includes PM agent');
     assert.ok(/god-launch-strategist/.test(planText), 'plan includes launch agent');
-    assert.ok(/local-helpers: \[feature-awareness, source-sync-back/.test(planText),
-      'plan includes final sync local helpers');
+    assert.ok(/local-helper-groups: \[runtime-awareness-closeout, source-sync-closeout, standard-closeout, release-readiness-closeout\]/.test(planText),
+      'plan records final sync local helper groups');
+    assert.ok(/local-helpers: \[feature-awareness, host-capabilities, source-sync-back/.test(planText),
+      'plan expands final sync local helpers');
 
     console.log('  + full-arc smoke passed: fixture + workflow plan + artifact');
 

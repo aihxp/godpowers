@@ -4,6 +4,7 @@ metadata:
   command: /god-suite-sync
   description: Propagate byte-identical files across suite
   tier: 0
+  family: collaborate
 
 prerequisites:
   required:

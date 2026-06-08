@@ -4,6 +4,7 @@ metadata:
   command: /god-repair
   description: Fix detected drift
   tier: 0
+  family: recover
 
 prerequisites:
   required:

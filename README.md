@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.4.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -21,12 +21,10 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.3.1 keeps the proof loop executable and adds release-surface
-hardening. Extension authors get `/god-extension-scaffold`, public starter
-paths are regression-tested against the actual router, host capability reports
-include optional code-intelligence tooling, clean user dashboards avoid
-maintainer-repo drift, and symlink handling is hardened across extension,
-planning-system, and cache paths.
+Version 2.4.0 keeps every leaf command available while making the command
+surface easier to navigate. `/god`, `/god-help`, `/god-next`, and route
+metadata now share command families, decision ladders, typed route outcomes,
+and workflow helper groups so users see clearer paths without losing power.
 
 Maintainer hardening continues on the 2.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
@@ -109,6 +107,16 @@ preserves the complete command surface, while the smaller profiles install the
 commands most relevant to the role. `--minimal` is an alias for
 `--profile=core`.
 
+Use profiles as journeys:
+
+| Journey | Profile |
+|---|---|
+| I want the basics | `core` |
+| I build products | `builder` |
+| I maintain Godpowers or mature repos | `maintainer` |
+| I coordinate suites | `suite` |
+| I want everything | `full` |
+
 Agent spawning is host-native. Claude uses its native agent/task interface,
 Codex uses installed `agents/*.toml` metadata backed by the same Markdown agent
 contracts, and the other runtimes use their supported agent or subagent
@@ -184,6 +192,10 @@ hook does the same thing when you open a new session in a Godpowers project.
 
 If the full command surface feels large, begin with one of these paths and only
 learn the next command when Godpowers recommends it.
+
+`/god-help` presents command families first: start, continue, build, verify,
+operate, maintain, capture, recover, extend, collaborate, and configure. Leaf
+commands remain direct shortcuts.
 
 | Goal | Starter path |
 |---|---|

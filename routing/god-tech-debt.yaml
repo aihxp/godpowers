@@ -4,6 +4,7 @@ metadata:
   command: /god-tech-debt
   description: Assess and prioritize technical debt
   tier: 0
+  family: maintain
 
 prerequisites:
   required: []

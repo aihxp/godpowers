@@ -4,6 +4,7 @@ metadata:
   command: /god-harden
   description: Adversarial security review
   tier: 3
+  family: operate
 
 prerequisites:
   required:

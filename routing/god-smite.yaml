@@ -4,6 +4,7 @@ metadata:
   command: /god-smite
   description: Hard-reset dependency cache; reinstall
   tier: 0
+  family: recover
 
 prerequisites:
   required: []

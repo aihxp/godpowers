@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-06-08
+
+### Added
+- Added command-family UX metadata for start, continue, build, verify,
+  operate, maintain, capture, recover, extend, collaborate, and configure
+  while keeping every shipped leaf command available.
+- Added capture, work-size, verification, status-view, and trigger-precedence
+  helpers in `lib/command-families.js`.
+- Added typed route outcome metadata for contextual, verdict-based,
+  steady-state, session-end, and selection-based route exits.
+- Added workflow helper groups with serialized plan expansion so closeout
+  helpers can be consolidated without hiding local runtime work.
+
+### Changed
+- Updated `/god`, `/god-help`, `/god-next`, `/god-status`, README,
+  reference docs, recipes, architecture docs, command-flow docs, and
+  auto-invoke visibility docs to present the consolidated UX paths.
+- Updated all shipped command routes with command family metadata.
+- Updated repeated workflow closeout helper lists to named helper groups while
+  preserving explicit expanded helpers in generated plans.
+- Updated extension recipe copy to describe current extension-pack-required
+  flows instead of old release annotations.
+
+### Fixed
+- Route-quality sync now requires typed outcomes for flexible route exits
+  instead of accepting unexplained placeholder next routes.
+- The full-arc e2e smoke test now verifies both helper groups and expanded
+  local helper visibility.
+
 ## [2.3.1] - 2026-06-08
 
 ### Added

@@ -4,6 +4,7 @@ metadata:
   command: /god-story-build
   description: Implement a single story
   tier: 2
+  family: build
 
 prerequisites:
   required:

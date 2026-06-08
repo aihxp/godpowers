@@ -4,6 +4,7 @@ metadata:
   command: /god-audit
   description: Score artifacts against have-nots
   tier: 0
+  family: verify
 
 prerequisites:
   required:

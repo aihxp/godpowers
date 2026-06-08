@@ -4,6 +4,7 @@ metadata:
   command: /god-version
   description: Print installed version + capability summary
   tier: 0
+  family: configure
 
 prerequisites:
   required: []

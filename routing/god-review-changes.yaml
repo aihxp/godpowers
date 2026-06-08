@@ -4,6 +4,7 @@ metadata:
   command: /god-review-changes
   description: Walk REVIEW-REQUIRED.md interactively
   tier: 0
+  family: verify
 
 prerequisites:
   required:

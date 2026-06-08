@@ -4,6 +4,13 @@ metadata:
   command: /god-lifecycle
   description: Show project phase
   tier: 0
+  family: continue
+  trigger-precedence:
+    - trigger: where am i
+      prefer: /god-locate
+      when: checkpoint-or-handoff-exists
+      fallback: /god-lifecycle
+      reason: Resume artifacts go to locate while normal phase questions stay in lifecycle.
 
 prerequisites:
   required:
@@ -18,6 +25,11 @@ execution:
 
 success-path:
   next-recommended: varies
+  outcome:
+    type: contextual
+    label: Context-specific next route
+    reason: The next route depends on current disk state, command arguments, or user choice.
+    allowed-next: [/god-status, /god-next, /god-help]
 
 failure-path:
   on-error: /god-doctor

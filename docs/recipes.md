@@ -7,6 +7,18 @@
 If you can't find your scenario, check `command-flows.md` for the canonical
 per-command reference, or `arc-integrations.md` for cross-workflow flows.
 
+## Quick triage
+
+Use `/god` or `/god-help` when you do not know the command name. Godpowers
+presents families first, then leaf commands:
+
+| Intent | Route shape |
+|---|---|
+| Capture something | note, todo, backlog, or seed |
+| Size implementation work | fast, quick, story, feature, build, debug, or hotfix |
+| Verify work | lint, standards, review, runtime test, audit, hygiene, preflight, or dogfood |
+| Find status | status overview, progress ledger, lifecycle phase, resume location, or next action |
+
 ---
 
 ## Table of Contents
@@ -60,7 +72,7 @@ One command. Idea -> hardened production. Pauses only for genuine human-only dec
 /god-launch
 ```
 
-### Joining an existing codebase (Mode B)
+### Joining an existing codebase (simple Mode B)
 
 ```
 /god-map-codebase     <- 4 parallel mappers analyze tech, arch, quality, concerns
@@ -68,6 +80,23 @@ One command. Idea -> hardened production. Pauses only for genuine human-only dec
 /god-status           <- see what tiers are imported vs missing
 /god-next             <- suggests the first missing tier
 ```
+
+Use this path when the repo is known, ownership is clear, and the next change
+is manageable.
+
+### Inheriting an unclear or risky codebase
+
+```
+/god-preflight        <- read-only intake before stronger workflows
+/god-archaeology      <- deep code archaeology
+/god-reconstruct      <- rebuild planning artifacts from code
+/god-audit            <- score the reconstructed surface
+/god-tech-debt        <- prioritize debt before feature work
+/god-feature          <- continue with a scoped change
+```
+
+Use this path when ownership, architecture, tests, or refactor risk are
+unclear.
 
 ### Inheriting code from another team
 
@@ -260,29 +289,27 @@ BLOCKS launch if Critical findings (even with --yolo).
 ```
 Refuses to run if /god-harden has unresolved Criticals.
 
-### Channel-specific launch (with extension, v0.13+)
+### Channel-specific launch (extension pack required)
 
-> Status: extension runtime ships in v0.13. Scaffolds for these
-> commands exist in `extensions/launch-pack/` today.
-
-```
-/god-extension-add @godpowers/launch-pack    # v0.13
-/god-show-hn        <- HN-specific tactics    # v0.13
-/god-product-hunt   <- PH-specific            # v0.13
-/god-indie-hackers  <- IH-specific            # v0.13
-/god-oss-release    <- OSS library publishing # v0.13
-```
-
-### Compliance audit (with extension, v0.13+)
-
-> Status: extension runtime ships in v0.13. Scaffolds for these
-> commands exist in `extensions/security-pack/` today.
+> Install the launch pack before invoking channel-specific commands.
 
 ```
-/god-extension-add @godpowers/security-pack  # v0.13
-/god-soc2-audit                              # v0.13
-/god-hipaa-audit                             # v0.13
-/god-pci-audit                               # v0.13
+/god-extension-add @godpowers/launch-pack
+/god-show-hn        <- HN-specific tactics
+/god-product-hunt   <- PH-specific
+/god-indie-hackers  <- IH-specific
+/god-oss-release    <- OSS library publishing
+```
+
+### Compliance audit (extension pack required)
+
+> Install the security pack before invoking compliance commands.
+
+```
+/god-extension-add @godpowers/security-pack
+/god-soc2-audit
+/god-hipaa-audit
+/god-pci-audit
 ```
 
 ---
@@ -456,6 +483,9 @@ Diagnoses install + state + suggests fixes.
 ---
 
 ## 8. Working with others
+
+Use `/god-workstream` for same-repo parallelism. Use `/god-suite-*` commands
+for multi-repo coordination.
 
 ### Two engineers working on parallel features
 

@@ -22,10 +22,12 @@ Before reading routing data or calling runtime modules, resolve the Godpowers ru
 1. If `<projectRoot>/lib/router.js` exists, use the repository checkout runtime at `<projectRoot>`.
 2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill, such as `~/.claude`, `~/.codex`, `~/.cursor`, `~/.windsurf`, or `~/.gemini`.
 3. Read routing definitions from `<runtimeRoot>/routing/*.yaml` and recipes from `<runtimeRoot>/routing/recipes/*.yaml`.
-4. For status output, load `<runtimeRoot>/lib/dashboard.js` and call
+4. Load `<runtimeRoot>/lib/command-families.js` for work size, verification,
+   capture, and trigger precedence hints.
+5. For status output, load `<runtimeRoot>/lib/dashboard.js` and call
    `dashboard.compute(projectRoot)`. Use `dashboard.render(result)` for the
    shared dashboard section before adding route-specific detail.
-5. If the checkout runtime and installed runtime differ, say which runtime root
+6. If the checkout runtime and installed runtime differ, say which runtime root
    was used. Only call the output a manual disk scan when `lib/dashboard.js`
    cannot be loaded at all.
 
@@ -70,6 +72,11 @@ Read <runtimeRoot>/routing/god-prd.yaml
    v
 Get success-path.next-recommended (e.g., "/god-arch"), then apply any
 conditional-next rule such as UI-detected -> "/god-design"
+   |
+   v
+Read success-path.outcome when present. Use it to label contextual,
+verdict-based, steady-state, session-end, and selection outcomes before
+showing allowed next commands.
    |
    v
 Display: "PRD complete: .godpowers/prd/PRD.md
@@ -127,6 +134,16 @@ If prereqs missing and NOT auto-completable:
 ```
 
 ## Process for Mode 3 (standalone)
+
+When the user asks a broad next-step question, use the family helpers before
+falling back to raw route order:
+
+- Capture intent routes through the capture ladder.
+- Implementation intent routes through the work size ladder.
+- Check or audit intent routes through the verification ladder.
+- Duplicate trigger phrases use `resolveTrigger` so `continue`, `think through`,
+  `what happened`, `what's done`, and `where am i` pick the context-aware
+  command.
 
 ```
 User types: /god-next

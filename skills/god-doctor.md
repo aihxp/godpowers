@@ -157,7 +157,7 @@ Built-in, no spawned agent. Reads:
 - `lib/repo-surface-sync.detect(projectRoot)` for structural repo surface
   freshness
 - `lib/route-quality-sync.detect(projectRoot)` through repo surface sync for
-  atomic spawn and contextual route exit freshness
+  atomic spawn and typed route outcome freshness
 - `lib/recipe-coverage-sync.detect(projectRoot)` through repo surface sync for
   high-frequency intent recipe coverage freshness
 - `lib/release-surface-sync.detect(projectRoot)` through repo surface sync for

@@ -4,6 +4,7 @@ metadata:
   command: /god-undo
   description: Revert last operation
   tier: 0
+  family: recover
 
 prerequisites:
   required:

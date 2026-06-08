@@ -4,6 +4,7 @@ metadata:
   command: /god-dogfood
   description: Run messy-repo dogfood scenarios for release and autonomy readiness.
   tier: 0
+  family: verify
 
 prerequisites:
   required: []

@@ -21,7 +21,7 @@
 - [DECISION] Agent contract sync checks that routed specialist spawns resolve to real `agents/god-*.md` files.
 - [DECISION] Workflow and recipe graph sync checks parseable workflow metadata and recipe command routes.
 - [DECISION] Extension pack sync checks manifest validation, package name and version agreement, peer dependency agreement, and provided file existence.
-- [DECISION] Route quality sync checks atomic spawn tokens, routed agent resolution, approved contextual exits, standards coverage, and agent trace event coverage.
+- [DECISION] Route quality sync checks atomic spawn tokens, routed agent resolution, typed contextual exits, standards coverage, and agent trace event coverage.
 - [DECISION] Recipe coverage sync checks high-frequency intent routes for release maintenance, docs drift, context refresh, story work, and automation setup.
 - [DECISION] Release surface sync checks README badges, changelog, release notes, release checklist policy, package lock version, package payload guardrails, dogfood tests, extension publish tests, Mode D suite tests, and installer smoke tests.
 - [DECISION] Release surface sync accepts delegated test wiring through `scripts/run-tests.js` when `package.json` points `npm test` at that runner.

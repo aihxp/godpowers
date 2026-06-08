@@ -4,6 +4,7 @@ metadata:
   command: /god-pause-work
   description: Save context handoff
   tier: 0
+  family: continue
 
 prerequisites:
   required:
@@ -18,6 +19,11 @@ execution:
 
 success-path:
   next-recommended: session-end
+  outcome:
+    type: session-end
+    label: Session handoff complete
+    reason: The command intentionally ends the active work session.
+    allowed-next: [/god-resume-work, /god-status]
 
 failure-path:
   on-error: /god-doctor

@@ -4,6 +4,7 @@ metadata:
   command: /god-rollback
   description: Walk back tier and downstream
   tier: 0
+  family: recover
 
 prerequisites:
   required:

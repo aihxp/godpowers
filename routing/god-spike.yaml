@@ -4,6 +4,7 @@ metadata:
   command: /god-spike
   description: Time-boxed research
   tier: 0
+  family: build
 
 prerequisites:
   required:

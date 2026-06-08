@@ -12,12 +12,13 @@
 
 Each command has:
 1. **Trigger phrases**: what user inputs match
-2. **Prerequisites**: what must be done first (with auto-complete options)
-3. **Execution**: what spawns, what's read, what's written
-4. **Standards check**: artifact discipline gates
-5. **Success path**: what to do next on success
-6. **Failure path**: what to do on errors or have-not failures
-7. **Endoff**: state changes and events emitted
+2. **Family**: the user-facing command family for help and routing UX
+3. **Prerequisites**: what must be done first (with auto-complete options)
+4. **Execution**: what spawns, what's read, what's written
+5. **Standards check**: artifact discipline gates
+6. **Success path**: what to do next on success, including typed outcome when flexible
+7. **Failure path**: what to do on errors or have-not failures
+8. **Endoff**: state changes and events emitted
 
 ---
 
@@ -682,7 +683,8 @@ Every command above follows this pattern (enforced by `<runtimeRoot>/routing/<co
 10. Standards fail: pause for user OR auto-fix per gate-on-failure
 11. Skill calls /god-next --after=/god-X
 12. Router returns success-path.next-recommended
-13. Skill prints suggestion + reason
+13. Router reads success-path.outcome when the route is contextual, verdict-based, steady-state, session-end, or selection-based
+14. Skill prints suggestion, outcome label, reason, and allowed next commands
 
 (All routing data is in `<runtimeRoot>/routing/<command>.yaml`.
  The decision engine is `/god-next` backed by `<runtimeRoot>/lib/router.js`.)

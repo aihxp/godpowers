@@ -4,6 +4,7 @@ metadata:
   command: /god-settings
   description: View/modify intent.yaml settings
   tier: 0
+  family: configure
 
 prerequisites:
   required: []

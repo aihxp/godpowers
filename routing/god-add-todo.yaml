@@ -4,6 +4,7 @@ metadata:
   command: /god-add-todo
   description: Capture a todo from current context
   tier: 0
+  family: capture
 
 prerequisites:
   required: []

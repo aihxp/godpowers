@@ -4,6 +4,7 @@ metadata:
   command: /god-roadmap-update
   description: Update ROADMAP.md after feature work or priority changes
   tier: 1
+  family: maintain
 
 prerequisites:
   required:

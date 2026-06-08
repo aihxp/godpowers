@@ -1,8 +1,53 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.3.1.
+Complete command, agent, and artifact reference for v2.4.0.
 
 ## Slash commands (112 total)
+
+### Command families
+All 112 commands remain direct entry points, but the user-facing map starts
+with families:
+
+| Family | Purpose |
+|---|---|
+| start | Start or import a project. |
+| continue | Understand state and choose the next move. |
+| build | Plan, implement, test, and ship product work. |
+| verify | Check artifacts, code, runtime behavior, and release readiness. |
+| operate | Deploy, observe, harden, launch, and respond in production. |
+| maintain | Keep artifacts, docs, dependencies, context, and repo surfaces current. |
+| capture | Save thoughts, tasks, backlog items, seeds, and learnings. |
+| recover | Undo, repair, restore, skip, or diagnose broken state. |
+| extend | Install, inspect, test, remove, or author extension packs. |
+| collaborate | Coordinate people, workstreams, suites, sprints, and pull requests. |
+| configure | Tune settings, budgets, cache, profiles, help, and version info. |
+
+`/god-help <family>` shows the matching leaf commands. `/god-help` still shows
+the full catalog.
+
+### Decision ladders
+For common ambiguous intents, Godpowers chooses the smallest fitting command:
+
+| Intent | Ladder |
+|---|---|
+| Capture | `/god-note`, `/god-add-todo`, `/god-add-backlog`, `/god-plant-seed` |
+| Work size | `/god-fast`, `/god-quick`, `/god-story`, `/god-feature`, `/god-build`, `/god-debug`, `/god-hotfix` |
+| Verification | `/god-lint`, `/god-standards`, `/god-review`, `/god-test-runtime`, `/god-audit`, `/god-hygiene`, `/god-preflight`, `/god-dogfood` |
+
+`/god-status` is the continue hub. `/god-progress`, `/god-lifecycle`,
+`/god-locate`, and `/god-next` remain direct shortcuts for narrower views.
+
+### Installer profile journeys
+Profiles reduce the installed command surface without changing runtime
+behavior:
+
+| Journey | Profile |
+|---|---|
+| I want the basics | `core` |
+| I build products | `builder` |
+| I maintain Godpowers or mature repos | `maintainer` |
+| I coordinate suites | `suite` |
+| I want everything | `full` |
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
@@ -167,10 +212,10 @@ diff churn that cannot be traced to the request or slice plan.
 - `/god-review` - Two-stage code review (spec + quality).
 - `/god-pr-branch` - Clean PR branch (filter .godpowers/ commits).
 - `/god-build-agent` - Generate custom specialist agent.
-- `/god-help` - Discoverable contextual help; lists skills grouped by tier.
+- `/god-help` - Discoverable contextual help; lists command families, ladders, and the full catalog.
 - `/god-version` - Print installed Godpowers version and capability summary.
 
-### Extensions (runtime since v0.13, packs on npm since v0.15)
+### Extensions
 Pack management:
 - `/god-extension-scaffold` - Create a publishable extension pack skeleton.
 - `/god-extension-add` - Install an extension pack from a local dir or npm.

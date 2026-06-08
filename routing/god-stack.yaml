@@ -4,6 +4,7 @@ metadata:
   command: /god-stack
   description: Pick technology stack
   tier: 1
+  family: start
 
 prerequisites:
   required:

@@ -4,6 +4,7 @@ metadata:
   command: /god-preflight
   description: Read-only intake audit before project-run readiness and pillars
   tier: 0
+  family: start
 
 prerequisites:
   required:

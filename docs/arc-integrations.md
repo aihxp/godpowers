@@ -704,6 +704,7 @@ Every workflow follows the same shape:
    - repo surface sync
    - host capability detection
    - dogfood runner when requested
+   - named helper groups, expanded into explicit plan helpers
 9. Skill suggests next workflow based on:
    - State of disk
    - Lifecycle phase

@@ -4,6 +4,7 @@ metadata:
   command: /god-set-profile
   description: Switch model profile
   tier: 0
+  family: configure
 
 prerequisites:
   required: []

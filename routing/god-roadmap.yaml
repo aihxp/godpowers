@@ -4,6 +4,7 @@ metadata:
   command: /god-roadmap
   description: Sequence work into milestones
   tier: 1
+  family: start
 
 prerequisites:
   required:

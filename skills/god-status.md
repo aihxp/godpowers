@@ -11,6 +11,19 @@ description: |
 
 Re-derive state from disk. Your memory is not authoritative. The file system is.
 
+## Status family views
+
+`/god-status` is the hub for the continue family. It should render the overview
+first, then offer direct shortcuts when the user wants a narrower view:
+
+| View | Shortcut | Purpose |
+|------|----------|---------|
+| Overview | `/god-status` | Operational state, proactive checks, and blockers. |
+| Progress ledger | `/god-progress` | Requirement and roadmap increment completion. |
+| Lifecycle phase | `/god-lifecycle` | Project phase and fitting workflows. |
+| Resume location | `/god-locate` | Orientation from checkpoint, handoff, and disk state. |
+| Next action | `/god-next` | Single recommended command with reason. |
+
 ## Process
 
 1. Check if `.godpowers/PROGRESS.md` exists

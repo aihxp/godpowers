@@ -4,6 +4,7 @@ metadata:
   command: /god-reconstruct
   description: Reverse-engineer planning artifacts from existing code
   tier: 1
+  family: maintain
 
 prerequisites:
   recommended:

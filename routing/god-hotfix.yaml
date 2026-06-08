@@ -4,6 +4,7 @@ metadata:
   command: /god-hotfix
   description: Urgent production bug fix
   tier: 0
+  family: operate
 
 prerequisites:
   required:

@@ -4,6 +4,7 @@ metadata:
   command: /god-note
   description: Zero-friction idea capture
   tier: 0
+  family: capture
 
 prerequisites:
   required: []

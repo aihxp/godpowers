@@ -4,6 +4,7 @@ metadata:
   command: /god-debug
   description: 4-phase systematic debug
   tier: 0
+  family: build
 
 prerequisites:
   required:

@@ -4,6 +4,7 @@ metadata:
   command: /god-suite-status
   description: Side-by-side status of all suite repos
   tier: 0
+  family: collaborate
 
 prerequisites:
   required:
@@ -16,6 +17,11 @@ execution:
 
 success-path:
   next-recommended: /god-suite-sync or /god-suite-patch
+  outcome:
+    type: requires-selection
+    label: User selection required
+    reason: The route offers multiple valid next commands and the user should choose one.
+    allowed-next: [/god-suite-sync, /god-suite-patch]
 
 failure-path:
   on-error: /god-doctor

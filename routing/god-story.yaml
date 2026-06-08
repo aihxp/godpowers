@@ -4,6 +4,7 @@ metadata:
   command: /god-story
   description: Write new STORY.md (fine-grained slice)
   tier: 1
+  family: build
 
 prerequisites:
   required: []

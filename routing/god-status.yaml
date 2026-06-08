@@ -4,6 +4,7 @@ metadata:
   command: /god-status
   description: Re-derive state from disk
   tier: 0
+  family: continue
 
 prerequisites:
   required:

@@ -4,6 +4,7 @@ metadata:
   command: /god-story-close
   description: Mark a story done after build+verify
   tier: 2
+  family: build
 
 prerequisites:
   required:

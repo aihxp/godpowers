@@ -4,6 +4,7 @@ metadata:
   command: /god-design
   description: Design lifecycle (DESIGN.md + PRODUCT.md) bridged to impeccable
   tier: 1
+  family: start
 
 prerequisites:
   required:

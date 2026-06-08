@@ -4,6 +4,7 @@ metadata:
   command: /god-prd
   description: Write a Product Requirements Document
   tier: 1
+  family: start
 
 prerequisites:
   required:

@@ -1,12 +1,12 @@
-# Godpowers 2.3.1 Release
+# Godpowers 2.4.0 Release
 
 > Status: Ready for package verification
 > Date: 2026-06-08
 
-Godpowers 2.3.1 is an accountability and release-surface hardening release for
-the 2.x line. It strengthens planning grounding, package legitimacy, install
-profiles, atomic persistence, executor recovery, extension authoring,
-front-door route coverage, host capability reporting, and dashboard behavior.
+Godpowers 2.4.0 is a UX flow consolidation release for the 2.x line. It keeps
+the complete 112-command surface intact while making the primary paths easier
+to understand through command families, decision ladders, typed route outcomes,
+and auditable workflow helper groups.
 
 ## What's in this release
 
@@ -17,52 +17,43 @@ front-door route coverage, host capability reporting, and dashboard behavior.
 
 ## Highlights
 
-- `/god-extension-scaffold` gives extension authors a first-class
-  slash-command path before `/god-test-extension` and `/god-extension-add`.
-- Public `/god` intent matching now covers the starter phrases users are most
-  likely to type: start a product, add a feature, fix production, audit an
-  existing repo, ship a release, maintain health, and extend Godpowers.
-- Quick Proof and README starter paths are now regression-tested against the
-  actual router and recipe engine.
-- User project dashboards no longer show maintainer-repository documentation
-  drift when a clean non-Godpowers project is inspected.
-- Host capability reporting now includes optional code-intelligence tooling
-  without treating missing optional tools as a host degradation.
-- Extension install, planning-system detection, and agent-cache cleanup are
-  hardened around symlinked paths that point outside trusted source trees.
-- Source-grounded planning records existing files, existing symbols, planned new
-  artifacts, and unchecked references before build execution.
-- Package legitimacy checks give stack and dependency decisions a concrete npm
-  evidence gate before recommending package-backed choices.
-- Installer profiles let users install a smaller role-based command surface
-  with `--profile=<name>` or `--minimal`.
-- Atomic write helpers now protect core state and ledger writes from partial
-  file updates.
-- Executor repair classification names whether a failed attempt should retry,
-  decompose, prune, or escalate.
-- Public migration language now uses neutral legacy-planning terminology so
-  Godpowers is not confused with external workflow products.
-- Architecture docs now include an executable audit map for disconnected
-  commands, actions, workflows, recipes, and package surfaces.
+- `/god-help` now presents command families first, then ladders and the full
+  catalog.
+- `/god` and `/god-next` now share command-family helpers for capture, work
+  sizing, verification, and overlapping trigger phrases.
+- `/god-status` is documented as the continue-family hub, with `/god-progress`,
+  `/god-lifecycle`, `/god-locate`, and `/god-next` as direct views.
+- Every shipped route now carries command family metadata.
+- Flexible route exits now carry typed `success-path.outcome` metadata so
+  contextual, verdict-based, steady-state, session-end, and selection outcomes
+  can be explained to users.
+- Workflow YAML can now use named helper groups, while generated plans still
+  expand the exact local helper list for visibility.
+- Recipes now split simple existing-repo onboarding from deeper inheritance
+  flows, and clarify workstream versus suite collaboration paths.
+- Extension journey docs now describe current extension-pack-required flows
+  instead of old release annotations.
+- Release guardrails now require the command-family runtime files, helper group
+  runtime files, and command-family regression test.
 
 ## Validation
 
 - `npm test` green across the full suite
-- `npm run lint` clean
-- `npm run release:check` green (tests, audit, package contents)
-- `npm pack` creates a local `godpowers-2.3.1.tgz` tarball for package
+- `npm run test:audit` green
+- `npm run pack:check` green
+- `npm pack` creates a local `godpowers-2.4.0.tgz` tarball for package
   inspection
 
 ## Upgrade
 
-- `npm install -g godpowers@2.3.1` or `npx godpowers@2.3.1`
+- `npm install -g godpowers@2.4.0` or `npx godpowers@2.4.0`
 - Re-run `/god-context` in each project to refresh installed runtime metadata
 - No breaking changes; existing `.godpowers/` state is compatible. Users who
   want a compact install can run `npx godpowers --profile=core`.
 
 ## Notes
 
-- GitHub release creation for `v2.3.1`
+- GitHub release creation for `v2.4.0`
 - The tag should match the npm package version
-- The `v2.3.1` tag should point to the release commit that matches the npm
-  `godpowers@2.3.1` package.
+- The `v2.4.0` tag should point to the release commit that matches the npm
+  `godpowers@2.4.0` package.

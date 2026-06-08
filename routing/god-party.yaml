@@ -4,6 +4,7 @@ metadata:
   command: /god-party
   description: Multi-persona collaboration session
   tier: 0
+  family: collaborate
 
 prerequisites:
   required: []

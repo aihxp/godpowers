@@ -4,6 +4,7 @@ metadata:
   command: /god-postmortem
   description: Post-incident investigation
   tier: 0
+  family: operate
 
 prerequisites:
   required:

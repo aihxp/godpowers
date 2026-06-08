@@ -4,6 +4,7 @@ metadata:
   command: /god-map-codebase
   description: Parallel codebase analysis with mappers
   tier: 0
+  family: start
 
 prerequisites:
   required: []

@@ -4,6 +4,7 @@ metadata:
   command: /god-update-deps
   description: Audit and update dependencies
   tier: 0
+  family: maintain
 
 prerequisites:
   required:

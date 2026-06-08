@@ -4,6 +4,7 @@ metadata:
   command: /god-scan
   description: Full reverse-sync of the codebase
   tier: 0
+  family: maintain
 
 prerequisites:
   required: []

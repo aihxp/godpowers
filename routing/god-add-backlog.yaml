@@ -4,6 +4,7 @@ metadata:
   command: /god-add-backlog
   description: Add idea to backlog (less urgent than todo)
   tier: 0
+  family: capture
 
 prerequisites:
   required: []

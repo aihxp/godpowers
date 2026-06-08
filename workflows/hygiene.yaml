@@ -38,9 +38,9 @@ jobs:
     tier: 0
     needs: [hygiene-audit, hygiene-deps, hygiene-docs]
     uses: god-orchestrator@^1.0.0
+    local-helper-groups:
+      - repo-maintenance-closeout
     local-helpers:
-      - repo-doc-sync
-      - repo-surface-sync
       - host-capabilities
       - checkpoint-sync
     with:

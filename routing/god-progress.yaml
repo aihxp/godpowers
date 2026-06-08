@@ -4,6 +4,13 @@ metadata:
   command: /god-progress
   description: Deliverable progress at the requirement and increment level
   tier: 0
+  family: continue
+  trigger-precedence:
+    - trigger: what's done
+      prefer: /god-status
+      when: operational-status-request
+      fallback: /god-progress
+      reason: Operational state goes to status while deliverable completion stays in progress.
 
 prerequisites:
   required:

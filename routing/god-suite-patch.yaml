@@ -4,6 +4,7 @@ metadata:
   command: /god-suite-patch
   description: Coordinated change across multiple repos
   tier: 0
+  family: collaborate
 
 prerequisites:
   required:

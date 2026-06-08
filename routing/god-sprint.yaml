@@ -4,6 +4,7 @@ metadata:
   command: /god-sprint
   description: Sprint plan / status / retro
   tier: 0
+  family: collaborate
 
 prerequisites:
   required:
@@ -16,6 +17,11 @@ execution:
 
 success-path:
   next-recommended: /god-feature or /god-story
+  outcome:
+    type: requires-selection
+    label: User selection required
+    reason: The route offers multiple valid next commands and the user should choose one.
+    allowed-next: [/god-feature, /god-story]
 
 failure-path:
   on-error: /god-doctor

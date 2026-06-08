@@ -4,6 +4,7 @@ metadata:
   command: /god-deploy
   description: Set up deploy pipeline
   tier: 3
+  family: operate
 
 prerequisites:
   required:

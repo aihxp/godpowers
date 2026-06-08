@@ -76,13 +76,11 @@ jobs:
     tier: 0
     needs: migration-contract
     uses: god-orchestrator@^1.0.0
+    local-helper-groups:
+      - source-sync-closeout
+      - standard-closeout
     local-helpers:
-      - source-sync-back
-      - repo-doc-sync
-      - repo-surface-sync
       - host-capabilities
-      - checkpoint-sync
-      - pillars-sync-plan
     with:
       action: final-sync
       dashboard: action-brief

@@ -4,6 +4,13 @@ metadata:
   command: /god-next
   description: Suggest next command
   tier: 0
+  family: continue
+  trigger-precedence:
+    - trigger: continue
+      prefer: /god-resume-work
+      when: handoff-exists
+      fallback: /god-next
+      reason: Resume a saved handoff before computing a fresh next route.
 
 prerequisites:
   required:
@@ -21,6 +28,11 @@ execution:
 
 success-path:
   next-recommended: varies
+  outcome:
+    type: contextual
+    label: Context-specific next route
+    reason: The next route depends on current disk state, command arguments, or user choice.
+    allowed-next: [/god-status, /god-next, /god-help]
 
 failure-path:
   on-error: /god-doctor

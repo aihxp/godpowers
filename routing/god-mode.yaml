@@ -4,6 +4,7 @@ metadata:
   command: /god-mode
   description: Full autonomous project run
   tier: 0
+  family: start
 
 prerequisites:
   required:
@@ -28,6 +29,11 @@ execution:
 
 success-path:
   next-recommended: steady-state
+  outcome:
+    type: steady-state
+    label: Steady state
+    reason: The project run has completed and ongoing work should start from steady-state commands.
+    allowed-next: [/god-status, /god-feature, /god-hygiene]
 
 failure-path:
   on-error: /god-doctor

@@ -25,9 +25,9 @@ jobs:
     tier: 0
     needs: audit-score
     uses: god-orchestrator@^1.0.0
+    local-helper-groups:
+      - repo-maintenance-closeout
     local-helpers:
-      - repo-doc-sync
-      - repo-surface-sync
       - host-capabilities
     with:
       action: audit-closeout

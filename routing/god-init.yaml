@@ -4,6 +4,7 @@ metadata:
   command: /god-init
   description: Initialize a Godpowers project. Detects mode and scale.
   tier: 0
+  family: start
 
 prerequisites:
   required: []  # No prerequisites; this is the entry point

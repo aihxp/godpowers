@@ -4,6 +4,7 @@ metadata:
   command: /god-link
   description: Manually add/remove a code-artifact link
   tier: 0
+  family: maintain
 
 prerequisites:
   required: []

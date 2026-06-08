@@ -4,6 +4,7 @@ metadata:
   command: /god-extract-learnings
   description: Capture decisions/lessons/patterns from completed work
   tier: 0
+  family: capture
 
 prerequisites:
   required: []

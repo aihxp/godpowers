@@ -4,6 +4,7 @@ metadata:
   command: /god-plant-seed
   description: Forward-looking idea with trigger condition
   tier: 0
+  family: capture
 
 prerequisites:
   required: []

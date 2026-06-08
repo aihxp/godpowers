@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const commandFamilies = require('../lib/command-families');
 
 const OUT = path.join(__dirname, '..', 'routing');
 const SAFE_SYNC_PREREQ = {
@@ -214,6 +215,8 @@ const commands = [
 ];
 
 function generate(c) {
+  const family = commandFamilies.familyForCommand(c.cmd);
+  const familyLine = family ? `  family: ${family.id}\n` : '';
   const writes = c.writes && c.writes.length ? c.writes.map(w => `    - ${w}`).join('\n') : '    []';
   const haveNots = c.haveNots && c.haveNots.length
     ? `  have-nots: [${c.haveNots.join(', ')}]\n  gate-on-failure: pause-for-user`
@@ -238,6 +241,7 @@ function generate(c) {
     ? Object.entries(c.altWhen).map(([cmd, when]) => `    - command: ${cmd}\n      when: ${when}`).join('\n')
     : '';
   const lifecycle = c.lifecycleTransition ? `\n  lifecycle-transition: ${c.lifecycleTransition}` : '';
+  const outcome = renderOutcome(c.next);
 
   return `apiVersion: godpowers/v1
 kind: CommandRouting
@@ -245,6 +249,7 @@ metadata:
   command: ${c.cmd}
   description: ${c.desc}
   tier: ${c.tier}
+${familyLine}
 
 prerequisites:
   required:
@@ -258,7 +263,7 @@ ${writes}${blocksOn}
 ${standards}
 
 success-path:
-  next-recommended: ${c.next}${altWhen ? '\n  alternatives:\n' + altWhen : ''}
+  next-recommended: ${c.next}${outcome}${altWhen ? '\n  alternatives:\n' + altWhen : ''}
 
 failure-path:
   on-error: /god-doctor
@@ -267,6 +272,60 @@ endoff:
   state-update: tier-${c.tier} updated for ${c.cmd}
   events: [agent.start, artifact.created, agent.end]${lifecycle}
 `;
+}
+
+function renderOutcome(next) {
+  const type = inferOutcomeType(next);
+  if (!type) return '';
+  const detail = outcomeDetail(type, next);
+  return `
+  outcome:
+    type: ${type}
+    label: ${detail.label}
+    reason: ${detail.reason}
+    allowed-next: [${detail.allowedNext.join(', ')}]`;
+}
+
+function inferOutcomeType(next) {
+  if (next === 'varies') return 'contextual';
+  if (next === 'varies-by-verdict') return 'verdict-based';
+  if (next === 'steady-state') return 'steady-state';
+  if (next === 'session-end') return 'session-end';
+  if (/\s+or\s+/.test(String(next))) return 'requires-selection';
+  return null;
+}
+
+function outcomeDetail(type, next) {
+  if (type === 'requires-selection') {
+    return {
+      label: 'User selection required',
+      reason: 'The route offers multiple valid next commands and the user should choose one.',
+      allowedNext: [...new Set(String(next).match(/\/god(?:-[a-z-]+)?/g) || [])]
+    };
+  }
+  const byType = {
+    contextual: {
+      label: 'Context-specific next route',
+      reason: 'The next route depends on current disk state, command arguments, or user choice.',
+      allowedNext: ['/god-status', '/god-next', '/god-help']
+    },
+    'verdict-based': {
+      label: 'Verdict-based next route',
+      reason: 'The next route depends on the returned verdict.',
+      allowedNext: ['/god-status', '/god-next', '/god-discuss']
+    },
+    'steady-state': {
+      label: 'Steady state',
+      reason: 'The project run has completed and ongoing work should start from steady-state commands.',
+      allowedNext: ['/god-status', '/god-feature', '/god-hygiene']
+    },
+    'session-end': {
+      label: 'Session handoff complete',
+      reason: 'The command intentionally ends the active work session.',
+      allowedNext: ['/god-resume-work', '/god-status']
+    }
+  };
+  return byType[type];
 }
 
 function formatPrereq(prereq, command) {

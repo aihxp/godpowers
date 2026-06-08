@@ -18,9 +18,9 @@ jobs:
   mechanical-doc-sync:
     tier: 0
     uses: god-orchestrator@^1.0.0
+    local-helper-groups:
+      - repo-maintenance-closeout
     local-helpers:
-      - repo-doc-sync
-      - repo-surface-sync
       - host-capabilities
     with:
       action: local-helper-sync

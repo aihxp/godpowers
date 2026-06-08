@@ -17,6 +17,21 @@ For other AI tools: `--codex`, `--cursor`, `--windsurf`, `--gemini`,
 `--opencode`, `--copilot`, `--augment`, `--trae`, `--cline`, `--kilo`,
 `--antigravity`, `--qwen`, `--codebuddy`, `--pi`. Or `--all` for everything.
 
+### Choose a profile journey
+
+Profiles install a smaller visible command surface while preserving the same
+runtime model:
+
+| Journey | Install flag |
+|---|---|
+| I want the basics | `--profile=core` or `--minimal` |
+| I build products | `--profile=builder` |
+| I maintain Godpowers or mature repos | `--profile=maintainer` |
+| I coordinate suites | `--profile=suite` |
+| I want everything | `--profile=full` |
+
+`/god-help` presents command families first, then the complete catalog.
+
 ### Pi support (earendil-works/pi-coding-agent)
 
 [Pi](https://github.com/earendil-works/pi) is supported as a first-class
@@ -121,6 +136,12 @@ Once you have a working project, ongoing work uses other workflows:
 - `/god-docs` for documentation
 - `/god-update-deps` for dependency updates
 - `/god-hygiene` periodic health check
+
+For existing repositories, use the simple path when the codebase is familiar
+and context is manageable: `/god-map-codebase`, `/god-init`, `/god-status`,
+then `/god-next`. Use the deep inheritance path when ownership, architecture,
+tests, or risk are unclear: `/god-preflight`, `/god-archaeology`,
+`/god-reconstruct`, `/god-audit`, `/god-tech-debt`, then `/god-feature`.
 
 ## Need extensions?
 

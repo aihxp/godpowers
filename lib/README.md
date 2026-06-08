@@ -17,7 +17,7 @@ package-level integrations.
 | `host-capabilities.js` | Detect host guarantees for shell, git, npm, agent spawning, optional code intelligence, extension authoring, and suite dry-runs. |
 | `repo-doc-sync.js` | Detect and refresh mechanical repository documentation surfaces. |
 | `repo-surface-sync.js` | Detect structural drift across commands, routes, packages, agents, workflows, recipes, extensions, and release policy. |
-| `route-quality-sync.js` | Detect symbolic route spawns, unresolved agent targets, and unapproved contextual route exits. |
+| `route-quality-sync.js` | Detect symbolic route spawns, unresolved agent targets, and untyped contextual route exits. |
 | `recipe-coverage-sync.js` | Detect missing high-frequency intent recipe coverage. |
 | `release-surface-sync.js` | Detect release-facing drift across badges, release notes, changelog, package checks, and release checklist policy. |
 | `dogfood-runner.js` | Run deterministic messy-repo scenarios against migration, host, extension, and suite release behavior. |
@@ -41,9 +41,11 @@ package-level integrations.
 | Module | Purpose |
 |--------|---------|
 | `router.js` | Resolve user intent to skills, agents, recipes, and workflows. |
+| `command-families.js` | Define UX command families, status views, decision ladders, and trigger precedence helpers. |
 | `recipes.js` | Load and validate routing recipes. |
 | `workflow-parser.js` | Parse workflow YAML into executable steps. |
 | `workflow-runner.js` | Execute workflow steps with validation hooks. |
+| `workflow-helper-groups.js` | Expand named workflow helper groups into explicit local helper names for plan visibility. |
 | `agent-cache.js` | Cache agent metadata for faster routing. |
 | `agent-validator.js` | Validate agent frontmatter and contracts. |
 | `agent-refs.js` | Validate workflow agent references and scan skill/agent prose for phantom references. |

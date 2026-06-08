@@ -80,7 +80,7 @@ Command gap:
   skill missing route
   route missing skill
   route missing standards policy
-  route exits with unapproved "varies"
+  contextual route exit missing typed outcome metadata
 
 Action gap:
   route spawns symbolic agent token
@@ -639,7 +639,7 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v2.3.1)
+├── package.json (v2.4.0)
 ├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
@@ -672,12 +672,14 @@ godpowers/
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (72 modules)
+├── lib/                           <- Real JS runtime (74 modules)
 │   ├── state.js                   <- state model + drift detection
 │   ├── events.js                  <- OTel-shape event log + hash chain
 │   ├── router.js                  <- command routing
+│   ├── command-families.js        <- UX families, ladders, and trigger precedence
 │   ├── recipes.js                 <- intent recipes
 │   ├── workflow-runner.js         <- executable workflow plans
+│   ├── workflow-helper-groups.js  <- named helper groups expanded in plans
 │   ├── dashboard.js               <- shared status and action brief engine
 │   ├── requirements.js            <- deliverable ledger (requirement/increment status)
 │   ├── linkage.js                 <- requirement-to-code linkage map
@@ -733,7 +735,7 @@ godpowers/
 
 ---
 
-## Numbers (as of v2.3.1)
+## Numbers (as of v2.4.0)
 
 | Component | Count |
 |-----------|-------|

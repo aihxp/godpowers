@@ -4,6 +4,7 @@ metadata:
   command: /god-migrate
   description: Detect and migrate legacy planning, BMAD, and Superpowers planning context
   tier: 0
+  family: start
 
 prerequisites:
   required: []

@@ -4,6 +4,7 @@ metadata:
   command: /god-org-context
   description: Set up or read org-level standards (bluefield)
   tier: 0
+  family: start
 
 prerequisites:
   required: []

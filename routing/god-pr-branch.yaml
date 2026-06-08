@@ -4,6 +4,7 @@ metadata:
   command: /god-pr-branch
   description: Create clean PR branch filtering .godpowers commits
   tier: 0
+  family: collaborate
 
 prerequisites:
   required:

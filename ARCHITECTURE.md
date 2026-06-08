@@ -1,14 +1,14 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.3.1 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, and extension authoring)
+> Status: STABLE v2.4.0 (pure-skill model plus executable proof, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, and extension authoring)
 > Authors: Godpowers Team
-> Last updated: 2026-05-30
+> Last updated: 2026-06-08
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.3.1 keeps the public slash-command surface coherent and strengthens release
-and UX hardening: extension scaffolding, starter-path route checks, optional
-code-intelligence host reporting, dashboard scope isolation, and symlink-safe
-runtime helpers.
+v2.4.0 keeps the public slash-command surface coherent and strengthens UX
+flow clarity: command families, decision ladders, typed route outcomes,
+workflow helper groups, extension journey copy, and release guardrails for the
+new routing layer.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -377,16 +377,26 @@ spawns.
 primary and secondary spawns.
 
 [DECISION] `lib/route-quality-sync.js` now detects symbolic route spawns,
-unresolved agent targets, unapproved contextual route exits, and agent-spawn
+unresolved agent targets, untyped contextual route exits, and agent-spawn
 routes missing required trace events.
 
 [DECISION] Agent-spawning routes must declare both `agent.start` and
 `agent.end` in `endoff.events`. This makes auto-spawn visibility auditable
 from route metadata before a command runs.
 
-[DECISION] Contextual route exits are allowed only for approved meta,
-inspection, extension, and flexible helper commands. New `varies` exits must
-be added deliberately or replaced with conditional-next branches.
+[DECISION] Contextual and choice-based route exits must include
+`success-path.outcome` metadata with a type, label, reason, and allowed next
+commands. This keeps flexible exits explainable without forcing false
+precision.
+
+[DECISION] `lib/command-families.js` is the UX catalog layer above slash
+commands. It groups all commands into start, continue, build, verify, operate,
+maintain, capture, recover, extend, collaborate, and configure, and it owns the
+capture, work size, verification, status-view, and trigger-precedence helpers.
+
+[DECISION] `lib/workflow-helper-groups.js` lets workflow YAML reference named
+closeout helper groups while serialized plans still expand the exact helper
+names. This reduces workflow drift without hiding automatic local work.
 
 [DECISION] Standards coverage is enforced where route metadata owns durable
 artifact-producing work. `/god-story-build` now carries the build have-nots
@@ -486,7 +496,7 @@ aliases such as `source-sync` and `pillars-sync`.
 |--------------|--------------------------|---------------------|
 | Skill to route | `node scripts/test-repo-surface-sync.js` | Skill without route, route without skill, package entry missing |
 | Route to agent | `node scripts/test-automation-surface-sync.js` | Symbolic spawn, missing agent, missing `agent.start` or `agent.end` |
-| Route to next command | `node scripts/test-automation-surface-sync.js` | `next-recommended: varies` without approval or conditional next |
+| Route to next command | `node scripts/test-automation-surface-sync.js` | contextual next route without `success-path.outcome` |
 | Route to standards | `node scripts/test-automation-surface-sync.js` | Durable-writing route without standards or approved exemption |
 | Recipe to command | `node scripts/test-recipes.js` and `node scripts/test-automation-surface-sync.js` | Recipe with missing command references or missing coverage |
 | Workflow to plan | `node scripts/test-workflow-runner.js` | Workflow that cannot load, plan, serialize, or expose helpers |

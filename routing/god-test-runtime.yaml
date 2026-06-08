@@ -4,6 +4,7 @@ metadata:
   command: /god-test-runtime
   description: Headless browser runtime verification
   tier: 3
+  family: verify
 
 prerequisites:
   required:

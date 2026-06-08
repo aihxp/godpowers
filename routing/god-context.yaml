@@ -4,6 +4,7 @@ metadata:
   command: /god-context
   description: Manage Godpowers fence in AGENTS.md / CLAUDE.md / GEMINI.md / others
   tier: 0
+  family: maintain
 
 prerequisites:
   required:

@@ -4,6 +4,7 @@ metadata:
   command: /god-reconcile
   description: Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc.
   tier: 0
+  family: maintain
 
 prerequisites:
   required:
@@ -32,6 +33,11 @@ execution:
 
 success-path:
   next-recommended: varies-by-verdict
+  outcome:
+    type: verdict-based
+    label: Verdict-based next route
+    reason: The next route depends on the returned verdict.
+    allowed-next: [/god-status, /god-next, /god-discuss]
   alternatives:
     - command: /god-feature
       when: status-is-enhancement-or-new

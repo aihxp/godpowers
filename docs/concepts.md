@@ -25,6 +25,17 @@ These skills do not own state. They read recipes
 quarterback (and the agents it spawns) is the only writer to the load-bearing
 artifacts.
 
+Command families are the catalog layer above individual slash commands. They
+make `/god-help` and `/god` easier to scan while keeping every leaf command as
+a direct shortcut. Families cover start, continue, build, verify, operate,
+maintain, capture, recover, extend, collaborate, and configure.
+
+Some families use ladders instead of flat lists. Capture routes to note, todo,
+backlog, or seed. Build routes by work size from fast to hotfix. Verify routes
+from cheapest artifact lint to release dogfood. Continue treats `/god-status`
+as the hub and keeps `/god-progress`, `/god-lifecycle`, `/god-locate`, and
+`/god-next` as direct views.
+
 We deliberately do not stack a meta-orchestrator above `god-orchestrator`.
 Stacking orchestrators is a known anti-pattern: it creates ambiguity about
 who owns state, who decides when to pause, and whose error is authoritative.

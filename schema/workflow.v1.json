@@ -106,6 +106,20 @@
             ]
           }
         },
+        "local-helper-groups": {
+          "type": "array",
+          "description": "Named helper groups expanded by the workflow runner into explicit local-helpers in serialized plans.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "standard-closeout",
+              "repo-maintenance-closeout",
+              "runtime-awareness-closeout",
+              "release-readiness-closeout",
+              "source-sync-closeout"
+            ]
+          }
+        },
         "per": { "type": "string", "enum": ["slice", "wave"] },
         "parallel-by": { "type": "string", "enum": ["slice", "wave"] },
         "on-pass": { "type": "string" },

@@ -4,6 +4,7 @@ metadata:
   command: /god-roadmap-check
   description: Reconcile intent against ROADMAP.md before feature work
   tier: 1
+  family: maintain
 
 prerequisites:
   required:
@@ -23,6 +24,11 @@ execution:
 
 success-path:
   next-recommended: varies-by-verdict
+  outcome:
+    type: verdict-based
+    label: Verdict-based next route
+    reason: The next route depends on the returned verdict.
+    allowed-next: [/god-status, /god-next, /god-discuss]
   alternatives:
     - command: /god-feature
       when: status-is-enhancement-or-new

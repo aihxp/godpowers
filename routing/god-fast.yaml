@@ -4,6 +4,7 @@ metadata:
   command: /god-fast
   description: Trivial inline edit
   tier: 0
+  family: build
 
 prerequisites:
   required:

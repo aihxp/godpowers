@@ -198,7 +198,30 @@ When the command only recommends work, keep the same dashboard but set
 command pauses, set `State: blocked` or `State: paused` and make `Next` the
 one exact user decision needed to continue.
 
-### 11. User-Facing Vocabulary
+### 11. Command Family UX
+Godpowers has many leaf commands, but user-facing routing should start from
+families. Keep the full command surface available while presenting these
+families first:
+
+- Start: start or import a project.
+- Continue: understand state and choose the next move.
+- Build: plan, implement, test, and ship product work.
+- Verify: check artifacts, code, runtime behavior, and release readiness.
+- Operate: deploy, observe, harden, launch, and respond in production.
+- Maintain: keep artifacts, docs, dependencies, context, and repo surfaces current.
+- Capture: save thoughts, tasks, backlog items, seeds, and learnings.
+- Recover: undo, repair, restore, skip, or diagnose broken state.
+- Extend: install, inspect, test, remove, or author extension packs.
+- Collaborate: coordinate people, workstreams, suites, sprints, and pull requests.
+- Configure: tune settings, budgets, cache, profiles, help, and version info.
+
+When choosing between similar commands, use the ladders from
+`lib/command-families.js`: capture ladder, work size ladder, verification
+ladder, status views, and trigger precedence. `/god-help` should render
+families before leaf commands, and `/god` should use the family helpers before
+asking the user to choose from a long list.
+
+### 12. User-Facing Vocabulary
 Godpowers may use internal words such as "arc" in routing, recipes, and agent
 implementation notes. Do not require the user to decode that word in visible
 output.
@@ -218,7 +241,7 @@ and roadmap visibility when those files exist or are expected. Show whether
 the PRD is done, whether the roadmap exists, which milestone or tier is active,
 how close the tracked workflow is to completion, and the next concrete move.
 
-### 12. Auto-Invoke Visibility
+### 13. Auto-Invoke Visibility
 When Godpowers automatically runs another command, agent, or local runtime
 helper, show the user what happened. Do not describe these as "background"
 unless they are truly detached from the current run. Most Godpowers sync work
@@ -271,7 +294,7 @@ Automatic steps that especially need visible reporting:
 - dogfood runner execution during `/god-dogfood`, release checks, or explicit
   dogfood requests
 
-### 13. Proactive Auto-Invoke Policy
+### 14. Proactive Auto-Invoke Policy
 Godpowers should be proactive from disk evidence, not from guesswork. Before
 auto-invoking anything, classify the action by risk and apply the safest
 allowed behavior.

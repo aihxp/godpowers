@@ -22,7 +22,7 @@ Before calling runtime modules, resolve the Godpowers runtime root:
 
 1. If `<projectRoot>/lib/recipes.js` exists, use the repository checkout runtime at `<projectRoot>`.
 2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill, such as `~/.claude`, `~/.codex`, `~/.cursor`, `~/.windsurf`, or `~/.gemini`.
-3. Load recipes from `<runtimeRoot>/lib/recipes.js`, routing from `<runtimeRoot>/lib/router.js`, and recipe YAML from `<runtimeRoot>/routing/recipes/`.
+3. Load recipes from `<runtimeRoot>/lib/recipes.js`, routing from `<runtimeRoot>/lib/router.js`, command families from `<runtimeRoot>/lib/command-families.js`, and recipe YAML from `<runtimeRoot>/routing/recipes/`.
 
 ## Why this exists
 
@@ -40,6 +40,57 @@ This skill complements `/god-next` rather than replacing it:
 | `/god-status` | "Where are we? what's done?" |
 | `/god-init` | "Start a project here" |
 | `/god-mode` | "Run the whole project run autonomously" |
+
+## Command family UX
+
+Before showing individual leaf commands, use the family map from
+`lib/command-families.js`:
+
+| Family | User question |
+|--------|---------------|
+| start | "How do I begin or import this project?" |
+| continue | "Where are we and what should happen next?" |
+| build | "How big is this work and how should it run?" |
+| verify | "What is the cheapest sufficient check?" |
+| operate | "How do we run, observe, harden, or fix production?" |
+| maintain | "How do we keep docs, deps, routes, and context current?" |
+| capture | "Where should this thought, task, backlog item, or seed go?" |
+| recover | "How do we repair or walk back state?" |
+| extend | "How do we install or author skill packs?" |
+| collaborate | "How do we coordinate people, workstreams, suites, or PRs?" |
+| configure | "How do we tune settings, budgets, cache, profiles, or help?" |
+
+Use the classifiers from `lib/command-families.js` when intent is about
+capture, work size, verification, or duplicate trigger phrases. Keep every
+leaf command available as a direct shortcut.
+
+### Capture ladder
+
+- Save only: `/god-note`
+- Actionable soon: `/god-add-todo`
+- Optional later: `/god-add-backlog`
+- Conditional future trigger: `/god-plant-seed`
+
+### Work size ladder
+
+- Trivial direct edit: `/god-fast`
+- Small TDD task: `/god-quick`
+- Fine-grained planned slice: `/god-story`
+- Existing-product feature: `/god-feature`
+- Current milestone work: `/god-build`
+- Non-urgent bug: `/god-debug`
+- Production outage: `/god-hotfix`
+
+### Verification ladder
+
+- Mechanical artifact check: `/god-lint`
+- Artifact quality gate: `/god-standards`
+- Code diff review: `/god-review`
+- Live behavior check: `/god-test-runtime`
+- Artifact set score: `/god-audit`
+- Ongoing health check: `/god-hygiene`
+- Existing repo intake: `/god-preflight`
+- Release fixture readiness: `/god-dogfood`
 
 ## Process
 
@@ -64,6 +115,7 @@ text empty?
          also call <runtimeRoot>/lib/router.js suggestNext(projectRoot) for structural next
 
   no  -> intent-driven: call <runtimeRoot>/lib/recipes.js matchIntent(text, projectRoot)
+         call <runtimeRoot>/lib/command-families.js classifiers for capture, work size, verification, and trigger precedence hints
          take top 1-3 matches by score
          if highest score >= 10 (exact phrase match): propose directly
          if highest score 5-9 (all-words match): propose with confirmation

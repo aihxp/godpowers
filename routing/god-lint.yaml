@@ -4,6 +4,7 @@ metadata:
   command: /god-lint
   description: Mechanical have-nots validation
   tier: 0
+  family: verify
 
 prerequisites:
   required: []

@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.3.1
+> Current shipped: v2.4.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.3.1)
+### Current surface (v2.4.0)
 
 What works today:
 - **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -33,6 +33,14 @@ What works today:
   name the runtime source, label workflow progress, report host guarantees,
   support compact `--brief` output, and keep audit scores out of the workflow
   percentage.
+- **Command family UX layer**: `/god`, `/god-help`, `/god-next`, and route
+  metadata share command families, capture, work-size, verification, and
+  status-view ladders so users can choose paths without losing leaf commands.
+- **Typed routing outcomes**: flexible success paths carry outcome type,
+  label, reason, and allowed-next metadata for contextual, verdict-based,
+  steady-state, session-end, and selection closeouts.
+- **Workflow helper groups**: repeated closeout helper sets are named in
+  workflow YAML and expanded into exact local helper names in serialized plans.
 - **Executable quick proof**: `npx godpowers quick-proof --project .` renders
   a shipped fixture with real `.godpowers/state.json`, computed next action,
   missing-artifact visibility, and host guarantees from the caller's
@@ -438,7 +446,7 @@ All other operations are slash commands inside the AI tool.
 |---------|-------------------|
 | v1.0 | No new features without adoption evidence |
 | v1.0 | No schema churn |
-| v1.0 | No command family expansion |
+| v1.0 | No removal of leaf commands through command family presentation |
 | All | No broad `godpowers` CLI beyond install, read-only status, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
 
 Discipline: a release that does too much is a release that ships late.

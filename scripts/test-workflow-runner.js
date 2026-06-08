@@ -37,7 +37,8 @@ jobs:
     tier: 1
     needs: prd
     uses: god-architect@^1.0.0
-    local-helpers: [repo-doc-sync, host-capabilities]
+    local-helper-groups: [repo-maintenance-closeout]
+    local-helpers: [host-capabilities]
   stack:
     tier: 1
     needs: arch
@@ -105,7 +106,10 @@ test('plan exposes workflow local helpers', () => {
   const p = runner.plan(wf);
   const archStep = p.steps.find(s => s.jobKey === 'arch');
   assert(archStep.localHelpers.includes('repo-doc-sync'), `helpers: ${archStep.localHelpers}`);
+  assert(archStep.localHelpers.includes('repo-surface-sync'), `helpers: ${archStep.localHelpers}`);
   assert(archStep.localHelpers.includes('host-capabilities'), `helpers: ${archStep.localHelpers}`);
+  assert(archStep.localHelperGroups.includes('repo-maintenance-closeout'),
+    `groups: ${archStep.localHelperGroups}`);
 });
 
 test('plan summary contains a wave description', () => {
@@ -127,7 +131,9 @@ test('writePlan creates .godpowers/runs/<id>/plan.yaml', () => {
   const text = fs.readFileSync(file, 'utf8');
   assert(/^workflow: simple/m.test(text), 'workflow name not in plan');
   assert(/wave-count: 3/.test(text), 'wave-count not in plan');
-  assert(/local-helpers: \[repo-doc-sync, host-capabilities\]/.test(text),
+  assert(/local-helper-groups: \[repo-maintenance-closeout\]/.test(text),
+    'local helper groups not in plan');
+  assert(/local-helpers: \[repo-doc-sync, repo-surface-sync, host-capabilities\]/.test(text),
     'local helpers not in plan');
 });
 
