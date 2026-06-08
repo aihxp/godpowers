@@ -61,6 +61,55 @@ test('matchIntent matches "update dependencies" to deps recipe', () => {
   if (top !== 'monthly-deps') throw new Error(`expected monthly-deps, got ${top}`);
 });
 
+test('matchIntent matches public front-door examples', () => {
+  const cases = [
+    ['start a product', 'greenfield-fast'],
+    ['add a feature', 'add-feature-mid-arc-pause'],
+    ['fix production', 'production-broken'],
+    ['production is broken', 'production-broken'],
+    ['add a feature without breaking the current project run', 'add-feature-mid-arc-pause'],
+    ["I'm coming back after a week", 'returning-after-break'],
+    ['audit an existing repo', 'brownfield-onboarding'],
+    ['ship a release', 'release-maintenance'],
+    ['maintain project health', 'weekly-health-check'],
+    ['maintain health', 'weekly-health-check'],
+    ['create an extension pack', 'extension-authoring'],
+    ['extend godpowers', 'extension-authoring']
+  ];
+
+  for (const [text, expected] of cases) {
+    recipes.clearCache();
+    const matches = recipes.matchIntent(text);
+    if (matches.length === 0) throw new Error(`no matches for ${text}`);
+    const top = matches[0].recipe.metadata.name;
+    if (top !== expected) throw new Error(`expected ${expected} for ${text}, got ${top}`);
+  }
+});
+
+test('public starter recipes keep their command order', () => {
+  recipes.clearCache();
+  const brownfield = recipes.getSequence(recipes.getRecipe('brownfield-onboarding'))
+    .map((step) => step.command);
+  const release = recipes.getSequence(recipes.getRecipe('release-maintenance'))
+    .map((step) => step.command);
+
+  for (const command of ['/god-preflight', '/god-archaeology', '/god-reconstruct', '/god-audit', '/god-tech-debt']) {
+    if (!brownfield.includes(command)) throw new Error(`brownfield missing ${command}`);
+  }
+  if (brownfield.indexOf('/god-audit') > brownfield.indexOf('/god-tech-debt')) {
+    throw new Error('brownfield should audit reconstructed artifacts before tech debt');
+  }
+  for (const command of ['/god-sync', '/god-docs', '/god-version', '/god-automation-setup']) {
+    if (!release.includes(command)) throw new Error(`release maintenance missing ${command}`);
+  }
+
+  const extension = recipes.getSequence(recipes.getRecipe('extension-authoring'))
+    .map((step) => step.command);
+  for (const command of ['/god-extension-scaffold --name=@godpowers/my-pack --output=.', '/god-test-extension <pack-dir>', '/god-extension-add <pack-dir>', '/god-extension-list']) {
+    if (!extension.includes(command)) throw new Error(`extension authoring missing ${command}`);
+  }
+});
+
 test('matchIntent ranks exact phrase match high (10+)', () => {
   recipes.clearCache();
   const exact = recipes.matchIntent('production down urgent', tmp);

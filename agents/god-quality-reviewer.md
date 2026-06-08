@@ -63,6 +63,26 @@ Your job: would you ship this code in production?
 - Flag missing or inaccurate annotations: the deliverable ledger derives
   requirement status from them, so a gap here understates delivered work
 
+### 8. Comment Quality and Style Fidelity
+- Required traceability comments such as `// Implements: P-...` remain present
+  and accurate.
+- Comments explain non-obvious why, constraints, hazards, or tradeoffs. Flag
+  comments that narrate obvious code, duplicate names, go stale, or use generic
+  AI-assistant prose.
+- Avoid decorative section banners or chatty explanation unless the surrounding
+  codebase already uses that convention.
+- If `CODEDNA.md` exists, compare naming, comment voice, extraction threshold,
+  error style, test style, and common idioms against the profile.
+- Absence of `CODEDNA.md` is not a failure. When no profile exists, judge style
+  against nearby code and repository conventions.
+
+### 9. Optional Code Intelligence
+- When `ast-grep`, `sg`, or LSP tools are available, use them to support
+  maintainability review for structural matches, impacted references, or
+  diagnostics that plain grep can miss.
+- Absence of these tools is not a failure. Treat them as extra evidence when
+  present.
+
 ## Output
 
 Return verdict to orchestrator:
@@ -78,6 +98,8 @@ Return verdict to orchestrator:
 - [PASS/FAIL] Maintainability: [evidence]
 - [PASS/FAIL] Simplicity and surgicality: [evidence]
 - [PASS/FAIL] Requirement traceability: [evidence]
+- [PASS/FAIL] Comment quality and style fidelity: [evidence]
+- [PASS/FAIL] Optional code intelligence: [evidence or not applicable]
 
 ### Verdict: PASS / FAIL
 
@@ -86,7 +108,7 @@ Return verdict to orchestrator:
 
 ## Pass Criteria
 
-ALL seven dimensions must PASS. Any FAIL blocks the commit.
+ALL nine dimensions must PASS. Any FAIL blocks the commit.
 
 If FAIL: orchestrator returns the slice to god-executor.
 If PASS: orchestrator commits the slice atomically.

@@ -47,6 +47,18 @@ test('getNextCommand returns next for /god-prd', () => {
   if (next !== '/god-arch') throw new Error(`expected /god-arch, got ${next}`);
 });
 
+test('getNextCommand returns repo as the default after /god-stack', () => {
+  router.clearCache();
+  const next = router.getNextCommand('/god-stack');
+  if (next !== '/god-repo') throw new Error(`expected /god-repo, got ${next}`);
+});
+
+test('getNextCommand returns test extension after /god-extension-scaffold', () => {
+  router.clearCache();
+  const next = router.getNextCommand('/god-extension-scaffold');
+  if (next !== '/god-test-extension') throw new Error(`expected /god-test-extension, got ${next}`);
+});
+
 test('getStandards returns checks for /god-prd', () => {
   router.clearCache();
   const s = router.getStandards('/god-prd');

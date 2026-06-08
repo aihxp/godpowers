@@ -48,7 +48,7 @@ Plain-text report grouped by severity:
 GODPOWERS DOCTOR
 
 Install: claude (~/.claude/)
-  [OK] 111 skills installed
+  [OK] 112 skills installed
   [OK] 40 agents installed
   [OK] VERSION matches (2.3.0)
   [WARN] routing/god-doctor.yaml exists but skill file did not until now
@@ -113,6 +113,12 @@ as a read-only diagnostic. It reports:
 
 `/god-doctor --fix` may call `lib/feature-awareness.run(projectRoot)` because
 that helper writes only safe state metadata and managed context fences.
+
+## Host Capability Reporting
+
+`/god-doctor` reports optional code intelligence when `ast-grep`, `sg`, or LSP
+tools are available. Missing code intelligence is diagnostic context only; it
+does not make the host degraded.
 
 ## Repo Documentation Sync
 

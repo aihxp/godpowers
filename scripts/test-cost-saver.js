@@ -265,6 +265,22 @@ test('clear --all removes everything', () => {
   assert(cache.stats(tmp).count === 0, 'stats not zero');
 });
 
+test('clear --all removes shard symlinks without following targets', () => {
+  const tmp = mkProject();
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-cache-outside-'));
+  const victim = path.join(outside, 'victim.json');
+  fs.writeFileSync(victim, JSON.stringify({ agent: 'god-pm' }));
+  const root = cache.cacheDir(tmp);
+  fs.mkdirSync(root, { recursive: true });
+  const link = path.join(root, 'aa');
+  fs.symlinkSync(outside, link);
+
+  cache.clear(tmp, { all: true });
+
+  assert(fs.existsSync(victim), 'outside cache target was deleted');
+  assert(!fs.existsSync(link), 'cache shard symlink was not removed');
+});
+
 test('clear --agent removes only that agent', () => {
   const tmp = mkProject();
   cache.put(tmp, cache.key('god-pm', '1.0.0', { x: 1 }, 's'), { agent: 'god-pm', output: 'a' });
@@ -280,6 +296,25 @@ test('clear --expired removes only expired', () => {
   cache.put(tmp, cache.key('b', '1', { x: 2 }, 's'), { agent: 'b', output: 'dead', ttl_ms: -1000 });
   const r = cache.clear(tmp, { expiredOnly: true });
   assert(r.removed === 1, `removed: ${r.removed}`);
+});
+
+test('clear and stats skip symlinked cache entry files', () => {
+  const tmp = mkProject();
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-cache-file-'));
+  const victim = path.join(outside, 'entry.json');
+  fs.writeFileSync(victim, JSON.stringify({ agent: 'god-pm', ts: new Date().toISOString() }));
+  const shard = path.join(cache.cacheDir(tmp), 'aa');
+  fs.mkdirSync(shard, { recursive: true });
+  const link = path.join(shard, 'entry.json');
+  fs.symlinkSync(victim, link);
+
+  const r = cache.clear(tmp, { agent: 'god-pm' });
+  const s = cache.stats(tmp);
+
+  assert(r.removed === 0, `removed: ${r.removed}`);
+  assert(fs.existsSync(victim), 'outside cache entry was deleted');
+  assert(fs.lstatSync(link).isSymbolicLink(), 'symlink entry should remain on narrow clear');
+  assert(s.count === 0, `count: ${s.count}`);
 });
 
 test('stats reports count + total bytes', () => {

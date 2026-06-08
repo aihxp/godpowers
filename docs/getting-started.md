@@ -134,6 +134,12 @@ Install packs with `/god-extension-add @godpowers/security-pack`. To author a
 new pack, start from the shipped scaffold:
 
 ```bash
+/god-extension-scaffold --name=@godpowers/my-pack --output=.
+```
+
+The terminal equivalent remains:
+
+```bash
 npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 ```
 
@@ -167,6 +173,6 @@ survives focused repair attempts or the blocker is genuinely human-only.
 ## Where to next
 
 - [Concepts](concepts.md) - the vocabulary and mental model
-- [Reference](reference.md) - all 111 slash commands and CLI helpers
+- [Reference](reference.md) - all 112 slash commands and CLI helpers
 - [Tutorial: First Project](tutorials/first-project.md) - end-to-end walkthrough
 - [Composing with other tools](../references/shared/ORCHESTRATORS.md) - coexistence with other AI workflow systems

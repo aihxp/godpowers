@@ -12,6 +12,9 @@ triggers:
     - "update readme badge"
     - "release notes"
     - "package release"
+    - "ship a release"
+    - "release the project"
+    - "prepare release"
 
 sequences:
   default:

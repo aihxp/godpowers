@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added `/god-extension-scaffold` as the slash-command entry point for
+  extension pack authoring, with routing metadata, installer profile coverage,
+  package payload checks, and front-door recipe coverage.
+- Added code-intelligence host capability detection for optional `ast-grep`,
+  `sg`, and LSP tooling without downgrading baseline host guarantees when those
+  tools are absent.
+- Added public starter-path regression checks that verify README and Quick
+  Proof goal labels resolve through shipped `/god` recipes and routes.
+
+### Changed
+- Updated public surface counts to 112 slash commands and 42 intent recipes
+  across release notes, reference docs, architecture maps, package metadata,
+  and project Pillars.
+- Tightened public front-door recipe matching for starter phrases including
+  "start a product", "add a feature", "fix production", "maintain health",
+  "audit an existing repo", "ship a release", and extension authoring.
+- Aligned the brownfield onboarding recipe to audit reconstructed artifacts
+  before tech-debt prioritization.
+
+### Fixed
+- Prevented maintainer-repository documentation drift from leaking into normal
+  user project dashboards.
+- Corrected Quick Proof output so fixture-backed checks render
+  `--project=.` for the user project path.
+- Hardened extension install, planning-system detection, and agent-cache cleanup
+  around symlinked directories that point outside the trusted source tree.
+- Removed phantom `god-*` examples from the extension scaffold skill prose so
+  agent-reference validation stays clean.
+
 ## [2.3.0] - 2026-05-30
 
 ### Added

@@ -11,6 +11,8 @@ triggers:
     - "health check"
     - "hygiene"
     - "project health"
+    - "maintain project health"
+    - "maintain health"
   state-conditions:
     - "lifecycle-phase == steady-state-active"
 

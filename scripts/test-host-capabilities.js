@@ -29,10 +29,17 @@ test('detect reports full when agent metadata is present', () => {
   fs.writeFileSync(path.join(tmp, 'schema', 'extension-manifest.v1.json'), '{}');
   const report = hostCapabilities.detect(tmp, {
     homeDir: path.join(tmp, 'home'),
-    env: { SHELL: '/bin/zsh', CODEX_HOME: path.join(tmp, 'home', '.codex') }
+    env: { SHELL: '/bin/zsh', CODEX_HOME: path.join(tmp, 'home', '.codex') },
+    codeIntelligence: {
+      level: 'available',
+      astGrep: { available: true, command: 'ast-grep', version: 'ast-grep 0.39.0' },
+      lsp: { available: false, primary: null, tools: [] },
+      gaps: ['LSP tools not detected']
+    }
   });
   assert.equal(report.level, 'full');
   assert.equal(report.guarantees.agentSpawn, true);
+  assert.equal(report.guarantees.codeIntelligence.astGrep.command, 'ast-grep');
   assert(hostCapabilities.summary(report).startsWith('full on codex'));
 });
 
@@ -54,6 +61,7 @@ test('render summarizes gaps without banned dash characters', () => {
   });
   const rendered = hostCapabilities.render(report);
   assert(rendered.includes('Host capabilities:'));
+  assert(rendered.includes('Code intelligence:'));
   assert(!/[\u2013\u2014]/.test(rendered), 'render contains banned dash');
 });
 

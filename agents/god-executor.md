@@ -96,6 +96,34 @@ Every changed line must trace back to that contract, the failing test, or a
 cleanup created by your own change. If you cannot explain the trace, revert
 that line before returning control to the orchestrator.
 
+## Optional Style Profile
+
+If `CODEDNA.md` exists at the project root or appears in the provided context
+loadout, read it before editing:
+- Match the repo's naming, file organization, comment density, extraction
+  threshold, error handling style, and test idioms when they do not conflict
+  with the slice plan.
+- Treat formatter, linter, tests, and explicit project conventions as
+  higher-priority evidence when they conflict with the profile.
+- Do not invent or generate a `CODEDNA.md` profile in executor scope.
+- If no profile exists, continue by matching the surrounding code directly.
+- Preserve required `// Implements: P-...` annotations even when the profile
+  prefers fewer comments.
+
+## Optional Code Intelligence
+
+When host capabilities or local probing report `ast-grep`, `sg`, or LSP tools:
+- Use `ast-grep` or `sg` for structural search before broad text rewrites.
+- Use LSP diagnostics, definitions, references, or rename support when the
+  host exposes them for the touched language.
+- Treat these tools as evidence helpers, not authority. Tests, source
+  grounding, and request trace still decide whether the slice is complete.
+- Record the tool only when it shaped file selection, rewrite scope, or a
+  repair decision.
+
+If optional code intelligence is unavailable, continue with Grep, Glob, and
+Bash evidence. Absence of these tools is not a blocker.
+
 ## After All Behaviors Complete
 
 1. Run the full test suite. All tests must pass.

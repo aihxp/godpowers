@@ -13,6 +13,8 @@ const cp = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const quickProof = require('../lib/quick-proof');
+const router = require('../lib/router');
+const recipes = require('../lib/recipes');
 const { test, report, assert } = require('./test-harness');
 
 
@@ -48,6 +50,38 @@ function stripAnchor(target) {
   return target.split('#')[0];
 }
 
+const STARTER_ROWS = [
+  '| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |',
+  '| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |',
+  '| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |',
+  '| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |',
+  '| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |',
+  '| Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |',
+  '| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |'
+];
+
+const STARTER_GOAL_RECIPES = new Map([
+  ['Start a product', 'greenfield-fast'],
+  ['Add a feature', 'add-feature-mid-arc-pause'],
+  ['Fix production', 'production-broken'],
+  ['Audit an existing repo', 'brownfield-onboarding'],
+  ['Ship a release', 'release-maintenance'],
+  ['Maintain project health', 'weekly-health-check'],
+  ['Maintain health', 'weekly-health-check'],
+  ['Extend Godpowers', 'extension-authoring']
+]);
+
+function starterGoals(text) {
+  return text.split('\n')
+    .filter((line) => /^\| (Start a product|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line))
+    .map((line) => line.split('|')[1].trim());
+}
+
+function starterCommands(text) {
+  const rows = text.split('\n').filter((line) => /^\| (Start a product|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line));
+  return rows.flatMap((row) => [...row.matchAll(/`([^`]+)`/g)].map((match) => match[1]));
+}
+
 console.log('\n  Quick proof documentation tests\n');
 
 test('README links to the quick proof and adoption canary', () => {
@@ -67,6 +101,45 @@ test('README exposes starter paths before the full reference', () => {
     'Extend Godpowers'
   ]) {
     assertIncludes('README.md', phrase);
+  }
+});
+
+test('starter paths stay aligned across public proof docs', () => {
+  const readme = read('README.md');
+  const quickProofDoc = read('docs/quick-proof.md');
+  for (const row of STARTER_ROWS) {
+    assert(readme.includes(row), `README.md missing starter row: ${row}`);
+    assert(quickProofDoc.includes(row.replace('Maintain project health', 'Maintain health')),
+      `docs/quick-proof.md missing starter row: ${row}`);
+  }
+});
+
+test('starter path slash commands resolve to shipped routes', () => {
+  const commands = new Set([
+    ...starterCommands(read('README.md')),
+    ...starterCommands(read('docs/quick-proof.md'))
+  ]);
+  for (const command of commands) {
+    if (!command.startsWith('/god')) continue;
+    const baseCommand = command.split(/\s+/)[0];
+    assert(router.getRouting(baseCommand), `missing route for starter command: ${command}`);
+    assert(exists(`skills/${baseCommand.slice(1)}.md`), `missing skill for starter command: ${command}`);
+  }
+});
+
+test('starter path goal labels resolve through front-door recipes', () => {
+  const goals = new Set([
+    ...starterGoals(read('README.md')),
+    ...starterGoals(read('docs/quick-proof.md'))
+  ]);
+  for (const goal of goals) {
+    const expected = STARTER_GOAL_RECIPES.get(goal);
+    assert(expected, `missing starter goal recipe expectation for: ${goal}`);
+    recipes.clearCache();
+    const matches = recipes.matchIntent(goal);
+    assert(matches.length > 0, `no recipe match for starter goal: ${goal}`);
+    const top = matches[0].recipe.metadata.name;
+    assert(top === expected, `expected ${expected} for ${goal}, got ${top}`);
   }
 });
 
@@ -124,6 +197,32 @@ test('quick proof fixture computes /god-prd as next command', () => {
   assert(rendered.includes('Godpowers Quick Proof'), 'render missing title');
   assert(rendered.includes('Next: /god-prd'), rendered);
   assert(rendered.includes('Host guarantees: degraded on test'), rendered);
+});
+
+test('quick proof renders dot for the user project when fixture root was passed', () => {
+  const proof = quickProof.compute(quickProof.FIXTURE_ROOT, {
+    hostReport: {
+      host: 'test',
+      level: 'full',
+      guarantees: {
+        shell: true,
+        fileEdit: true,
+        node: process.version,
+        git: 'git version test',
+        npm: 'test',
+        gh: 'test',
+        agentSpawn: true,
+        extensionAuthoring: true,
+        suiteReleaseDryRun: true
+      },
+      installedAgents: { codex: true, claude: true },
+      gaps: []
+    }
+  });
+  const rendered = quickProof.render(proof);
+  assert(rendered.includes('Try it on your project:'), rendered);
+  assert(rendered.includes('npx godpowers status --project=. --brief'), rendered);
+  assert(rendered.includes('npx godpowers next --project=. --brief'), rendered);
 });
 
 test('CLI quick-proof renders the fixture proof', () => {

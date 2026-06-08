@@ -162,13 +162,13 @@ Use these paths before reading the full command reference.
 
 | Goal | Start here |
 |---|---|
-| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-build` |
-| Add a feature | `/god-feature`, `/god-reconcile`, `/god-build`, `/god-review`, `/god-sync` |
-| Fix production | `/god-hotfix`, `/god-debug`, `/god-harden`, `/god-postmortem` |
-| Audit an existing repo | `/god-preflight`, `/god-audit`, `/god-archaeology`, `/god-tech-debt` |
-| Ship a release | `/god-status`, `/god-harden`, `/god-launch`, `npm run release:check` |
+| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |
+| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
+| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
+| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
+| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
 | Maintain health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
-| Extend Godpowers | `/god-extension-add`, `/god-extension-list`, `npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.` |
+| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
 
 ## Runtime Expectations
 

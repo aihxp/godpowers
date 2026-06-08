@@ -65,6 +65,12 @@ Answer each with EVIDENCE from the code:
    - If the slice added a dependency, is there package legitimacy evidence or
      an explicit accepted-risk note?
 
+8. **Did available code intelligence support the review?**
+   - If `ast-grep`, `sg`, or LSP tools are available, use them to verify
+     impacted references, structural matches, or diagnostics for the touched
+     language when relevant.
+   - If unavailable or irrelevant, do not fail the slice for absence alone.
+
 ## Output
 
 Return verdict to orchestrator:

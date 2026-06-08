@@ -1,7 +1,7 @@
 # Godpowers Architecture Map
 
 > Visual reference for how everything connects.
-> 4 layers, 111 slash commands, 40 agents, 13 workflows, 41 recipes, executable release gates.
+> 4 layers, 112 slash commands, 40 agents, 13 workflows, 42 recipes, executable release gates.
 
 ---
 
@@ -10,8 +10,8 @@
 ```
    Layer 1: SLASH COMMANDS (skills/)              <- User surface
    ┌─────────────────────────────────────────────┐
-   │  /god-mode  /god-prd  /god-arch  /god-build │
-   │  /god-feature  /god-hotfix  /god-dogfood ... │
+   │  /god  /god-mode  /god-prd  /god-arch       │
+   │  /god-build  /god-feature  /god-hotfix ...   │
    └─────────────────────────────────────────────┘
                        |
                        | Each skill spawns
@@ -45,10 +45,103 @@
 
 ---
 
+## Connectivity Audit Map
+
+`ARCHITECTURE.md` owns the architecture audit playbook. This map shows the
+same connectivity as a graph that can be checked by executable tests.
+
+```
+skills/*.md
+    |
+    v
+routing/*.yaml
+    |
+    +--> agents/god-*.md
+    |
+    +--> built-in runtime helpers
+    |
+    v
+workflows/*.yaml
+    |
+    v
+routing/recipes/*.yaml
+    |
+    v
+docs/command-flows.md
+    |
+    v
+package.json + scripts/check-package-contents.js
+```
+
+### What counts as disconnected
+
+```
+Command gap:
+  skill missing route
+  route missing skill
+  route missing standards policy
+  route exits with unapproved "varies"
+
+Action gap:
+  route spawns symbolic agent token
+  route references missing agent
+  agent-spawning route lacks agent.start or agent.end trace event
+  local helper runs without a visible owner, artifact, log, or no-op reason
+
+Workflow gap:
+  workflow cannot load or plan
+  workflow helper is hidden from the serialized plan
+  recipe has no slash-command route
+  recipe references an unavailable command
+```
+
+### Executable audit commands
+
+```
+node scripts/test-repo-surface-sync.js
+node scripts/test-automation-surface-sync.js
+node scripts/test-workflow-runner.js
+node scripts/test-router.js
+node scripts/test-recipes.js
+npm run test:audit
+npm run pack:check
+```
+
+Current checked status:
+
+```
+repo-surface: fresh
+route-quality: fresh
+recipe-coverage: fresh
+workflows: 13 loaded and planned
+```
+
+### Sync helper vocabulary
+
+[DECISION] This map uses workflow schema names for canonical helper IDs and
+keeps shorter `/god-sync` output names as aliases where users see them.
+
+```
+checkpoint-sync       -> CHECKPOINT.md refresh
+dogfood-runner        -> messy-repo fixture runner
+feature-awareness     -> runtime capability refresh
+host-capabilities     -> host feature detection
+pillars-sync-plan     -> shown as pillars-sync in /god-sync output
+recipe-coverage-sync  -> recipe to command coverage check
+release-surface-sync  -> release gate and package surface check
+repo-doc-sync         -> public docs, badges, counts, and version check
+repo-surface-sync     -> skills, routes, agents, workflows, recipes, package
+route-quality-sync    -> route spawn, standards, and next-exit check
+source-sync-back      -> shown as source-sync in /god-sync output
+```
+
+---
+
 ## Skill -> Agent Mapping (the spawn graph)
 
 ### Lifecycle commands
 ```
+/god              -> built-in recipe and router front door
 /god-init         -> built-in + import detection
 /god-status       -> reads state.json directly
 /god-next         -> built-in routing logic + action brief
@@ -56,12 +149,15 @@
 /god-doctor       -> built-in + scoped specialist suggestions
 /god-version      -> built-in
 /god-lifecycle    -> built-in (reads disk)
+/god-progress     -> built-in (requirement and increment progress)
 /god-dogfood      -> built-in fixture runner, specialists on failure
 ```
 
 ### Tier 1: Planning
 ```
 /god-prd          -> god-pm                      writes prd/PRD.md
+/god-design       -> god-designer                writes DESIGN.md + PRODUCT.md
+                  -> god-design-reviewer (review)
 /god-arch         -> god-architect               writes arch/ARCH.md + adr/
 /god-roadmap      -> god-roadmapper              writes roadmap/ROADMAP.md
 /god-stack        -> god-stack-selector          writes stack/DECISION.md
@@ -136,9 +232,11 @@
 /god-migrate      -> local planning-system import
                   -> god-greenfieldifier when import judgment is needed
 /god-sync         -> god-updater
-                  -> local reverse-sync, source-sync, repo-doc-sync,
+                  -> local feature-awareness, reverse-sync, source-sync-back,
                      repo-surface-sync, route-quality-sync,
-                     recipe-coverage-sync, release-surface-sync
+                     recipe-coverage-sync, release-surface-sync,
+                     repo-doc-sync, pillars-sync-plan, checkpoint-sync,
+                     context-refresh
 /god-context      -> god-context-writer
                   -> feature-awareness and Pillars context refresh
 ```
@@ -199,6 +297,69 @@
 /god-build-agent  -> built-in (template-based generation)
 /god-settings     -> built-in (intent.yaml read/write)
 /god-set-profile  -> built-in (intent.yaml update)
+```
+
+### Complete core command coverage supplement
+
+[DECISION] The grouped spawn graph above shows common flows, while this
+supplement keeps every current core slash command visible for drift audits.
+
+#### Read-only, cost, and runtime maintenance
+```
+/god-agent-audit       -> built-in (agent contract audit)
+/god-automation-setup  -> built-in + god-automation-engineer
+/god-automation-status -> built-in (host automation provider status)
+/god-budget            -> built-in (budget controls)
+/god-cache-clear       -> built-in (cache cleanup)
+/god-context-scan      -> built-in (context drift scan)
+/god-cost              -> built-in (cost and token report)
+/god-export-otel       -> built-in (OTel trace export)
+/god-lint              -> built-in (mechanical have-nots validation)
+/god-locate            -> built-in (state and artifact locator)
+/god-standards         -> god-standards-check
+/god-test-extension    -> built-in (extension contract test)
+/god-test-runtime      -> god-browser-tester
+```
+
+#### Brownfield and planning repair
+```
+/god-archaeology       -> god-archaeologist
+/god-org-context       -> god-org-context-loader
+/god-preflight         -> god-auditor (read-only intake audit)
+/god-reconcile         -> god-reconciler
+/god-reconstruct       -> god-reconstructor
+/god-roadmap-check     -> god-roadmap-reconciler
+/god-roadmap-update    -> god-roadmap-updater
+/god-tech-debt         -> god-debt-assessor
+```
+
+#### Design, fast paths, and linkage
+```
+/god-design-impact     -> built-in (DESIGN.md what-if analysis)
+/god-fast              -> built-in (trivial inline edit)
+/god-link              -> built-in (manual code-artifact link)
+/god-quick             -> god-planner + god-executor + reviewers
+/god-review-changes    -> built-in (REVIEW-REQUIRED.md walkthrough)
+/god-scan              -> built-in (reverse-sync scanner)
+/god-smite             -> built-in (dependency cache reset)
+```
+
+#### Extension lifecycle
+```
+/god-extension-scaffold -> built-in (create extension pack)
+/god-extension-add     -> built-in (install extension pack)
+/god-extension-info    -> built-in (extension metadata)
+/god-extension-list    -> built-in (extension inventory)
+/god-extension-remove  -> built-in (remove extension pack)
+```
+
+#### Story commands
+```
+/god-stories           -> built-in (story inventory)
+/god-story             -> god-storyteller
+/god-story-build       -> god-planner + god-executor + reviewers
+/god-story-close       -> built-in (story closeout)
+/god-story-verify      -> god-browser-tester
 ```
 
 ### From extensions
@@ -478,12 +639,12 @@ godpowers/
 ├── README.md, CHANGELOG.md, LICENSE, CONTRIBUTING.md, SECURITY.md, USERS.md
 ├── ARCHITECTURE.md                <- Design doc
 ├── ARCHITECTURE-MAP.md            <- This file
-├── package.json (v2.2.0)
+├── package.json (v2.3.0)
 ├── .github/workflows/              <- CI + npm publish workflows
 │
 ├── bin/install.js                 <- CLI installer (15 runtimes)
 │
-├── skills/                        <- 111 core slash commands
+├── skills/                        <- 112 slash-command skill files
 │   ├── god-mode.md, god-init.md, god-prd.md, god-arch.md, ...
 │   └── (one .md per slash command)
 │
@@ -511,7 +672,7 @@ godpowers/
 │   ├── events.v1.json
 │   └── workflow.v1.json
 │
-├── lib/                           <- Real JS runtime (65 modules)
+├── lib/                           <- Real JS runtime (72 modules)
 │   ├── state.js                   <- state model + drift detection
 │   ├── events.js                  <- OTel-shape event log + hash chain
 │   ├── router.js                  <- command routing
@@ -572,26 +733,26 @@ godpowers/
 
 ---
 
-## Numbers (as of v2.2.0)
+## Numbers (as of v2.3.0)
 
 | Component | Count |
 |-----------|-------|
 | Layers | 4 |
 | Tiers | 4 (0-3) |
 | Sub-steps (per tier) | 13: PRD, ARCH, ROADMAP, STACK, **DESIGN, PRODUCT**, REPO, BUILD, DEPLOY, OBSERVE, LAUNCH, HARDEN, plus orchestration |
-| Slash commands | 111 |
+| Slash commands | 112 |
 | Specialist agents | 40 |
 | Workflows (core YAMLs) | 13 |
-| Intent recipes | 41 |
+| Intent recipes | 42 |
 | Have-nots | 156 documented + 30+ mechanically validated by linter |
-| Templates | 15 |
-| Reference documents | 38 |
+| Templates | 16 |
+| Reference documents | 39 |
 | JSON Schemas | 7 |
-| **JS runtime modules** | **65** |
+| **JS runtime modules** | **72** |
 | **External integrations** | **5** (all detect-and-delegate; none vendored): Google Labs design.md, Impeccable, awesome-design-md, SkillUI, vercel-labs/agent-browser + Playwright |
 | Hooks | 2 |
 | Dogfood scenarios | 5 |
-| Documentation pages | 32 under docs/ plus reference material |
+| Documentation pages | 34 under docs/ plus reference material |
 | **Test suites** | **59 script files plus integration tests** |
 | **Tests** | **Full behavioral suite gated by npm test** |
 | Supported AI runtimes | 15+ |

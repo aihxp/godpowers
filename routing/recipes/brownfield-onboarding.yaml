@@ -11,6 +11,9 @@ triggers:
     - "inherit codebase"
     - "legacy code"
     - "understand existing"
+    - "audit an existing repo"
+    - "audit existing repo"
+    - "audit existing codebase"
   state-conditions:
     - "has-package-json"
 
@@ -24,10 +27,10 @@ sequences:
         why: "Deep history, decisions, conventions, risks"
       - command: "/god-reconstruct"
         why: "Reverse-engineer PRD/ARCH/ROADMAP/STACK from code"
-      - command: "/god-tech-debt"
-        why: "Categorize and prioritize debt"
       - command: "/god-audit"
         why: "Score reconstructed artifacts"
+      - command: "/god-tech-debt"
+        why: "Categorize and prioritize debt"
       - command: "/god-feature"
         why: "Now safe to add new work with reconciliation"
 

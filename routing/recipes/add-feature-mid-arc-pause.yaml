@@ -11,6 +11,12 @@ triggers:
     - "mid development"
     - "pause arc"
     - "feature during build"
+    - "add a feature"
+    - "feature addition"
+    - "add a feature during the current project run"
+    - "add a feature without breaking the current project run"
+    - "without breaking current project run"
+    - "do not disturb current work"
   state-conditions:
     - "lifecycle-phase == in-arc"
 

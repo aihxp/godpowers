@@ -44,6 +44,19 @@ test('detect finds legacy planning .planning artifacts', () => {
   assert(legacyPlanning.confidence === 'high', `unexpected confidence: ${legacyPlanning.confidence}`);
 });
 
+test('detect skips symlinked planning roots that escape the project', () => {
+  const tmp = mkProject();
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-planning-secret-'));
+  write(path.join(outside, 'SECRET.md'), '# Secret\n\n- [ ] do not import\n');
+  fs.symlinkSync(outside, path.join(tmp, '.planning'));
+
+  const result = planningSystems.detect(tmp);
+  const legacyPlanning = result.systems.find((system) => system.id === 'legacy-planning');
+  assert(legacyPlanning, 'legacy planning marker not detected');
+  assert(!legacyPlanning.files.some((file) => file.path.includes('SECRET.md')),
+    'outside symlink target was imported');
+});
+
 test('detect finds BMAD v6 output artifacts', () => {
   const tmp = mkProject();
   write(path.join(tmp, '_bmad-output', 'planning-artifacts', 'PRD.md'), '# PRD\n\n## Goals\n');

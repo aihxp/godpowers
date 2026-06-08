@@ -28,8 +28,8 @@ legitimacy, core ledger writes use atomic persistence, installer profiles let
 teams choose a smaller command surface, and failed executor attempts leave a
 clear repair classification.
 
-Maintainer hardening continues on the 2.x line without expanding the public
-command surface. The 2.1.0 patch closes a command-injection vector in the
+Maintainer hardening continues on the 2.x line with small, audited public
+surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
 agent-browser driver, guards runtime file parsing against corrupt state,
 makes data-directory installs a clean replace, and reconciles documentation
 drift. The 2.0.3 patch range-checks workflow agent references,
@@ -187,13 +187,13 @@ learn the next command when Godpowers recommends it.
 
 | Goal | Starter path |
 |---|---|
-| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-build` |
-| Add a feature | `/god-feature`, `/god-reconcile`, `/god-build`, `/god-review`, `/god-sync` |
-| Fix production | `/god-hotfix`, `/god-debug`, `/god-harden`, `/god-postmortem` |
-| Audit an existing repo | `/god-preflight`, `/god-audit`, `/god-archaeology`, `/god-tech-debt` |
-| Ship a release | `/god-status`, `/god-harden`, `/god-launch`, `npm run release:check` |
+| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |
+| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
+| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
+| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
+| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
 | Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
-| Extend Godpowers | `/god-extension-add`, `/god-extension-list`, `npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.` |
+| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
 
 The same status engine is available from the installer CLI for humans, CI,
 Codex, Claude, Cursor, Gemini, OpenCode, Windsurf, Antigravity, and any host
@@ -498,7 +498,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Getting Started](docs/getting-started.md)
 - [Quick Proof](docs/quick-proof.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 111 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 112 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Adoption Canary](docs/adoption-canary.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)

@@ -27,6 +27,16 @@ test('selectedSkillNames limits core surface', () => {
   assert(!selected.has('god-suite-release'), 'core should not include suite release');
 });
 
+test('selectedSkillNames includes extension authoring in maintainer surface', () => {
+  const names = fs.readdirSync(path.join(ROOT, 'skills'))
+    .filter(file => file.endsWith('.md'))
+    .map(file => path.basename(file, '.md'));
+  const selected = profiles.selectedSkillNames('maintainer', names);
+  assert(selected.has('god-extension-scaffold'), 'maintainer missing god-extension-scaffold');
+  assert(selected.has('god-test-extension'), 'maintainer missing god-test-extension');
+  assert(selected.has('god-extension-add'), 'maintainer missing god-extension-add');
+});
+
 test('installer profile core installs fewer commands and writes marker', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-profile-core-'));
   execFileSync('node', [INSTALLER, '--codex', '--global', '--profile=core'], {

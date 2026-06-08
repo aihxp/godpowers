@@ -21,6 +21,11 @@ test('compute reports not initialized and suggests /god-init', () => {
   assert(result.next.command === '/god-init', `next: ${result.next.command}`);
   assert(result.planning.prd.status === 'missing', `prd: ${result.planning.prd.status}`);
   assert(result.openItems.includes('No .godpowers/state.json found'), 'missing open item');
+  assert(result.proactive.repoSurface === 'not-applicable',
+    `repo surface: ${result.proactive.repoSurface}`);
+  assert(result.proactive.docs === 'not-applicable', `docs: ${result.proactive.docs}`);
+  assert(result.proactive.sync === 'not-applicable', `sync: ${result.proactive.sync}`);
+  assert(result.actionBrief.confidence === 'ready', `brief: ${result.actionBrief.confidence}`);
   const rendered = dashboard.render(result);
   assert(rendered.includes('Godpowers Dashboard'), 'render missing title');
   assert(rendered.includes('Source: runtime dashboard (lib/dashboard.js)'), 'render missing source');
@@ -61,6 +66,21 @@ test('compute reports progress and planning visibility from disk', () => {
   assert(result.proactive.sync === 'fresh', `sync: ${result.proactive.sync}`);
 });
 
+test('non-Godpowers projects do not show maintainer repo drift', () => {
+  const tmp = mkProject();
+  state.init(tmp, 'user-project');
+  writeRel(tmp, 'package.json', JSON.stringify({ name: 'user-project' }, null, 2));
+  const result = dashboard.compute(tmp, { git: false });
+  assert(result.proactive.repoSurface === 'not-applicable',
+    `repo surface: ${result.proactive.repoSurface}`);
+  assert(result.proactive.docs === 'not-applicable', `docs: ${result.proactive.docs}`);
+  assert(!result.actionBrief.blockers.some((blocker) => /^Repo surface:/.test(blocker)),
+    `blockers: ${result.actionBrief.blockers.join('; ')}`);
+  assert(!result.actionBrief.blockers.some((blocker) => /^Docs:/.test(blocker)),
+    `blockers: ${result.actionBrief.blockers.join('; ')}`);
+  assert(result.actionBrief.confidence === 'ready', `brief: ${result.actionBrief.confidence}`);
+});
+
 test('render includes current status, proactive checks, and next route', () => {
   const tmp = mkProject();
   state.init(tmp, 'render-demo');
@@ -92,7 +112,28 @@ test('action brief compresses blockers without hiding next route', () => {
   assert(brief.recommended === '/god-sync', `recommended: ${brief.recommended}`);
   assert(brief.confidence === 'needs attention', `confidence: ${brief.confidence}`);
   assert(brief.blockers.length === 3, `blockers: ${brief.blockers.length}`);
-  assert(brief.overflow === 1, `overflow: ${brief.overflow}`);
+  assert(brief.overflow === 0, `overflow: ${brief.overflow}`);
+  assert(!brief.blockers.some((blocker) => /^Hygiene:/.test(blocker)),
+    `blockers: ${brief.blockers.join('; ')}`);
+});
+
+test('action brief does not let routine maintenance compete with planning next step', () => {
+  const result = {
+    next: { command: '/god-prd', reason: 'PRD pending' },
+    proactive: {
+      repoSurface: 'not-applicable',
+      docs: 'not-applicable',
+      reviews: 'none',
+      sync: 'missing, suggest /god-sync',
+      security: 'clear',
+      dependencies: 'clear',
+      hygiene: 'stale, suggest /god-hygiene'
+    }
+  };
+  const brief = dashboard.actionBrief(result);
+  assert(brief.recommended === '/god-prd', `recommended: ${brief.recommended}`);
+  assert(brief.confidence === 'ready', `confidence: ${brief.confidence}`);
+  assert(brief.blockers.length === 0, `blockers: ${brief.blockers.join('; ')}`);
 });
 
 test('pending review file becomes proactive review suggestion', () => {

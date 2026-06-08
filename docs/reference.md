@@ -2,7 +2,7 @@
 
 Complete command, agent, and artifact reference for v2.3.0.
 
-## Slash commands (111 total)
+## Slash commands (112 total)
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
@@ -172,6 +172,7 @@ diff churn that cannot be traced to the request or slice plan.
 
 ### Extensions (runtime since v0.13, packs on npm since v0.15)
 Pack management:
+- `/god-extension-scaffold` - Create a publishable extension pack skeleton.
 - `/god-extension-add` - Install an extension pack from a local dir or npm.
 - `/god-extension-list` - Show all installed packs.
 - `/god-extension-info` - Manifest + capabilities of one installed pack.

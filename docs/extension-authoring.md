@@ -9,6 +9,12 @@
   unless overwrite is requested.
 - [DECISION] The scaffold validates its manifest before reporting success.
 
+## Slash Command
+
+```bash
+/god-extension-scaffold --name=@godpowers/my-pack --output=.
+```
+
 ## CLI
 
 ```bash
@@ -17,8 +23,8 @@ npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 
 Optional arguments:
 
-- [DECISION] `--skill=god-my-pack` sets the generated skill name.
-- [DECISION] `--agent=god-my-pack-agent` creates a generated agent contract.
+- [DECISION] `--skill=custom-pack-command` sets the generated skill name.
+- [DECISION] `--agent=custom-pack-agent` creates a generated agent contract.
 - [DECISION] `--workflow=my-pack-workflow` creates a generated workflow YAML.
 
 ## Generated Files

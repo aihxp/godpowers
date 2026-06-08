@@ -223,7 +223,7 @@ First-party pack examples:
 - `@godpowers/launch-pack` - Show HN, PH, IH, OSS
 - `@godpowers/data-pack` - ETL, ML features, dashboards
 
-Use `npx godpowers extension-scaffold --name=@scope/pack --output=.` to create
+Use `/god-extension-scaffold --name=@scope/pack --output=.` to create
 the manifest, package, README, skill, agent, and workflow skeleton for a new
 pack.
 

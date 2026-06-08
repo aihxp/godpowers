@@ -12,6 +12,9 @@ triggers:
     - "greenfield"
     - "new project"
     - "idea to production"
+    - "start a product"
+    - "start product"
+    - "build a product"
   state-conditions:
     - "no-godpowers-dir"
 

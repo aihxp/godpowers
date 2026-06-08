@@ -13,7 +13,8 @@ package-level integrations.
 | `intent.js` | Read and validate `intent.yaml` from project roots or `.godpowers/`. |
 | `checkpoint.js` | Create and inspect resumable checkpoint artifacts. |
 | `feature-awareness.js` | Detect and refresh existing-project awareness after runtime upgrades. |
-| `host-capabilities.js` | Detect host guarantees for shell, git, npm, agent spawning, extension authoring, and suite dry-runs. |
+| `code-intelligence.js` | Detect optional `ast-grep`, `sg`, and LSP tooling for structural search, rewrite, and diagnostics guidance. |
+| `host-capabilities.js` | Detect host guarantees for shell, git, npm, agent spawning, optional code intelligence, extension authoring, and suite dry-runs. |
 | `repo-doc-sync.js` | Detect and refresh mechanical repository documentation surfaces. |
 | `repo-surface-sync.js` | Detect structural drift across commands, routes, packages, agents, workflows, recipes, extensions, and release policy. |
 | `route-quality-sync.js` | Detect symbolic route spawns, unresolved agent targets, and unapproved contextual route exits. |

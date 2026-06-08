@@ -8,6 +8,10 @@ metadata:
 triggers:
   intent-keywords:
     - "production down"
+    - "production is broken"
+    - "production broken"
+    - "fix production"
+    - "prod is broken"
     - "urgent"
     - "p0"
     - "p1"

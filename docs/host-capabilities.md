@@ -28,6 +28,11 @@
   `~/.claude/agents/god-orchestrator.md`.
 - [DECISION] It checks local availability of `git`, `npm`, and `gh` without
   requiring network access.
+- [DECISION] It reports optional code intelligence from
+  `lib/code-intelligence.js`, including `ast-grep`, `sg`, and detected LSP
+  tool commands.
+- [DECISION] Missing code intelligence is an optional enhancement gap and does
+  not downgrade `full` or `degraded` host levels.
 - [DECISION] It reports extension authoring and suite release dry-run support
   from shipped runtime files.
 
@@ -40,6 +45,7 @@ Action brief:
   Readiness: needs attention
   Attention: Host: degraded on codex, fresh-context agent spawn not detected
   Host guarantees: degraded on codex, fresh-context agent spawn not detected
+  Code intelligence: ast-grep via ast-grep
 ```
 
 - [DECISION] Full host guarantees do not block the action brief.

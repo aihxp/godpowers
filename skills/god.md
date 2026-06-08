@@ -160,13 +160,11 @@ any destructive sequence executes.
 ```
 User: /god production is broken
 
-Match: production-broken (score: 30)
-What this does: P0 incident response with rollback-first triage
+Match: production-broken (score: 20)
+What this does: Production is broken now
 
 Sequence:
-  1. /god-hotfix     Spawn god-debugger for fast triage
-  2. /god-deploy     Push the fix once green
-  3. /god-postmortem Schedule the incident review
+  1. /god-hotfix     Skip planning, debug, fix with TDD, expedited deploy, schedule postmortem
 
 Run this sequence? (yes / show others / cancel)
 ```
@@ -174,15 +172,14 @@ Run this sequence? (yes / show others / cancel)
 ### Example 2: ambiguous intent (multiple matches)
 
 ```
-User: /god add a new feature
+User: /god parallel feature during build
 
-Top matches for "add a new feature":
+Top matches for "parallel feature during build":
 
-  1. add-feature-mid-arc-pause       (15)   Pause /god-mode, run feature, resume
-  2. add-feature-small               (10)   Lightweight feature, no project-run context
-  3. add-feature-next-milestone      (10)   Defer to next milestone
+  1. add-feature-mid-arc-pause       (10)   Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume
+  2. add-feature-parallel            (10)   Parallel feature, do not disrupt main work
 
-Pick one (1/2/3) or describe more specifically.
+Pick one (1/2) or describe more specifically.
 ```
 
 ### Example 3: state-driven (no text)

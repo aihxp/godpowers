@@ -253,6 +253,7 @@ uninstall, legacy migration, and read-only status helpers.
 
 | Command | What it does | Status |
 |---------|-------------|--------|
+| `/god-extension-scaffold --name=@x/y --output=.` | Create a publishable extension pack skeleton | current |
 | `/god-extension-add @x/y` | Install a skill pack from npm | current |
 | `/god-extension-list` | Show installed extensions | current |
 | `/god-extension-remove @x/y` | Uninstall a pack | current |
@@ -310,15 +311,15 @@ commands inside the AI coding tool.
 
 ### Route Topology And Automation Audit (2026-05-16)
 
-[DECISION] The route graph is currently complete at the file level: 111
-`skills/*.md` command files match 111 `routing/*.yaml` route files (110
-`god-*` commands plus the `god` front door).
+[DECISION] The route graph is currently complete at the file level: 112
+`skills/*.md` command files match 112 `routing/*.yaml` route files, including
+the `god` front door and every shipped `god-*` command.
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
-agents, 13 workflow YAML files, and 41 intent recipes.
+agents, 13 workflow YAML files, and 42 intent recipes.
 
-[DECISION] The current route graph has 57 built-in or local-runtime command
-routes and 54 agent-routed command routes.
+[DECISION] The current route graph has 60 built-in or local-runtime command
+routes and 52 agent-routed command routes.
 
 [DECISION] Eighteen command routes declare secondary or parallel spawns:
 `/god-build`, `/god-design`, `/god-dogfood`, `/god-feature`, `/god-harden`,
@@ -328,18 +329,18 @@ routes and 54 agent-routed command routes.
 
 [DECISION] All workflow `uses:` targets resolve to shipped agent files.
 
-[DECISION] All 41 recipes contain at least one slash-command route, and every
+[DECISION] All 42 recipes contain at least one slash-command route, and every
 recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
 |---------|---------------|---------------------------|
-| Skills | 111 | Every command has a user-facing skill file |
-| Routes | 111 | Every command has machine-readable routing metadata |
+| Skills | 112 | Every command has a user-facing skill file |
+| Routes | 112 | Every command has machine-readable routing metadata |
 | Agents | 40 | Spawn targets are available for specialist work |
 | Workflows | 13 | Arc execution has declarative DAGs |
-| Recipes | 41 | Fuzzy intent can route into command sequences |
-| Built-in routes | 57 | Local helpers need visible `Agent: none` cards |
-| Agent-routed routes | 54 | Spawned work needs visible spawn cards |
+| Recipes | 42 | Fuzzy intent can route into command sequences |
+| Built-in routes | 60 | Local helpers need visible `Agent: none` cards |
+| Agent-routed routes | 52 | Spawned work needs visible spawn cards |
 
 #### Current Automation Ladder
 
@@ -349,7 +350,7 @@ actions, command routing, and agent spawning do not blur together.
 | Level | Action type | Examples | Visibility rule |
 |-------|-------------|----------|-----------------|
 | 0 | Read-only detection | `/god-status`, `/god-next`, `/god-doctor` detect checks | Report source and confidence |
-| 1 | Local safe sync | feature-awareness, repo-doc-sync, repo-surface-sync, reverse-sync, source-sync | Report `Agent: none, local runtime only` |
+| 1 | Local safe sync | feature-awareness, reverse-sync, source-sync-back, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync, pillars-sync-plan, checkpoint-sync | Report `Agent: none, local runtime only` |
 | 2 | Command auto-invoke | `/god-sync`, `/god-reconcile`, `/god-review-changes` | Show trigger, files, and next command |
 | 3 | Scoped specialist spawn | `god-updater`, `god-docs-writer`, `god-browser-tester`, `god-harden-auditor` | Show spawned agent and owned scope |
 
@@ -415,6 +416,10 @@ scaffolding, and Mode D suite release dry-runs.
 runtime guarantees based on shell tooling and installed Godpowers agent
 metadata.
 
+[DECISION] `lib/code-intelligence.js` detects optional `ast-grep`, `sg`, and
+LSP tooling, and host capabilities report that signal without downgrading
+baseline host guarantees when these tools are absent.
+
 [DECISION] `lib/extension-authoring.js` now scaffolds publishable extension
 packs with manifest, package, README, skill, agent, and workflow files.
 
@@ -449,6 +454,60 @@ summary rather than a replacement.
 dogfood runner checks, host capability checks, extension authoring checks, and
 suite dry-run checks are now implemented as local runtime helpers and are
 included by release readiness.
+
+#### Architecture Audit Playbook
+
+[DECISION] `ARCHITECTURE.md` is the human map for command, action, and workflow
+connectivity, while executable sync detectors are the source of current repo
+truth.
+
+[DECISION] A disconnected command is any slash command whose skill file, route
+metadata, package payload, recipe reference, standards block, or next route
+cannot be followed to a shipped artifact or an explicit approved exemption.
+
+[DECISION] A disconnected action is any local helper, agent spawn, route side
+effect, or auto-invoked repair that can run without visible trace metadata, a
+declared owner, and a closeout artifact or no-op reason.
+
+[DECISION] A disconnected workflow is any workflow job, dependency, local
+helper, recipe, or command flow that cannot be parsed, planned, packed, or
+traced back to a slash-command surface.
+
+[DECISION] The architecture audit graph is:
+`skills/*.md` -> `routing/*.yaml` -> `agents/god-*.md` or built-in helper ->
+`workflows/*.yaml` -> `routing/recipes/*.yaml` -> `docs/command-flows.md` ->
+`package.json` and `scripts/check-package-contents.js`.
+
+[DECISION] Workflow plans use schema helper IDs such as `source-sync-back` and
+`pillars-sync-plan`, while `/god-sync` transcript output may show shorter
+aliases such as `source-sync` and `pillars-sync`.
+
+| Audit target | Primary executable check | Disconnection found |
+|--------------|--------------------------|---------------------|
+| Skill to route | `node scripts/test-repo-surface-sync.js` | Skill without route, route without skill, package entry missing |
+| Route to agent | `node scripts/test-automation-surface-sync.js` | Symbolic spawn, missing agent, missing `agent.start` or `agent.end` |
+| Route to next command | `node scripts/test-automation-surface-sync.js` | `next-recommended: varies` without approval or conditional next |
+| Route to standards | `node scripts/test-automation-surface-sync.js` | Durable-writing route without standards or approved exemption |
+| Recipe to command | `node scripts/test-recipes.js` and `node scripts/test-automation-surface-sync.js` | Recipe with missing command references or missing coverage |
+| Workflow to plan | `node scripts/test-workflow-runner.js` | Workflow that cannot load, plan, serialize, or expose helpers |
+| Router to command | `node scripts/test-router.js` | Intent route that cannot resolve to the command surface |
+| Public docs to surface | `node scripts/test-doc-surface-counts.js` and `npm run test:audit` | Count drift, stale version claim, stale package claim |
+| Release package to runtime | `npm run pack:check` | Shipped package missing runtime files or including local-only files |
+
+[DECISION] Manual architecture audits should run in this order: inspect
+`/god-doctor` or `lib/dashboard.js` status, run repo-surface sync tests, run
+automation-surface sync tests, run workflow and router tests, then finish with
+`npm run test:audit` and `npm run pack:check`.
+
+[DECISION] A stale audit finding should be classified before repair as one of:
+missing file, unresolved owner, hidden automation, ambiguous route exit,
+unsupported durable write, workflow parse failure, recipe coverage gap, package
+payload gap, or stale public claim.
+
+[DECISION] Adding a new command is complete only when the skill, route,
+spawn target or built-in owner, standards policy, next route, recipe coverage,
+package inclusion, docs surface count, and relevant workflow or command-flow
+reference are either present or explicitly exempt.
 
 ---
 
@@ -843,7 +902,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 111 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 112 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

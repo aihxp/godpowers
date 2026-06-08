@@ -15,7 +15,7 @@ const recipes = [
     name: 'greenfield-fast',
     category: 'starting',
     description: 'Greenfield idea to production with one command',
-    keywords: ['build something new', 'start from scratch', 'greenfield', 'new project', 'idea to production'],
+    keywords: ['build something new', 'start from scratch', 'greenfield', 'new project', 'idea to production', 'start a product', 'start product', 'build a product'],
     stateConditions: ['no-godpowers-dir'],
     sequence: [
       { cmd: '/god-mode', why: 'Full autonomous project run, idea to hardened production' }
@@ -70,7 +70,7 @@ const recipes = [
     name: 'returning-after-break',
     category: 'starting',
     description: 'Returning to a project after a long break',
-    keywords: ['returning', 'after break', 'pick up where left', 'resume project'],
+    keywords: ['returning', 'after break', 'pick up where left', 'resume project', 'coming back after a week', 'back after a week', 'coming back'],
     stateConditions: ['file:.godpowers/PROGRESS.md'],
     sequence: [
       { cmd: '/god-resume-work', why: 'If HANDOFF.md exists, restore context', skipWhen: 'no-handoff' },
@@ -83,14 +83,14 @@ const recipes = [
     name: 'brownfield-onboarding',
     category: 'starting',
     description: 'Inheriting an existing codebase; preflight before archaeology',
-    keywords: ['brownfield', 'inherit codebase', 'legacy code', 'understand existing'],
+    keywords: ['brownfield', 'inherit codebase', 'legacy code', 'understand existing', 'audit an existing repo', 'audit existing repo', 'audit existing codebase'],
     stateConditions: ['has-package-json'],
     sequence: [
       { cmd: '/god-preflight', why: 'Read-only intake audit before project-run readiness and pillars' },
       { cmd: '/god-archaeology', why: 'Deep history, decisions, conventions, risks' },
       { cmd: '/god-reconstruct', why: 'Reverse-engineer PRD/ARCH/ROADMAP/STACK from code' },
-      { cmd: '/god-tech-debt', why: 'Categorize and prioritize debt' },
       { cmd: '/god-audit', why: 'Score reconstructed artifacts' },
+      { cmd: '/god-tech-debt', why: 'Categorize and prioritize debt' },
       { cmd: '/god-feature', why: 'Now safe to add new work with reconciliation' }
     ]
   },
@@ -130,7 +130,7 @@ const recipes = [
     name: 'add-feature-mid-arc-pause',
     category: 'feature-addition',
     description: 'Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume',
-    keywords: ['mid arc', 'mid development', 'pause arc', 'feature during build'],
+    keywords: ['mid arc', 'mid development', 'pause arc', 'feature during build', 'add a feature', 'feature addition', 'add a feature during the current project run', 'add a feature without breaking the current project run', 'without breaking current project run', 'do not disturb current work'],
     stateConditions: ['lifecycle-phase == in-arc'],
     sequence: [
       { cmd: '/god-reconcile', why: 'Multi-artifact reconciliation across PRD/ARCH/ROADMAP/STACK/etc.' },
@@ -196,7 +196,7 @@ const recipes = [
     name: 'production-broken',
     category: 'production',
     description: 'Production is broken now',
-    keywords: ['production down', 'urgent', 'p0', 'p1', 'fire drill', 'users seeing errors'],
+    keywords: ['production down', 'production is broken', 'production broken', 'fix production', 'prod is broken', 'urgent', 'p0', 'p1', 'fire drill', 'users seeing errors'],
     stateConditions: ['lifecycle-phase == steady-state-active'],
     sequence: [
       { cmd: '/god-hotfix', why: 'Skip planning, debug, fix with TDD, expedited deploy, schedule postmortem' }
@@ -227,7 +227,7 @@ const recipes = [
     name: 'weekly-health-check',
     category: 'maintaining',
     description: 'Weekly composite health check',
-    keywords: ['weekly check', 'health check', 'hygiene', 'project health'],
+    keywords: ['weekly check', 'health check', 'hygiene', 'project health', 'maintain project health', 'maintain health'],
     stateConditions: ['lifecycle-phase == steady-state-active'],
     sequence: [
       { cmd: '/god-hygiene', why: 'Audit + deps + docs in one composite report' }

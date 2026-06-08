@@ -11,6 +11,9 @@ triggers:
     - "after break"
     - "pick up where left"
     - "resume project"
+    - "coming back after a week"
+    - "back after a week"
+    - "coming back"
   state-conditions:
     - "file:.godpowers/PROGRESS.md"
 

@@ -1,7 +1,8 @@
 # Godpowers Recipes
 
 > Every scenario in a full dev cycle, with the exact commands to use.
-> No new commands needed; all use existing primitives composed.
+> Most flows compose existing primitives; extension authoring starts with its
+> scaffold command.
 
 If you can't find your scenario, check `command-flows.md` for the canonical
 per-command reference, or `arc-integrations.md` for cross-workflow flows.
@@ -745,6 +746,8 @@ not started, derived from the linkage map. Refreshes the
 ### "What can I install to extend this?"
 
 ```
+/god-extension-scaffold --name=@godpowers/my-pack --output=.  <- create a pack
+/god-test-extension <pack-dir>                               <- validate it
 /god-extension-list      <- what's installed
 [npm search @godpowers]  <- what's available
 ```
@@ -769,7 +772,7 @@ For any scenario you might face:
 4. **Is there urgency?** (hotfix vs feature)
 5. **What do you have today vs what's missing?**
 
-The 111 commands compose to handle all of these. If a scenario isn't here:
+The 112 commands compose to handle all of these. If a scenario isn't here:
 - Run `/god-next` and describe the situation
 - /god-next routes you to the right command
 - Or describe what you want; the AI tool's skill matching does the rest
@@ -845,6 +848,7 @@ If you know the command, here's where each one shines:
 | `/god-build-agent` | Generate custom agent |
 | `/god-settings` | Config management |
 | `/god-set-profile` | Model profile |
+| `/god-extension-scaffold` | Create an extension pack |
 | `/god-extension-add/list/remove/info` | Skill pack management |
 | `/god-smite` | Delete node_modules + reinstall |
 

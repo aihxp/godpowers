@@ -148,6 +148,21 @@ test('reinstall removes files deleted from pack source', () => {
     'stale skill file remained after reinstall');
 });
 
+test('install skips symlinks escaping the pack source tree', () => {
+  const runtime = mkRuntime();
+  const src = mkPackSource('@test/p-symlink', '1.0.0', '>=0.13.0', { withSkill: false });
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-ext-secret-'));
+  fs.writeFileSync(path.join(outside, 'secret.md'), 'do not copy');
+  fs.mkdirSync(path.join(src, 'skills'), { recursive: true });
+  fs.symlinkSync(path.join(outside, 'secret.md'), path.join(src, 'skills', 'god-secret.md'));
+
+  ext.install(runtime, src, '0.13.0');
+
+  const installed = path.join(runtime, 'godpowers-extensions', '@test', 'p-symlink');
+  assert(!fs.existsSync(path.join(installed, 'skills', 'god-secret.md')),
+    'escaping symlink was installed');
+});
+
 test('install throws on capability mismatch', () => {
   const runtime = mkRuntime();
   const src = mkPackSource('@test/p2', '1.0.0', '>=99.0.0');
@@ -181,6 +196,19 @@ test('list returns installed packs', () => {
   const names = all.map(e => e.name).sort();
   assert(names[0] === '@org/a' && names[1] === '@org/b',
     `names: ${names}`);
+});
+
+test('list ignores symlinked extension pack directories', () => {
+  const runtime = mkRuntime();
+  const pack = mkPackSource('@test/linked', '1.0.0', '>=0.13.0');
+  const scopeDir = path.join(runtime, 'godpowers-extensions', '@test');
+  fs.mkdirSync(scopeDir, { recursive: true });
+  fs.symlinkSync(pack, path.join(scopeDir, 'linked'));
+
+  const all = ext.list(runtime);
+
+  assert(!all.some((item) => item.name === '@test/linked'),
+    'symlinked extension pack was listed');
 });
 
 test('info returns one pack by name', () => {

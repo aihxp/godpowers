@@ -15,12 +15,12 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 ### Current surface (v2.3.0)
 
 What works today:
-- **111 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
-- **13 executable workflows** and **41 intent recipes**
+- **13 executable workflows** and **42 intent recipes**
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map
@@ -78,7 +78,8 @@ What works today:
 - **Host capability detection**: `lib/host-capabilities.js` reports full,
   degraded, or unknown guarantees for shell tools, agent spawning, extension
   authoring, and suite dry-runs.
-- **Extension authoring scaffold**: `npx godpowers extension-scaffold` creates
+- **Extension authoring scaffold**: `/god-extension-scaffold` and
+  `npx godpowers extension-scaffold` create
   manifest, package, README, skill, agent, and workflow files without
   overwriting existing files by default.
 - **Suite release dry-run planning**: `suiteState.planRelease` identifies
@@ -280,7 +281,7 @@ Shipped earlier-than-roadmapped and combined:
   `.godpowers/CHECKPOINT.md`, `/god-locate`, `/god-context-scan`,
   events.jsonl hash chain, SessionStart hook prefers CHECKPOINT
 - **Extension runtime**: `lib/extensions.js`, schema/extension-manifest.v1.json,
-  `/god-extension-add/list/info/remove`, `/god-test-extension`,
+  `/god-extension-scaffold`, `/god-extension-add/list/info/remove`, `/god-test-extension`,
   SemVer capability handshake. Scaffolds in `extensions/` are now
   installable. Pack publishing to npm is part of v0.14 distribution.
 - **Observability readers**: `lib/event-reader.js`, `/god-logs`,

@@ -11,7 +11,7 @@ description: |
 
 # /god-discuss
 
-Pre-planning Socratic discussion with domain grilling.
+Pre-planning Socratic discussion with domain and plan grilling.
 
 ## When to use
 
@@ -31,10 +31,15 @@ The agent:
 4. Explores the codebase instead of asking when repo evidence can answer
 5. Challenges vague, overloaded, or conflicting terms against the glossary
 6. Stress-tests domain relationships with concrete scenarios and edge cases
-7. Surfaces 2-3 hidden assumptions
-8. Identifies what's [DECISION] vs [HYPOTHESIS] vs [OPEN QUESTION]
-9. Drafts a brief in `.godpowers/discussions/<topic>.md`
-10. Updates `.godpowers/domain/GLOSSARY.md` when a term or ambiguity is resolved
+7. Attempts to falsify the proposed plan before accepting it:
+   - What breaks if the smallest happy path is wrong?
+   - Which dependency, user behavior, or edge case could invalidate the plan?
+   - What would make this scope too broad for one safe slice?
+   - What evidence would change the recommended next command?
+8. Surfaces 2-3 hidden assumptions
+9. Identifies what's [DECISION] vs [HYPOTHESIS] vs [OPEN QUESTION]
+10. Drafts a brief in `.godpowers/discussions/<topic>.md`
+11. Updates `.godpowers/domain/GLOSSARY.md` when a term or ambiguity is resolved
 
 The brief and glossary get passed to the next planning command. The glossary is
 preparation context, not a replacement for PRD, ARCH, ROADMAP, STACK, or Pillars
