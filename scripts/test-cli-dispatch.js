@@ -5,7 +5,8 @@ const path = require('path');
 
 const installer = require('../bin/install');
 const cliDispatch = require('../lib/cli-dispatch');
-const { COMMANDS } = require('../lib/installer-args');
+const state = require('../lib/state');
+const { COMMANDS, parseArgs } = require('../lib/installer-args');
 const { test, assert, mkProject, report } = require('./test-harness');
 
 function capture(fn) {
@@ -49,6 +50,22 @@ test('CLI dispatch table covers every parsed subcommand', () => {
 test('installer re-exports lib CLI dispatch table', () => {
   assert(installer.COMMAND_RUNNERS === cliDispatch.COMMAND_RUNNERS, 'installer should re-export dispatch table');
   assert(installer.runCommand === cliDispatch.runCommand, 'installer should re-export runCommand');
+});
+
+test('parseArgs accepts state advance mutation options', () => {
+  const parsed = parseArgs([
+    'node',
+    'bin',
+    'state',
+    'advance',
+    '--step=prd',
+    '--status=done',
+    '--project=.'
+  ], process.cwd());
+  assert(parsed.command === 'state', `command: ${parsed.command}`);
+  assert(parsed.stateAction === 'advance', `stateAction: ${parsed.stateAction}`);
+  assert(parsed.step === 'prd', `step: ${parsed.step}`);
+  assert(parsed.status === 'done', `status: ${parsed.status}`);
 });
 
 test('status and next commands dispatch through the dashboard branch', () => {
@@ -113,6 +130,44 @@ test('mcp-info command emits JSON setup details', () => {
   assert(result.value === true, 'mcp-info JSON did not dispatch');
   assert(parsed.package === '@godpowers/mcp', `package: ${parsed.package}`);
   assert(parsed.automaticRegistration === false, 'mcp-info should not auto-register');
+});
+
+test('state advance command dispatches through state branch', () => {
+  const project = mkProject('godpowers-cli-state-');
+  state.init(project, 'cli-state-demo');
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'state',
+    stateAction: 'advance',
+    project,
+    step: 'prd',
+    status: 'done',
+    json: true
+  }));
+  const parsed = JSON.parse(result.output);
+  const current = state.read(project);
+
+  assert(result.value === true, 'state advance did not dispatch');
+  assert(parsed.verdict === 'pass', `verdict: ${parsed.verdict}`);
+  assert(parsed.step.subStepKey === 'prd', `subStepKey: ${parsed.step.subStepKey}`);
+  assert(current.tiers['tier-1'].prd.status === 'done', 'state was not advanced');
+});
+
+test('state command rejects missing action', () => {
+  process.exitCode = 0;
+  const project = mkProject('godpowers-cli-state-missing-');
+  state.init(project, 'cli-state-missing-demo');
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'state',
+    project,
+    step: 'prd',
+    status: 'done',
+    json: false
+  }));
+
+  assert(result.value === true, 'state missing action did not dispatch');
+  assert(result.output.includes('state requires subcommand advance'), `output: ${result.output}`);
+  assert(process.exitCode === 1, `exitCode: ${process.exitCode}`);
+  process.exitCode = 0;
 });
 
 test('automation commands dispatch through automation branch', () => {

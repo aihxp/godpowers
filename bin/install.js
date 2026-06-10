@@ -51,6 +51,7 @@ function showHelp() {
   log('Commands:');
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
+  log('  state advance        Update one tracked Godpowers state step');
   log('  gate                 Check a tier artifact gate');
   log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
@@ -65,7 +66,9 @@ function showHelp() {
   }
   log('');
   log('Options:');
-  log('  --project=<path>     Project root for status, next, proof, or automation commands');
+  log('  --project=<path>     Project root for status, next, state, proof, or automation commands');
+  log('  --step=<name>        Step for state advance, such as prd or tier-1.prd');
+  log('  --status=<status>    Status for state advance');
   log('  --tier=<name>        Tier for gate: prd, design, arch, roadmap, stack, repo, build, or harden');
   log('  --json               Emit JSON for status, next, proof, or automation commands');
   log('  --brief              Render compact output for status, next, or proof');
@@ -100,6 +103,7 @@ function showHelp() {
   log('Examples:');
   log('  npx godpowers status --project=.');
   log('  npx godpowers next --project=.');
+  log('  npx godpowers state advance --step=prd --status=done --project=.');
   log('  npx godpowers gate --tier=prd --project=.');
   log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers quick-proof --project=.');
@@ -216,6 +220,7 @@ module.exports = {
   runMcpInfoCommand: cliDispatch.runMcpInfoCommand,
   runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
   runGateCommand: cliDispatch.runGateCommand,
+  runStateCommand: cliDispatch.runStateCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,

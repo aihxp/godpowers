@@ -269,7 +269,7 @@
       "properties": {
         "status": {
           "type": "string",
-          "enum": ["pending", "in-flight", "done", "skipped", "imported", "failed", "re-invoked"]
+          "enum": ["pending", "in-flight", "done", "skipped", "imported", "failed", "re-invoked", "not-required"]
         },
         "artifact": {
           "type": "string",
