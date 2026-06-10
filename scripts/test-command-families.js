@@ -38,7 +38,10 @@ test('routing metadata records command families', () => {
 
 test('family lookup resolves common command hubs', () => {
   assert(families.familyForCommand('/god-status').id === 'continue');
+  assert(families.familyForCommand('/god-plan').id === 'start');
   assert(families.familyForCommand('/god-feature').id === 'build');
+  assert(families.familyForCommand('/god-ship').id === 'operate');
+  assert(families.familyForCommand('/god-capture').id === 'capture');
   assert(families.familyForCommand('/god-extension-add').id === 'extend');
 });
 

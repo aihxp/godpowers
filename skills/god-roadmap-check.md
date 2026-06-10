@@ -2,6 +2,7 @@
 name: god-roadmap-check
 deprecated: true
 replacement: god-reconcile
+successor: god-reconcile
 description: |
   Check if user intent overlaps with the existing ROADMAP.md before doing
   feature work. Returns: already-done, in-progress, enhancement,

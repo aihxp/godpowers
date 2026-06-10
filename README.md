@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.7.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.0.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,15 +30,16 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.7.0 makes `.godpowers/state.json` the one-directional state authority,
-adds the locked `godpowers state advance` helper, and generates checksummed
-markdown state views for humans. It keeps the optional `@godpowers/mcp`
-companion package, the 2.5.2 installed-runtime gate and build-gate fixes, the
-2.5.1 Codex host proof studies, executable tier gates, 2.4 command-family UX,
-external CLI canary evidence, prompt-size guardrails, legacy command quarantine,
-lib coverage gating, and package verification before publish.
+Version 3.0.0 makes the omitted installer profile `core`, adds five verb
+dispatch commands, and folds locate and lifecycle views into `/god-status`
+flags while preserving full-profile compatibility aliases. It keeps the
+one-directional state authority from 2.7.0, the optional `@godpowers/mcp`
+companion package, the installed-runtime gate and build-gate fixes, Codex host
+proof studies, executable tier gates, command-family UX, external CLI canary
+evidence, prompt-size guardrails, lib coverage gating, and package verification
+before publish.
 
-Maintainer hardening continues on the 2.x line with small, audited public
+Maintainer hardening continues on the 3.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
 agent-browser driver, guards runtime file parsing against corrupt state,
 makes data-directory installs a clean replace, and reconciles documentation
@@ -120,8 +121,9 @@ The installer copies:
 - Codex agent metadata to `<runtime>/agents/*.toml`
 - SessionStart hook (Claude Code only) to `<runtime>/hooks/`
 
-Installer profiles keep the visible command surface calm. Start with `core` or
-`builder` unless you already know you need the full maintainer surface:
+Installer profiles keep the visible command surface calm. The default omitted
+profile is `core`; choose `builder` or `maintainer` only when you already know
+you need those leaves:
 
 ```bash
 npx godpowers --claude --global --profile=core
@@ -129,10 +131,11 @@ npx godpowers --codex --local --profile=builder
 npx godpowers --all --profile=maintainer
 ```
 
-Profiles are `core`, `builder`, `maintainer`, `suite`, and `full`. `full`
-preserves the complete command surface, while the smaller profiles install the
-commands most relevant to the role. `--minimal` is an alias for
-`--profile=core`.
+Profiles are `core`, `builder`, `maintainer`, `suite`, and `full`. `core`
+installs the front door, status, verb dispatchers, and `/god-mode`
+compatibility. `full` preserves the complete command surface, while the smaller
+profiles install the commands most relevant to the role. `--minimal` is an
+alias for `--profile=core`.
 
 Use profiles as journeys:
 
@@ -227,13 +230,13 @@ commands remain direct shortcuts.
 
 | Goal | Starter path |
 |---|---|
-| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |
+| Start a product | `/god-init`, `/god-plan`, `/god-build` |
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
-| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
+| Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
-| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
+| Ship a release | `/god-ship`, `/god-sync`, `/god-docs`, `/god-version`, `npm run release:check` |
 | Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
-| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
+| Extend Godpowers | `/god-extend scaffold --name=@godpowers/my-pack --output=.`, `/god-extend test`, `/god-extend add`, `/god-extend list` |
 
 ### Outcome Metrics
 
@@ -308,14 +311,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@2.7.0 -p @godpowers/mcp@2.7.0 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.0.0 -p @godpowers/mcp@3.0.0 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@2.7.0 -p @godpowers/mcp@2.7.0 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.0.0 -p @godpowers/mcp@3.0.0 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
@@ -325,6 +328,11 @@ See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
 | Command | What it does | Spawns agent |
 |---------|--------------|--------------|
 | `/god` | Front door: match free-text intent to a command sequence | (built-in) |
+| `/god-plan` | Route planning intent to planning leaves | (built-in) |
+| `/god-fix` | Route bug and outage intent to debug or hotfix | (built-in) |
+| `/god-ship` | Route deploy, observe, and launch intent | (built-in) |
+| `/god-capture` | Route notes, todos, backlog items, and seeds | (built-in) |
+| `/god-extend` | Route extension install, inspection, testing, and authoring | (built-in) |
 | `/god-mode` | Full autonomous project run | god-orchestrator |
 | `/god-next` | Auto-detect and suggest the next command | (built-in) |
 | `/god-init` | Start a project, detect mode and scale | (built-in) |
@@ -591,7 +599,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Quick Proof](docs/quick-proof.md)
 - [First 10 Minute Proof Case Study](docs/case-studies/first-10-minute-proof.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 112 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 117 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Adoption Canary](docs/adoption-canary.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)

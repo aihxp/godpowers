@@ -52,13 +52,13 @@ function stripAnchor(target) {
 }
 
 const STARTER_ROWS = [
-  '| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |',
+  '| Start a product | `/god-init`, `/god-plan`, `/god-build` |',
   '| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |',
-  '| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |',
+  '| Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |',
   '| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |',
-  '| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |',
+  '| Ship a release | `/god-ship`, `/god-sync`, `/god-docs`, `/god-version`, `npm run release:check` |',
   '| Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |',
-  '| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |'
+  '| Extend Godpowers | `/god-extend scaffold --name=@godpowers/my-pack --output=.`, `/god-extend test`, `/god-extend add`, `/god-extend list` |'
 ];
 
 const STARTER_GOAL_RECIPES = new Map([

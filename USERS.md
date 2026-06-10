@@ -1,16 +1,17 @@
 # Users and Community
 
-Godpowers is at v2.7.0. Stable release.
+Godpowers is at v3.0.0. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. The 2.7 line makes
-`.godpowers/state.json` the Godpowers state authority and turns markdown state
-files into generated human views on top of the optional MCP companion package,
-executable tier gates, three Codex host-run proof studies, two Phase 2 blocker
-fixes, 2.4 UX flow clarity, executable proof path, accountability hardening,
-deliverable progress tracking, and three external CLI-verifiable adoption
-canaries. Real users will reveal which gaps actually matter.
+Currently zero recorded production users. Be honest. The 3.0 line makes the
+omitted installer profile `core`, adds verb dispatchers for common work, keeps
+full-profile compatibility aliases, and preserves `.godpowers/state.json`
+authority on top of the optional MCP companion package, executable tier gates,
+three Codex host-run proof studies, two Phase 2 blocker fixes, 2.4 UX flow
+clarity, executable proof path, accountability hardening, deliverable progress
+tracking, and three external CLI-verifiable adoption canaries. Real users will
+reveal which gaps actually matter.
 
 - [DECISION] The Phase 2 host proof campaign has selected three current repository slots and completed Slot A for local and CI-verifiable host-proof scope.
 - [DECISION] Slot A does not prove production usage, deployed smoke, or token-dollar accounting because no staging origin or `cost.recorded` events were captured.

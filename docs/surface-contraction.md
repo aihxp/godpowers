@@ -3,19 +3,19 @@
 ## Scope
 
 - [DECISION] This document records the Phase 5 evidence boundary for shrinking the default installed Godpowers command surface.
-- [DECISION] This document does not change installer behavior, command deprecation behavior, or slash-command routing.
-- [DECISION] The next Phase 5 behavioral slice can use this file as the checked source for which proof-campaign commands map to the twelve-verb surface and which commands require explicit exceptions.
+- [DECISION] This document records the installer behavior, command deprecation behavior, and slash-command routing boundary after the Phase 5 verb dispatch slice.
+- [DECISION] The Phase 5 behavioral slice uses this file as the checked source for which proof-campaign commands map to the twelve-verb surface and which commands require explicit exceptions.
 
 ## Repository Facts
 
 - [DECISION] `lib/install-profiles.js` is the current source for install profile membership.
-- [DECISION] The `core` profile currently selects 15 skills from the shipped `skills/` directory.
-- [DECISION] The `builder` profile currently selects 33 skills from the shipped `skills/` directory.
-- [DECISION] The `maintainer` profile currently selects 44 skills from the shipped `skills/` directory.
-- [DECISION] The `suite` profile currently selects 20 skills from the shipped `skills/` directory.
-- [DECISION] The `full` profile currently selects 112 skills from the shipped `skills/` directory.
-- [DECISION] `lib/install-profiles.js` still defaults an omitted profile to `full`.
-- [DECISION] Phase 5 may flip the omitted-profile default only after a behavior slice updates installer tests, public docs, and release artifacts in the same claim.
+- [DECISION] The `core` profile currently selects 16 skills from the shipped `skills/` directory.
+- [DECISION] The `builder` profile currently selects 40 skills from the shipped `skills/` directory.
+- [DECISION] The `maintainer` profile currently selects 48 skills from the shipped `skills/` directory.
+- [DECISION] The `suite` profile currently selects 21 skills from the shipped `skills/` directory.
+- [DECISION] The `full` profile currently selects 117 skills from the shipped `skills/` directory.
+- [DECISION] `lib/install-profiles.js` defaults an omitted profile to `core`.
+- [DECISION] `--profile=full` preserves every shipped slash command, including deprecated compatibility aliases.
 
 ## Evidence Sources
 
@@ -45,7 +45,7 @@
 | `/god-repo` | `build` | [DECISION] Route repo scaffolding through build because Run B and Run C used it as the setup step before implementation. |
 | `/god-build` | `build` | [DECISION] Route build through build because Run B and Run C used it for implementation and local verification. |
 | `/god-deploy` | `ship` | [DECISION] Route deploy through ship because Run B used deploy before observe, harden, and launch. |
-| `/god-observe` | Explicit exception | [DECISION] Treat observe as a Phase 5 routing exception because the current Phase 5 verb definitions do not name observe under `ship` or `audit`, while Run B proves the command is part of shipping closure. |
+| `/god-observe` | `ship` | [DECISION] Route observe through ship because Run B proves observability is part of shipping closure between deploy and launch. |
 | `/god-harden` | `audit` | [DECISION] Route harden through audit because the Phase 5 plan names harden as an audit route and Run B plus Run C used it as the launch gate. |
 | `/god-launch` | `ship` | [DECISION] Route launch through ship because the Phase 5 plan names launch as a ship route and Run B plus Run C reached that stage. |
 | `/god-sync` | `sync` | [DECISION] Route sync through sync because Run B and Run C used it for final artifact and state alignment. |
@@ -58,8 +58,8 @@
 
 ## Core Boundary For The Next Slice
 
-- [DECISION] The next Phase 5 behavioral slice should preserve the current `core` count near 15 when it flips the omitted installer profile away from `full`.
-- [DECISION] The current `core` profile keeps `god`, `god-help`, `god-version`, `god-next`, `god-status`, `god-progress`, `god-doctor`, `god-settings`, `god-init`, `god-mode`, `god-build`, `god-review`, `god-sync`, `god-quick`, and `god-fast`.
-- [DECISION] The next Phase 5 behavioral slice should not remove proof-used leaves from `full`; it should add deprecation metadata and successor routing only when the new verb dispatch skills exist.
-- [DECISION] The next Phase 5 behavioral slice should decide whether `/god-observe` routes through `ship`, routes through `audit`, or remains a full-profile exception with a documented successor.
-- [DECISION] The next Phase 5 behavioral slice should keep `quick-proof`, `status`, `next`, `gate`, and `dogfood` CLI helpers outside slash-command profile counts.
+- [DECISION] The Phase 5 behavior slice preserves the `core` count near 15 while flipping the omitted installer profile away from `full`.
+- [DECISION] The current `core` profile keeps `god`, `god-help`, `god-version`, `god-status`, `god-init`, `god-plan`, `god-mode`, `god-build`, `god-fix`, `god-review`, `god-ship`, `god-audit`, `god-capture`, `god-sync`, `god-undo`, and `god-extend`.
+- [DECISION] The Phase 5 behavior slice does not remove proof-used leaves from `full`.
+- [DECISION] `god-locate`, `god-lifecycle`, and `god-roadmap-check` are deprecated compatibility aliases with `successor` frontmatter.
+- [DECISION] `quick-proof`, `status`, `next`, `gate`, and `dogfood` CLI helpers remain outside slash-command profile counts.

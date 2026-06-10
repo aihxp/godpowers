@@ -4,7 +4,8 @@ description: |
   Re-derive project state from disk. Never from memory. Scans all artifact
   paths and reports what exists, what passes, and what's missing.
 
-  Triggers on: "god status", "where are we", "project status", "what's done"
+  Triggers on: "god status", "where are we", "project status", "what's done",
+  "god status --locate", "god status --lifecycle"
 ---
 
 # God Status
@@ -20,11 +21,13 @@ proactive checks, blockers, planning visibility, and the next action first.
 |------|----------|---------|
 | Overview | `/god-status` | Operational state, proactive checks, and blockers. |
 | Progress ledger | `/god-progress` | Requirement and roadmap increment completion. |
-| Lifecycle phase | `/god-lifecycle` | Project phase and fitting workflows. |
-| Resume location | `/god-locate` | Orientation from checkpoint, handoff, and disk state. |
+| Lifecycle phase | `/god-status --lifecycle` | Project phase and fitting workflows. |
+| Resume location | `/god-status --locate` | Orientation from checkpoint, handoff, and disk state. |
 | Next action | `/god-next` | Single recommended command with reason. |
 
-`/god-lifecycle` remains separate because it answers phase and workflow-fit questions without the full dashboard. `/god-locate` remains separate because it is optimized for fresh-session resume from CHECKPOINT.md, handoff files, and disk state.
+`/god-lifecycle` and `/god-locate` remain callable as full-profile compatibility
+aliases for one minor release. New workflows should use `/god-status
+--lifecycle` and `/god-status --locate`.
 
 ## Process
 
@@ -32,10 +35,12 @@ proactive checks, blockers, planning visibility, and the next action first.
 2. Resolve the runtime root and load `<runtimeRoot>/lib/dashboard.js`.
 3. Call `dashboard.compute(projectRoot)` and render with `dashboard.render(result)`.
 4. Prefer the MCP `status` tool when it is available, and fall back to the CLI or runtime module when it is not.
-5. Use `.godpowers/PROGRESS.md` only as generated fallback or legacy explanation when state.json is missing.
-6. Scan canonical artifact paths for PRD, design, architecture, roadmap, stack, repo, build, deploy, observe, launch, harden, sync, checkpoint, and requirements evidence.
-7. Compare disk state to recorded state and flag phantom resume or untracked work.
-8. Offer `/god-repair` when recorded state and disk evidence conflict.
+5. If `--lifecycle` is present, emphasize lifecycle phase, fitting workflows, PRD visibility, roadmap visibility, and the next route.
+6. If `--locate` is present, emphasize CHECKPOINT.md, HANDOFF.md, recent events, current step, and the next route.
+7. Use `.godpowers/PROGRESS.md` only as generated fallback or legacy explanation when state.json is missing.
+8. Scan canonical artifact paths for PRD, design, architecture, roadmap, stack, repo, build, deploy, observe, launch, harden, sync, checkpoint, and requirements evidence.
+9. Compare disk state to recorded state and flag phantom resume or untracked work.
+10. Offer `/god-repair` when recorded state and disk evidence conflict.
 
 ## Required reference
 

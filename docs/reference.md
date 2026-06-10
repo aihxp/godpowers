@@ -1,11 +1,11 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.7.0.
+Complete command, agent, and artifact reference for v3.0.0.
 
-## Slash commands (112 total)
+## Slash commands (117 total)
 
 ### Command families
-All 112 commands remain direct entry points, but the user-facing map starts
+All 117 commands remain direct entry points, but the user-facing map starts
 with families:
 
 | Family | Purpose |
@@ -34,11 +34,17 @@ For common ambiguous intents, Godpowers chooses the smallest fitting command:
 | Work size | `/god-fast`, `/god-quick`, `/god-story`, `/god-feature`, `/god-build`, `/god-debug`, `/god-hotfix` |
 | Verification | `/god-lint`, `/god-standards`, `/god-review`, `/god-test-runtime`, `/god-audit`, `/god-hygiene`, `/god-preflight`, `/god-dogfood` |
 
-`/god-status` is the continue hub. `/god-progress`, `/god-lifecycle`,
-`/god-locate`, and `/god-next` remain direct shortcuts for narrower views.
-`/god-lifecycle` stays separate for phase-only workflow fit checks.
-`/god-locate` stays separate for fresh-session resume from checkpoint,
-handoff, and disk evidence.
+### Verb dispatchers
+The default `core` install starts with the front door plus verb dispatchers:
+`/god`, `/god-init`, `/god-plan`, `/god-build`, `/god-fix`, `/god-review`,
+`/god-ship`, `/god-audit`, `/god-capture`, `/god-sync`, `/god-undo`, and
+`/god-extend`. These commands route to existing leaf commands through routing
+metadata and do not remove direct shortcuts from the `full` profile.
+
+`/god-status` is the continue hub. `/god-progress`, `/god-status --lifecycle`,
+`/god-status --locate`, and `/god-next` remain direct shortcuts for narrower
+views. `/god-lifecycle` and `/god-locate` remain full-profile deprecated
+compatibility aliases for one minor release.
 
 ### Installer profile journeys
 Profiles reduce the installed command surface without changing runtime
@@ -58,7 +64,7 @@ family card, decision ladder, profile journey, recipe, typed route outcome, or
 documentation change. Add a new public command only when a case study, canary,
 or repeated user journey proves that existing paths cannot express the need.
 [DECISION] Phase 5 uses [Surface Contraction Evidence](surface-contraction.md)
-to map proof-campaign command usage before installer defaults change.
+to map proof-campaign command usage after installer defaults changed.
 
 ### Outcome metrics
 Quick Proof and adoption canary reports track commands to first signal, next
@@ -70,11 +76,17 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
+- `/god-status --lifecycle` - Show project phase and fitting workflows.
+- `/god-status --locate` - Orient a fresh AI session from checkpoint, handoff, and disk evidence.
 - `/god-progress` - Deliverable progress: which requirements and roadmap increments are done, in progress, or not started. Refreshes `.godpowers/REQUIREMENTS.md`.
+- `/god-plan` - Route planning intent to PRD, design, architecture, roadmap, stack, or reconstruction.
+- `/god-fix` - Route bug and outage intent to debug or hotfix.
+- `/god-ship` - Route shipping intent to deploy, observe, or launch.
+- `/god-capture` - Route notes, todos, backlog items, and seeds.
+- `/god-extend` - Route extension authoring, install, inspection, removal, and testing.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
 - `/god-migrate` - Detect legacy planning, BMAD, and Superpowers context, import seeds, and sync back progress.
-- `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
 ### Installer CLI helpers
 - `godpowers status --project .` - Render the shared dashboard from disk state.
@@ -191,7 +203,8 @@ diff churn that cannot be traced to the request or slice plan.
 - `/god-restore` - Recover files from `.godpowers/.trash/`.
 - `/god-repair` - Fix drift between `state.json` and disk state.
 - `/god-skip` - Skip a tier or sub-step with an audited reason.
-- `/god-locate` - Orient a fresh AI session from CHECKPOINT.md + state.
+- `/god-locate` - Deprecated compatibility alias for `/god-status --locate`.
+- `/god-lifecycle` - Deprecated compatibility alias for `/god-status --lifecycle`.
 - `/god-context-scan` - Detect drift between session mental model and disk.
 - `/god-smite` - Hard reset of the project's dependency cache.
 - `/god-doctor` - Diagnose install and project state; report fixes.
