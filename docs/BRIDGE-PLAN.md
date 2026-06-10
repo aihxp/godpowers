@@ -86,7 +86,7 @@
 
 ### Phase 2 Run Status
 
-- [DECISION] Status: in progress on `main` after PR #9 merge for the 2026-06-10 automation run.
+- [DECISION] Status: in progress on `codex/bridge-phase-2-slot-b-host-proof-closeout` for the 2026-06-10 Slot B automation run.
 - [DECISION] Completed work: loaded `AGENTS.md`, required Pillars, `USERS.md`, `docs/adoption-canary.md`, and the current case-study inventory before changing docs.
 - [DECISION] Completed work: selected and verified current repository identities for Slot A, Slot B, and Slot C in `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md`.
 - [DECISION] Completed work: Slot A is `https://github.com/sindresorhus/slugify-cli.git` at `9d7cc5e95668085d73dd4229d8bb0365f4f32144`, MIT license, with 70 measured JavaScript source lines across `cli.js` and `test.js`.
@@ -99,6 +99,11 @@
 - [DECISION] Completed work: Slot A now has durable `preflight`, `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, `harden`, `deploy`, `observe`, `launch`, `PROGRESS.md`, `state.json`, `events.jsonl`, and host-run summary artifacts.
 - [DECISION] Completed work: added `/tmp/godpowers-phase2/slugify-cli/.godpowers/todos/deployed-staging-origin.md` to record the only deployed-smoke blocker.
 - [DECISION] Completed work: updated `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, `docs/case-studies/run-c.md`, `docs/adoption-canary.md`, and `USERS.md` to reflect Slot A closure and Slot B as the next target.
+- [DECISION] Completed work: verified existing Slot B host-run artifacts under `/tmp/godpowers-phase2/create-vite-app-template-react/.godpowers/`, including `preflight`, `prd`, `design`, `arch`, `roadmap`, `stack`, `repo`, `build`, `harden`, `deploy`, `observe`, `launch`, `PROGRESS.md`, `state.json`, `events.jsonl`, and `runs/phase2-run-b/HOST-RUN-SUMMARY.md`.
+- [DECISION] Completed work: confirmed Slot B used `/god-mode --brownfield --yolo` against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git` at `7b1c46dab57d14abd5f36941fe867a3d45e7c6af`.
+- [DECISION] Completed work: confirmed the upstream identity clone at `/tmp/godpowers-phase2/create-vite-app` remained unedited.
+- [DECISION] Completed work: confirmed Slot B repair changed only copied-target `vite.config.js` from ESM export syntax to CommonJS export syntax after Vite 1 rc failed on Node 25.6.0.
+- [DECISION] Completed work: updated `docs/case-studies/run-b.md`, `docs/case-studies/run-c.md`, `docs/adoption-canary.md`, and `USERS.md` to reflect Slot B local host-proof closure and Slot C as the next target.
 - [DECISION] Verification result: `node bin/install.js quick-proof --project=. --brief` passed.
 - [DECISION] Verification result: `node bin/install.js dogfood` passed with 5 of 5 scenarios.
 - [DECISION] Verification result: Slot A CLI canary passed.
@@ -111,6 +116,25 @@
 - [DECISION] Verification result: `node bin/install.js status --project=/tmp/godpowers-phase2/slugify-cli --brief` passed and rendered `State: complete`.
 - [DECISION] Verification result: `node bin/install.js quick-proof --project=/tmp/godpowers-phase2/slugify-cli --brief` passed.
 - [DECISION] Verification result: `node bin/install.js dogfood` rerun passed with 5 of 5 scenarios.
+- [DECISION] Verification result: Slot B target `npm run build` passed after the recorded repair.
+- [DECISION] Verification result: Slot B target `npm audit --json` exited 1 and reported 10 non-critical findings, with 6 High and 4 Moderate findings already captured in `.godpowers/harden/FINDINGS.md`.
+- [DECISION] Verification result: Slot B target `gate` commands for `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, and `harden` all exited 0 with verdict `pass`.
+- [DECISION] Verification result: Slot B build gate found 9 passed verification commands in `.godpowers/build/STATE.md`.
+- [DECISION] Verification result: Slot B harden gate found no unresolved Critical findings or blocked launch gate.
+- [DECISION] Verification result: `node bin/install.js status --project=/tmp/godpowers-phase2/create-vite-app-template-react --brief` passed and rendered `State: complete`.
+- [DECISION] Verification result: `node bin/install.js quick-proof --project=/tmp/godpowers-phase2/create-vite-app-template-react --brief` passed.
+- [DECISION] Verification result: Slot B CLI canary rerun passed and wrote `/tmp/godpowers-phase2/create-vite-app-canary-rerun-slot-b-closeout.md`.
+- [DECISION] Verification result: Slot B in-app browser smoke passed on `http://127.0.0.1:3001/` with page title `Vite App`, rendered text `Hello Vite + React!`, button text `count is: 0`, and 0 console warnings or errors.
+- [DECISION] Verification result: Slot B closeout `node bin/install.js quick-proof --project=. --brief` passed.
+- [DECISION] Verification result: Slot B closeout `npm run test:e2e` passed.
+- [DECISION] Verification result: Slot B closeout `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: Slot B closeout `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: Slot B closeout `npm run test:quick-proof` passed.
+- [DECISION] Verification result: Slot B closeout `node bin/install.js dogfood` passed with 5 of 5 scenarios.
+- [DECISION] Verification result: Slot B closeout `npm run lint` passed with 16 static checks.
+- [DECISION] Verification result: Slot B closeout initial `npm run release:check` failed before tests because `c8` was absent from `node_modules`.
+- [DECISION] Verification result: Slot B closeout `npm ci` installed locked dependencies with 0 vulnerabilities.
+- [DECISION] Verification result: Slot B closeout rerun `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
 - [DECISION] Verification result: `npm run test:e2e` passed.
 - [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
 - [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
@@ -120,7 +144,7 @@
 - [DECISION] Verification result: rerun `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
 - [DECISION] Verification result: GitHub CI run `27286969057` for PR #9 head `5dc6191` completed successfully before the final merge-status note was added.
 - [DECISION] Verification result: GitHub CI run `27287260869` for PR #9 head `fc783b4` completed successfully before merge.
-- [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met.
+- [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met while Slot C remains unrun.
 - [DECISION] Release result: branch `codex/bridge-phase-2-slot-a-host-proof-continuation` was pushed to `origin`.
 - [DECISION] Release result: PR creation was attempted through `gh pr create` and failed with `HTTP 401: Requires authentication`.
 - [DECISION] Release result: GitHub connector PR creation succeeded and opened PR #9 at `https://github.com/aihxp/godpowers/pull/9`.
@@ -128,8 +152,11 @@
 - [DECISION] Release result: the second PR #9 merge attempt succeeded through the GitHub connector at merge commit `295744aadfa7671f819fbeb6cbd7c8aa6a48813a`.
 - [DECISION] Blockers: Slot A deployed smoke remains deferred until an upstream maintainer or repository configuration provides `STAGING_APP_URL=<deployed staging origin>`.
 - [DECISION] Blockers: Slot A token and dollar cost remain unclaimable because the host run did not emit `cost.recorded` events.
-- [DECISION] Blockers: Slot B and Slot C have not started.
-- [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
+- [DECISION] Blockers: Slot B deployed smoke remains deferred until an upstream maintainer or repository configuration provides `STAGING_APP_URL=<deployed staging origin>`.
+- [DECISION] Blockers: Slot B token and dollar cost remain unclaimable because the host run did not emit `cost.recorded` events.
+- [DECISION] Blockers: Slot B dependency modernization remains deferred because `npm audit --json` reports 6 High and 4 Moderate findings fixed by a semver-major Vite upgrade outside this proof scope.
+- [DECISION] Blockers: Slot C has not started.
+- [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting Slot C against `examples/cujo` from `https://github.com/tastejs/todomvc.git`.
 
 ## Phase 3: MCP Companion Package (target release 2.6.0)
 

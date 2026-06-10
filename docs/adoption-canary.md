@@ -14,8 +14,8 @@ The first CLI-verifiable external canary set is captured in:
 [tinyhttp/tinyhttp](case-studies/tinyhttp-adoption-canary.md).
 
 - [DECISION] The Phase 2 host proof campaign has selected current slots in [Run A](case-studies/run-a.md), [Run B](case-studies/run-b.md), and [Run C](case-studies/run-c.md).
-- [DECISION] Run A now has local and CI-verifiable durable host-proof artifacts, with deployed smoke and token-dollar accounting gaps still explicit.
-- [DECISION] Runs B and C remain selected but unrun.
+- [DECISION] Runs A and B now have local and CI-verifiable durable host-proof artifacts, with deployed smoke and token-dollar accounting gaps still explicit.
+- [DECISION] Run C remains selected but unrun.
 
 ## Purpose
 
@@ -137,5 +137,5 @@ Route canary findings to the smallest matching surface:
 
 ## Phase 2 Status
 
-- [DECISION] The next Phase 2 run should start Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
-- [DECISION] The Slot C target is `examples/cujo` from `https://github.com/tastejs/todomvc.git` after Slot B completes or fails honestly.
+- [DECISION] The next Phase 2 run should start Slot C against `examples/cujo` from `https://github.com/tastejs/todomvc.git`.
+- [DECISION] Slot B is complete for local and CI-verifiable host-proof scope against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
