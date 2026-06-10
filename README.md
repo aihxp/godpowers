@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.4.3-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.5.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -26,9 +26,10 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.4.3 keeps the 2.4 command-family UX and adds external CLI canary
-evidence, prompt-size guardrails, legacy command quarantine, lib coverage
-gating, and temp-directory package verification before publish.
+Version 2.5.0 adds executable tier gates through `npx godpowers gate` while
+keeping the 2.4 command-family UX, external CLI canary evidence, prompt-size
+guardrails, legacy command quarantine, lib coverage gating, and package
+verification before publish.
 
 Maintainer hardening continues on the 2.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
@@ -251,6 +252,7 @@ npx godpowers next --project=.
 npx godpowers status --project=. --brief
 npx godpowers status --project=. --json
 npx godpowers quick-proof --project=.
+npx godpowers gate --tier=prd --project=.
 npx godpowers dogfood
 npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 ```
@@ -270,6 +272,17 @@ test order is maintained as a readable list instead of a long package script.
 `scripts/static-check.js`, including shared test harness adoption, installer
 decomposition, async runtime APIs, agent reference validation coverage, and God
 Mode runbook delegation.
+
+Tier skills now run the executable gate before downstream work proceeds:
+
+```bash
+npx godpowers gate --tier=prd --project=.
+npx godpowers gate --tier=build --project=.
+npx godpowers gate --tier=harden --project=.
+```
+
+The gate reads disk artifacts, runs the shared artifact linter, checks build
+verification evidence, and blocks unresolved Critical harden findings.
 
 The runtime remains dependency-free. YAML parsing is intentionally limited to
 the documented Godpowers subset used by intent, routing, workflow, and

@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.4.3
+> Current shipped: v2.5.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.4.3)
+### Current surface (v2.5.0)
 
 What works today:
 - **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -457,6 +457,7 @@ npx godpowers --uninstall        # Remove
 npx godpowers --migrate          # One-shot upgrade
 npx godpowers status --project . # Render dashboard from disk state
 npx godpowers next --project .   # Recommend the next route from disk state
+npx godpowers gate --tier prd --project . # Check a tier artifact gate
 npx godpowers dogfood            # Run built-in messy-repo scenarios
 npx godpowers extension-scaffold --name=@scope/pack --output=.
 npx godpowers --help             # Show install help
@@ -473,6 +474,6 @@ All other operations are slash commands inside the AI tool.
 | v1.0 | No new features without adoption evidence |
 | v1.0 | No schema churn |
 | v1.0 | No removal of leaf commands through command family presentation |
-| All | No broad `godpowers` CLI beyond install, read-only status, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
+| All | No broad `godpowers` CLI beyond install, read-only status, executable artifact gates, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
 
 Discipline: a release that does too much is a release that ships late.

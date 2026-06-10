@@ -1,14 +1,14 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.4.3 (pure-skill model plus executable proof, adoption metrics, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, prompt-size guardrails, and coverage gating)
+> Status: STABLE v2.5.0 (pure-skill model plus executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, prompt-size guardrails, and coverage gating)
 > Authors: Godpowers Team
-> Last updated: 2026-06-09
+> Last updated: 2026-06-10
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.4.3 keeps the public slash-command surface coherent and strengthens the
-release-facing runtime: external CLI canary evidence, prompt-size delegation,
-legacy command quarantine, lib coverage gating, and temp-directory package
-verification on top of the 2.4 command-family UX.
+v2.5.0 keeps the public slash-command surface coherent and strengthens the
+release-facing runtime: executable tier gates, external CLI canary evidence,
+prompt-size delegation, legacy command quarantine, lib coverage gating, and
+package verification on top of the 2.4 command-family UX.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -16,11 +16,10 @@ dogfood runs, canary reports, and dashboard progress must be reported visibly
 instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
-The CLI surface is `npx godpowers` for installation plus read-only proof and
-status helpers such as `godpowers quick-proof --project .`,
-`godpowers status --project .`, `godpowers next --project .`, and
-automation-provider inspection. Durable project operations remain slash
-commands inside the AI coding tool.
+The CLI surface is `npx godpowers` for installation plus read-only proof,
+status, next-route, tier-gate, dogfood, extension-scaffold, and
+automation-provider helpers. Durable project operations remain slash commands
+inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
 Tekton, Argo, Buildkite, VSCode, Cargo, Poetry, Bazel, Nx, Helm, Terraform,
@@ -53,7 +52,8 @@ contexts to produce mechanically-verified artifacts on disk.
 ### Core surface (pure-skill foundation)
 - Skills at `<runtime>/skills/god-*.md` invoked as slash commands
 - Specialist agents at `<runtime>/agents/god-*.md` spawned via Task tool
-- Single CLI surface: `npx godpowers` for install/uninstall only
+- Single CLI surface: `npx godpowers` for install, uninstall, read-only status,
+  executable tier gates, dogfood, and extension scaffolding
 - Hooks for SessionStart and PreToolUse
 - Native Pillars project context in `AGENTS.md` and `agents/*.md`
 - Disk-authoritative state in `.godpowers/`

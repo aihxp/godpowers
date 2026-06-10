@@ -87,6 +87,9 @@ test('full test runner includes YAML parser coverage', () => {
   if (!commands.some(command => command.includes('scripts/test-cli-dispatch.js'))) {
     throw new Error('scripts/test-cli-dispatch.js is missing from TEST_COMMANDS');
   }
+  if (!commands.some(command => command.includes('scripts/test-gate.js'))) {
+    throw new Error('scripts/test-gate.js is missing from TEST_COMMANDS');
+  }
 });
 
 test('install file helpers stay outside bin/install.js', () => {
@@ -129,14 +132,47 @@ test('async file APIs exist on load-bearing modules', () => {
   const state = require('../lib/state');
   const intent = require('../lib/intent');
   const workflows = require('../lib/workflow-runner');
+  const gate = require('../lib/gate');
   for (const [name, fn] of [
     ['state.readAsync', state.readAsync],
     ['state.writeAsync', state.writeAsync],
     ['intent.readAsync', intent.readAsync],
     ['workflow.writePlanAsync', workflows.writePlanAsync],
-    ['workflow.readPlanAsync', workflows.readPlanAsync]
+    ['workflow.readPlanAsync', workflows.readPlanAsync],
+    ['gate.checkAsync', gate.checkAsync]
   ]) {
     if (typeof fn !== 'function') throw new Error(`${name} missing`);
+  }
+});
+
+test('tier skills delegate verification to executable gate', () => {
+  const tiers = ['prd', 'design', 'arch', 'roadmap', 'stack', 'repo', 'build', 'harden'];
+  const missing = [];
+  for (const tier of tiers) {
+    const rel = `skills/god-${tier}.md`;
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const verification = text.match(/## Verification\n([\s\S]*?)(?=\n## |\n# |\s*$)/);
+    if (!verification || !verification[1].includes(`npx godpowers gate --tier=${tier} --project=.`)) {
+      missing.push(rel);
+    }
+  }
+  if (missing.length > 0) {
+    throw new Error(`missing gate verification in ${missing.join(', ')}`);
+  }
+});
+
+test('tier routes declare executable gate commands', () => {
+  const tiers = ['prd', 'design', 'arch', 'roadmap', 'stack', 'repo', 'build', 'harden'];
+  const missing = [];
+  for (const tier of tiers) {
+    const rel = `routing/god-${tier}.yaml`;
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    if (!text.includes(`gate-command: npx godpowers gate --tier=${tier} --project=.`)) {
+      missing.push(rel);
+    }
+  }
+  if (missing.length > 0) {
+    throw new Error(`missing gate-command route metadata in ${missing.join(', ')}`);
   }
 });
 

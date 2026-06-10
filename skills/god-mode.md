@@ -121,6 +121,10 @@ workflow.
        `safe-sync-clear` fails, run
        `/god-reconcile Release Truth And Safe Sync` before deploy, observe,
        harden, launch, broad migration, or resume work.
+     - Instruction to run `npx godpowers gate --tier=<tier> --project=.`
+       after each tier skill returns and before starting the downstream tier
+       for PRD, design when required, architecture, roadmap, stack, repo,
+       build, and harden. A non-zero exit pauses the project run for repair.
      - Instruction that `--yolo` cannot bypass safe sync blockers or
        unresolved Critical harden findings. These are release-truth gates, not
        preference pauses.

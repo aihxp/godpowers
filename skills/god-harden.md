@@ -21,7 +21,8 @@ Spawn the **god-harden-auditor** agent in a fresh context via the host platform'
 
 After god-harden-auditor returns:
 1. Verify FINDINGS.md exists on disk
-2. Read findings classification:
+2. Run `npx godpowers gate --tier=harden --project=.` and do not proceed on a non-zero exit
+3. Read findings classification:
    - If any Critical: PROGRESS.md status = failed, launch is BLOCKED
    - If only High/Medium/Low: PROGRESS.md status = done
 

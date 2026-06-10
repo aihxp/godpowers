@@ -23,7 +23,8 @@ Spawn the **god-roadmapper** agent in a fresh context via the host platform's na
 After god-roadmapper returns:
 1. Verify ROADMAP.md exists on disk
 2. Spawn god-auditor to verify have-nots pass
-3. Update `.godpowers/PROGRESS.md`: Roadmap status = done
+3. Run `npx godpowers gate --tier=roadmap --project=.` and do not proceed on a non-zero exit
+4. Update `.godpowers/PROGRESS.md`: Roadmap status = done
 
 ## On Completion
 

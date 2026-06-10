@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const installer = require('../bin/install');
+const cliDispatch = require('../lib/cli-dispatch');
 const { COMMANDS } = require('../lib/installer-args');
 const { test, assert, mkProject, report } = require('./test-harness');
 
@@ -21,10 +22,33 @@ function capture(fn) {
   }
 }
 
+function captureWithExit(fn) {
+  const originalExit = process.exit;
+  let exitCode = null;
+  process.exit = (code) => {
+    exitCode = code;
+    throw new Error(`process.exit:${code}`);
+  };
+  try {
+    const result = capture(fn);
+    return { ...result, exitCode };
+  } catch (e) {
+    return { value: null, output: e.message, exitCode };
+  } finally {
+    process.exit = originalExit;
+  }
+}
+
 test('CLI dispatch table covers every parsed subcommand', () => {
   for (const command of COMMANDS) {
     assert(typeof installer.COMMAND_RUNNERS[command] === 'function', `${command} missing dispatch runner`);
+    assert(typeof cliDispatch.COMMAND_RUNNERS[command] === 'function', `${command} missing lib dispatch runner`);
   }
+});
+
+test('installer re-exports lib CLI dispatch table', () => {
+  assert(installer.COMMAND_RUNNERS === cliDispatch.COMMAND_RUNNERS, 'installer should re-export dispatch table');
+  assert(installer.runCommand === cliDispatch.runCommand, 'installer should re-export runCommand');
 });
 
 test('status and next commands dispatch through the dashboard branch', () => {
@@ -39,6 +63,18 @@ test('status and next commands dispatch through the dashboard branch', () => {
     assert(result.value === true, `${command} did not dispatch`);
     assert(result.output.includes('"state"'), `${command} did not render dashboard JSON`);
   }
+});
+
+test('next command renders text suggestion through dashboard branch', () => {
+  const project = mkProject('godpowers-cli-next-text-');
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'next',
+    project,
+    json: false,
+    brief: true
+  }));
+  assert(result.value === true, 'next text did not dispatch');
+  assert(result.output.includes('Suggested next command:'), 'next text output missing suggestion');
 });
 
 test('quick-proof command dispatches through proof branch', () => {
@@ -66,6 +102,19 @@ test('automation commands dispatch through automation branch', () => {
   }
 });
 
+test('automation commands render text reports', () => {
+  const project = mkProject('godpowers-cli-automation-text-');
+  for (const command of ['automation-status', 'automation-setup']) {
+    const result = capture(() => cliDispatch.runCommand({
+      command,
+      project,
+      json: false
+    }));
+    assert(result.value === true, `${command} text did not dispatch`);
+    assert(result.output.trim().length > 0, `${command} text output missing`);
+  }
+});
+
 test('dogfood command dispatches through dogfood branch', () => {
   const result = capture(() => installer.runCommand({
     command: 'dogfood',
@@ -73,6 +122,15 @@ test('dogfood command dispatches through dogfood branch', () => {
   }));
   assert(result.value === true, 'dogfood did not dispatch');
   assert(result.output.includes('"status"'), 'dogfood output missing status');
+});
+
+test('dogfood command renders text report', () => {
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'dogfood',
+    json: false
+  }));
+  assert(result.value === true, 'dogfood text did not dispatch');
+  assert(result.output.includes('Dogfood'), 'dogfood text output missing title');
 });
 
 test('extension-scaffold command dispatches through scaffold branch', () => {
@@ -92,8 +150,79 @@ test('extension-scaffold command dispatches through scaffold branch', () => {
   assert(result.output.includes('"@godpowers/dispatch-test"'), 'extension output missing package name');
 });
 
+test('extension-scaffold command renders text branch', () => {
+  const output = mkProject('godpowers-cli-extension-text-');
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'extension-scaffold',
+    extensionName: '@godpowers/dispatch-text-test',
+    extensionOutput: output,
+    extensionSkill: 'god-dispatch-text-test',
+    extensionAgent: 'god-dispatch-text-agent',
+    extensionWorkflow: 'dispatch-text-workflow',
+    json: false
+  }));
+  assert(result.value === true, 'extension-scaffold text did not dispatch');
+  assert(result.output.includes('Scaffolded @godpowers/dispatch-text-test'), 'extension text output missing scaffold message');
+  assert(result.output.includes('Extension manifest validates'), 'extension text output missing validation message');
+});
+
+test('extension-scaffold exits when name is missing', () => {
+  const result = captureWithExit(() => cliDispatch.runCommand({
+    command: 'extension-scaffold',
+    extensionOutput: mkProject('godpowers-cli-extension-missing-')
+  }));
+  assert(result.exitCode === 1, `expected exit code 1, got ${result.exitCode}`);
+});
+
+test('gate command dispatches through gate branch', () => {
+  const project = mkProject('godpowers-cli-gate-');
+  fs.mkdirSync(path.join(project, '.godpowers', 'stack'), { recursive: true });
+  fs.writeFileSync(path.join(project, '.godpowers', 'stack', 'DECISION.md'), [
+    '# Stack Decision',
+    '',
+    '[DECISION] The dispatch test uses Node.js so the gate runner has a lint-clean artifact.'
+  ].join('\n'));
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'gate',
+    project,
+    tier: 'stack',
+    json: true
+  }));
+  assert(result.value === true, 'gate did not dispatch');
+  assert(result.output.includes('"verdict": "pass"'), 'gate output missing pass verdict');
+});
+
+test('gate command renders text and missing-tier branches', () => {
+  const project = mkProject('godpowers-cli-gate-text-');
+  fs.mkdirSync(path.join(project, '.godpowers', 'stack'), { recursive: true });
+  fs.writeFileSync(path.join(project, '.godpowers', 'stack', 'DECISION.md'), [
+    '# Stack Decision',
+    '',
+    '[DECISION] The dispatch text test uses Node.js for a passing gate.'
+  ].join('\n'));
+  const text = capture(() => cliDispatch.runCommand({
+    command: 'gate',
+    project,
+    tier: 'stack',
+    json: false
+  }));
+  assert(text.value === true, 'gate text did not dispatch');
+  assert(text.output.includes('Verdict: pass'), 'gate text output missing pass verdict');
+
+  process.exitCode = 0;
+  const missing = capture(() => cliDispatch.runCommand({
+    command: 'gate',
+    project,
+    json: false
+  }));
+  assert(missing.value === true, 'gate missing tier did not dispatch');
+  assert(missing.output.includes('gate requires --tier=<name>'), 'missing tier output absent');
+  assert(process.exitCode === 1, `missing tier should set exitCode, got ${process.exitCode}`);
+  process.exitCode = 0;
+});
+
 test('unknown command returns false', () => {
-  const result = capture(() => installer.runCommand({ command: 'unknown' }));
+  const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');
 });
 

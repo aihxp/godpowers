@@ -25,6 +25,7 @@ const commands = [
     writes: ['.godpowers/stack/DECISION.md'],
     haveNots: ['S-01','S-02','S-03','S-04','S-05'],
     next: '/god-repo',
+    gateTier: 'stack',
   },
 
   // Tier 2
@@ -35,6 +36,7 @@ const commands = [
     writes: ['.godpowers/repo/AUDIT.md', 'repo source files'],
     haveNots: ['RP-01','RP-02','RP-03','RP-04','RP-05','RP-06','RP-07','RP-08'],
     next: '/god-build',
+    gateTier: 'repo',
   },
   {
     cmd: '/god-build', tier: 2, agent: 'god-planner',
@@ -46,6 +48,7 @@ const commands = [
     haveNots: ['B-01','B-02','B-03','B-04','B-05','B-06','B-07','B-08','B-09','B-10','B-11','B-12'],
     next: '/god-deploy',
     altWhen: { '/god-harden': 'parallel-with-deploy' },
+    gateTier: 'build',
   },
 
   // Tier 3
@@ -76,6 +79,7 @@ const commands = [
     haveNots: ['H-01','H-02','H-03','H-04','H-05','H-06','H-07','H-08','H-09','H-10','H-11'],
     next: '/god-launch',
     blocksOn: { 'critical-finding': 'pause-required' },
+    gateTier: 'harden',
   },
   {
     cmd: '/god-launch', tier: 3, agent: 'god-launch-strategist', desc: 'Launch the product',
@@ -221,8 +225,11 @@ function generate(c) {
   const haveNots = c.haveNots && c.haveNots.length
     ? `  have-nots: [${c.haveNots.join(', ')}]\n  gate-on-failure: pause-for-user`
     : '';
+  const gateCommand = c.gateTier
+    ? `\n  gate-command: npx godpowers gate --tier=${c.gateTier} --project=.`
+    : '';
   const standards = c.haveNots && c.haveNots.length
-    ? `\nstandards:\n  substitution-test: true\n  three-label-test: true\n${haveNots}`
+    ? `\nstandards:\n  substitution-test: true\n  three-label-test: true\n${haveNots}${gateCommand}`
     : '';
   const prereqs = [
     ...(c.prereq || []),
