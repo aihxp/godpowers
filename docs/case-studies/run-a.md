@@ -20,6 +20,7 @@
 
 ## Commands Observed
 
+- [DECISION] Slash command invoked: `/god-mode --brownfield --yolo`.
 - [DECISION] `npm install --no-package-lock` passed.
 - [DECISION] `npm test` passed with 5 AVA tests.
 - [DECISION] `./cli.js 'Hello World from Godpowers'` passed.
