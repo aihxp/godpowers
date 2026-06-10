@@ -57,9 +57,14 @@
 - [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
 - [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
 - [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
-- [DECISION] Release result: package creation and release checks passed, but npm publish is blocked until this branch is merged through the repository protected path and release hooks plus npm credentials are confirmed.
+- [DECISION] Release result: PR #3 merged through the protected GitHub path on 2026-06-10 at merge commit `d19f191802cce7959344284682876747efe5f270`.
+- [DECISION] Release result: `v2.5.0` was tagged and pushed to trigger the repository publish workflow.
+- [DECISION] Release result: GitHub Publish to npm workflow `27282180092` passed, and npm published `godpowers@2.5.0` with provenance.
+- [DECISION] Release result: GitHub release `v2.5.0` was created at `https://github.com/aihxp/godpowers/releases/tag/v2.5.0`.
+- [DECISION] Verification result: the 2026-06-10 release follow-up reran `npm run release:check` locally and passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
+- [DECISION] Verification result: the 2026-06-10 release follow-up ran `npm run verify:published-install` after publish and passed against npm `godpowers@latest`.
 - [DECISION] Blockers: no Phase 1 implementation blocker remains.
-- [DECISION] Blockers: npm publishing remains deferred by protected-merge and credential conditions.
+- [DECISION] Blockers: no Phase 1 release blocker remains.
 - [DECISION] Next phase to run is Phase 2: Host Proof Campaign.
 
 ## Phase 2: Host Proof Campaign (target release 2.5.x docs patch)
@@ -82,6 +87,7 @@
 ### Phase 2 Run Status
 
 - [DECISION] Status: blocked on branch `codex/bridge-phase-2-host-proof` for the 2026-06-10 automation run.
+- [DECISION] Completed work: loaded `AGENTS.md`, required Pillars, `USERS.md`, `docs/adoption-canary.md`, and the current case-study inventory before changing docs.
 - [DECISION] Completed work: selected and verified current repository identities for Slot A, Slot B, and Slot C in `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md`.
 - [DECISION] Completed work: Slot A is `https://github.com/sindresorhus/slugify-cli.git` at `9d7cc5e95668085d73dd4229d8bb0365f4f32144`, MIT license, with 70 measured JavaScript source lines across `cli.js` and `test.js`.
 - [DECISION] Completed work: Slot B is `https://github.com/vitejs/create-vite-app.git` at `7b1c46dab57d14abd5f36941fe867a3d45e7c6af`, MIT license, with `template-react` exposing `dev` and `build` scripts.
