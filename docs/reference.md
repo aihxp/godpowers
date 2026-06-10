@@ -83,6 +83,7 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.
 - `godpowers extension-scaffold --name=@scope/pack --output=.` - Create a publishable extension pack skeleton.
+- `godpowers mcp-info --project .` - Show opt-in MCP companion setup instructions.
 - `godpowers status --project . --brief` - Render only the action brief, host guarantee, status, and next route.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
 - `npx godpowers --profile=core|builder|maintainer|suite|full` - Install a smaller role-specific slash-command surface.

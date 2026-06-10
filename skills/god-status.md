@@ -35,6 +35,7 @@ proactive checks, blockers, planning visibility, and the next action first.
 5. Scan canonical artifact paths for PRD, design, architecture, roadmap, stack, repo, build, deploy, observe, launch, harden, sync, checkpoint, and requirements evidence.
 6. Compare disk state to recorded state and flag phantom resume or untracked work.
 7. Offer `/god-repair` when recorded state and disk evidence conflict.
+- [DECISION] Prefer the MCP `status` tool when it is available, and fall back to the local runtime module or CLI helper when it is not available.
 
 ## Required reference
 

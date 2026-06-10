@@ -90,6 +90,9 @@ test('full test runner includes YAML parser coverage', () => {
   if (!commands.some(command => command.includes('scripts/test-gate.js'))) {
     throw new Error('scripts/test-gate.js is missing from TEST_COMMANDS');
   }
+  if (!commands.some(command => command.includes('scripts/test-mcp-protocol.js'))) {
+    throw new Error('scripts/test-mcp-protocol.js is missing from TEST_COMMANDS');
+  }
 });
 
 test('install file helpers stay outside bin/install.js', () => {
@@ -269,6 +272,20 @@ test('release gate enforces lib coverage floor', () => {
   }
   if (!pkg.scripts['release:check'].includes('npm run coverage:lib')) {
     throw new Error('release:check must run coverage:lib');
+  }
+});
+
+test('MCP SDK dependency stays isolated to companion package', () => {
+  const rootPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const mcpPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'mcp', 'package.json'), 'utf8'));
+  if (rootPkg.dependencies && Object.keys(rootPkg.dependencies).length > 0) {
+    throw new Error(`main package has production dependencies: ${Object.keys(rootPkg.dependencies).join(', ')}`);
+  }
+  if (!mcpPkg.dependencies || !mcpPkg.dependencies['@modelcontextprotocol/sdk']) {
+    throw new Error('@godpowers/mcp must declare @modelcontextprotocol/sdk');
+  }
+  if (rootPkg.dependencies && rootPkg.dependencies['@modelcontextprotocol/sdk']) {
+    throw new Error('main package must not depend on @modelcontextprotocol/sdk at runtime');
   }
 });
 

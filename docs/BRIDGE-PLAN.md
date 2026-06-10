@@ -168,6 +168,31 @@
 - [DECISION] Exit criteria are passing protocol tests, documented package boundary, host setup instructions, and no new production dependency in the main package.
 - [HYPOTHESIS] Phase 3 takes one to two weeks depending on host registration formats.
 
+### Phase 3 Foundation Task Status
+
+- [DECISION] Status: partial on branch `codex/bridge-phase-3-mcp-foundation-af96` for the 2026-06-10 automation run.
+- [DECISION] Completed work: added the first-party `@godpowers/mcp` companion package foundation with a stdio server, package-local protocol test, and read-only tools for `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`.
+- [DECISION] Completed work: added the dependency-free main CLI helper `godpowers mcp-info --project=.` so users can inspect opt-in MCP setup instructions without adding the MCP SDK to the main package runtime dependencies.
+- [DECISION] Completed work: surfaced MCP availability through `lib/host-capabilities.js`, which feeds the dashboard and Quick Proof host guarantee line.
+- [DECISION] Completed work: updated `/god-status` and `/god-next` to prefer MCP tools when available and fall back to the local runtime or CLI helper when unavailable.
+- [DECISION] Completed work: updated `README.md`, `docs/reference.md`, `docs/quick-proof.md`, `docs/host-capabilities.md`, `CHANGELOG.md`, package metadata, and package lock data for the scoped MCP foundation.
+- [DECISION] Verification result: `node scripts/test-mcp-protocol.js` passed.
+- [DECISION] Verification result: `npm run test:protocol` passed in `packages/mcp`.
+- [DECISION] Verification result: `node scripts/test-cli-dispatch.js` passed.
+- [DECISION] Verification result: `node scripts/test-host-capabilities.js` passed.
+- [DECISION] Verification result: `node scripts/test-quick-proof.js` passed.
+- [DECISION] Verification result: `node scripts/static-check.js` passed.
+- [DECISION] Verification result: `npm run test:e2e` passed.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: `npm pack --dry-run --json` in `packages/mcp` passed for `@godpowers/mcp@0.1.0` with 6 files and executable bin mode.
+- [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 93.01 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.2, and package contents verified at 535 files.
+- [DECISION] Verification result: changed and untracked files were scanned with a local Node check and no em dashes, en dashes, or emojis were found.
+- [DECISION] Release result: no npm publish was attempted because this run claimed an independent Phase 3 foundation task, not the full Phase 3 release.
+- [DECISION] Blockers: no blocker remains for the scoped MCP foundation task.
+- [DECISION] Remaining Phase 3 work: implement explicit opt-in host MCP registration writing, decide final companion package version for the 2.6.0 release, finish full host setup documentation, merge through the protected path, publish `@godpowers/mcp` only after release gates and credentials permit it, and publish the main package only if the full Phase 3 release requires a main package release.
+- [DECISION] Next task to run is the Phase 3 opt-in host MCP registration path.
+
 ## Phase 4: One-Directional State (target release 2.7.0)
 
 - [DECISION] Inventory every read of `.godpowers/PROGRESS.md` and per-tier `STATE.md` files across `lib/`, `skills/`, `routing/`, tests, and docs, classifying each as a decision-read, display-read, migration-read, or legacy-source-read.
@@ -252,3 +277,14 @@
 - [DECISION] Generated markdown state views carry checksum lines inside managed fences.
 - [DECISION] `god-locate` and `god-lifecycle` fold into `god-status` flags in Phase 5 while remaining deprecated aliases for one minor release.
 - [DECISION] Phase 2 repository identity is decided by slot criteria plus recorded URL, commit SHA, license, and rationale at run start, rather than hard-coding repository names in this plan.
+
+## Automation Coordination
+
+- [DECISION] Coordination ledger entries below are authoritative for automation claims on bridge-plan work.
+- [DECISION] An active claim newer than two hours blocks overlapping implementation work unless the entry is marked `done`, `blocked`, `waiting`, or `stale`.
+- [DECISION] Each automation run must claim exactly one phase or one independent phase-scoped task before changing implementation files.
+- [DECISION] Each closeout must update its ledger entry with final status, verification commands, release or publish status, remaining work, and next action.
+
+## Coordination Ledger
+
+- [DECISION] Timestamp: 2026-06-10T16:22:33Z. Agent: Codex automation af96. Scope: Phase 3 MCP companion package foundation, read-side tools, protocol tests, and main CLI `mcp-info` helper. Branch or worktree: `codex/bridge-phase-3-mcp-foundation-af96` at `/Users/hprincivil/.codex/worktrees/af96/godpowers`. Status: `done` at 2026-06-10T16:34:02Z. Verification commands: `node scripts/test-mcp-protocol.js`, `npm run test:protocol` in `packages/mcp`, `node scripts/test-cli-dispatch.js`, `node scripts/test-host-capabilities.js`, `node scripts/test-quick-proof.js`, `node scripts/static-check.js`, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, `npm pack --dry-run --json` in `packages/mcp`, and `npm run release:check`. Release or publish status: no npm publish attempted because this was a partial Phase 3 foundation task. Remaining work: opt-in host MCP registration writing, final 2.6.0 version decision, full host setup docs, protected merge, and npm publish only after full Phase 3 release gates and credentials permit it. Next action: run the Phase 3 opt-in host MCP registration path.

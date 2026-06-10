@@ -10,6 +10,7 @@
     "prepublishOnly": "npm run release:check",
     "validate-skills": "node scripts/validate-skills.js",
     "test:surface": "node scripts/test-doc-surface-counts.js",
+    "test:mcp": "node scripts/test-mcp-protocol.js",
     "test:quick-proof": "node scripts/test-quick-proof.js",
     "canary:adoption": "node scripts/run-adoption-canary.js",
     "verify:published-install": "node scripts/verify-published-install.js",
@@ -90,6 +91,8 @@
     "LICENSE"
   ],
   "devDependencies": {
-    "c8": "^11.0.0"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "c8": "^11.0.0",
+    "zod": "^3.25.76"
   }
 }

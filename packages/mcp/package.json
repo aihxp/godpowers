@@ -1,0 +1,28 @@
+{
+  "name": "@godpowers/mcp",
+  "version": "0.1.0",
+  "description": "Read-only MCP companion server for Godpowers runtime tools.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "godpowers-mcp": "./bin/godpowers-mcp.cjs"
+  },
+  "main": "./lib/server.cjs",
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "test:protocol": "node scripts/test-protocol.cjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "godpowers": ">=2.5.2",
+    "zod": "^3.25.76"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

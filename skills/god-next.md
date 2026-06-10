@@ -23,6 +23,7 @@ routing definitions, recipes, command families, and user intent.
 4. Load `<runtimeRoot>/lib/command-families.js` before resolving broad intent.
 5. Load `<runtimeRoot>/lib/dashboard.js` and render the shared dashboard before route-specific detail.
 6. If no dashboard module is available, say `Dashboard engine: unavailable, manual scan used`.
+- [DECISION] Prefer the MCP `next` tool when it is available, and fall back to the local runtime module or CLI helper when it is not available.
 
 ## Required references
 

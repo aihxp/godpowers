@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added the first `@godpowers/mcp` companion package foundation with read-only
+  MCP tools for status, next, gate checks, artifact linting, and requirement
+  tracing.
+- Added `godpowers mcp-info --project=.` so the main package can print opt-in
+  MCP setup instructions without depending on the MCP SDK at runtime.
+- Added MCP protocol coverage that starts the companion server over stdio,
+  completes SDK client initialization, lists tools, and calls each read-side
+  tool against the Quick Proof fixture.
+
 ## [2.5.2] - 2026-06-10
 
 ### Added

@@ -221,6 +221,27 @@ test('gate command renders text and missing-tier branches', () => {
   process.exitCode = 0;
 });
 
+test('mcp-info command renders setup instructions and JSON', () => {
+  const project = mkProject('godpowers-cli-mcp-info-');
+  const json = capture(() => cliDispatch.runCommand({
+    command: 'mcp-info',
+    project,
+    json: true
+  }));
+  assert(json.value === true, 'mcp-info JSON did not dispatch');
+  assert(json.output.includes('"package": "@godpowers/mcp"'), 'mcp-info JSON missing package');
+  assert(json.output.includes('"runtimeDependencyOnMcpSdk": false'), 'mcp-info JSON missing boundary');
+
+  const text = capture(() => cliDispatch.runCommand({
+    command: 'mcp-info',
+    project,
+    json: false
+  }));
+  assert(text.value === true, 'mcp-info text did not dispatch');
+  assert(text.output.includes('Godpowers MCP Companion'), 'mcp-info text missing title');
+  assert(text.output.includes('godpowers-mcp --project'), 'mcp-info text missing server command');
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');

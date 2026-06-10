@@ -53,6 +53,20 @@ test('detect reports degraded when shell tools exist but agent spawn is absent',
   assert(report.gaps.includes('fresh-context agent spawn not detected'));
 });
 
+test('detect reports MCP companion source when package files exist', () => {
+  const tmp = mkProject();
+  fs.mkdirSync(path.join(tmp, 'packages', 'mcp', 'bin'), { recursive: true });
+  fs.writeFileSync(path.join(tmp, 'packages', 'mcp', 'package.json'), '{}');
+  fs.writeFileSync(path.join(tmp, 'packages', 'mcp', 'bin', 'godpowers-mcp.cjs'), '');
+  const report = hostCapabilities.detect(tmp, {
+    homeDir: path.join(tmp, 'home'),
+    env: { SHELL: '/bin/zsh' }
+  });
+  assert.equal(report.guarantees.mcp.available, true);
+  assert.equal(report.guarantees.mcp.source, 'repo package source');
+  assert(hostCapabilities.summary(report).includes('MCP available via repo package source'));
+});
+
 test('render summarizes gaps without banned dash characters', () => {
   const tmp = mkProject();
   const report = hostCapabilities.detect(tmp, {
@@ -62,6 +76,7 @@ test('render summarizes gaps without banned dash characters', () => {
   const rendered = hostCapabilities.render(report);
   assert(rendered.includes('Host capabilities:'));
   assert(rendered.includes('Code intelligence:'));
+  assert(rendered.includes('MCP:'));
   assert(!/[\u2013\u2014]/.test(rendered), 'render contains banned dash');
 });
 

@@ -258,6 +258,7 @@ npx godpowers quick-proof --project=.
 npx godpowers gate --tier=prd --project=.
 npx godpowers dogfood
 npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
+npx godpowers mcp-info --project=.
 ```
 
 ### Maintainer Validation

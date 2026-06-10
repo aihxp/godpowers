@@ -44,6 +44,8 @@ The gate returns JSON with `{tier, verdict, artifacts, checks, findings,
 summary}` when `--json` is passed, and exits non-zero when required evidence is
 missing or a blocking lint, build, or harden finding is present.
 
+- [DECISION] MCP setup information is available through `npx godpowers mcp-info --project=.` for hosts that support MCP tool registration.
+
 If the project has no `.godpowers/` directory yet, start with the smallest
 state-producing path inside your AI coding tool:
 
@@ -163,6 +165,7 @@ Next:
 Host guarantees: degraded
 First gap: this host can install skills, but true fresh-context agent spawning
 is not available. Godpowers will report Agent: simulated in current context.
+MCP: reported as available or not configured in the same host capability line.
 ```
 
 ### Review Finding

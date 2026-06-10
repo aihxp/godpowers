@@ -57,6 +57,7 @@ function showHelp() {
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
+  log('  mcp-info             Show opt-in MCP companion setup instructions');
   log('');
   log('Command families:');
   for (const family of commandFamilies.COMMAND_FAMILIES) {
@@ -105,6 +106,7 @@ function showHelp() {
   log('  npx godpowers automation-setup --project=.');
   log('  npx godpowers dogfood');
   log('  npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.');
+  log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers --claude --global');
   log('  npx godpowers --claude --global --profile=core');
   log('  npx godpowers --all');
@@ -213,6 +215,7 @@ module.exports = {
   runQuickProofCommand: cliDispatch.runQuickProofCommand,
   runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
   runGateCommand: cliDispatch.runGateCommand,
+  runMcpInfoCommand: cliDispatch.runMcpInfoCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,

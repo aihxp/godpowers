@@ -35,6 +35,8 @@
   not downgrade `full` or `degraded` host levels.
 - [DECISION] It reports extension authoring and suite release dry-run support
   from shipped runtime files.
+- [DECISION] It reports MCP availability from an installed `godpowers-mcp`
+  command or the repository companion package source.
 
 ## Dashboard Behavior
 
@@ -43,8 +45,8 @@ Action brief:
   Next: /god-prd
   Why: PRD is the next planning gate.
   Readiness: needs attention
-  Attention: Host: degraded on codex, fresh-context agent spawn not detected
-  Host guarantees: degraded on codex, fresh-context agent spawn not detected
+  Attention: Host: degraded on codex, fresh-context agent spawn not detected; MCP not configured
+  Host guarantees: degraded on codex, fresh-context agent spawn not detected; MCP not configured
   Code intelligence: ast-grep via ast-grep
 ```
 
