@@ -20,6 +20,7 @@
 
 | Timestamp UTC | Agent | Scope | Branch or worktree | Status | Next action |
 |---|---|---|---|---|---|
+| 2026-06-10T17:02:35Z | Codex b3f2 | Phase 4 generated state views foundation | `codex/bridge-phase-4-generated-state-views-b3f2` in `/Users/hprincivil/.codex/worktrees/b3f2/godpowers` | done | Verification: `node scripts/test-state-views.js`, `node scripts/test-state.js`, `node scripts/static-check.js`, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, `npm ci`, and `npm run release:check` passed after dependencies were installed; release: not attempted for this independent foundation slice; remaining work: add the `godpowers state advance` CLI mutation, migrate decision reads, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and ship Phase 4 as 2.7.0; next action: run the Phase 4 state advance CLI mutation slice. |
 | 2026-06-10T16:49:00Z | Codex 46d1 | Phase 3 companion registry verification | `codex/bridge-phase-3-registry-blocker-46d1` in `/Users/hprincivil/.codex/worktrees/46d1/godpowers` | done | Verification: `gh run view 27291159615`, `npm view godpowers version dist-tags`, `npm view @godpowers/mcp version dist-tags`, `npm run verify:published-install`, `npm install --package-lock-only --ignore-scripts @godpowers/mcp@2.6.0`, `npm exec --package @godpowers/mcp@2.6.0 -- godpowers-mcp --help`, `gh release view v2.6.0`, `npm run lint`, and `npm run test:surface`; release: npm `godpowers@2.6.0`, npm `@godpowers/mcp@2.6.0`, and GitHub release `v2.6.0` are published; remaining work: none for Phase 3; next action: start Phase 4. |
 | 2026-06-10T16:33:08Z | Codex e273 | Phase 3 release and publish closeout | `codex/bridge-phase-3-release-closeout-e273` and `codex/bridge-phase-3-release-status-e273` in `/Users/hprincivil/.codex/worktrees/e273/godpowers` | done | Verification: `npm --workspace @godpowers/mcp test`, `npm --workspace @godpowers/mcp run pack:check`, `node scripts/static-check.js`, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, three `npm run release:check` runs, PR #23 CI, PR #25 CI, `gh run view 27291159615`, `npm run verify:published-install`, npm view for both packages, `npm exec --package @godpowers/mcp@2.6.0 -- godpowers-mcp --help`, and `gh release view v2.6.0`; release: npm `godpowers@2.6.0`, npm `@godpowers/mcp@2.6.0`, tag `v2.6.0`, and GitHub release published; remaining work: none for Phase 3; next action: start Phase 4. |
 | 2026-06-10T16:12:38Z | Codex da7c | Phase 2 blocker patch release-status closeout | `codex/bridge-phase-2-release-closeout-da7c` in `/Users/hprincivil/.codex/worktrees/da7c/godpowers` | done | Verification: `gh run view 27289417888`, `npm view godpowers version dist-tags`, `npm run verify:published-install`, `gh release view v2.5.2`, `npm run lint`, and `npm run release:check`; release: npm `2.5.2` and GitHub release published; remaining work: none; next action: start Phase 3. |
@@ -247,6 +248,26 @@
 - [DECISION] Update dogfood fixtures in the same commit so `npx godpowers dogfood` stays green.
 - [DECISION] Exit criteria are no Godpowers decision-reads from markdown state, generated views with checksums, green drift-impossibility tests, and retained `god-repair` diagnostics.
 - [HYPOTHESIS] Phase 4 takes two to three weeks because the current surface contains many `PROGRESS.md` and `STATE.md` references.
+
+### Phase 4 Run Status
+
+- [DECISION] Status: partial on branch `codex/bridge-phase-4-generated-state-views-b3f2` for the 2026-06-10 automation run.
+- [DECISION] Completed work: added `lib/state-views.js` as the generated state view owner for `.godpowers/PROGRESS.md`, including managed fences, checksum validation, atomic writes, user-content preservation outside the fence, and tamper replacement warnings.
+- [DECISION] Completed work: wired `lib/state.js` sync and async write paths to refresh generated state views after `state.json` mutations, with an opt-out for callers that need `refreshViews: false`.
+- [DECISION] Completed work: added `scripts/test-state-views.js`, registered it in `scripts/run-tests.js`, and added a static check that keeps the test in the full release runner.
+- [DECISION] Completed work: updated `lib/README.md` so the runtime module index names the generated state view owner.
+- [DECISION] Verification result: `node scripts/test-state-views.js` passed.
+- [DECISION] Verification result: `node scripts/test-state.js` passed.
+- [DECISION] Verification result: `node scripts/static-check.js` passed.
+- [DECISION] Verification result: `npm run test:e2e` passed.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: `npm ci` passed and reported 0 vulnerabilities.
+- [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.94 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.6.0, root package contents verified at 536 files, and `@godpowers/mcp` package contents verified at 8 files.
+- [DECISION] Release result: no npm publish or version bump was attempted because this was an independent Phase 4 foundation slice, not the complete 2.7.0 release.
+- [DECISION] Blockers: no blocker remains for this generated state views foundation slice.
+- [DECISION] Remaining Phase 4 work: add the `godpowers state advance` CLI mutation, migrate decision reads from markdown state to `state.json`, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and run the final 2.7.0 release path.
+- [DECISION] Next phase-scoped task to run is Phase 4 state advance CLI mutation.
 
 ## Phase 5: Surface Contraction (target release 3.0.0)
 
