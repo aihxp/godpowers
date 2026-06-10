@@ -15,7 +15,7 @@ Spawn the **god-observability-engineer** agent in a fresh context via the host p
 
 1. Verify `.godpowers/state.json` records `tier-3.deploy.status == done`.
 2. Spawn god-observability-engineer with PRD (for success metrics) and ARCH paths.
-3. The agent returns observability evidence for `.godpowers/state.json`; the generated `.godpowers/observe/STATE.md` view refreshes after state mutation.
+3. The agent returns structured observability evidence for `.godpowers/state.json`; the generated `.godpowers/observe/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
@@ -55,13 +55,13 @@ named command cannot run without one exact credential.
 
 ## Re-invocation contract
 
-What happens if `/god-observe` is run when observe state evidence or the generated observe state view already exists:
+What happens if `/god-observe` is run when observe state evidence already exists:
 
 | Existing state | Behavior |
 |---|---|
 | State evidence does not exist | Spawn god-observability-engineer; record observability evidence; mark sub-step done |
-| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| State evidence or generated view fails checks | Spawn god-observability-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists and state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence fails checks or the owning wrapper reports a generated view checksum warning | Spawn god-observability-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
 | State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-observe --force` to re-run. |
 | `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-observe-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |

@@ -15,9 +15,9 @@ Wire observability.
 
 ## Gate Check
 
-`.godpowers/state.json` records deploy completion. App is deployed and
-reachable, or deploy state documents a tested local staging harness plus a
-single external access bundle. A deferred staging URL must not block
+`.godpowers/state.json` records deploy completion. The deploy evidence says the
+app is deployed and reachable, or it documents a tested local staging harness
+plus a single external access bundle. A deferred staging URL must not block
 observability setup when local or CI-verifiable checks can still run.
 
 ## Process

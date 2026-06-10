@@ -69,9 +69,8 @@ For each channel:
 - D+7: post-launch retrospective
 
 ### 6. Shipping Closure
-- Read `.godpowers/state.json` deploy and observe evidence,
-  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present, and the
-  generated deploy or observe state views as human context.
+- Read `.godpowers/state.json` deploy and observe evidence plus
+  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present.
 - If deploy or observe is waiting on external access, do not create a broad
   dashboard checklist. Reference only the smallest next access item from the
   waiting bundle and write launch state as local-ready with deployed

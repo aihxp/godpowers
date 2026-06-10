@@ -22,7 +22,10 @@ execution:
   spawns: [god-launch-strategist]
   context: fresh
   writes:
-    - .godpowers/launch/STATE.md
+    - .godpowers/state.json
+    - landing copy
+    - OG cards
+    - launch runbook
 
 standards:
   substitution-test: true

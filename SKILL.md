@@ -633,8 +633,8 @@ Silence is not a status. Every tier must have an explicit entry.
    - Agent refactors (REFACTOR)
    - Two-stage review: spec compliance, then code quality
    - Atomic commit on pass
-7. Update `.godpowers/build/STATE.md`
-8. Run `npx godpowers state advance --step=build --status=done --project=.`
+7. Record build verification evidence in `.godpowers/state.json`
+8. Run `npx godpowers state advance --step=build --status=done --project=.` to regenerate the build state view
 
 **TDD Enforcement**:
 - If a subagent writes implementation before tests, flag the violation
@@ -661,7 +661,7 @@ Silence is not a status. Every tier must have an explicit entry.
 2. Environment parity (dev matches prod)
 3. Rollback plan (documented, tested)
 4. Health checks (not just "is the process running")
-5. Write to `.godpowers/deploy/STATE.md`
+5. Record deploy evidence in `.godpowers/state.json` and regenerate the deploy state view
 
 **Have-nots**:
 - Different build per environment
@@ -678,7 +678,7 @@ Silence is not a status. Every tier must have an explicit entry.
 3. Alerting (symptoms, not causes)
 4. Structured logging
 5. Runbooks (tested, not paper)
-6. Write to `.godpowers/observe/STATE.md`
+6. Record observability evidence in `.godpowers/state.json` and regenerate the observability state view
 
 **Have-nots**:
 - SLO has no error budget policy
@@ -696,7 +696,7 @@ Silence is not a status. Every tier must have an explicit entry.
 3. Launch channels identified with messaging per channel
 4. Launch-day telemetry (source attribution on every signup)
 5. D-7 to D+7 runbook
-6. Write to `.godpowers/launch/STATE.md`
+6. Record launch evidence in `.godpowers/state.json` and regenerate the launch state view
 
 **Have-nots**:
 - Landing copy passes substitution test (reads generic)
@@ -828,13 +828,13 @@ See individual tier sections above.
   repo/
     AUDIT.md           # Repo Scaffold Audit
   build/
-    STATE.md           # Build State
+    STATE.md           # Generated build state view
   deploy/
-    STATE.md           # Deploy Pipeline State
+    STATE.md           # Generated deploy pipeline state view
   observe/
-    STATE.md           # Observability State
+    STATE.md           # Generated observability state view
   launch/
-    STATE.md           # Launch State
+    STATE.md           # Generated launch state view
   harden/
     FINDINGS.md        # Security Findings
 ```

@@ -298,6 +298,46 @@
           "type": "string",
           "description": "Free-form for skip reason, failure detail, etc."
         },
+        "readiness-scope": {
+          "type": "string",
+          "description": "Deploy, observe, or launch readiness scope such as local-readiness, local-staging, ci-readiness, deployed-staging, live-target, or deferred-external-access."
+        },
+        "verified-target-type": {
+          "type": "string",
+          "description": "Target class verified by deploy, observe, or launch work, such as local-staging, ci, deployed-staging, production, or live."
+        },
+        "target-evidence": {
+          "type": "string",
+          "description": "Evidence source for a deploy, observe, or launch target, such as config, CI variable, IaC output, provider CLI output, docs, or current user input."
+        },
+        "external-access-deferral": {
+          "type": "string",
+          "description": "Relative artifact path or concise reason when deployed staging, provider, dashboard, or live launch access is deferred."
+        },
+        "waiting-artifact": {
+          "type": "string",
+          "description": "Relative artifact path for the smallest outstanding external access bundle."
+        },
+        "rollback-evidence": {
+          "type": "string",
+          "description": "Deploy rollback command, run result, or artifact path proving rollback was tested."
+        },
+        "slo-evidence": {
+          "type": "string",
+          "description": "Observability evidence for SLO definitions and error budget policy coverage."
+        },
+        "alert-evidence": {
+          "type": "string",
+          "description": "Observability evidence for alert definitions and alert response coverage."
+        },
+        "runbook-evidence": {
+          "type": "string",
+          "description": "Observability or launch evidence for tested runbooks."
+        },
+        "launch-evidence": {
+          "type": "string",
+          "description": "Launch evidence for live launch, local launch-readiness, source attribution, or launch deferral."
+        },
         "verification": {
           "type": "object",
           "description": "Structured verification evidence used by executable gates instead of markdown STATE.md parsing.",

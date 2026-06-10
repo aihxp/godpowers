@@ -206,7 +206,7 @@ Each command has:
   - Spawn `god-quality-reviewer` (independent of spec-reviewer)
   - On both pass: atomic commit
   - On either fail: return to executor with feedback
-- Writes: source code, tests, `.godpowers/state.json`, and generated `.godpowers/build/STATE.md`
+- Writes: source code, tests, `.godpowers/state.json`, and `.godpowers/build/PLAN.md`
 
 **Standards**: have-nots B-01 through B-12
 
@@ -223,7 +223,7 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-deploy-engineer`
-- Writes: `.godpowers/state.json`, generated `.godpowers/deploy/STATE.md`, and CI/CD configs
+- Writes: `.godpowers/state.json`, CI/CD configs, and deploy access bundle when needed
 
 **Standards**: have-nots D-01 through D-08
 
@@ -239,7 +239,7 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-observability-engineer`
-- Writes: `.godpowers/state.json`, generated `.godpowers/observe/STATE.md`, alert configs, dashboards
+- Writes: `.godpowers/state.json`, alert configs, dashboards, and runbooks
 
 **Standards**: have-nots OB-01 through OB-08
 
@@ -280,7 +280,7 @@ Each command has:
 
 **Execution**:
 - Spawns: `god-launch-strategist`
-- Writes: `.godpowers/state.json`, generated `.godpowers/launch/STATE.md`, landing copy, OG cards
+- Writes: `.godpowers/state.json`, landing copy, OG cards, and launch runbook
 
 **Standards**: have-nots L-01 through L-08
 

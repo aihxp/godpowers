@@ -37,7 +37,7 @@ execution:
   writes:
     - DESIGN.md
     - PRODUCT.md
-    - .godpowers/design/STATE.md
+    - .godpowers/state.json
 
 standards:
   have-nots:

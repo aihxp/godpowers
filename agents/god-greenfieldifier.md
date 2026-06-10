@@ -29,10 +29,8 @@ intent, architecture, delivery commitments, or org constraints.
   - `.godpowers/roadmap/ROADMAP.md`
   - `.godpowers/stack/DECISION.md`
   - `.godpowers/repo/AUDIT.md`
-  - generated `.godpowers/build/STATE.md`
-  - generated `.godpowers/deploy/STATE.md`
-  - generated `.godpowers/observe/STATE.md`
-  - generated `.godpowers/launch/STATE.md`
+  - `.godpowers/state.json` build, deploy, observe, and launch evidence
+  - `.godpowers/build/PLAN.md`
   - `.godpowers/harden/FINDINGS.md`
 - Source evidence from code, org context, and imported planning systems.
 

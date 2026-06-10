@@ -17,7 +17,7 @@ Spawn the **god-launch-strategist** agent in a fresh context via the host platfo
 2. If Critical findings exist: REFUSE to proceed. Tell user to resolve or
    explicitly accept the risk first.
 3. Spawn god-launch-strategist with PRD path and harden FINDINGS.md path.
-4. The agent returns launch evidence for `.godpowers/state.json` plus landing copy artifacts; the generated `.godpowers/launch/STATE.md` view refreshes after state mutation.
+4. The agent returns structured launch evidence for `.godpowers/state.json` plus landing copy artifacts; the generated `.godpowers/launch/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
@@ -73,13 +73,13 @@ approval.
 
 ## Re-invocation contract
 
-What happens if `/god-launch` is run when launch state evidence or the generated launch state view already exists:
+What happens if `/god-launch` is run when launch state evidence already exists:
 
 | Existing state | Behavior |
 |---|---|
 | State evidence does not exist | Spawn god-launch-strategist; record launch evidence; mark sub-step done |
-| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| State evidence or generated view fails checks | Spawn god-launch-strategist in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists and state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence fails checks or the owning wrapper reports a generated view checksum warning | Spawn god-launch-strategist in update mode with current evidence plus findings as input. Diff preview before overwrite. |
 | State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-launch --force` to re-run. |
 | `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-launch-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |

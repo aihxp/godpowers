@@ -16,7 +16,7 @@ Spawn the **god-deploy-engineer** agent in a fresh context via the host platform
 1. Verify build is complete through `.godpowers/state.json` `tier-2.build.status == done` and passing build verification commands.
 2. Verify all tests pass.
 3. Spawn god-deploy-engineer with ARCH and stack DECISION paths.
-4. The agent returns deploy evidence for `.godpowers/state.json`; the generated `.godpowers/deploy/STATE.md` view refreshes after state mutation.
+4. The agent returns structured deploy evidence for `.godpowers/state.json`; the generated `.godpowers/deploy/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
@@ -71,13 +71,13 @@ known, do not use it as staging without explicit user approval.
 
 ## Re-invocation contract
 
-What happens if `/god-deploy` is run when deploy state evidence or the generated deploy state view already exists:
+What happens if `/god-deploy` is run when deploy state evidence already exists:
 
 | Existing state | Behavior |
 |---|---|
 | State evidence does not exist | Spawn god-deploy-engineer; record deploy evidence; mark sub-step done |
-| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| State evidence or generated view fails checks | Spawn god-deploy-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists and state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence fails checks or the owning wrapper reports a generated view checksum warning | Spawn god-deploy-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
 | State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-deploy --force` to re-run. |
 | `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-deploy-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |
