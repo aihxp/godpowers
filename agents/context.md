@@ -15,7 +15,7 @@ see_also: [arch, quality, deploy]
 ## Context
 
 - [DECISION] Godpowers is an AI-powered development system delivered as slash commands and specialist agents inside AI coding tools.
-- [DECISION] The package name is `godpowers`, and the current repository version is `2.4.3`.
+- [DECISION] The package name is `godpowers`, and the current repository version is `2.5.0`.
 - [DECISION] The primary audience is solo founders and small engineering teams using AI coding tools who need accountable production workflow discipline without enterprise process.
 - [DECISION] The product promise is one slash-command arc from idea to hardened, observable, launch-ready software with traceable artifacts on disk.
 - [DECISION] Godpowers uses a pure-skill model where `npx godpowers` installs runtime files and in-tool slash commands perform work.
@@ -32,7 +32,7 @@ see_also: [arch, quality, deploy]
 
 - [HYPOTHESIS] User adoption risk concentrates around whether agent spawning, installed runtime metadata, and local validation behave the same across supported AI coding tools.
 - [HYPOTHESIS] Documentation drift risk is high because the public surface includes 112 slash commands, 40 specialist agents, 13 workflows, and 42 intent recipes.
-- [HYPOTHESIS] Adoption risk also concentrates around whether dogfood, host guarantees, extension authoring, and suite release dry-runs behave consistently across supported hosts.
+- [HYPOTHESIS] Adoption risk also concentrates around whether executable gates, dogfood, host guarantees, extension authoring, and suite release dry-runs behave consistently across supported hosts.
 
 ## Gaps
 

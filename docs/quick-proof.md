@@ -34,6 +34,16 @@ from your current environment.
 The next two commands render live project status and the recommended next
 action for the current directory.
 
+Executable gates are available when a tier artifact exists:
+
+```bash
+npx godpowers gate --tier=prd --project=.
+```
+
+The gate returns JSON with `{tier, verdict, artifacts, checks, findings,
+summary}` when `--json` is passed, and exits non-zero when required evidence is
+missing or a blocking lint, build, or harden finding is present.
+
 If the project has no `.godpowers/` directory yet, start with the smallest
 state-producing path inside your AI coding tool:
 

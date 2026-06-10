@@ -1,13 +1,14 @@
 # Users and Community
 
-Godpowers is at v2.4.3. Stable release.
+Godpowers is at v2.5.0. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. The 2.4 line adds UX
-flow clarity on top of the executable proof path, accountability hardening,
-deliverable progress tracking, and three external CLI-verifiable adoption
-canaries. Real users will reveal which gaps actually matter.
+Currently zero recorded production users. Be honest. The 2.5 line adds
+executable tier gates on top of the 2.4 UX flow clarity, executable proof path,
+accountability hardening, deliverable progress tracking, and three external
+CLI-verifiable adoption canaries. Real users will reveal which gaps actually
+matter.
 
 ## Proof needed during freeze
 

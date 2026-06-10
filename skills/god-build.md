@@ -76,8 +76,10 @@ After all waves:
    decompose, prune, or escalate. Pass the exact failing diagnostics, rerun the
    command, and repeat until green or until the same root failure exhausts the
    repair budget.
-5. Update PROGRESS.md: Build status = done
-6. If the build plan or implementation establishes durable conventions, plan
+5. Record the exact verification commands that passed in `.godpowers/build/STATE.md`
+6. Run `npx godpowers gate --tier=build --project=.` and do not proceed on a non-zero exit
+7. Update PROGRESS.md: Build status = done
+8. If the build plan or implementation establishes durable conventions, plan
    pillar updates through `lib/pillars.planArtifactSync`. Under
    `/god-mode --yolo`, apply those updates immediately and log the decision.
 

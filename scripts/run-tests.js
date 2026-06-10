@@ -36,6 +36,7 @@ const TEST_COMMANDS = [
   [node, ['scripts/test-atomic-write.js']],
   [node, ['scripts/test-executor-repair.js']],
   [node, ['scripts/test-cli-dispatch.js']],
+  [node, ['scripts/test-gate.js']],
   [node, ['scripts/test-installer-profiles.js']],
   [node, ['scripts/test-command-families.js']],
   [node, ['scripts/test-package-identity.js']],

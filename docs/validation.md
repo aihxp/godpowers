@@ -31,6 +31,9 @@ The lint layer. Mechanical checks against the catalog of failure modes.
   load-bearing state, intent, and workflow plan modules.
 - [DECISION] `scripts/static-check.js` verifies executable skill metadata
   source-of-truth parsing through `lib/skill-surface.js`.
+- [DECISION] `scripts/static-check.js` verifies tier skills reference
+  `npx godpowers gate --tier=<tier> --project=.` and tier routes declare the
+  matching `standards.gate-command` metadata.
 - [DECISION] `scripts/static-check.js` keeps `skills/god-mode.md` as a concise
   dispatch contract and checks that the detailed runbook lives in
   `references/orchestration/GOD-MODE-RUNBOOK.md`.
@@ -40,6 +43,20 @@ The lint layer. Mechanical checks against the catalog of failure modes.
 - [DECISION] `npm run release:check` remains the maintainer command before a
   public package release because it runs the full test gate, audit gate, and
   package contents gate.
+
+### Executable tier gates
+
+- [DECISION] `npx godpowers gate --tier=<tier> --project=.` checks PRD,
+  design, architecture, roadmap, stack, repo, build, and harden tier artifacts
+  without running arbitrary project commands.
+- [DECISION] Gate JSON has `{tier, verdict, artifacts, checks, findings,
+  summary}` so hosts can quote exact check ids and reasons.
+- [DECISION] Build gates require `.godpowers/build/STATE.md` to record exact
+  verification commands that passed.
+- [DECISION] Harden gates fail unresolved Critical findings and blocked launch
+  gates in `.godpowers/harden/FINDINGS.md`.
+- [DECISION] `/god-mode` runs the matching gate after each tier skill returns
+  and before starting downstream tier work.
 
 ### Dependency-free YAML subset
 

@@ -22,7 +22,8 @@ Spawn the **god-repo-scaffolder** agent in a fresh context via the host platform
 After god-repo-scaffolder returns:
 1. Verify AUDIT.md exists on disk
 2. Verify CI passes on the empty scaffold
-3. Update `.godpowers/PROGRESS.md`: Repo status = done
+3. Run `npx godpowers gate --tier=repo --project=.` and do not proceed on a non-zero exit
+4. Update `.godpowers/PROGRESS.md`: Repo status = done
 
 ## On Completion
 
