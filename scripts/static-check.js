@@ -8,7 +8,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const CHECK_DIRS = ['bin', 'lib', 'scripts', 'tests'];
+const CHECK_DIRS = ['bin', 'lib', 'scripts', 'tests', 'packages'];
 
 let passed = 0;
 let failed = 0;
@@ -89,6 +89,9 @@ test('full test runner includes YAML parser coverage', () => {
   }
   if (!commands.some(command => command.includes('scripts/test-gate.js'))) {
     throw new Error('scripts/test-gate.js is missing from TEST_COMMANDS');
+  }
+  if (!commands.some(command => command.includes('--workspace @godpowers/mcp test'))) {
+    throw new Error('@godpowers/mcp protocol test is missing from TEST_COMMANDS');
   }
 });
 
@@ -269,6 +272,26 @@ test('release gate enforces lib coverage floor', () => {
   }
   if (!pkg.scripts['release:check'].includes('npm run coverage:lib')) {
     throw new Error('release:check must run coverage:lib');
+  }
+  if (!pkg.scripts['release:check'].includes('npm run pack:mcp:check')) {
+    throw new Error('release:check must run @godpowers/mcp package checks');
+  }
+});
+
+test('MCP companion stays outside main package dependencies', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  if (pkg.dependencies && Object.keys(pkg.dependencies).length > 0) {
+    throw new Error('main package must not add production dependencies for MCP');
+  }
+  if (!Array.isArray(pkg.workspaces) || !pkg.workspaces.includes('packages/mcp')) {
+    throw new Error('packages/mcp workspace missing');
+  }
+  const mcpPkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'mcp', 'package.json'), 'utf8'));
+  if (mcpPkg.name !== '@godpowers/mcp') {
+    throw new Error(`unexpected MCP package name: ${mcpPkg.name}`);
+  }
+  if (!mcpPkg.dependencies || !mcpPkg.dependencies['@modelcontextprotocol/sdk']) {
+    throw new Error('@godpowers/mcp must own the MCP SDK dependency');
   }
 });
 

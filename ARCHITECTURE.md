@@ -1,15 +1,15 @@
 # Godpowers Architecture (v2 Design Target)
 
-> Status: STABLE v2.5.1 (pure-skill model plus executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, Codex host proof studies, prompt-size guardrails, and coverage gating)
+> Status: STABLE v2.6.0 (pure-skill model plus executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, MCP companion tools, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, Codex host proof studies, prompt-size guardrails, and coverage gating)
 > Authors: Godpowers Team
 > Last updated: 2026-06-10
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.5.1 keeps the public slash-command surface coherent and adds Codex host-run
-proof studies on top of the release-facing runtime: executable tier gates,
-external CLI canary evidence, prompt-size delegation, legacy command
-quarantine, lib coverage gating, and package verification on top of the 2.4
-command-family UX.
+v2.6.0 keeps the public slash-command surface coherent, preserves the Codex
+host-run proof studies, and adds an optional read-only MCP companion package on
+top of the release-facing runtime: executable tier gates, external CLI canary
+evidence, prompt-size delegation, legacy command quarantine, lib coverage
+gating, and package verification on top of the 2.4 command-family UX.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -18,7 +18,7 @@ instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
 The CLI surface is `npx godpowers` for installation plus read-only proof,
-status, next-route, tier-gate, dogfood, extension-scaffold, and
+status, next-route, tier-gate, MCP setup info, dogfood, extension-scaffold, and
 automation-provider helpers. Durable project operations remain slash commands
 inside the AI coding tool.
 

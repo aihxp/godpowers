@@ -1,12 +1,11 @@
-# Godpowers 2.5.1 Release
+# Godpowers 2.6.0 Release
 
 > Status: Release candidate
 > Date: 2026-06-10
 
-Godpowers 2.5.1 ships the Phase 2 host proof campaign as a docs patch release.
-It keeps the 2.5.0 executable tier gates intact while adding Codex host-run
-evidence for a CLI package, a browser app, and a TODO-backed React component
-project.
+Godpowers 2.6.0 ships the Phase 3 MCP companion package. It keeps the main
+`godpowers` package dependency-free while adding an optional `@godpowers/mcp`
+package for MCP-capable hosts.
 
 ## What's in this release
 
@@ -14,25 +13,24 @@ project.
 - 40 specialist agents
 - 13 executable workflows
 - 42 intent recipes
-- 8 installer CLI helpers
+- 9 installer CLI helpers
+- 5 read-only MCP tools in `@godpowers/mcp`
 
 ## Highlights
 
-- Run A completed a Codex host proof on slugify-cli with 13 of 13 workflow steps
-  complete, 16 of 16 requirements done, passing tests, passing production
-  audit, passing pack dry run, and no tracked source diff.
-- Run B completed a Codex host proof on Countdown with local browser evidence,
-  6 of 7 requirements done, dependency audit repair, and deployed-origin proof
-  deferred pending a staging URL.
-- Run C completed a documented failed Codex host proof on
-  react-github-readme-button, with local tests, lint, build, browser smoke, and
-  production audit passing before the run blocked on Critical dev-tooling audit
-  findings.
-- The host proof campaign captured command usage, gate failures, repairs,
-  blocker files, cost availability, and proof limits in `docs/case-studies/`.
+- `@godpowers/mcp` exposes `status`, `next`, `gate_check`, `lint_artifact`,
+  and `trace_requirement` over stdio.
+- `godpowers mcp-info --project=.` prints setup instructions without requiring
+  or loading the MCP SDK in the main package.
+- `godpowers-mcp setup --host=codex --project=. --write` writes a managed
+  Codex MCP registration only after the user explicitly asks for it.
+- Dashboard and Quick Proof host guarantee lines now include MCP availability.
+- The main `godpowers` package still has no production dependencies.
 
 ## Validation
 
+- `npm --workspace @godpowers/mcp test` passed.
+- `npm --workspace @godpowers/mcp run pack:check` passed.
 - `npm run test:e2e` passed.
 - `node scripts/test-runtime-verification.js` passed.
 - `node scripts/test-agent-browser.js` passed.
@@ -40,13 +38,14 @@ project.
 
 ## Upgrade
 
-- `npm install -g godpowers@2.5.1` or `npx godpowers@2.5.1`
+- `npm install -g godpowers@2.6.0` or `npx godpowers@2.6.0`
+- Optional MCP package: `npm install -g godpowers @godpowers/mcp`
 - Re-run `/god-context` in each project to refresh installed runtime metadata.
 - Existing `.godpowers/` state remains compatible.
 
 ## Notes
 
-- GitHub release created for `v2.5.1`.
-- The tag matches the npm package version.
-- The `v2.5.1` tag points to the release commit that matches the npm
-  `godpowers@2.5.1` package.
+- GitHub release should be created for `v2.6.0`.
+- The tag should match the npm package version.
+- The companion package should publish as `@godpowers/mcp@2.6.0` after the
+  release gate passes.

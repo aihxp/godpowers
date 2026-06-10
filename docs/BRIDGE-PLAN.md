@@ -123,6 +123,28 @@
 - [DECISION] Exit criteria are passing protocol tests, documented package boundary, host setup instructions, and no new production dependency in the main package.
 - [HYPOTHESIS] Phase 3 takes one to two weeks depending on host registration formats.
 
+### Phase 3 Run Status
+
+- [DECISION] Status: complete on branch `codex/bridge-phase-3-mcp` for the 2026-06-10 automation run.
+- [DECISION] Completed work: added the `@godpowers/mcp` companion workspace package with a CommonJS stdio MCP server, five read-only tools, and an explicit Codex setup writer guarded by `--write`.
+- [DECISION] Completed work: exposed MCP tools named `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`, all wrapping existing Godpowers `lib/` runtime modules without adding production dependencies to the main `godpowers` package.
+- [DECISION] Completed work: added `godpowers mcp-info --project=.` as a read-only main CLI helper that prints MCP setup instructions without requiring the MCP SDK.
+- [DECISION] Completed work: updated host capability reporting so dashboard and quick-proof host guarantee lines include MCP availability without changing full, degraded, or unknown host levels.
+- [DECISION] Completed work: updated `/god-status` and `/god-next` to prefer MCP tools when available and fall back to the CLI or runtime modules otherwise.
+- [DECISION] Completed work: updated package metadata, package lock, `CHANGELOG.md`, `RELEASE.md`, `README.md`, `docs/reference.md`, `docs/quick-proof.md`, `docs/host-capabilities.md`, `docs/mcp.md`, `docs/ROADMAP.md`, `ARCHITECTURE.md`, `SECURITY.md`, `USERS.md`, and `agents/context.md` for version 2.6.0 and the Phase 3 release surface.
+- [DECISION] Verification result: `npm --workspace @godpowers/mcp test` passed and covered MCP initialize, tools/list, one tools/call per tool against `fixtures/quick-proof/project`, and explicit Codex setup writes.
+- [DECISION] Verification result: `npm --workspace @godpowers/mcp run pack:check` passed with the companion package payload verified at 8 files.
+- [DECISION] Verification result: `npm run test:e2e` passed.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: repo documentation sync and repo surface sync were fresh after updating `SECURITY.md` to the 2.6.x support series.
+- [DECISION] Verification result: changed files contained no em dashes, en dashes, or emoji characters.
+- [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.85 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.6.0, root package contents verified at 535 files, and `@godpowers/mcp` package contents verified at 8 files.
+- [DECISION] Release result: local release gate passed; PR merge, tag, npm publish, companion publish, and published-install verification are still pending.
+- [DECISION] Blockers: no Phase 3 implementation blocker remains.
+- [DECISION] Blockers: publishing is blocked until the branch is committed, pushed, merged through the protected path, tag-triggered release hooks permit publish, and npm credentials are available to the release workflow.
+- [DECISION] Next phase to run is Phase 4: One-Directional State.
+
 ## Phase 4: One-Directional State (target release 2.7.0)
 
 - [DECISION] Inventory every read of `.godpowers/PROGRESS.md` and per-tier `STATE.md` files across `lib/`, `skills/`, `routing/`, tests, and docs, classifying each as a decision-read, display-read, migration-read, or legacy-source-read.

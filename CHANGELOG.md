@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-06-10
+
+### Added
+- Added the `@godpowers/mcp` companion package with read-only MCP tools for
+  status, next, gate checks, artifact linting, and requirement tracing.
+- Added `godpowers mcp-info --project=.` as a read-only main-package helper
+  that prints setup instructions without loading the MCP SDK.
+- Added MCP protocol tests that spawn the companion server over stdio, list
+  tools, and call each tool against the quick-proof fixture.
+
+### Changed
+- Updated dashboard and quick-proof host guarantee output to include MCP
+  availability.
+- Updated `/god-status` and `/god-next` to prefer MCP tools when available and
+  fall back to CLI or runtime modules otherwise.
+- Updated release checks to verify the companion package protocol and package
+  contents while keeping the main `godpowers` package dependency-free.
+
 ## [2.5.1] - 2026-06-10
 
 ### Added

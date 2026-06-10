@@ -25,6 +25,7 @@ Run these from a project directory after installing Godpowers.
 npx godpowers quick-proof --project=. --brief
 npx godpowers status --project=. --brief
 npx godpowers next --project=. --brief
+npx godpowers mcp-info --project=.
 ```
 
 The first command reads a shipped fixture at `fixtures/quick-proof/project`, computes
@@ -32,7 +33,8 @@ the next command from its `.godpowers/state.json`, and reports host guarantees
 from your current environment.
 
 The next two commands render live project status and the recommended next
-action for the current directory.
+action for the current directory. The MCP info command prints optional
+read-only companion setup without writing host configuration.
 
 Executable gates are available when a tier artifact exists:
 
@@ -134,7 +136,7 @@ Action brief:
   Why: Prep exists, but no PRD artifact is complete.
   Readiness: ready
   Attention: none
-  Host guarantees: full for shell and local runtime, agent spawning depends on host
+  Host guarantees: full on codex; MCP available via workspace package
 ```
 
 ### Dashboard Closeout
@@ -210,7 +212,7 @@ Use these paths before reading the full command reference.
 | Degraded hosts | Godpowers must report local-only or simulated agent behavior instead of hiding the limitation. |
 
 See [host-capabilities.md](host-capabilities.md) for the detailed capability
-model.
+model. See [mcp.md](mcp.md) for optional MCP host setup.
 
 ## What To Inspect Next
 

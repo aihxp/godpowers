@@ -182,6 +182,7 @@ test('quick proof fixture computes /god-prd as next command', () => {
         npm: 'test',
         gh: null,
         agentSpawn: false,
+        mcp: { available: false, source: 'not configured' },
         extensionAuthoring: false,
         suiteReleaseDryRun: false
       },
@@ -199,6 +200,7 @@ test('quick proof fixture computes /god-prd as next command', () => {
   assert(rendered.includes('Godpowers Quick Proof'), 'render missing title');
   assert(rendered.includes('Next: /god-prd'), rendered);
   assert(rendered.includes('Host guarantees: degraded on test'), rendered);
+  assert(rendered.includes('MCP not configured'), rendered);
   assert(rendered.includes('Outcome metrics:'), rendered);
   assert(rendered.includes('Commands to first signal: 1'), rendered);
   assert(proof.metrics.nextCommand === '/god-prd', JSON.stringify(proof.metrics));
@@ -218,6 +220,7 @@ test('quick proof renders dot for the user project when fixture root was passed'
         npm: 'test',
         gh: 'test',
         agentSpawn: true,
+        mcp: { available: true, source: 'test registration' },
         extensionAuthoring: true,
         suiteReleaseDryRun: true
       },
