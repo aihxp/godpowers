@@ -8,6 +8,17 @@ description: |
 
   Spawned by: /god-build, god-orchestrator (before god-executor waves)
 tools: Read, Write, Bash, Grep, Glob
+inputs:
+  - ".godpowers/roadmap/ROADMAP.md"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/stack/DECISION.md"
+outputs:
+  - ".godpowers/build/PLAN.md"
+gates:
+  - "vertical slices with test-first sequence"
+  - "dependency and verification criteria coverage"
+handoff:
+  - "return wave plan for executor and reviewer spawns"
 ---
 
 # God Planner

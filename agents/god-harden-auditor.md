@@ -7,6 +7,18 @@ description: |
 
   Spawned by: /god-harden, god-orchestrator
 tools: Read, Bash, Grep, Glob, WebSearch
+inputs:
+  - "codebase"
+  - ".godpowers/state.json deploy evidence"
+  - "optional org security standards"
+outputs:
+  - ".godpowers/harden/FINDINGS.md"
+gates:
+  - "H-01 through H-11 have-nots"
+  - "Critical findings block launch"
+  - "manual adversarial review"
+handoff:
+  - "return security findings and block launch on unresolved Critical issues"
 ---
 
 # God Harden Auditor

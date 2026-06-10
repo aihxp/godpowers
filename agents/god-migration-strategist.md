@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-upgrade
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
+inputs:
+  - "migration target"
+  - ".godpowers/state.json build evidence"
+  - "upstream changelog"
+outputs:
+  - ".godpowers/migrations/<slug>/MIGRATION.md"
+  - "phased migration plan"
+gates:
+  - "MG-01 through MG-07 have-nots"
+  - "expand-contract rollout safety"
+  - "migration test coverage evidence"
+handoff:
+  - "return migration plan, executor slices, and rollout blockers"
 ---
 
 # God Migration Strategist

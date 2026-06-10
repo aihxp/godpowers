@@ -10,6 +10,20 @@ description: |
 
   Spawned by: /god-sync, end of feature-addition recipe execution
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
+inputs:
+  - "reconciliation verdict"
+  - "changed files"
+  - "trigger type and recent commits"
+outputs:
+  - "updated affected artifacts"
+  - ".godpowers/SYNC-LOG.md"
+  - "local sync summaries"
+gates:
+  - "per-artifact have-nots"
+  - "feature awareness and source sync-back freshness"
+  - "no broad context loading"
+handoff:
+  - "return sync summary and remaining artifact drift if any"
 ---
 
 # God Updater

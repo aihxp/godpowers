@@ -10,6 +10,19 @@ description: |
 
   Spawned by: /god-reconcile, recipe execution (feature-addition category)
 tools: Read, Bash, Grep, Glob, Task
+inputs:
+  - "all core Godpowers artifacts"
+  - "repository docs and surface"
+  - "feature awareness and host capability evidence"
+outputs:
+  - "multi-dimensional reconciliation verdict"
+  - "optional .godpowers/reconciliation/ report"
+gates:
+  - "all relevant surfaces checked"
+  - "missing artifacts handled explicitly"
+  - "no false all-covered claim"
+handoff:
+  - "return synthesis recommendation and preflight commands to caller"
 ---
 
 # God Reconciler

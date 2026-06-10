@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-launch, god-orchestrator
 tools: Read, Write, Edit, Bash, Grep, WebSearch
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/harden/FINDINGS.md"
+  - ".godpowers/state.json launch prerequisites"
+outputs:
+  - ".godpowers/state.json launch evidence"
+  - "landing copy and channel messaging"
+  - "D-7 to D+7 launch runbook"
+gates:
+  - "L-01 through L-08 have-nots"
+  - "no unresolved Critical harden findings"
+  - "launch state evidence is complete"
+handoff:
+  - "return launch evidence and pause only for human-only brand choices"
 ---
 
 # God Launch Strategist

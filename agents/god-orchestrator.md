@@ -8,6 +8,20 @@ description: |
 
   Spawned by: /god-mode
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
+inputs:
+  - "user intent or private handoff"
+  - ".godpowers/state.json"
+  - "routing and workflow definitions"
+outputs:
+  - ".godpowers/state.json mutations"
+  - ".godpowers/PROGRESS.md generated view refresh"
+  - "specialist agent handoffs"
+gates:
+  - "state-lock contract"
+  - "specialist gate checks"
+  - "mandatory final sync"
+handoff:
+  - "spawn specialists in tier order and return dashboard closeout to user"
 ---
 
 # God Orchestrator

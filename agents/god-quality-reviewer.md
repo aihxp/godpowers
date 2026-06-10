@@ -7,6 +7,18 @@ description: |
 
   Spawned by: god-orchestrator (after god-spec-reviewer passes)
 tools: Read, Bash, Grep, Glob
+inputs:
+  - "executor code diff"
+  - "repository quality conventions"
+  - "verification evidence"
+outputs:
+  - "stage 2 PASS or FAIL verdict"
+  - "quality findings"
+gates:
+  - "readability, security, error handling, performance, and maintainability review"
+  - "fresh-context independence"
+handoff:
+  - "return verdict to orchestrator for repair or atomic commit"
 ---
 
 # God Quality Reviewer (Stage 2)

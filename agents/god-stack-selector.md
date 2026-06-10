@@ -6,6 +6,18 @@ description: |
 
   Spawned by: /god-stack, god-orchestrator
 tools: Read, Write, Bash, Grep, WebSearch
+inputs:
+  - ".godpowers/arch/ARCH.md"
+  - "optional org constraints"
+  - "optional imported stack signals"
+outputs:
+  - ".godpowers/stack/DECISION.md"
+gates:
+  - "S-01 through S-05 have-nots"
+  - "scored candidates and flip points"
+  - "lock-in cost evidence"
+handoff:
+  - "return stack decision and pause only for close tradeoffs or lock-in choices"
 ---
 
 # God Stack Selector

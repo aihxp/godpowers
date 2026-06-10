@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-debug, when build encounters failures
 tools: Read, Edit, Bash, Grep, Glob, WebSearch
+inputs:
+  - "bug report"
+  - "failing command evidence"
+  - "codebase and recent commits"
+outputs:
+  - "regression test"
+  - "minimal fix"
+  - "debug conclusion summary"
+gates:
+  - "observe-minimize-instrument-hypothesize-test-conclude sequence"
+  - "regression test passes"
+handoff:
+  - "return root cause, fix files, and verification commands"
 ---
 
 # God Debugger

@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-prd, god-orchestrator
 tools: Read, Write, Bash, Grep
+inputs:
+  - "user intent"
+  - ".godpowers/intent.yaml"
+  - "optional preparation context"
+  - "templates/PRD.md"
+outputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/prd/PRD.meta.json"
+gates:
+  - "P-01 through P-15 have-nots"
+  - "substitution test"
+  - "three-label sentence discipline"
+handoff:
+  - "return PRD and pause only for ambiguous problem or conflicting requirements"
 ---
 
 # God PM

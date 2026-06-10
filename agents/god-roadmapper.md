@@ -7,6 +7,18 @@ description: |
 
   Spawned by: /god-roadmap, god-orchestrator
 tools: Read, Write, Bash, Grep
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/arch/ARCH.md"
+  - "templates/ROADMAP.md"
+outputs:
+  - ".godpowers/roadmap/ROADMAP.md"
+gates:
+  - "R-01 through R-10 have-nots"
+  - "topological dependency ordering"
+  - "observable completion gates"
+handoff:
+  - "return roadmap and pause only for capacity or ordering ambiguity"
 ---
 
 # God Roadmapper

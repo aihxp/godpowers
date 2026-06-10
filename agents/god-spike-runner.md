@@ -8,6 +8,19 @@ description: |
 
   Spawned by: /god-spike
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
+inputs:
+  - "specific technical question"
+  - "time-box"
+  - "minimal relevant context"
+outputs:
+  - ".godpowers/spikes/<slug>/SPIKE.md"
+  - "throwaway proof-of-concept code"
+gates:
+  - "SP-01 through SP-05 have-nots"
+  - "evidence-backed recommendation"
+  - "time-box respected"
+handoff:
+  - "return proceed, reject, or follow-up spike recommendation"
 ---
 
 # God Spike Runner

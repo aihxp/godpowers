@@ -9,6 +9,20 @@ description: |
   Spawned by: /god-init (automatic quiet setup after consent), /god-context,
   /god-sync (refresh).
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/state.json"
+  - "detected AI tool configuration"
+  - "DESIGN.md and PRODUCT.md presence"
+outputs:
+  - "AGENTS.md godpowers fence"
+  - "tool-specific pointer files"
+  - "context refresh summary"
+gates:
+  - "detect-then-write policy"
+  - "fenced edits only"
+  - "idempotent context output"
+handoff:
+  - "return canonical and pointer write summary to invoking skill"
 ---
 
 # God Context Writer

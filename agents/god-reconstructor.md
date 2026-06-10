@@ -7,6 +7,22 @@ description: |
 
   Spawned by: /god-reconstruct, brownfield-arc workflow
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "brownfield codebase"
+  - "optional archaeology report"
+  - "existing docs and tests"
+outputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/roadmap/ROADMAP.md"
+  - ".godpowers/stack/DECISION.md"
+  - ".godpowers/RECONSTRUCTION-LOG.md"
+gates:
+  - "per-tier have-nots"
+  - "confidence levels on reconstructed claims"
+  - "stakeholder review recommendation"
+handoff:
+  - "return reconstructed artifacts and prominent uncertainty warnings"
 ---
 
 # God Reconstructor

@@ -7,6 +7,17 @@ description: |
 
   Spawned by: /god-org-context, bluefield-arc workflow
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "organization standards input"
+  - "auto-detected org files"
+  - "bluefield workflow request"
+outputs:
+  - ".godpowers/org-context.yaml"
+gates:
+  - "org-context have-nots"
+  - "constraints grounded in detected or provided evidence"
+handoff:
+  - "return org-context path and constraints for downstream agents"
 ---
 
 # God Org Context Loader

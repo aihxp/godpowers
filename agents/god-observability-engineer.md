@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-observe, god-orchestrator
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/prd/PRD.md success metrics"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/state.json deploy evidence"
+outputs:
+  - ".godpowers/state.json observability evidence"
+  - "alert and dashboard configs"
+  - "runbooks"
+gates:
+  - "OB-01 through OB-08 have-nots"
+  - "real SLOs and symptom alerts"
+  - "observability evidence is complete"
+handoff:
+  - "return observability evidence and metric readiness summary"
 ---
 
 # God Observability Engineer
