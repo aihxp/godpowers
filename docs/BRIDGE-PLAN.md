@@ -124,6 +124,8 @@
 - [DECISION] Verification result: `npm ci` installed locked dependencies with 0 vulnerabilities.
 - [DECISION] Verification result: rerun `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
 - [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met.
+- [DECISION] Repository result: branch `codex/bridge-phase-2-slot-b-proof` was pushed to `origin`.
+- [DECISION] Repository result: PR creation and protected-path merge were blocked because `gh pr create` returned `HTTP 401: Requires authentication` from the GitHub GraphQL API.
 - [DECISION] Blockers: Slot A deployed smoke testing remains deferred until a `STAGING_APP_URL` exists, but this does not block local or CI-verifiable Slot A proof closure.
 - [DECISION] Blockers: Slot B deployed smoke testing remains deferred until a `STAGING_APP_URL` exists, but this does not block local or CI-verifiable Slot B proof closure.
 - [DECISION] Blockers: Slot B cost telemetry was unavailable because `/god-cost` telemetry was not exposed in the target host proof.
