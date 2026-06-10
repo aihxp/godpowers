@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.5.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.5.2-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -21,14 +21,18 @@ CLI-verifiable canaries now cover [sindresorhus/is](docs/case-studies/sindresorh
 [expressjs/cors](docs/case-studies/expressjs-cors-adoption-canary.md), and
 [tinyhttp/tinyhttp](docs/case-studies/tinyhttp-adoption-canary.md), with host
 slash-command gaps called out rather than hidden.
+Host-run proof studies now cover [slugify-cli](docs/case-studies/run-a.md),
+[Countdown](docs/case-studies/run-b.md), and
+[react-github-readme-button](docs/case-studies/run-c.md), including one
+blocked harden run recorded as evidence instead of hidden as success.
 
 Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.5.1 keeps executable tier gates through `npx godpowers gate` and
-patches two Phase 2 host-proof blockers found during Run A: installed runtime
-gate command access and build-gate false passes when verification is red.
+Version 2.5.2 keeps the 2.5.1 Codex host-run proof studies and patches two
+Phase 2 blocker defects: installed runtime gate command access and build-gate
+false passes when verification evidence is red.
 
 Maintainer hardening continues on the 2.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the

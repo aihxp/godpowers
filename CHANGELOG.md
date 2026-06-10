@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.5.1] - 2026-06-10
+## [2.5.2] - 2026-06-10
 
 ### Added
 - Added regression coverage proving an installed `godpowers-runtime` bundle can
@@ -22,6 +22,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the build gate so `.godpowers/build/STATE.md` fails closed when any
   verification command is recorded as failed, instead of passing because a
   different command passed.
+
+## [2.5.1] - 2026-06-10
+
+### Added
+- Added three Codex host-run proof case studies for slugify-cli, Countdown, and
+  react-github-readme-button.
+- Added Phase 2 proof evidence for successful CLI and web app runs plus one
+  blocked harden run with Critical dev-tooling findings preserved as a public
+  blocker.
+
+### Changed
+- Updated USERS, README, roadmap, reference, architecture, release notes, and
+  bridge-plan status for the Phase 2 host proof campaign.
 
 ## [2.5.0] - 2026-06-10
 

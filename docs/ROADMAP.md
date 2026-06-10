@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.5.1
+> Current shipped: v2.5.2
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.5.0)
+### Current surface (v2.5.2)
 
 What works today:
 - **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -61,10 +61,13 @@ What works today:
   sindresorhus/is, expressjs/cors, and tinyhttp/tinyhttp first-contact runs
   with commit hashes, elapsed time, cost, pause count, and explicit host-run
   gaps.
-- **Phase 2 Host Proof Run A**: `docs/case-studies/run-a.md` captures a
-  failed `/god-mode --brownfield --yolo` run against `sindresorhus/is-up-cli`,
-  including command usage, gate repairs, degraded host guarantees, and a red
-  build blocker before app behavior shipped.
+- **Codex host proof case studies**: `docs/case-studies/run-a.md`,
+  `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md` capture
+  slugify-cli, Countdown, and react-github-readme-button host runs with exact
+  repository identity, validation, gate failures, repairs, and blockers.
+- **Phase 2 blocker fixes**: installed runtime bundles include the `bin/`
+  command surface, and build gates fail closed when build state records failed
+  verification commands.
 - **Parser and frontmatter hardening**: strict YAML diagnostics surface
   malformed routing, recipe, workflow, and extension manifest lines, while
   `lib/frontmatter.js` keeps markdown contract metadata on one shared parser.
