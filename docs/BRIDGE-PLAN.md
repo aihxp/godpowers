@@ -121,10 +121,11 @@
 - [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met.
 - [DECISION] Release result: branch `codex/bridge-phase-2-slot-a-host-proof-continuation` was pushed to `origin`.
 - [DECISION] Release result: PR creation was attempted through `gh pr create` and failed with `HTTP 401: Requires authentication`.
+- [DECISION] Release result: GitHub connector PR creation succeeded and opened PR #9 at `https://github.com/aihxp/godpowers/pull/9`.
 - [DECISION] Blockers: Slot A deployed smoke remains deferred until an upstream maintainer or repository configuration provides `STAGING_APP_URL=<deployed staging origin>`.
 - [DECISION] Blockers: Slot A token and dollar cost remain unclaimable because the host run did not emit `cost.recorded` events.
 - [DECISION] Blockers: Slot B and Slot C have not started.
-- [DECISION] Blockers: protected-path PR creation is blocked until GitHub CLI authentication is refreshed.
+- [DECISION] Blockers: GitHub CLI PR creation remains unavailable until `gh` authentication is refreshed, but the connector-created PR keeps the protected path open.
 - [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
 
 ## Phase 3: MCP Companion Package (target release 2.6.0)
