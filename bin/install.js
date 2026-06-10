@@ -95,7 +95,7 @@ function showHelp() {
   log('  --codebuddy          Install for CodeBuddy');
   log('  --pi                 Install for Pi');
   log('  --all                Install for all 15 runtimes');
-  log('  --profile=<name>     Install profile: core, builder, maintainer, suite, or full');
+  log('  --profile=<name>     Install profile: core, builder, maintainer, suite, or full (default: core)');
   log('  --minimal            Alias for --profile=core');
   log('  -u, --uninstall      Uninstall Godpowers');
   log('  -h, --help           Show this help message');
@@ -166,15 +166,15 @@ function runInstall(opts, srcDir) {
   log('');
   log(`\x1b[36mProfile:\x1b[0m ${describeProfiles(opts.profile)}`);
   log(`\x1b[36mInstalled:\x1b[0m`);
-  log(`  ${surface.skills} slash commands (try: /god-mode, /god-next, /god-status, /god-progress)`);
+  log(`  ${surface.skills} slash commands (try: /god, /god-plan, /god-status, /god-mode)`);
   log(`  ${surface.agents} specialist agents`);
   log('  Templates and references for artifact discipline');
   log('');
   log(`\x1b[36mNext steps:\x1b[0m`);
   log('  1. Open your AI coding tool in any project directory');
-  log(`  2. Type: \x1b[36m/god-mode\x1b[0m for the full autonomous project run`);
-  log(`     Or:   \x1b[36m/god-next\x1b[0m to see what to run next`);
-  log(`     Or:   \x1b[36m/god-init\x1b[0m to start a new project`);
+  log(`  2. Type: \x1b[36m/god\x1b[0m for the front door`);
+  log(`     Or:   \x1b[36m/god-plan\x1b[0m to start planning`);
+  log(`     Or:   \x1b[36m/god-mode\x1b[0m for the full autonomous project run`);
   log('');
   log(`\x1b[36mDocs:\x1b[0m ${identity.HOMEPAGE_URL}`);
   log('');

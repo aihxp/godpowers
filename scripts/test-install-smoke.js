@@ -58,7 +58,7 @@ console.log('\n  Install + init smoke test\n');
 const fakeHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-install-smoke-'));
 
 test('installer completes against a clean HOME', () => {
-  const out = execFileSync('node', [INSTALLER, '--claude', '--global'], {
+  const out = execFileSync('node', [INSTALLER, '--claude', '--global', '--profile=full'], {
     env: { ...process.env, HOME: fakeHome },
     encoding: 'utf8',
     timeout: 30_000
@@ -78,7 +78,7 @@ test('installer wrote ~/.claude/skills/ with at least 80 god-* files', () => {
 
 test('installer writes Codex commands as skill directories', () => {
   const codexHome = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-codex-smoke-'));
-  execFileSync('node', [INSTALLER, '--codex', '--global'], {
+  execFileSync('node', [INSTALLER, '--codex', '--global', '--profile=full'], {
     env: { ...process.env, HOME: codexHome },
     encoding: 'utf8',
     timeout: 30_000

@@ -4,7 +4,7 @@ metadata:
   command: /god-lifecycle
   description: Show project phase
   tier: 0
-  family: continue
+  family: compatibility
   trigger-precedence:
     - trigger: where am i
       prefer: /god-locate

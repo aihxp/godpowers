@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.7.0
+> Current shipped: v3.0.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,10 +12,10 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.7.0)
+### Current surface (v3.0.0)
 
 What works today:
-- **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **117 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
@@ -44,6 +44,10 @@ What works today:
 - **Command family UX layer**: `/god`, `/god-help`, `/god-next`, and route
   metadata share command families, capture, work-size, verification, and
   status-view ladders so users can choose paths without losing leaf commands.
+- **Surface contraction**: omitted installer profiles now resolve to `core`,
+  five verb dispatchers route common planning, fix, ship, capture, and
+  extension intent to existing leaves, and `--profile=full` preserves the
+  complete compatibility surface.
 - **Typed routing outcomes**: flexible success paths carry outcome type,
   label, reason, and allowed-next metadata for contextual, verdict-based,
   steady-state, session-end, and selection closeouts.
@@ -151,7 +155,7 @@ What works today:
 - **Transcript-safe init and suite handoffs**: `/god-init` and Mode D suite
   coordinator paths use private handoff files before orchestrator or
   coordinator spawns
-- **Human-readable progress reports**: `/god-status`, `/god-locate`,
+- **Human-readable progress reports**: `/god-status`, `/god-status --locate`,
   `/god-next`, `/god-mode`, `CHECKPOINT.md`, and `PROGRESS.md` now surface
   workflow progress, current step, recent work, and what happens next
 - **Proposition closeouts**: proposal, diagnostic, audit, lifecycle, status,

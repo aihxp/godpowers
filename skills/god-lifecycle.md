@@ -1,5 +1,7 @@
 ---
 name: god-lifecycle
+deprecated: true
+successor: god-status --lifecycle
 description: |
   Show where the project is in its lifecycle and what workflows make sense
   next. Distinguishes: pre-init, planning, building, shipping, steady state,
@@ -10,6 +12,10 @@ description: |
 ---
 
 # /god-lifecycle
+
+Deprecated: prefer `/god-status --lifecycle` for new workflows. This command
+remains callable in the full profile for one minor release as a compatibility
+alias.
 
 Show project phase and contextually appropriate workflows.
 

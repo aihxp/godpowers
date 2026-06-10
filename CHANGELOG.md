@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-06-10
+
+### Added
+- Added `/god-plan`, `/god-fix`, `/god-ship`, `/god-capture`, and
+  `/god-extend` as thin verb dispatchers over existing leaf commands.
+- Added routing metadata for the new verb dispatchers so repository surface
+  checks keep skills and routes aligned.
+
+### Changed
+- Changed the omitted installer profile default from `full` to `core`.
+- Updated the `core` profile to install the front door, status, verb
+  dispatchers, and `/god-mode` compatibility while preserving every command in
+  `--profile=full`.
+- Routed `/god-observe` through the `ship` verb boundary based on Phase 2 host
+  proof evidence.
+- Updated public docs, profile tests, command-family tests, and Phase 5
+  surface evidence for the 117-command surface.
+
+### Deprecated
+- Deprecated `/god-locate` in favor of `/god-status --locate`.
+- Deprecated `/god-lifecycle` in favor of `/god-status --lifecycle`.
+- Added `successor` metadata to deprecated compatibility commands.
+
 ## [2.7.0] - 2026-06-10
 
 ### Added

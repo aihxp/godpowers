@@ -9,6 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const profiles = require('../lib/install-profiles');
+const frontmatter = require('../lib/frontmatter');
 const { test, assert, report } = require('./test-harness');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -59,6 +60,37 @@ test('surface contraction evidence records the current profile boundary', () => 
   assertIncludes(text, `\`full\` profile currently selects ${fullCount} skills`);
 });
 
+test('phase 5 verb dispatch skills exist', () => {
+  const names = skillNames();
+  for (const name of ['god-plan', 'god-fix', 'god-ship', 'god-capture', 'god-extend']) {
+    assert(names.includes(name), `${name} dispatch skill is missing`);
+    assert(fs.existsSync(path.join(ROOT, 'routing', `${name}.yaml`)), `${name} routing is missing`);
+  }
+});
+
+test('deprecated command metadata names a successor', () => {
+  const missing = [];
+  for (const file of fs.readdirSync(path.join(ROOT, 'skills')).filter((name) => name.endsWith('.md')).sort()) {
+    const parsed = frontmatter.parse(read(path.join('skills', file)), { strict: true });
+    if (parsed.deprecated === true && !parsed.successor) {
+      missing.push(file);
+    }
+  }
+  assert(missing.length === 0, `deprecated skills missing successor: ${missing.join(', ')}`);
+});
+
+test('status flags replace locate and lifecycle in smaller profiles', () => {
+  const names = skillNames();
+  for (const profile of ['core', 'builder', 'maintainer', 'suite']) {
+    const selected = profiles.selectedSkillNames(profile, names);
+    assert(!selected.has('god-locate'), `${profile} should not install god-locate`);
+    assert(!selected.has('god-lifecycle'), `${profile} should not install god-lifecycle`);
+  }
+  const status = read('skills/god-status.md');
+  assert(status.includes('/god-status --locate'), 'status skill missing locate flag');
+  assert(status.includes('/god-status --lifecycle'), 'status skill missing lifecycle flag');
+});
+
 test('observed host proof slash commands map to verbs or explicit exceptions', () => {
   const text = read(DOC);
   for (const command of [
@@ -85,7 +117,7 @@ test('observed host proof slash commands map to verbs or explicit exceptions', (
   }
   assertIncludes(text, '| `quick-proof` CLI |');
   assertIncludes(text, '| `gate` CLI |');
-  assertIncludes(text, '| `/god-observe` | Explicit exception |');
+  assertIncludes(text, '| `/god-observe` | `ship` |');
 });
 
 report('Surface contraction evidence tests');
