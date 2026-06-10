@@ -143,9 +143,14 @@
 - [DECISION] Verification result: post-latest-main 2.5.2 `node scripts/test-runtime-verification.js` passed.
 - [DECISION] Verification result: post-latest-main 2.5.2 `node scripts/test-agent-browser.js` passed.
 - [DECISION] Verification result: post-latest-main 2.5.2 `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.2, and package contents verified at 534 files.
-- [DECISION] Release result: `godpowers@2.5.1` is already published, so this blocker patch is now prepared as version `2.5.2`; protected merge, tag, publish workflow, and npm publication are pending.
+- [DECISION] Verification result: clean release-clone `bash scripts/release.sh 2.5.2` passed its release gate before tagging.
+- [DECISION] Release result: PR #12 merged through the protected GitHub path on 2026-06-10 at merge commit `6a09a6117bfc83f7bca29402a75b2e2cf732aa1a`.
+- [DECISION] Release result: `v2.5.2` was tagged and pushed to trigger the repository publish workflow.
+- [DECISION] Release result: GitHub Publish to npm workflow `27289417888` passed, and npm published `godpowers@2.5.2` with provenance.
+- [DECISION] Release result: `npm run verify:published-install` passed after publish and resolved npm `godpowers@latest` to version 2.5.2.
+- [DECISION] Release result: GitHub release `v2.5.2` was created at `https://github.com/aihxp/godpowers/releases/tag/v2.5.2`.
 - [DECISION] Blockers: no Phase 2 deliverable blocker remains.
-- [DECISION] Blockers: 2.5.2 publish remains pending until protected merge and npm provenance publish complete.
+- [DECISION] Blockers: no 2.5.2 release blocker remains.
 - [DECISION] Next phase to run after this blocker patch is Phase 3: MCP Companion Package.
 
 ## Phase 3: MCP Companion Package (target release 2.6.0)
