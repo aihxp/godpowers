@@ -20,6 +20,7 @@ const {
 const { describeProfiles } = require('../lib/install-profiles');
 const commandFamilies = require('../lib/command-families');
 const identity = require('../lib/package-identity');
+const cliDispatch = require('../lib/cli-dispatch');
 
 const VERSION = identity.PACKAGE_VERSION;
 
@@ -55,6 +56,7 @@ function showHelp() {
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
+  log('  gate                 Run an executable tier gate and emit JSON');
   log('');
   log('Command families:');
   for (const family of commandFamilies.COMMAND_FAMILIES) {
@@ -63,6 +65,7 @@ function showHelp() {
   log('');
   log('Options:');
   log('  --project=<path>     Project root for status, next, proof, or automation commands');
+  log('  --tier=<name>        Tier for gate: prd, design, arch, roadmap, stack, repo, build, harden');
   log('  --json               Emit JSON for status, next, proof, or automation commands');
   log('  --brief              Render compact output for status, next, or proof');
   log('  --name=<scope/name>  Extension package name for extension-scaffold');
@@ -99,6 +102,7 @@ function showHelp() {
   log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
+  log('  npx godpowers gate --tier=prd --project=.');
   log('  npx godpowers dogfood');
   log('  npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.');
   log('  npx godpowers --claude --global');
@@ -107,104 +111,8 @@ function showHelp() {
   log('  npx godpowers --codex --cursor');
 }
 
-function runAutomationCommand(opts) {
-  const automation = require('../lib/automation-providers');
-  const result = opts.command === 'automation-setup'
-    ? automation.setupPlan(opts.project)
-    : automation.detect(opts.project);
-  if (opts.json) {
-    console.log(JSON.stringify(result, null, 2));
-  } else if (opts.command === 'automation-setup') {
-    console.log(automation.renderSetupPlan(result));
-  } else {
-    console.log(automation.render(result));
-  }
-}
-
-function runDashboardCommand(opts) {
-  const dashboard = require('../lib/dashboard');
-  const result = dashboard.compute(opts.project);
-  if (opts.json) {
-    console.log(JSON.stringify(result, null, 2));
-    return;
-  }
-
-  console.log(dashboard.render(result, { brief: opts.brief }));
-  if (opts.command === 'next') {
-    console.log('');
-    console.log('Suggested next command:');
-    console.log(`  ${result.next && result.next.command ? result.next.command : 'describe the next intent'}`);
-  }
-}
-
-function runDogfoodCommand(opts) {
-  const dogfood = require('../lib/dogfood-runner');
-  const result = dogfood.runAll();
-  if (opts.json) {
-    console.log(JSON.stringify(result, null, 2));
-  } else {
-    console.log(dogfood.render(result));
-  }
-  if (result.status !== 'pass') process.exit(1);
-}
-
-function runQuickProofCommand(opts) {
-  const quickProof = require('../lib/quick-proof');
-  const result = quickProof.compute(opts.project);
-  if (opts.json) {
-    console.log(JSON.stringify(result, null, 2));
-  } else {
-    console.log(quickProof.render(result, { brief: opts.brief }));
-  }
-}
-
-function runExtensionScaffoldCommand(opts) {
-  const authoring = require('../lib/extension-authoring');
-  if (!opts.extensionName) {
-    error('extension-scaffold requires --name=@scope/package');
-    process.exit(1);
-  }
-  const result = authoring.scaffold(opts.extensionOutput, {
-    name: opts.extensionName,
-    skill: opts.extensionSkill || undefined,
-    agent: opts.extensionAgent || undefined,
-    workflow: opts.extensionWorkflow || undefined,
-    runtimeVersion: VERSION
-  });
-  if (opts.json) {
-    console.log(JSON.stringify(result, null, 2));
-    return;
-  }
-
-  success(`Scaffolded ${result.name} at ${result.path}`);
-  if (result.written.length > 0) {
-    log(`Wrote ${result.written.length} file(s): ${result.written.join(', ')}`);
-  }
-  if (result.validation.length > 0) {
-    warn(`Validation warnings: ${result.validation.join('; ')}`);
-  } else {
-    success('Extension manifest validates');
-  }
-}
-
-const COMMAND_RUNNERS = {
-  status: runDashboardCommand,
-  next: runDashboardCommand,
-  'quick-proof': runQuickProofCommand,
-  'automation-status': runAutomationCommand,
-  'automation-setup': runAutomationCommand,
-  dogfood: runDogfoodCommand,
-  'extension-scaffold': runExtensionScaffoldCommand
-};
-
-function runCommand(opts) {
-  const runner = COMMAND_RUNNERS[opts.command];
-  if (runner) {
-    runner(opts);
-    return true;
-  }
-  return false;
-}
+const COMMAND_RUNNERS = cliDispatch.COMMAND_RUNNERS;
+const runCommand = cliDispatch.runCommand;
 
 function applyDefaultRuntimeSelection(opts) {
   if (opts.runtimes.length > 0 || opts.all) return;
@@ -302,11 +210,12 @@ module.exports = {
   showHelp,
   COMMAND_RUNNERS,
   runCommand,
-  runAutomationCommand,
-  runDashboardCommand,
-  runDogfoodCommand,
-  runQuickProofCommand,
-  runExtensionScaffoldCommand,
+  runAutomationCommand: cliDispatch.runAutomationCommand,
+  runDashboardCommand: cliDispatch.runDashboardCommand,
+  runDogfoodCommand: cliDispatch.runDogfoodCommand,
+  runQuickProofCommand: cliDispatch.runQuickProofCommand,
+  runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
+  runGateCommand: cliDispatch.runGateCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,

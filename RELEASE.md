@@ -1,12 +1,11 @@
-# Godpowers 2.4.3 Release
+# Godpowers 2.5.0 Release
 
-> Status: Ready for package verification
-> Date: 2026-06-09
+> Status: Release verification passed, waiting on protected merge and npm publish path
+> Date: 2026-06-10
 
-Godpowers 2.4.3 is a review-followup release for the 2.4 line. It keeps the
-2.4 command-family UX intact while adding external CLI proof, prompt-size
-guardrails, legacy surface quarantine, lib coverage gating, and clean package
-verification before publish.
+Godpowers 2.5.0 is the executable gate release. It adds a JSON tier gate
+command for PRD, DESIGN, ARCH, ROADMAP, STACK, repo audit, build state, and
+harden findings while keeping the slash-command workflow intact.
 
 ## What's in this release
 
@@ -17,42 +16,44 @@ verification before publish.
 
 ## Highlights
 
-- Three external CLI adoption canary case studies now cover sindresorhus/is,
-  expressjs/cors, and tinyhttp/tinyhttp, including commit hashes, elapsed time,
-  zero-dollar local CLI cost, pause counts, and explicit host-run gaps.
-- `agents/god-orchestrator.md`, `skills/god-next.md`, and
-  `skills/god-status.md` are now concise dispatch contracts that delegate
-  detailed runbook content to `references/`.
-- Repeated skill locking boilerplate now points to
-  `references/shared/LOCKING.md`.
-- `/god-roadmap-check` is deprecated, kept for full-profile compatibility, and
-  excluded from non-full installer profiles by regression test.
-- `npm run coverage:lib` enforces a 90 percent line coverage floor for
-  `lib/**/*.js`.
-- `npm run release:check` runs the full suite under the lib coverage floor
-  before audit and package verification.
-- Package verification now creates the npm tarball in a temporary directory and
-  removes it automatically.
+- `npx godpowers gate --tier=<tier> --project=.` emits JSON with `tier`,
+  `verdict`, `artifacts`, `checks`, `findings`, and `summary`.
+- The eight tier skills now run the executable gate before marking completion.
+- `/god-mode` now carries an explicit rule to run gates automatically between
+  tier transitions.
+- `lib/artifact-map.js` is the shared source for tier artifact paths used by
+  gates and dashboard planning visibility.
+- `lib/cli-dispatch.js` moves subcommand dispatch out of `bin/install.js` and
+  keeps the installer entry point thin.
+- `scripts/test-gate.js` covers green cases, red cases, JSON shape stability,
+  CLI exit codes, and async API parity.
+- Route metadata now declares `standards.gate-command` for the eight tier
+  commands, and route-quality checks verify those executable gate commands.
 
 ## Validation
 
-- `node scripts/static-check.js` green
+- `node scripts/test-gate.js` green
 - `node scripts/test-cli-dispatch.js` green
-- `node scripts/test-installer-profiles.js` green
-- `node scripts/run-adoption-canary.js https://github.com/sindresorhus/is.git --output=docs/case-studies/sindresorhus-is-adoption-canary.md` green
-- `node scripts/run-adoption-canary.js https://github.com/expressjs/cors.git --output=docs/case-studies/expressjs-cors-adoption-canary.md` green
-- `node scripts/run-adoption-canary.js https://github.com/tinyhttp/tinyhttp.git --output=docs/case-studies/tinyhttp-adoption-canary.md` green
-- `npm run release:check` required before publish
+- `node scripts/test-router.js` green
+- `node scripts/static-check.js` green
+- `npm run test:e2e` green
+- `node scripts/test-runtime-verification.js` green
+- `node scripts/test-agent-browser.js` green
+- `npm run pack:check` green
+- `npm run release:check` green
 
 ## Upgrade
 
-- `npm install -g godpowers@2.4.3` or `npx godpowers@2.4.3`
+- `npm install -g godpowers@2.5.0` or `npx godpowers@2.5.0`
 - Re-run `/god-context` in each project to refresh installed runtime metadata
 - No breaking changes for valid `.godpowers/` state.
 
 ## Notes
 
-- GitHub release creation for `v2.4.3`
+- GitHub release creation for `v2.5.0`
 - The tag should match the npm package version.
-- The `v2.4.3` tag should point to the release commit that matches the npm
-  `godpowers@2.4.3` package.
+- The `v2.5.0` tag should point to the release commit that matches the npm
+  `godpowers@2.5.0` package.
+- npm publish is deferred until the release commit is merged through the
+  protected repository path, npm credentials are available, and release hooks
+  permit publishing.

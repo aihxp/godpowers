@@ -15,6 +15,13 @@ The lint layer. Mechanical checks against the catalog of failure modes.
 
 ### Repository gate checks
 
+- [DECISION] `npx godpowers gate --tier=<tier> --project=.` emits JSON for
+  executable tier gates covering PRD, DESIGN, ARCH, ROADMAP, STACK, repo audit,
+  build state, and harden findings.
+- [DECISION] Tier gate output includes `tier`, `verdict`, `artifacts`,
+  `checks`, `findings`, and `summary`, and the CLI exits nonzero on failed
+  required artifacts, lint errors, missing build verification evidence, or
+  unresolved Critical harden findings.
 - [DECISION] `npm test` delegates to `scripts/run-tests.js` so the full test
   sequence is maintained as data instead of a long package script.
 - [DECISION] `scripts/run-tests.js` includes the skill validator, static
@@ -31,6 +38,8 @@ The lint layer. Mechanical checks against the catalog of failure modes.
   load-bearing state, intent, and workflow plan modules.
 - [DECISION] `scripts/static-check.js` verifies executable skill metadata
   source-of-truth parsing through `lib/skill-surface.js`.
+- [DECISION] `scripts/static-check.js` verifies the eight tier skills and
+  routes delegate completion checks to `npx godpowers gate`.
 - [DECISION] `scripts/static-check.js` keeps `skills/god-mode.md` as a concise
   dispatch contract and checks that the detailed runbook lives in
   `references/orchestration/GOD-MODE-RUNBOOK.md`.

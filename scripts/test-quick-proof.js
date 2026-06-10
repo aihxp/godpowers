@@ -56,7 +56,7 @@ const STARTER_ROWS = [
   '| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |',
   '| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |',
   '| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |',
-  '| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |',
+  '| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npx godpowers gate --tier=harden --project=.`, `npm run release:check` |',
   '| Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |',
   '| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |'
 ];

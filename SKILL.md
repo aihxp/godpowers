@@ -53,6 +53,15 @@ Each tier gates on a verified artifact from the prior tier. You cannot build
 without architecture. You cannot deploy without a build. You cannot launch with
 unresolved Critical security findings.
 
+Executable tier gates are available through:
+
+```
+npx godpowers gate --tier=<prd|design|arch|roadmap|stack|repo|build|harden> --project=.
+```
+
+The command emits JSON with `tier`, `verdict`, `artifacts`, `checks`,
+`findings`, and `summary`. A non-zero exit blocks downstream tier transitions.
+
 ### 5. Context Isolation
 Every execution agent gets a fresh context window. The orchestrator is thin; it
 spawns workers with full context budgets. This defeats context rot.

@@ -87,6 +87,9 @@ test('full test runner includes YAML parser coverage', () => {
   if (!commands.some(command => command.includes('scripts/test-cli-dispatch.js'))) {
     throw new Error('scripts/test-cli-dispatch.js is missing from TEST_COMMANDS');
   }
+  if (!commands.some(command => command.includes('scripts/test-gate.js'))) {
+    throw new Error('scripts/test-gate.js is missing from TEST_COMMANDS');
+  }
 });
 
 test('install file helpers stay outside bin/install.js', () => {
@@ -129,14 +132,54 @@ test('async file APIs exist on load-bearing modules', () => {
   const state = require('../lib/state');
   const intent = require('../lib/intent');
   const workflows = require('../lib/workflow-runner');
+  const gate = require('../lib/gate');
   for (const [name, fn] of [
     ['state.readAsync', state.readAsync],
     ['state.writeAsync', state.writeAsync],
     ['intent.readAsync', intent.readAsync],
     ['workflow.writePlanAsync', workflows.writePlanAsync],
-    ['workflow.readPlanAsync', workflows.readPlanAsync]
+    ['workflow.readPlanAsync', workflows.readPlanAsync],
+    ['gate.evaluateAsync', gate.evaluateAsync]
   ]) {
     if (typeof fn !== 'function') throw new Error(`${name} missing`);
+  }
+});
+
+test('tier skills delegate verification to executable gates', () => {
+  const gateSkills = {
+    'skills/god-prd.md': 'prd',
+    'skills/god-design.md': 'design',
+    'skills/god-arch.md': 'arch',
+    'skills/god-roadmap.md': 'roadmap',
+    'skills/god-stack.md': 'stack',
+    'skills/god-repo.md': 'repo',
+    'skills/god-build.md': 'build',
+    'skills/god-harden.md': 'harden'
+  };
+  for (const [rel, tier] of Object.entries(gateSkills)) {
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    if (!text.includes(`npx godpowers gate --tier=${tier} --project=.`)) {
+      throw new Error(`${rel} missing executable gate verification`);
+    }
+  }
+});
+
+test('tier routes declare executable gate commands', () => {
+  const router = require('../lib/router');
+  const gateRoutes = {
+    '/god-prd': 'npx godpowers gate --tier=prd --project=.',
+    '/god-design': 'npx godpowers gate --tier=design --project=.',
+    '/god-arch': 'npx godpowers gate --tier=arch --project=.',
+    '/god-roadmap': 'npx godpowers gate --tier=roadmap --project=.',
+    '/god-stack': 'npx godpowers gate --tier=stack --project=.',
+    '/god-repo': 'npx godpowers gate --tier=repo --project=.',
+    '/god-build': 'npx godpowers gate --tier=build --project=.',
+    '/god-harden': 'npx godpowers gate --tier=harden --project=.'
+  };
+  router.clearCache();
+  for (const [command, expected] of Object.entries(gateRoutes)) {
+    const actual = router.getGateCommand(command);
+    if (actual !== expected) throw new Error(`${command} gate command mismatch: ${actual}`);
   }
 });
 

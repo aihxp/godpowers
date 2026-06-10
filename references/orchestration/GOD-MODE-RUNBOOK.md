@@ -107,6 +107,16 @@ selection impossible.
 ### --conservative
 Pass through. Orchestrator pauses at every tier boundary.
 
+## Executable Tier Gates
+
+After each tier skill returns and before starting the downstream tier,
+orchestrator runs the route's `standards.gate-command`, for example
+`npx godpowers gate --tier=prd --project=.`.
+
+If the gate exits nonzero, orchestrator stops the tier transition, records the
+JSON gate output in the step result, and routes repair to the owning tier
+command. The next tier does not start until the same gate passes.
+
 ### --from=<tier>
 Pass through. Orchestrator re-derives state from disk and starts from named tier.
 

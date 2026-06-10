@@ -25,6 +25,7 @@ Run these from a project directory after installing Godpowers.
 npx godpowers quick-proof --project=. --brief
 npx godpowers status --project=. --brief
 npx godpowers next --project=. --brief
+npx godpowers gate --tier=prd --project=examples/cli-tool
 ```
 
 The first command reads a shipped fixture at `fixtures/quick-proof/project`, computes
@@ -33,6 +34,9 @@ from your current environment.
 
 The next two commands render live project status and the recommended next
 action for the current directory.
+
+The gate command verifies a shipped example PRD with the same JSON contract
+used between tier transitions in `/god-mode`.
 
 If the project has no `.godpowers/` directory yet, start with the smallest
 state-producing path inside your AI coding tool:
@@ -186,7 +190,7 @@ Use these paths before reading the full command reference.
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
 | Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
-| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
+| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npx godpowers gate --tier=harden --project=.`, `npm run release:check` |
 | Maintain health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
 | Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
 

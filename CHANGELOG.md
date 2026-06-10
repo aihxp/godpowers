@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-06-10
+
+### Added
+- Added `npx godpowers gate --tier=<tier> --project=.` for executable PRD,
+  DESIGN, ARCH, ROADMAP, STACK, repo, build, and harden gates.
+- Added `lib/gate.js`, `lib/artifact-map.js`, and `lib/cli-dispatch.js` so
+  gate checks, artifact paths, and CLI subcommand dispatch are reusable and
+  tested outside `bin/install.js`.
+- Added `scripts/test-gate.js` with green artifact fixtures, missing-artifact,
+  lint-failure, harden Critical-finding, missing build-evidence, JSON shape,
+  CLI exit-code, and async API coverage.
+- Added minimal repo, build, and harden gate fixtures under `fixtures/gate/`.
+
+### Changed
+- Updated the eight tier skills to run `npx godpowers gate` before marking
+  completion or moving to downstream work.
+- Updated `/god-mode`, the orchestrator contract, and the God Mode runbook so
+  tier transitions run executable gates automatically.
+- Updated routing metadata with `standards.gate-command` and taught router,
+  route-quality sync, and routing generation code to recognize the field.
+- Updated release surface checks and package contents checks to protect the
+  new gate runtime modules and gate test.
+
 ## [2.4.3] - 2026-06-09
 
 ### Added

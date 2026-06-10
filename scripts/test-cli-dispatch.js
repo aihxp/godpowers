@@ -24,6 +24,7 @@ function capture(fn) {
 test('CLI dispatch table covers every parsed subcommand', () => {
   for (const command of COMMANDS) {
     assert(typeof installer.COMMAND_RUNNERS[command] === 'function', `${command} missing dispatch runner`);
+    assert(typeof require('../lib/cli-dispatch').COMMAND_RUNNERS[command] === 'function', `${command} missing lib dispatch runner`);
   }
 });
 
@@ -90,6 +91,16 @@ test('extension-scaffold command dispatches through scaffold branch', () => {
   assert(result.value === true, 'extension-scaffold did not dispatch');
   assert(fs.existsSync(scaffoldPath), 'extension scaffold manifest missing');
   assert(result.output.includes('"@godpowers/dispatch-test"'), 'extension output missing package name');
+});
+
+test('gate command dispatches through executable gate branch', () => {
+  const result = capture(() => installer.runCommand({
+    command: 'gate',
+    project: path.resolve(__dirname, '..', 'examples', 'cli-tool'),
+    tier: 'prd'
+  }));
+  assert(result.value === true, 'gate did not dispatch');
+  assert(result.output.includes('"verdict": "pass"'), 'gate output missing pass verdict');
 });
 
 test('unknown command returns false', () => {

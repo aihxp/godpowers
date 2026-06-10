@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.4.3
+> Current shipped: v2.5.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,7 +12,7 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.4.3)
+### Current surface (v2.5.0)
 
 What works today:
 - **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
@@ -33,6 +33,9 @@ What works today:
   name the runtime source, label workflow progress, report host guarantees,
   support compact `--brief` output, and keep audit scores out of the workflow
   percentage.
+- **Executable tier gates**: `npx godpowers gate --tier=<tier> --project=.`
+  verifies PRD, DESIGN, ARCH, ROADMAP, STACK, repo audit, build state, and
+  harden findings with JSON output that hosts can inspect.
 - **Command family UX layer**: `/god`, `/god-help`, `/god-next`, and route
   metadata share command families, capture, work-size, verification, and
   status-view ladders so users can choose paths without losing leaf commands.
@@ -68,8 +71,9 @@ What works today:
   repeated locking contracts delegate long-form content into references, with
   `scripts/static-check.js` enforcing prompt and locking boundaries.
 - **Coverage and packaging gates**: `npm run release:check` runs the full suite
-  under `c8` with a 90 percent line floor for `lib/`, and package checks pack
-  into a temp directory so release verification leaves no root tarball.
+  under `c8` with a 90 percent line floor for `lib/`, including executable
+  gate tests, and package checks pack into a temp directory so release
+  verification leaves no root tarball.
 - **Messy-repo dogfooding**: `/god-dogfood` and `npx godpowers dogfood` run
   fixture scenarios for legacy planning migration, sync-back, host capabilities, extension
   authoring, and Mode D suite release dry-runs.

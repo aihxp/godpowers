@@ -103,6 +103,13 @@ Inside `.godpowers/design/`:
 - `HISTORY.md` (append-only log of design changes; populated by god-designer)
 - `REJECTED.md` (append-only log of blocked changes; populated by god-design-reviewer)
 
+## Verification
+
+After god-designer returns:
+1. Verify `DESIGN.md` exists on disk.
+2. Run `npx godpowers gate --tier=design --project=.` and do not proceed on non-zero exit.
+3. Surface any gate findings and suggest `/god-design polish` if warnings need design follow-up.
+
 ## Output to events.jsonl
 
 For every subcommand dispatch:

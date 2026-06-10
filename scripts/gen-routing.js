@@ -14,6 +14,16 @@ const SAFE_SYNC_PREREQ = {
   autoComplete: '/god-reconcile Release Truth And Safe Sync',
   humanRequired: true
 };
+const TIER_GATE_COMMANDS = {
+  '/god-prd': 'npx godpowers gate --tier=prd --project=.',
+  '/god-design': 'npx godpowers gate --tier=design --project=.',
+  '/god-arch': 'npx godpowers gate --tier=arch --project=.',
+  '/god-roadmap': 'npx godpowers gate --tier=roadmap --project=.',
+  '/god-stack': 'npx godpowers gate --tier=stack --project=.',
+  '/god-repo': 'npx godpowers gate --tier=repo --project=.',
+  '/god-build': 'npx godpowers gate --tier=build --project=.',
+  '/god-harden': 'npx godpowers gate --tier=harden --project=.'
+};
 
 const commands = [
   // Tier 1 (remaining)
@@ -219,7 +229,7 @@ function generate(c) {
   const familyLine = family ? `  family: ${family.id}\n` : '';
   const writes = c.writes && c.writes.length ? c.writes.map(w => `    - ${w}`).join('\n') : '    []';
   const haveNots = c.haveNots && c.haveNots.length
-    ? `  have-nots: [${c.haveNots.join(', ')}]\n  gate-on-failure: pause-for-user`
+    ? `  have-nots: [${c.haveNots.join(', ')}]\n  gate-on-failure: pause-for-user${TIER_GATE_COMMANDS[c.cmd] ? `\n  gate-command: ${TIER_GATE_COMMANDS[c.cmd]}` : ''}`
     : '';
   const standards = c.haveNots && c.haveNots.length
     ? `\nstandards:\n  substitution-test: true\n  three-label-test: true\n${haveNots}`

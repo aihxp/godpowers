@@ -67,6 +67,14 @@ test('getStandards returns checks for /god-prd', () => {
   if (!s['have-nots']) throw new Error('no have-nots');
 });
 
+test('getGateCommand returns executable gate command for /god-prd', () => {
+  router.clearCache();
+  const gateCommand = router.getGateCommand('/god-prd');
+  if (gateCommand !== 'npx godpowers gate --tier=prd --project=.') {
+    throw new Error(`unexpected gate command: ${gateCommand}`);
+  }
+});
+
 test('getSpawnedAgents includes primary for /god-prd', () => {
   router.clearCache();
   const agents = router.getSpawnedAgents('/god-prd');

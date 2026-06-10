@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.4.3-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.5.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -26,9 +26,9 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 2.4.3 keeps the 2.4 command-family UX and adds external CLI canary
-evidence, prompt-size guardrails, legacy command quarantine, lib coverage
-gating, and temp-directory package verification before publish.
+Version 2.5.0 adds executable tier gates through `npx godpowers gate`, while
+keeping the 2.4 command-family UX, external CLI canary evidence, prompt-size
+guardrails, lib coverage gating, and temp-directory package verification.
 
 Maintainer hardening continues on the 2.x line with small, audited public
 surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
@@ -222,7 +222,7 @@ commands remain direct shortcuts.
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
 | Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
-| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
+| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npx godpowers gate --tier=harden --project=.`, `npm run release:check` |
 | Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
 | Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
 
@@ -251,6 +251,7 @@ npx godpowers next --project=.
 npx godpowers status --project=. --brief
 npx godpowers status --project=. --json
 npx godpowers quick-proof --project=.
+npx godpowers gate --tier=prd --project=.
 npx godpowers dogfood
 npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.
 ```
@@ -268,8 +269,19 @@ contents verification. `npm test` delegates to `scripts/run-tests.js`, so the
 test order is maintained as a readable list instead of a long package script.
 `npm run lint` runs dependency-free static checks through
 `scripts/static-check.js`, including shared test harness adoption, installer
-decomposition, async runtime APIs, agent reference validation coverage, and God
-Mode runbook delegation.
+decomposition, executable tier gate wiring, async runtime APIs, agent reference
+validation coverage, and God Mode runbook delegation.
+
+Tier artifacts can be checked directly without spawning a specialist agent:
+
+```bash
+npx godpowers gate --tier=prd --project=.
+npx godpowers gate --tier=build --project=.
+```
+
+The gate command emits JSON with `tier`, `verdict`, `artifacts`, `checks`,
+`findings`, and `summary`, and exits nonzero when a required artifact, lint
+check, build verification record, or harden Critical-finding check fails.
 
 The runtime remains dependency-free. YAML parsing is intentionally limited to
 the documented Godpowers subset used by intent, routing, workflow, and
