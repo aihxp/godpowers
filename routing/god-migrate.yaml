@@ -27,7 +27,6 @@ execution:
     - .godpowers/arch/ARCH.md
     - .godpowers/roadmap/ROADMAP.md
     - .godpowers/stack/DECISION.md
-    - .godpowers/build/STATE.md
     - .godpowers/state.json
     - .planning/GODPOWERS-SYNC.md
     - .legacy-planning/GODPOWERS-SYNC.md

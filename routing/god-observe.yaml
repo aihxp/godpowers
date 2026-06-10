@@ -19,7 +19,10 @@ execution:
   spawns: [god-observability-engineer]
   context: fresh
   writes:
-    - .godpowers/observe/STATE.md
+    - .godpowers/state.json
+    - alert definitions
+    - dashboard definitions
+    - runbooks
 
 standards:
   substitution-test: true

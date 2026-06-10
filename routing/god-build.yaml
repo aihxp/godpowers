@@ -21,7 +21,7 @@ execution:
   secondary-spawns: [god-executor, god-spec-reviewer, god-quality-reviewer]
   writes:
     - .godpowers/build/PLAN.md
-    - .godpowers/build/STATE.md
+    - .godpowers/state.json
     - source code
 
 standards:

@@ -41,6 +41,30 @@ test('getRouting returns null for unknown command', () => {
   if (r !== null) throw new Error('should be null');
 });
 
+test('Tier 3 route writes use state.json instead of generated state views', () => {
+  router.clearCache();
+  for (const command of ['/god-deploy', '/god-observe', '/god-launch']) {
+    const routing = router.getRouting(command);
+    const writes = routing.execution && routing.execution.writes;
+    if (!Array.isArray(writes)) throw new Error(`${command} writes missing`);
+    if (!writes.includes('.godpowers/state.json')) {
+      throw new Error(`${command} does not write state.json`);
+    }
+    const generatedView = writes.find(item => /\.godpowers\/(?:deploy|observe|launch)\/STATE\.md$/.test(item));
+    if (generatedView) throw new Error(`${command} writes generated view ${generatedView}`);
+  }
+});
+
+test('/god-reconcile reads state.json instead of generated state views', () => {
+  router.clearCache();
+  const routing = router.getRouting('/god-reconcile');
+  const reads = routing.execution && routing.execution.reads;
+  if (!Array.isArray(reads)) throw new Error('/god-reconcile reads missing');
+  if (!reads.includes('.godpowers/state.json')) throw new Error('/god-reconcile missing state.json read');
+  const generatedView = reads.find(item => /\.godpowers\/(?:build|deploy|observe|launch)\/STATE\.md$/.test(item));
+  if (generatedView) throw new Error(`/god-reconcile reads generated view ${generatedView}`);
+});
+
 test('getNextCommand returns next for /god-prd', () => {
   router.clearCache();
   const next = router.getNextCommand('/god-prd');

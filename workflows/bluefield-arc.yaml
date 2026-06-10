@@ -56,10 +56,8 @@ jobs:
         - .godpowers/roadmap/ROADMAP.md
         - .godpowers/stack/DECISION.md
         - .godpowers/repo/AUDIT.md
-        - .godpowers/build/STATE.md
-        - .godpowers/deploy/STATE.md
-        - .godpowers/observe/STATE.md
-        - .godpowers/launch/STATE.md
+        - .godpowers/state.json
+        - .godpowers/build/PLAN.md
         - .godpowers/harden/FINDINGS.md
 
   prd:

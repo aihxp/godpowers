@@ -19,7 +19,9 @@ execution:
   spawns: [god-deploy-engineer]
   context: fresh
   writes:
-    - .godpowers/deploy/STATE.md
+    - .godpowers/state.json
+    - deploy config
+    - .godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md when needed
 
 standards:
   substitution-test: true

@@ -21,11 +21,8 @@ execution:
     - .godpowers/roadmap/ROADMAP.md
     - .godpowers/stack/DECISION.md
     - .godpowers/repo/AUDIT.md
-    - .godpowers/build/STATE.md
-    - .godpowers/deploy/STATE.md
-    - .godpowers/observe/STATE.md
+    - .godpowers/state.json
     - .godpowers/harden/FINDINGS.md
-    - .godpowers/launch/STATE.md
     - .godpowers/backlog/BACKLOG.md
     - .godpowers/seeds/
     - .godpowers/todos/TODOS.md

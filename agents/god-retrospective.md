@@ -22,7 +22,7 @@ sprint, not generic platitudes.
 ### 1. Gather Data
 Read:
 - Sprint PLAN.md (what was committed)
-- Sprint slice completion record from `.godpowers/state.json` and generated `.godpowers/build/STATE.md` context
+- Sprint slice completion record from `.godpowers/state.json`
 - Git log for the sprint window
 - Any HANDOFF.md or pause logs from the sprint
 

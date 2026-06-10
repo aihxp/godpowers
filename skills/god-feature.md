@@ -57,7 +57,7 @@ Spawn **god-planner** scoped to the feature only.
 Then run god-executor + god-spec-reviewer + god-quality-reviewer per slice.
 
 ### Phase 4: Deploy
-Use existing deploy pipeline from `.godpowers/state.json` deploy evidence and generated `.godpowers/deploy/STATE.md` context. No new pipeline.
+Use existing deploy pipeline from `.godpowers/state.json` deploy evidence. No new pipeline.
 Feature flag the rollout if the feature is high-risk.
 
 ### Phase 5: Harden (just the new code)

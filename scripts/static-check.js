@@ -37,6 +37,20 @@ function walk(dir, out = []) {
   return out;
 }
 
+function walkMatching(dir, predicate, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === 'node_modules' || entry.name === '.git') continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkMatching(full, predicate, out);
+    } else if (entry.isFile() && predicate(full)) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
 function test(name, fn) {
   try {
     fn();
@@ -288,6 +302,79 @@ test('state view owner covers Godpowers-owned STATE.md views', () => {
   }
   if (missing.length > 0) {
     throw new Error(`missing generated state view ownership for ${missing.join(', ')}`);
+  }
+});
+
+test('route and workflow handoffs use state.json instead of generated state views', () => {
+  const generatedStateView = /\.godpowers\/(?:design|build|deploy|observe|launch)\/STATE\.md/;
+  const files = [
+    ...walkMatching(path.join(ROOT, 'routing'), file => /\.ya?ml$/.test(file)),
+    ...walkMatching(path.join(ROOT, 'workflows'), file => /\.ya?ml$/.test(file)),
+    path.join(ROOT, 'scripts', 'gen-routing.js')
+  ];
+  const offenders = [];
+  for (const file of files) {
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+    lines.forEach((line, index) => {
+      if (generatedStateView.test(line)) {
+        offenders.push(`${path.relative(ROOT, file)}:${index + 1}`);
+      }
+    });
+  }
+  if (offenders.length > 0) {
+    throw new Error(`generated state view route handoffs in ${offenders.join(', ')}`);
+  }
+});
+
+test('runtime modules read generated STATE.md views only through the view owner', () => {
+  const generatedStateView = /\.godpowers\/(?:design|build|deploy|observe|launch)\/STATE\.md/;
+  const allowed = new Set([
+    'lib/state-views.js',
+    'scripts/static-check.js',
+    'scripts/test-gate.js',
+    'scripts/test-state-advance.js',
+    'scripts/test-state-views.js'
+  ]);
+  const files = [
+    ...walkMatching(path.join(ROOT, 'lib'), file => file.endsWith('.js')),
+    ...walkMatching(path.join(ROOT, 'scripts'), file => file.endsWith('.js'))
+  ];
+  const offenders = [];
+  for (const file of files) {
+    const rel = path.relative(ROOT, file);
+    if (allowed.has(rel)) continue;
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+    lines.forEach((line, index) => {
+      if (generatedStateView.test(line)) {
+        offenders.push(`${rel}:${index + 1}`);
+      }
+    });
+  }
+  if (offenders.length > 0) {
+    throw new Error(`direct runtime generated STATE.md reads in ${offenders.join(', ')}`);
+  }
+});
+
+test('prompts do not direct-edit generated STATE.md views', () => {
+  const generatedStateView = /`?(?:\.godpowers\/)?(?:design|build|deploy|observe|launch)\/STATE\.md`?/;
+  const directAction = /\b(?:Write|write|Update|update|Append|append|Record|record|Mark|mark|Modify|modify)\b/;
+  const allowedGeneratedContext = /\b(?:generated|regenerate|regenerates|refreshes|state-views\.js|view|views|checksum warning|managed)\b/i;
+  const files = [
+    path.join(ROOT, 'SKILL.md'),
+    ...walkMatching(path.join(ROOT, 'skills'), file => file.endsWith('.md')),
+    ...walkMatching(path.join(ROOT, 'agents'), file => file.endsWith('.md'))
+  ];
+  const offenders = [];
+  for (const file of files) {
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+    lines.forEach((line, index) => {
+      if (generatedStateView.test(line) && directAction.test(line) && !allowedGeneratedContext.test(line)) {
+        offenders.push(`${path.relative(ROOT, file)}:${index + 1}`);
+      }
+    });
+  }
+  if (offenders.length > 0) {
+    throw new Error(`direct generated STATE.md edit prompts in ${offenders.join(', ')}`);
   }
 });
 
