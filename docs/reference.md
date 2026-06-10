@@ -363,10 +363,10 @@ available.
   stack/DECISION.md        Tech decisions
   repo/AUDIT.md            Repo scaffold audit
   build/PLAN.md            Build slices
-  build/STATE.md           Build progress
-  deploy/STATE.md          Deploy pipeline
-  observe/STATE.md         Observability
-  launch/STATE.md          Launch artifacts
+  build/STATE.md           Generated build state view
+  deploy/STATE.md          Generated deploy state view
+  observe/STATE.md         Generated observability state view
+  launch/STATE.md          Generated launch state view
   harden/FINDINGS.md       Security findings
 
   stories/STORY-*.md       Fine-grained slices

@@ -13,15 +13,15 @@ Spawn the **god-deploy-engineer** agent in a fresh context via the host platform
 
 ## Setup
 
-1. Verify build is complete (`.godpowers/build/STATE.md` exists with passing state).
+1. Verify build is complete through `.godpowers/state.json` `tier-2.build.status == done` and passing build verification commands.
 2. Verify all tests pass.
 3. Spawn god-deploy-engineer with ARCH and stack DECISION paths.
-4. The agent writes `.godpowers/deploy/STATE.md`.
+4. The agent returns deploy evidence for `.godpowers/state.json`; the generated `.godpowers/deploy/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
 After god-deploy-engineer returns:
-1. Verify STATE.md exists on disk
+1. Verify deploy evidence is recorded in `.godpowers/state.json`
 2. Verify rollback procedure has been tested (not paper-only)
 3. Verify the deploy path is one of:
    - real staging or production target tested
@@ -34,12 +34,12 @@ After god-deploy-engineer returns:
    deployed staging is deferred, record the waiting artifact path in
    `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` and keep that evidence
    in `state.json` through the owning deploy command rather than editing the
-   generated progress view.
+   generated progress or deploy state views.
 
 ## On Completion
 
 ```
-Deploy pipeline complete: .godpowers/deploy/STATE.md
+Deploy pipeline complete: .godpowers/deploy/STATE.md (generated view)
 
 Suggested next: /god-observe (wire SLOs, alerts, runbooks)
 ```
@@ -71,15 +71,15 @@ known, do not use it as staging without explicit user approval.
 
 ## Re-invocation contract
 
-What happens if `/god-deploy` is run when `.godpowers/deploy/STATE.md` already exists:
+What happens if `/god-deploy` is run when deploy state evidence or the generated deploy state view already exists:
 
 | Existing state | Behavior |
 |---|---|
-| File does not exist | Spawn god-deploy-engineer; produce file; mark sub-step done |
-| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| File exists, fails lint or have-nots | Spawn god-deploy-engineer in update mode with current file + findings as input. Diff preview before overwrite. |
-| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-deploy --force` to re-run. |
-| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-deploy-<ts>/`. Spawn agent fresh. |
+| State evidence does not exist | Spawn god-deploy-engineer; record deploy evidence; mark sub-step done |
+| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence or generated view fails checks | Spawn god-deploy-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-deploy --force` to re-run. |
+| `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-deploy-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |
 
 Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.

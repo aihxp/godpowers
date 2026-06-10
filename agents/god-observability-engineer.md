@@ -15,10 +15,10 @@ Wire observability.
 
 ## Gate Check
 
-`.godpowers/deploy/STATE.md` exists. App is deployed and reachable, or deploy
-state documents a tested local staging harness plus a single external access
-bundle. A deferred staging URL must not block observability setup when local or
-CI-verifiable checks can still run.
+`.godpowers/state.json` records deploy completion. App is deployed and
+reachable, or deploy state documents a tested local staging harness plus a
+single external access bundle. A deferred staging URL must not block
+observability setup when local or CI-verifiable checks can still run.
 
 ## Process
 
@@ -78,7 +78,7 @@ For each PRD success metric, define an SLO:
 
 ## Output
 
-Write `.godpowers/observe/STATE.md` with:
+Return observability evidence for `.godpowers/state.json`; `lib/state-views.js` generates `.godpowers/observe/STATE.md` with:
 - SLO definitions
 - Error budget policies
 - Alert catalog

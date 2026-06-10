@@ -271,6 +271,26 @@ test('state-backed gates do not require markdown STATE.md artifacts', () => {
   }
 });
 
+test('state view owner covers Godpowers-owned STATE.md views', () => {
+  const stateViews = require('../lib/state-views');
+  const expected = {
+    design: '.godpowers/design/STATE.md',
+    build: '.godpowers/build/STATE.md',
+    deploy: '.godpowers/deploy/STATE.md',
+    observe: '.godpowers/observe/STATE.md',
+    launch: '.godpowers/launch/STATE.md'
+  };
+  const missing = [];
+  for (const [step, relPath] of Object.entries(expected)) {
+    if (!stateViews.STATE_VIEW_PATHS || stateViews.STATE_VIEW_PATHS[step] !== relPath) {
+      missing.push(`${step}:${relPath}`);
+    }
+  }
+  if (missing.length > 0) {
+    throw new Error(`missing generated state view ownership for ${missing.join(', ')}`);
+  }
+});
+
 test('public runtime modules expose JSDoc type contracts', () => {
   const modules = [
     'lib/state.js',

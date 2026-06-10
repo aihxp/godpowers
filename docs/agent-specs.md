@@ -190,11 +190,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-deploy`, `/god-mode`, `/god-hotfix` (expedited mode), `/god-refactor` (gradual rollout mode), `/god-upgrade` (per-slice with metric gating) |
-| **Inputs** | `.godpowers/arch/ARCH.md`, `.godpowers/stack/DECISION.md`, `.godpowers/build/STATE.md`, optional `.godpowers/org-context.yaml` |
-| **Outputs** | `.godpowers/deploy/STATE.md`, CI/CD config files |
+| **Inputs** | `.godpowers/arch/ARCH.md`, `.godpowers/stack/DECISION.md`, `.godpowers/state.json` build evidence, generated `.godpowers/build/STATE.md` context, optional `.godpowers/org-context.yaml` |
+| **Outputs** | `.godpowers/state.json` deploy evidence, generated `.godpowers/deploy/STATE.md`, CI/CD config files |
 | **Downstream consumers** | god-observability-engineer (uses pipeline for deploy events), god-launch-strategist (verifies deploy is healthy) |
 | **Artifact awareness** | ARCH topology, stack hosting choice, build artifacts |
-| **Handoff** | Returns when STATE.md complete and rollback procedure has been tested. Have-nots D-01..D-08. |
+| **Handoff** | Returns when deploy state evidence is complete and rollback procedure has been tested. Have-nots D-01..D-08. |
 | **Standards check** | YES |
 
 ### god-observability-engineer
@@ -202,11 +202,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-observe`, `/god-mode`, `/god-hotfix` (verify-symptom-resolved mode) |
-| **Inputs** | `.godpowers/prd/PRD.md` (success metrics -> SLOs), `.godpowers/arch/ARCH.md`, `.godpowers/deploy/STATE.md`, optional `.godpowers/org-context.yaml` |
-| **Outputs** | `.godpowers/observe/STATE.md`, alert configs, dashboard configs |
+| **Inputs** | `.godpowers/prd/PRD.md` (success metrics -> SLOs), `.godpowers/arch/ARCH.md`, `.godpowers/state.json` deploy evidence, generated `.godpowers/deploy/STATE.md` context, optional `.godpowers/org-context.yaml` |
+| **Outputs** | `.godpowers/state.json` observability evidence, generated `.godpowers/observe/STATE.md`, alert configs, dashboard configs |
 | **Downstream consumers** | god-launch-strategist (verifies metrics ready before launch) |
 | **Artifact awareness** | PRD success metrics, deploy pipeline, org observability stack |
-| **Handoff** | Returns when STATE.md complete. Have-nots OB-01..OB-08. |
+| **Handoff** | Returns when observability state evidence is complete. Have-nots OB-01..OB-08. |
 | **Standards check** | YES |
 
 ### god-harden-auditor
@@ -214,7 +214,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-harden`, `/god-mode`, `/god-feature` (scope-to-new-code mode) |
-| **Inputs** | Code, `.godpowers/deploy/STATE.md`, optional `.godpowers/org-context.yaml` (org-specific security standards) |
+| **Inputs** | Code, `.godpowers/state.json` deploy evidence, generated `.godpowers/deploy/STATE.md` context, optional `.godpowers/org-context.yaml` (org-specific security standards) |
 | **Outputs** | `.godpowers/harden/FINDINGS.md` |
 | **Downstream consumers** | god-launch-strategist (BLOCKED on Critical findings) |
 | **Artifact awareness** | Full codebase, deploy config |
@@ -227,10 +227,10 @@ Each agent has these fields:
 |---|---|
 | **Triggers** | `/god-launch`, `/god-mode`, `/god-feature` (feature-flag-rollout mode) |
 | **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/harden/FINDINGS.md` (must have NO unresolved Criticals) |
-| **Outputs** | `.godpowers/launch/STATE.md`, landing copy, OG cards, channel-specific messaging, D-7..D+7 runbook |
+| **Outputs** | `.godpowers/state.json` launch evidence, generated `.godpowers/launch/STATE.md`, landing copy, OG cards, channel-specific messaging, D-7..D+7 runbook |
 | **Downstream consumers** | (end of arc; no downstream consumers within Godpowers; users consume launch artifacts externally) |
 | **Artifact awareness** | PRD positioning, harden findings, optional extension packs (Show HN, PH, IH, OSS) |
-| **Handoff** | Returns when STATE.md complete. Pauses on brand voice / final headline (legitimate human-only). Have-nots L-01..L-08. |
+| **Handoff** | Returns when launch state evidence is complete. Pauses on brand voice / final headline (legitimate human-only). Have-nots L-01..L-08. |
 | **Standards check** | YES |
 
 ---
@@ -278,7 +278,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-upgrade` |
-| **Inputs** | Migration target (from -> to), `.godpowers/build/STATE.md`, upstream changelog |
+| **Inputs** | Migration target (from -> to), `.godpowers/state.json` build evidence, generated `.godpowers/build/STATE.md` context, upstream changelog |
 | **Outputs** | `.godpowers/migrations/<slug>/MIGRATION.md` |
 | **Downstream consumers** | god-planner (test gap-fill), god-executor (per-slice migration), god-deploy-engineer (gradual rollout), god-observability-engineer (metric watch) |
 | **Artifact awareness** | Code surface, test coverage, upstream release notes |
@@ -709,7 +709,7 @@ added during the production-ready + design + linkage push.
 | **File** | `agents/god-designer.md` |
 | **Triggers** | `/god-design`, `/god-design teach`, `/god-design from <site>`, `/god-design suggest`, `/god-design refresh`, `/god-design polish [...]`, `/god-mode` Tier 1 (when UI detected) |
 | **Inputs** | PRD.md (target users, register), ARCH.md (UI surface), STACK/DECISION.md (UI framework), state.json |
-| **Outputs** | `DESIGN.md` (project root, Google Labs spec), `PRODUCT.md` (when impeccable installed), `.godpowers/design/STATE.md` (lint history) |
+| **Outputs** | `DESIGN.md` (project root, Google Labs spec), `PRODUCT.md` (when impeccable installed), `.godpowers/state.json` design evidence, generated `.godpowers/design/STATE.md` |
 | **Downstream consumers** | god-design-reviewer (gates the change), god-impact-analyzer, god-updater (reverse-sync), repo scaffolder (token references in templates) |
 | **Artifact awareness** | Reads PRD, ARCH, STACK; writes DESIGN, PRODUCT |
 | **Standards check** | Validates with `lib/design-spec.lint`, `npx @google/design.md lint`, and `npx impeccable detect` (when installed) |

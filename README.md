@@ -510,10 +510,10 @@ Skill updates:   state.json via godpowers state advance
 .godpowers/stack/DECISION.md   Stack Decision (with flip points)
 .godpowers/repo/AUDIT.md       Repo Scaffold Audit
 .godpowers/build/PLAN.md       Build Plan (slices, waves)
-.godpowers/build/STATE.md      Build State
-.godpowers/deploy/STATE.md     Deploy Pipeline State
-.godpowers/observe/STATE.md    Observability State
-.godpowers/launch/STATE.md     Launch State
+.godpowers/build/STATE.md      Generated build state view
+.godpowers/deploy/STATE.md     Generated deploy state view
+.godpowers/observe/STATE.md    Generated observability state view
+.godpowers/launch/STATE.md     Generated launch state view
 .godpowers/harden/FINDINGS.md  Security Findings
 ```
 

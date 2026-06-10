@@ -105,8 +105,9 @@ result before applying.
   (parsed by `lib/design-spec.js`)
 - `PRODUCT.md` at project root, when impeccable is present (impeccable owns
   the format)
-- `.godpowers/design/STATE.md` with: lint history, version, impeccable
-  command log, drift snapshot
+- `.godpowers/state.json` design evidence with lint history, version,
+  impeccable command log, and drift snapshot; `lib/state-views.js`
+  regenerates `.godpowers/design/STATE.md`
 
 ## Validation
 
