@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2026-06-10
+
+### Added
+- Added the Phase 2 Run A host proof case study for `sindresorhus/is-up-cli`,
+  including repository identity, command usage, validation failures, repaired
+  gate failures, host guarantee level, and the build blocker that stopped the
+  run.
+- Added regression coverage proving an installed `godpowers-runtime` bundle can
+  be used as a local npm package for `godpowers gate`.
+
+### Fixed
+- Fixed installed runtime bundles so `godpowers-runtime` includes `bin/` next
+  to `package.json`, allowing host workflows to call the documented
+  `godpowers gate` command from the installed runtime package.
+- Fixed the build gate so `.godpowers/build/STATE.md` fails closed when any
+  verification command is recorded as failed, instead of passing because a
+  different command passed.
+
 ## [2.5.0] - 2026-06-10
 
 ### Added

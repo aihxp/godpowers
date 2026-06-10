@@ -1,14 +1,15 @@
 # Users and Community
 
-Godpowers is at v2.5.0. Stable release.
+Godpowers is at v2.5.1. Stable release.
 
 ## Track record
 
 Currently zero recorded production users. Be honest. The 2.5 line adds
 executable tier gates on top of the 2.4 UX flow clarity, executable proof path,
 accountability hardening, deliverable progress tracking, and three external
-CLI-verifiable adoption canaries. Real users will reveal which gaps actually
-matter.
+CLI-verifiable adoption canaries. Phase 2 Run A also produced a failed
+host-proof case study against `sindresorhus/is-up-cli`, stopping honestly at a
+red build gate. Real users will reveal which gaps actually matter.
 
 ## Proof needed during freeze
 
@@ -49,12 +50,16 @@ If you use Godpowers on a real project:
 
 ## Case studies
 
+- [sindresorhus/is-up-cli Host Proof Run A](docs/case-studies/run-a.md)
 - [sindresorhus/is CLI adoption canary](docs/case-studies/sindresorhus-is-adoption-canary.md)
 - [expressjs/cors CLI adoption canary](docs/case-studies/expressjs-cors-adoption-canary.md)
 - [tinyhttp/tinyhttp CLI adoption canary](docs/case-studies/tinyhttp-adoption-canary.md)
 
-These are not production-user studies. They prove first-contact CLI signals
-against real cloned repositories and keep the host-run gap explicit.
+Run A is not a production-user study because it did not ship app behavior. It
+is a host-run proof artifact because it records `/god-mode` command usage,
+gate repairs, degraded host guarantees, and a real build blocker. The CLI
+canaries prove first-contact CLI signals against real cloned repositories and
+keep the remaining host-run gaps explicit.
 
 If you ship something with Godpowers, write it up. We'll feature you here.
 

@@ -1,54 +1,47 @@
-# Godpowers 2.5.0 Release
+# Godpowers 2.5.1 Release
 
-> Status: Published
+> Status: Ready for protected merge
 > Date: 2026-06-10
 
-Godpowers 2.5.0 ships executable tier gates for the code-first kernel
-migration. It keeps the slash-command workflow intact while giving command
-capable hosts a stable JSON gate contract and non-zero exit codes for blocked
-tier transitions.
+[DECISION] Godpowers 2.5.1 is a Phase 2 host-proof blocker patch.
+[DECISION] Run A against `sindresorhus/is-up-cli` stopped honestly at `/god-build`, and this release fixes the two Godpowers defects that would otherwise contaminate Run B.
+[DECISION] This release does not complete the Host Proof Campaign because Run B and Run C are still pending.
 
 ## What's in this release
 
-- 112 slash commands
-- 40 specialist agents
-- 13 executable workflows
-- 42 intent recipes
-- 8 installer CLI helpers
+- [DECISION] 112 slash commands.
+- [DECISION] 40 specialist agents.
+- [DECISION] 13 executable workflows.
+- [DECISION] 42 intent recipes.
+- [DECISION] 8 installer CLI helpers.
 
 ## Highlights
 
-- `npx godpowers gate --tier=<tier> --project=.` checks PRD, design,
-  architecture, roadmap, stack, repo, build, and harden artifacts.
-- Gate JSON returns `{tier, verdict, artifacts, checks, findings, summary}` for
-  host-visible evidence.
-- Build gates require `.godpowers/build/STATE.md` to record exact verification
-  commands that passed.
-- Harden gates fail unresolved Critical findings and blocked launch gates.
-- `/god-mode` now runs executable gates between tier transitions.
-- Tier routes declare `standards.gate-command`, and static checks enforce the
-  skill and route metadata.
-- CLI command dispatch now lives in `lib/cli-dispatch.js`, keeping
-  `bin/install.js` thin.
+- [DECISION] `godpowers-runtime` now includes `bin/` next to `package.json`, so host workflows can run `npm exec --package <runtime> -- godpowers gate`.
+- [DECISION] Build gates now fail closed when `.godpowers/build/STATE.md` records any failed verification command.
+- [DECISION] `docs/case-studies/run-a.md` records the first Phase 2 host proof as a failed but useful external run.
+- [DECISION] Run A captured command usage, validation failures, gate repairs, degraded host guarantees, and the blocked build state without changing protected application files.
 
 ## Validation
 
-- `node scripts/test-gate.js` green
-- `node scripts/test-cli-dispatch.js` green
-- `node scripts/static-check.js` green
-- `npm run release:check` passed before publish
-- GitHub Publish to npm workflow `27282180092` passed
-- `npm run verify:published-install` passed against `godpowers@latest`
+- [DECISION] `node scripts/test-gate.js` passed.
+- [DECISION] `node scripts/test-install-smoke.js` passed.
+- [DECISION] `npm run test:e2e` passed.
+- [DECISION] `node scripts/test-runtime-verification.js` passed.
+- [DECISION] `node scripts/test-agent-browser.js` passed.
+- [DECISION] `node scripts/static-check.js` passed.
+- [DECISION] Patched `lib/gate.js` failed the Run A build artifact because `npm test` was recorded as failed.
+- [DECISION] A temp local Codex install ran `npm exec --package <runtime> -- godpowers gate --tier=prd --project=<example> --json` successfully.
+- [DECISION] `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.1, and package contents verified at 534 files.
 
 ## Upgrade
 
-- `npm install -g godpowers@2.5.0` or `npx godpowers@2.5.0`
-- Re-run `/god-context` in each project to refresh installed runtime metadata.
-- Existing `.godpowers/` state remains compatible.
+- [DECISION] Use `npm install -g godpowers@2.5.1` or `npx godpowers@2.5.1` after the package is published.
+- [DECISION] Reinstall Godpowers in host runtimes before Phase 2 Run B so the installed runtime bundle includes the gate CLI entrypoint fix.
+- [DECISION] Existing `.godpowers/` state remains compatible.
 
 ## Notes
 
-- GitHub release created for `v2.5.0`.
-- The tag matches the npm package version.
-- The `v2.5.0` tag points to the release commit that matches the npm
-  `godpowers@2.5.0` package.
+- [DECISION] Run A did not ship app behavior because the external repository's existing `npm test` stayed red after three repair attempts.
+- [DECISION] Run B and Run C remain required before the Phase 2 docs patch can claim a complete host proof campaign.
+- [DECISION] Publishing remains pending until protected merge, tag, and npm provenance publish complete.

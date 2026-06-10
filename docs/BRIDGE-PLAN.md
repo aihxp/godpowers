@@ -84,6 +84,35 @@
 - [DECISION] Exit criteria are three published host-run case studies, captured defect backlog, exact repository identity for each run, and command-usage data on disk.
 - [HYPOTHESIS] Phase 2 takes about two weeks including triage between runs.
 
+### Phase 2 Run Status
+
+- [DECISION] Status: in progress on branch `codex/bridge-phase-2-host-proof-run-a-56e6` for the 2026-06-10 automation run.
+- [DECISION] Completed work: selected Slot A as `https://github.com/sindresorhus/is-up-cli.git` at commit `9c6e39128b1674507fe3cba1bdef0dd876c7d2a9`, with MIT license and 36 JavaScript source lines verified before host spawn.
+- [DECISION] Completed work: installed `godpowers@2.5.0` locally for Codex in the external clone and ran `/god-mode --brownfield --yolo` through the host `god-orchestrator` agent.
+- [DECISION] Completed work: recorded the failed but valid host proof in `docs/case-studies/run-a.md`, including command usage, wall-clock window, validation results, gate failures, repairs, host guarantee level, and what shipped or blocked.
+- [DECISION] Completed work: Run A auto-invoked `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-tech-debt`, `/god-greenfieldify`, `/god-repo`, and `/god-build`.
+- [DECISION] Completed work: Run A stopped honestly at `/god-build` with 72 percent progress, 13 of 18 tracked steps complete, one pause, and no shipped app behavior because `npm test` stayed red after three repair attempts.
+- [DECISION] Completed work: triaged and repaired two Godpowers Phase 2 blockers found during Run A.
+- [DECISION] Completed work: `lib/installer-files.js` now copies `bin/` into `godpowers-runtime`, and `scripts/test-install-smoke.js` verifies `npm exec --package <runtime> -- godpowers gate` works against an installed runtime bundle.
+- [DECISION] Completed work: `lib/gate.js` now fails build gates when `.godpowers/build/STATE.md` records failed verification commands, and `scripts/test-gate.js` covers the Run A false-pass evidence shape.
+- [DECISION] Verification result: baseline `npx godpowers@2.5.0 quick-proof --project=<clone> --brief` passed before the host run.
+- [DECISION] Verification result: baseline `npx godpowers@2.5.0 status --project=<clone> --brief` passed before the host run.
+- [DECISION] Verification result: baseline `npx godpowers@2.5.0 next --project=<clone> --brief` passed before the host run.
+- [DECISION] Verification result: `node scripts/run-adoption-canary.js https://github.com/sindresorhus/is-up-cli.git --output=/tmp/godpowers-phase2-run-a-Of3Xh6/adoption-canary.md --keep` passed before the host run.
+- [DECISION] Verification result: `npm run test:e2e` passed after the blocker repairs.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed after the blocker repairs.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed after the blocker repairs.
+- [DECISION] Verification result: `node scripts/static-check.js` passed after the blocker repairs.
+- [DECISION] Verification result: `node scripts/test-gate.js` passed after the blocker repairs.
+- [DECISION] Verification result: `node scripts/test-install-smoke.js` passed after the blocker repairs.
+- [DECISION] Verification result: patched `lib/gate.js` fails the Run A build artifact because failed verification commands are present.
+- [DECISION] Verification result: a temp local Codex install successfully ran `npm exec --package <runtime> -- godpowers gate --tier=prd --project=<example> --json`.
+- [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.1, and package contents verified at 534 files.
+- [DECISION] Release result: prepared version `2.5.1` as a blocker patch candidate; protected merge, tag, publish workflow, and npm publication are pending.
+- [DECISION] Blockers: Run B and Run C remain required for Phase 2 exit criteria.
+- [OPEN QUESTION] Blocker: `/god-cost` token and dollar output was not captured during Run A because this host proof did not expose that command output; owner: maintainer; due: before Run B public confidence wording.
+- [DECISION] Next phase to run remains Phase 2: merge and publish `2.5.1` if protected path and credentials allow, then run Slot B.
+
 ## Phase 3: MCP Companion Package (target release 2.6.0)
 
 - [DECISION] Ship MCP as a first-party companion package named `@godpowers/mcp`, not as a production dependency of the main `godpowers` package.
