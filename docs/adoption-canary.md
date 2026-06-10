@@ -15,7 +15,8 @@ The first CLI-verifiable external canary set is captured in:
 
 - [DECISION] The Phase 2 host proof campaign has selected current slots in [Run A](case-studies/run-a.md), [Run B](case-studies/run-b.md), and [Run C](case-studies/run-c.md).
 - [DECISION] Run A has a completed local and CI-verifiable host proof with durable `.godpowers` artifacts on disk.
-- [DECISION] Runs B and C remain selected but not started as host proofs.
+- [DECISION] Run B has a completed local and CI-verifiable host proof with durable `.godpowers` artifacts on disk.
+- [DECISION] Run C remains selected but not started as a host proof.
 
 ## Purpose
 
@@ -137,4 +138,4 @@ Route canary findings to the smallest matching surface:
 
 ## Open Decision
 
-- [OPEN QUESTION] Should Slot B target the repository root or a copied template directory as the host proof project root? Owner: maintainer. Due: before starting Slot B.
+- [OPEN QUESTION] Should Slot C target the repository root or the `examples/cujo` TODO slice? Owner: maintainer. Due: before starting Slot C.

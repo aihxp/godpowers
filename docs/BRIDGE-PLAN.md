@@ -86,7 +86,7 @@
 
 ### Phase 2 Run Status
 
-- [DECISION] Status: in progress on branch `codex/bridge-phase-2-slot-a-proof` for the 2026-06-10 automation continuation.
+- [DECISION] Status: in progress on branch `codex/bridge-phase-2-slot-b-proof` for the 2026-06-10 Slot B automation run.
 - [DECISION] Completed work: loaded `AGENTS.md`, required Pillars, `USERS.md`, `docs/adoption-canary.md`, and the current case-study inventory before changing docs.
 - [DECISION] Completed work: selected and verified current repository identities for Slot A, Slot B, and Slot C in `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md`.
 - [DECISION] Completed work: Slot A is `https://github.com/sindresorhus/slugify-cli.git` at `9d7cc5e95668085d73dd4229d8bb0365f4f32144`, MIT license, with 70 measured JavaScript source lines across `cli.js` and `test.js`.
@@ -96,9 +96,22 @@
 - [DECISION] Completed work: continued Slot A `/god-mode --brownfield --yolo` through the Codex `god-orchestrator` host subagent until durable `.godpowers` artifacts existed.
 - [DECISION] Completed work: Slot A now has durable state, checkpoint, progress, PRD, architecture, roadmap, stack, repo audit, build state, deploy state, observe state, harden findings, launch state, run summary, and deployed-staging TODO artifacts under `/tmp/godpowers-phase2/slugify-cli/.godpowers/`.
 - [DECISION] Completed work: updated `docs/case-studies/run-a.md`, `docs/adoption-canary.md`, and `USERS.md` to record Slot A local and CI-verifiable host proof closure without claiming production use or deployed smoke coverage.
+- [DECISION] Completed work: resolved Slot B target-root selection to a copied `template-react` app at `/tmp/godpowers-phase2/create-vite-app-template-react` because the runnable `dev` and `build` workflow lives under `template-react/package.json`.
+- [DECISION] Completed work: continued Slot B `/god-mode --brownfield --yolo` through the Codex `god-orchestrator` host subagent until durable `.godpowers` artifacts existed.
+- [DECISION] Completed work: Slot B now has durable state, checkpoint, progress, PRD, design, product, architecture, roadmap, stack, repo audit, build state, deploy state, observe state, harden findings, launch state, run summary, requirements, linkage, and deployed-staging deferral artifacts under `/tmp/godpowers-phase2/create-vite-app-template-react/.godpowers/`.
+- [DECISION] Completed work: updated `docs/case-studies/run-b.md`, `docs/adoption-canary.md`, and `USERS.md` to record Slot B local and CI-verifiable host proof closure without claiming production use or deployed smoke coverage.
 - [DECISION] Verification result: Slot A host run `npm test` passed with XO and 5 AVA tests.
 - [DECISION] Verification result: Slot A host run `npm audit --omit=dev --json` passed with 0 production vulnerabilities.
 - [DECISION] Verification result: Slot A gates for `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, and `harden` passed through `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate`.
+- [DECISION] Verification result: Slot B host run `npm install` passed and installed 337 packages.
+- [DECISION] Verification result: Slot B host run `npm audit --json` exited 1 with 6 High and 4 Moderate dev-surface findings and 0 Critical findings.
+- [DECISION] Verification result: Slot B parent rerun `npm audit --omit=dev --json` passed with 0 production vulnerabilities.
+- [DECISION] Verification result: Slot B host run `npm run build` failed first with `Cannot add property env, object is not extensible`, then passed after the copied target `vite.config.js` CommonJS repair.
+- [DECISION] Verification result: Slot B parent rerun `npm run build` passed.
+- [DECISION] Verification result: Slot B parent rerun `npm run dev` smoke passed on `http://localhost:3000/`.
+- [DECISION] Verification result: Slot B browser navigation to `http://localhost:3000/` passed with page title `Vite App`, rendered text `Hello Vite + React!`, and counter button text `count is: 0`.
+- [DECISION] Verification result: Slot B gates for `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, and `harden` passed through `node /Users/hprincivil/.codex/worktrees/0bed/godpowers/bin/install.js gate`.
+- [DECISION] Verification result: Slot B CLI canary passed and wrote `/tmp/godpowers-phase2/create-vite-app-canary.md`.
 - [DECISION] Verification result: `npm run test:e2e` passed.
 - [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed with 21 passed and 0 failed.
 - [DECISION] Verification result: `node scripts/test-agent-browser.js` passed with 14 passed and 0 failed.
@@ -112,8 +125,11 @@
 - [DECISION] Verification result: rerun `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
 - [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met.
 - [DECISION] Blockers: Slot A deployed smoke testing remains deferred until a `STAGING_APP_URL` exists, but this does not block local or CI-verifiable Slot A proof closure.
-- [DECISION] Blockers: Slot B and Slot C were not started because Phase 2 sequence runs one host proof slot at a time.
-- [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting with Slot B target-root selection and host proof execution.
+- [DECISION] Blockers: Slot B deployed smoke testing remains deferred until a `STAGING_APP_URL` exists, but this does not block local or CI-verifiable Slot B proof closure.
+- [DECISION] Blockers: Slot B cost telemetry was unavailable because `/god-cost` telemetry was not exposed in the target host proof.
+- [DECISION] Blockers: Slot B Vite dependency modernization remains a separate upstream modernization workflow because `npm audit fix` recommends a semver-major Vite upgrade.
+- [DECISION] Blockers: Slot C was not started because Phase 2 sequence runs one host proof slot at a time.
+- [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting with Slot C target-root selection and host proof execution.
 
 ## Phase 3: MCP Companion Package (target release 2.6.0)
 
