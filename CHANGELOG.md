@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `godpowers state advance --step=<step> --status=<status> --project=.`
   as a locked state mutation helper that updates `.godpowers/state.json` and
   regenerates managed state views.
+- Added generated checksummed state views for Godpowers-owned design, build,
+  deploy, observe, and launch `STATE.md` files, all sourced from
+  `.godpowers/state.json`.
 
 ## [2.6.0] - 2026-06-10
 

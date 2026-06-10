@@ -13,7 +13,7 @@ Spawn the **god-harden-auditor** agent in a fresh context via the host platform'
 
 ## Setup
 
-1. Verify build is complete (`.godpowers/build/STATE.md` exists).
+1. Verify build is complete through `.godpowers/state.json` `tier-2.build.status == done`.
 2. Spawn god-harden-auditor with full code access.
 3. The agent writes `.godpowers/harden/FINDINGS.md`.
 

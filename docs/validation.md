@@ -26,7 +26,9 @@ The lint layer. Mechanical checks against the catalog of failure modes.
   files and verifies the release gate still includes parser coverage and
   installer helper extraction.
 - [DECISION] `scripts/static-check.js` verifies the full release runner still
-  includes generated state view and state advance mutation regression tests.
+  includes generated state view and state advance mutation regression tests,
+  and verifies the state view owner covers the Godpowers-owned per-tier
+  `STATE.md` views.
 - [DECISION] `scripts/static-check.js` rejects copied test harness boilerplate
   outside `scripts/test-harness.js`.
 - [DECISION] `scripts/static-check.js` verifies async file APIs exist on

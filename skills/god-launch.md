@@ -17,12 +17,12 @@ Spawn the **god-launch-strategist** agent in a fresh context via the host platfo
 2. If Critical findings exist: REFUSE to proceed. Tell user to resolve or
    explicitly accept the risk first.
 3. Spawn god-launch-strategist with PRD path and harden FINDINGS.md path.
-4. The agent writes `.godpowers/launch/STATE.md` plus landing copy artifacts.
+4. The agent returns launch evidence for `.godpowers/state.json` plus landing copy artifacts; the generated `.godpowers/launch/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
 After god-launch-strategist returns:
-1. Verify STATE.md exists on disk
+1. Verify launch evidence is recorded in `.godpowers/state.json`
 2. Verify landing copy passes substitution test
 3. Verify OG cards rendered (not just meta tags)
 4. Verify one of:
@@ -33,7 +33,7 @@ After god-launch-strategist returns:
    only when live launch or explicit local launch-readiness scope is complete.
    If external access is missing, record the waiting artifact path in launch
    state through the owning command wrapper rather than editing the generated
-   progress view.
+   progress or launch state views.
 
 ## Pause Conditions
 
@@ -43,7 +43,7 @@ approval require human input.
 ## On Completion
 
 ```
-Launch complete: .godpowers/launch/STATE.md
+Launch complete: .godpowers/launch/STATE.md (generated view)
 
 All Godpowers tiers done. Project is live.
 
@@ -73,15 +73,15 @@ approval.
 
 ## Re-invocation contract
 
-What happens if `/god-launch` is run when `.godpowers/launch/STATE.md` already exists:
+What happens if `/god-launch` is run when launch state evidence or the generated launch state view already exists:
 
 | Existing state | Behavior |
 |---|---|
-| File does not exist | Spawn god-launch-strategist; produce file; mark sub-step done |
-| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| File exists, fails lint or have-nots | Spawn god-launch-strategist in update mode with current file + findings as input. Diff preview before overwrite. |
-| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-launch --force` to re-run. |
-| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-launch-<ts>/`. Spawn agent fresh. |
+| State evidence does not exist | Spawn god-launch-strategist; record launch evidence; mark sub-step done |
+| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence or generated view fails checks | Spawn god-launch-strategist in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-launch --force` to re-run. |
+| `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-launch-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |
 
 Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.

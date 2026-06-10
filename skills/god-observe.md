@@ -13,14 +13,14 @@ Spawn the **god-observability-engineer** agent in a fresh context via the host p
 
 ## Setup
 
-1. Verify `.godpowers/deploy/STATE.md` exists. App is deployed.
+1. Verify `.godpowers/state.json` records `tier-3.deploy.status == done`.
 2. Spawn god-observability-engineer with PRD (for success metrics) and ARCH paths.
-3. The agent writes `.godpowers/observe/STATE.md`.
+3. The agent returns observability evidence for `.godpowers/state.json`; the generated `.godpowers/observe/STATE.md` view refreshes after state mutation.
 
 ## Verification
 
 After god-observability-engineer returns:
-1. Verify STATE.md exists on disk
+1. Verify observability evidence is recorded in `.godpowers/state.json`
 2. Verify each SLO has an error budget policy
 3. Verify each alert has a runbook
 4. Verify provider work is one of:
@@ -32,12 +32,12 @@ After god-observability-engineer returns:
    only for verified real provider config or local definitions as code. If
    external access is missing, record the missing access bundle in deploy or
    observe state through the owning command wrapper rather than editing the
-   generated progress view.
+   generated progress or observe state views.
 
 ## On Completion
 
 ```
-Observability complete: .godpowers/observe/STATE.md
+Observability complete: .godpowers/observe/STATE.md (generated view)
 
 Suggested next: /god-harden (adversarial security review, gates Launch)
 ```
@@ -55,15 +55,15 @@ named command cannot run without one exact credential.
 
 ## Re-invocation contract
 
-What happens if `/god-observe` is run when `.godpowers/observe/STATE.md` already exists:
+What happens if `/god-observe` is run when observe state evidence or the generated observe state view already exists:
 
 | Existing state | Behavior |
 |---|---|
-| File does not exist | Spawn god-observability-engineer; produce file; mark sub-step done |
-| File exists, passes lint, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
-| File exists, fails lint or have-nots | Spawn god-observability-engineer in update mode with current file + findings as input. Diff preview before overwrite. |
-| File exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-observe --force` to re-run. |
-| `--force` flag passed | Snapshot existing file to `.godpowers/.trash/god-observe-<ts>/`. Spawn agent fresh. |
+| State evidence does not exist | Spawn god-observability-engineer; record observability evidence; mark sub-step done |
+| State evidence exists, generated view passes checksum, state.json says `done` | Pause: ask user (A) re-run anyway with diff preview, (B) treat as imported (no-op), (C) cancel |
+| State evidence or generated view fails checks | Spawn god-observability-engineer in update mode with current evidence plus findings as input. Diff preview before overwrite. |
+| State evidence exists, state.json says `pending` | Treat as imported: hash + register, no agent spawn. User can `/god-observe --force` to re-run. |
+| `--force` flag passed | Snapshot existing evidence to `.godpowers/.trash/god-observe-<ts>/`. Spawn agent fresh. |
 | `--dry-run` flag passed | Show what would happen; touch nothing |
 
 Snapshots in `.trash/` are recoverable via `/god-restore` for 30 days.

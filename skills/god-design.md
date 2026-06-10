@@ -107,7 +107,7 @@ Project root:
 - `PRODUCT.md` (impeccable strategic file, when impeccable installed)
 
 Inside `.godpowers/design/`:
-- `STATE.md` (lint history, version, impeccable command log)
+- `STATE.md` (generated design state view from `.godpowers/state.json`)
 - `HISTORY.md` (append-only log of design changes; populated by god-designer)
 - `REJECTED.md` (append-only log of blocked changes; populated by god-design-reviewer)
 

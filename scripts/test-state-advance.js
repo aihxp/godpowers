@@ -16,6 +16,10 @@ function progressFile(root) {
   return path.join(root, stateViews.PROGRESS_VIEW_PATH);
 }
 
+function stateViewFile(root, relPath) {
+  return path.join(root, relPath);
+}
+
 console.log('\n  State advance behavioral tests\n');
 
 test('advance updates a named step through state.json and refreshes PROGRESS.md', () => {
@@ -111,6 +115,30 @@ test('advance replaces tampered managed progress view and reports warning', () =
   assert(result.warnings[0].includes('checksum mismatch'), `warning: ${result.warnings[0]}`);
   assert(parsed.validChecksum === true, 'repaired checksum should validate');
   assert(!repaired.includes('Tampered progress is'), 'tampered text survived');
+});
+
+test('advance replaces tampered managed per-tier view and reports warning', () => {
+  const tmp = mkProject('godpowers-state-advance-tier-tamper-');
+  state.init(tmp, 'advance-tier-tamper-demo');
+  const file = stateViewFile(tmp, '.godpowers/deploy/STATE.md');
+  const tampered = fs.readFileSync(file, 'utf8').replace('Status: `pending`.', 'Status: `done`.');
+  fs.writeFileSync(file, tampered);
+
+  const result = stateAdvance.advance(tmp, {
+    step: 'deploy',
+    status: 'done',
+    holder: 'test-advance-tier-tamper'
+  });
+  const repaired = fs.readFileSync(file, 'utf8');
+  const parsed = stateViews.parseManaged(file);
+
+  assert(result.verdict === 'pass', `verdict: ${result.verdict}`);
+  assert(result.warnings.some(warning => warning.includes('.godpowers/deploy/STATE.md')),
+    `warnings: ${JSON.stringify(result.warnings)}`);
+  assert(result.summary.views.includes('.godpowers/deploy/STATE.md'),
+    `views: ${JSON.stringify(result.summary.views)}`);
+  assert(parsed.validChecksum === true, 'repaired per-tier checksum should validate');
+  assert(repaired.includes('Status: `done`.'), 'advanced status missing from repaired per-tier view');
 });
 
 test('render shows pass and fail results', () => {
