@@ -1,0 +1,52 @@
+{
+  "name": "@godpowers/mcp",
+  "version": "2.6.0",
+  "description": "Read-only MCP server for Godpowers runtime status, routing, gates, artifact linting, and requirement tracing.",
+  "bin": {
+    "godpowers-mcp": "./bin/godpowers-mcp.js"
+  },
+  "main": "./lib/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node scripts/test-protocol.js",
+    "pack:check": "node scripts/check-package-contents.js"
+  },
+  "keywords": [
+    "godpowers",
+    "mcp",
+    "model-context-protocol",
+    "ai-coding"
+  ],
+  "author": "Godpowers",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aihxp/godpowers.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://github.com/aihxp/godpowers/tree/main/packages/mcp#readme",
+  "bugs": {
+    "url": "https://github.com/aihxp/godpowers/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.1.13"
+  },
+  "peerDependencies": {
+    "godpowers": ">=2.6.0"
+  },
+  "peerDependenciesMeta": {
+    "godpowers": {
+      "optional": true
+    }
+  }
+}

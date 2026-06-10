@@ -36,6 +36,7 @@ const REQUIRED_FILES = [
   'lib/state.js',
   'lib/dogfood-runner.js',
   'lib/quick-proof.js',
+  'lib/mcp-info.js',
   'lib/extension-authoring.js',
   'lib/feature-awareness.js',
   'lib/host-capabilities.js',
@@ -66,6 +67,7 @@ const REQUIRED_FILES = [
 const FORBIDDEN_PREFIXES = [
   '.github/',
   'docs/',
+  'packages/',
   'scripts/',
   'tests/',
   'examples/',

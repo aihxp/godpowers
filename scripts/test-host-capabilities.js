@@ -30,6 +30,7 @@ test('detect reports full when agent metadata is present', () => {
   const report = hostCapabilities.detect(tmp, {
     homeDir: path.join(tmp, 'home'),
     env: { SHELL: '/bin/zsh', CODEX_HOME: path.join(tmp, 'home', '.codex') },
+    mcpAvailable: false,
     codeIntelligence: {
       level: 'available',
       astGrep: { available: true, command: 'ast-grep', version: 'ast-grep 0.39.0' },
@@ -39,28 +40,47 @@ test('detect reports full when agent metadata is present', () => {
   });
   assert.equal(report.level, 'full');
   assert.equal(report.guarantees.agentSpawn, true);
+  assert.equal(report.guarantees.mcp.available, false);
   assert.equal(report.guarantees.codeIntelligence.astGrep.command, 'ast-grep');
   assert(hostCapabilities.summary(report).startsWith('full on codex'));
+  assert(hostCapabilities.summary(report).includes('MCP not configured'));
 });
 
 test('detect reports degraded when shell tools exist but agent spawn is absent', () => {
   const tmp = mkProject();
   const report = hostCapabilities.detect(tmp, {
     homeDir: path.join(tmp, 'home'),
-    env: { SHELL: '/bin/zsh' }
+    env: { SHELL: '/bin/zsh' },
+    mcpAvailable: false
   });
   assert.equal(report.level, 'degraded');
   assert(report.gaps.includes('fresh-context agent spawn not detected'));
+  assert(hostCapabilities.summary(report).includes('MCP not configured'));
+});
+
+test('detect reports MCP availability from workspace package', () => {
+  const tmp = mkProject();
+  fs.mkdirSync(path.join(tmp, 'packages', 'mcp'), { recursive: true });
+  fs.writeFileSync(path.join(tmp, 'packages', 'mcp', 'package.json'), '{"name":"@godpowers/mcp"}\n');
+  const report = hostCapabilities.detect(tmp, {
+    homeDir: path.join(tmp, 'home'),
+    env: { SHELL: '/bin/zsh' }
+  });
+  assert.equal(report.guarantees.mcp.available, true);
+  assert.equal(report.guarantees.mcp.source, 'workspace package');
+  assert(hostCapabilities.summary(report).includes('MCP available via workspace package'));
 });
 
 test('render summarizes gaps without banned dash characters', () => {
   const tmp = mkProject();
   const report = hostCapabilities.detect(tmp, {
     homeDir: path.join(tmp, 'home'),
-    env: { SHELL: '/bin/zsh' }
+    env: { SHELL: '/bin/zsh' },
+    mcpAvailable: false
   });
   const rendered = hostCapabilities.render(report);
   assert(rendered.includes('Host capabilities:'));
+  assert(rendered.includes('MCP:'));
   assert(rendered.includes('Code intelligence:'));
   assert(!/[\u2013\u2014]/.test(rendered), 'render contains banned dash');
 });

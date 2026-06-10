@@ -89,6 +89,32 @@ test('quick-proof command dispatches through proof branch', () => {
   assert(result.output.includes('Godpowers Quick Proof'), 'quick-proof output missing title');
 });
 
+test('mcp-info command dispatches through read-only info branch', () => {
+  const project = mkProject('godpowers-cli-mcp-info-');
+  const result = capture(() => installer.runCommand({
+    command: 'mcp-info',
+    project,
+    json: false
+  }));
+  assert(result.value === true, 'mcp-info did not dispatch');
+  assert(result.output.includes('Godpowers MCP'), 'mcp-info output missing title');
+  assert(result.output.includes('@godpowers/mcp'), 'mcp-info output missing package');
+  assert(result.output.includes('Automatic registration: disabled'), 'mcp-info output should stay read-only');
+});
+
+test('mcp-info command emits JSON setup details', () => {
+  const project = mkProject('godpowers-cli-mcp-info-json-');
+  const result = capture(() => cliDispatch.runCommand({
+    command: 'mcp-info',
+    project,
+    json: true
+  }));
+  const parsed = JSON.parse(result.output);
+  assert(result.value === true, 'mcp-info JSON did not dispatch');
+  assert(parsed.package === '@godpowers/mcp', `package: ${parsed.package}`);
+  assert(parsed.automaticRegistration === false, 'mcp-info should not auto-register');
+});
+
 test('automation commands dispatch through automation branch', () => {
   const project = mkProject('godpowers-cli-automation-');
   for (const command of ['automation-status', 'automation-setup']) {

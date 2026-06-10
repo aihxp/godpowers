@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.5.2.
+Complete command, agent, and artifact reference for v2.6.0.
 
 ## Slash commands (112 total)
 
@@ -79,6 +79,7 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
 - `godpowers quick-proof --project .` - Render the shipped proof fixture with host guarantees.
 - `godpowers gate --tier=prd --project .` - Check a tier artifact gate and exit non-zero when blocking evidence is missing.
+- `godpowers mcp-info --project .` - Show read-only MCP companion setup instructions without loading the MCP SDK.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.
@@ -91,6 +92,18 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 Dashboard status uses workflow progress from `.godpowers/state.json` tracked
 steps. Audit, hygiene, remediation, and launch-readiness scores are separate
 metrics and should be labeled separately in closeouts.
+
+### MCP companion
+`@godpowers/mcp` is an optional first-party companion package. It owns the MCP
+SDK dependency, while the main `godpowers` package remains dependency-free at
+runtime.
+
+The companion exposes five read-only tools: `status`, `next`, `gate_check`,
+`lint_artifact`, and `trace_requirement`. Mutation tools such as state advance,
+artifact writes, and route edits are intentionally absent through 3.0.0.
+
+Run `godpowers mcp-info --project .` for host setup instructions. Codex
+registration is written only when `godpowers-mcp setup --host=codex --project=. --write` is invoked explicitly.
 
 Build and review commands enforce request-trace discipline. Executors state
 assumptions, public behavior, expected files, and verification before editing.

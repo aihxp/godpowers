@@ -52,6 +52,7 @@ function showHelp() {
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
   log('  gate                 Check a tier artifact gate');
+  log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
@@ -100,6 +101,7 @@ function showHelp() {
   log('  npx godpowers status --project=.');
   log('  npx godpowers next --project=.');
   log('  npx godpowers gate --tier=prd --project=.');
+  log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
@@ -211,6 +213,7 @@ module.exports = {
   runDashboardCommand: cliDispatch.runDashboardCommand,
   runDogfoodCommand: cliDispatch.runDogfoodCommand,
   runQuickProofCommand: cliDispatch.runQuickProofCommand,
+  runMcpInfoCommand: cliDispatch.runMcpInfoCommand,
   runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
   runGateCommand: cliDispatch.runGateCommand,
   applyDefaultRuntimeSelection,
