@@ -128,6 +128,37 @@ test('install file helpers stay outside bin/install.js', () => {
   }
 });
 
+test('CLI dispatch coverage boundary stays in lib', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const coverageLib = pkg.scripts['coverage:lib'] || '';
+  const installer = fs.readFileSync(path.join(ROOT, 'bin', 'install.js'), 'utf8');
+  const dispatch = fs.readFileSync(path.join(ROOT, 'lib', 'cli-dispatch.js'), 'utf8');
+  const dispatchTest = fs.readFileSync(path.join(ROOT, 'scripts', 'test-cli-dispatch.js'), 'utf8');
+
+  if (!coverageLib.includes('--include=lib/**/*.js')) {
+    throw new Error('coverage:lib must include the extracted lib CLI dispatch surface');
+  }
+  if (/--include(?:=|\s+)bin\//.test(coverageLib) || coverageLib.includes('bin/**/*.js')) {
+    throw new Error('coverage:lib must not force bin/install.js into the lib-only ratchet');
+  }
+  if (!installer.includes("require('../lib/cli-dispatch')")) {
+    throw new Error('bin/install.js must delegate command dispatch to lib/cli-dispatch.js');
+  }
+  if (/const\s+COMMAND_RUNNERS\s*=|function\s+runDashboardCommand\s*\(|function\s+runGateCommand\s*\(/.test(installer)) {
+    throw new Error('bin/install.js must not recreate CLI command dispatch behavior');
+  }
+  if (!/const\s+COMMAND_RUNNERS\s*=\s*\{/.test(dispatch) || !dispatch.includes('function runCommand(')) {
+    throw new Error('lib/cli-dispatch.js must own the command runner table and runCommand');
+  }
+  if (!dispatchTest.includes("require('../bin/install')") || !dispatchTest.includes("require('../lib/cli-dispatch')")) {
+    throw new Error('scripts/test-cli-dispatch.js must exercise both installer and lib dispatch surfaces');
+  }
+  if (!dispatchTest.includes('installer.COMMAND_RUNNERS === cliDispatch.COMMAND_RUNNERS') ||
+    !dispatchTest.includes('installer.runCommand === cliDispatch.runCommand')) {
+    throw new Error('scripts/test-cli-dispatch.js must prove the installer re-exports lib dispatch');
+  }
+});
+
 test('frontmatter parsing stays in shared helper', () => {
   const offenders = jsFiles
     .filter(file => path.relative(ROOT, file) !== 'lib/frontmatter.js')
