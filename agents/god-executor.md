@@ -7,6 +7,20 @@ description: |
 
   Spawned by: god-orchestrator (one per slice, parallel waves)
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "one slice from .godpowers/build/PLAN.md"
+  - "relevant architecture excerpts"
+  - ".godpowers/stack/DECISION.md"
+outputs:
+  - "source code changes"
+  - "tests and regression coverage"
+  - "request-trace closeout"
+gates:
+  - "RED-GREEN-REFACTOR sequence"
+  - "full test suite and lint for the slice"
+  - "requirement id annotations"
+handoff:
+  - "return changed files and verification results to orchestrator without committing"
 ---
 
 # God Executor

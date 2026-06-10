@@ -123,6 +123,78 @@ description: x
   }
 });
 
+test('validateAgent flags missing contract frontmatter as warning when enabled', () => {
+  const file = mkAgent(`---
+name: god-x
+description: x
+tools: Read
+---
+
+# God X
+
+## Inputs
+
+what i read
+
+## Outputs
+
+what i write
+
+## Have-Nots
+
+what fails
+
+## Handoff
+
+what next
+`);
+  const agent = validator.parseAgentFile(file);
+  const findings = validator.validateAgent(agent, { contractSeverity: 'warning' });
+  const contractWarnings = findings.filter(f => (
+    f.severity === 'warning' && f.kind === 'missing-contract-frontmatter'
+  ));
+  if (contractWarnings.length !== 4) {
+    throw new Error(`expected 4 contract warnings, got ${contractWarnings.length}`);
+  }
+});
+
+test('validateAgent accepts complete structured contract frontmatter', () => {
+  const file = mkAgent(`---
+name: god-x
+description: x
+tools: Read
+inputs: ["task request"]
+outputs: ["contract artifact"]
+gates: ["contract validation"]
+handoff: ["return to caller"]
+---
+
+# God X
+
+## Inputs
+
+what i read
+
+## Outputs
+
+what i write
+
+## Have-Nots
+
+what fails
+
+## Handoff
+
+what next
+`);
+  const agent = validator.parseAgentFile(file);
+  const findings = validator.validateAgent(agent, { contractSeverity: 'warning' });
+  const contractFindings = findings.filter(f => f.kind && f.kind.includes('contract-frontmatter'));
+  if (contractFindings.length !== 0) {
+    throw new Error(`expected 0 contract findings, got ${contractFindings.length}`);
+  }
+});
+
 test('validateAgent issues info for missing recommended sections', () => {
   const file = mkAgent(`---
 name: god-x
@@ -221,6 +293,21 @@ I write .godpowers/test/STATE.md and append to .godpowers/state.json.
   const agent = validator.parseAgentFile(file);
   const paths = validator.findOutputPaths(agent);
   if (!paths.includes('.godpowers/test/STATE.md')) throw new Error('path missed');
+});
+
+test('findOutputPaths prefers structured outputs frontmatter when present', () => {
+  const file = mkAgent(`---
+name: god-test
+description: x
+outputs: [".godpowers/test/STATE.md"]
+---
+
+I read .godpowers/prd/PRD.md and write nothing else.
+`);
+  const agent = validator.parseAgentFile(file);
+  const paths = validator.findOutputPaths(agent);
+  if (!paths.includes('.godpowers/test/STATE.md')) throw new Error('structured path missed');
+  if (paths.includes('.godpowers/prd/PRD.md')) throw new Error('input path should not be claimed');
 });
 
 test('findOutputPaths picks up project-root MD files', () => {
@@ -336,6 +423,20 @@ test('auditAll on real godpowers/agents covers 30+ agents', () => {
   const result = validator.auditAll('.');
   if (result.summary.agentCount < 30) {
     throw new Error(`expected 30+ agents, got ${result.summary.agentCount}`);
+  }
+});
+
+test('auditAll on real godpowers/agents has structured contracts for every shipped agent', () => {
+  const result = validator.auditAll('.');
+  if (result.summary.agentCount !== 40) {
+    throw new Error(`expected 40 agents, got ${result.summary.agentCount}`);
+  }
+  if (result.summary.structuredContractCount !== 40) {
+    throw new Error(`expected 40 structured contracts, got ${result.summary.structuredContractCount}`);
+  }
+  const contractFindings = result.allFindings.filter(f => f.kind && f.kind.includes('contract-frontmatter'));
+  if (contractFindings.length !== 0) {
+    throw new Error(`expected 0 contract findings, got ${contractFindings.length}`);
   }
 });
 

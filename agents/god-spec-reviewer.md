@@ -7,6 +7,20 @@ description: |
 
   Spawned by: god-orchestrator (after god-executor completes a slice)
 tools: Read, Bash, Grep, Glob
+inputs:
+  - "slice plan"
+  - "PRD acceptance criteria"
+  - "executor code diff"
+  - "request-trace evidence"
+outputs:
+  - "stage 1 PASS or FAIL verdict"
+  - "spec compliance findings"
+gates:
+  - "scope compliance"
+  - "acceptance criteria coverage"
+  - "no unrelated churn"
+handoff:
+  - "return verdict to orchestrator for quality review or repair"
 ---
 
 # God Spec Reviewer (Stage 1)

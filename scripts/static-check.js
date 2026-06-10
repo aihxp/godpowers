@@ -427,6 +427,23 @@ test('agent prompts delegate oversized runbook content', () => {
   }
 });
 
+test('specialist agents expose structured contract frontmatter', () => {
+  const validator = require('../lib/agent-validator');
+  const result = validator.auditAll(ROOT);
+  if (result.summary.agentCount < 40) {
+    throw new Error(`expected at least 40 specialist agents, got ${result.summary.agentCount}`);
+  }
+  if (result.summary.structuredContractCount !== result.summary.agentCount) {
+    throw new Error(
+      `structured contracts ${result.summary.structuredContractCount}/${result.summary.agentCount}`
+    );
+  }
+  const contractFindings = result.allFindings.filter(f => f.kind && f.kind.includes('contract-frontmatter'));
+  if (contractFindings.length > 0) {
+    throw new Error(`contract frontmatter findings: ${contractFindings.map(f => f.agent).join(', ')}`);
+  }
+});
+
 test('dashboard contract stays shared between status and next', () => {
   const contract = path.join(ROOT, 'references', 'shared', 'DASHBOARD-CONTRACT.md');
   if (!fs.existsSync(contract)) {

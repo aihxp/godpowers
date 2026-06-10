@@ -8,6 +8,20 @@ description: |
 
   Spawned by: /god-story, /god-feature --with-stories
 tools: Read, Write, Bash, Grep
+inputs:
+  - "user story prompt"
+  - "feature decomposition"
+  - "optional PRD and roadmap context"
+outputs:
+  - "STORY.md content"
+  - "acceptance criteria"
+  - "initial slice plan"
+gates:
+  - "user-story format"
+  - "runtime-test-friendly acceptance criteria"
+  - "linkage participation"
+handoff:
+  - "return story artifact and suggested build or feature next step"
 ---
 
 # God Storyteller

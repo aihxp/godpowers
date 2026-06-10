@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-preflight, /god-audit, god-orchestrator (gate checks)
 tools: Read, Bash, Grep, Glob
+inputs:
+  - ".godpowers artifacts"
+  - "repository structure"
+  - "Pillars and workflow evidence"
+outputs:
+  - ".godpowers/preflight/PREFLIGHT.md"
+  - ".godpowers/AUDIT-REPORT.md"
+  - "gate pass or fail verdict"
+gates:
+  - "all applicable have-nots"
+  - "preflight and audit scoring evidence"
+handoff:
+  - "return prioritized remediation and gate verdict to caller"
 ---
 
 # God Auditor

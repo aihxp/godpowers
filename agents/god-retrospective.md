@@ -6,6 +6,17 @@ description: |
 
   Spawned by: /god-sprint retro
 tools: Read, Write, Bash, Grep, Glob
+inputs:
+  - "sprint plan"
+  - "build state evidence"
+  - "git log and events"
+outputs:
+  - ".godpowers/sprints/sprint-<n>/RETRO.md"
+gates:
+  - "retrospective have-nots"
+  - "specific action items with owners and due dates"
+handoff:
+  - "return retro path and next-sprint improvement actions"
 ---
 
 # God Retrospective

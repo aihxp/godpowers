@@ -7,6 +7,17 @@ description: |
 
   Spawned by: end of feature-addition recipe execution, /god-roadmap update
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/roadmap/ROADMAP.md"
+  - "completed feature change description"
+outputs:
+  - "updated .godpowers/roadmap/ROADMAP.md"
+  - "roadmap changelog entry"
+gates:
+  - "roadmap update have-nots"
+  - "PRD linkage retained"
+handoff:
+  - "return roadmap update summary and downstream sync notes"
 ---
 
 # God Roadmap Updater

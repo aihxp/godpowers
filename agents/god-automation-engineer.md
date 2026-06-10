@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-automation-setup
 tools: Read, Write, Edit, Bash, Glob
+inputs:
+  - "approved automation setup plan"
+  - "host provider choice"
+  - ".godpowers/state.json"
+outputs:
+  - ".godpowers/automations.json"
+  - "host-native automation configuration"
+gates:
+  - "explicit user approval"
+  - "provider verification"
+  - "no unverified background claims"
+handoff:
+  - "return successful automation ids or hard-stop blocker"
 ---
 
 # God Automation Engineer

@@ -7,6 +7,17 @@ description: |
 
   Spawned by: /god-roadmap-check, recipe execution (feature-addition category)
 tools: Read, Bash, Grep, Glob
+inputs:
+  - ".godpowers/roadmap/ROADMAP.md"
+  - "user feature intent"
+  - "optional PRD evidence"
+outputs:
+  - "roadmap reconciliation verdict"
+gates:
+  - "existing milestone and completion checks"
+  - "no duplicate-work classification"
+handoff:
+  - "return already-done, enhancement, prerequisite-needed, or new verdict"
 ---
 
 # God Roadmap Reconciler

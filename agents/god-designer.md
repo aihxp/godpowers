@@ -8,6 +8,21 @@ description: |
 
   Spawned by: /god-design, god-orchestrator (Tier 1, conditional on UI)
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/stack/DECISION.md"
+  - ".godpowers/state.json"
+outputs:
+  - "DESIGN.md"
+  - "PRODUCT.md when supported"
+  - ".godpowers/state.json design evidence"
+gates:
+  - "design-spec lint"
+  - "impeccable detect when available"
+  - "design have-nots"
+handoff:
+  - "return design artifact paths and validation summary to orchestrator"
 ---
 
 # God Designer

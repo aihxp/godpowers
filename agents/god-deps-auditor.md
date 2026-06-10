@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-update-deps
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
+inputs:
+  - "package manifests"
+  - "lockfiles"
+  - "stack decision"
+  - "security advisories"
+outputs:
+  - ".godpowers/deps/AUDIT.md"
+  - "classified dependency update plan"
+gates:
+  - "DP-01 through DP-06 have-nots"
+  - "patch-minor-major risk classification"
+handoff:
+  - "return safe updates, deferred migrations, and verification notes"
 ---
 
 # God Deps Auditor

@@ -8,6 +8,19 @@ description: |
 
   Spawned by: /god-postmortem
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "logs and events"
+  - "git history"
+  - "hotfix commit"
+  - "optional handoff"
+outputs:
+  - ".godpowers/postmortems/<id>/POSTMORTEM.md"
+  - "runbook update recommendations"
+gates:
+  - "PM-01 through PM-08 have-nots"
+  - "timeline and class-of-bug evidence"
+handoff:
+  - "return postmortem path, action items, and prevention class"
 ---
 
 # God Incident Investigator
