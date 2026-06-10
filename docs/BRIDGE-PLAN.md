@@ -86,32 +86,77 @@
 
 ### Phase 2 Run Status
 
-- [DECISION] Status: in progress on branch `codex/bridge-phase-2-host-proof-run-a-56e6` for the 2026-06-10 automation run.
-- [DECISION] Completed work: selected Slot A as `https://github.com/sindresorhus/is-up-cli.git` at commit `9c6e39128b1674507fe3cba1bdef0dd876c7d2a9`, with MIT license and 36 JavaScript source lines verified before host spawn.
-- [DECISION] Completed work: installed `godpowers@2.5.0` locally for Codex in the external clone and ran `/god-mode --brownfield --yolo` through the host `god-orchestrator` agent.
-- [DECISION] Completed work: recorded the failed but valid host proof in `docs/case-studies/run-a.md`, including command usage, wall-clock window, validation results, gate failures, repairs, host guarantee level, and what shipped or blocked.
-- [DECISION] Completed work: Run A auto-invoked `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-tech-debt`, `/god-greenfieldify`, `/god-repo`, and `/god-build`.
-- [DECISION] Completed work: Run A stopped honestly at `/god-build` with 72 percent progress, 13 of 18 tracked steps complete, one pause, and no shipped app behavior because `npm test` stayed red after three repair attempts.
-- [DECISION] Completed work: triaged and repaired two Godpowers Phase 2 blockers found during Run A.
+- [DECISION] Status: in progress on `main` after PR #9 merge for the 2026-06-10 automation run.
+- [DECISION] Completed work: loaded `AGENTS.md`, required Pillars, `USERS.md`, `docs/adoption-canary.md`, and the current case-study inventory before changing docs.
+- [DECISION] Completed work: selected and verified current repository identities for Slot A, Slot B, and Slot C in `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md`.
+- [DECISION] Completed work: Slot A is `https://github.com/sindresorhus/slugify-cli.git` at `9d7cc5e95668085d73dd4229d8bb0365f4f32144`, MIT license, with 70 measured JavaScript source lines across `cli.js` and `test.js`.
+- [DECISION] Completed work: Slot B is `https://github.com/vitejs/create-vite-app.git` at `7b1c46dab57d14abd5f36941fe867a3d45e7c6af`, MIT license, with `template-react` exposing `dev` and `build` scripts.
+- [DECISION] Completed work: Slot C is `https://github.com/tastejs/todomvc.git` at `ff43b02e59dfa604386bb382034b2cd07c2bcd8a`, MIT license, with TODO evidence in `examples/cujo/TODO.md` and `cypress/e2e/spec.cy.js`.
+- [DECISION] Completed work: ran the CLI-verifiable canary harness for all three selected repositories and wrote temporary reports under `/tmp/godpowers-phase2/`.
+- [DECISION] Completed work: attempted Slot A `/god-mode --brownfield --yolo` through the Codex `god-orchestrator` host subagent.
+- [DECISION] Completed work: continued Slot A through the Codex `god-orchestrator` host subagent, constrained to `/tmp/godpowers-phase2/slugify-cli`.
+- [DECISION] Completed work: verified existing local-runtime fallback artifacts and subagent closeout artifacts in `/tmp/godpowers-phase2/slugify-cli/.godpowers/`.
+- [DECISION] Completed work: Slot A now has durable `preflight`, `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, `harden`, `deploy`, `observe`, `launch`, `PROGRESS.md`, `state.json`, `events.jsonl`, and host-run summary artifacts.
+- [DECISION] Completed work: added `/tmp/godpowers-phase2/slugify-cli/.godpowers/todos/deployed-staging-origin.md` to record the only deployed-smoke blocker.
+- [DECISION] Completed work: updated `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, `docs/case-studies/run-c.md`, `docs/adoption-canary.md`, and `USERS.md` to reflect Slot A closure and Slot B as the next target.
+- [DECISION] Verification result: `node bin/install.js quick-proof --project=. --brief` passed.
+- [DECISION] Verification result: `node bin/install.js dogfood` passed with 5 of 5 scenarios.
+- [DECISION] Verification result: Slot A CLI canary passed.
+- [DECISION] Verification result: Slot B CLI canary passed.
+- [DECISION] Verification result: Slot C CLI canary passed.
+- [DECISION] Verification result: Slot A CLI canary rerun passed and wrote `/tmp/godpowers-phase2/slugify-cli-canary-rerun.md`.
+- [DECISION] Verification result: Slot A target `npm test` passed with 5 AVA tests.
+- [DECISION] Verification result: Slot A target `npm audit --omit=dev --json` passed with 0 production vulnerabilities.
+- [DECISION] Verification result: Slot A target `gate` commands for `prd`, `arch`, `roadmap`, `stack`, `repo`, `build`, and `harden` all exited 0 with verdict `pass`.
+- [DECISION] Verification result: `node bin/install.js status --project=/tmp/godpowers-phase2/slugify-cli --brief` passed and rendered `State: complete`.
+- [DECISION] Verification result: `node bin/install.js quick-proof --project=/tmp/godpowers-phase2/slugify-cli --brief` passed.
+- [DECISION] Verification result: `node bin/install.js dogfood` rerun passed with 5 of 5 scenarios.
+- [DECISION] Verification result: `npm run test:e2e` passed.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: `npm run test:quick-proof` passed.
+- [DECISION] Verification result: initial `npm run release:check` failed before tests because `c8` was absent from `node_modules`.
+- [DECISION] Verification result: `npm ci` installed locked dependencies with 0 vulnerabilities.
+- [DECISION] Verification result: rerun `npm run release:check` passed with `coverage:lib` at 92.88 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.0, and package contents verified at 534 files.
+- [DECISION] Verification result: GitHub CI run `27286969057` for PR #9 head `5dc6191` completed successfully before the final merge-status note was added.
+- [DECISION] Verification result: GitHub CI run `27287260869` for PR #9 head `fc783b4` completed successfully before merge.
+- [DECISION] Release result: no docs patch release, package metadata update, changelog entry, npm publish, or external package release was attempted because Phase 2 exit criteria are not met.
+- [DECISION] Release result: branch `codex/bridge-phase-2-slot-a-host-proof-continuation` was pushed to `origin`.
+- [DECISION] Release result: PR creation was attempted through `gh pr create` and failed with `HTTP 401: Requires authentication`.
+- [DECISION] Release result: GitHub connector PR creation succeeded and opened PR #9 at `https://github.com/aihxp/godpowers/pull/9`.
+- [DECISION] Release result: the first PR #9 merge attempt failed because the GitHub app connection required reauthentication.
+- [DECISION] Release result: the second PR #9 merge attempt succeeded through the GitHub connector at merge commit `295744aadfa7671f819fbeb6cbd7c8aa6a48813a`.
+- [DECISION] Blockers: Slot A deployed smoke remains deferred until an upstream maintainer or repository configuration provides `STAGING_APP_URL=<deployed staging origin>`.
+- [DECISION] Blockers: Slot A token and dollar cost remain unclaimable because the host run did not emit `cost.recorded` events.
+- [DECISION] Blockers: Slot B and Slot C have not started.
+- [DECISION] Next phase to run remains Phase 2: Host Proof Campaign, starting Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
+
+### Phase 2 Blocker Patch Status
+
+- [DECISION] Status: in progress on branch `codex/bridge-phase-2-host-proof-run-a-56e6` after merging `origin/main` for the 2026-06-10 automation run.
+- [DECISION] Completed work: preserved the merged Slot A, Slot B, and Slot C evidence from PR #9 while keeping the code fixes from this blocker patch branch.
 - [DECISION] Completed work: `lib/installer-files.js` now copies `bin/` into `godpowers-runtime`, and `scripts/test-install-smoke.js` verifies `npm exec --package <runtime> -- godpowers gate` works against an installed runtime bundle.
-- [DECISION] Completed work: `lib/gate.js` now fails build gates when `.godpowers/build/STATE.md` records failed verification commands, and `scripts/test-gate.js` covers the Run A false-pass evidence shape.
-- [DECISION] Verification result: baseline `npx godpowers@2.5.0 quick-proof --project=<clone> --brief` passed before the host run.
-- [DECISION] Verification result: baseline `npx godpowers@2.5.0 status --project=<clone> --brief` passed before the host run.
-- [DECISION] Verification result: baseline `npx godpowers@2.5.0 next --project=<clone> --brief` passed before the host run.
-- [DECISION] Verification result: `node scripts/run-adoption-canary.js https://github.com/sindresorhus/is-up-cli.git --output=/tmp/godpowers-phase2-run-a-Of3Xh6/adoption-canary.md --keep` passed before the host run.
-- [DECISION] Verification result: `npm run test:e2e` passed after the blocker repairs.
-- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed after the blocker repairs.
-- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed after the blocker repairs.
-- [DECISION] Verification result: `node scripts/static-check.js` passed after the blocker repairs.
-- [DECISION] Verification result: `node scripts/test-gate.js` passed after the blocker repairs.
-- [DECISION] Verification result: `node scripts/test-install-smoke.js` passed after the blocker repairs.
-- [DECISION] Verification result: patched `lib/gate.js` fails the Run A build artifact because failed verification commands are present.
+- [DECISION] Completed work: `lib/gate.js` now fails build gates when `.godpowers/build/STATE.md` records failed verification commands, and `scripts/test-gate.js` covers that false-pass evidence shape.
+- [DECISION] Verification result: `node scripts/test-gate.js` passed before merge resolution.
+- [DECISION] Verification result: `node scripts/test-install-smoke.js` passed before merge resolution.
+- [DECISION] Verification result: `npm run test:e2e` passed before merge resolution.
+- [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed before merge resolution.
+- [DECISION] Verification result: `node scripts/test-agent-browser.js` passed before merge resolution.
+- [DECISION] Verification result: `node scripts/static-check.js` passed before merge resolution.
+- [DECISION] Verification result: patched `lib/gate.js` failed the captured build artifact because a failed verification command was present.
 - [DECISION] Verification result: a temp local Codex install successfully ran `npm exec --package <runtime> -- godpowers gate --tier=prd --project=<example> --json`.
-- [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.1, and package contents verified at 534 files.
+- [DECISION] Verification result: pre-merge `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.1, and package contents verified at 534 files.
+- [DECISION] Verification result: post-merge `node scripts/test-gate.js` passed.
+- [DECISION] Verification result: post-merge `node scripts/test-install-smoke.js` passed.
+- [DECISION] Verification result: post-merge `node scripts/static-check.js` passed.
+- [DECISION] Verification result: post-merge `npm run test:e2e` passed.
+- [DECISION] Verification result: post-merge `node scripts/test-runtime-verification.js` passed.
+- [DECISION] Verification result: post-merge `node scripts/test-agent-browser.js` passed.
+- [DECISION] Verification result: post-merge `npm run release:check` passed with `coverage:lib` at 92.9 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.5.1, and package contents verified at 534 files.
 - [DECISION] Release result: prepared version `2.5.1` as a blocker patch candidate; protected merge, tag, publish workflow, and npm publication are pending.
-- [DECISION] Blockers: Run B and Run C remain required for Phase 2 exit criteria.
-- [OPEN QUESTION] Blocker: `/god-cost` token and dollar output was not captured during Run A because this host proof did not expose that command output; owner: maintainer; due: before Run B public confidence wording.
-- [DECISION] Next phase to run remains Phase 2: merge and publish `2.5.1` if protected path and credentials allow, then run Slot B.
+- [DECISION] Blockers: Slot A deployed smoke and cost remain unclaimable.
+- [DECISION] Blockers: Slot B and Slot C still need host runs.
+- [DECISION] Next phase to run remains Phase 2: publish the `2.5.1` blocker patch if protected path and release credentials allow, then run Slot B.
 
 ## Phase 3: MCP Companion Package (target release 2.6.0)
 

@@ -7,9 +7,13 @@ Godpowers is at v2.5.1. Stable release.
 Currently zero recorded production users. Be honest. The 2.5 line adds
 executable tier gates on top of the 2.4 UX flow clarity, executable proof path,
 accountability hardening, deliverable progress tracking, and three external
-CLI-verifiable adoption canaries. Phase 2 Run A also produced a failed
-host-proof case study against `sindresorhus/is-up-cli`, stopping honestly at a
-red build gate. Real users will reveal which gaps actually matter.
+CLI-verifiable adoption canaries. The 2.5.1 blocker patch repairs installed
+runtime gate command access and build-gate failure parsing before Phase 2 Slot
+B. Real users will reveal which gaps actually matter.
+
+- [DECISION] The Phase 2 host proof campaign has selected three current repository slots and completed Slot A for local and CI-verifiable host-proof scope.
+- [DECISION] Slot A does not prove production usage, deployed smoke, or token-dollar accounting because no staging origin or `cost.recorded` events were captured.
+- [DECISION] Current evidence and blockers are recorded in [Run A](docs/case-studies/run-a.md), [Run B](docs/case-studies/run-b.md), and [Run C](docs/case-studies/run-c.md).
 
 ## Proof needed during freeze
 
@@ -50,16 +54,15 @@ If you use Godpowers on a real project:
 
 ## Case studies
 
-- [sindresorhus/is-up-cli Host Proof Run A](docs/case-studies/run-a.md)
 - [sindresorhus/is CLI adoption canary](docs/case-studies/sindresorhus-is-adoption-canary.md)
 - [expressjs/cors CLI adoption canary](docs/case-studies/expressjs-cors-adoption-canary.md)
 - [tinyhttp/tinyhttp CLI adoption canary](docs/case-studies/tinyhttp-adoption-canary.md)
+- [Phase 2 Run A local host proof record](docs/case-studies/run-a.md)
+- [Phase 2 Run B selected slot](docs/case-studies/run-b.md)
+- [Phase 2 Run C selected slot](docs/case-studies/run-c.md)
 
-Run A is not a production-user study because it did not ship app behavior. It
-is a host-run proof artifact because it records `/god-mode` command usage,
-gate repairs, degraded host guarantees, and a real build blocker. The CLI
-canaries prove first-contact CLI signals against real cloned repositories and
-keep the remaining host-run gaps explicit.
+- [DECISION] These are not production-user studies.
+- [DECISION] They prove first-contact CLI signals against real cloned repositories and one local host-proof record while keeping production-user, deployed-smoke, and cost-accounting gaps explicit.
 
 If you ship something with Godpowers, write it up. We'll feature you here.
 
