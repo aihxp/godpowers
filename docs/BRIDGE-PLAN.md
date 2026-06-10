@@ -20,6 +20,7 @@
 
 | Timestamp UTC | Agent | Scope | Branch or worktree | Status | Next action |
 |---|---|---|---|---|---|
+| 2026-06-10T17:21:48Z | Codex 382b | Phase 4 state advance CLI mutation | `codex/bridge-phase-4-state-advance-cli-382b` in `/Users/hprincivil/.codex/worktrees/382b/godpowers` | done | Verification: `node scripts/test-state-advance.js`, `node scripts/test-cli-dispatch.js`, `node scripts/test-state.js`, `node scripts/test-state-views.js`, `node scripts/test-state-lock.js`, `node scripts/static-check.js`, CLI temp-project smoke, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, `npm ci`, changed-file banned character scan, and `npm run release:check` passed; release: not attempted for this independent Phase 4 CLI mutation slice; remaining work: migrate decision reads from markdown state to `state.json`, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and ship Phase 4 as 2.7.0; next action: run the Phase 4 decision-read migration slice. |
 | 2026-06-10T17:02:35Z | Codex b3f2 | Phase 4 generated state views foundation | `codex/bridge-phase-4-generated-state-views-b3f2` in `/Users/hprincivil/.codex/worktrees/b3f2/godpowers` | done | Verification: `node scripts/test-state-views.js`, `node scripts/test-state.js`, `node scripts/static-check.js`, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, `npm ci`, and `npm run release:check` passed after dependencies were installed; release: not attempted for this independent foundation slice; remaining work: add the `godpowers state advance` CLI mutation, migrate decision reads, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and ship Phase 4 as 2.7.0; next action: run the Phase 4 state advance CLI mutation slice. |
 | 2026-06-10T16:53:40Z | Codex 70d8 | Phase 4 markdown state read inventory | `codex/bridge-phase-4-state-inventory-70d8` in `/Users/hprincivil/.codex/worktrees/70d8/godpowers` | done | Verification: `npm run lint`, `npm run test:quick-proof`, `npm run test:audit`, and changed-doc banned character scan passed; release: not attempted for this inventory-only docs slice; remaining work: implement generated state views and migrate executable decision reads; next action: start Phase 4 generated state views. |
 | 2026-06-10T16:49:00Z | Codex 46d1 | Phase 3 companion registry verification | `codex/bridge-phase-3-registry-blocker-46d1` in `/Users/hprincivil/.codex/worktrees/46d1/godpowers` | done | Verification: `gh run view 27291159615`, `npm view godpowers version dist-tags`, `npm view @godpowers/mcp version dist-tags`, `npm run verify:published-install`, `npm install --package-lock-only --ignore-scripts @godpowers/mcp@2.6.0`, `npm exec --package @godpowers/mcp@2.6.0 -- godpowers-mcp --help`, `gh release view v2.6.0`, `npm run lint`, and `npm run test:surface`; release: npm `godpowers@2.6.0`, npm `@godpowers/mcp@2.6.0`, and GitHub release `v2.6.0` are published; remaining work: none for Phase 3; next action: start Phase 4. |
@@ -252,7 +253,7 @@
 
 ### Phase 4 Run Status
 
-- [DECISION] Status: partial after the 2026-06-10 inventory slice on branch `codex/bridge-phase-4-state-inventory-70d8` and the generated state views foundation slice on branch `codex/bridge-phase-4-generated-state-views-b3f2`.
+- [DECISION] Status: partial after the 2026-06-10 inventory slice on branch `codex/bridge-phase-4-state-inventory-70d8`, the generated state views foundation slice on branch `codex/bridge-phase-4-generated-state-views-b3f2`, and the state advance CLI mutation slice on branch `codex/bridge-phase-4-state-advance-cli-382b`.
 - [DECISION] Completed work: added `docs/phase-4-state-read-inventory.md` with classified `decision-read`, `display-read`, `migration-read`, and `legacy-source-read` entries for `.godpowers/PROGRESS.md` and Godpowers-owned per-tier `STATE.md` surfaces.
 - [DECISION] Completed work: identified schema gaps for initialized-project detection, generated-view metadata, build verification evidence, design state evidence, deploy evidence, observe evidence, launch evidence, and source-system migration metadata.
 - [DECISION] Completed work: identified static-check targets for route prerequisites, direct `PROGRESS.md` updates, direct per-tier `STATE.md` reads, and `.planning/STATE.md` legacy-source exceptions.
@@ -260,6 +261,9 @@
 - [DECISION] Completed work: wired `lib/state.js` sync and async write paths to refresh generated state views after `state.json` mutations, with an opt-out for callers that need `refreshViews: false`.
 - [DECISION] Completed work: added `scripts/test-state-views.js`, registered it in `scripts/run-tests.js`, and added a static check that keeps the test in the full release runner.
 - [DECISION] Completed work: updated `lib/README.md` so the runtime module index names the generated state view owner.
+- [DECISION] Completed work: added `lib/state-advance.js`, `godpowers state advance --step=<s> --status=<status> --project=.`, parser and dispatch wiring, focused CLI dispatch tests, focused state advance tests, and public CLI helper docs.
+- [DECISION] Completed work: changed `lib/state-lock.js` so lock-only acquire, release, and reclaim writes do not refresh generated markdown views before the actual state mutation can report managed-view checksum warnings.
+- [DECISION] Completed work: updated `schema/state.v1.json` so the schema accepts the existing `not-required` complete status already used by the state runtime.
 - [DECISION] Verification result: inventory slice `npm run lint` passed.
 - [DECISION] Verification result: inventory slice `npm run test:quick-proof` passed.
 - [DECISION] Verification result: inventory slice `npm run test:audit` passed with `npm audit --omit=dev`, `git diff --check`, and `npm run test:surface`.
@@ -267,15 +271,22 @@
 - [DECISION] Verification result: `node scripts/test-state-views.js` passed.
 - [DECISION] Verification result: `node scripts/test-state.js` passed.
 - [DECISION] Verification result: `node scripts/static-check.js` passed.
+- [DECISION] Verification result: state advance slice `node scripts/test-state-advance.js` passed.
+- [DECISION] Verification result: state advance slice `node scripts/test-cli-dispatch.js` passed.
+- [DECISION] Verification result: state advance slice `node scripts/test-state-lock.js` passed.
+- [DECISION] Verification result: state advance slice temp-project CLI smoke passed for `node bin/install.js state advance --step=prd --status=done --project=<tmp> --json`.
 - [DECISION] Verification result: `npm run test:e2e` passed.
 - [DECISION] Verification result: `node scripts/test-runtime-verification.js` passed.
 - [DECISION] Verification result: `node scripts/test-agent-browser.js` passed.
 - [DECISION] Verification result: `npm ci` passed and reported 0 vulnerabilities.
 - [DECISION] Verification result: `npm run release:check` passed with `coverage:lib` at 92.94 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.6.0, root package contents verified at 536 files, and `@godpowers/mcp` package contents verified at 8 files.
+- [DECISION] Verification result: state advance slice `npm run release:check` passed after `npm ci` installed local dependencies, with `coverage:lib` at 92.83 percent line coverage, `npm audit --omit=dev` reporting 0 vulnerabilities, public surface docs matching version 2.6.0, root package contents verified at 537 files, and `@godpowers/mcp` package contents verified at 8 files.
+- [DECISION] Verification result: state advance slice changed-file banned character scan passed.
 - [DECISION] Release result: no npm publish or version bump was attempted because this was an independent Phase 4 foundation slice, not the complete 2.7.0 release.
-- [DECISION] Blockers: no blocker remains for this generated state views foundation slice.
-- [DECISION] Remaining Phase 4 work: add the `godpowers state advance` CLI mutation, migrate decision reads from markdown state to `state.json`, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and run the final 2.7.0 release path.
-- [DECISION] Next phase-scoped task to run is Phase 4 state advance CLI mutation.
+- [DECISION] Release result: no npm publish or version bump was attempted for the state advance CLI mutation slice because Phase 4 remains partial.
+- [DECISION] Blockers: no blocker remains for the generated state views foundation slice or the state advance CLI mutation slice.
+- [DECISION] Remaining Phase 4 work: migrate decision reads from markdown state to `state.json`, add static decision-read checks, extend generated views beyond `PROGRESS.md`, update dogfood fixtures, and run the final 2.7.0 release path.
+- [DECISION] Next phase-scoped task to run is Phase 4 decision-read migration.
 
 ## Phase 5: Surface Contraction (target release 3.0.0)
 

@@ -466,6 +466,7 @@ npx godpowers --uninstall        # Remove
 npx godpowers --migrate          # One-shot upgrade
 npx godpowers status --project . # Render dashboard from disk state
 npx godpowers next --project .   # Recommend the next route from disk state
+npx godpowers state advance --step prd --status done --project . # Mutate tracked state
 npx godpowers gate --tier prd --project . # Check a tier artifact gate
 npx godpowers dogfood            # Run built-in messy-repo scenarios
 npx godpowers extension-scaffold --name=@scope/pack --output=.

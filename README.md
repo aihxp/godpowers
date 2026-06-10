@@ -259,6 +259,7 @@ npx godpowers next --project=.
 npx godpowers status --project=. --brief
 npx godpowers status --project=. --json
 npx godpowers quick-proof --project=.
+npx godpowers state advance --step=prd --status=done --project=.
 npx godpowers gate --tier=prd --project=.
 npx godpowers mcp-info --project=.
 npx godpowers dogfood

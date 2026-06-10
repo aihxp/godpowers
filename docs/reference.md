@@ -78,6 +78,7 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `godpowers status --project .` - Render the shared dashboard from disk state.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
 - `godpowers quick-proof --project .` - Render the shipped proof fixture with host guarantees.
+- `godpowers state advance --step=prd --status=done --project .` - Update one tracked state step and regenerate managed state views.
 - `godpowers gate --tier=prd --project .` - Check a tier artifact gate and exit non-zero when blocking evidence is missing.
 - `godpowers mcp-info --project .` - Show read-only MCP companion setup instructions without loading the MCP SDK.
 - `godpowers automation-status --project .` - Show automation provider support.
