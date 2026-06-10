@@ -295,6 +295,16 @@ test('MCP companion stays outside main package dependencies', () => {
   }
 });
 
+test('publish workflow includes MCP companion package', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'publish.yml'), 'utf8');
+  if (Array.isArray(pkg.workspaces) && pkg.workspaces.includes('packages/mcp')) {
+    if (!workflow.includes('npm publish --workspace @godpowers/mcp --provenance --access public')) {
+      throw new Error('publish.yml must publish @godpowers/mcp when the workspace exists');
+    }
+  }
+});
+
 test('skill metadata source of truth is executable', () => {
   const surface = require('../lib/skill-surface');
   const commands = surface.commandNames();
