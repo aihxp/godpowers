@@ -14,8 +14,8 @@ The first CLI-verifiable external canary set is captured in:
 [tinyhttp/tinyhttp](case-studies/tinyhttp-adoption-canary.md).
 
 - [DECISION] The Phase 2 host proof campaign has selected current slots in [Run A](case-studies/run-a.md), [Run B](case-studies/run-b.md), and [Run C](case-studies/run-c.md).
-- [DECISION] Run A has a completed local and CI-verifiable host proof with durable `.godpowers` artifacts on disk.
-- [DECISION] Runs B and C remain selected but not started as host proofs.
+- [DECISION] Run A now has local and CI-verifiable durable host-proof artifacts, with deployed smoke and token-dollar accounting gaps still explicit.
+- [DECISION] Runs B and C remain selected but unrun.
 
 ## Purpose
 
@@ -135,6 +135,7 @@ Route canary findings to the smallest matching surface:
 | Artifact drift appears | `/god-sync`, repo sync docs, or Pillars sync rules |
 | Release confidence gap appears | [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) |
 
-## Open Decision
+## Phase 2 Status
 
-- [OPEN QUESTION] Should Slot B target the repository root or a copied template directory as the host proof project root? Owner: maintainer. Due: before starting Slot B.
+- [DECISION] The next Phase 2 run should start Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
+- [DECISION] The Slot C target is `examples/cujo` from `https://github.com/tastejs/todomvc.git` after Slot B completes or fails honestly.

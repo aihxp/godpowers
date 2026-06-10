@@ -10,12 +10,13 @@
 
 ## Host Run Status
 
-- [DECISION] Host invocation completed for local and CI-verifiable scope: `/god-mode --brownfield --yolo` inside Codex using the `god-orchestrator` subagent.
+- [DECISION] Host invocation was `/god-mode --brownfield --yolo` inside Codex using the `god-orchestrator` subagent for the 2026-06-10 continuation.
 - [DECISION] The host run read `/tmp/godpowers-phase2/slugify-cli/.godpowers/runs/phase2-run-a/ORCHESTRATOR-HANDOFF.md` before acting.
-- [DECISION] The host run inspected `package.json`, `cli.js`, `test.js`, `readme.md`, and `.github/workflows/main.yml`.
-- [DECISION] The continuation wrote durable Godpowers state, planning, build, release-readiness, harden, launch, and run-summary artifacts under `/tmp/godpowers-phase2/slugify-cli/.godpowers/`.
+- [DECISION] The initial artifact-generation pass used local runtime fallback, and the continuation used the Codex `god-orchestrator` host subagent to verify disk contracts and executable gates.
+- [DECISION] Durable Slot A artifacts now exist under `/tmp/godpowers-phase2/slugify-cli/.godpowers/`, including `preflight/PREFLIGHT.md`, `prd/PRD.md`, `arch/ARCH.md`, `roadmap/ROADMAP.md`, `stack/DECISION.md`, `repo/AUDIT.md`, `build/STATE.md`, `harden/FINDINGS.md`, `PROGRESS.md`, `state.json`, and `runs/phase2-run-a/HOST-RUN-SUMMARY.md`.
+- [DECISION] The continuation added `/tmp/godpowers-phase2/slugify-cli/.godpowers/todos/deployed-staging-origin.md` for the only external blocker.
 - [DECISION] Source package files from the upstream repository were not edited.
-- [DECISION] Case-study claim: this is a completed Slot A host proof for local and CI-verifiable scope, not a production-user study and not a deployed smoke test.
+- [DECISION] Case-study claim: Slot A is complete for local and CI-verifiable host-proof scope, but it is not a production-user study and it does not prove deployed smoke because no staging origin is evidenced.
 
 ## Commands Observed
 
@@ -25,30 +26,28 @@
 - [DECISION] `./cli.js 'Hello World from Godpowers'` passed.
 - [DECISION] `npm audit --omit=dev --json` passed with 0 production vulnerabilities.
 - [DECISION] `npm audit --json` reported 3 low-severity dev dependency findings under `xo`.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=prd --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=arch --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=roadmap --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=stack --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=repo --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=build --project=.` passed.
-- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=harden --project=.` passed.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=prd --project=.` passed with verdict `pass`.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=arch --project=.` passed with verdict `pass`.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=roadmap --project=.` passed with verdict `pass`.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=stack --project=.` passed with verdict `pass`.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=repo --project=.` passed with verdict `pass`.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=build --project=.` passed with verdict `pass` and found 2 passed verification commands in build state.
+- [DECISION] `node /Users/hprincivil/.codex/worktrees/a60e/godpowers/bin/install.js gate --tier=harden --project=.` passed with verdict `pass` and found no unresolved Critical findings or blocked launch gate.
 
 ## Evidence Protocol
 
-- [DECISION] Wall-clock case-study time remains not claimable because the first attempt and continuation were split by automation interruption and a parent status interrupt.
-- [DECISION] Parent automation wait windows totaled at least 1120 seconds across the first attempt and continuation before durable artifacts were verified.
-- [DECISION] `/god-cost` was not captured in the target clone.
-- [DECISION] Pause count is 2, caused by parent automation status interrupts, not by product decisions.
+- [DECISION] Wall-clock case-study time remains approximate because the initial artifact-generation pass began outside a single timed command; durable state records `2026-06-10T15:05:28Z` as the project start timestamp.
+- [DECISION] Parent automation wait windows from the first attempt totaled 220 seconds before the status interruption completed.
+- [DECISION] `/god-cost` tokens and dollars were not captured because no `cost.recorded` events exist in `/tmp/godpowers-phase2/slugify-cli/.godpowers/runs/phase2-run-a/events.jsonl`.
+- [DECISION] Pause count is 1, caused by parent automation requesting status, not by a product decision.
 - [DECISION] CLI canary result: `node scripts/run-adoption-canary.js https://github.com/sindresorhus/slugify-cli.git --output=/tmp/godpowers-phase2/slugify-cli-canary.md` passed and wrote a report.
 - [DECISION] Host guarantee line from the CLI canary was `Host guarantees: full on unknown`.
-- [DECISION] Host run summary exists at `/tmp/godpowers-phase2/slugify-cli/.godpowers/runs/phase2-run-a/HOST-RUN-SUMMARY.md`.
-- [DECISION] Durable state exists at `/tmp/godpowers-phase2/slugify-cli/.godpowers/state.json`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/PROGRESS.md`, and `/tmp/godpowers-phase2/slugify-cli/.godpowers/CHECKPOINT.md`.
-- [DECISION] Planning artifacts exist at `/tmp/godpowers-phase2/slugify-cli/.godpowers/prd/PRD.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/arch/ARCH.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/roadmap/ROADMAP.md`, and `/tmp/godpowers-phase2/slugify-cli/.godpowers/stack/DECISION.md`.
-- [DECISION] Build and release-readiness artifacts exist at `/tmp/godpowers-phase2/slugify-cli/.godpowers/repo/AUDIT.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/build/STATE.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/deploy/STATE.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/observe/STATE.md`, `/tmp/godpowers-phase2/slugify-cli/.godpowers/harden/FINDINGS.md`, and `/tmp/godpowers-phase2/slugify-cli/.godpowers/launch/STATE.md`.
-- [DECISION] Local and CI-verifiable Slot A proof shipped as external clone artifacts only.
-- [DECISION] No upstream source package change, npm release, GitHub release, or deployed service shipped from this run.
+- [DECISION] Target dashboard result from `node bin/install.js status --project=/tmp/godpowers-phase2/slugify-cli --brief` was `State: complete`, `Readiness: ready`, and `Host guarantees: full on unknown`.
+- [DECISION] Target `state.json` records host guarantees as degraded because the artifact-generation pass used local runtime fallback before the Codex subagent continuation verified gates.
+- [DECISION] Nothing shipped from this run because the upstream source package was intentionally left unchanged.
 
 ## Blocker
 
-- [DECISION] No blocker prevents local or CI-verifiable Slot A host proof closure.
-- [OPEN QUESTION] Provide `STAGING_APP_URL=<deployed staging origin>` if deployed smoke testing is required later. Owner: upstream maintainer. Due: before deployed smoke testing.
+- [DECISION] No blocker prevents local or CI-verifiable Slot A host-proof closure.
+- [DECISION] Blocker: deployed smoke remains deferred until an upstream maintainer or repository configuration provides `STAGING_APP_URL=<deployed staging origin>`.
+- [DECISION] Blocker: token and dollar cost remain unclaimable because the host run did not emit `cost.recorded` events.
