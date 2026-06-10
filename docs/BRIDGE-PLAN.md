@@ -20,6 +20,7 @@
 
 | Timestamp UTC | Agent | Scope | Branch or worktree | Status | Next action |
 |---|---|---|---|---|---|
+| 2026-06-10T16:53:40Z | Codex 70d8 | Phase 4 markdown state read inventory | `codex/bridge-phase-4-state-inventory-70d8` in `/Users/hprincivil/.codex/worktrees/70d8/godpowers` | done | Verification: `npm run lint`, `npm run test:quick-proof`, `npm run test:audit`, and changed-doc banned character scan passed; release: not attempted for this inventory-only docs slice; remaining work: implement generated state views and migrate executable decision reads; next action: start Phase 4 generated state views. |
 | 2026-06-10T16:49:00Z | Codex 46d1 | Phase 3 companion registry verification | `codex/bridge-phase-3-registry-blocker-46d1` in `/Users/hprincivil/.codex/worktrees/46d1/godpowers` | done | Verification: `gh run view 27291159615`, `npm view godpowers version dist-tags`, `npm view @godpowers/mcp version dist-tags`, `npm run verify:published-install`, `npm install --package-lock-only --ignore-scripts @godpowers/mcp@2.6.0`, `npm exec --package @godpowers/mcp@2.6.0 -- godpowers-mcp --help`, `gh release view v2.6.0`, `npm run lint`, and `npm run test:surface`; release: npm `godpowers@2.6.0`, npm `@godpowers/mcp@2.6.0`, and GitHub release `v2.6.0` are published; remaining work: none for Phase 3; next action: start Phase 4. |
 | 2026-06-10T16:33:08Z | Codex e273 | Phase 3 release and publish closeout | `codex/bridge-phase-3-release-closeout-e273` and `codex/bridge-phase-3-release-status-e273` in `/Users/hprincivil/.codex/worktrees/e273/godpowers` | done | Verification: `npm --workspace @godpowers/mcp test`, `npm --workspace @godpowers/mcp run pack:check`, `node scripts/static-check.js`, `npm run test:e2e`, `node scripts/test-runtime-verification.js`, `node scripts/test-agent-browser.js`, three `npm run release:check` runs, PR #23 CI, PR #25 CI, `gh run view 27291159615`, `npm run verify:published-install`, npm view for both packages, `npm exec --package @godpowers/mcp@2.6.0 -- godpowers-mcp --help`, and `gh release view v2.6.0`; release: npm `godpowers@2.6.0`, npm `@godpowers/mcp@2.6.0`, tag `v2.6.0`, and GitHub release published; remaining work: none for Phase 3; next action: start Phase 4. |
 | 2026-06-10T16:12:38Z | Codex da7c | Phase 2 blocker patch release-status closeout | `codex/bridge-phase-2-release-closeout-da7c` in `/Users/hprincivil/.codex/worktrees/da7c/godpowers` | done | Verification: `gh run view 27289417888`, `npm view godpowers version dist-tags`, `npm run verify:published-install`, `gh release view v2.5.2`, `npm run lint`, and `npm run release:check`; release: npm `2.5.2` and GitHub release published; remaining work: none; next action: start Phase 3. |
@@ -247,6 +248,21 @@
 - [DECISION] Update dogfood fixtures in the same commit so `npx godpowers dogfood` stays green.
 - [DECISION] Exit criteria are no Godpowers decision-reads from markdown state, generated views with checksums, green drift-impossibility tests, and retained `god-repair` diagnostics.
 - [HYPOTHESIS] Phase 4 takes two to three weeks because the current surface contains many `PROGRESS.md` and `STATE.md` references.
+
+### Phase 4 Run Status
+
+- [DECISION] Status: in progress on branch `codex/bridge-phase-4-state-inventory-70d8` for the 2026-06-10 automation run.
+- [DECISION] Completed work: added `docs/phase-4-state-read-inventory.md` with classified `decision-read`, `display-read`, `migration-read`, and `legacy-source-read` entries for `.godpowers/PROGRESS.md` and Godpowers-owned per-tier `STATE.md` surfaces.
+- [DECISION] Completed work: identified schema gaps for initialized-project detection, generated-view metadata, build verification evidence, design state evidence, deploy evidence, observe evidence, launch evidence, and source-system migration metadata.
+- [DECISION] Completed work: identified static-check targets for route prerequisites, direct `PROGRESS.md` updates, direct per-tier `STATE.md` reads, and `.planning/STATE.md` legacy-source exceptions.
+- [DECISION] Verification result: `npm run lint` passed.
+- [DECISION] Verification result: `npm run test:quick-proof` passed.
+- [DECISION] Verification result: `npm run test:audit` passed with `npm audit --omit=dev`, `git diff --check`, and `npm run test:surface`.
+- [DECISION] Verification result: changed-doc banned character scan passed for `docs/BRIDGE-PLAN.md` and `docs/phase-4-state-read-inventory.md`.
+- [DECISION] Release result: no release or publish action was attempted because this run completed an inventory-only Phase 4 documentation slice.
+- [DECISION] Blockers: no inventory blocker remains.
+- [DECISION] Remaining work: implement `lib/state-views.js`, generated checksummed `PROGRESS.md`, generated checksummed per-tier `STATE.md` views, route-prerequisite migration, gate migration, drift-impossibility tests, dogfood fixture updates, and docs migration.
+- [DECISION] Next phase-scoped task to run is Phase 4 generated state views.
 
 ## Phase 5: Surface Contraction (target release 3.0.0)
 
