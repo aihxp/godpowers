@@ -86,7 +86,7 @@
 
 ### Phase 2 Run Status
 
-- [DECISION] Status: in progress on branch `codex/bridge-phase-2-slot-a-host-proof-continuation` for the 2026-06-10 automation run.
+- [DECISION] Status: in progress on `main` after PR #9 merge for the 2026-06-10 automation run.
 - [DECISION] Completed work: loaded `AGENTS.md`, required Pillars, `USERS.md`, `docs/adoption-canary.md`, and the current case-study inventory before changing docs.
 - [DECISION] Completed work: selected and verified current repository identities for Slot A, Slot B, and Slot C in `docs/case-studies/run-a.md`, `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md`.
 - [DECISION] Completed work: Slot A is `https://github.com/sindresorhus/slugify-cli.git` at `9d7cc5e95668085d73dd4229d8bb0365f4f32144`, MIT license, with 70 measured JavaScript source lines across `cli.js` and `test.js`.
