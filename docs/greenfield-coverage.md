@@ -37,11 +37,11 @@ These are produced sequentially as the arc progresses:
 | 1 | **Design** | `DESIGN.md` (project root, Google Labs spec) | god-designer | **UI projects only** |
 | 1 | **Product** | `PRODUCT.md` (project root) | impeccable teach | **UI + impeccable installed** |
 | 2 | Repo | `.godpowers/repo/AUDIT.md` + repo source | god-repo-scaffolder | always |
-| 2 | Build | `.godpowers/build/PLAN.md` + `STATE.md` + code | god-planner + god-executor | always |
-| 3 | Deploy | `.godpowers/deploy/STATE.md` | god-deploy-engineer | always |
-| 3 | Observe | `.godpowers/observe/STATE.md` | god-observability-engineer | always |
+| 2 | Build | `.godpowers/build/PLAN.md` + `.godpowers/state.json` + code | god-planner + god-executor | always |
+| 3 | Deploy | `.godpowers/state.json` deploy evidence | god-deploy-engineer | always |
+| 3 | Observe | `.godpowers/state.json` observe evidence | god-observability-engineer | always |
 | 3 | Harden | `.godpowers/harden/FINDINGS.md` | god-harden-auditor | always |
-| 3 | Launch | `.godpowers/launch/STATE.md` | god-launch-strategist | always |
+| 3 | Launch | `.godpowers/state.json` launch evidence | god-launch-strategist | always |
 
 Detection of UI presence is automatic via `lib/design-detector.js`
 (reads STACK + package.json + filesystem signals). Backend-only

@@ -4,7 +4,7 @@ metadata:
   command: /god-locate
   description: 
   tier: 0
-  family: continue
+  family: compatibility
 
 prerequisites:
   required: []

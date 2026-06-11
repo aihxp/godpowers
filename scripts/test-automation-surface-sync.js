@@ -148,8 +148,8 @@ test('route quality sync requires gate commands for executable tier routes', () 
     '  events: [agent.start, artifact.created, agent.end]'
   ].join('\n'));
   const report = routeQualitySync.detect(tmp);
-  assert(report.stale.some((check) => check.id === 'missing-tier-gate-command--god-prd'));
-  assert(report.stale.some((check) => check.id === 'tier-gate-command-policy'));
+  assert(report.stale.some((check) => check.id === 'missing-gate-command--god-prd'));
+  assert(report.stale.some((check) => check.id === 'gate-command-policy'));
 });
 
 test('recipe coverage sync finds missing high-frequency recipes', () => {

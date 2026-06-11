@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-launch, god-orchestrator
 tools: Read, Write, Edit, Bash, Grep, WebSearch
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/harden/FINDINGS.md"
+  - ".godpowers/state.json launch prerequisites"
+outputs:
+  - ".godpowers/state.json launch evidence"
+  - "landing copy and channel messaging"
+  - "D-7 to D+7 launch runbook"
+gates:
+  - "L-01 through L-08 have-nots"
+  - "no unresolved Critical harden findings"
+  - "launch state evidence is complete"
+handoff:
+  - "return launch evidence and pause only for human-only brand choices"
 ---
 
 # God Launch Strategist
@@ -69,9 +83,8 @@ For each channel:
 - D+7: post-launch retrospective
 
 ### 6. Shipping Closure
-- Read `.godpowers/deploy/STATE.md`,
-  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present, and
-  `.godpowers/observe/STATE.md`.
+- Read `.godpowers/state.json` deploy and observe evidence plus
+  `.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md` if present.
 - If deploy or observe is waiting on external access, do not create a broad
   dashboard checklist. Reference only the smallest next access item from the
   waiting bundle and write launch state as local-ready with deployed
@@ -96,7 +109,7 @@ For each channel:
 
 ## Output
 
-Write `.godpowers/launch/STATE.md` with all artifacts.
+Return launch evidence for `.godpowers/state.json`; `lib/state-views.js` generates `.godpowers/launch/STATE.md` with the launch artifact summary.
 
 ## Have-Nots
 
@@ -129,7 +142,7 @@ pause. Log to YOLO-DECISIONS.md so the user can revise:
 - Auto-picked tone: direct/professional (default)
 - Auto-picked headline: [actual headline written]
 - Reason: substitution-tested headline that emphasizes the strongest PRD value prop
-- Reversible by: edit `.godpowers/launch/STATE.md` headline section
+- Reversible by: update launch evidence in `.godpowers/state.json` and regenerate the launch state view
 - Timestamp: [ISO 8601]
 ```
 

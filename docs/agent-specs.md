@@ -88,7 +88,7 @@ Each agent has these fields:
 | **Triggers** | `/god-roadmap`, `/god-mode`, `/god-roadmap-update` (legacy) |
 | **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/arch/ARCH.md`, optional `.godpowers/domain/GLOSSARY.md`, optional `.godpowers/prep/INITIAL-FINDINGS.md`, optional `.godpowers/prep/IMPORTED-CONTEXT.md`, `templates/ROADMAP.md` |
 | **Outputs** | `.godpowers/roadmap/ROADMAP.md` |
-| **Downstream consumers** | god-planner, god-roadmap-reconciler, god-reconciler |
+| **Downstream consumers** | god-planner, god-reconciler |
 | **Artifact awareness** | PRD requirements, ARCH dependency edges, domain glossary, imported milestones and stories as supporting evidence |
 | **Handoff** | Returns when ROADMAP passes have-nots R-01..R-10. Pauses on capacity unknown, ambiguous ordering. |
 | **Standards check** | YES |
@@ -190,11 +190,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-deploy`, `/god-mode`, `/god-hotfix` (expedited mode), `/god-refactor` (gradual rollout mode), `/god-upgrade` (per-slice with metric gating) |
-| **Inputs** | `.godpowers/arch/ARCH.md`, `.godpowers/stack/DECISION.md`, `.godpowers/build/STATE.md`, optional `.godpowers/org-context.yaml` |
-| **Outputs** | `.godpowers/deploy/STATE.md`, CI/CD config files |
+| **Inputs** | `.godpowers/arch/ARCH.md`, `.godpowers/stack/DECISION.md`, `.godpowers/state.json` build evidence, optional `.godpowers/org-context.yaml` |
+| **Outputs** | `.godpowers/state.json` deploy evidence, CI/CD config files, optional deploy access bundle |
 | **Downstream consumers** | god-observability-engineer (uses pipeline for deploy events), god-launch-strategist (verifies deploy is healthy) |
 | **Artifact awareness** | ARCH topology, stack hosting choice, build artifacts |
-| **Handoff** | Returns when STATE.md complete and rollback procedure has been tested. Have-nots D-01..D-08. |
+| **Handoff** | Returns when deploy state evidence is complete and rollback procedure has been tested. Have-nots D-01..D-08. |
 | **Standards check** | YES |
 
 ### god-observability-engineer
@@ -202,11 +202,11 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-observe`, `/god-mode`, `/god-hotfix` (verify-symptom-resolved mode) |
-| **Inputs** | `.godpowers/prd/PRD.md` (success metrics -> SLOs), `.godpowers/arch/ARCH.md`, `.godpowers/deploy/STATE.md`, optional `.godpowers/org-context.yaml` |
-| **Outputs** | `.godpowers/observe/STATE.md`, alert configs, dashboard configs |
+| **Inputs** | `.godpowers/prd/PRD.md` (success metrics -> SLOs), `.godpowers/arch/ARCH.md`, `.godpowers/state.json` deploy evidence, optional `.godpowers/org-context.yaml` |
+| **Outputs** | `.godpowers/state.json` observability evidence, alert configs, dashboard configs, runbooks |
 | **Downstream consumers** | god-launch-strategist (verifies metrics ready before launch) |
 | **Artifact awareness** | PRD success metrics, deploy pipeline, org observability stack |
-| **Handoff** | Returns when STATE.md complete. Have-nots OB-01..OB-08. |
+| **Handoff** | Returns when observability state evidence is complete. Have-nots OB-01..OB-08. |
 | **Standards check** | YES |
 
 ### god-harden-auditor
@@ -214,7 +214,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-harden`, `/god-mode`, `/god-feature` (scope-to-new-code mode) |
-| **Inputs** | Code, `.godpowers/deploy/STATE.md`, optional `.godpowers/org-context.yaml` (org-specific security standards) |
+| **Inputs** | Code, `.godpowers/state.json` deploy evidence, optional `.godpowers/org-context.yaml` (org-specific security standards) |
 | **Outputs** | `.godpowers/harden/FINDINGS.md` |
 | **Downstream consumers** | god-launch-strategist (BLOCKED on Critical findings) |
 | **Artifact awareness** | Full codebase, deploy config |
@@ -227,10 +227,10 @@ Each agent has these fields:
 |---|---|
 | **Triggers** | `/god-launch`, `/god-mode`, `/god-feature` (feature-flag-rollout mode) |
 | **Inputs** | `.godpowers/prd/PRD.md`, `.godpowers/harden/FINDINGS.md` (must have NO unresolved Criticals) |
-| **Outputs** | `.godpowers/launch/STATE.md`, landing copy, OG cards, channel-specific messaging, D-7..D+7 runbook |
+| **Outputs** | `.godpowers/state.json` launch evidence, landing copy, OG cards, channel-specific messaging, D-7..D+7 runbook |
 | **Downstream consumers** | (end of arc; no downstream consumers within Godpowers; users consume launch artifacts externally) |
 | **Artifact awareness** | PRD positioning, harden findings, optional extension packs (Show HN, PH, IH, OSS) |
-| **Handoff** | Returns when STATE.md complete. Pauses on brand voice / final headline (legitimate human-only). Have-nots L-01..L-08. |
+| **Handoff** | Returns when launch state evidence is complete. Pauses on brand voice / final headline (legitimate human-only). Have-nots L-01..L-08. |
 | **Standards check** | YES |
 
 ---
@@ -278,7 +278,7 @@ Each agent has these fields:
 | Field | Value |
 |---|---|
 | **Triggers** | `/god-upgrade` |
-| **Inputs** | Migration target (from -> to), `.godpowers/build/STATE.md`, upstream changelog |
+| **Inputs** | Migration target (from -> to), `.godpowers/state.json` build evidence, upstream changelog |
 | **Outputs** | `.godpowers/migrations/<slug>/MIGRATION.md` |
 | **Downstream consumers** | god-planner (test gap-fill), god-executor (per-slice migration), god-deploy-engineer (gradual rollout), god-observability-engineer (metric watch) |
 | **Artifact awareness** | Code surface, test coverage, upstream release notes |
@@ -429,16 +429,16 @@ Each agent has these fields:
 | **Handoff** | Returns when all touched artifacts pass have-nots, local sync surfaces are reported, and SYNC-LOG.md is appended |
 | **Standards check** | YES (per-artifact, per-tier) |
 
-### god-roadmap-reconciler (legacy, narrower scope)
+### god-roadmap-reconciler (legacy compatibility adapter)
 
 | Field | Value |
 |---|---|
-| **Triggers** | `/god-roadmap-check` (legacy; superseded by /god-reconcile) |
+| **Triggers** | Older installed `/god-roadmap-check` copies only; current routing spawns `god-reconciler` |
 | **Inputs** | `.godpowers/roadmap/ROADMAP.md`, optional PRD |
-| **Outputs** | 6-status verdict (returned to caller) |
+| **Outputs** | ROADMAP portion of the `god-reconciler` verdict |
 | **Downstream consumers** | Calling skill |
-| **Artifact awareness** | Just ROADMAP.md (narrow scope) |
-| **Handoff** | Same as god-reconciler but for roadmap only |
+| **Artifact awareness** | Delegated to `god-reconciler` |
+| **Handoff** | Spawns `god-reconciler` with ROADMAP-focused output |
 | **Standards check** | YES |
 
 ### god-roadmap-updater (legacy, narrower scope)
@@ -635,7 +635,7 @@ Examples: god-orchestrator (the workflow runner), /god-sync (god-updater calls g
 
 ### Shape 7: Reconciliation
 Agent reads multiple artifacts in parallel, returns multi-dimensional verdict.
-Examples: god-reconciler (all 14), god-roadmap-reconciler (just ROADMAP).
+Examples: god-reconciler, with god-roadmap-reconciler retained only as a compatibility adapter.
 
 ---
 
@@ -709,7 +709,7 @@ added during the production-ready + design + linkage push.
 | **File** | `agents/god-designer.md` |
 | **Triggers** | `/god-design`, `/god-design teach`, `/god-design from <site>`, `/god-design suggest`, `/god-design refresh`, `/god-design polish [...]`, `/god-mode` Tier 1 (when UI detected) |
 | **Inputs** | PRD.md (target users, register), ARCH.md (UI surface), STACK/DECISION.md (UI framework), state.json |
-| **Outputs** | `DESIGN.md` (project root, Google Labs spec), `PRODUCT.md` (when impeccable installed), `.godpowers/design/STATE.md` (lint history) |
+| **Outputs** | `DESIGN.md` (project root, Google Labs spec), `PRODUCT.md` (when impeccable installed), `.godpowers/state.json` design evidence, generated `.godpowers/design/STATE.md` |
 | **Downstream consumers** | god-design-reviewer (gates the change), god-impact-analyzer, god-updater (reverse-sync), repo scaffolder (token references in templates) |
 | **Artifact awareness** | Reads PRD, ARCH, STACK; writes DESIGN, PRODUCT |
 | **Standards check** | Validates with `lib/design-spec.lint`, `npx @google/design.md lint`, and `npx impeccable detect` (when installed) |

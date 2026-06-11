@@ -26,6 +26,7 @@ const commands = [
     writes: ['.godpowers/stack/DECISION.md'],
     haveNots: ['S-01','S-02','S-03','S-04','S-05'],
     next: '/god-repo',
+    gateTier: 'stack',
   },
 
   // Tier 2
@@ -37,6 +38,7 @@ const commands = [
     writes: ['.godpowers/repo/AUDIT.md', 'repo source files'],
     haveNots: ['RP-01','RP-02','RP-03','RP-04','RP-05','RP-06','RP-07','RP-08'],
     next: '/god-build',
+    gateTier: 'repo',
   },
   {
     cmd: '/god-build', tier: 2, agent: 'god-planner',
@@ -45,10 +47,11 @@ const commands = [
     prereq: ['state:tier-1.roadmap.status == done', 'state:tier-2.repo.status == done'],
     autoCompletePrereq: '/god-roadmap',
     secondarySpawns: ['god-executor', 'god-spec-reviewer', 'god-quality-reviewer'],
-    writes: ['.godpowers/build/PLAN.md', '.godpowers/build/STATE.md', 'source code'],
+    writes: ['.godpowers/build/PLAN.md', '.godpowers/state.json', 'source code'],
     haveNots: ['B-01','B-02','B-03','B-04','B-05','B-06','B-07','B-08','B-09','B-10','B-11','B-12'],
     next: '/god-deploy',
     altWhen: { '/god-harden': 'parallel-with-deploy' },
+    gateTier: 'build',
   },
 
   // Tier 3
@@ -57,7 +60,7 @@ const commands = [
     prereq: ['state:tier-2.build.status == done'],
     extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-build',
-    writes: ['.godpowers/deploy/STATE.md'],
+    writes: ['.godpowers/state.json', 'deploy config', '.godpowers/deploy/WAITING-FOR-EXTERNAL-ACCESS.md when needed'],
     haveNots: ['D-01','D-02','D-03','D-04','D-05','D-06','D-07','D-08'],
     next: '/god-observe',
   },
@@ -66,7 +69,7 @@ const commands = [
     prereq: ['state:tier-3.deploy.status == done'],
     extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-deploy',
-    writes: ['.godpowers/observe/STATE.md'],
+    writes: ['.godpowers/state.json', 'alert definitions', 'dashboard definitions', 'runbooks'],
     haveNots: ['OB-01','OB-02','OB-03','OB-04','OB-05','OB-06','OB-07','OB-08'],
     next: '/god-harden',
   },
@@ -80,13 +83,14 @@ const commands = [
     haveNots: ['H-01','H-02','H-03','H-04','H-05','H-06','H-07','H-08','H-09','H-10','H-11'],
     next: '/god-launch',
     blocksOn: { 'critical-finding': 'pause-required' },
+    gateTier: 'harden',
   },
   {
     cmd: '/god-launch', tier: 3, agent: 'god-launch-strategist', desc: 'Launch the product',
     prereq: ['state:tier-3.harden.status == done', 'no-critical-findings'],
     extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-harden',
-    writes: ['.godpowers/launch/STATE.md'],
+    writes: ['.godpowers/state.json', 'landing copy', 'OG cards', 'launch runbook'],
     haveNots: ['L-01','L-02','L-03','L-04','L-05','L-06','L-07','L-08'],
     next: 'steady-state',
     lifecycleTransition: 'in-arc -> steady-state-active',
@@ -159,7 +163,7 @@ const commands = [
   },
   {
     cmd: '/god-audit', tier: 0, agent: 'god-auditor', desc: 'Score artifacts against have-nots',
-    prereq: ['file:.godpowers/PROGRESS.md'],
+    prereq: ['state:initialized == true'],
     autoCompletePrereq: '/god-init',
     writes: ['.godpowers/AUDIT-REPORT.md'],
     next: '/god-status',
@@ -186,7 +190,7 @@ const commands = [
   },
   {
     cmd: '/god-mode', tier: 0, agent: 'god-orchestrator', desc: 'Full autonomous project run',
-    prereq: ['file:.godpowers/PROGRESS.md OR mode-A-greenfield'],
+    prereq: ['state:initialized == true OR mode-A-greenfield'],
     extraPrereq: [SAFE_SYNC_PREREQ],
     autoCompletePrereq: '/god-init',
     secondarySpawns: ['god-auditor', 'god-pm', 'god-architect', 'god-roadmapper', 'god-stack-selector', 'god-repo-scaffolder', 'god-planner', 'god-executor', 'god-spec-reviewer', 'god-quality-reviewer', 'god-deploy-engineer', 'god-observability-engineer', 'god-harden-auditor', 'god-launch-strategist'],

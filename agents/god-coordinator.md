@@ -10,6 +10,20 @@ description: |
   Spawned by: /god-suite-init, /god-suite-status, /god-suite-sync,
   /god-suite-release, /god-suite-patch
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
+inputs:
+  - "suite manifest"
+  - "per-repo state files"
+  - "suite operation request"
+outputs:
+  - "suite coordination state"
+  - "per-repo orchestrator handoff files"
+  - "suite release or sync report"
+gates:
+  - "per-repo orchestrator ownership"
+  - "byte-identical file sync verification"
+  - "suite meta-linter results"
+handoff:
+  - "return suite-level status and per-repo next actions"
 ---
 
 # God Coordinator

@@ -2,10 +2,10 @@
 name: god-agent-audit
 description: |
   Validates every `agents/god-*.md` against the agent contract:
-  required frontmatter, recommended sections (Have-Nots, Inputs,
-  Outputs, Handoff), hand-off targets exist, no dual-ownership of
-  output paths. Lenient by design: most issues are warnings; only
-  structural breakage errors.
+  required frontmatter, structured contract frontmatter, recommended
+  sections (Have-Nots, Inputs, Outputs, Handoff), hand-off targets exist,
+  no dual-ownership of output paths. Lenient by design: most issues are
+  warnings; only structural breakage errors.
 
   Triggers on: "god agent audit", "/god-agent-audit", "audit agents",
   "validate agent contracts"
@@ -32,6 +32,7 @@ Mechanical validation of agent contracts. Backed by `lib/agent-validator.js`.
 
 **Recommended (warnings)**:
 - Frontmatter `tools` field
+- Frontmatter `inputs`, `outputs`, `gates`, and `handoff` fields after at least 20 shipped agents have structured contracts
 - Hand-off targets that are referenced exist as agent files
 - Output paths claimed by 4+ agents (boundary review needed)
 
@@ -51,16 +52,16 @@ opportunities, not failures.
 Agent audit
 
 40 agents audited
-0 errors, 2 warnings, 90 infos
+40 structured contracts
+0 errors, 1 warning, 97 infos
 
 Errors:
 (none)
 
 Warnings:
-  [multi-ownership] STATE.md claimed by 4 agents (verify boundaries)
-  [multi-ownership] .godpowers/roadmap/ROADMAP.md claimed by 4 agents
+  [multi-ownership] .godpowers/state.json claimed by 5 agents (verify boundaries)
 
-Infos: 90 missing-recommended-section suggestions across agents
+Infos: 97 missing-recommended-section suggestions across agents
        (run with --json for full list)
 
 Proposition:
@@ -76,7 +77,9 @@ Recommended: [one option and why]
 This skill never breaks existing agents that don't yet have the
 recommended sections. Errors fire only on real structural issues
 (missing required frontmatter, broken hand-off targets, conflicting
-output ownership).
+output ownership). Missing structured contract frontmatter becomes a
+warning once a project has at least 20 agents with complete `inputs`,
+`outputs`, `gates`, and `handoff` fields.
 
 The `--fix` flag inserts placeholder sections so contributors can
 fill them in incrementally. It never modifies content that's already

@@ -10,6 +10,19 @@ description: |
 
   Spawned by: /god-reconcile, recipe execution (feature-addition category)
 tools: Read, Bash, Grep, Glob, Task
+inputs:
+  - "all core Godpowers artifacts"
+  - "repository docs and surface"
+  - "feature awareness and host capability evidence"
+outputs:
+  - "multi-dimensional reconciliation verdict"
+  - "optional .godpowers/reconciliation/ report"
+gates:
+  - "all relevant surfaces checked"
+  - "missing artifacts handled explicitly"
+  - "no false all-covered claim"
+handoff:
+  - "return synthesis recommendation and preflight commands to caller"
 ---
 
 # God Reconciler
@@ -59,7 +72,7 @@ For each artifact below, check (in parallel where possible):
 
 #### ROADMAP (`.godpowers/roadmap/ROADMAP.md`)
 - Already-done / in-progress / enhancement / prerequisite-needed / new / ambiguous
-- (Same as god-roadmap-reconciler, integrated)
+- Use the integrated ROADMAP classification logic for milestone overlap.
 
 #### STACK (`.godpowers/stack/DECISION.md`)
 - Does the feature require a new dependency category? (e.g., adding a queue when none exists)
@@ -82,12 +95,16 @@ For each artifact below, check (in parallel where possible):
 
 ### Tier 3 artifacts
 
-#### DEPLOY (`.godpowers/deploy/STATE.md`)
+#### DEPLOY state evidence
+
+Source: `.godpowers/state.json` `tier-3.deploy`.
 - Does the feature need a new env var?
 - New deploy step (e.g., new service)?
 - Verdict: covered / needs-extension
 
-#### OBSERVE (`.godpowers/observe/STATE.md`)
+#### OBSERVE state evidence
+
+Source: `.godpowers/state.json` `tier-3.observe`.
 - Does the feature need a new SLO?
 - New error budget category?
 - New alert + runbook?
@@ -99,7 +116,9 @@ For each artifact below, check (in parallel where possible):
 - New input source to validate?
 - Verdict: covered / needs-review / new-surface
 
-#### LAUNCH (`.godpowers/launch/STATE.md`)
+#### LAUNCH state evidence
+
+Source: `.godpowers/state.json` `tier-3.launch`.
 - Is the feature user-visible?
 - Does launch copy need updating?
 - New channel-specific messaging needed?
@@ -168,7 +187,7 @@ Return structured JSON to the orchestrating skill:
   "roadmap": { "status": "enhancement", "match": "Milestone 2", "action": "fold in or amend" },
   "stack": { "status": "covered" },
   "repo": { "status": "scaffolded" },
-  "deploy": { "status": "needs-extension", "action": "add env var to deploy/STATE.md" },
+  "deploy": { "status": "needs-extension", "action": "record new env var in state.json deploy evidence" },
   "observe": { "status": "needs-slo", "action": "add SLO for new endpoint" },
   "harden": { "status": "needs-review", "action": "scope-to-new-code review" },
   "launch": { "status": "copy-update", "action": "update landing if launching publicly" },

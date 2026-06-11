@@ -7,6 +7,17 @@ description: |
 
   Spawned by: /god-tech-debt, brownfield-arc workflow
 tools: Read, Bash, Grep, Glob, WebSearch
+inputs:
+  - "brownfield codebase"
+  - "optional archaeology report"
+  - "dependency and test evidence"
+outputs:
+  - ".godpowers/tech-debt/REPORT.md"
+gates:
+  - "technical debt prioritization evidence"
+  - "debt assessment have-nots"
+handoff:
+  - "return prioritized P0 through P3 remediation plan"
 ---
 
 # God Debt Assessor

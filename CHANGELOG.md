@@ -7,6 +7,118 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-06-10
+
+### Added
+- Added `/god-plan`, `/god-fix`, `/god-ship`, `/god-capture`, and
+  `/god-extend` as thin verb dispatchers over existing leaf commands.
+- Added routing metadata for the new verb dispatchers so repository surface
+  checks keep skills and routes aligned.
+
+### Changed
+- Changed the omitted installer profile default from `full` to `core`.
+- Updated the `core` profile to install the front door, status, verb
+  dispatchers, and `/god-mode` compatibility while preserving every command in
+  `--profile=full`.
+- Routed `/god-observe` through the `ship` verb boundary based on Phase 2 host
+  proof evidence.
+- Updated public docs, profile tests, command-family tests, and Phase 5
+  surface evidence for the 117-command surface.
+
+### Deprecated
+- Deprecated `/god-locate` in favor of `/god-status --locate`.
+- Deprecated `/god-lifecycle` in favor of `/god-status --lifecycle`.
+- Added `successor` metadata to deprecated compatibility commands.
+
+## [2.7.0] - 2026-06-10
+
+### Added
+- Added `godpowers state advance --step=<step> --status=<status> --project=.`
+  as a locked state mutation helper that updates `.godpowers/state.json` and
+  regenerates managed state views.
+- Added generated checksummed state views for Godpowers-owned design, build,
+  deploy, observe, and launch `STATE.md` files, all sourced from
+  `.godpowers/state.json`.
+
+### Changed
+- Changed route prerequisites, executable gates, workflow handoffs, command
+  prompts, and specialist agent contracts so Godpowers decision reads use
+  `.godpowers/state.json` instead of generated markdown state views.
+- Changed tier completion instructions to use `godpowers state advance` or an
+  owning command wrapper instead of direct edits to `.godpowers/PROGRESS.md`.
+
+### Fixed
+- Fixed state-view drift by regenerating `.godpowers/PROGRESS.md` and
+  Godpowers-owned per-tier `STATE.md` files after state mutations and replacing
+  tampered managed fences on the next mutation.
+
+## [2.6.0] - 2026-06-10
+
+### Added
+- Added the `@godpowers/mcp` companion package with read-only MCP tools for
+  status, next, gate checks, artifact linting, and requirement tracing.
+- Added `godpowers mcp-info --project=.` as a read-only main-package helper
+  that prints setup instructions without loading the MCP SDK.
+- Added MCP protocol tests that spawn the companion server over stdio, list
+  tools, and call each tool against the quick-proof fixture.
+
+### Changed
+- Updated dashboard and quick-proof host guarantee output to include MCP
+  availability.
+- Updated `/god-status` and `/god-next` to prefer MCP tools when available and
+  fall back to CLI or runtime modules otherwise.
+- Updated release checks to verify the companion package protocol and package
+  contents while keeping the main `godpowers` package dependency-free.
+
+## [2.5.2] - 2026-06-10
+
+### Added
+- Added regression coverage proving an installed `godpowers-runtime` bundle can
+  be used as a local npm package for `godpowers gate`.
+- Added regression coverage proving build gates fail when build state records a
+  failed verification command.
+
+### Fixed
+- Fixed installed runtime bundles so `godpowers-runtime` includes `bin/` next
+  to `package.json`, allowing host workflows to call the documented
+  `godpowers gate` command from the installed runtime package.
+- Fixed the build gate so `.godpowers/build/STATE.md` fails closed when any
+  verification command is recorded as failed, instead of passing because a
+  different command passed.
+
+## [2.5.1] - 2026-06-10
+
+### Added
+- Added three Codex host-run proof case studies for slugify-cli, Countdown, and
+  react-github-readme-button.
+- Added Phase 2 proof evidence for successful CLI and web app runs plus one
+  blocked harden run with Critical dev-tooling findings preserved as a public
+  blocker.
+
+### Changed
+- Updated USERS, README, roadmap, reference, architecture, release notes, and
+  bridge-plan status for the Phase 2 host proof campaign.
+
+## [2.5.0] - 2026-06-10
+
+### Added
+- Added `npx godpowers gate --tier=<tier> --project=.` for PRD, design,
+  architecture, roadmap, stack, repo, build, and harden tier gates.
+- Added `lib/artifact-map.js`, `lib/gate.js`, and `lib/cli-dispatch.js` so
+  artifact paths, executable gates, and CLI command dispatch are tested outside
+  the installer binary.
+- Added gate fixtures and tests for green tier artifacts, missing artifacts,
+  lint failures, harden Critical findings, build verification evidence, JSON
+  shape stability, async API coverage, and CLI exit codes.
+
+### Changed
+- Updated eight tier skills and their routing metadata to require the
+  executable gate before downstream work proceeds.
+- Updated `/god-mode` and its runbook to run executable gates between tier
+  transitions.
+- Updated static checks and route-quality sync so missing gate instructions and
+  missing `standards.gate-command` metadata block release readiness.
+
 ## [2.4.3] - 2026-06-09
 
 ### Added

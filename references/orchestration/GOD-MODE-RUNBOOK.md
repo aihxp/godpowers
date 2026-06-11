@@ -124,6 +124,25 @@ quality drift before declaring complete.
 ### --skip-hygiene
 Default. Skip the hygiene pass. Use when iterating quickly.
 
+## Tier transition gates
+
+After each tier skill returns, run the matching executable gate before starting
+the downstream tier:
+
+```bash
+npx godpowers gate --tier=prd --project=.
+npx godpowers gate --tier=design --project=.
+npx godpowers gate --tier=arch --project=.
+npx godpowers gate --tier=roadmap --project=.
+npx godpowers gate --tier=stack --project=.
+npx godpowers gate --tier=repo --project=.
+npx godpowers gate --tier=build --project=.
+npx godpowers gate --tier=harden --project=.
+```
+
+Run the design gate only when the project requires design. A non-zero gate exit
+pauses the project run for repair and blocks downstream tier dispatch.
+
 ## Mandatory final sync
 
 Regardless of flags, `/god-mode` always runs `/god-sync` before declaring

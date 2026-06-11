@@ -7,6 +7,17 @@ description: |
 
   Spawned by: /god-repo, god-orchestrator
 tools: Read, Write, Edit, Bash, Glob
+inputs:
+  - ".godpowers/stack/DECISION.md"
+  - "optional .godpowers/org-context.yaml"
+outputs:
+  - ".godpowers/repo/AUDIT.md"
+  - "production repository scaffold files"
+gates:
+  - "RP-01 through RP-08 have-nots"
+  - "CI passes on empty scaffold"
+handoff:
+  - "return scaffold audit and repo readiness status"
 ---
 
 # God Repo Scaffolder

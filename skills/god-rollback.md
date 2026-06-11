@@ -38,7 +38,7 @@ Examples:
 5. Mark each tier `status: pending` in state.json.
 6. Append a `op:rollback` event to the reflog with the full closure.
 7. Truncate the linkage map entries belonging to rolled-back artifacts.
-8. Update PROGRESS.md.
+8. Regenerate managed state views from `state.json`.
 
 ## Difference from /god-undo
 
@@ -72,6 +72,4 @@ Writes via `lib/reverse-sync.js` (for linkage truncation) and standard
 fs operations (for artifact move).
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-05-30
-> Current shipped: v2.4.3
+> Current shipped: v3.0.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 2.0 public adoption window. Everything user-facing remains slash-command based.
@@ -12,15 +12,23 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v2.4.3)
+### Current surface (v3.0.0)
 
 What works today:
-- **112 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **117 slash commands** as thin orchestrators (front door, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
 - **13 executable workflows** and **42 intent recipes**
+- Optional `@godpowers/mcp` companion package with five read-only tools:
+  `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`
+- **One-directional state authority**: `.godpowers/state.json` is the
+  Godpowers decision source, while `.godpowers/PROGRESS.md` and
+  Godpowers-owned per-tier `STATE.md` files are generated human views.
+- **Locked state mutation helper**: `godpowers state advance --step=<step>
+  --status=<status> --project=.` updates tracked steps and regenerates managed
+  state views.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map
@@ -36,6 +44,10 @@ What works today:
 - **Command family UX layer**: `/god`, `/god-help`, `/god-next`, and route
   metadata share command families, capture, work-size, verification, and
   status-view ladders so users can choose paths without losing leaf commands.
+- **Surface contraction**: omitted installer profiles now resolve to `core`,
+  five verb dispatchers route common planning, fix, ship, capture, and
+  extension intent to existing leaves, and `--profile=full` preserves the
+  complete compatibility surface.
 - **Typed routing outcomes**: flexible success paths carry outcome type,
   label, reason, and allowed-next metadata for contextual, verdict-based,
   steady-state, session-end, and selection closeouts.
@@ -61,6 +73,13 @@ What works today:
   sindresorhus/is, expressjs/cors, and tinyhttp/tinyhttp first-contact runs
   with commit hashes, elapsed time, cost, pause count, and explicit host-run
   gaps.
+- **Codex host proof case studies**: `docs/case-studies/run-a.md`,
+  `docs/case-studies/run-b.md`, and `docs/case-studies/run-c.md` capture
+  slugify-cli, Countdown, and react-github-readme-button host runs with exact
+  repository identity, validation, gate failures, repairs, and blockers.
+- **Phase 2 blocker fixes**: installed runtime bundles include the `bin/`
+  command surface, and build gates fail closed when build state records failed
+  verification commands.
 - **Parser and frontmatter hardening**: strict YAML diagnostics surface
   malformed routing, recipe, workflow, and extension manifest lines, while
   `lib/frontmatter.js` keeps markdown contract metadata on one shared parser.
@@ -136,7 +155,7 @@ What works today:
 - **Transcript-safe init and suite handoffs**: `/god-init` and Mode D suite
   coordinator paths use private handoff files before orchestrator or
   coordinator spawns
-- **Human-readable progress reports**: `/god-status`, `/god-locate`,
+- **Human-readable progress reports**: `/god-status`, `/god-status --locate`,
   `/god-next`, `/god-mode`, `CHECKPOINT.md`, and `PROGRESS.md` now surface
   workflow progress, current step, recent work, and what happens next
 - **Proposition closeouts**: proposal, diagnostic, audit, lifecycle, status,
@@ -457,6 +476,8 @@ npx godpowers --uninstall        # Remove
 npx godpowers --migrate          # One-shot upgrade
 npx godpowers status --project . # Render dashboard from disk state
 npx godpowers next --project .   # Recommend the next route from disk state
+npx godpowers state advance --step prd --status done --project . # Mutate tracked state
+npx godpowers gate --tier prd --project . # Check a tier artifact gate
 npx godpowers dogfood            # Run built-in messy-repo scenarios
 npx godpowers extension-scaffold --name=@scope/pack --output=.
 npx godpowers --help             # Show install help
@@ -473,6 +494,6 @@ All other operations are slash commands inside the AI tool.
 | v1.0 | No new features without adoption evidence |
 | v1.0 | No schema churn |
 | v1.0 | No removal of leaf commands through command family presentation |
-| All | No broad `godpowers` CLI beyond install, read-only status, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
+| All | No broad `godpowers` CLI beyond install, read-only status, executable artifact gates, fixture dogfood, and extension scaffolding. Slash commands remain primary. |
 
 Discipline: a release that does too much is a release that ships late.

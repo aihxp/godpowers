@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-observe, god-orchestrator
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/prd/PRD.md success metrics"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/state.json deploy evidence"
+outputs:
+  - ".godpowers/state.json observability evidence"
+  - "alert and dashboard configs"
+  - "runbooks"
+gates:
+  - "OB-01 through OB-08 have-nots"
+  - "real SLOs and symptom alerts"
+  - "observability evidence is complete"
+handoff:
+  - "return observability evidence and metric readiness summary"
 ---
 
 # God Observability Engineer
@@ -15,10 +29,10 @@ Wire observability.
 
 ## Gate Check
 
-`.godpowers/deploy/STATE.md` exists. App is deployed and reachable, or deploy
-state documents a tested local staging harness plus a single external access
-bundle. A deferred staging URL must not block observability setup when local or
-CI-verifiable checks can still run.
+`.godpowers/state.json` records deploy completion. The deploy evidence says the
+app is deployed and reachable, or it documents a tested local staging harness
+plus a single external access bundle. A deferred staging URL must not block
+observability setup when local or CI-verifiable checks can still run.
 
 ## Process
 
@@ -78,7 +92,7 @@ For each PRD success metric, define an SLO:
 
 ## Output
 
-Write `.godpowers/observe/STATE.md` with:
+Return observability evidence for `.godpowers/state.json`; `lib/state-views.js` generates `.godpowers/observe/STATE.md` with:
 - SLO definitions
 - Error budget policies
 - Alert catalog

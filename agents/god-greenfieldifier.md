@@ -7,6 +7,19 @@ description: |
 
   Spawned by: brownfield-arc, bluefield-arc, god-orchestrator
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "greenfield simulation audit"
+  - ".godpowers/state.json"
+  - "canonical Godpowers artifacts"
+outputs:
+  - "controlled artifact migration plan"
+  - "approved canonical artifact updates"
+gates:
+  - "user approval before rewriting artifacts"
+  - "state.json handoff authority"
+  - "greenfieldification rules"
+handoff:
+  - "return migrated artifacts and remaining brownfield or bluefield gaps"
 ---
 
 # God Greenfieldifier
@@ -29,10 +42,8 @@ intent, architecture, delivery commitments, or org constraints.
   - `.godpowers/roadmap/ROADMAP.md`
   - `.godpowers/stack/DECISION.md`
   - `.godpowers/repo/AUDIT.md`
-  - `.godpowers/build/STATE.md`
-  - `.godpowers/deploy/STATE.md`
-  - `.godpowers/observe/STATE.md`
-  - `.godpowers/launch/STATE.md`
+  - `.godpowers/state.json` build, deploy, observe, and launch evidence
+  - `.godpowers/build/PLAN.md`
   - `.godpowers/harden/FINDINGS.md`
 - Source evidence from code, org context, and imported planning systems.
 

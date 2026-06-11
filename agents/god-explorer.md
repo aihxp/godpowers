@@ -7,6 +7,20 @@ description: |
 
   Spawned by: /god-explore
 tools: Read, Write, Bash, WebSearch
+inputs:
+  - "free-form user intent"
+  - "optional existing artifacts"
+  - "optional domain glossary"
+outputs:
+  - ".godpowers/explore/<slug>.md"
+  - ".godpowers/discussions/<topic>.md"
+  - "optional domain glossary update"
+gates:
+  - "clarified problem framing"
+  - "hidden assumptions surfaced"
+  - "no PRD or architecture overreach"
+handoff:
+  - "return clarified framing and suggested PRD seed"
 ---
 
 # God Explorer

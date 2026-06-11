@@ -61,7 +61,8 @@ For each slice in the wave (parallel):
    - If FAIL: return slice to god-executor with findings, including any
      overcomplication, speculative abstraction, or unrelated cleanup
    - If PASS: commit the slice atomically
-5. Update `.godpowers/build/STATE.md`
+5. Record build status and slice evidence in `.godpowers/state.json` so
+   `.godpowers/build/STATE.md` regenerates as a managed view.
 
 Move to next wave only when current wave is fully committed.
 
@@ -76,9 +77,10 @@ After all waves:
    decompose, prune, or escalate. Pass the exact failing diagnostics, rerun the
    command, and repeat until green or until the same root failure exhausts the
    repair budget.
-5. Run `npx godpowers gate --tier=build --project=.`
-6. If the gate returns a non-zero exit, do not mark Build complete. Report the gate output and repair the artifact first.
-7. Update PROGRESS.md: Build status = done
+5. Record the exact verification commands that passed in `.godpowers/state.json`
+   under `tiers.tier-2.build.verification.commands`
+6. Run `npx godpowers gate --tier=build --project=.` and do not proceed on a non-zero exit
+7. Run `npx godpowers state advance --step=build --status=done --project=.` to update `state.json` and regenerate `.godpowers/PROGRESS.md` plus `.godpowers/build/STATE.md`.
 8. If the build plan or implementation establishes durable conventions, plan
    pillar updates through `lib/pillars.planArtifactSync`. Under
    `/god-mode --yolo`, apply those updates immediately and log the decision.
@@ -93,7 +95,7 @@ Pause for user ONLY if:
 ## On Completion
 
 ```
-Build complete: .godpowers/build/STATE.md
+Build complete: .godpowers/build/STATE.md (generated view)
 [N] slices delivered. [N] commits. All tests passing.
 
 Suggested next: /god-harden (adversarial review, gates Launch)
@@ -106,6 +108,4 @@ increment before moving to Tier 3 unless the user explicitly asked to stop
 after the current increment.
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

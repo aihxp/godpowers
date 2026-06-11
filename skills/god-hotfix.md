@@ -72,7 +72,7 @@ Spawn **god-observability-engineer** briefly:
 - Confirm recovery in metrics
 
 ### Phase 7: Schedule Postmortem
-Update PROGRESS.md with a TODO:
+Record a state-backed follow-up TODO through the owning command wrapper:
 "Run /god-postmortem within 48 hours for incident <id>"
 
 Hotfix doesn't replace postmortem; it precedes it.
@@ -123,6 +123,4 @@ in the linkage system:
   via `/god-review-changes`.
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

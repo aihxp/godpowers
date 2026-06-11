@@ -1,0 +1,37 @@
+apiVersion: godpowers/v1
+kind: CommandRouting
+metadata:
+  command: /god-fix
+  description: Fix verb dispatcher
+  tier: 0
+  family: build
+
+prerequisites:
+  required: []
+
+execution:
+  spawns: [built-in]
+  context: fresh
+  reads:
+    - routing/god-debug.yaml
+    - routing/god-hotfix.yaml
+  writes: []
+
+dispatch:
+  debug: /god-debug
+  hotfix: /god-hotfix
+
+success-path:
+  next-recommended: varies
+  outcome:
+    type: contextual
+    label: Fix dispatch route
+    reason: The next route depends on whether production urgency is present.
+    allowed-next: [/god-debug, /god-hotfix]
+
+failure-path:
+  on-error: /god-doctor
+
+endoff:
+  state-update: no direct state update; selected leaf command owns state
+  events: [agent.start, decision.route, agent.end]

@@ -6,6 +6,18 @@ description: |
 
   Spawned by: /god-arch, god-orchestrator
 tools: Read, Write, Bash, Grep, Glob
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - "optional .godpowers/domain/GLOSSARY.md"
+  - "optional preparation context"
+outputs:
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/arch/adr/"
+gates:
+  - "A-01 through A-13 have-nots"
+  - "npx godpowers gate --tier=arch --project=."
+handoff:
+  - "return architecture artifact and pause only for tied load-bearing decisions"
 ---
 
 # God Architect

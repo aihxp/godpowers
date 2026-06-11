@@ -1,13 +1,21 @@
 # Users and Community
 
-Godpowers is at v2.4.3. Stable release.
+Godpowers is at v3.0.0. Stable release.
 
 ## Track record
 
-Currently zero recorded production users. Be honest. The 2.4 line adds UX
-flow clarity on top of the executable proof path, accountability hardening,
-deliverable progress tracking, and three external CLI-verifiable adoption
-canaries. Real users will reveal which gaps actually matter.
+Currently zero recorded production users. Be honest. The 3.0 line makes the
+omitted installer profile `core`, adds verb dispatchers for common work, keeps
+full-profile compatibility aliases, and preserves `.godpowers/state.json`
+authority on top of the optional MCP companion package, executable tier gates,
+three Codex host-run proof studies, two Phase 2 blocker fixes, 2.4 UX flow
+clarity, executable proof path, accountability hardening, deliverable progress
+tracking, and three external CLI-verifiable adoption canaries. Real users will
+reveal which gaps actually matter.
+
+- [DECISION] The Phase 2 host proof campaign has selected three current repository slots and completed Slot A for local and CI-verifiable host-proof scope.
+- [DECISION] Slot A does not prove production usage, deployed smoke, or token-dollar accounting because no staging origin or `cost.recorded` events were captured.
+- [DECISION] Current evidence and blockers are recorded in [Run A](docs/case-studies/run-a.md), [Run B](docs/case-studies/run-b.md), and [Run C](docs/case-studies/run-c.md).
 
 ## Proof needed during freeze
 
@@ -51,9 +59,13 @@ If you use Godpowers on a real project:
 - [sindresorhus/is CLI adoption canary](docs/case-studies/sindresorhus-is-adoption-canary.md)
 - [expressjs/cors CLI adoption canary](docs/case-studies/expressjs-cors-adoption-canary.md)
 - [tinyhttp/tinyhttp CLI adoption canary](docs/case-studies/tinyhttp-adoption-canary.md)
+- [Run A slugify-cli Codex host proof](docs/case-studies/run-a.md)
+- [Run B Countdown Codex host proof](docs/case-studies/run-b.md)
+- [Run C react-github-readme-button blocked host proof](docs/case-studies/run-c.md)
 
-These are not production-user studies. They prove first-contact CLI signals
-against real cloned repositories and keep the host-run gap explicit.
+- [DECISION] The CLI canaries are not production-user studies.
+- [DECISION] The CLI canaries prove first-contact CLI signals against real cloned repositories and keep narrow proof limits explicit.
+- [DECISION] The Codex host studies are host-run evidence, but they are still not production user adoption.
 
 If you ship something with Godpowers, write it up. We'll feature you here.
 

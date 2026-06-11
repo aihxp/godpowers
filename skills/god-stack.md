@@ -21,9 +21,8 @@ Spawn the **god-stack-selector** agent in a fresh context via the host platform'
 
 After god-stack-selector returns:
 1. Verify DECISION.md exists on disk
-2. Run `npx godpowers gate --tier=stack --project=.`
-3. If the gate returns a non-zero exit, do not mark Stack complete. Report the gate output and repair the artifact first.
-4. Update `.godpowers/PROGRESS.md`: Stack status = done
+2. Run `npx godpowers gate --tier=stack --project=.` and do not proceed on a non-zero exit
+3. Run `npx godpowers state advance --step=stack --status=done --project=.` to update `state.json` and regenerate `.godpowers/PROGRESS.md`.
 
 ## On Completion
 
@@ -60,6 +59,4 @@ The reflog records every god-stack invocation as `op:god-stack` for `/god-undo`.
   for `/god-repair` review. Re-running picks up cleanly.
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

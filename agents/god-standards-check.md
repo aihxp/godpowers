@@ -7,6 +7,19 @@ description: |
 
   Spawned by: skill orchestration after any artifact-producing agent
 tools: Read, Grep, Glob
+inputs:
+  - "just-produced artifact"
+  - "applicable have-nots list"
+  - "routing gate configuration"
+outputs:
+  - "PASS, FAIL, or PARTIAL verdict"
+  - "standards findings"
+gates:
+  - "substitution test"
+  - "three-label test"
+  - "artifact-specific have-nots"
+handoff:
+  - "return gate behavior and remediation path to orchestrating skill"
 ---
 
 # God Standards Check

@@ -8,6 +8,17 @@ description: |
 
   Spawned by: /god-archaeology, brownfield-arc workflow
 tools: Read, Bash, Grep, Glob, WebSearch
+inputs:
+  - "brownfield codebase"
+  - "git history"
+  - "repository documentation"
+outputs:
+  - ".godpowers/archaeology/REPORT.md"
+gates:
+  - "archaeology have-nots"
+  - "evidence-backed history and risk claims"
+handoff:
+  - "return report path and priority risks to caller"
 ---
 
 # God Archaeologist

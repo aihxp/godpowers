@@ -1,11 +1,11 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v2.4.3.
+Complete command, agent, and artifact reference for v3.0.0.
 
-## Slash commands (112 total)
+## Slash commands (117 total)
 
 ### Command families
-All 112 commands remain direct entry points, but the user-facing map starts
+All 117 commands remain direct entry points, but the user-facing map starts
 with families:
 
 | Family | Purpose |
@@ -34,11 +34,17 @@ For common ambiguous intents, Godpowers chooses the smallest fitting command:
 | Work size | `/god-fast`, `/god-quick`, `/god-story`, `/god-feature`, `/god-build`, `/god-debug`, `/god-hotfix` |
 | Verification | `/god-lint`, `/god-standards`, `/god-review`, `/god-test-runtime`, `/god-audit`, `/god-hygiene`, `/god-preflight`, `/god-dogfood` |
 
-`/god-status` is the continue hub. `/god-progress`, `/god-lifecycle`,
-`/god-locate`, and `/god-next` remain direct shortcuts for narrower views.
-`/god-lifecycle` stays separate for phase-only workflow fit checks.
-`/god-locate` stays separate for fresh-session resume from checkpoint,
-handoff, and disk evidence.
+### Verb dispatchers
+The default `core` install starts with the front door plus verb dispatchers:
+`/god`, `/god-init`, `/god-plan`, `/god-build`, `/god-fix`, `/god-review`,
+`/god-ship`, `/god-audit`, `/god-capture`, `/god-sync`, `/god-undo`, and
+`/god-extend`. These commands route to existing leaf commands through routing
+metadata and do not remove direct shortcuts from the `full` profile.
+
+`/god-status` is the continue hub. `/god-progress`, `/god-status --lifecycle`,
+`/god-status --locate`, and `/god-next` remain direct shortcuts for narrower
+views. `/god-lifecycle` and `/god-locate` remain full-profile deprecated
+compatibility aliases for one minor release.
 
 ### Installer profile journeys
 Profiles reduce the installed command surface without changing runtime
@@ -57,6 +63,8 @@ New commands should not be the default response to a usability gap. First try a
 family card, decision ladder, profile journey, recipe, typed route outcome, or
 documentation change. Add a new public command only when a case study, canary,
 or repeated user journey proves that existing paths cannot express the need.
+[DECISION] Phase 5 uses [Surface Contraction Evidence](surface-contraction.md)
+to map proof-campaign command usage after installer defaults changed.
 
 ### Outcome metrics
 Quick Proof and adoption canary reports track commands to first signal, next
@@ -68,17 +76,25 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
+- `/god-status --lifecycle` - Show project phase and fitting workflows.
+- `/god-status --locate` - Orient a fresh AI session from checkpoint, handoff, and disk evidence.
 - `/god-progress` - Deliverable progress: which requirements and roadmap increments are done, in progress, or not started. Refreshes `.godpowers/REQUIREMENTS.md`.
+- `/god-plan` - Route planning intent to PRD, design, architecture, roadmap, stack, or reconstruction.
+- `/god-fix` - Route bug and outage intent to debug or hotfix.
+- `/god-ship` - Route shipping intent to deploy, observe, or launch.
+- `/god-capture` - Route notes, todos, backlog items, and seeds.
+- `/god-extend` - Route extension authoring, install, inspection, removal, and testing.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
 - `/god-migrate` - Detect legacy planning, BMAD, and Superpowers context, import seeds, and sync back progress.
-- `/god-lifecycle` - Show project phase and contextually appropriate workflows.
 
 ### Installer CLI helpers
 - `godpowers status --project .` - Render the shared dashboard from disk state.
 - `godpowers next --project .` - Render the dashboard and show the recommended next command.
 - `godpowers quick-proof --project .` - Render the shipped proof fixture with host guarantees.
-- `godpowers gate --tier prd --project .` - Run the executable artifact gate for one tier.
+- `godpowers state advance --step=prd --status=done --project .` - Update one tracked state step and regenerate managed state views.
+- `godpowers gate --tier=prd --project .` - Check a tier artifact gate and exit non-zero when blocking evidence is missing.
+- `godpowers mcp-info --project .` - Show read-only MCP companion setup instructions without loading the MCP SDK.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.
@@ -91,6 +107,18 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 Dashboard status uses workflow progress from `.godpowers/state.json` tracked
 steps. Audit, hygiene, remediation, and launch-readiness scores are separate
 metrics and should be labeled separately in closeouts.
+
+### MCP companion
+`@godpowers/mcp` is an optional first-party companion package. It owns the MCP
+SDK dependency, while the main `godpowers` package remains dependency-free at
+runtime.
+
+The companion exposes five read-only tools: `status`, `next`, `gate_check`,
+`lint_artifact`, and `trace_requirement`. Mutation tools such as state advance,
+artifact writes, and route edits are intentionally absent through 3.0.0.
+
+Run `godpowers mcp-info --project .` for host setup instructions. Codex
+registration is written only when `godpowers-mcp setup --host=codex --project=. --write` is invoked explicitly.
 
 Build and review commands enforce request-trace discipline. Executors state
 assumptions, public behavior, expected files, and verification before editing.
@@ -175,7 +203,8 @@ diff churn that cannot be traced to the request or slice plan.
 - `/god-restore` - Recover files from `.godpowers/.trash/`.
 - `/god-repair` - Fix drift between `state.json` and disk state.
 - `/god-skip` - Skip a tier or sub-step with an audited reason.
-- `/god-locate` - Orient a fresh AI session from CHECKPOINT.md + state.
+- `/god-locate` - Deprecated compatibility alias for `/god-status --locate`.
+- `/god-lifecycle` - Deprecated compatibility alias for `/god-status --lifecycle`.
 - `/god-context-scan` - Detect drift between session mental model and disk.
 - `/god-smite` - Hard reset of the project's dependency cache.
 - `/god-doctor` - Diagnose install and project state; report fixes.
@@ -298,7 +327,7 @@ First-party packs on npm:
 - `god-standards-check` - Artifact discipline gate.
 - `god-updater` - Reverse-sync runner.
 - `god-context-writer` - AI-tool context fenced section manager.
-- `god-roadmap-reconciler` - Roadmap overlap detection.
+- `god-roadmap-reconciler` - Legacy compatibility adapter for roadmap overlap checks.
 - `god-roadmap-updater` - Roadmap update after work.
 
 ## Native Pillars context
@@ -331,10 +360,10 @@ available.
 
 ```
 .godpowers/
-  PROGRESS.md              Tier status
+  state.json               Machine-readable project state
+  PROGRESS.md              Generated tier status view
   REQUIREMENTS.md          Deliverable ledger (requirements done / in progress / not started, from /god-progress)
   intent.yaml              Project intent
-  state.json               Project state
   links/                   Requirement-to-code linkage map
   prep/INITIAL-FINDINGS.md Godpowers init scan and suggested next rationale
   prep/IMPORTED-CONTEXT.md Optional legacy planning / Superpowers / BMAD preparation context
@@ -349,10 +378,10 @@ available.
   stack/DECISION.md        Tech decisions
   repo/AUDIT.md            Repo scaffold audit
   build/PLAN.md            Build slices
-  build/STATE.md           Build progress
-  deploy/STATE.md          Deploy pipeline
-  observe/STATE.md         Observability
-  launch/STATE.md          Launch artifacts
+  build/STATE.md           Generated build state view
+  deploy/STATE.md          Generated deploy state view
+  observe/STATE.md         Generated observability state view
+  launch/STATE.md          Generated launch state view
   harden/FINDINGS.md       Security findings
 
   stories/STORY-*.md       Fine-grained slices

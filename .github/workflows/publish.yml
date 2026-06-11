@@ -25,7 +25,12 @@ jobs:
       - name: Release gate
         run: npm run release:check
 
-      - name: Publish with provenance
+      - name: Publish godpowers with provenance
         run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @godpowers/mcp with provenance
+        run: npm publish --workspace @godpowers/mcp --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

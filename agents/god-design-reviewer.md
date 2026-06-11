@@ -9,6 +9,20 @@ description: |
 
   Spawned by: /god-design, god-orchestrator (mid-arc DESIGN/PRODUCT changes)
 tools: Read, Bash, Grep, Glob
+inputs:
+  - "DESIGN.md diff"
+  - "PRODUCT.md"
+  - "PRD and design context"
+outputs:
+  - "design review verdict"
+  - ".godpowers/design/REJECTED.md on block"
+  - "design.review-verdict event"
+gates:
+  - "impeccable critique when available"
+  - "design-spec lint"
+  - "WCAG contrast checks"
+handoff:
+  - "return PASS, WARN, or BLOCK verdict to design updater or orchestrator"
 ---
 
 # God Design Reviewer

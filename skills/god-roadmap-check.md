@@ -2,6 +2,7 @@
 name: god-roadmap-check
 deprecated: true
 replacement: god-reconcile
+successor: god-reconcile
 description: |
   Check if user intent overlaps with the existing ROADMAP.md before doing
   feature work. Returns: already-done, in-progress, enhancement,
@@ -17,12 +18,13 @@ description: |
 Deprecated: prefer `/god-reconcile` for new workflows. This command remains in
 the full profile for backward compatibility with existing route references.
 
-Reconcile intent against ROADMAP.md before adding work.
+Reconcile intent against ROADMAP.md before adding work. This legacy command
+delegates to `god-reconciler` with ROADMAP-focused output.
 
 ## Setup
 
 1. Verify `.godpowers/roadmap/ROADMAP.md` exists. If not: nothing to reconcile against; suggest /god-roadmap or /god-feature directly.
-2. Spawn god-roadmap-reconciler with the user's intent description and the roadmap path.
+2. Spawn `god-reconciler` with the user's intent description and ask for ROADMAP-focused output.
 
 ## Output
 
@@ -58,7 +60,7 @@ For each status, the recommendation differs:
 
 ## Verification
 
-After god-roadmap-reconciler returns:
+After `god-reconciler` returns:
 1. Verify the verdict has a status from the canonical 6
 2. Verify recommendation has a concrete action
 3. Display to user; await decision before proceeding

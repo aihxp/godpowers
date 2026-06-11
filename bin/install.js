@@ -23,7 +23,6 @@ const identity = require('../lib/package-identity');
 const cliDispatch = require('../lib/cli-dispatch');
 
 const VERSION = identity.PACKAGE_VERSION;
-const { runCommand } = cliDispatch;
 
 const BANNER = `
   GODPOWERS v${VERSION}
@@ -52,8 +51,10 @@ function showHelp() {
   log('Commands:');
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
+  log('  state advance        Update one tracked Godpowers state step');
+  log('  gate                 Check a tier artifact gate');
+  log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
-  log('  gate                 Run executable artifact gate for one tier');
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
@@ -65,9 +66,11 @@ function showHelp() {
   }
   log('');
   log('Options:');
-  log('  --project=<path>     Project root for status, next, proof, gate, or automation commands');
+  log('  --project=<path>     Project root for status, next, state, proof, or automation commands');
+  log('  --step=<name>        Step for state advance, such as prd or tier-1.prd');
+  log('  --status=<status>    Status for state advance');
   log('  --tier=<name>        Tier for gate: prd, design, arch, roadmap, stack, repo, build, or harden');
-  log('  --json               Emit JSON for status, next, proof, gate, or automation commands');
+  log('  --json               Emit JSON for status, next, proof, or automation commands');
   log('  --brief              Render compact output for status, next, or proof');
   log('  --name=<scope/name>  Extension package name for extension-scaffold');
   log('  --output=<path>      Extension output root for extension-scaffold');
@@ -92,7 +95,7 @@ function showHelp() {
   log('  --codebuddy          Install for CodeBuddy');
   log('  --pi                 Install for Pi');
   log('  --all                Install for all 15 runtimes');
-  log('  --profile=<name>     Install profile: core, builder, maintainer, suite, or full');
+  log('  --profile=<name>     Install profile: core, builder, maintainer, suite, or full (default: core)');
   log('  --minimal            Alias for --profile=core');
   log('  -u, --uninstall      Uninstall Godpowers');
   log('  -h, --help           Show this help message');
@@ -100,8 +103,10 @@ function showHelp() {
   log('Examples:');
   log('  npx godpowers status --project=.');
   log('  npx godpowers next --project=.');
-  log('  npx godpowers quick-proof --project=.');
+  log('  npx godpowers state advance --step=prd --status=done --project=.');
   log('  npx godpowers gate --tier=prd --project=.');
+  log('  npx godpowers mcp-info --project=.');
+  log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
   log('  npx godpowers dogfood');
@@ -161,15 +166,15 @@ function runInstall(opts, srcDir) {
   log('');
   log(`\x1b[36mProfile:\x1b[0m ${describeProfiles(opts.profile)}`);
   log(`\x1b[36mInstalled:\x1b[0m`);
-  log(`  ${surface.skills} slash commands (try: /god-mode, /god-next, /god-status, /god-progress)`);
+  log(`  ${surface.skills} slash commands (try: /god, /god-plan, /god-status, /god-mode)`);
   log(`  ${surface.agents} specialist agents`);
   log('  Templates and references for artifact discipline');
   log('');
   log(`\x1b[36mNext steps:\x1b[0m`);
   log('  1. Open your AI coding tool in any project directory');
-  log(`  2. Type: \x1b[36m/god-mode\x1b[0m for the full autonomous project run`);
-  log(`     Or:   \x1b[36m/god-next\x1b[0m to see what to run next`);
-  log(`     Or:   \x1b[36m/god-init\x1b[0m to start a new project`);
+  log(`  2. Type: \x1b[36m/god\x1b[0m for the front door`);
+  log(`     Or:   \x1b[36m/god-plan\x1b[0m to start planning`);
+  log(`     Or:   \x1b[36m/god-mode\x1b[0m for the full autonomous project run`);
   log('');
   log(`\x1b[36mDocs:\x1b[0m ${identity.HOMEPAGE_URL}`);
   log('');
@@ -183,7 +188,7 @@ function main() {
     process.exit(0);
   }
 
-  if (runCommand(opts)) return;
+  if (cliDispatch.runCommand(opts)) return;
 
   console.log(BANNER);
   const srcDir = path.resolve(__dirname, '..');
@@ -206,7 +211,16 @@ if (require.main === module) {
 
 module.exports = {
   showHelp,
-  ...cliDispatch,
+  COMMAND_RUNNERS: cliDispatch.COMMAND_RUNNERS,
+  runCommand: cliDispatch.runCommand,
+  runAutomationCommand: cliDispatch.runAutomationCommand,
+  runDashboardCommand: cliDispatch.runDashboardCommand,
+  runDogfoodCommand: cliDispatch.runDogfoodCommand,
+  runQuickProofCommand: cliDispatch.runQuickProofCommand,
+  runMcpInfoCommand: cliDispatch.runMcpInfoCommand,
+  runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
+  runGateCommand: cliDispatch.runGateCommand,
+  runStateCommand: cliDispatch.runStateCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,

@@ -7,6 +7,19 @@ description: |
 
   Spawned by: /god-docs
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - "codebase"
+  - "existing documentation"
+  - "changed behavior evidence"
+outputs:
+  - "updated docs"
+  - ".godpowers/docs/UPDATE-LOG.md"
+gates:
+  - "DC-01 through DC-05 have-nots"
+  - "docs match code evidence"
+  - "substitution and three-label checks"
+handoff:
+  - "return updated files and drift findings"
 ---
 
 # God Docs Writer

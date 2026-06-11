@@ -25,17 +25,26 @@ Run these from a project directory after installing Godpowers.
 npx godpowers quick-proof --project=. --brief
 npx godpowers status --project=. --brief
 npx godpowers next --project=. --brief
-npx godpowers gate --tier=prd --project=examples/saas-mrr-tracker
+npx godpowers mcp-info --project=.
 ```
 
 The first command reads a shipped fixture at `fixtures/quick-proof/project`, computes
 the next command from its `.godpowers/state.json`, and reports host guarantees
 from your current environment.
 
-The status and next commands render live project status and the recommended
-next action for the current directory. The gate command checks a shipped
-example PRD with the same executable artifact gate used by tier Verification
-sections.
+The next two commands render live project status and the recommended next
+action for the current directory. The MCP info command prints optional
+read-only companion setup without writing host configuration.
+
+Executable gates are available when a tier artifact exists:
+
+```bash
+npx godpowers gate --tier=prd --project=.
+```
+
+The gate returns JSON with `{tier, verdict, artifacts, checks, findings,
+summary}` when `--json` is passed, and exits non-zero when required evidence is
+missing or a blocking lint, build, or harden finding is present.
 
 If the project has no `.godpowers/` directory yet, start with the smallest
 state-producing path inside your AI coding tool:
@@ -100,6 +109,7 @@ User: A SaaS for solo founders to track MRR breakdown by new, expansion, and chu
 Godpowers routes the work through project state and artifacts:
 
 ```text
+.godpowers/state.json
 .godpowers/PROGRESS.md
 .godpowers/prd/PRD.md
 .godpowers/arch/ARCH.md
@@ -127,7 +137,7 @@ Action brief:
   Why: Prep exists, but no PRD artifact is complete.
   Readiness: ready
   Attention: none
-  Host guarantees: full for shell and local runtime, agent spawning depends on host
+  Host guarantees: full on codex; MCP available via workspace package
 ```
 
 ### Dashboard Closeout
@@ -185,13 +195,13 @@ Use these paths before reading the full command reference.
 
 | Goal | Start here |
 |---|---|
-| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |
+| Start a product | `/god-init`, `/god-plan`, `/god-build` |
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
-| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |
+| Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
-| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |
+| Ship a release | `/god-ship`, `/god-sync`, `/god-docs`, `/god-version`, `npm run release:check` |
 | Maintain health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |
-| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |
+| Extend Godpowers | `/god-extend scaffold --name=@godpowers/my-pack --output=.`, `/god-extend test`, `/god-extend add`, `/god-extend list` |
 
 ## Runtime Expectations
 
@@ -203,7 +213,7 @@ Use these paths before reading the full command reference.
 | Degraded hosts | Godpowers must report local-only or simulated agent behavior instead of hiding the limitation. |
 
 See [host-capabilities.md](host-capabilities.md) for the detailed capability
-model.
+model. See [mcp.md](mcp.md) for optional MCP host setup.
 
 ## What To Inspect Next
 

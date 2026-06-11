@@ -10,6 +10,20 @@ description: |
 
   Spawned by: /god-sync, end of feature-addition recipe execution
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
+inputs:
+  - "reconciliation verdict"
+  - "changed files"
+  - "trigger type and recent commits"
+outputs:
+  - "updated affected artifacts"
+  - ".godpowers/SYNC-LOG.md"
+  - "local sync summaries"
+gates:
+  - "per-artifact have-nots"
+  - "feature awareness and source sync-back freshness"
+  - "no broad context loading"
+handoff:
+  - "return sync summary and remaining artifact drift if any"
 ---
 
 # God Updater
@@ -54,13 +68,13 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Validate have-nots S-01 through S-05
 
 ### DEPLOY update (if reconciler said "needs-extension")
-- Update deploy/STATE.md
+- Update `.godpowers/state.json` deploy evidence
 - Document new env vars
 - Update CI/CD config notes
 - Have-nots D-01 through D-08
 
 ### OBSERVE update (if reconciler said "needs-slo" or "needs-alert")
-- Update observe/STATE.md
+- Update `.godpowers/state.json` observe evidence
 - Define new SLO with error budget policy
 - Define new alert with runbook reference
 - Have-nots OB-01 through OB-08
@@ -71,7 +85,7 @@ After feature work, every artifact that was impacted needs to reflect reality.
 - Have-nots H-01 through H-11
 
 ### LAUNCH update (if reconciler said "copy-update" or "new-launch")
-- Update launch/STATE.md
+- Update `.godpowers/state.json` launch evidence
 - Update landing copy if user-visible
 - Substitution-test new copy
 
@@ -260,8 +274,8 @@ Updated:
 - arch/ARCH.md: added ADR-007 (auth refactor)
 - arch/adr/007-auth-refactor.md: created
 - roadmap/ROADMAP.md: Milestone 2 marked complete
-- deploy/STATE.md: added STRIPE_WEBHOOK_SECRET env var
-- observe/STATE.md: added SLO for /api/stripe-webhook (99.5%)
+- state.json tier-3.deploy: added STRIPE_WEBHOOK_SECRET env var
+- state.json tier-3.observe: added SLO for /api/stripe-webhook (99.5%)
 - backlog/BACKLOG.md: resolved entry "Stripe webhook handling"
 - todos/TODOS.md: marked "wire stripe events" as done
 - threads/auth-migration.md: appended progress note

@@ -1,14 +1,18 @@
-# Godpowers Architecture (v2 Design Target)
+# Godpowers Architecture (v3 Design Target)
 
-> Status: STABLE v2.4.3 (pure-skill model plus executable proof, adoption metrics, dogfood, host guarantees, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, prompt-size guardrails, and coverage gating)
+> Status: STABLE v3.0.0 (surface contraction, core default install profile, verb dispatchers, one-directional state authority, generated state views, executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, MCP companion tools, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, Codex host proof studies, prompt-size guardrails, coverage gating, and Phase 2 blocker fixes)
 > Authors: Godpowers Team
-> Last updated: 2026-06-09
+> Last updated: 2026-06-10
 
 This document is the canonical design for Godpowers as a coherent product.
-v2.4.3 keeps the public slash-command surface coherent and strengthens the
-release-facing runtime: external CLI canary evidence, prompt-size delegation,
-legacy command quarantine, lib coverage gating, and temp-directory package
-verification on top of the 2.4 command-family UX.
+v3.0.0 makes the omitted installer profile `core`, adds verb dispatchers over
+existing leaf commands, keeps `.godpowers/state.json` as the state authority,
+treats markdown state files as generated human views, preserves the Codex
+host-run proof studies, retains the installed-runtime gate and build-gate
+fixes, and keeps the optional read-only MCP companion package on top of the
+release-facing runtime: executable tier gates, external CLI canary evidence,
+prompt-size delegation, legacy command quarantine, lib coverage gating, and
+package verification on top of the command-family UX.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -16,11 +20,10 @@ dogfood runs, canary reports, and dashboard progress must be reported visibly
 instead of implied as hidden background work.
 
 The design follows a **pure-skill model**: Godpowers is a skill-based system.
-The CLI surface is `npx godpowers` for installation plus read-only proof and
-status helpers such as `godpowers quick-proof --project .`,
-`godpowers status --project .`, `godpowers next --project .`, and
-automation-provider inspection. Durable project operations remain slash
-commands inside the AI coding tool.
+The CLI surface is `npx godpowers` for installation plus read-only proof,
+status, next-route, tier-gate, MCP setup info, dogfood, extension-scaffold, and
+automation-provider helpers. Durable project operations remain slash commands
+inside the AI coding tool.
 
 The design is informed by research into how mature dev tools (GitHub Actions,
 Tekton, Argo, Buildkite, VSCode, Cargo, Poetry, Bazel, Nx, Helm, Terraform,
@@ -53,7 +56,8 @@ contexts to produce mechanically-verified artifacts on disk.
 ### Core surface (pure-skill foundation)
 - Skills at `<runtime>/skills/god-*.md` invoked as slash commands
 - Specialist agents at `<runtime>/agents/god-*.md` spawned via Task tool
-- Single CLI surface: `npx godpowers` for install/uninstall only
+- Single CLI surface: `npx godpowers` for install, uninstall, read-only status,
+  executable tier gates, dogfood, and extension scaffolding
 - Hooks for SessionStart and PreToolUse
 - Native Pillars project context in `AGENTS.md` and `agents/*.md`
 - Disk-authoritative state in `.godpowers/`
@@ -205,6 +209,11 @@ uninstall, legacy migration, and read-only status helpers.
 | `/god-init` | Detect project, create `.godpowers/`, write intent.yaml | god-orchestrator (mode/scale detect) |
 | `/god-mode` | Run full arc autonomously | god-orchestrator (full workflow) |
 | `/god-status` | Show current state from disk | (built-in) |
+| `/god-plan` | Route planning intent to existing planning leaves | (built-in) |
+| `/god-fix` | Route bug and outage intent to debug or hotfix | (built-in) |
+| `/god-ship` | Route deploy, observe, and launch intent | (built-in) |
+| `/god-capture` | Route capture intent to note, todo, backlog, or seed | (built-in) |
+| `/god-extend` | Route extension intent to existing extension leaves | (built-in) |
 | `/god-next` | Suggest next command based on state | (built-in) |
 | `/god-help` | Discoverable command help | (built-in) |
 | `/god-doctor` | Diagnose install + state, suggest fixes | (built-in) |
@@ -311,14 +320,14 @@ commands inside the AI coding tool.
 
 ### Route Topology And Automation Audit (2026-05-16)
 
-[DECISION] The route graph is currently complete at the file level: 112
-`skills/*.md` command files match 112 `routing/*.yaml` route files, including
+[DECISION] The route graph is currently complete at the file level: 117
+`skills/*.md` command files match 117 `routing/*.yaml` route files, including
 the `god` front door and every shipped `god-*` command.
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
 agents, 13 workflow YAML files, and 42 intent recipes.
 
-[DECISION] The current route graph has 60 built-in or local-runtime command
+[DECISION] The current route graph has 65 built-in or local-runtime command
 routes and 52 agent-routed command routes.
 
 [DECISION] Eighteen command routes declare secondary or parallel spawns:
@@ -334,12 +343,12 @@ recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
 |---------|---------------|---------------------------|
-| Skills | 112 | Every command has a user-facing skill file |
-| Routes | 112 | Every command has machine-readable routing metadata |
+| Skills | 117 | Every command has a user-facing skill file |
+| Routes | 117 | Every command has machine-readable routing metadata |
 | Agents | 40 | Spawn targets are available for specialist work |
 | Workflows | 13 | Arc execution has declarative DAGs |
 | Recipes | 42 | Fuzzy intent can route into command sequences |
-| Built-in routes | 60 | Local helpers need visible `Agent: none` cards |
+| Built-in routes | 65 | Local helpers need visible `Agent: none` cards |
 | Agent-routed routes | 52 | Spawned work needs visible spawn cards |
 
 #### Current Automation Ladder
@@ -912,7 +921,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 112 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 117 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

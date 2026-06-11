@@ -6,6 +6,19 @@ description: |
 
   Spawned by: /god-deploy, god-orchestrator
 tools: Read, Write, Edit, Bash, Glob
+inputs:
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/stack/DECISION.md"
+  - ".godpowers/state.json build evidence"
+outputs:
+  - ".godpowers/state.json deploy evidence"
+  - "CI and deploy configuration"
+  - "rollback procedure"
+gates:
+  - "D-01 through D-08 have-nots"
+  - "deploy state evidence is complete"
+handoff:
+  - "return deploy evidence and smoke verification status"
 ---
 
 # God Deploy Engineer
@@ -14,7 +27,7 @@ Set up the deploy pipeline.
 
 ## Gate Check
 
-Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
+Build is complete. All tests pass. `.godpowers/state.json` records `tier-2.build.status == done` with passing build verification commands.
 
 ## Process
 
@@ -91,7 +104,7 @@ Build is complete. All tests pass. `.godpowers/build/STATE.md` shows green.
 
 ## Output
 
-Write `.godpowers/deploy/STATE.md`:
+Return deploy evidence for `.godpowers/state.json`; `lib/state-views.js` generates `.godpowers/deploy/STATE.md` from these fields:
 
 ```markdown
 # Deploy State

@@ -8,6 +8,21 @@ description: |
 
   Spawned by: /god-design, god-orchestrator (Tier 1, conditional on UI)
 tools: Read, Write, Edit, Bash, Grep, Glob
+inputs:
+  - ".godpowers/prd/PRD.md"
+  - ".godpowers/arch/ARCH.md"
+  - ".godpowers/stack/DECISION.md"
+  - ".godpowers/state.json"
+outputs:
+  - "DESIGN.md"
+  - "PRODUCT.md when supported"
+  - ".godpowers/state.json design evidence"
+gates:
+  - "design-spec lint"
+  - "impeccable detect when available"
+  - "design have-nots"
+handoff:
+  - "return design artifact paths and validation summary to orchestrator"
 ---
 
 # God Designer
@@ -105,8 +120,9 @@ result before applying.
   (parsed by `lib/design-spec.js`)
 - `PRODUCT.md` at project root, when impeccable is present (impeccable owns
   the format)
-- `.godpowers/design/STATE.md` with: lint history, version, impeccable
-  command log, drift snapshot
+- `.godpowers/state.json` design evidence with lint history, version,
+  impeccable command log, and drift snapshot; `lib/state-views.js`
+  regenerates `.godpowers/design/STATE.md`
 
 ## Validation
 

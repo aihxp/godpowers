@@ -52,13 +52,13 @@ function stripAnchor(target) {
 }
 
 const STARTER_ROWS = [
-  '| Start a product | `/god-init`, `/god-prd`, `/god-design`, `/god-arch`, `/god-roadmap`, `/god-stack`, `/god-repo`, `/god-build` |',
+  '| Start a product | `/god-init`, `/god-plan`, `/god-build` |',
   '| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |',
-  '| Fix production | `/god-hotfix`, `/god-postmortem`, `/god-status` |',
+  '| Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |',
   '| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |',
-  '| Ship a release | `/god-sync`, `/god-docs`, `/god-version`, `/god-automation-setup`, `npm run release:check` |',
+  '| Ship a release | `/god-ship`, `/god-sync`, `/god-docs`, `/god-version`, `npm run release:check` |',
   '| Maintain project health | `/god-hygiene`, `/god-update-deps`, `/god-docs`, `/god-check-todos` |',
-  '| Extend Godpowers | `/god-extension-scaffold --name=@godpowers/my-pack --output=.`, `/god-test-extension`, `/god-extension-add`, `/god-extension-list` |'
+  '| Extend Godpowers | `/god-extend scaffold --name=@godpowers/my-pack --output=.`, `/god-extend test`, `/god-extend add`, `/god-extend list` |'
 ];
 
 const STARTER_GOAL_RECIPES = new Map([
@@ -182,6 +182,7 @@ test('quick proof fixture computes /god-prd as next command', () => {
         npm: 'test',
         gh: null,
         agentSpawn: false,
+        mcp: { available: false, source: 'not configured' },
         extensionAuthoring: false,
         suiteReleaseDryRun: false
       },
@@ -199,6 +200,7 @@ test('quick proof fixture computes /god-prd as next command', () => {
   assert(rendered.includes('Godpowers Quick Proof'), 'render missing title');
   assert(rendered.includes('Next: /god-prd'), rendered);
   assert(rendered.includes('Host guarantees: degraded on test'), rendered);
+  assert(rendered.includes('MCP not configured'), rendered);
   assert(rendered.includes('Outcome metrics:'), rendered);
   assert(rendered.includes('Commands to first signal: 1'), rendered);
   assert(proof.metrics.nextCommand === '/god-prd', JSON.stringify(proof.metrics));
@@ -218,6 +220,7 @@ test('quick proof renders dot for the user project when fixture root was passed'
         npm: 'test',
         gh: 'test',
         agentSpawn: true,
+        mcp: { available: true, source: 'test registration' },
         extensionAuthoring: true,
         suiteReleaseDryRun: true
       },
@@ -250,6 +253,7 @@ test('quick proof names the accountable outputs', () => {
     'validation gates',
     'host guarantees',
     'next action',
+    '.godpowers/state.json',
     '.godpowers/PROGRESS.md',
     '.godpowers/harden/FINDINGS.md'
   ]) {

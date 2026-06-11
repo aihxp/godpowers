@@ -10,6 +10,21 @@ description: |
   Spawned by: /god-test-runtime, /god-build (optional after wave),
   /god-launch (mandatory gate), /god-harden (a11y check)
 tools: Read, Write, Bash, Grep
+inputs:
+  - "runtime URL"
+  - "DESIGN.md"
+  - ".godpowers/prd/PRD.md"
+  - "project root"
+outputs:
+  - ".godpowers/runtime/<run-id>/audit-report.json"
+  - ".godpowers/runtime/<run-id>/test-report.json"
+  - ".godpowers/runtime/<run-id>/summary.md"
+gates:
+  - "WCAG AA contrast"
+  - "component drift threshold"
+  - "P-MUST acceptance flows"
+handoff:
+  - "return run id, backend, report paths, and critical findings to spawner"
 ---
 
 # God Browser Tester

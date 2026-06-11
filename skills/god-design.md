@@ -75,7 +75,7 @@ After god-designer returns:
 1. Verify `DESIGN.md` exists on disk when design was required.
 2. Run `npx godpowers gate --tier=design --project=.`
 3. If the gate returns a non-zero exit, do not mark Design complete. Report the gate output and repair the artifact first.
-4. Update `.godpowers/PROGRESS.md`: Design status = done.
+4. Run `npx godpowers state advance --step=design --status=done --project=.`.
 
 ## Detection-driven behavior
 
@@ -100,6 +100,14 @@ When DESIGN.md or PRODUCT.md change as a result of any subcommand:
 This pattern mirrors code review (god-spec-reviewer + god-quality-reviewer)
 applied to design.
 
+## Verification
+
+After god-designer and god-design-reviewer return:
+1. Verify `DESIGN.md` exists on disk
+2. Record design lint, review verdict, and command history in `.godpowers/state.json`
+3. Run `npx godpowers gate --tier=design --project=.` and do not proceed on a non-zero exit
+4. Run `npx godpowers state advance --step=design --status=done --project=.` when the project requires design, or `npx godpowers state advance --step=design --status=not-required --project=.` when design is explicitly not required.
+
 ## Output
 
 Project root:
@@ -107,7 +115,7 @@ Project root:
 - `PRODUCT.md` (impeccable strategic file, when impeccable installed)
 
 Inside `.godpowers/design/`:
-- `STATE.md` (lint history, version, impeccable command log)
+- `STATE.md` (generated design state view from `.godpowers/state.json`)
 - `HISTORY.md` (append-only log of design changes; populated by god-designer)
 - `REJECTED.md` (append-only log of blocked changes; populated by god-design-reviewer)
 
@@ -267,6 +275,4 @@ The reflog records every god-design invocation as `op:god-design` for `/god-undo
   for `/god-repair` review. Re-running picks up cleanly.
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

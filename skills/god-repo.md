@@ -22,9 +22,8 @@ Spawn the **god-repo-scaffolder** agent in a fresh context via the host platform
 After god-repo-scaffolder returns:
 1. Verify AUDIT.md exists on disk
 2. Verify CI passes on the empty scaffold
-3. Run `npx godpowers gate --tier=repo --project=.`
-4. If the gate returns a non-zero exit, do not mark Repo complete. Report the gate output and repair the artifact first.
-5. Update `.godpowers/PROGRESS.md`: Repo status = done
+3. Run `npx godpowers gate --tier=repo --project=.` and do not proceed on a non-zero exit
+4. Run `npx godpowers state advance --step=repo --status=done --project=.` to update `state.json` and regenerate `.godpowers/PROGRESS.md`.
 
 ## On Completion
 
@@ -35,6 +34,4 @@ Suggested next: /god-build (start building the first milestone)
 ```
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

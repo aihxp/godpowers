@@ -1,5 +1,7 @@
 ---
 name: god-locate
+deprecated: true
+successor: god-status --locate
 description: |
   Orient a new chat session or new AI tool. Reads CHECKPOINT.md +
   state.json + events.jsonl tail + intent.yaml + reflog tail and
@@ -11,6 +13,10 @@ description: |
 ---
 
 # /god-locate
+
+Deprecated: prefer `/god-status --locate` for new workflows. This command
+remains callable in the full profile for one minor release as a compatibility
+alias.
 
 Orient a new session against disk reality. Single-screen output.
 

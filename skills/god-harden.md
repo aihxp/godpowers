@@ -13,7 +13,7 @@ Spawn the **god-harden-auditor** agent in a fresh context via the host platform'
 
 ## Setup
 
-1. Verify build is complete (`.godpowers/build/STATE.md` exists).
+1. Verify build is complete through `.godpowers/state.json` `tier-2.build.status == done`.
 2. Spawn god-harden-auditor with full code access.
 3. The agent writes `.godpowers/harden/FINDINGS.md`.
 
@@ -21,11 +21,10 @@ Spawn the **god-harden-auditor** agent in a fresh context via the host platform'
 
 After god-harden-auditor returns:
 1. Verify FINDINGS.md exists on disk
-2. Run `npx godpowers gate --tier=harden --project=.`
-3. If the gate returns a non-zero exit, do not mark Harden complete. Report the gate output and repair the artifact first.
-4. Read findings classification after the gate passes:
-   - If any Critical: PROGRESS.md status = failed, launch is BLOCKED
-   - If only High/Medium/Low: PROGRESS.md status = done
+2. Run `npx godpowers gate --tier=harden --project=.` and do not proceed on a non-zero exit
+3. Read findings classification:
+   - If any Critical: run `npx godpowers state advance --step=harden --status=failed --project=.` and keep launch BLOCKED
+   - If only High/Medium/Low: run `npx godpowers state advance --step=harden --status=done --project=.`
 
 ## Have-Nots
 
@@ -92,6 +91,4 @@ The reflog records every god-harden invocation as `op:god-harden` for `/god-undo
   for `/god-repair` review. Re-running picks up cleanly.
 
 
-## Locking
-
-See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.
+Locking: See `<runtimeRoot>/references/shared/LOCKING.md` for the shared state-lock contract.

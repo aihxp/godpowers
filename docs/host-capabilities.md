@@ -8,6 +8,8 @@
   proactive checks.
 - [DECISION] Capability gaps are actionable release and workflow signals, not
   hidden implementation details.
+- [DECISION] MCP availability appears in the host guarantee line without
+  changing whether the host is `full`, `degraded`, or `unknown`.
 
 ## Levels
 
@@ -33,6 +35,9 @@
   tool commands.
 - [DECISION] Missing code intelligence is an optional enhancement gap and does
   not downgrade `full` or `degraded` host levels.
+- [DECISION] It reports MCP availability from `GODPOWERS_MCP`, the
+  `@godpowers/mcp` package, the local `packages/mcp` workspace, or a Codex
+  `[mcp_servers.godpowers]` registration.
 - [DECISION] It reports extension authoring and suite release dry-run support
   from shipped runtime files.
 
@@ -44,7 +49,7 @@ Action brief:
   Why: PRD is the next planning gate.
   Readiness: needs attention
   Attention: Host: degraded on codex, fresh-context agent spawn not detected
-  Host guarantees: degraded on codex, fresh-context agent spawn not detected
+  Host guarantees: degraded on codex, fresh-context agent spawn not detected; MCP not configured
   Code intelligence: ast-grep via ast-grep
 ```
 
@@ -52,6 +57,8 @@ Action brief:
 - [DECISION] Degraded or unknown host guarantees appear as attention items.
 - [DECISION] The compact dashboard mode includes host guarantees so compressed
   output still tells the truth about autonomy.
+- [DECISION] MCP unavailability is reported as host context, not as a blocker
+  for non-MCP workflows.
 
 ## Tests
 
