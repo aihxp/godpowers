@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-06-11
+
+### Changed
+- Updated README, roadmap, reference, MCP, architecture, release checklist, and
+  release notes for the 3.0.1 patch release.
+- Bumped `godpowers` and `@godpowers/mcp` package metadata to 3.0.1.
+- Clarified that `npm run lint` is a separate release-sensitive check rather
+  than part of `npm run release:check`.
+
+### Fixed
+- Fixed architecture extension compatibility examples to match shipped
+  first-party pack compatibility ranges.
+- Added quick proof regression coverage for adoption canary and published
+  install verification documentation links.
+
+### Removed
+- Removed the completed migration planning file from the public documentation
+  tree.
+
 ## [3.0.0] - 2026-06-10
 
 ### Added
@@ -97,7 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Updated USERS, README, roadmap, reference, architecture, release notes, and
-  bridge-plan status for the Phase 2 host proof campaign.
+  migration status for the Phase 2 host proof campaign.
 
 ## [2.5.0] - 2026-06-10
 

@@ -2,17 +2,21 @@
 
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
-> Last updated: 2026-05-30
-> Current shipped: v3.0.0
+> Last updated: 2026-06-11
+> Current shipped: v3.0.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
-2.0 public adoption window. Everything user-facing remains slash-command based.
+3.x public adoption window. Everything user-facing remains slash-command based.
 
 ---
 
 ## Shipped releases
 
-### Current surface (v3.0.0)
+### Current surface (v3.0.1)
+
+3.0.1 preserves the 3.0.0 runtime surface and updates release documentation,
+package metadata, completed migration cleanup, and publish verification
+evidence.
 
 What works today:
 - **117 slash commands** as thin orchestrators (front door, lifecycle, planning,

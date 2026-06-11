@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.0.1-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,24 +30,17 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 3.0.0 makes the omitted installer profile `core`, adds five verb
-dispatch commands, and folds locate and lifecycle views into `/god-status`
-flags while preserving full-profile compatibility aliases. It keeps the
-one-directional state authority from 2.7.0, the optional `@godpowers/mcp`
-companion package, the installed-runtime gate and build-gate fixes, Codex host
-proof studies, executable tier gates, command-family UX, external CLI canary
-evidence, prompt-size guardrails, lib coverage gating, and package verification
-before publish.
+Version 3.0.1 is a release-surface cleanup patch on top of the 3.0.0 surface
+contraction release. The current 3.x line keeps the omitted installer profile
+on `core`, preserves `--profile=full` for compatibility, keeps locate and
+lifecycle views under `/god-status`, ships the optional `@godpowers/mcp`
+companion package, and verifies docs, package contents, npm metadata, GitHub
+release state, and published install behavior before public release.
 
 Maintainer hardening continues on the 3.x line with small, audited public
-surface updates when they close real workflow gaps. The 2.1.0 patch closes a command-injection vector in the
-agent-browser driver, guards runtime file parsing against corrupt state,
-makes data-directory installs a clean replace, and reconciles documentation
-drift. The 2.0.3 patch range-checks workflow agent references,
-derives command metadata from the individual files in `skills/`, delegates
-installer runtime logic to `lib/`, moves the detailed God Mode runbook into
-`references/`, and exposes async file APIs for incremental migration away from
-synchronous-only internals.
+surface updates when they close real workflow gaps. Historical release details
+live in [CHANGELOG.md](CHANGELOG.md), while the current release status lives in
+[RELEASE.md](RELEASE.md).
 
 Strict release readiness remains fail-closed. Godpowers requires delegated
 release checks to cover root docs, docs, agents, skills, routing, workflows,
@@ -311,14 +304,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@3.0.0 -p @godpowers/mcp@3.0.0 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.0.1 -p @godpowers/mcp@3.0.1 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@3.0.0 -p @godpowers/mcp@3.0.0 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.0.1 -p @godpowers/mcp@3.0.1 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.

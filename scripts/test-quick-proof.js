@@ -287,6 +287,15 @@ test('adoption canary defines pass and failure criteria', () => {
   assertIncludes('docs/adoption-canary.md', '## Feedback Targets');
 });
 
+test('adoption canary status tracks completed Phase 2 host proofs', () => {
+  const text = read('docs/adoption-canary.md');
+  assertIncludes('docs/adoption-canary.md', 'Phase 2 host proof is complete with Run A, Run B, and Run C case studies on disk.');
+  assertIncludes('docs/adoption-canary.md', 'Run B completed the local web-app host-proof path');
+  assertIncludes('docs/adoption-canary.md', 'Run C completed a blocked-but-documented brownfield host proof');
+  assert(!text.includes('Runs B and C remain selected but unrun'), 'docs/adoption-canary.md still marks completed runs as unrun');
+  assert(!text.includes('The next Phase 2 run should start Slot B'), 'docs/adoption-canary.md still points to obsolete Slot B kickoff');
+});
+
 test('adoption canary harness captures CLI-verifiable proof signals', () => {
   assertIncludes('scripts/run-adoption-canary.js', 'quick-proof');
   assertIncludes('scripts/run-adoption-canary.js', 'status');

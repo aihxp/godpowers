@@ -1,6 +1,6 @@
 # Users and Community
 
-Godpowers is at v3.0.0. Stable release.
+Godpowers is at v3.0.1. Stable release.
 
 ## Track record
 
@@ -13,7 +13,7 @@ clarity, executable proof path, accountability hardening, deliverable progress
 tracking, and three external CLI-verifiable adoption canaries. Real users will
 reveal which gaps actually matter.
 
-- [DECISION] The Phase 2 host proof campaign has selected three current repository slots and completed Slot A for local and CI-verifiable host-proof scope.
+- [DECISION] The Phase 2 host proof campaign completed Run A for local and CI-verifiable CLI proof, Run B for local web-app proof, and Run C as a blocked-but-documented host proof.
 - [DECISION] Slot A does not prove production usage, deployed smoke, or token-dollar accounting because no staging origin or `cost.recorded` events were captured.
 - [DECISION] Current evidence and blockers are recorded in [Run A](docs/case-studies/run-a.md), [Run B](docs/case-studies/run-b.md), and [Run C](docs/case-studies/run-c.md).
 

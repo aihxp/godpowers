@@ -1,18 +1,17 @@
 # Godpowers Architecture (v3 Design Target)
 
-> Status: STABLE v3.0.0 (surface contraction, core default install profile, verb dispatchers, one-directional state authority, generated state views, executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, MCP companion tools, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, Codex host proof studies, prompt-size guardrails, coverage gating, and Phase 2 blocker fixes)
+> Status: STABLE v3.0.1 (surface contraction, core default install profile, verb dispatchers, one-directional state authority, generated state views, executable tier gates, executable proof, adoption metrics, dogfood, host guarantees, MCP companion tools, release surface sync, request-trace review, release hardening, maintenance hardening, security and drift hardening, deliverable progress tracking, accountability hardening, extension authoring, parser hardening, external CLI canaries, Codex host proof studies, prompt-size guardrails, coverage gating, Phase 2 blocker fixes, and release documentation cleanup)
 > Authors: Godpowers Team
 > Last updated: 2026-06-10
 
 This document is the canonical design for Godpowers as a coherent product.
-v3.0.0 makes the omitted installer profile `core`, adds verb dispatchers over
-existing leaf commands, keeps `.godpowers/state.json` as the state authority,
-treats markdown state files as generated human views, preserves the Codex
-host-run proof studies, retains the installed-runtime gate and build-gate
-fixes, and keeps the optional read-only MCP companion package on top of the
-release-facing runtime: executable tier gates, external CLI canary evidence,
-prompt-size delegation, legacy command quarantine, lib coverage gating, and
-package verification on top of the command-family UX.
+v3.0.1 preserves the v3.0.0 surface contraction: the omitted installer profile
+is `core`, verb dispatchers route to existing leaf commands,
+`.godpowers/state.json` remains the state authority, markdown state files stay
+generated human views, Codex host-run proof studies remain public evidence,
+installed-runtime and build-gate fixes stay in the release gate, and the
+optional read-only MCP companion package stays outside the dependency-free main
+runtime.
 Auto-invoked commands, spawned agents, local runtime helpers, platform-specific
 spawning limits, migration imports, sync-back writes, feature-awareness
 refreshes, repo documentation sync, repo surface sync, quick proof runs,
@@ -899,7 +898,7 @@ metadata:
   version: 1.0.0
 
 engines:
-  godpowers: ">=2.0.0 <3.0.0"
+  godpowers: ">=2.0.0 <4.0.0"
 
 provides:
   agents:
@@ -1004,7 +1003,7 @@ After migration, the slash command `/god-doctor` validates the new state.
 Each extension declares:
 ```yaml
 engines:
-  godpowers: ">=2.0.0 <3.0.0"
+  godpowers: ">=2.0.0 <4.0.0"
 ```
 
 `/god-extension-add` checks compatibility before installing. Mismatches fail

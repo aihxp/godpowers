@@ -49,10 +49,6 @@ This includes:
 - Full test suite through `npm test`.
 - Security and surface audit through `npm run test:audit`.
 - Package contents assertion through `npm run pack:check`.
-- Static release-sensitive checks through `npm run lint`, including shared test
-  harness adoption, async runtime APIs, agent reference validation coverage,
-  installer decomposition, God Mode runbook delegation, and skill metadata
-  source-of-truth parsing.
 - Repository documentation sync tests through `node scripts/test-repo-doc-sync.js`.
 - Repository surface sync tests through `node scripts/test-repo-surface-sync.js`.
 - Automation surface sync tests through `node scripts/test-automation-surface-sync.js`.
@@ -66,6 +62,14 @@ This includes:
 Before publish, confirm release-surface sync still sees those dogfood,
 extension, suite, and installer gates through `package.json` or the delegated
 test runner in `scripts/run-tests.js`.
+
+Run the static release-sensitive lint gate separately when release prose,
+installer decomposition, async runtime APIs, agent reference validation, or God
+Mode runbook delegation changes:
+
+```bash
+npm run lint
+```
 
 ## Package Surface
 
@@ -101,6 +105,8 @@ Confirm the npm payload excludes:
 - Create a `vX.Y.Z` git tag on the release commit.
 - Push the tag.
 - Prefer the tag-triggered GitHub publish workflow for npm provenance.
+- Create the GitHub release from the same tag and attach tarballs created from
+  the verified release commit when GitHub release assets are needed.
 - If the workflow cannot run, publish the verified tarball with
   `npm publish godpowers-X.Y.Z.tgz --access public` and record that provenance
   is unavailable for that publish.

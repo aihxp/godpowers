@@ -15,7 +15,8 @@ The first CLI-verifiable external canary set is captured in:
 
 - [DECISION] The Phase 2 host proof campaign has selected current slots in [Run A](case-studies/run-a.md), [Run B](case-studies/run-b.md), and [Run C](case-studies/run-c.md).
 - [DECISION] Run A now has local and CI-verifiable durable host-proof artifacts, with deployed smoke and token-dollar accounting gaps still explicit.
-- [DECISION] Runs B and C remain selected but unrun.
+- [DECISION] Run B completed the local web-app host-proof path and records local browser smoke evidence, runtime gates, and deployed-origin deferral.
+- [DECISION] Run C completed a blocked-but-documented brownfield host proof and records Critical dev-tooling audit findings as the honest stop point.
 
 ## Purpose
 
@@ -137,5 +138,6 @@ Route canary findings to the smallest matching surface:
 
 ## Phase 2 Status
 
-- [DECISION] The next Phase 2 run should start Slot B against a copied `template-react` target from `https://github.com/vitejs/create-vite-app.git`.
-- [DECISION] The Slot C target is `examples/cujo` from `https://github.com/tastejs/todomvc.git` after Slot B completes or fails honestly.
+- [DECISION] Phase 2 host proof is complete with Run A, Run B, and Run C case studies on disk.
+- [DECISION] Run B completed a local web-app host proof against `https://github.com/CrazyTim/countdown.git`.
+- [DECISION] Run C completed a blocked host proof against `https://github.com/seapagan/react-github-readme-button.git`.
