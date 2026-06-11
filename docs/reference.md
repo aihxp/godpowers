@@ -2,11 +2,11 @@
 
 Complete command, agent, and artifact reference for v3.0.1.
 
-## Slash commands (117 total)
+## Slash commands (120 total)
 
 ### Command families
-All 117 commands remain direct entry points, but the user-facing map starts
-with families:
+All 120 commands remain direct entry points, but the user-facing map starts
+with likely next moves and families:
 
 | Family | Purpose |
 |---|---|
@@ -22,8 +22,8 @@ with families:
 | collaborate | Coordinate people, workstreams, suites, sprints, and pull requests. |
 | configure | Tune settings, budgets, cache, profiles, help, and version info. |
 
-`/god-help <family>` shows the matching leaf commands. `/god-help` still shows
-the full catalog.
+`/god-help` shows a compact state-aware view. `/god-help <family>` shows the
+matching leaf commands. `/god-help all` shows the full catalog.
 
 ### Decision ladders
 For common ambiguous intents, Godpowers chooses the smallest fitting command:
@@ -35,11 +35,13 @@ For common ambiguous intents, Godpowers chooses the smallest fitting command:
 | Verification | `/god-lint`, `/god-standards`, `/god-review`, `/god-test-runtime`, `/god-audit`, `/god-hygiene`, `/god-preflight`, `/god-dogfood` |
 
 ### Verb dispatchers
-The default `core` install starts with the front door plus verb dispatchers:
-`/god`, `/god-init`, `/god-plan`, `/god-build`, `/god-fix`, `/god-review`,
-`/god-ship`, `/god-audit`, `/god-capture`, `/god-sync`, `/god-undo`, and
-`/god-extend`. These commands route to existing leaf commands through routing
-metadata and do not remove direct shortcuts from the `full` profile.
+The default `core` install starts with first-run guidance, the front door,
+surface control, and verb dispatchers: `/god-first-run`, `/god-demo`, `/god`,
+`/god-surface`, `/god-init`, `/god-plan`, `/god-build`, `/god-fix`,
+`/god-review`, `/god-ship`, `/god-audit`, `/god-capture`, `/god-sync`,
+`/god-undo`, and `/god-extend`. These commands route to existing leaf commands
+through routing metadata and do not remove direct shortcuts from the `full`
+profile.
 
 `/god-status` is the continue hub. `/god-progress`, `/god-status --lifecycle`,
 `/god-status --locate`, and `/god-next` remain direct shortcuts for narrower
@@ -74,6 +76,8 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 
 ### Front door
 - `/god` - Free-text intent matcher. Maps to a recipe and proposes the right command.
+- `/god-first-run` - Guide the first 10 minutes with one recommendation at a time.
+- `/god-demo` - Run the shipped sandbox proof without modifying the current project.
 - `/god-next` - Pre-flight + post-flight routing. Suggests next command from state.
 - `/god-status` - Re-derive project state from disk.
 - `/god-status --lifecycle` - Show project phase and fitting workflows.
@@ -86,6 +90,7 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `/god-extend` - Route extension authoring, install, inspection, removal, and testing.
 - `/god-automation-status` - Show host automation provider support.
 - `/god-automation-setup` - Prepare opt-in automation setup.
+- `/god-surface` - Preview or apply a runtime command surface profile after install.
 - `/god-migrate` - Detect legacy planning, BMAD, and Superpowers context, import seeds, and sync back progress.
 
 ### Installer CLI helpers
@@ -98,6 +103,9 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
 - `godpowers dogfood` - Run built-in messy-repo dogfood scenarios.
+- `godpowers demo --project .` - Show the shipped sandbox proof.
+- `godpowers surface --profile=builder --codex --global --dry-run` - Preview a runtime surface profile switch.
+- `godpowers surface --profile=builder --codex --global --apply` - Apply a runtime surface profile switch.
 - `godpowers extension-scaffold --name=@scope/pack --output=.` - Create a publishable extension pack skeleton.
 - `godpowers status --project . --brief` - Render only the action brief, host guarantee, status, and next route.
 - `godpowers status --project . --json` - Emit machine-readable dashboard state.
@@ -248,6 +256,7 @@ diff churn that cannot be traced to the request or slice plan.
 ### Context + configuration
 - `/god-context` - Manage fenced section in AGENTS.md / CLAUDE.md / GEMINI.md / etc.
 - `/god-settings` - View / modify intent.yaml settings.
+- `/god-surface` - Preview or apply a runtime command surface profile.
 - `/god-set-profile` - Switch model profile.
 
 ### Utility
@@ -257,7 +266,7 @@ diff churn that cannot be traced to the request or slice plan.
 - `/god-review` - Two-stage code review (spec + quality).
 - `/god-pr-branch` - Clean PR branch (filter .godpowers/ commits).
 - `/god-build-agent` - Generate custom specialist agent.
-- `/god-help` - Discoverable contextual help; lists command families, ladders, and the full catalog.
+- `/god-help` - Discoverable contextual help; shows compact guidance by default and the full catalog through `/god-help all`.
 - `/god-version` - Print installed Godpowers version and capability summary.
 
 ### Extensions
@@ -414,11 +423,15 @@ available.
 
 ## CLI
 
-Install-only. Everything else is slash commands.
+Install, profile switching, and read-only helper commands. Slash commands
+remain the primary project workflow surface.
 
 ```
 npx godpowers --claude --global    Install for Claude Code
 npx godpowers --all                Install for all 15 runtimes
+npx godpowers surface --profile=core --codex --global --dry-run
+npx godpowers demo --project=.
+npx godpowers status --project=.
 npx godpowers --uninstall          Remove
 npx godpowers --migrate            One-shot upgrade
 npx godpowers --help               Help

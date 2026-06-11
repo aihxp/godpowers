@@ -1,10 +1,8 @@
 ---
 name: god-help
 description: |
-  Discoverable contextual help for Godpowers. Lists all skills grouped
-  by category, with the current project state and what's suggested next.
-  Different from /god (front door): /god proposes a command sequence;
-  /god-help lists the catalog.
+  Discoverable contextual help for Godpowers. Shows a short guided view by
+  default, with the full catalog available only through /god-help all.
 
   Triggers on: "god help", "/god-help", "what can godpowers do",
   "list commands", "show help"
@@ -12,21 +10,55 @@ description: |
 
 # /god-help
 
-List Godpowers commands organized by family first, then by full catalog
-category. Show the map without hiding any installed command.
+Show the smallest useful help view for the current project state. Do not dump
+the installed command catalog unless the user asks for `all`, a family, a
+category, a keyword search, or one command.
 
-## Output sections
+## Default Output
 
-### 1. Where you are
-One line summary of project state from `state.json`:
-- Mode (A/B/C/E + suite flag), scale, current tier, last command
+### 1. Where You Are
 
-### 2. Suggested next
-The same suggestion `/god-next` would make. One command.
+Render one plain sentence from disk state:
 
-### 3. Command families
-Load `<runtimeRoot>/lib/command-families.js` and render family cards before the
-full catalog:
+```text
+You are <not initialized | in planning | building | shipping | complete>; the likely next move is <command>.
+```
+
+If no `.godpowers/` directory exists, treat the user as first-run and recommend
+`/god-first-run`.
+
+### 2. Likely Next Area
+
+Show 3 to 6 commands. Put the best command first. Use the family map from
+`<runtimeRoot>/lib/command-families.js` and the state-derived recommendation
+from `<runtimeRoot>/lib/router.js` or `<runtimeRoot>/lib/dashboard.js`.
+
+Example for an initialized project:
+
+```text
+Likely next area: continue
+
+Next commands:
+- /god-next: Continue with the safest state-derived next step.
+- /god-status --full: See the complete dashboard and proactive checks.
+- /god-help build: See build commands only.
+```
+
+Example for first-run:
+
+```text
+You have not initialized Godpowers here yet.
+
+Next commands:
+- /god-first-run: Walk through the first 10 minutes with one recommendation at a time.
+- /god-demo: Try the shipped sandbox before touching this repo.
+- /god-init: Start this project now.
+- /god-help all: Show the complete catalog.
+```
+
+### 3. Families
+
+Show family hubs without leaf commands:
 
 - Start: start or import a project.
 - Continue: understand state and choose the next move.
@@ -40,65 +72,59 @@ full catalog:
 - Collaborate: coordinate people, workstreams, suites, sprints, and pull requests.
 - Configure: tune settings, budgets, cache, profiles, help, and version info.
 
-### 4. Decision ladders
-Show the compact ladders when the user asks about capture, work size, or
-verification:
-
-- Capture ladder: `/god-note`, `/god-add-todo`, `/god-add-backlog`, `/god-plant-seed`.
-- Work size ladder: `/god-fast`, `/god-quick`, `/god-story`, `/god-feature`, `/god-build`, `/god-debug`, `/god-hotfix`.
-- Verification ladder: `/god-lint`, `/god-standards`, `/god-review`, `/god-test-runtime`, `/god-audit`, `/god-hygiene`, `/god-preflight`, `/god-dogfood`.
-
-### 5. Status views
-Present `/god-status` as the hub view and list the direct shortcuts:
-`/god-progress`, `/god-lifecycle`, `/god-locate`, and `/god-next`.
-
-### 6. Full catalog
-All installed skills grouped by category. Categories match
-`docs/reference.md` order.
-
-### 7. Where to go for more
-- Full reference: https://github.com/aihxp/godpowers/blob/main/docs/reference.md
-- Concepts: https://github.com/aihxp/godpowers/blob/main/docs/concepts.md
-- Roadmap: https://github.com/aihxp/godpowers/blob/main/docs/ROADMAP.md
-- Installed have-nots catalog: `<runtime>/godpowers-references/HAVE-NOTS.md`
+End with `Next commands:` and never more than four commands.
 
 ## Subcommands
 
 ### `/god-help`
-Full catalog with categories.
+
+Contextual help with 3 to 6 likely next commands.
+
+### `/god-help all`
+
+Full installed catalog grouped by category. This is the only default path that
+lists every command.
 
 ### `/god-help <command>`
-Description of one specific command (reads the skill's frontmatter description).
+
+Description of one command from the skill frontmatter.
 
 ### `/god-help search <keyword>`
-Filter the catalog by keyword match against descriptions.
+
+Filter the catalog by keyword match against names and descriptions.
 
 ### `/god-help <family>`
+
 Show one family card plus its leaf commands. Valid families are start,
 continue, build, verify, operate, maintain, capture, recover, extend,
 collaborate, and configure.
 
 ### `/god-help --category=<name>`
-Show only one category (lifecycle, planning, building, shipping, etc.).
+
+Show only one category, such as lifecycle, planning, building, shipping, or
+configuration.
 
 ## Implementation
 
 Built-in, no spawned agent. Reads:
 - `<runtime>/skills/*.md` frontmatter
-- `.godpowers/state.json` (for current state line)
-- `<runtimeRoot>/lib/recipes.js` (for suggested next)
-- `<runtimeRoot>/lib/command-families.js` (for family cards and ladders)
+- `.godpowers/state.json` for current state
+- `<runtimeRoot>/lib/dashboard.js` for the next route when available
+- `<runtimeRoot>/lib/command-families.js` for family cards and ladders
 
-Resolve `<runtimeRoot>` as `<projectRoot>` when `<projectRoot>/lib/recipes.js` exists. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the directory that contains this installed skill.
+Resolve `<runtimeRoot>` as `<projectRoot>` when
+`<projectRoot>/lib/dashboard.js` exists. Otherwise use the installed bundle at
+`<tool-config-dir>/godpowers-runtime`, where `<tool-config-dir>` is the
+directory that contains this installed skill.
 
-## When to use
+## When To Use
 
-- First time using Godpowers and need an overview
-- Forgot the exact name of a command
-- Want to discover commands relevant to the current state
+- First time using Godpowers and needing one next move.
+- Forgot the exact name of a command.
+- Want commands relevant to the current state without seeing the whole catalog.
 
-## When NOT to use
+## When Not To Use
 
-- You know exactly what you want -> just run that command
-- You want intent-to-command matching -> use `/god` (front door)
-- You want a single next-step suggestion -> use `/god-next`
+- You know exactly what you want: run that command.
+- You want intent-to-command matching: use `/god`.
+- You want the next state-derived action only: use `/god-next`.

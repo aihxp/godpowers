@@ -80,17 +80,16 @@ Drift check:
 - If gap > 1 hour, run /god-context-scan
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
-The orientation summary must end with a compact proposition block:
+The orientation summary must end with a compact Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: [next suggested command]
-  2. Implement complete: /god-mode to continue the project run when no drift is flagged
-  3. Discuss more: /god-discuss [unclear state or stale checkpoint]
-  4. Inspect status: /god-status for the full report
-Recommended: [one option and why]
+Next commands:
+- /god-next: Run the next suggested command from disk state.
+- /god-mode to continue the project run when no drift is flagged: Run the full recommended path.
+- /god-discuss [unclear state or stale checkpoint]: Resolve the open question before continuing.
+- /god-status for the full report: Inspect status before continuing.
 ```
 
 If drift is flagged, recommend `/god-context-scan` or `/god-repair` before

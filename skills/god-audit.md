@@ -52,15 +52,14 @@ After god-auditor returns:
 1. Verify AUDIT-REPORT.md exists on disk
 2. Display the summary table to the user
 3. If any artifact scored below 80%: suggest re-running the failing tier
-4. End with a proposition block:
+4. End with a Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: [rerun the single lowest-scoring tier or fix the top finding]
-  2. Implement complete: [rerun all failing tiers in priority order]
-  3. Discuss more: /god-discuss audit remediation plan
-  4. Run God Mode: /god-mode only when the audit has no blocking findings
-Recommended: [one option and why]
+Next commands:
+- /god-redo [tier]: Rerun the single lowest-scoring tier or fix the top finding.
+- /god-audit: Re-run audit after failing tiers are repaired in priority order.
+- /god-discuss audit remediation plan: Resolve the open question before continuing.
+- /god-mode only when the audit has no blocking findings: Run the full autonomous project workflow when it fits.
 ```
 
 ## Output Format

@@ -129,15 +129,14 @@ Approval required:
   - Confirm any host-native schedule, routine, background agent, API trigger, or connector scope
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
 End with:
 
 ```text
-Proposition:
-  1. Implement partial: create one read-only automation after approval
-  2. Implement complete: create all safe read-only automations after approval
-  3. Discuss more: tune provider, cadence, or safety rules
-  4. Inspect status: /god-automation-status
-Recommended: <one option tied to provider capability and user risk>
+Next commands:
+- /god-automation-setup: Create one approved read-only automation.
+- /god-automation-setup --all-safe: Create all approved safe read-only automations.
+- /god-discuss automation policy: Tune provider, cadence, or safety rules.
+- /god-automation-status: Inspect status before continuing.
 ```

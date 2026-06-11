@@ -1,16 +1,52 @@
 # Godpowers Dashboard Contract
 
-This reference owns the shared dashboard shape for `/god-status`, `/god-next`, `/god-mode` closeouts, and completed command closeouts.
+This reference owns the shared closeout shape for `/god-status`, `/god-next`,
+`/god-mode` closeouts, and completed command closeouts.
 
-## Runtime source
+## Runtime Source
 
-Prefer `lib/dashboard.js` for dashboard computation. Call `dashboard.compute(projectRoot)`, then render with `dashboard.render(result)` unless the caller needs a narrower brief view.
+Prefer `lib/dashboard.js` for status computation. Call
+`dashboard.compute(projectRoot)`, then render a compact action brief unless the
+user asks for `/god-status --full` or passes a verbose flag.
 
-If the runtime module is unavailable, use a manual disk scan and say `Dashboard engine: unavailable, manual scan used`.
+If the runtime module is unavailable, use a manual disk scan quietly. Mention
+the fallback only when it changes the recommendation, then suggest
+`/god-doctor`.
 
-Never mix workflow progress with audit, hygiene, remediation, or launch-readiness scores. Label those scores separately when they appear.
+Never mix workflow progress with audit, hygiene, remediation, or
+launch-readiness scores. Label those scores separately when they appear.
 
-## Required shape
+## Default Closeout
+
+Completed work, proposals, diagnostics, lifecycle views, and status summaries
+use this shape by default:
+
+```text
+<one sentence describing the result or current position>
+
+Changed:
+- <highest-signal user-visible change>
+- <highest-signal user-visible change>
+
+Validation:
+- <command>: <result>
+
+Attention:
+- <only blockers or signals that change the recommendation>
+
+Next commands:
+- <recommended command>: <one sentence reason>
+- /god-status --full: See the complete dashboard and proactive checks.
+```
+
+Omit empty sections. Do not render rows that only say `fresh`, `clear`,
+`none`, or `not-applicable`.
+
+## Full Dashboard
+
+The full dashboard is available on request through `/god-status --full` and in
+release-gate evidence. It may also appear when a user explicitly asks for all
+status details.
 
 ```text
 Godpowers Dashboard
@@ -43,13 +79,6 @@ Deliverable progress:
   Increments: <done> done, <building> building, <pending> pending
   Ledger: .godpowers/REQUIREMENTS.md
 
-What changed:
-  1. <highest-signal user-visible change>
-  2. <highest-signal user-visible change>
-
-Validation:
-  + <command>: <result>
-
 Proactive checks:
   Checkpoint: <fresh | refreshed | missing | stale | conflicts with state.json>
   Reviews: <none | N pending, suggest /god-review-changes>
@@ -57,7 +86,7 @@ Proactive checks:
   Docs: <fresh | N stale, suggest /god-docs | repo-doc-sync ran>
   Repo surface: <fresh | N stale, suggest /god-doctor | repo-surface-sync ran>
   Host: <full | degraded | unknown with host and first gap>
-  Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
+  Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL>
   Automation: <not configured | N active | available via provider, suggest /god-automation-setup>
   Security: <clear | sensitive files changed, suggest /god-harden>
   Dependencies: <clear | dependency files changed, suggest /god-update-deps>
@@ -66,28 +95,36 @@ Proactive checks:
 Open items:
   1. <deferred staging, unstaged files, pending review, blocker, or none>
 
-Next:
-  Recommended: <one concrete command or user decision>
-  Why: <one sentence tied to current state>
+Next commands:
+- <recommended command>: <one sentence reason>
+- /god-next: Recompute the state-derived next step.
 ```
 
-## Proposition closeout
+## Next Commands
 
-When a command only recommends work, end with this proposition block unless it already launched the selected command.
+When a command only recommends work, end with this block unless it already
+launched the selected command.
 
 ```text
-Proposition:
-  1. Implement partial: <single suggested command>
-  2. Implement complete: <recipe sequence or /god-mode when safe>
-  3. Discuss more: /god-discuss <routing ambiguity or missing prerequisite>
-  4. Inspect status: /god-status, /god-locate, or /god-next
-Recommended: <one option and why>
+Next commands:
+- <best runnable command>: <plain sentence reason>
+- <second runnable command>: <plain sentence reason>
+- <third runnable command>: <plain sentence reason>
 ```
 
-## Proactive rules
+Use 1 to 4 commands. Put the recommendation first. Do not show abstract
+implementation choices when a slash command can name the next move.
 
-`/god-status` is read-only by default, so Level 3 agent work becomes a suggestion unless the user asked it to continue work.
+## Proactive Rules
 
-`/god-next` may run Level 2 local helpers only when there is a direct trigger. Standalone `/god-next` turns Level 3 work into the recommended command or a proposition option.
+`/god-status` is read-only by default, so Level 3 agent work becomes a
+suggestion unless the user asked it to continue work.
 
-Report checkpoint, review, sync, docs, repo surface, host, runtime, automation, security, dependency, and hygiene signals using the labels in the required shape.
+`/god-next` may run Level 1 read-only checks by default. It may run Level 2
+local helpers only when there is a direct trigger and no destructive effect.
+Standalone `/god-next` turns Level 3 work into the recommended command.
+
+Report checkpoint, review, sync, docs, repo surface, host, runtime, automation,
+security, dependency, and hygiene signals using the labels in the full
+dashboard only when they affect the recommendation or the user asks for full
+status.

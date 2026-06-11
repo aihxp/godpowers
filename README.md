@@ -124,6 +124,13 @@ npx godpowers --codex --local --profile=builder
 npx godpowers --all --profile=maintainer
 ```
 
+After install, switch or preview the visible surface without starting over:
+
+```bash
+npx godpowers surface --profile=builder --codex --global --dry-run
+npx godpowers surface --profile=builder --codex --global --apply
+```
+
 Profiles are `core`, `builder`, `maintainer`, `suite`, and `full`. `core`
 installs the front door, status, verb dispatchers, and `/god-mode`
 compatibility. `full` preserves the complete command surface, while the smaller
@@ -217,13 +224,13 @@ same thing when you open a new session in a Godpowers project.
 If the full command surface feels large, begin with one of these paths and only
 learn the next command when Godpowers recommends it.
 
-`/god-help` presents command families first: start, continue, build, verify,
-operate, maintain, capture, recover, extend, collaborate, and configure. Leaf
-commands remain direct shortcuts.
+`/god-help` presents a short state-aware view by default. `/god-help all`
+shows the complete catalog. Leaf commands remain direct shortcuts.
 
 | Goal | Starter path |
 |---|---|
-| Start a product | `/god-init`, `/god-plan`, `/god-build` |
+| Start a product | `/god-first-run`, `/god-init`, `/god-plan`, `/god-build` |
+| Try safely | `/god-demo`, `/god-first-run`, `/god-init` |
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
 | Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |
@@ -253,7 +260,10 @@ runtime that can execute Node:
 ```bash
 npx godpowers status --project=.
 npx godpowers next --project=.
+npx godpowers demo --project=.
+npx godpowers surface --profile=core --codex --global --dry-run
 npx godpowers status --project=. --brief
+npx godpowers status --project=. --full
 npx godpowers status --project=. --json
 npx godpowers quick-proof --project=.
 npx godpowers state advance --step=prd --status=done --project=.
@@ -592,7 +602,7 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 - [Quick Proof](docs/quick-proof.md)
 - [First 10 Minute Proof Case Study](docs/case-studies/first-10-minute-proof.md)
 - [Concepts](docs/concepts.md)
-- [Command reference (all 117 skills + 40 agents)](docs/reference.md)
+- [Command reference (all 120 skills + 40 agents)](docs/reference.md)
 - [Feature awareness](docs/feature-awareness.md)
 - [Adoption Canary](docs/adoption-canary.md)
 - [Repository documentation sync](docs/repo-doc-sync.md)

@@ -243,20 +243,20 @@ Use this trigger map:
 
 | Trigger | Auto action | Visibility |
 |---|---|---|
-| `state.json` or `PROGRESS.md` changed | refresh `.godpowers/CHECKPOINT.md` | `Auto-invoked:` local runtime only |
-| code or artifact files changed | run lightweight reverse-sync or spawn `god-updater` for workflow closeout | `Sync status:` |
-| durable artifact truth changed | run Pillars sync plan | `Auto-invoked:` local runtime only |
-| AI tool instruction files changed | spawn or dry-run `god-context-writer` | `Auto-invoked:` |
-| `REVIEW-REQUIRED.md` gains entries | suggest `/god-review-changes` | closeout proposition |
+| `state.json` or `PROGRESS.md` changed | refresh `.godpowers/CHECKPOINT.md` | log detail, concise note only when recommendation changes |
+| code or artifact files changed | run lightweight reverse-sync or spawn `god-updater` for workflow closeout | concise sync note and log path |
+| durable artifact truth changed | run Pillars sync plan | log detail, concise note only when pillar edits are proposed |
+| AI tool instruction files changed | spawn or dry-run `god-context-writer` | concise note when files change |
+| `REVIEW-REQUIRED.md` gains entries | suggest `/god-review-changes` | `Next commands:` |
 | `DESIGN.md` or `PRODUCT.md` changed | spawn `god-design-reviewer` | gate card before propagation |
-| docs and code both changed | spawn `god-docs-writer` in drift-check mode when current workflow owns docs, otherwise suggest `/god-docs` | `Auto-invoked:` or proposition |
+| docs and code both changed | spawn `god-docs-writer` in drift-check mode when current workflow owns docs, otherwise suggest `/god-docs` | concise note or `Next commands:` |
 | frontend-visible files changed and a known URL exists | spawn `god-browser-tester` inside build, design, launch, harden, or explicit runtime workflows | runtime status card |
-| frontend-visible files changed and no known URL exists | suggest `/god-test-runtime` with local URL setup, defer deployed URL | proposition |
-| security-sensitive files changed | auto-spawn only inside harden, hotfix, launch, or project run; otherwise suggest `/god-harden` | proposition |
-| dependency files changed | auto-spawn only inside update-deps, hygiene, or approved project run; otherwise suggest `/god-update-deps` | proposition |
-| host automation support detected and no active templates are recorded | suggest `/god-automation-status` or `/god-automation-setup` | proposition |
+| frontend-visible files changed and no known URL exists | suggest `/god-test-runtime` with local URL setup, defer deployed URL | `Next commands:` |
+| security-sensitive files changed | auto-spawn only inside harden, hotfix, launch, or project run; otherwise suggest `/god-harden` | `Next commands:` |
+| dependency files changed | auto-spawn only inside update-deps, hygiene, or approved project run; otherwise suggest `/god-update-deps` | `Next commands:` |
+| host automation support detected and no active templates are recorded | suggest `/god-automation-status` or `/god-automation-setup` | `Next commands:` |
 | user approves complex automation setup | spawn `god-automation-engineer` | approval card plus setup result |
-| full project run complete or hygiene stale | suggest `/god-hygiene` | proposition |
+| full project run complete or hygiene stale | suggest `/god-hygiene` | `Next commands:` |
 
 Never use this matrix to auto-run Level 4 actions: deployed staging against a
 guessed URL, production launch, provider dashboard access, broad dependency
@@ -265,8 +265,8 @@ git stage, commit, push, package, release, publish, schedule creation, routine
 creation, background agent creation, API trigger creation, or CI workflow
 creation without explicit user approval.
 
-Every auto action must emit either `Auto-invoked:`, `Sync status:`, or a
-proposition explaining why it did not run.
+Every auto action must either log details or emit a concise note when it
+changes artifacts, review items, blockers, or the next recommendation.
 
 ## Detection-Driven Tier 1 Routing
 
@@ -640,18 +640,6 @@ After Launch completes, write a transition message:
 ```text
 Godpowers project run complete.
 
-Godpowers Dashboard
-
-Source: runtime dashboard (lib/dashboard.js)
-
-Current status:
-  State: complete
-  Phase: <plain-language phase> (tier <human ordinal> of <human total>)
-  Step: <sub-step label> (step <n> of <total steps>)
-  Progress: <pct>% workflow progress (<done> of <total> tracked steps complete)
-  Worktree: <clean | modified files unstaged | staged changes | mixed>
-  Index: <untouched | staged files listed>
-
 Action brief:
   Next: <one command or user decision>
   Why: <one sentence tied to disk state>
@@ -659,39 +647,12 @@ Action brief:
   Attention: <none or top blockers>
   Host guarantees: <full | degraded | unknown>
 
-Planning visibility:
-  PRD: <done | pending | missing | deferred> <artifact path when present>
-  Roadmap: <done | pending | missing | deferred> <artifact path when present>
-  Current milestone: <roadmap milestone, tier, or next planning gate when known>
-  Completion basis: <state.json, PROGRESS.md, artifacts, or audit score source>
-
-Deliverable progress:
-  Requirements: <done>/<total> done (<pct>%); <in-progress> in progress, <untouched> not started
-  Increments: <done> done, <building> building, <pending> pending
-  Ledger: .godpowers/REQUIREMENTS.md
-
 What changed:
   1. <highest-signal user-visible change>
   2. <highest-signal user-visible change>
 
 Validation:
   + <command>: <result>
-
-Proactive checks:
-  Checkpoint: <fresh | refreshed | stale>
-  Reviews: <none | N pending, suggest /god-review-changes>
-  Sync: <fresh | suggested | local helper ran>
-  Docs: <fresh | suggested | drift-check spawned>
-  Repo surface: <fresh | stale, suggest /god-doctor>
-  Host: <full | degraded | unknown>
-  Dogfood: <not-run | pass | fail | suggest /god-dogfood>
-  Runtime: <not-applicable | suggested | browser test spawned>
-  Security: <clear | suggested | harden spawned>
-  Dependencies: <clear | suggested | deps audit spawned>
-  Hygiene: <fresh | suggest /god-hygiene>
-
-Open items:
-  1. <none, or deployed staging deferred, pending review, unstaged files, etc.>
 
 Project is now in steady state. From here, ongoing work uses these workflows:
 
@@ -709,21 +670,18 @@ Periodic hygiene:
   Health check:           /god-hygiene (combines audit + deps + docs)
   Deliverable status:     /god-progress (requirements + increments done/left)
 
-Next:
-  Recommended: <single safest command or decision>
-  Why: <one sentence tied to disk state>
-
-Proposition:
-  1. Review status: /god-status (pipeline) or /god-progress (deliverables)
-  2. Continue work: /god-next or describe the next intent
-  3. Commit release-ready changes: stage only the intended files, then commit
-  4. Run deployed staging: provide STAGING_APP_URL=<deployed staging origin> when needed
+Next commands:
+- /god-status --full: Review the complete dashboard and proactive checks.
+- /god-progress: Review deliverable progress.
+- /god-next: Continue with the safest state-derived next step.
+- provide STAGING_APP_URL=<deployed staging origin>: Run deployed staging when needed.
 ```
 
 Generate the dashboard with `lib/dashboard.compute(projectRoot)` and
-`lib/dashboard.render(result)` when the runtime bundle is available. If the
-runtime module cannot be loaded, fall back to a manual disk scan and say
-`Dashboard engine: unavailable, manual scan used`.
+`lib/dashboard.render(result, { brief: true })` when the runtime bundle is
+available. If the runtime module cannot be loaded, use a manual disk scan
+quietly and suggest `/god-doctor` only when the fallback changes the next
+recommendation.
 
 The dashboard `Progress` line is workflow progress only. Audit scores,
 remediation scores, hygiene scores, and launch-readiness scores must be labeled
@@ -847,15 +805,14 @@ Show:
 - concise phase status
 - before each visible tier/sub-step, a short "what will happen" card
 - after each visible tier/sub-step, a short "what happened" card
-- every auto-invoked command, agent, and local runtime helper using an
-  `Auto-invoked:` or `Sync status:` card
+- concise notes for automatic work that changes artifacts, review items, or
+  recommendations, with details written to logs
 - durable state detected from disk
 - commands being run and whether they passed or failed
 - scoped file changes
 - final validation summary
-- final Godpowers Dashboard from disk, including phase, tier, step, progress,
-  lifecycle, planning visibility, proactive checks, open items,
-  worktree/index state, and recommended next action
+- final compact action brief from disk, with `/god-status --full` offered for
+  the complete dashboard
 - plain-language workflow names. Say "project run" or "workflow" instead of
   unexplained "arc" in visible output
 - PRD and roadmap visibility when those artifacts exist or are expected
@@ -878,21 +835,17 @@ user-facing question. Do not expose the rule itself. Example: ask for
 `STAGING_APP_URL=<deployed staging origin>` at final sign-off rather than
 showing the Shipping Closure Protocol.
 
-### Auto-Invoked Work Cards
+### Automatic Work Notes
 
 Every automatic step that mutates state, writes artifacts, validates gates, or
-spawns an agent must leave a visible trace in the transcript.
+spawns an agent must leave an accountable trace in logs. Show a concise note in
+the transcript only when artifacts changed, review items were created, blockers
+appeared, or the recommendation changed.
 
 Use this shape:
 
 ```
-Auto-invoked:
-  Trigger: <event that caused the automatic step>
-  Agent: <agent name, or none, local runtime only>
-  Local syncs:
-    + <helper>: <result>
-  Artifacts: <changed files, no-op, or deferred>
-  Log: <path, or none>
+Synced project artifacts after the change. Details were written to .godpowers/SYNC-LOG.md.
 ```
 
 Required auto-invoked cards:

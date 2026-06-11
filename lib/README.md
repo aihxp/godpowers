@@ -112,6 +112,7 @@ package-level integrations.
 | `installer-args.js` | Parse `bin/install.js` arguments and subcommands. |
 | `cli-dispatch.js` | Dispatch local CLI helper commands such as status, quick-proof, gate, dogfood, and extension-scaffold. |
 | `install-profiles.js` | Select smaller role-specific slash-command install surfaces. |
+| `surface-profile.js` | Preview and apply runtime command surface profile switches after install. |
 | `installer-runtimes.js` | Map supported runtimes to their config directories. |
 | `package-identity.js` | Centralize package name, version, repository, docs, and command identity. |
 | `automation-providers.js` | Detect and configure host-native automation providers. |

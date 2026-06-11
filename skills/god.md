@@ -2,8 +2,9 @@
 name: god
 description: |
   Front door. Take free-text intent from the user, match it to a recipe via
-  the Godpowers runtime recipes module, and propose the matching command sequence. If no
-  text given, fall back to state-driven suggestion (same as /god-next Mode 3).
+  the Godpowers runtime recipes module, and recommend one matching command
+  sequence. If no text is given, show one state-derived recommendation and a
+  few alternatives.
 
   Triggers on: "/god", "god", "/god help", "I want to ...", "how do I ..."
   (when not matched by a more specific command)
@@ -12,9 +13,12 @@ description: |
 # /god (front door)
 
 The natural-language entry point. Users describe what they want; this skill
-matches the intent to a recipe and suggests the right command sequence. No
+matches the intent to a recipe and recommends the right command sequence. No
 agent is spawned here. This is a thin router on top of the Godpowers runtime
 recipes module.
+
+If the user only types `/god`, answer with one sentence of position, one
+recommended command, and 2 to 3 alternatives. Do not show a catalog.
 
 ## Runtime module resolution
 
@@ -31,13 +35,14 @@ Recipes are scenario-shaped ("I'm coming back after a week", "production is
 broken", "add a feature during the current project run") and match free-text intent. `/god` is the
 front door that turns intent into the right slash command.
 
-This skill complements `/god-next` rather than replacing it:
+This skill is the single front door. It points to narrower views only when the
+user needs them:
 
 | Skill | Best for |
 |-------|----------|
 | `/god <free text>` | "I don't know which command, but here's what I want" |
-| `/god-next` | "I just finished X, what's next?" or pre-flight checks |
-| `/god-status` | "Where are we? what's done?" |
+| `/god-next` | "Continue safely from disk state" |
+| `/god-status --full` | "Show every dashboard detail" |
 | `/god-init` | "Start a project here" |
 | `/god-mode` | "Run the whole project run autonomously" |
 
@@ -110,9 +115,10 @@ Treat everything after `/god` as free text. If empty, treat as state-driven.
 
 ```
 text empty?
-  yes -> state-driven: call <runtimeRoot>/lib/recipes.js suggestForState(projectRoot)
-         display top 3 recipes ranked by current lifecycle phase
-         also call <runtimeRoot>/lib/router.js suggestNext(projectRoot) for structural next
+  yes -> state-driven: call <runtimeRoot>/lib/dashboard.js compute(projectRoot)
+         display one sentence of current position
+         recommend the structural next command first
+         show at most 3 alternatives
 
   no  -> intent-driven: call <runtimeRoot>/lib/recipes.js matchIntent(text, projectRoot)
          call <runtimeRoot>/lib/command-families.js classifiers for capture, work size, verification, and trigger precedence hints
@@ -127,15 +133,18 @@ text empty?
 For a single high-confidence match (score >= 10):
 
 ```
-Best match: <recipe.metadata.name>
-What this does: <recipe.metadata.description>
+Recommended: <command>
+Why: <one sentence tied to the user's words and disk state>
 
 Sequence:
   1. <command>   <why>
   2. <command>   <why>
   ...
 
-Run this sequence? (yes / show others / cancel)
+Next commands:
+- <command>: Run the recommended sequence.
+- /god-help <family>: See only the relevant family.
+- /god-status --full: Inspect the complete dashboard first.
 ```
 
 For multiple matches (top 3):
@@ -147,38 +156,27 @@ Top matches for "<user text>":
   2. <recipe-name>   (<score>)   <description>
   3. <recipe-name>   (<score>)   <description>
 
-Pick one (1/2/3) or describe more specifically.
+Next commands:
+- <best command>: Run the strongest match.
+- /god-discuss <ambiguity>: Resolve the routing ambiguity.
+- /god-help <family>: See the relevant command family.
 ```
 
 For state-driven (no text):
 
 ```
-Where you are: <lifecycle-phase>
+You are <lifecycle-phase>; the likely next move is <command>.
 
-Structural next: <command>   <why>
-
-Recipes that fit your current state:
-  - <recipe-name>   <description>
-  - <recipe-name>   <description>
-
-Run structural next? (yes / pick recipe / cancel)
-```
-
-If the answer is exploratory and proposes an approach instead of selecting or
-running a command, close with:
-
-```
-Proposition:
-  1. Implement partial: <smallest safe command or slice>
-  2. Implement complete: <full command sequence>
-  3. Discuss more: /god-discuss <topic or unresolved question>
-  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous project run
-Recommended: <one option and why>
+Next commands:
+- <command>: <why>
+- /god-next: Continue with the state-derived safe step.
+- /god-status --full: Inspect every dashboard check.
+- /god-help all: Show the complete catalog.
 ```
 
 Do not include a God Mode option when the request is clearly a tiny fix,
-single-file change, or narrow question. In that case, replace it with the
-smallest matching command, such as `/god-fast`, `/god-spike`, or `/god-next`.
+single-file change, or narrow question. In that case, recommend the smallest
+matching command, such as `/god-fast`, `/god-spike`, or `/god-next`.
 
 ### Step 4: execute or hand off
 
@@ -218,7 +216,10 @@ What this does: Production is broken now
 Sequence:
   1. /god-hotfix     Skip planning, debug, fix with TDD, expedited deploy, schedule postmortem
 
-Run this sequence? (yes / show others / cancel)
+Next commands:
+- /god-hotfix: Start the expedited production fix.
+- /god-help operate: See production operations commands only.
+- /god-status --full: Inspect the complete dashboard first.
 ```
 
 ### Example 2: ambiguous intent (multiple matches)
@@ -228,10 +229,13 @@ User: /god parallel feature during build
 
 Top matches for "parallel feature during build":
 
-  1. add-feature-mid-arc-pause       (10)   Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume
-  2. add-feature-parallel            (10)   Parallel feature, do not disrupt main work
+  1. feature-during-current-work     (10)   Bigger feature during the current project run; reconcile with roadmap, pause, do feature, update roadmap, resume
+  2. parallel-feature                (10)   Parallel feature, do not disrupt main work
 
-Pick one (1/2) or describe more specifically.
+Next commands:
+- /god-reconcile parallel feature during build: Resolve the roadmap impact first.
+- /god-feature parallel feature: Start the feature as scoped work.
+- /god-discuss parallel feature routing: Clarify which path fits.
 ```
 
 ### Example 3: state-driven (no text)
@@ -239,16 +243,12 @@ Pick one (1/2) or describe more specifically.
 ```
 User: /god
 
-Where you are: tier-1 in progress (PRD done, ARCH pending)
+You are in planning with the PRD done and architecture pending.
 
-Structural next: /god-arch
-Why: PRD is complete; architecture is the next gate
-
-Recipes that fit your current state:
-  - whats-next                Show the next logical step with reason
-  - rerun-tier                Redo a previous tier with new inputs
-
-Run /god-arch? (yes / pick recipe / cancel)
+Next commands:
+- /god-arch: Start the next planning gate.
+- /god-status --full: Inspect all dashboard details first.
+- /god-help start: See start and planning commands only.
 ```
 
 ### Example 4: no match
@@ -258,11 +258,12 @@ User: /god make me a sandwich
 
 No recipe matched. Falling back to state-driven suggestion.
 
-Where you are: tier-3 launched
-Structural next: (none, project run complete)
+You are launched and no recipe matched the request.
 
-Suggested: /god-next   show all valid next-step options
-       or: /god-status   re-derive state from disk
+Next commands:
+- /god-next: Continue from disk state.
+- /god-status --full: Re-derive full status from disk.
+- /god-discuss routing ambiguity: Clarify what you want Godpowers to do.
 ```
 
 ## Why a skill, not an agent

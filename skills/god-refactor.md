@@ -92,18 +92,17 @@ Suggested next: /god-status or continue with /god-feature
 
 When the user asks for a proposal, recommendation, or performance-improvement
 approach and no files are edited, do not stop after the advice. End with a
-proposition block that turns the recommendation into user-selectable next
+Next commands block that turns the recommendation into user-selectable next
 moves.
 
 Use this shape:
 
 ```
-Proposition:
-  1. Implement partial: /god-spike <measurement or smallest safe slice>
-  2. Implement complete: /god-refactor <full scoped refactor>
-  3. Discuss more: /god-discuss <unresolved scope question>
-  4. Run God Mode: /god-mode <scope> if the user wants the full autonomous project run
-Recommended: <one option and why>
+Next commands:
+- /god-spike <measurement or smallest safe slice>: Run the smallest safe next step.
+- /god-refactor <full scoped refactor>: Run the full recommended path.
+- /god-discuss <unresolved scope question>: Resolve the open question before continuing.
+- /god-mode <scope> if the user wants the full autonomous project run: Run the full autonomous project workflow when it fits.
 ```
 
 For performance refactors, prefer partial implementation when measurement is

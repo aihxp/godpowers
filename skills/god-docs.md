@@ -69,19 +69,14 @@ Godpowers may invoke docs work proactively in two ways:
 | Repo structural surface drift | Run `lib/repo-surface-sync.run` and include findings in docs scope | Do not invent routing or agent ownership prose without evidence |
 | `REVIEW-REQUIRED.md` contains docs drift items | Suggest `/god-review-changes` first | Do not auto-clear review items |
 
-When auto-invoked, show:
+When auto-invoked, show a concise default note:
 
 ```text
-Auto-invoked:
-  Trigger: docs and code changed in the same workflow
-  Agent: god-docs-writer
-  Local syncs:
-    + repo-doc-sync: <safe mechanical fixes, prose review needed, or no-op>
-    + repo-surface-sync: <structural surface fresh, scoped findings, or no-op>
-    + docs-drift-check: <N claims checked, N drift items>
-  Artifacts: .godpowers/docs/UPDATE-LOG.md or no-op
-  Log: .godpowers/docs/UPDATE-LOG.md
+Checked docs against changed code. Details were written to .godpowers/docs/UPDATE-LOG.md.
 ```
+
+Use a detailed `Auto-invoked:` card only with `--verbose` or release-gate
+debugging.
 
 ## Have-Nots
 

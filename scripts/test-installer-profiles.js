@@ -31,6 +31,8 @@ test('selectedSkillNames limits core surface', () => {
   const selected = profiles.selectedSkillNames('core', names);
   for (const name of [
     'god',
+    'god-first-run',
+    'god-demo',
     'god-init',
     'god-plan',
     'god-build',
@@ -43,11 +45,12 @@ test('selectedSkillNames limits core surface', () => {
     'god-undo',
     'god-extend',
     'god-status',
+    'god-surface',
     'god-mode'
   ]) {
     assert(selected.has(name), `core missing ${name}`);
   }
-  assert(selected.size >= 15 && selected.size <= 17, `core size should stay near 15, got ${selected.size}`);
+  assert(selected.size >= 18 && selected.size <= 20, `core size should stay near 19, got ${selected.size}`);
   assert(!selected.has('god-prd'), 'core should route planning through god-plan');
   assert(!selected.has('god-locate'), 'core should fold locate into god-status flags');
   assert(!selected.has('god-lifecycle'), 'core should fold lifecycle into god-status flags');
@@ -85,7 +88,9 @@ test('installer profile core installs fewer commands and writes marker', () => {
   });
   const skillsDir = path.join(home, '.codex', 'skills');
   assert(fs.existsSync(path.join(skillsDir, 'god-build', 'SKILL.md')), 'god-build missing');
+  assert(fs.existsSync(path.join(skillsDir, 'god-first-run', 'SKILL.md')), 'god-first-run missing');
   assert(fs.existsSync(path.join(skillsDir, 'god-status', 'SKILL.md')), 'god-status missing');
+  assert(fs.existsSync(path.join(skillsDir, 'god-surface', 'SKILL.md')), 'god-surface missing');
   assert(!fs.existsSync(path.join(skillsDir, 'god-suite-release', 'SKILL.md')),
     'suite command should not be installed in core profile');
   assert(fs.readFileSync(path.join(home, '.codex', 'GODPOWERS_PROFILE'), 'utf8') === 'core',

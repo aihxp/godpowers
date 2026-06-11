@@ -58,6 +58,8 @@ function showHelp() {
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
+  log('  demo                 Show the shipped sandbox proof');
+  log('  surface              Preview or apply an installed command profile');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
   log('');
   log('Command families:');
@@ -72,6 +74,10 @@ function showHelp() {
   log('  --tier=<name>        Tier for gate: prd, design, arch, roadmap, stack, repo, build, or harden');
   log('  --json               Emit JSON for status, next, proof, or automation commands');
   log('  --brief              Render compact output for status, next, or proof');
+  log('  --full               Render complete output for status, next, or demo');
+  log('  --dry-run            Preview a surface profile change');
+  log('  --apply              Apply a surface profile change');
+  log('  --runtime=<name>     Runtime target for surface, such as codex');
   log('  --name=<scope/name>  Extension package name for extension-scaffold');
   log('  --output=<path>      Extension output root for extension-scaffold');
   log('  --skill=<name>       Extension skill name for extension-scaffold');
@@ -110,6 +116,8 @@ function showHelp() {
   log('  npx godpowers automation-status --project=.');
   log('  npx godpowers automation-setup --project=.');
   log('  npx godpowers dogfood');
+  log('  npx godpowers demo --project=.');
+  log('  npx godpowers surface --profile=builder --codex --global --dry-run');
   log('  npx godpowers extension-scaffold --name=@godpowers/my-pack --output=.');
   log('  npx godpowers --claude --global');
   log('  npx godpowers --claude --global --profile=core');
@@ -216,7 +224,9 @@ module.exports = {
   runAutomationCommand: cliDispatch.runAutomationCommand,
   runDashboardCommand: cliDispatch.runDashboardCommand,
   runDogfoodCommand: cliDispatch.runDogfoodCommand,
+  runDemoCommand: cliDispatch.runDemoCommand,
   runQuickProofCommand: cliDispatch.runQuickProofCommand,
+  runSurfaceCommand: cliDispatch.runSurfaceCommand,
   runMcpInfoCommand: cliDispatch.runMcpInfoCommand,
   runExtensionScaffoldCommand: cliDispatch.runExtensionScaffoldCommand,
   runGateCommand: cliDispatch.runGateCommand,

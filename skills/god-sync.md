@@ -57,17 +57,13 @@ User runs `/god-sync` after manual changes. Useful for:
    - Or: re-run reconciliation against current state to detect what changed
    - Recent commits for context
 
-Before spawning, show a visible auto-invoke card:
+Before spawning, show a concise sync note:
 
 ```
-Auto-invoked:
-  Trigger: <manual /god-sync, recipe closeout, /god-mode final sync, or other source>
-  Agent: god-updater
-  Local syncs:
-    - pending: feature-awareness, reverse-sync, source-sync, repo-doc-sync, repo-surface-sync, route-quality-sync, recipe-coverage-sync, release-surface-sync, pillars-sync, checkpoint-sync, context-refresh
-  Artifacts: pending
-  Log: .godpowers/SYNC-LOG.md
+Syncing project artifacts after this workflow. Details will be written to .godpowers/SYNC-LOG.md.
 ```
+
+Use the detailed helper list only with `--verbose` or release-gate debugging.
 
 ## Verification
 

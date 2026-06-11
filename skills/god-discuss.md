@@ -73,10 +73,9 @@ Key findings:
 
 Suggested next: [the planning command this discussion was for]
 
-Proposition:
-  1. Implement partial: [smallest safe slice or planning command]
-  2. Implement complete: [full command that consumes this brief]
-  3. Discuss more: /god-discuss [specific unresolved question]
-  4. Run God Mode: /god-mode [scope] if the user wants autonomous execution
-Recommended: [one option and why]
+Next commands:
+- /god-next: Continue with the safest command that uses this discussion.
+- /god-mode [scope]: Run the full command that consumes this brief when safe.
+- /god-discuss [specific unresolved question]: Resolve the open question before continuing.
+- /god-mode [scope] if the user wants autonomous execution: Run the full autonomous project workflow when it fits.
 ```

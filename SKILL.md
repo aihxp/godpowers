@@ -96,120 +96,82 @@ answer a question, inspect first. When a term is resolved, record it in
 `.godpowers/domain/GLOSSARY.md` with canonical spelling, avoided aliases,
 relationships, and any unresolved ambiguity.
 
-### 9. Proposal Closeout
-When you answer with a recommendation, proposal, or exploratory plan and do not
-make file edits, run commands, or hand off to another command, end with a
-proposition block. The block must give the user concrete next moves instead of
-leaving them at a dead stop.
+### 9. Next Commands Closeout
+When you answer with a recommendation, proposal, status report, diagnostic,
+audit, lifecycle view, reconciliation, or exploratory plan, end with
+`Next commands:` unless a downstream command already launched.
 
-This also applies to diagnostic, status, audit, lifecycle, reconciliation, and
-decision-support reports when they end with suggestions, options, or a
-recommended sequence.
+The block must contain 1 to 4 runnable commands. Put the best option first.
+Each line must be a concrete command plus one plain sentence explaining what it
+will do. Do not end with abstract options such as "implement partial" or
+"discuss more" unless those words are part of the command argument.
 
 Use this shape:
 
 ```
-Proposition:
-  1. Implement partial: <smallest safe slice and command>
-  2. Implement complete: <larger command or project run>
-  3. Discuss more: <focused question or /god-discuss topic>
-  4. Run God Mode: /god-mode <optional flags or scope>
-Recommended: <one option and why>
+Next commands:
+- /god-next: Continue with the safest state-derived next step.
+- /god-status --full: Inspect the complete dashboard when you need all checks.
+- /god-discuss <topic>: Resolve the named open question before work starts.
 ```
 
-Only include options that actually fit the situation. If `/god-mode` is too
-broad or unsafe for the request, say so and offer `/god-feature`,
-`/god-refactor`, `/god-spike`, or `/god-discuss` instead.
+Only include commands that fit the current state. If `/god-mode` is too broad
+or unsafe for the request, use `/god-feature`, `/god-refactor`, `/god-spike`,
+`/god-fast`, `/god-quick`, or `/god-discuss` instead.
 
 ### 10. Completion Closeout
 When you complete work, especially from `/god-mode`, `/god-build`,
 `/god-feature`, `/god-hotfix`, `/god-refactor`, `/god-quick`, or any command
-that edits code or artifacts, do not stop at "complete" plus validation. End
-with a disk-derived closeout that tells the user the current state and what is
-next.
+that edits code or artifacts, do not stop at "complete" plus validation.
+End with a concise disk-derived closeout that tells the user what changed,
+what needs attention, and what command to run next.
 
-Every closeout must include a **Godpowers Dashboard**. This dashboard is the
-same mental model across `/god-status`, `/god-progress`, `/god-next`,
-`/god-mode`, and every command that completes, pauses, or proposes work.
+Closeouts use the dashboard engine for computation, but they do not print the
+full dashboard by default. When the runtime bundle is available, compute with
+`lib/dashboard.compute(projectRoot)` and render a compact action brief. The
+complete dashboard is available through `/god-status --full`.
 
-When the runtime bundle is available, compute this with
-`lib/dashboard.compute(projectRoot)` and render it with
-`lib/dashboard.render(result)`. The executable dashboard engine is the shared
-source for phase, tier, step, progress, PRD and roadmap visibility, proactive
-checks, host guarantees, open items, and the next route. If the runtime module
-is unavailable, fall back to a manual disk scan and say `Dashboard engine:
-unavailable, manual scan used`.
+If the runtime module is unavailable, silently use a manual disk scan. Mention
+the fallback only when the missing runtime changes the recommendation, then
+suggest `/god-doctor`.
 
 Use this shape:
 
 ```
-Godpowers Dashboard
+<one sentence describing the completed result>
 
-Current status:
-  State: <complete | partial | blocked | complete with deferred item>
-  Phase: <plain-language phase> (tier <human ordinal> of <human total>) when available
-  Step: <sub-step label> (<step n> of <total steps>) when available
-  Progress: <pct>% (<done> of <total> steps complete) when available
-  Worktree: <clean | modified files unstaged | staged changes | mixed>
-  Index: <untouched | staged files listed>
-
-Action brief:
-  Next: <recommended command or user decision>
-  Why: <route reason tied to disk state>
-  Readiness: <ready | needs attention>
-  Attention: <top blockers or none>
-  Host guarantees: <full | degraded | unknown with host and first gap>
-
-Planning visibility:
-  PRD: <done | pending | missing | deferred> <artifact path when present>
-  Roadmap: <done | pending | missing | deferred> <artifact path when present>
-  Current milestone: <roadmap milestone, tier, or next planning gate when known>
-  Completion: <pct>% <brief basis, for example done steps over total tracked steps>
-
-What changed:
-  1. <highest-signal change>
-  2. <highest-signal change>
+Changed:
+- <highest-signal user-visible change>
+- <highest-signal user-visible change>
 
 Validation:
-  + <command>: <result>
+- <command>: <result>
 
-Proactive checks:
-  Checkpoint: <fresh | refreshed | missing | stale | conflicts with state.json>
-  Reviews: <none | N pending, suggest /god-review-changes>
-  Sync: <fresh | missing | stale | local helper ran | suggest /god-sync>
-  Docs: <fresh | N stale, suggest /god-docs | repo-doc-sync ran>
-  Repo surface: <fresh | N stale, suggest /god-doctor | repo-surface-sync ran>
-  Host: <full | degraded | unknown with host and first gap>
-  Runtime: <not-applicable | known URL, suggest /god-test-runtime | no known URL, defer deployed verification>
-  Automation: <not configured | N active | available via provider, suggest /god-automation-setup>
-  Security: <clear | sensitive files changed, suggest /god-harden>
-  Dependencies: <clear | dependency files changed, suggest /god-update-deps>
-  Hygiene: <fresh | stale, suggest /god-hygiene>
+Attention:
+- <only blockers or signals that change the recommendation>
 
-Open items:
-  1. <deferred staging, unstaged files, pending review, blocker, or none>
-
-Next:
-  Recommended: <one concrete command or user decision>
-  Why: <one sentence tied to current state>
+Next commands:
+- <recommended command>: <one sentence reason>
+- /god-status --full: See the complete dashboard and proactive checks.
 ```
 
-If the command intentionally did not stage, commit, push, or deploy, say that
-plainly and explain what the user can do next. If deployed staging is deferred,
-include the deferred artifact path or exact missing input. If the worktree has
-pre-existing unrelated changes, say the index was left untouched and recommend
-a scoped review or staging command rather than implying the project is fully
-shipped.
+Omit empty sections. Do not print rows that only say `fresh`, `clear`, `none`,
+or `not-applicable`. If the command intentionally did not stage, commit, push,
+or deploy, say that plainly in the completion sentence or `Attention`.
+If deployed staging is deferred, include the deferred artifact path or exact
+missing input. If the worktree has pre-existing unrelated changes, say the
+index was left untouched and recommend a scoped review or staging command
+rather than implying the project is fully shipped.
 
-When the command only recommends work, keep the same dashboard but set
-`State: proposal` and end with the proposition block from Section 9. When the
-command pauses, set `State: blocked` or `State: paused` and make `Next` the
-one exact user decision needed to continue.
+When the command only recommends work, use the same compact shape and end with
+`Next commands:` from Section 9. When the command pauses, make the first next
+command the exact user decision or command needed to continue.
 
 ### 11. Command Family UX
 Godpowers has many leaf commands, but user-facing routing should start from
-families. Keep the full command surface available while presenting these
-families first:
+families and likely next moves. Keep the full command surface available, but
+show the full catalog only when the user asks for `/god-help all`,
+`/god-help <family>`, `/god-help search <keyword>`, or a direct command.
 
 - Start: start or import a project.
 - Continue: understand state and choose the next move.
@@ -225,9 +187,9 @@ families first:
 
 When choosing between similar commands, use the ladders from
 `lib/command-families.js`: capture ladder, work size ladder, verification
-ladder, status views, and trigger precedence. `/god-help` should render
-families before leaf commands, and `/god` should use the family helpers before
-asking the user to choose from a long list.
+ladder, status views, and trigger precedence. `/god-help` should render 3 to 6
+state-relevant choices by default, and `/god` should recommend one command
+before showing alternatives.
 
 ### 12. User-Facing Vocabulary
 Godpowers may use internal words such as "arc" in routing, recipes, and agent
@@ -249,32 +211,29 @@ and roadmap visibility when those files exist or are expected. Show whether
 the PRD is done, whether the roadmap exists, which milestone or tier is active,
 how close the tracked workflow is to completion, and the next concrete move.
 
-### 13. Auto-Invoke Visibility
+### 13. Automatic Work Visibility
 When Godpowers automatically runs another command, agent, or local runtime
-helper, show the user what happened. Do not describe these as "background"
-unless they are truly detached from the current run. Most Godpowers sync work
-is auto-invoked but still part of the current workflow.
+helper, make the user-visible message proportional to the outcome. Internal
+helper names do not appear by default.
 
-Use this shape whenever an automatic step runs or is skipped:
-
-```
-Auto-invoked:
-  Trigger: <what caused this automatic step>
-  Agent: <god-updater | god-context-writer | none, local runtime only>
-  Local syncs:
-    + <feature-awareness | planning-system-import | reverse-sync | source-sync | repo-doc-sync | repo-surface-sync | route-quality-sync | recipe-coverage-sync | release-surface-sync | host-capabilities | dogfood-runner | pillars-sync | checkpoint-sync | context-refresh>: <result or skipped reason>
-  Artifacts: <changed files, no-op, or deferred>
-  Log: <SYNC-LOG.md, CHECKPOINT.md, REVIEW-REQUIRED.md, or none>
-```
-
-If no agent was spawned, say so plainly:
+If the automatic step changed user-visible artifacts or changed the next
+recommendation, say it in one plain sentence:
 
 ```
-Agent: none, local runtime only
-Why: this path calls lib/reverse-sync.run directly
+Synced project artifacts after the change. Details were written to .godpowers/SYNC-LOG.md.
 ```
 
-Automatic steps that especially need visible reporting:
+If the automatic step is routine and does not change the recommendation, keep
+the details in `.godpowers/SYNC-LOG.md`, `.godpowers/CHECKPOINT.md`, or
+`.godpowers/REVIEW-REQUIRED.md` without printing a card.
+
+Use a detailed `Auto-invoked:` card only for `--verbose`, debugging,
+release-gate evidence, or a direct user request for automation internals.
+When shown, it must name the user-facing trigger, changed artifacts, and log
+path before any internal helper id.
+
+Automatic steps that especially need a concise note when they change the next
+recommendation, and a log entry otherwise:
 - `/god-sync` spawning `god-updater`
 - `god-updater` calling reverse-sync, Pillars sync, checkpoint sync, or
   AI-tool context refresh

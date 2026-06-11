@@ -46,10 +46,9 @@ Suggested next:
   /god-tech-debt    - assess and prioritize debt revealed
   /god-feature      - now safe to add new work with archaeology in hand
 
-Proposition:
-  1. Implement partial: /god-tech-debt for only the highest-risk areas
-  2. Implement complete: /god-reconstruct then /god-audit for full brownfield alignment
-  3. Discuss more: /god-discuss the open tribal-knowledge questions
-  4. Run God Mode: /god-mode only after reconstruction or audit makes the state clear
-Recommended: /god-reconstruct when planning artifacts are missing or stale.
+Next commands:
+- /god-tech-debt for only the highest-risk areas: Run the smallest safe next step.
+- /god-reconstruct then /god-audit for full brownfield alignment: Run the full recommended path.
+- /god-discuss the open tribal-knowledge questions: Resolve the open question before continuing.
+- /god-mode only after reconstruction or audit makes the state clear: Run the full autonomous project workflow when it fits.
 ```

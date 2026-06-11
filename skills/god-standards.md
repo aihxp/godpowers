@@ -55,12 +55,11 @@ Suggested next:
   /god-redo prd to address failures with feedback
   /god-skip prd --reason "..." to accept-as-is
 
-Proposition:
-  1. Implement partial: /god-redo [tier] with the listed failures
-  2. Implement complete: fix all failures, rerun /god-standards, then continue the gate
-  3. Discuss more: /god-discuss standards failure
-  4. Skip: /god-skip [tier] --reason "..." only with an explicit reason
-Recommended: [one option and why]
+Next commands:
+- /god-redo [tier] with the listed failures: Run the smallest safe next step.
+- /god-standards [tier]: Re-run the standards gate after fixing all failures.
+- /god-discuss standards failure: Resolve the open question before continuing.
+- /god-skip [tier] --reason "..." only with an explicit reason: Skip only with an explicit reason.
 ```
 
 ## Auto-invocation

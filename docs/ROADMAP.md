@@ -19,12 +19,12 @@ package metadata, completed migration cleanup, and publish verification
 evidence.
 
 What works today:
-- **117 slash commands** as thin orchestrators (front door, lifecycle, planning,
+- **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
   building, shipping, design, runtime, linkage, story-file, suite, recovery,
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
-- **13 executable workflows** and **42 intent recipes**
+- **13 executable workflows** and **43 intent recipes**
 - Optional `@godpowers/mcp` companion package with five read-only tools:
   `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`
 - **One-directional state authority**: `.godpowers/state.json` is the

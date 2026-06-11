@@ -26,28 +26,19 @@ Detect and migrate adjacent planning systems into Godpowers.
 
 ## Auto-Invoke Contract
 
-`/god-init` auto-invokes the import path when it detects legacy planning, BMAD, or
-Superpowers context. It must show this visible status card:
+`/god-init` auto-invokes the import path when it detects legacy planning, BMAD,
+or Superpowers context. It shows this concise note when import writes happen:
 
 ```
-Auto-invoked:
-  Trigger: /god-init planning-system detection
-  Agent: none, local runtime only
-  Local syncs:
-    + planning-system-import: <detected systems, written seeds, or no-op>
-  Artifacts: .godpowers/prep/IMPORTED-CONTEXT.md and optional seed artifacts
+Imported adjacent planning context into .godpowers/prep/IMPORTED-CONTEXT.md.
 ```
 
 `/god-sync` auto-invokes sync-back when `state.json` contains enabled
-`source-systems` entries. It must show this visible status card:
+`source-systems` entries. It shows this concise note when companion files are
+written:
 
 ```
-Auto-invoked:
-  Trigger: /god-sync source-system sync-back
-  Agent: none, local runtime only
-  Local syncs:
-    + source-sync: <written companion files, pointer fences, or no-op>
-  Artifacts: <.planning/GODPOWERS-SYNC.md, _bmad-output/GODPOWERS-SYNC.md, docs/superpowers/GODPOWERS-SYNC.md>
+Synced Godpowers progress back to the source planning system.
 ```
 
 If the import has low confidence, multiple conflicting systems, or missing

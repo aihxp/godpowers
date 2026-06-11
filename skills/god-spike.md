@@ -84,12 +84,11 @@ Suggested next:
   - If rejecting: archive .godpowers/spikes/<question-slug>/
   - If unclear: /god-spike with narrower question
 
-Proposition:
-  1. Implement partial: /god-feature for the smallest proven slice
-  2. Implement complete: /god-feature with the full recommendation
-  3. Discuss more: /god-discuss the remaining uncertainty
-  4. Run God Mode: /god-mode only if this spike unblocks the full project run
-Recommended: proceed only when SPIKE.md has a clear DECISION and evidence.
+Next commands:
+- /god-feature for the smallest proven slice: Run the smallest safe next step.
+- /god-feature with the full recommendation: Run the full recommended path.
+- /god-discuss the remaining uncertainty: Resolve the open question before continuing.
+- /god-mode only if this spike unblocks the full project run: Run the full autonomous project workflow when it fits.
 
 REMINDER: spike code is throwaway. Do NOT merge to main.
 ```

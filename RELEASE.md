@@ -10,10 +10,10 @@
 
 ## What's in this release
 
-- [DECISION] 117 slash commands.
+- [DECISION] 120 slash commands.
 - [DECISION] 40 specialist agents.
 - [DECISION] 13 executable workflows.
-- [DECISION] 42 intent recipes.
+- [DECISION] 43 intent recipes.
 - [DECISION] Five thin verb dispatch commands remain shipped: `/god-plan`, `/god-fix`, `/god-ship`, `/god-capture`, and `/god-extend`.
 - [DECISION] Five read-only MCP tools remain available in `@godpowers/mcp`: `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`.
 
@@ -33,7 +33,7 @@
 - [DECISION] `npm run lint` passed with 29 static checks.
 - [DECISION] `npm run release:check` passed with `coverage:lib` at 92.82 percent line coverage.
 - [DECISION] `npm run release:check` passed `npm audit --omit=dev` with 0 vulnerabilities.
-- [DECISION] `npm run release:check` passed public surface docs for version 3.0.1 with 117 skills, 40 agents, 13 workflows, and 42 recipes.
+- [DECISION] `npm run release:check` passed public surface docs for version 3.0.1 with 120 skills, 40 agents, 13 workflows, and 43 recipes.
 - [DECISION] `npm run release:check` passed root package contents with 548 files.
 - [DECISION] `npm run release:check` passed `@godpowers/mcp` package contents with 8 files.
 - [DECISION] `npm pack --pack-destination /tmp/godpowers-release-3.0.1` produced `godpowers-3.0.1.tgz` with 548 files.

@@ -110,17 +110,13 @@ missing. If only a local URL is evidenced, run local verification and defer
 deployed staging verification until the user provides
 `STAGING_APP_URL=<deployed staging origin>` or reaches final sign-off.
 
-When auto-invoked, show:
+When auto-invoked, show a concise default note:
 
 ```text
-Auto-invoked:
-  Trigger: frontend-visible files changed and URL was evidenced
-  Agent: god-browser-tester
-  Local syncs:
-    + runtime-verification: <audit | test | full pipeline>
-  Artifacts: .godpowers/runtime/<run-id>/
-  Log: .godpowers/runtime/<run-id>/summary.md
+Verified the evidenced runtime target. Details were written to .godpowers/runtime/<run-id>/summary.md.
 ```
+
+Use a detailed `Auto-invoked:` card only with `--verbose` or debugging.
 
 ## Output to events.jsonl
 

@@ -52,7 +52,8 @@ function stripAnchor(target) {
 }
 
 const STARTER_ROWS = [
-  '| Start a product | `/god-init`, `/god-plan`, `/god-build` |',
+  '| Start a product | `/god-first-run`, `/god-init`, `/god-plan`, `/god-build` |',
+  '| Try safely | `/god-demo`, `/god-first-run`, `/god-init` |',
   '| Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |',
   '| Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |',
   '| Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |',
@@ -63,6 +64,7 @@ const STARTER_ROWS = [
 
 const STARTER_GOAL_RECIPES = new Map([
   ['Start a product', 'greenfield-fast'],
+  ['Try safely', 'try-safely'],
   ['Add a feature', 'add-feature-mid-arc-pause'],
   ['Fix production', 'production-broken'],
   ['Audit an existing repo', 'brownfield-onboarding'],
@@ -74,12 +76,12 @@ const STARTER_GOAL_RECIPES = new Map([
 
 function starterGoals(text) {
   return text.split('\n')
-    .filter((line) => /^\| (Start a product|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line))
+    .filter((line) => /^\| (Start a product|Try safely|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line))
     .map((line) => line.split('|')[1].trim());
 }
 
 function starterCommands(text) {
-  const rows = text.split('\n').filter((line) => /^\| (Start a product|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line));
+  const rows = text.split('\n').filter((line) => /^\| (Start a product|Try safely|Add a feature|Fix production|Audit an existing repo|Ship a release|Maintain (project )?health|Extend Godpowers) \|/.test(line));
   return rows.flatMap((row) => [...row.matchAll(/`([^`]+)`/g)].map((match) => match[1]));
 }
 
@@ -94,6 +96,7 @@ test('README exposes starter paths before the full reference', () => {
   assertIncludes('README.md', '### Start With A Path');
   for (const phrase of [
     'Start a product',
+    'Try safely',
     'Add a feature',
     'Fix production',
     'Audit an existing repo',

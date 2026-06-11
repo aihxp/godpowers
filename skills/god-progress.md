@@ -78,17 +78,16 @@ Open the full checklist any time: .godpowers/REQUIREMENTS.md
 Use plain text. No emoji, no box-drawing. Ledger marks are `[x]` done, `[~]`
 in progress, `[ ]` not started, matching the ledger file.
 
-## Proposition Closeout
+## Next Commands Closeout
 
-End every progress report with a proposition block:
+End every progress report with a Next commands block:
 
 ```text
-Proposition:
-  1. Implement partial: [single next command, e.g. /god-build]
-  2. Implement complete: /god-mode to continue the project run when unblocked
-  3. Inspect deeper: open .godpowers/REQUIREMENTS.md or run /god-status
-  4. Discuss more: /god-discuss [a gap, a blocked requirement, or scope]
-Recommended: [one option and one sentence on why it fits the disk state]
+Next commands:
+- /god-build: Continue the next build step when the roadmap is unblocked.
+- /god-mode: Continue the project run when the current phase is safe to resume.
+- /god-status --full: Inspect the complete dashboard and proactive checks.
+- /god-discuss <blocked requirement>: Resolve a gap before continuing.
 ```
 
 If `derived.gaps` is non-empty, make `/god-review-changes` (or fixing the gap)

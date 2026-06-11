@@ -8,27 +8,27 @@ Godpowers has two kinds of automatic work:
   `lib/reverse-sync.run`, `lib/pillars.applyArtifactSync`, or
   `lib/checkpoint.syncFromState`.
 
-Both must be visible to the user. Local runtime work is not a background agent.
+Both must be accountable to the user. Local runtime work is not a background
+agent, but routine helper names do not need to lead the default transcript.
 
-## Required Status Shape
+## Default Visibility Shape
 
 ```text
-Auto-invoked:
-  Trigger: <what caused the automatic step>
-  Agent: <agent name, or none, local runtime only>
-  Local syncs:
-    + <helper>: <result>
-  Artifacts: <changed files, no-op, or deferred>
-  Log: <path, or none>
+Synced project artifacts after the change. Details were written to .godpowers/SYNC-LOG.md.
 ```
 
-Use `Sync status:` when the automatic work is part of `/god-sync`,
-`/god-scan`, or a final `/god-mode` sync.
+Use one concise sentence when automatic work changes artifacts, creates review
+items, changes the recommendation, or blocks progress. Otherwise write details
+to the relevant log and keep the user-facing closeout focused on the next
+command.
+
+Use a detailed `Auto-invoked:` card only for `--verbose`, debugging,
+release-gate evidence, or a direct user request for automation internals.
 
 ## Godpowers Dashboard
 
-Every command that completes, pauses, or proposes work must finish with the
-same status model:
+Every command that completes, pauses, or proposes work uses the same status
+model, but the full dashboard is not printed by default.
 
 When the runtime bundle is available, this model is computed by
 `lib/dashboard.js`:
@@ -36,20 +36,10 @@ When the runtime bundle is available, this model is computed by
 ```js
 const dashboard = require('./lib/dashboard');
 const result = dashboard.compute(projectRoot);
-console.log(dashboard.render(result));
+console.log(dashboard.render(result, { brief: true }));
 ```
 
 ```text
-Godpowers Dashboard
-
-Source: runtime dashboard (lib/dashboard.js)
-
-Current status:
-  State: <complete | partial | blocked | proposal>
-  Phase: <plain-language phase> (tier <human ordinal> of <human total>)
-  Step: <sub-step label> (step <n> of <total steps>)
-  Progress: <pct>% workflow progress (<done> of <total> tracked steps complete)
-
 Action brief:
   Next: <one command or user decision>
   Why: <one sentence tied to disk state>
@@ -57,39 +47,16 @@ Action brief:
   Attention: <none or top blockers, with overflow count>
   Host guarantees: <full | degraded | unknown>
 
-Planning visibility:
-  PRD: <done | pending | missing | deferred> <path when present>
-  Roadmap: <done | pending | missing | deferred> <path when present>
-  Current milestone: <roadmap milestone, phase, or next gate>
-  Completion basis: <state.json, PROGRESS.md, artifacts, or audit score source>
-
-Proactive checks:
-  Checkpoint: <fresh | refreshed | missing | stale>
-  Reviews: <none | N pending, suggest /god-review-changes>
-  Sync: <fresh | suggest /god-sync | local helper ran>
-  Docs: <fresh | possible drift, suggest /god-docs>
-  Repo surface: <fresh | N stale, suggest /god-doctor>
-  Host guarantees: <full | degraded | unknown>
-  Dogfood: <not-run | pass | fail | suggest /god-dogfood>
-  Runtime: <not-applicable | known URL, suggest /god-test-runtime>
-  Security: <clear | sensitive files changed, suggest /god-harden>
-  Dependencies: <clear | dependency files changed, suggest /god-update-deps>
-  Hygiene: <fresh | stale, suggest /god-hygiene>
-
-Open items:
-  1. <none, blocker, deferred verification, or pending review>
-
-Next:
-  Recommended: <one command or user decision>
-  Why: <one sentence tied to disk state>
+Next commands:
+- <recommended command>: <one sentence reason>
+- /god-status --full: See the complete dashboard and proactive checks.
 ```
 
-This dashboard is required for `/god-status`, `/god-next`, `/god-mode`, and
-workflow closeouts so the user can always see where Godpowers is, how close it
-is to completion, and what happens next.
+`/god-status --full` renders the complete dashboard with planning visibility,
+deliverable progress, proactive checks, open items, and next commands.
 
-The action brief is the compressed onboarding surface. It must not replace the
-full proactive checks, because the detailed checks are the audit trail.
+The action brief is the default onboarding surface. The full proactive checks
+remain available through `/god-status --full` and release-gate evidence.
 
 Workflow progress and audit scores are separate metrics. The dashboard
 `Progress` line is only workflow step completion from state. Audit or hygiene
@@ -98,21 +65,21 @@ as workflow progress.
 
 Workflow YAML may use `local-helper-groups` to avoid repeating closeout helper
 sets. Serialized plans must still expand those groups into explicit
-`local-helpers` so the transcript can show every local runtime action.
+`local-helpers` so logs and verbose output can show every local runtime action.
 
-Route closeouts that use contextual or choice-based next values must render
-their `success-path.outcome` type, label, reason, and allowed next commands.
-Flexible routing is allowed, but unexplained placeholders are not.
+Route closeouts that use contextual or choice-based next values must use
+`Next commands:` with concrete commands. Verbose output may include the
+`success-path.outcome` type, label, reason, and allowed next commands.
 
 ## Already Automatic
 
 | Area | Current trigger | Visibility requirement |
 |---|---|---|
-| Final sync | `/god-mode` completion | Show `god-updater` spawn and local sync counts |
-| Feature sync | Feature-addition recipes | Show `/god-sync` trigger and `SYNC-LOG.md` path |
-| Reverse-sync | `/god-sync`, `/god-scan`, code-touching workflows | Show whether an agent ran or local runtime only |
-| Pillars sync | Artifact truth changes | Show changed pillar files or no-op |
-| Repo documentation sync | `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, `/god-mode` | Show local fixes and prose agent recommendations |
+| Final sync | `/god-mode` completion | Show a concise sync note and `SYNC-LOG.md` path when artifacts changed |
+| Feature sync | Feature-addition recipes | Show `/god-sync` recommendation and `SYNC-LOG.md` path when review is needed |
+| Reverse-sync | `/god-sync`, `/god-scan`, code-touching workflows | Log helper details, show findings only when links or review items changed |
+| Pillars sync | Artifact truth changes | Show changed pillar files, otherwise log no-op |
+| Repo documentation sync | `/god-sync`, `/god-docs`, `/god-doctor`, `/god-status`, `/god-mode` | Show only fixes or recommendations that change the next command |
 | Host capability detection | `/god-status`, `/god-next`, `/god-doctor`, `/god-sync`, release closeout | Show full, degraded, or unknown host guarantees |
 | Dogfood runner | `/god-dogfood`, `npx godpowers dogfood`, release readiness checks | Show scenario names, pass/fail counts, and fixture paths |
 | Checkpoint sync | State mutation checkpoints | Show `.godpowers/CHECKPOINT.md` created, updated, no-op, or skipped |
@@ -127,7 +94,7 @@ Flexible routing is allowed, but unexplained placeholders are not.
 | Candidate | Trigger | Benefit | Guardrail |
 |---|---|---|---|
 | `/god-status` summary | After `/god-sync`, `/god-scan`, and `/god-mode` | Confirms disk-derived status without user asking | Read-only only |
-| `/god-next` route | After any successful standalone command | Prevents dead-stop endings | Must include proposition when no work starts |
+| `/god-next` route | After any successful standalone command | Prevents dead-stop endings | Must include `Next commands:` when no work starts |
 | `/god-scan --linkage-only` | After code edits that include `Implements:` or `Source:` annotations | Keeps linkage current without full sync | Report local runtime only |
 | Checkpoint refresh | After any state.json write | Makes new sessions resume accurately | Never overwrite user content outside checkpoint |
 | Context refresh dry-run | After AGENTS.md or pillar changes | Shows whether tool pointers would change | Default to no-op unless configured |
@@ -164,8 +131,9 @@ Run or compute these by default in closeouts:
 
 ## Level 2 Auto-Run Local Helpers
 
-Run these automatically when the trigger is direct, then display an
-`Auto-invoked:` card:
+Run these automatically when the trigger is direct, then log details. Display a
+concise note only when artifacts changed, review items were created, or the
+recommendation changed:
 
 - `lib/checkpoint.syncFromState` after `state.json` or `PROGRESS.md` changes.
 - Lightweight reverse-sync or linkage scan after code or artifact edits.
@@ -218,11 +186,6 @@ Do not auto-invoke these without explicit user intent:
 
 ## User Promise
 
-If Godpowers does something automatically, the user should see:
-
-- why it ran
-- whether an agent was spawned
-- which local helpers ran
-- what changed on disk
-- where to inspect the log
-- what to do next
+If Godpowers does something automatically, the user should see what changed,
+where to inspect the log, and what to do next. Detailed helper names are
+available through verbose output and logs.

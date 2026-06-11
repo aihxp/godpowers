@@ -10,8 +10,8 @@ Show:
 - detected resume or project mode in plain language
 - a compact "Next step" card before each visible phase or tier sub-step
 - a compact "Step result" card after each visible phase or tier sub-step
-- every auto-invoked command, agent, and local runtime helper using an
-  `Auto-invoked:` or `Sync status:` card
+- concise notes for automatic work that changes artifacts, review items, or
+  recommendations, with details written to logs
 - plain-language workflow names. Say "project run" or "workflow" instead of
   unexplained "arc" in visible output
 - PRD and roadmap visibility in status and closeout blocks when artifacts
@@ -19,9 +19,8 @@ Show:
 - short progress updates for phases, commands, validations, and file edits
 - concise validation summaries instead of full command noise when possible
 - final changed paths, validation results, and completion or pause status
-- final Godpowers Dashboard from disk, including phase, tier, step, progress,
-  planning visibility, proactive checks, open items, worktree/index state, and
-  recommended next action
+- final compact action brief from disk, with `/god-status --full` offered for
+  the complete dashboard
 
 Hide:
 - raw spawn input
@@ -272,15 +271,11 @@ Periodic hygiene:
 Open items:
   1. <none, or deployed staging deferred, pending review, unstaged files, etc.>
 
-Next:
-  Recommended: <single safest command or decision>
-  Why: <one sentence tied to disk state>
-
-Proposition:
-  1. Review status: /god-status
-  2. Continue work: /god-next or describe the next intent
-  3. Commit release-ready changes: stage only the intended files, then commit
-  4. Run deployed staging: provide STAGING_APP_URL=<deployed staging origin> when needed
+Next commands:
+- /god-status --full: Review the complete dashboard and proactive checks.
+- /god-next: Continue with the safest state-derived next step.
+- stage only the intended files, then commit: Commit release-ready changes.
+- provide STAGING_APP_URL=<deployed staging origin>: Run deployed staging when needed.
 ```
 
 If the run edited code but did not stage or commit, the completion block must

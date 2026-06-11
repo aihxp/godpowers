@@ -27,12 +27,12 @@ Run deterministic messy-repo scenarios before release or after automation change
 1. Resolve the runtime root and load `lib/dogfood-runner.js`.
 2. Run `dogfood.runAll()` against `fixtures/dogfood/`.
 3. Report each scenario with pass or fail status.
-4. If any scenario fails, auto-invoke the matching specialist by visible card:
+4. If any scenario fails, recommend the matching specialist with a concise note:
    - `god-greenfieldifier` for planning-system import failures.
    - `god-context-writer` for host capability or install surface failures.
    - `god-coordinator` for extension authoring or suite release failures.
 5. Do not edit user projects while running fixture scenarios.
-6. End with the Godpowers Dashboard and make `/god-repair` the recommended
+6. End with a compact action brief and make `/god-repair` the recommended
    route when dogfood is red.
 
 ## CLI Equivalent
@@ -50,14 +50,11 @@ npx godpowers dogfood --json
 - [DECISION] The dogfood suite includes extension scaffold validation.
 - [DECISION] The dogfood suite includes a Mode D suite release dry-run.
 
-## Auto-Invoke Card
+## Automatic Work Note
 
 ```text
-Auto-invoked:
-  Trigger: /god-dogfood scenario failure
-  Agent: <god-greenfieldifier | god-context-writer | god-coordinator | none, local runtime only>
-  Local syncs:
-    + dogfood-runner: <pass, fail, or skipped reason>
-  Artifacts: fixture-only unless repair is explicitly requested
-  Log: none
+Dogfood scenarios finished. Fixture details stayed in the run output unless repair was explicitly requested.
 ```
+
+Use a detailed `Auto-invoked:` card only with `--verbose` or release-gate
+debugging.

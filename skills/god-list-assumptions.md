@@ -48,17 +48,16 @@ Assumptions Claude is operating under:
 Any of these wrong? Flag them now before they cement into decisions.
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
-After listing assumptions, end with a proposition block:
+After listing assumptions, end with a Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: correct or confirm the low-confidence assumptions only
-  2. Implement complete: confirm assumptions and continue to [queued command]
-  3. Discuss more: /god-discuss assumptions before planning
-  4. Inspect status: /god-status to re-ground before deciding
-Recommended: [one option and why]
+Next commands:
+- /god-discuss assumptions: Correct or confirm low-confidence assumptions.
+- /god-next: Continue to the queued command after assumptions are confirmed.
+- /god-discuss assumptions before planning: Resolve the open question before continuing.
+- /god-status to re-ground before deciding: Inspect status before continuing.
 ```
 
 ## Have-Nots

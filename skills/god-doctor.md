@@ -48,7 +48,7 @@ Plain-text report grouped by severity:
 GODPOWERS DOCTOR
 
 Install: claude (~/.claude/)
-  [OK] 117 skills installed
+  [OK] 120 skills installed
   [OK] 40 agents installed
   [OK] VERSION matches (2.3.1)
   [WARN] routing/god-doctor.yaml exists but skill file did not until now
@@ -68,17 +68,16 @@ Suggested next steps:
   2. /god-restore  (review trash)
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
-End every human-readable doctor report with a proposition block:
+End every human-readable doctor report with a Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: [safest single fix or diagnostic follow-up]
-  2. Implement complete: /god-doctor --fix when all proposed fixes are safe categories
-  3. Discuss more: /god-discuss [highest-risk warning or unclear repair]
-  4. Inspect status: /god-status after repair
-Recommended: [one option and why it is safe]
+Next commands:
+- /god-doctor --fix: Run the safest approved repair category.
+- /god-doctor --fix when all proposed fixes are safe categories: Run the full recommended path.
+- /god-discuss [highest-risk warning or unclear repair]: Resolve the open question before continuing.
+- /god-status after repair: Inspect status before continuing.
 ```
 
 If the report contains errors that need manual repair, do not recommend

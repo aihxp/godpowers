@@ -83,12 +83,11 @@ Recommended sequence:
   Main work:  [/god-feature scoped to Milestone 2]
   Post-work:  [/god-sync]
 
-Proposition:
-  1. Implement partial: [run only the first preflight command]
-  2. Implement complete: [run the full recommended sequence]
-  3. Discuss more: /god-discuss [ambiguous overlap or artifact conflict]
-  4. Cancel: leave artifacts unchanged
-Recommended: [one option and why]
+Next commands:
+- /god-next: Run only the first preflight command.
+- /god-sync: Run the full recommended sync sequence after reconciliation.
+- /god-discuss [ambiguous overlap or artifact conflict]: Resolve the open question before continuing.
+- stop: Leave artifacts unchanged.
 ```
 
 ## Difference from /god-roadmap-check

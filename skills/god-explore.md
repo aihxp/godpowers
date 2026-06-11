@@ -48,11 +48,9 @@ Idea explored. Suggested framing:
 Suggested next: /god-init (commit to this framing) or /god-explore again
                 (if you want to try another angle)
 
-Proposition:
-  1. Implement partial: /god-init with this framing and stop after PRD
-  2. Implement complete: /god-mode with this framing for the full project run
-  3. Discuss more: /god-explore again with the weakest assumption
-  4. Run God Mode: /god-mode if the user is ready to build now
-Recommended: /god-init when the framing feels stable enough to turn into
-requirements.
+Next commands:
+- /god-init with this framing and stop after PRD: Run the smallest safe next step.
+- /god-mode with this framing for the full project run: Run the full recommended path.
+- /god-explore again with the weakest assumption: Resolve the open question before continuing.
+- /god-mode if the user is ready to build now: Run the full autonomous project workflow when it fits.
 ```

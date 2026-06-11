@@ -88,17 +88,16 @@ Suggested next:
 2. Accept the 2 new todos: /god-check-todos
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
-End every context scan report with a proposition block:
+End every context scan report with a Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: [first suggested action, usually /god-locate or /god-repair]
-  2. Implement complete: resolve all error and warn drifts, then rerun /god-context-scan
-  3. Discuss more: /god-discuss context drift
-  4. Inspect status: /god-status after re-orientation
-Recommended: [one option and why]
+Next commands:
+- /god-locate: Re-orient from checkpoint and disk state.
+- /god-repair: Resolve state drift before continuing.
+- /god-discuss context drift: Resolve the open question before continuing.
+- /god-status after re-orientation: Inspect status before continuing.
 ```
 
 ## What this does NOT do

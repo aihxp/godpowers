@@ -68,6 +68,22 @@ test('parseArgs accepts state advance mutation options', () => {
   assert(parsed.status === 'done', `status: ${parsed.status}`);
 });
 
+test('parseArgs accepts surface profile options', () => {
+  const parsed = parseArgs([
+    'node',
+    'bin',
+    'surface',
+    '--profile=builder',
+    '--runtime=codex',
+    '--dry-run',
+    '--project=.'
+  ], process.cwd());
+  assert(parsed.command === 'surface', `command: ${parsed.command}`);
+  assert(parsed.profile === 'builder', `profile: ${parsed.profile}`);
+  assert(parsed.runtimes.includes('codex'), `runtimes: ${parsed.runtimes.join(',')}`);
+  assert(parsed.dryRun === true, 'dryRun flag missing');
+});
+
 test('status and next commands dispatch through the dashboard branch', () => {
   const project = mkProject('godpowers-cli-dispatch-');
   for (const command of ['status', 'next']) {
@@ -92,6 +108,17 @@ test('next command renders text suggestion through dashboard branch', () => {
   }));
   assert(result.value === true, 'next text did not dispatch');
   assert(result.output.includes('Suggested next command:'), 'next text output missing suggestion');
+});
+
+test('demo command dispatches through quick proof branch', () => {
+  const project = mkProject('godpowers-cli-demo-');
+  const result = capture(() => installer.runCommand({
+    command: 'demo',
+    project,
+    json: false
+  }));
+  assert(result.value === true, 'demo did not dispatch');
+  assert(result.output.includes('Godpowers Quick Proof'), 'demo output missing proof title');
 });
 
 test('quick-proof command dispatches through proof branch', () => {

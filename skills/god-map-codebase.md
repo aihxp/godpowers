@@ -43,11 +43,10 @@ Codebase mapped.
 
 Suggested next: /god-init Mode B (gap-fill) or /god-feature
 
-Proposition:
-  1. Implement partial: /god-intel or /god-tech-debt on the riskiest mapped area
-  2. Implement complete: /god-init Mode B to gap-fill project artifacts
-  3. Discuss more: /god-discuss the unclear architecture or quality findings
-  4. Run God Mode: /god-mode after Mode B context exists
-Recommended: /god-init Mode B when the codebase is real but Godpowers artifacts
+Next commands:
+- /god-intel or /god-tech-debt on the riskiest mapped area: Run the smallest safe next step.
+- /god-init Mode B to gap-fill project artifacts: Run the full recommended path.
+- /god-discuss the unclear architecture or quality findings: Resolve the open question before continuing.
+- /god-mode after Mode B context exists: Run the full autonomous project workflow when it fits.
 are missing.
 ```

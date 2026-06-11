@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Routed `/god-observe` through the `ship` verb boundary based on Phase 2 host
   proof evidence.
 - Updated public docs, profile tests, command-family tests, and Phase 5
-  surface evidence for the 117-command surface.
+  surface evidence for the 120-command surface.
 
 ### Deprecated
 - Deprecated `/god-locate` in favor of `/god-status --locate`.
@@ -254,7 +254,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Proof goal labels resolve through shipped `/god` recipes and routes.
 
 ### Changed
-- Updated public surface counts to 112 slash commands and 42 intent recipes
+- Updated public surface counts to 120 slash commands and 43 intent recipes
   across release notes, reference docs, architecture maps, package metadata,
   and project Pillars.
 - Tightened public front-door recipe matching for starter phrases including

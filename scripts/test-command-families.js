@@ -38,11 +38,20 @@ test('routing metadata records command families', () => {
 
 test('family lookup resolves common command hubs', () => {
   assert(families.familyForCommand('/god-status').id === 'continue');
+  assert(families.familyForCommand('/god-first-run').id === 'start');
+  assert(families.familyForCommand('/god-surface').id === 'configure');
   assert(families.familyForCommand('/god-plan').id === 'start');
   assert(families.familyForCommand('/god-feature').id === 'build');
   assert(families.familyForCommand('/god-ship').id === 'operate');
   assert(families.familyForCommand('/god-capture').id === 'capture');
   assert(families.familyForCommand('/god-extension-add').id === 'extend');
+});
+
+test('family cards hide leaf commands unless requested', () => {
+  const compact = families.renderFamilyCards([families.COMMAND_FAMILIES[0]])[0];
+  const expanded = families.renderFamilyCards([families.COMMAND_FAMILIES[0]], { includeCommands: true })[0];
+  assert(!compact.includes('/god-init'), `compact: ${compact}`);
+  assert(expanded.includes('/god-init'), `expanded: ${expanded}`);
 });
 
 test('capture ladder classifies note, todo, backlog, and seed intent', () => {

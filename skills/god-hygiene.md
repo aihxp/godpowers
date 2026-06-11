@@ -94,12 +94,11 @@ Suggested next actions (in priority order):
 
 Schedule next hygiene check in [N days] (default: 30).
 
-Proposition:
-  1. Implement partial: [highest-priority action]
-  2. Implement complete: [all P0/P1 hygiene actions in order]
-  3. Discuss more: /god-discuss hygiene remediation
-  4. Inspect status: /god-status after fixes
-Recommended: [one option and why]
+Next commands:
+- /god-next: Run the highest-priority hygiene follow-up from disk state.
+- /god-hygiene: Re-run the health check after P0 and P1 fixes.
+- /god-discuss hygiene remediation: Resolve the open question before continuing.
+- /god-status after fixes: Inspect status before continuing.
 ```
 
 ## Have-Nots

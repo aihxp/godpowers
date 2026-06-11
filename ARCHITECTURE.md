@@ -309,24 +309,30 @@ npx godpowers --uninstall --claude
 # One-time migration (v0.3 -> v0.4+)
 npx godpowers --migrate
 
+# Read-only helpers and profile switching
+npx godpowers status --project=.
+npx godpowers demo --project=.
+npx godpowers surface --profile=core --codex --global --dry-run
+
 # Help
 npx godpowers --help
 ```
 
-[DECISION] The CLI may install, uninstall, migrate legacy disk state, and read
-status or next-route information. Durable project mutations remain slash
-commands inside the AI coding tool.
+[DECISION] The CLI may install, uninstall, preview or apply runtime profiles,
+run sandbox proof, migrate legacy disk state, check gates, and read status or
+next-route information. Durable project mutations remain slash commands inside
+the AI coding tool.
 
 ### Route Topology And Automation Audit (2026-05-16)
 
-[DECISION] The route graph is currently complete at the file level: 117
-`skills/*.md` command files match 117 `routing/*.yaml` route files, including
+[DECISION] The route graph is currently complete at the file level: 120
+`skills/*.md` command files match 120 `routing/*.yaml` route files, including
 the `god` front door and every shipped `god-*` command.
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
-agents, 13 workflow YAML files, and 42 intent recipes.
+agents, 13 workflow YAML files, and 43 intent recipes.
 
-[DECISION] The current route graph has 65 built-in or local-runtime command
+[DECISION] The current route graph has 68 built-in or local-runtime command
 routes and 52 agent-routed command routes.
 
 [DECISION] Eighteen command routes declare secondary or parallel spawns:
@@ -337,17 +343,17 @@ routes and 52 agent-routed command routes.
 
 [DECISION] All workflow `uses:` targets resolve to shipped agent files.
 
-[DECISION] All 42 recipes contain at least one slash-command route, and every
+[DECISION] All 43 recipes contain at least one slash-command route, and every
 recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
 |---------|---------------|---------------------------|
-| Skills | 117 | Every command has a user-facing skill file |
-| Routes | 117 | Every command has machine-readable routing metadata |
+| Skills | 120 | Every command has a user-facing skill file |
+| Routes | 120 | Every command has machine-readable routing metadata |
 | Agents | 40 | Spawn targets are available for specialist work |
 | Workflows | 13 | Arc execution has declarative DAGs |
-| Recipes | 42 | Fuzzy intent can route into command sequences |
-| Built-in routes | 65 | Local helpers need visible `Agent: none` cards |
+| Recipes | 43 | Fuzzy intent can route into command sequences |
+| Built-in routes | 68 | Local helpers need visible concise sync notes or logs |
 | Agent-routed routes | 52 | Spawned work needs visible spawn cards |
 
 #### Current Automation Ladder
@@ -920,7 +926,7 @@ Lazy activation: extensions don't load until their skill is invoked.
 
 | Package | Contains |
 |---------|----------|
-| `godpowers` | Core: 117 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
+| `godpowers` | Core: 120 skills, 40 agents, 13 workflows, base have-nots, 5 external integrations |
 | `@godpowers/security-pack` | SOC2, HIPAA, PCI auditors |
 | `@godpowers/launch-pack` | Show HN, Product Hunt, Indie Hackers strategists |
 | `@godpowers/data-pack` | Data engineering tier (ETL, ML, dashboards) |

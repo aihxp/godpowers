@@ -195,7 +195,8 @@ Use these paths before reading the full command reference.
 
 | Goal | Start here |
 |---|---|
-| Start a product | `/god-init`, `/god-plan`, `/god-build` |
+| Start a product | `/god-first-run`, `/god-init`, `/god-plan`, `/god-build` |
+| Try safely | `/god-demo`, `/god-first-run`, `/god-init` |
 | Add a feature | `/god-reconcile`, `/god-feature`, `/god-sync`, `/god-review` |
 | Fix production | `/god-fix`, `/god-postmortem`, `/god-status` |
 | Audit an existing repo | `/god-preflight`, `/god-archaeology`, `/god-reconstruct`, `/god-audit`, `/god-tech-debt` |

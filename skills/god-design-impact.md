@@ -66,12 +66,11 @@ Transitive (depth 2):
 Recommendation: Run /god-design with this change to apply.
 god-design-reviewer will gate via two-stage review.
 
-Proposition:
-  1. Implement partial: /god-design for only the lowest-risk token or component change
-  2. Implement complete: /god-design with the full proposed change
-  3. Discuss more: /god-discuss the design tradeoff before changing files
-  4. Run God Mode: /god-mode only if this design change is part of a wider project run
-Recommended: apply the smallest design change first when severity is warning
+Next commands:
+- /god-design for only the lowest-risk token or component change: Run the smallest safe next step.
+- /god-design with the full proposed change: Run the full recommended path.
+- /god-discuss the design tradeoff before changing files: Resolve the open question before continuing.
+- /god-mode only if this design change is part of a wider project run: Run the full autonomous project workflow when it fits.
 or higher.
 ```
 

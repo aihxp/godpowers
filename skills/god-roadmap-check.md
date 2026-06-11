@@ -64,15 +64,14 @@ After `god-reconciler` returns:
 1. Verify the verdict has a status from the canonical 6
 2. Verify recommendation has a concrete action
 3. Display to user; await decision before proceeding
-4. End with a proposition block:
+4. End with a Next commands block:
 
 ```
-Proposition:
-  1. Implement partial: [smallest command from the recommendation]
-  2. Implement complete: [roadmap update plus feature work when needed]
-  3. Discuss more: /god-discuss roadmap overlap
-  4. Defer: /god-add-backlog [intent]
-Recommended: [one option and why]
+Next commands:
+- /god-roadmap-update: Apply the smallest roadmap correction from the recommendation.
+- /god-feature <feature-name>: Start feature work after roadmap overlap is clear.
+- /god-discuss roadmap overlap: Resolve the open question before continuing.
+- /god-add-backlog [intent]: Defer the work for later review.
 ```
 
 ## When called manually

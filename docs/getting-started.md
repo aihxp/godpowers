@@ -32,7 +32,16 @@ runtime model:
 | I coordinate suites | `--profile=suite` |
 | I want everything | `--profile=full` |
 
-`/god-help` presents command families first, then the complete catalog.
+`/god-help` presents compact state-aware guidance first. `/god-help all`
+shows the complete catalog.
+
+After install, preview or switch profiles with `/god-surface` or the terminal
+equivalent:
+
+```bash
+npx godpowers surface --profile=builder --codex --global --dry-run
+npx godpowers surface --profile=builder --codex --global --apply
+```
 
 ### Pi support (earendil-works/pi-coding-agent)
 
@@ -78,10 +87,16 @@ run `/god-design from <site>`.
 Before a full project run, get one local proof signal:
 
 ```bash
-npx godpowers quick-proof --project=. --brief
+npx godpowers demo --project=.
 ```
 
 Open Claude Code in an empty directory. Type:
+
+```
+/god-first-run
+```
+
+When you are ready to start the project directly, type:
 
 ```
 /god-mode
@@ -104,7 +119,8 @@ When complete, you have:
 - Security findings (or clean)
 - Launch artifacts
 
-All artifacts live in `.godpowers/`. Run `/god-status` any time to see state.
+All artifacts live in `.godpowers/`. Run `/god-status` for a compact state
+view or `/god-status --full` for every dashboard check.
 
 ## Want more control?
 
@@ -202,6 +218,6 @@ survives focused repair attempts or the blocker is genuinely human-only.
 ## Where to next
 
 - [Concepts](concepts.md) - the vocabulary and mental model
-- [Reference](reference.md) - all 112 slash commands and CLI helpers
+- [Reference](reference.md) - all 120 slash commands and CLI helpers
 - [Tutorial: First Project](tutorials/first-project.md) - end-to-end walkthrough
 - [Composing with other tools](../references/shared/ORCHESTRATORS.md) - coexistence with other AI workflow systems

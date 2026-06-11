@@ -1,10 +1,9 @@
 ---
 name: god-next
 description: |
-  Decision engine. For any command intent, checks prerequisites, proposes
-  auto-completion of missing prerequisites, runs standards checks at gates,
-  and suggests next commands after success. Backed by runtime routing YAML
-  configurations.
+  Decision engine. For any command intent, checks prerequisites, runs safe
+  read-only continuation when possible, and suggests the next concrete command
+  after success. Backed by runtime routing YAML configurations.
 
   Triggers on: "god next", "/god-next", "what's next", "what should I do next",
   "next step", "continue"
@@ -13,7 +12,9 @@ description: |
 # /god-next
 
 The unified decision engine. Route between commands based on disk state,
-routing definitions, recipes, command families, and user intent.
+routing definitions, recipes, command families, and user intent. Explain what
+you are about to do in one plain sentence, then run the safe next step when the
+step is read-only or an explicit local check.
 
 ## Runtime module resolution
 
@@ -21,22 +22,22 @@ routing definitions, recipes, command families, and user intent.
 2. Otherwise use the installed bundle at `<tool-config-dir>/godpowers-runtime`.
 3. Read routing definitions from `<runtimeRoot>/routing/*.yaml` and recipes from `<runtimeRoot>/routing/recipes/*.yaml`.
 4. Load `<runtimeRoot>/lib/command-families.js` before resolving broad intent.
-5. Load `<runtimeRoot>/lib/dashboard.js` and render the shared dashboard before route-specific detail.
+5. Load `<runtimeRoot>/lib/dashboard.js` and render only the compact action brief unless the user asks for `--full`.
 6. Prefer the MCP `next` tool when it is available, and fall back to the CLI or runtime module when it is not.
-7. If no dashboard module is available, say `Dashboard engine: unavailable, manual scan used`.
+7. If no dashboard module is available, use a manual disk scan quietly and suggest `/god-doctor` only when the fallback changes the recommendation.
 
 ## Required references
 
 Read these references before producing a route recommendation:
 
 - `<runtimeRoot>/references/orchestration/GOD-NEXT-RUNBOOK.md` for invocation modes, route detail, and edge cases.
-- `<runtimeRoot>/references/shared/DASHBOARD-CONTRACT.md` for the shared status and proposition shape.
+- `<runtimeRoot>/references/shared/DASHBOARD-CONTRACT.md` for the shared status and `Next commands:` shape.
 
 ## Invocation modes
 
 - Post-completion: after a command finishes, read its routing file and announce the next gate.
 - Pre-flight: before a target command runs, evaluate prerequisites and offer auto-completion when available.
-- Standalone: when the user asks what is next, derive the recommendation from disk state.
+- Standalone: when the user asks what is next, derive the recommendation from disk state and run the safe read-only next step when it has no destructive effect.
 - Intent-based: when the user uses fuzzy text, match recipes and command families before raw route order.
 
 ## Decision rules
@@ -54,12 +55,10 @@ Read these references before producing a route recommendation:
 
 Render this sequence:
 
-1. `Godpowers Next` heading.
-2. Shared Godpowers Dashboard from `DASHBOARD-CONTRACT.md`.
-3. Suggested next command and one-line reason.
-4. Optional three-line path ahead when state allows it.
-5. Optional pre-flight, standards, or blocker detail.
-6. Proactive checks using the shared labels.
-7. Proposition block unless the selected command already launched.
+1. One plain sentence describing the selected next step.
+2. Suggested next command and one-line reason.
+3. Optional blocker detail only when it changes the recommendation.
+4. `Next commands:` with the selected command first.
 
-Keep the route preview to three lines unless the user asks for the full plan.
+Keep the route preview to three lines unless the user asks for the full plan or
+`--full`. Do not print the full dashboard by default.

@@ -59,17 +59,16 @@ Safety rules:
   - Default templates are read-only.
 ```
 
-## Proposition Closeout
+## Next Commands Closeout
 
 End with:
 
 ```text
-Proposition:
-  1. Implement partial: /god-automation-setup for one safe read-only template
-  2. Implement complete: /god-automation-setup for all safe templates supported by the current host
-  3. Discuss more: /god-discuss automation policy and provider choice
-  4. Inspect status: /god-status to see project progress and automation status together
-Recommended: <one option tied to the detected provider>
+Next commands:
+- /god-automation-setup for one safe read-only template: Run the smallest safe next step.
+- /god-automation-setup for all safe templates supported by the current host: Run the full recommended path.
+- /god-discuss automation policy and provider choice: Resolve the open question before continuing.
+- /god-status to see project progress and automation status together: Inspect status before continuing.
 ```
 
 If no provider is available, recommend manual `/god-next` or
