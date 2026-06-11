@@ -97,3 +97,9 @@
 - [DECISION] Repo documentation sync status before apply was fresh.
 - [DECISION] Repo documentation sync status after apply is fresh.
 - [DECISION] No mechanical repo documentation files were changed.
+
+## 2026-06-11T14:51:05.182Z
+
+- [DECISION] Repo documentation sync status before apply was stale.
+- [DECISION] Repo documentation sync status after apply is fresh.
+- [DECISION] Refreshed USERS.md for users-version.

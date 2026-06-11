@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-11
-> Current shipped: v3.0.1
+> Current shipped: v3.0.2
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,11 +12,11 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.0.1)
+### Current surface (v3.0.2)
 
-3.0.1 preserves the 3.0.0 runtime surface and updates release documentation,
-package metadata, completed migration cleanup, and publish verification
-evidence.
+3.0.2 preserves the 3.0.0 runtime surface contraction and adds concierge
+entry points, compact next-command guidance, sandbox proof access, and
+post-install surface control.
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,

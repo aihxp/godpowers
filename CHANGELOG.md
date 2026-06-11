@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - 2026-06-11
+
+### Added
+- Added `/god-first-run`, `/god-demo`, and `/god-surface` as concierge
+  entry points for onboarding, sandbox proof, and post-install surface control.
+- Added the `try-safely` recipe for users who want a proof path before
+  touching their current project.
+- Added `godpowers demo` and `godpowers surface` CLI helpers, including
+  dry-run and apply flows for runtime profile changes.
+
+### Changed
+- Changed default command guidance from catalog-first and dashboard-first
+  output to compact recommendations with `Next commands:` blocks.
+- Updated `/god-help`, `/god`, `/god-next`, `/god-status`, and shared
+  dashboard contracts so full catalogs and full dashboards are opt-in.
+- Updated README, roadmap, reference, release notes, architecture, and Pillar
+  context counts for the 120-command and 43-recipe public surface.
+
+### Fixed
+- Added package, routing, installer-profile, command-family, quick-proof, and
+  surface-profile tests for the new concierge surface.
+- Refreshed repo documentation sync and repo surface sync evidence after the
+  new surface landed.
+
 ## [3.0.1] - 2026-06-11
 
 ### Changed

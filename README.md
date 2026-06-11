@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.0.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.0.2-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,12 +30,13 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 3.0.1 is a release-surface cleanup patch on top of the 3.0.0 surface
+Version 3.0.2 is a concierge surface patch on top of the 3.0.0 surface
 contraction release. The current 3.x line keeps the omitted installer profile
-on `core`, preserves `--profile=full` for compatibility, keeps locate and
-lifecycle views under `/god-status`, ships the optional `@godpowers/mcp`
-companion package, and verifies docs, package contents, npm metadata, GitHub
-release state, and published install behavior before public release.
+on `core`, adds first-run, demo, and surface-control entry points, preserves
+`--profile=full` for compatibility, keeps locate and lifecycle views under
+`/god-status`, ships the optional `@godpowers/mcp` companion package, and
+verifies docs, package contents, npm metadata, GitHub release state, and
+published install behavior before public release.
 
 Maintainer hardening continues on the 3.x line with small, audited public
 surface updates when they close real workflow gaps. Historical release details
@@ -314,14 +315,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@3.0.1 -p @godpowers/mcp@3.0.1 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.0.2 -p @godpowers/mcp@3.0.2 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@3.0.1 -p @godpowers/mcp@3.0.1 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.0.2 -p @godpowers/mcp@3.0.2 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
