@@ -282,6 +282,90 @@ test('history filters by substep and limits to recent', () => {
 });
 
 // ---------------------------------------------------------------------------
+// canClose: the strict close gate (read-only primitive, not yet wired)
+// ---------------------------------------------------------------------------
+
+test('canClose requires an executed pass for an executable-gated substep', () => {
+  const project = mkProject('godpowers-evidence-canclose-build-');
+  state.init(project, 'evidence-canclose-build');
+
+  let verdict = evidence.canClose('tier-2.build', { projectRoot: project });
+  assert(verdict.canClose === false, 'should not close with no evidence');
+  assert(verdict.strategy === 'executed', `strategy: ${verdict.strategy}`);
+  assert(verdict.reason === 'no-executed-record-since-in-flight', `reason: ${verdict.reason}`);
+
+  evidence.verify('true', { substep: 'tier-2.build', projectRoot: project });
+  verdict = evidence.canClose('tier-2.build', { projectRoot: project });
+  assert(verdict.canClose === true, 'should close after an executed pass');
+  assert(verdict.reason === 'executed-pass', `reason: ${verdict.reason}`);
+
+  evidence.verify('false', { substep: 'tier-2.build', projectRoot: project });
+  verdict = evidence.canClose('tier-2.build', { projectRoot: project });
+  assert(verdict.canClose === false, 'a later failure must block the close');
+  assert(verdict.reason === 'latest-executed-record-failed', `reason: ${verdict.reason}`);
+});
+
+test('canClose only counts records since the substep went in-flight', () => {
+  const project = mkProject('godpowers-evidence-canclose-since-');
+  state.init(project, 'evidence-canclose-since');
+  // Mark build in-flight; updated becomes the in-flight reference time.
+  state.updateSubStep(project, 'tier-2', 'build', { status: 'in-flight' });
+
+  // A pass recorded BEFORE the in-flight time must not satisfy the gate.
+  evidence.verify('true', { substep: 'tier-2.build', now: '2000-01-01T00:00:00.000Z', projectRoot: project });
+  let verdict = evidence.canClose('tier-2.build', { projectRoot: project });
+  assert(verdict.canClose === false, 'stale pass must not close');
+  assert(verdict.wentInFlightAt, 'wentInFlightAt should be set from updated');
+
+  // A pass recorded AFTER the in-flight time satisfies it.
+  evidence.verify('true', { substep: 'tier-2.build', now: '2099-01-01T00:00:00.000Z', projectRoot: project });
+  verdict = evidence.canClose('tier-2.build', { projectRoot: project });
+  assert(verdict.canClose === true, 'fresh pass should close');
+});
+
+test('canClose accepts an attested record for a non-executable-gated substep', () => {
+  const project = mkProject('godpowers-evidence-canclose-prd-');
+  state.init(project, 'evidence-canclose-prd');
+
+  let verdict = evidence.canClose('tier-1.prd', { projectRoot: project });
+  assert(verdict.canClose === false && verdict.strategy === 'attested-ok', `prd empty: ${verdict.reason}/${verdict.strategy}`);
+  assert(verdict.reason === 'no-record-since-in-flight', `reason: ${verdict.reason}`);
+
+  evidence.verifyClaim('PRD rationale sound', 'reviewed', { substep: 'tier-1.prd', projectRoot: project });
+  verdict = evidence.canClose('tier-1.prd', { projectRoot: project });
+  assert(verdict.canClose === true && verdict.reason === 'attested', `prd attested: ${verdict.reason}`);
+});
+
+test('canClose blocks a non-executable-gated substep on a failed executed record', () => {
+  const project = mkProject('godpowers-evidence-canclose-prd-red-');
+  state.init(project, 'evidence-canclose-prd-red');
+  evidence.verify('false', { substep: 'tier-1.prd', projectRoot: project });
+  const verdict = evidence.canClose('tier-1.prd', { projectRoot: project });
+  assert(verdict.canClose === false && verdict.reason === 'executed-record-failed', `reason: ${verdict.reason}`);
+});
+
+test('canClose handles missing state and unknown substeps', () => {
+  const noState = mkProject('godpowers-evidence-canclose-nostate-');
+  let verdict = evidence.canClose('tier-2.build', { projectRoot: noState });
+  assert(verdict.canClose === false && verdict.reason === 'no-state', `no-state: ${verdict.reason}`);
+
+  const project = mkProject('godpowers-evidence-canclose-unknown-');
+  state.init(project, 'evidence-canclose-unknown');
+  verdict = evidence.canClose('tier-9.nope', { projectRoot: project });
+  assert(verdict.canClose === false && verdict.reason === 'substep-not-found', `unknown: ${verdict.reason}`);
+});
+
+test('canClose does not mutate state (additive, read-only)', () => {
+  const project = mkProject('godpowers-evidence-canclose-readonly-');
+  state.init(project, 'evidence-canclose-readonly');
+  evidence.verify('true', { substep: 'tier-2.build', projectRoot: project });
+  const before = JSON.stringify(state.read(project));
+  evidence.canClose('tier-2.build', { projectRoot: project });
+  const after = JSON.stringify(state.read(project));
+  assert(before === after, 'canClose must not mutate state.json');
+});
+
+// ---------------------------------------------------------------------------
 // rollup is robust to a held state lock
 // ---------------------------------------------------------------------------
 
