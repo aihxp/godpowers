@@ -8,7 +8,10 @@ const TOOL_NAMES = [
   'next',
   'gate_check',
   'lint_artifact',
-  'trace_requirement'
+  'trace_requirement',
+  'work_report',
+  'route',
+  'verification_history'
 ];
 
 function toolResult(value) {
@@ -115,6 +118,31 @@ function traceRequirementTool(input = {}, opts = {}) {
   };
 }
 
+function workReportTool(input = {}, opts = {}) {
+  const projectRoot = projectRootFor(input, opts);
+  const workReport = runtime.requireRuntime('work-report', opts);
+  // Read-only veneer: always peek so the MCP tool never advances the cursor.
+  const report = workReport.report({ since: input.since || 'all', peek: true, projectRoot });
+  return { project: projectRoot, report };
+}
+
+function routeTool(input = {}, opts = {}) {
+  const projectRoot = projectRootFor(input, opts);
+  const quarterback = runtime.requireRuntime('quarterback', opts);
+  return { project: projectRoot, play: quarterback.route(input.prompt || '', { projectRoot }) };
+}
+
+function verificationHistoryTool(input = {}, opts = {}) {
+  const projectRoot = projectRootFor(input, opts);
+  const evidence = runtime.requireRuntime('evidence', opts);
+  const records = evidence.history({
+    substep: input.substep || undefined,
+    recent: input.recent,
+    projectRoot
+  });
+  return { project: projectRoot, substep: input.substep || null, records };
+}
+
 function registerTools(server, opts = {}) {
   server.registerTool('status', {
     title: 'Godpowers status',
@@ -187,6 +215,49 @@ function registerTools(server, opts = {}) {
       idempotentHint: true
     }
   }, async (input) => withErrors(() => traceRequirementTool(input, opts)));
+
+  server.registerTool('work_report', {
+    title: 'Godpowers work report',
+    description: 'Read the verification play-by-play from the evidence ledger (does not advance the report cursor).',
+    inputSchema: {
+      project: z.string().optional().describe('Project root. Defaults to the server project.'),
+      since: z.enum(['last', 'all']).optional().describe('Window: new records since last report, or all. Defaults to all.')
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true
+    }
+  }, async (input) => withErrors(() => workReportTool(input, opts)));
+
+  server.registerTool('route', {
+    title: 'Godpowers route',
+    description: 'Classify a prompt into an entry play via the quarterback (read-only; never mutates state).',
+    inputSchema: {
+      project: z.string().optional().describe('Project root. Defaults to the server project.'),
+      prompt: z.string().optional().describe('Free-text intent to classify.')
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true
+    }
+  }, async (input) => withErrors(() => routeTool(input, opts)));
+
+  server.registerTool('verification_history', {
+    title: 'Godpowers verification history',
+    description: 'Read evidence ledger records, optionally filtered to one substep and limited to the most recent N.',
+    inputSchema: {
+      project: z.string().optional().describe('Project root. Defaults to the server project.'),
+      substep: z.string().optional().describe('Substep id such as tier-2.build.'),
+      recent: z.number().optional().describe('Limit to the most recent N records.')
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true
+    }
+  }, async (input) => withErrors(() => verificationHistoryTool(input, opts)));
 }
 
 module.exports = {
@@ -197,6 +268,9 @@ module.exports = {
   gateTool,
   lintTool,
   traceRequirementTool,
+  workReportTool,
+  routeTool,
+  verificationHistoryTool,
   toolResult,
   toolError
 };

@@ -74,8 +74,11 @@ async function main() {
       'gate_check',
       'lint_artifact',
       'next',
+      'route',
       'status',
-      'trace_requirement'
+      'trace_requirement',
+      'verification_history',
+      'work_report'
     ]);
     for (const tool of listed.tools) {
       assert(tool.annotations && tool.annotations.readOnlyHint === true, `${tool.name} missing readOnlyHint`);
@@ -115,6 +118,26 @@ async function main() {
     }));
     assert(trace.found === false, 'quick-proof fixture should not contain requirements yet');
     assert(trace.summary.total === 0, 'trace summary should report zero requirements');
+
+    const workReport = parseToolJson(await client.callTool({
+      name: 'work_report',
+      arguments: { project: PROJECT, since: 'all' }
+    }));
+    assert(workReport.report && workReport.report.summary, 'work_report missing report summary');
+    assert(Array.isArray(workReport.report.records), 'work_report records should be an array');
+
+    const route = parseToolJson(await client.callTool({
+      name: 'route',
+      arguments: { project: PROJECT, prompt: 'add a feature' }
+    }));
+    assert(typeof route.play.route === 'string', 'route play missing route');
+    assert(route.play.mutatesState === false, 'route must be read-only');
+
+    const history = parseToolJson(await client.callTool({
+      name: 'verification_history',
+      arguments: { project: PROJECT }
+    }));
+    assert(Array.isArray(history.records), 'verification_history records should be an array');
   } finally {
     await client.close();
   }

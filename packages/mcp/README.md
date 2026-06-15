@@ -2,7 +2,7 @@
 
 - [DECISION] `@godpowers/mcp` is the first-party read-only MCP companion package for Godpowers.
 - [DECISION] The main `godpowers` package stays dependency-free at runtime, and the MCP SDK dependency lives only in this companion package.
-- [DECISION] Version 3.9.0 exposes five tools: `status`, `next`, `gate_check`, `lint_artifact`, and `trace_requirement`.
+- [DECISION] Version 3.9.0 exposes eight read-only tools: `status`, `next`, `gate_check`, `lint_artifact`, `trace_requirement`, `work_report`, `route`, and `verification_history`.
 - [DECISION] Mutation tools are intentionally absent through the 3.9.0 release.
 
 ## Install
@@ -35,3 +35,6 @@ godpowers-mcp setup --host=codex --project=. --write
 - [DECISION] `gate_check` wraps `lib/gate.js` and returns the executable tier gate verdict.
 - [DECISION] `lint_artifact` wraps `lib/artifact-linter.js` for one file inside the project root.
 - [DECISION] `trace_requirement` wraps `lib/requirements.js` and returns requirement, roadmap, linkage, and ledger evidence.
+- [DECISION] `work_report` wraps `lib/work-report.js` and returns the verification play-by-play (read-only; never advances the report cursor).
+- [DECISION] `route` wraps `lib/quarterback.js` and classifies a prompt into an entry play without mutating state.
+- [DECISION] `verification_history` wraps `lib/evidence.js` and returns ledger records, optionally filtered to one substep.
