@@ -597,6 +597,42 @@ test('reflect command dispatches through evidence', () => {
   process.exitCode = 0;
 });
 
+test('parseArgs captures memory action, key, value, and category', () => {
+  const parsed = parseArgs(['node', 'bin', 'memory', 'set', 'db', 'postgres', '--category', 'decision', '--project=.'], process.cwd());
+  assert(parsed.command === 'memory', `command: ${parsed.command}`);
+  assert(parsed.memoryAction === 'set', `action: ${parsed.memoryAction}`);
+  assert(parsed.memoryKey === 'db', `key: ${parsed.memoryKey}`);
+  assert(parsed.memoryValue === 'postgres', `value: ${parsed.memoryValue}`);
+  assert(parsed.category === 'decision', `category: ${parsed.category}`);
+});
+
+test('memory command sets, gets, and lists through evidence', () => {
+  const project = mkProject('godpowers-cli-memory-');
+  state.init(project, 'cli-memory');
+  const set = capture(() => cliDispatch.runCommand({
+    command: 'memory', project, memoryAction: 'set', memoryKey: 'db', memoryValue: 'postgres', category: 'decision', json: true
+  }));
+  assert(JSON.parse(set.output).result.value === 'postgres', 'memory set did not store');
+
+  const get = capture(() => cliDispatch.runCommand({
+    command: 'memory', project, memoryAction: 'get', memoryKey: 'db', json: false
+  }));
+  assert(get.output.includes('postgres'), `memory get output: ${get.output}`);
+
+  const list = capture(() => cliDispatch.runCommand({ command: 'memory', project, memoryAction: 'list', json: true }));
+  assert(JSON.parse(list.output).result.length === 1, 'memory list count');
+});
+
+test('memory command rejects a missing action and a missing get key', () => {
+  process.exitCode = 0;
+  const project = mkProject('godpowers-cli-memory-bad-');
+  state.init(project, 'cli-memory-bad');
+  const noAction = capture(() => cliDispatch.runCommand({ command: 'memory', project, json: false }));
+  assert(noAction.output.includes('memory requires an action'), `output: ${noAction.output}`);
+  assert(process.exitCode === 1, 'missing action should set exit code');
+  process.exitCode = 0;
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');

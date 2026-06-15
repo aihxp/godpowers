@@ -41,6 +41,7 @@ const TEST_COMMANDS = [
   [node, ['scripts/test-quarterback.js']],
   [node, ['scripts/test-work-report.js']],
   [node, ['scripts/test-reflections.js']],
+  [node, ['scripts/test-memory.js']],
   ['npm', ['--workspace', '@godpowers/mcp', 'test']],
   [node, ['scripts/test-installer-profiles.js']],
   [node, ['scripts/test-surface-profile.js']],
