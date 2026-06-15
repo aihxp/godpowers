@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-06-15
+
+### Added
+- Added the evidence producer in `lib/evidence.js`, vendored from the Mythify
+  Node engine (`mythify-mcp@3.6.3`, `verify_run`/`verify_claim`). `evidence.verify()`
+  executes a command, appends an exit-code-backed record to the new append-only
+  `.godpowers/ledger/verifications.jsonl`, rolls the latest verdict per command
+  into `state.json` `verification.commands[]` through `lib/state.js`, and emits
+  `gate.pass`/`gate.fail` to the hash-chained `runs/<id>/events.jsonl` stream.
+  `evidence.verifyClaim()` records a second-class attested record that never
+  rolls up.
+- Added the `npx godpowers verify "<cmd>" --substep <id> --claim "<text>"` CLI
+  subcommand (with `--timeout`, and `--attest`/`--evidence` for attestations),
+  wired through `lib/cli-dispatch.js`.
+- Added `lib/evidence/.provenance.json` recording the vendored engine's source,
+  version, commit, and adaptations, plus `scripts/sync-evidence-engine.js` to
+  re-pull the upstream engine, re-state the adaptations, and flag any upstream
+  record-shape drift for review.
+- Added `docs/FUSION-ARCHITECTURE.md`, the canonical design for transplanting
+  Mythify's evidence engine and quarterback into Godpowers (Phases 0-3; this
+  release lands Phase 0).
+
+### Changed
+- `state.json` `verification.commands[]` is now reliably populated by the
+  evidence producer (previously specified in the schema but never written).
+  This is additive: the build gate reads the same shape, no gate behavior or
+  close-on-evidence logic changed (that is Phase 1).
+
 ## [3.0.2] - 2026-06-11
 
 ### Added

@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v3.0.2.
+Complete command, agent, and artifact reference for v3.1.0.
 
 ## Slash commands (120 total)
 
@@ -99,6 +99,7 @@ recommendation signals. Longer runs use `/god-metrics`, `/god-trace`, and
 - `godpowers quick-proof --project .` - Render the shipped proof fixture with host guarantees.
 - `godpowers state advance --step=prd --status=done --project .` - Update one tracked state step and regenerate managed state views.
 - `godpowers gate --tier=prd --project .` - Check a tier artifact gate and exit non-zero when blocking evidence is missing.
+- `godpowers verify "<cmd>" --substep tier-2.build --claim "<claim>" --project .` - Run a command as executed verification: append an exit-code-backed record to `.godpowers/ledger/verifications.jsonl`, roll the latest verdict into `state.json` `verification.commands[]`, emit `gate.pass`/`gate.fail`, and exit non-zero when the command fails. Use `--attest --claim "<claim>" --evidence "<text>"` to record a self-reported attestation instead.
 - `godpowers mcp-info --project .` - Show read-only MCP companion setup instructions without loading the MCP SDK.
 - `godpowers automation-status --project .` - Show automation provider support.
 - `godpowers automation-setup --project .` - Show a reviewed setup and execution plan.
@@ -123,7 +124,7 @@ runtime.
 
 The companion exposes five read-only tools: `status`, `next`, `gate_check`,
 `lint_artifact`, and `trace_requirement`. Mutation tools such as state advance,
-artifact writes, and route edits are intentionally absent through 3.0.2.
+artifact writes, and route edits are intentionally absent through 3.1.0.
 
 Run `godpowers mcp-info --project .` for host setup instructions. Codex
 registration is written only when `godpowers-mcp setup --host=codex --project=. --write` is invoked explicitly.
@@ -432,6 +433,7 @@ npx godpowers --all                Install for all 15 runtimes
 npx godpowers surface --profile=core --codex --global --dry-run
 npx godpowers demo --project=.
 npx godpowers status --project=.
+npx godpowers verify "npm test" --substep tier-2.build --claim "tests pass" --project=.
 npx godpowers --uninstall          Remove
 npx godpowers --migrate            One-shot upgrade
 npx godpowers --help               Help

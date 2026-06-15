@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
-> Last updated: 2026-06-11
-> Current shipped: v3.0.2
+> Last updated: 2026-06-15
+> Current shipped: v3.1.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,11 +12,13 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.0.2)
+### Current surface (v3.1.0)
 
-3.0.2 preserves the 3.0.0 runtime surface contraction and adds concierge
-entry points, compact next-command guidance, sandbox proof access, and
-post-install surface control.
+3.1.0 preserves the 3.0.0 runtime surface contraction and adds the evidence
+producer on top of the existing concierge entry points, compact next-command
+guidance, sandbox proof access, and post-install surface control. The producer
+makes the exit-code-backed verification records the build gate already consumes
+get written.
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
@@ -33,6 +35,13 @@ What works today:
 - **Locked state mutation helper**: `godpowers state advance --step=<step>
   --status=<status> --project=.` updates tracked steps and regenerates managed
   state views.
+- **Evidence producer**: `godpowers verify "<cmd>" --substep <id> --claim
+  "<claim>"` executes a command, appends an exit-code-backed record to the
+  append-only `.godpowers/ledger/verifications.jsonl`, rolls the latest verdict
+  per command into `state.json` `verification.commands[]` where the build gate
+  reads it, and emits `gate.pass`/`gate.fail` to the hash-chained event stream.
+  The engine is vendored from Mythify (see `docs/FUSION-ARCHITECTURE.md`) with
+  provenance recorded in `lib/evidence/.provenance.json`.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map
