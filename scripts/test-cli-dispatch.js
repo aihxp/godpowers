@@ -552,6 +552,51 @@ test('report command dispatches through the work report', () => {
   assert(text.output.includes('Godpowers Work Report'), `text output: ${text.output}`);
 });
 
+test('parseArgs captures reflect fields', () => {
+  const parsed = parseArgs([
+    'node', 'bin', 'reflect',
+    '--action', 'ran build',
+    '--outcome', 'failure',
+    '--observation', 'tests failed',
+    '--root-cause', 'bad guard',
+    '--next', 'fix it',
+    '--lesson', 'guard inputs',
+    '--substep', 'tier-2.build',
+    '--project=.'
+  ], process.cwd());
+  assert(parsed.command === 'reflect', `command: ${parsed.command}`);
+  assert(parsed.reflectAction === 'ran build', `action: ${parsed.reflectAction}`);
+  assert(parsed.outcome === 'failure', `outcome: ${parsed.outcome}`);
+  assert(parsed.observation === 'tests failed', `observation: ${parsed.observation}`);
+  assert(parsed.rootCause === 'bad guard', `rootCause: ${parsed.rootCause}`);
+  assert(parsed.nextAction === 'fix it', `nextAction: ${parsed.nextAction}`);
+  assert(parsed.lesson === 'guard inputs', `lesson: ${parsed.lesson}`);
+});
+
+test('reflect command dispatches through evidence', () => {
+  const project = mkProject('godpowers-cli-reflect-');
+  state.init(project, 'cli-reflect');
+  const json = capture(() => cliDispatch.runCommand({
+    command: 'reflect',
+    project,
+    reflectAction: 'ran the build',
+    outcome: 'failure',
+    nextAction: 'fix the test',
+    substep: 'tier-2.build',
+    json: true
+  }));
+  const parsed = JSON.parse(json.output);
+  assert(json.value === true, 'reflect did not dispatch');
+  assert(parsed.record.outcome === 'failure', `outcome: ${parsed.record.outcome}`);
+  assert(parsed.record.next === 'fix the test', `next: ${parsed.record.next}`);
+
+  process.exitCode = 0;
+  const missing = capture(() => cliDispatch.runCommand({ command: 'reflect', project, json: false }));
+  assert(missing.output.includes('reflect requires --action'), `output: ${missing.output}`);
+  assert(process.exitCode === 1, 'missing action should set exit code');
+  process.exitCode = 0;
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');

@@ -57,6 +57,7 @@ function showHelp() {
   log('  can-close            Check whether a substep has the evidence to close');
   log('  route                Classify a prompt into an entry play (quarterback)');
   log('  report               Show the verification play-by-play since last report');
+  log('  reflect              Record a structured reflection to the ledger');
   log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
@@ -126,6 +127,7 @@ function showHelp() {
   log('  npx godpowers can-close --substep tier-2.build --project=.');
   log('  npx godpowers route "add a feature" --project=.');
   log('  npx godpowers report --since last --project=.');
+  log('  npx godpowers reflect --action "ran build" --outcome failure --next "fix the failing test" --project=.');
   log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
@@ -250,6 +252,7 @@ module.exports = {
   runCanCloseCommand: cliDispatch.runCanCloseCommand,
   runRouteCommand: cliDispatch.runRouteCommand,
   runReportCommand: cliDispatch.runReportCommand,
+  runReflectCommand: cliDispatch.runReflectCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,
