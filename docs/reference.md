@@ -1,6 +1,6 @@
 # Godpowers Reference
 
-Complete command, agent, and artifact reference for v3.10.0.
+Complete command, agent, and artifact reference for v3.11.0.
 
 ## Slash commands (120 total)
 
@@ -133,7 +133,7 @@ runtime.
 The companion exposes eight read-only tools: `status`, `next`, `gate_check`,
 `lint_artifact`, `trace_requirement`, `work_report`, `route`, and
 `verification_history`. Mutating tools such as state advance, verify, artifact
-writes, and route edits are intentionally absent through 3.10.0; verification
+writes, and route edits are intentionally absent through 3.11.0; verification
 stays on the CLI and orchestrator path.
 
 Run `godpowers mcp-info --project .` for host setup instructions. Codex

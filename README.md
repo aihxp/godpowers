@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.10.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.11.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,15 +30,13 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 3.10.0 exposes the evidence engine through the `@godpowers/mcp`
-companion: three new read-only MCP tools (`work_report`, `route`, and
-`verification_history`) join the existing five, so an MCP host can read the
-play-by-play, classify a prompt, and inspect the ledger without mutating
-anything. This completes the native fusion of Mythify's evidence engine and
-quarterback into Godpowers (Phases 0-3): the evidence producer, enforced
-close-on-evidence on the build and harden gates, the quarterback entry router,
-the work report, reflections, memory, lessons, and outcome loops. The current
-3.x line keeps
+Version 3.11.0 adds the optional one-time `.mythify/` ledger importer (`npx
+godpowers import-ledger`), the final piece of the native fusion of Mythify's
+evidence engine and quarterback into Godpowers. The fusion is now complete end
+to end: the evidence producer, enforced close-on-evidence on the build and
+harden gates, the quarterback entry router, the work report, reflections,
+memory, lessons, outcome loops, the read-only MCP tools, and now a path to bring
+existing Mythify ledgers along. The current 3.x line keeps
 the omitted installer profile on `core`, keeps first-run, demo, and
 surface-control entry points, preserves `--profile=full` for compatibility,
 keeps locate and lifecycle views under `/god-status`, ships the optional
@@ -323,14 +321,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@3.10.0 -p @godpowers/mcp@3.10.0 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.11.0 -p @godpowers/mcp@3.11.0 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@3.10.0 -p @godpowers/mcp@3.10.0 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.11.0 -p @godpowers/mcp@3.11.0 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.

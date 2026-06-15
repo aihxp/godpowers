@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.11.0] - 2026-06-15
+
+### Added
+- Added `lib/evidence-import.js` and the `npx godpowers import-ledger [--from
+  <path>]` CLI: a one-time, best-effort importer that copies an existing Mythify
+  `.mythify/` ledger into `.godpowers/ledger/` (verifications rebinding
+  plan/step to arc/substep, reflections, memory merged by key, lessons, and
+  outcomes). Records are appended; no state rollup and no gate events.
+- Exported `readJsonl` and `appendJsonlAtomic` from `lib/evidence.js` for reuse.
+
+### Notes
+- This is the final item in `docs/FUSION-ARCHITECTURE.md`. With it, the native
+  fusion of Mythify's evidence engine and quarterback into Godpowers (Phases 0-3
+  plus the optional importer) is complete.
+
 ## [3.10.0] - 2026-06-15
 
 ### Added
