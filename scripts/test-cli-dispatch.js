@@ -633,6 +633,35 @@ test('memory command rejects a missing action and a missing get key', () => {
   process.exitCode = 0;
 });
 
+test('parseArgs captures lesson action, text, tags, and scope', () => {
+  const parsed = parseArgs(['node', 'bin', 'lesson', 'add', 'guard inputs', '--tags', 'parsing,safety', '--scope', 'project', '--project=.'], process.cwd());
+  assert(parsed.command === 'lesson', `command: ${parsed.command}`);
+  assert(parsed.lessonAction === 'add', `action: ${parsed.lessonAction}`);
+  assert(parsed.lessonText === 'guard inputs', `text: ${parsed.lessonText}`);
+  assert(parsed.tags === 'parsing,safety', `tags: ${parsed.tags}`);
+  assert(parsed.scope === 'project', `scope: ${parsed.scope}`);
+});
+
+test('lesson command adds and lists through evidence', () => {
+  const project = mkProject('godpowers-cli-lesson-');
+  state.init(project, 'cli-lesson');
+  const add = capture(() => cliDispatch.runCommand({
+    command: 'lesson', project, lessonAction: 'add', lessonText: 'guard inputs', tags: 'parsing,safety', json: true
+  }));
+  const added = JSON.parse(add.output).result;
+  assert(added.lesson === 'guard inputs', 'lesson add did not store');
+  assert(added.tags.length === 2, `tags split: ${JSON.stringify(added.tags)}`);
+
+  const list = capture(() => cliDispatch.runCommand({ command: 'lesson', project, lessonAction: 'list', json: true }));
+  assert(JSON.parse(list.output).result.length === 1, 'lesson list count');
+
+  process.exitCode = 0;
+  const bad = capture(() => cliDispatch.runCommand({ command: 'lesson', project, lessonAction: 'add', json: false }));
+  assert(bad.output.includes('lesson add requires the lesson text'), `output: ${bad.output}`);
+  assert(process.exitCode === 1, 'missing text should set exit code');
+  process.exitCode = 0;
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');
