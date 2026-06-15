@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.1.0
+> Current shipped: v3.1.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,9 +12,9 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.1.0)
+### Current surface (v3.1.1)
 
-3.1.0 preserves the 3.0.0 runtime surface contraction and adds the evidence
+3.1.1 preserves the 3.0.0 runtime surface contraction and adds the evidence
 producer on top of the existing concierge entry points, compact next-command
 guidance, sandbox proof access, and post-install surface control. The producer
 makes the exit-code-backed verification records the build gate already consumes

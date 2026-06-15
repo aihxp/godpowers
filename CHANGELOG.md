@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2026-06-15
+
+### Added
+- Added `evidence.canClose(substep)` to `lib/evidence.js`, the read-only strict
+  close-gate primitive rebound from Mythify's completion rule: a substep may
+  close only when evidence bound to it since it went in-flight supports the
+  close. Tier-appropriate per `docs/FUSION-ARCHITECTURE.md` section 4.2:
+  `build`/`deploy`/`harden` require the latest executed record to be
+  `verified:true`; other substeps accept an executed pass or an attested record,
+  and a failed executed record always blocks.
+
+### Notes
+- `canClose` is additive and read-only. It does not mutate state and is not yet
+  wired into `gate.js` or the close path; wiring it in (the deliberate
+  behavior change) is the remaining Phase 1 work tracked in
+  `docs/FUSION-ARCHITECTURE.md`. No existing behavior changed in this release.
+
 ## [3.1.0] - 2026-06-15
 
 ### Added
