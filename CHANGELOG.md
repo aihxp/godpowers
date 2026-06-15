@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-06-15
+
+### Changed
+- BEHAVIOR CHANGE: the `harden` gate now requires executed verification
+  evidence. `lib/gate.js`'s build-only executed-evidence requirement is
+  generalized to every executable-gated tier, driven by
+  `evidence.EXECUTED_REQUIRED_SUBSTEPS` (`build`, `deploy`, `harden`). The
+  harden gate now requires at least one passed and zero failed verification
+  commands in `state.json` `verification.commands[]`, in addition to its
+  no-Critical-findings check. A security tier can no longer close "done" without
+  an exit-code-backed passing record. Finding ids are tier-prefixed, so the
+  build tier keeps its `build-verification-*` contract and harden gains
+  `harden-verification-*`.
+- Updated the `god-harden` skill to record the executed security check
+  (for example `npx godpowers verify "npm audit --omit=dev" --substep
+  tier-3.harden`) before running the harden gate.
+
+### Added
+- Added the `tier-3.harden` state-step mapping in `lib/artifact-map.js` so the
+  harden gate reads structured state evidence (matching `build`).
+
+### Notes
+- This is the first enforced close-on-evidence behavior change from the Phase 1
+  fusion design (`docs/FUSION-ARCHITECTURE.md`). Projects that closed a harden
+  step without a verification record must now run `godpowers verify` (or record
+  an attested record where no executable check applies) before the harden gate
+  passes. The build gate behavior is unchanged.
+
 ## [3.1.1] - 2026-06-15
 
 ### Added

@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.1.1
+> Current shipped: v3.2.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,13 +12,13 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.1.1)
+### Current surface (v3.2.0)
 
-3.1.1 preserves the 3.0.0 runtime surface contraction and adds the evidence
-producer on top of the existing concierge entry points, compact next-command
-guidance, sandbox proof access, and post-install surface control. The producer
-makes the exit-code-backed verification records the build gate already consumes
-get written.
+3.2.0 preserves the 3.0.0 runtime surface contraction. It builds on the 3.1.0
+evidence producer and the 3.1.1 `evidence.canClose` primitive, and adds the
+first enforced close-on-evidence behavior change: the harden gate now requires a
+passing, exit-code-backed verification record (like the build gate), so a
+security tier cannot close "done" on assertion alone.
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
@@ -42,6 +42,11 @@ What works today:
   reads it, and emits `gate.pass`/`gate.fail` to the hash-chained event stream.
   The engine is vendored from Mythify (see `docs/FUSION-ARCHITECTURE.md`) with
   provenance recorded in `lib/evidence/.provenance.json`.
+- **Enforced close-on-evidence (build, harden)**: `lib/gate.js` requires a
+  passed (and zero failed) verification command in `state.json` for every
+  executable-gated tier, driven by `evidence.EXECUTED_REQUIRED_SUBSTEPS`. The
+  `evidence.canClose(substep)` primitive applies the same tier-appropriate rule
+  for the orchestrator close path.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map

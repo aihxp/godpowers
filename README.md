@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.1.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.2.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,11 +30,13 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 3.1.1 adds the evidence producer: `npx godpowers verify "<cmd>"
---substep <id>` runs a command, records the exit-code-backed verdict to an
-append-only ledger, rolls it into `state.json` where the build gate already
-reads it, and emits `gate.pass`/`gate.fail` to the event stream. It is purely
-additive on top of the 3.0.0 surface contraction. The current 3.x line keeps
+Version 3.2.0 enforces evidence on the harden gate: a security tier can no
+longer close "done" without a passing, exit-code-backed verification record.
+This builds on the 3.1.0 evidence producer (`npx godpowers verify "<cmd>"
+--substep <id>`, which records the verdict to an append-only ledger, rolls it
+into `state.json`, and emits `gate.pass`/`gate.fail`) and the 3.1.1
+`evidence.canClose` close-gate primitive. The build and harden gates now both
+require executed evidence; other tiers are unchanged. The current 3.x line keeps
 the omitted installer profile on `core`, keeps first-run, demo, and
 surface-control entry points, preserves `--profile=full` for compatibility,
 keeps locate and lifecycle views under `/god-status`, ships the optional
@@ -319,14 +321,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@3.1.1 -p @godpowers/mcp@3.1.1 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.2.0 -p @godpowers/mcp@3.2.0 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@3.1.1 -p @godpowers/mcp@3.1.1 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.2.0 -p @godpowers/mcp@3.2.0 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
