@@ -61,6 +61,7 @@ function showHelp() {
   log('  memory               Set, get, list, or clear ledger memory entries');
   log('  lesson               Add or list reusable lessons in the ledger');
   log('  outcome              Start, check, stop, or inspect a bounded retry loop');
+  log('  import-ledger        Import an existing .mythify/ ledger into .godpowers/ledger/');
   log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
@@ -134,6 +135,7 @@ function showHelp() {
   log('  npx godpowers memory set decision "use postgres" --category decision --project=.');
   log('  npx godpowers lesson add "guard inputs before parsing" --tags parsing --project=.');
   log('  npx godpowers outcome start green-build --verify "npm test" --budget 3 --substep tier-2.build --project=.');
+  log('  npx godpowers import-ledger --from ../legacy/.mythify --project=.');
   log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
@@ -262,6 +264,7 @@ module.exports = {
   runMemoryCommand: cliDispatch.runMemoryCommand,
   runLessonCommand: cliDispatch.runLessonCommand,
   runOutcomeCommand: cliDispatch.runOutcomeCommand,
+  runImportLedgerCommand: cliDispatch.runImportLedgerCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,

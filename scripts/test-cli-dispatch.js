@@ -702,6 +702,31 @@ test('outcome command rejects a missing action and a missing name', () => {
   process.exitCode = 0;
 });
 
+test('parseArgs captures import-ledger --from', () => {
+  const parsed = parseArgs(['node', 'bin', 'import-ledger', '--from', '../legacy/.mythify', '--project=.'], process.cwd());
+  assert(parsed.command === 'import-ledger', `command: ${parsed.command}`);
+  assert(parsed.importFrom === '../legacy/.mythify', `importFrom: ${parsed.importFrom}`);
+});
+
+test('import-ledger command imports a .mythify ledger and reports a missing source', () => {
+  const project = mkProject('godpowers-cli-import-');
+  state.init(project, 'cli-import');
+  const source = path.join(project, '.mythify');
+  fs.mkdirSync(source, { recursive: true });
+  fs.writeFileSync(path.join(source, 'verifications.jsonl'),
+    JSON.stringify({ kind: 'executed', command: 'true', exit_code: 0, verified: true, timestamp: 'T', plan: 'arc', step_id: 'build' }) + '\n');
+  const ok = capture(() => cliDispatch.runCommand({ command: 'import-ledger', project, json: true }));
+  const result = JSON.parse(ok.output);
+  assert(ok.value === true, 'import-ledger did not dispatch');
+  assert(result.found === true && result.imported.verifications === 1, `import result: ${JSON.stringify(result.imported)}`);
+
+  process.exitCode = 0;
+  const missing = capture(() => cliDispatch.runCommand({ command: 'import-ledger', project, importFrom: path.join(project, 'nope'), json: false }));
+  assert(missing.output.includes('No .mythify/ ledger found'), `output: ${missing.output}`);
+  assert(process.exitCode === 1, 'missing source should set exit code');
+  process.exitCode = 0;
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');
