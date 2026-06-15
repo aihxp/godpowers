@@ -496,6 +496,36 @@ test('can-close command requires a substep', () => {
   process.exitCode = 0;
 });
 
+test('parseArgs captures a route prompt positional', () => {
+  const parsed = parseArgs(['node', 'bin', 'route', 'add a feature', '--project=.'], process.cwd());
+  assert(parsed.command === 'route', `command: ${parsed.command}`);
+  assert(parsed.routePrompt === 'add a feature', `routePrompt: ${parsed.routePrompt}`);
+});
+
+test('route command dispatches through the quarterback', () => {
+  const project = mkProject('godpowers-cli-route-');
+  state.init(project, 'cli-route');
+  const json = capture(() => cliDispatch.runCommand({
+    command: 'route',
+    project,
+    routePrompt: 'take this idea to production',
+    json: true
+  }));
+  const parsed = JSON.parse(json.output);
+  assert(json.value === true, 'route did not dispatch');
+  assert(parsed.route === 'full', `route: ${parsed.route}`);
+  assert(parsed.nextCommand === '/god-mode', `next: ${parsed.nextCommand}`);
+  assert(parsed.mutatesState === false, 'route must be read-only');
+
+  const text = capture(() => cliDispatch.runCommand({
+    command: 'route',
+    project,
+    routePrompt: 'fix a typo',
+    json: false
+  }));
+  assert(text.output.includes('Route: trivial'), `text output: ${text.output}`);
+});
+
 test('unknown command returns false', () => {
   const result = capture(() => cliDispatch.runCommand({ command: 'unknown' }));
   assert(result.value === false, 'unknown command should not dispatch');

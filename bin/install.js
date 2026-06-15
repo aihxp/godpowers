@@ -55,6 +55,7 @@ function showHelp() {
   log('  gate                 Check a tier artifact gate');
   log('  verify               Run a command as executed verification evidence');
   log('  can-close            Check whether a substep has the evidence to close');
+  log('  route                Classify a prompt into an entry play (quarterback)');
   log('  mcp-info             Show read-only MCP companion setup instructions');
   log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
@@ -120,6 +121,7 @@ function showHelp() {
   log('  npx godpowers gate --tier=prd --project=.');
   log('  npx godpowers verify "npm test" --substep tier-2.build --claim "build slice tests pass" --project=.');
   log('  npx godpowers can-close --substep tier-2.build --project=.');
+  log('  npx godpowers route "add a feature" --project=.');
   log('  npx godpowers mcp-info --project=.');
   log('  npx godpowers quick-proof --project=.');
   log('  npx godpowers automation-status --project=.');
@@ -242,6 +244,7 @@ module.exports = {
   runStateCommand: cliDispatch.runStateCommand,
   runVerifyCommand: cliDispatch.runVerifyCommand,
   runCanCloseCommand: cliDispatch.runCanCloseCommand,
+  runRouteCommand: cliDispatch.runRouteCommand,
   applyDefaultRuntimeSelection,
   runInstall,
   runUninstall,
