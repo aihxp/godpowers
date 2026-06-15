@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.8.0] - 2026-06-15
+
+### Added
+- Added `evidence.lesson.add/list` (Phase 3), rebound from Mythify's lessons
+  store: append tagged lessons with project or global scope to
+  `.godpowers/ledger/lessons.jsonl` (or `~/.godpowers/lessons.jsonl` for global).
+- Added the `npx godpowers lesson add|list "<lesson>" [--tags a,b] [--scope
+  project|global]` CLI subcommand.
+
+### Changed
+- `evidence.reflect()` now auto-records a project lesson tagged `auto-reflected`
+  when a reflection carries a lesson, matching the upstream reflect tool. The
+  reflection record itself is unchanged.
+
+### Notes
+- The lessons store is isolated: it never touches `state.json`, the
+  verifications ledger, or the event stream.
+
 ## [3.7.0] - 2026-06-15
 
 ### Added

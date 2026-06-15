@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.7.0
+> Current shipped: v3.8.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,16 +12,15 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.7.0)
+### Current surface (v3.8.0)
 
-3.7.0 preserves the 3.0.0 runtime surface contraction. It adds a durable
-key/value memory store (`npx godpowers memory set|get|list|clear`) with
-categories fact, decision, discovery, and state. This follows the 3.6.0
-structured reflections (`npx godpowers reflect`), the 3.5.0 work report (`npx
-godpowers report`), the 3.4.0 quarterback entry router (`npx godpowers route`),
-and the close-on-evidence path completed across 3.1.0-3.3.0 (the evidence
-producer, the `evidence.canClose` primitive, the enforced build and harden
-gates, and the `can-close` check).
+3.8.0 preserves the 3.0.0 runtime surface contraction. It adds a reusable
+lessons store (`npx godpowers lesson add|list`) with tags and project/global
+scope, where a reflection that carries a lesson auto-records one. This follows
+the 3.7.0 memory store (`npx godpowers memory`), the 3.6.0 structured
+reflections (`npx godpowers reflect`), the 3.5.0 work report (`npx godpowers
+report`), the 3.4.0 quarterback entry router (`npx godpowers route`), and the
+close-on-evidence path completed across 3.1.0-3.3.0.
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
@@ -71,6 +70,10 @@ What works today:
   memory set|get|list|clear` keep categorized key/value entries (fact, decision,
   discovery, state) at `.godpowers/ledger/memory.json`. Isolated from state.json,
   verifications, and events.
+- **Reusable lessons store**: `evidence.lesson.add/list` and `godpowers lesson
+  add|list` append tagged, project- or global-scoped lessons to
+  `.godpowers/ledger/lessons.jsonl` (or `~/.godpowers/lessons.jsonl`); a
+  reflection that carries a lesson auto-records one tagged `auto-reflected`.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map
