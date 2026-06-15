@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.0] - 2026-06-15
+
+### Added
+- Added `evidence.reflect()` and `evidence.reflections()` (Phase 3), rebound from
+  Mythify's reflect tool: record action, outcome (success/partial/failure),
+  observation, root cause, next action, and an optional lesson to
+  `.godpowers/ledger/reflections.jsonl` with substep context.
+- Added the `npx godpowers reflect --action "<...>" --outcome <...> --next "<...>"`
+  CLI subcommand (`--observation`, `--root-cause`, `--lesson`, `--substep`
+  optional).
+
+### Changed
+- Generalized the ledger jsonl append/read into shared `appendJsonlAtomic` and
+  `readJsonl` helpers in `lib/evidence.js` so verifications and reflections share
+  one atomic path. No change to the verifications record shape or behavior.
+
+### Notes
+- `reflect` is isolated: it never touches `state.json`, the verifications ledger,
+  or the event stream. No existing command behavior changed.
+
 ## [3.5.0] - 2026-06-15
 
 ### Added

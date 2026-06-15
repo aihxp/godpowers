@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.5.0
+> Current shipped: v3.6.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,15 +12,15 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.5.0)
+### Current surface (v3.6.0)
 
-3.5.0 preserves the 3.0.0 runtime surface contraction. It adds the work report
-(`npx godpowers report --since last`), a verification play-by-play from the
-evidence ledger with an Attention section for unverified records and a cursor so
-a fresh session sees only what is new. This follows the 3.4.0 quarterback entry
-router (`npx godpowers route`) and the close-on-evidence path completed across
-3.1.0-3.3.0 (the evidence producer, the `evidence.canClose` primitive, the
-enforced build and harden gates, and the `can-close` check).
+3.6.0 preserves the 3.0.0 runtime surface contraction. It adds structured
+reflections (`npx godpowers reflect`), which record what was attempted, the
+outcome, the root cause, and the next action to an append-only ledger. This
+follows the 3.5.0 work report (`npx godpowers report`), the 3.4.0 quarterback
+entry router (`npx godpowers route`), and the close-on-evidence path completed
+across 3.1.0-3.3.0 (the evidence producer, the `evidence.canClose` primitive,
+the enforced build and harden gates, and the `can-close` check).
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
@@ -61,6 +61,11 @@ What works today:
   unverified records, summarize passed/failed/attested, and advance a report
   cursor at `.godpowers/ledger/reports/cursor.json` (skip with `--peek`) so a
   fresh session emits only what is new. Read-only beyond the cursor.
+- **Structured reflections**: `evidence.reflect()` and `godpowers reflect
+  --action ... --outcome ... --next ...` append an action/outcome/observation/
+  root-cause/next/lesson record to `.godpowers/ledger/reflections.jsonl` with
+  substep context. Isolated: never touches state.json, the verifications ledger,
+  or the event stream.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map
