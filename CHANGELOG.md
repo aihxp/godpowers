@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.5.0] - 2026-06-15
+
+### Added
+- Added `lib/work-report.js`, the chat play-by-play (Phase 3) rebound from
+  Mythify's build_work_report. It reads the evidence ledger, surfaces an
+  Attention section for unverified records, summarizes passed/failed/attested,
+  and advances a report cursor at `.godpowers/ledger/reports/cursor.json` so a
+  fresh session emits only what is new.
+- Added the read-only `npx godpowers report --since last` CLI subcommand
+  (`--since all` for full history, `--peek` to show without advancing the
+  cursor).
+
+### Notes
+- `report` is read-only beyond the report cursor and never mutates `state.json`;
+  no existing command behavior changed. This is the first Phase 3 slice; outcome
+  loops, memory, lessons, reflections, and MCP read tools remain to come.
+
 ## [3.4.0] - 2026-06-15
 
 ### Added
