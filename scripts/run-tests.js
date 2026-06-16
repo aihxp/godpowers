@@ -65,6 +65,7 @@ const TEST_COMMANDS = [
   [node, ['scripts/test-skillui-bridge.js']],
   [node, ['scripts/test-runtime-verification.js']],
   [node, ['scripts/test-agent-browser.js']],
+  [node, ['scripts/test-runtime-audit.js']],
   [node, ['scripts/test-mode-d.js']],
   [node, ['scripts/test-runtime-heuristics.js']],
   [node, ['scripts/test-agent-validator.js']],

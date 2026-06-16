@@ -166,24 +166,42 @@ test('checkPrerequisites: /god-prd uses state.json without PROGRESS.md', () => {
   fs.rmSync(proj, { recursive: true, force: true });
 });
 
+// Each suggestNext case sets up its own isolated project so the tests no longer
+// depend on the shared `tmp` being mutated in a specific order (TEST-003).
 test('suggestNext: empty project suggests /god-init', () => {
   router.clearCache();
-  const s = router.suggestNext(tmp);
-  if (s.command !== '/god-init') throw new Error(`expected /god-init, got ${s.command}`);
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-suggest-empty-'));
+  try {
+    const s = router.suggestNext(proj);
+    if (s.command !== '/god-init') throw new Error(`expected /god-init, got ${s.command}`);
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
+  }
 });
 
 test('suggestNext: with PRD pending, suggests /god-prd', () => {
   router.clearCache();
-  state.init(tmp, 'router-test');
-  const s = router.suggestNext(tmp);
-  if (s.command !== '/god-prd') throw new Error(`expected /god-prd, got ${s.command}`);
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-suggest-prd-'));
+  try {
+    state.init(proj, 'router-test');
+    const s = router.suggestNext(proj);
+    if (s.command !== '/god-prd') throw new Error(`expected /god-prd, got ${s.command}`);
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
+  }
 });
 
 test('suggestNext: with PRD done, suggests /god-arch', () => {
   router.clearCache();
-  state.updateSubStep(tmp, 'tier-1', 'prd', { status: 'done' });
-  const s = router.suggestNext(tmp);
-  if (s.command !== '/god-arch') throw new Error(`expected /god-arch, got ${s.command}`);
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-suggest-arch-'));
+  try {
+    state.init(proj, 'router-test');
+    state.updateSubStep(proj, 'tier-1', 'prd', { status: 'done' });
+    const s = router.suggestNext(proj);
+    if (s.command !== '/god-arch') throw new Error(`expected /god-arch, got ${s.command}`);
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
+  }
 });
 
 function markPreDeployDone(projectRoot) {
@@ -380,9 +398,16 @@ test('evaluateCheck: file:path rejects traversal outside project', () => {
 
 test('evaluateCheck: state:tier-1.prd.status == done', () => {
   router.clearCache();
-  // PRD was set to done in earlier test
-  if (router.evaluateCheck('state:tier-1.prd.status == done', tmp) !== true) {
-    throw new Error('should be true');
+  // Self-contained: set up PRD-done state in its own project (TEST-003).
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-eval-prd-done-'));
+  try {
+    state.init(proj, 'router-eval-prd-done');
+    state.updateSubStep(proj, 'tier-1', 'prd', { status: 'done' });
+    if (router.evaluateCheck('state:tier-1.prd.status == done', proj) !== true) {
+      throw new Error('should be true');
+    }
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
   }
 });
 
@@ -452,17 +477,18 @@ fs.rmSync(tmp, { recursive: true, force: true });
 
 // Phase audit: conditional-next routing
 test('getNextCommand evaluates ui-detected condition', () => {
-  // Set up a project root with React in package.json
-  const fs = require('fs');
-  const os = require('os');
-  const path = require('path');
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-test-'));
-  fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({
-    dependencies: { react: '^18.0.0' }
-  }));
-  // /god-stack has conditional-next: ui-detected -> /god-design, no-ui-detected -> /god-repo
-  const next = router.getNextCommand('/god-stack', { projectRoot: tmp });
-  if (next !== '/god-design') throw new Error('expected /god-design for UI project, got ' + next);
+  // Set up a project root with React in package.json (cleaned up; TEST-003).
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-ui-'));
+  try {
+    fs.writeFileSync(path.join(proj, 'package.json'), JSON.stringify({
+      dependencies: { react: '^18.0.0' }
+    }));
+    // /god-stack has conditional-next: ui-detected -> /god-design, no-ui-detected -> /god-repo
+    const next = router.getNextCommand('/god-stack', { projectRoot: proj });
+    if (next !== '/god-design') throw new Error('expected /god-design for UI project, got ' + next);
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
+  }
 });
 
 test('getNextCommand falls back to next-recommended when no condition', () => {
@@ -472,15 +498,16 @@ test('getNextCommand falls back to next-recommended when no condition', () => {
 });
 
 test('getNextCommand evaluates no-ui-detected for backend project', () => {
-  const fs = require('fs');
-  const os = require('os');
-  const path = require('path');
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-test-'));
-  fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({
-    dependencies: { express: '^4.0.0' }
-  }));
-  const next = router.getNextCommand('/god-stack', { projectRoot: tmp });
-  if (next !== '/god-repo') throw new Error('expected /god-repo for backend, got ' + next);
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'router-cond-backend-'));
+  try {
+    fs.writeFileSync(path.join(proj, 'package.json'), JSON.stringify({
+      dependencies: { express: '^4.0.0' }
+    }));
+    const next = router.getNextCommand('/god-stack', { projectRoot: proj });
+    if (next !== '/god-repo') throw new Error('expected /god-repo for backend, got ' + next);
+  } finally {
+    fs.rmSync(proj, { recursive: true, force: true });
+  }
 });
 
 report('Router tests');

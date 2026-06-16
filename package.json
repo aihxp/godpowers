@@ -24,7 +24,7 @@
     "test:e2e": "node tests/integration/full-arc.test.js",
     "test:mcp": "npm --workspace @godpowers/mcp test",
     "coverage": "c8 --reporter=text --reporter=lcov node scripts/run-tests.js",
-    "coverage:lib": "c8 --include=lib/**/*.js --check-coverage --lines 90 --reporter=text node scripts/run-tests.js",
+    "coverage:lib": "c8 --include=lib/**/*.js --check-coverage --lines 90 --branches 75 --reporter=text node scripts/run-tests.js",
     "test:audit": "npm audit --omit=dev && git diff --check && npm run test:surface",
     "pack:check": "node scripts/check-package-contents.js",
     "pack:mcp:check": "npm --workspace @godpowers/mcp run pack:check",
