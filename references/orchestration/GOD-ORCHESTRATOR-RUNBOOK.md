@@ -367,6 +367,41 @@ after tests pass. If a git remote exists and the user passed an explicit push
 flag or the project intent says pushing is allowed, push after the green commit
 and then continue the project run. Pushing is not a terminal state.
 
+## Audit-Remediation Loop
+
+For intent like "audit and fix until clean" / "drive the audit to clean" (the
+`audit-remediate` recipe), and as an optional end-of-arc pass, run a bounded
+audit-then-remediate loop. The maker that fixes is never the checker that grades.
+
+1. **Audit (read-only).** Spawn `god-debt-assessor` in a fresh context. It writes
+   the scored, self-contained report to `.godpowers/tech-debt/REPORT.md` with
+   stable finding IDs (SEC-001, etc.), each carrying Severity, Confidence, Effort,
+   `file:line`, and a "Verify the fix" step.
+2. **Select.** Take the "What to fix first" list: Confirmed Critical and High,
+   worst-first, root causes (systemic patterns) before leaves. Re-verify any
+   Suspected finding against the cited code before touching it; never act on an
+   unconfirmed claim.
+3. **Drive each finding to closure** with an outcome loop so the loop is bounded
+   and self-arresting:
+   - `npx godpowers outcome start fix-<ID> --verify "<the finding's verify command>" --substep <tier.substep> --project=.`
+   - Spawn `god-debugger` (or the owning specialist) in a fresh context with only
+     that finding's evidence and touched files to draft the fix.
+   - Spawn an **independent** reviewer (`god-quality-reviewer`, or
+     `god-harden-auditor` for a SEC finding) in a fresh context to verify the fix
+     against the cited evidence and the project's tests. The maker does not grade
+     its own work.
+   - `npx godpowers outcome check fix-<ID> --project=.` runs the finding's verify
+     command and records the iteration. Repeat until the outcome succeeds or the
+     budget is exhausted.
+   - Never mark a finding resolved while `can-close` for its substep is red.
+4. **Re-audit.** Re-run `god-debt-assessor` and confirm findings are resolved,
+   not relocated, and that no Strength regressed. The loop is done when no
+   Confirmed Critical or High remains (or the agreed bucket is empty).
+5. **Pause, do not fake.** Anything that cannot be fixed within budget, or that
+   is `human-only` (scope, credentials, vendor/legal/Critical-security
+   acceptance), lands as a precise paused blocker with the finding ID, not a
+   silent skip. "Clean" is an evidence-backed re-audit, never a claim.
+
 ## Shipping Closure Protocol
 
 The shipping tier must not end by listing a broad provider checklist. God Mode

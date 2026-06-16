@@ -269,6 +269,17 @@ const recipes = [
       { cmd: '/god-refactor', why: 'Strict TDD, behavior-preserving, gradual rollout' }
     ]
   },
+  {
+    name: 'audit-remediate',
+    category: 'maintaining',
+    description: 'Audit the codebase, then drive the findings to zero',
+    keywords: ['audit and fix', 'fix all the audit findings', 'drive the audit to clean', 'remediate tech debt', 'fix the codebase until clean', 'pay down tech debt', 'address all the findings', 'code audit and fix'],
+    sequence: [
+      { cmd: '/god-tech-debt', why: 'Score the codebase and write the prioritized, self-contained audit report (god-debt-assessor)' },
+      { cmd: '/god-debug', why: 'Fix each Confirmed Critical/High finding worst-first; an independent reviewer verifies each fix against the cited evidence' },
+      { cmd: '/god-tech-debt', why: 'Re-audit to confirm findings are resolved not relocated and no strength regressed; the orchestrator loops this under an outcome budget until clean' }
+    ]
+  },
 
   // RECOVERING
   {

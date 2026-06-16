@@ -28,7 +28,7 @@ What works today:
   observability, capture, knowledge, process, configuration, utility,
   automation, migration, extension management, release support)
 - **40 specialist agents** in fresh contexts
-- **13 executable workflows** and **43 intent recipes**
+- **13 executable workflows** and **44 intent recipes**
 - Optional `@godpowers/mcp` companion package with eight read-only tools:
   `status`, `next`, `gate_check`, `lint_artifact`, `trace_requirement`,
   `work_report`, `route`, and `verification_history`

@@ -332,7 +332,7 @@ the AI coding tool.
 the `god` front door and every shipped `god-*` command.
 
 [DECISION] The runtime surface also includes 40 `agents/god-*.md` specialist
-agents, 13 workflow YAML files, and 43 intent recipes.
+agents, 13 workflow YAML files, and 44 intent recipes.
 
 [DECISION] The current route graph has 68 built-in or local-runtime command
 routes and 52 agent-routed command routes.
@@ -345,7 +345,7 @@ routes and 52 agent-routed command routes.
 
 [DECISION] All workflow `uses:` targets resolve to shipped agent files.
 
-[DECISION] All 43 recipes contain at least one slash-command route, and every
+[DECISION] All 44 recipes contain at least one slash-command route, and every
 recipe command reference resolves to a shipped command route.
 
 | Surface | Current count | Automation interpretation |
