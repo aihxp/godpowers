@@ -2,8 +2,8 @@
 
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
-> Last updated: 2026-06-15
-> Current shipped: v3.12.1
+> Last updated: 2026-06-16
+> Current shipped: v3.13.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,14 +12,19 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.12.1)
+### Current surface (v3.13.0)
 
-3.12.1 preserves the 3.0.0 runtime surface contraction. It makes the code audit
-codeauditor-grade and adds an audit-remediation loop: `god-debt-assessor`
-(`/god-tech-debt`) now scores the source across nine weighted dimensions with
+3.13.0 preserves the 3.0.0 runtime surface contraction. It makes the default
+greenfield arc (`/god-mode`) miss less: the one-shot `full-arc` workflow now
+runs a whole-codebase code audit after the build (catching what the per-slice
+reviews missed in AI-generated code) and a documentation pass after harden
+(`god-docs-writer` verifies the docs against the code before launch). The arc is
+build, code-audit, deploy, observe, harden, docs, launch, final-sync. This sits
+on top of 3.12.x, which made that code audit codeauditor-grade: `god-debt-assessor`
+(`/god-tech-debt`) scores the source across nine weighted dimensions with
 per-finding severity/confidence/effort, and the `audit-remediate` recipe drives
 the findings to zero (audit, fix worst-first with an independent reviewer,
-re-audit, bounded by an outcome budget, evidence-gated). It sits on top of the
+re-audit, bounded by an outcome budget, evidence-gated). All of it rides on the
 completed Mythify fusion (the evidence producer, enforced close-on-evidence, the
 quarterback, work report, reflections, memory, lessons, outcome loops, MCP read
 tools, and ledger importer) shipped across 3.1.0-3.11.0.

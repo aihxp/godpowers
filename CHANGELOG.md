@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.13.0] - 2026-06-16
+
+### Changed
+- The default greenfield workflow (`full-arc`, run by `/god-mode`) now runs two
+  more steps so the one-shot product ships audited and documented. A `code-audit`
+  job (`god-debt-assessor`) runs after the build and before deploy/harden, giving
+  the whole AI-generated codebase a scored audit that catches what the per-slice
+  reviews could not see across files. A `docs` job (`god-docs-writer`) runs after
+  harden and before launch, writing the project documentation and verifying every
+  claim against the code (drift detected) before the product ships. `deploy` and
+  `harden` now need `code-audit`; `launch` now needs `docs`. The plan goes from
+  11 to 13 steps. No new skill, agent, workflow, or recipe surface: both jobs
+  reuse agents that already exist.
+- `GOD-ORCHESTRATOR-RUNBOOK` documents the new audit and docs positions in the
+  greenfield arc.
+
 ## [3.12.1] - 2026-06-16
 
 ### Changed

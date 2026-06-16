@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/aihxp/godpowers/actions/workflows/ci.yml/badge.svg)](https://github.com/aihxp/godpowers/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.12.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.13.0-blue)](CHANGELOG.md)
 [![npm](https://img.shields.io/npm/v/godpowers.svg)](https://www.npmjs.com/package/godpowers)
 
 **Ship fast. Ship right. Ship everything. Ship accountably.**
@@ -30,15 +30,21 @@ Godpowers makes AI coding accountable: every serious run should leave disk
 state, artifacts, validation gates, host guarantees, and a next action. Code is
 only one output. The project memory and proof trail matter too.
 
-Version 3.12.1 makes the code audit codeauditor-grade and adds an
-audit-remediation loop. `god-debt-assessor` (`/god-tech-debt`) now produces a
-scored, prioritized, self-contained source-code audit across nine weighted
-dimensions, and the `audit-remediate` recipe drives the findings to zero: audit,
-fix worst-first with an independent reviewer, then re-audit, bounded by an
-outcome budget, with the can't-fake-done gate ensuring "clean" is evidence-backed.
-This sits on top of the completed Mythify fusion (the evidence producer, enforced
-close-on-evidence, the quarterback, work report, reflections, memory, lessons,
-outcome loops, MCP read tools, and ledger importer). The current 3.x line keeps
+Version 3.13.0 makes the default greenfield arc (`/god-mode`) miss less. The
+one-shot `full-arc` workflow now runs a whole-codebase code audit after the
+build (so it catches what the per-slice reviews missed in AI-generated code) and
+a documentation pass after harden (so the shipped product has docs verified
+against the code, not vibes). The arc goes build, code-audit, deploy, observe,
+harden, docs, launch, final-sync: per-slice review, whole-codebase audit plus
+remediation, a security gate, and verified docs before launch. This builds on
+3.12.x, which made that code audit codeauditor-grade: `god-debt-assessor`
+(`/god-tech-debt`) produces a scored, prioritized, self-contained source-code
+audit across nine weighted dimensions, and the `audit-remediate` recipe drives
+the findings to zero (audit, fix worst-first with an independent reviewer,
+re-audit, bounded by an outcome budget, with the can't-fake-done gate ensuring
+"clean" is evidence-backed). It all sits on top of the completed Mythify fusion
+(the evidence producer, enforced close-on-evidence, the quarterback, work report,
+reflections, memory, lessons, outcome loops, MCP read tools, and ledger importer). The current 3.x line keeps
 the omitted installer profile on `core`, keeps first-run, demo, and
 surface-control entry points, preserves `--profile=full` for compatibility,
 keeps locate and lifecycle views under `/god-status`, ships the optional
@@ -323,14 +329,14 @@ dependency to the main `godpowers` package:
 
 ```bash
 npx godpowers mcp-info --project=.
-npx -y -p godpowers@3.12.1 -p @godpowers/mcp@3.12.1 godpowers-mcp serve --project=.
+npx -y -p godpowers@3.13.0 -p @godpowers/mcp@3.13.0 godpowers-mcp serve --project=.
 ```
 
 The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 `trace_requirement`. Host registration is opt-in:
 
 ```bash
-npx -y -p godpowers@3.12.1 -p @godpowers/mcp@3.12.1 godpowers-mcp setup --host=codex --project=. --write
+npx -y -p godpowers@3.13.0 -p @godpowers/mcp@3.13.0 godpowers-mcp setup --host=codex --project=. --write
 ```
 
 See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
