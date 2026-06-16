@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.11.0
+> Current shipped: v3.12.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,15 +12,17 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.11.0)
+### Current surface (v3.12.0)
 
-3.11.0 preserves the 3.0.0 runtime surface contraction. It adds the optional
-one-time `.mythify/` ledger importer (`npx godpowers import-ledger`), the final
-piece of the native fusion of Mythify's evidence engine and quarterback into
-Godpowers. The fusion (Phases 0-3 plus the optional importer) is now complete:
-the evidence producer, enforced close-on-evidence, the quarterback, the work
-report, reflections, memory, lessons, outcome loops, the read-only MCP tools,
-and the importer shipped across 3.1.0-3.11.0.
+3.12.0 preserves the 3.0.0 runtime surface contraction. It makes the code audit
+codeauditor-grade and adds an audit-remediation loop: `god-debt-assessor`
+(`/god-tech-debt`) now scores the source across nine weighted dimensions with
+per-finding severity/confidence/effort, and the `audit-remediate` recipe drives
+the findings to zero (audit, fix worst-first with an independent reviewer,
+re-audit, bounded by an outcome budget, evidence-gated). It sits on top of the
+completed Mythify fusion (the evidence producer, enforced close-on-evidence, the
+quarterback, work report, reflections, memory, lessons, outcome loops, MCP read
+tools, and ledger importer) shipped across 3.1.0-3.11.0.
 
 What works today:
 - **120 slash commands** as thin orchestrators (front door, first-run, demo, surface control, lifecycle, planning,
@@ -88,6 +90,13 @@ What works today:
   [--from <path>]` perform a one-time, best-effort import of an existing
   `.mythify/` ledger into `.godpowers/ledger/`, rebinding plan/step to
   arc/substep. Appends only; no state rollup and no gate events.
+- **Codeauditor-grade audit + remediation loop**: `god-debt-assessor`
+  (`/god-tech-debt`) scores the source across nine weighted dimensions
+  (severity/confidence/effort per finding, adversarial verification,
+  paper-construct hunting, systemic clustering, strengths, a self-contained
+  report). The `audit-remediate` recipe and a GOD-ORCHESTRATOR-RUNBOOK section
+  drive findings to zero with an independent reviewer and an `evidence.outcome`
+  budget; "clean" is an evidence-backed re-audit, un-fixable findings pause.
 - **Deliverable progress tracking**: `/god-progress` and the
   `.godpowers/REQUIREMENTS.md` ledger report which requirements and roadmap
   increments are done, in progress, or not started, derived from the linkage map

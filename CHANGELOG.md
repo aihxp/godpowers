@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.12.0] - 2026-06-16
+
+### Changed
+- Upgraded `god-debt-assessor` (`/god-tech-debt`) to a codeauditor-grade,
+  read-only source-code audit: nine weighted dimensions scored 0-100 with grade
+  bands and risk-capping, per-finding Severity/Confidence/Effort, adversarial
+  verification with Suspected marking, paper-construct/theater hunting,
+  root-not-leaves systemic clustering, a strengths-to-preserve section,
+  calibration to maturity, a file:line + substitution evidence gate, and a
+  self-contained "how to use this report" protocol for an acting agent. Keeps
+  Godpowers' broader operational/knowledge debt categories as extra lenses.
+  Output stays `.godpowers/tech-debt/REPORT.md`.
+
+### Added
+- Added the audit-remediation loop: a new `audit-remediate` recipe routes
+  "audit and fix until clean" intent, and a `GOD-ORCHESTRATOR-RUNBOOK` section
+  defines the bounded drive-to-zero loop (audit, select worst-first, fix with
+  `god-debugger`, verify with an independent reviewer, bound the retries with
+  `evidence.outcome`, re-audit until no Confirmed Critical/High remains). The
+  can't-fake-done gate makes "clean" an evidence-backed re-audit; un-fixable
+  findings pause as precise blockers instead of silent skips.
+
+### Notes
+- No new skill or agent (god-debt-assessor enhanced in place). Recipe surface
+  count moves 43 to 44. The audit-remediation loop is opt-in (intent/recipe or
+  an end-of-arc pass); it is not wired into the default greenfield `full-arc`.
+
 ## [3.11.0] - 2026-06-15
 
 ### Added

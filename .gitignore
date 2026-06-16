@@ -10,3 +10,4 @@ tmp/
 .codex/
 *.tgz
 .planning/
+codeaudit.md
