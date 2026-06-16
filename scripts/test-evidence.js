@@ -2,13 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
 
 const evidence = require('../lib/evidence');
 const state = require('../lib/state');
 const stateLock = require('../lib/state-lock');
 const events = require('../lib/events');
 const sync = require('./sync-evidence-engine');
-const { test, assert, mkProject, report } = require('./test-harness');
+const { test, asyncTest, assert, mkProject, report } = require('./test-harness');
 
 function ledgerRecords(project) {
   const file = path.join(project, '.godpowers', 'ledger', 'verifications.jsonl');
@@ -502,6 +503,54 @@ test('buildReport flags drift when the upstream fixture adds a key', () => {
   assert(r.shapeChanged === true, 'added key should flag a shape change');
   assert(r.shapeDiff.executed.added.includes('new_field'), 'diff should name the new key');
   assert(r.ok === false, 'report should not be in sync after drift');
+});
+
+// ---------------------------------------------------------------------------
+// Ledger durability (ERR-001) and command-exec edge cases (ERR-003)
+// ---------------------------------------------------------------------------
+
+asyncTest('appendJsonlAtomic keeps every record under concurrent writers (ERR-001)', async () => {
+  const project = mkProject('godpowers-evidence-concurrency-');
+  const file = path.join(project, '.godpowers', 'ledger', 'concurrency.jsonl');
+  const WRITERS = 8;
+  const PER_WRITER = 25;
+  const evidencePath = require.resolve('../lib/evidence');
+  const child = `
+    const evidence = require(${JSON.stringify(evidencePath)});
+    const file = ${JSON.stringify(file)};
+    const tag = process.env.WRITER_ID;
+    for (let i = 0; i < ${PER_WRITER}; i++) {
+      evidence.appendJsonlAtomic(file, { writer: tag, i });
+    }
+  `;
+  await Promise.all(
+    Array.from({ length: WRITERS }, (_, w) =>
+      new Promise((resolve, reject) => {
+        const proc = spawn(process.execPath, ['-e', child], {
+          stdio: 'ignore',
+          env: { ...process.env, WRITER_ID: String(w) }
+        });
+        proc.on('error', reject);
+        proc.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`writer ${w} exited ${code}`))));
+      })
+    )
+  );
+  const lines = fs.readFileSync(file, 'utf8').split('\n').filter((l) => l.trim());
+  // Read-modify-write was last-writer-wins and dropped records here; O_APPEND keeps all.
+  assert(lines.length === WRITERS * PER_WRITER,
+    `expected ${WRITERS * PER_WRITER} records, got ${lines.length} (records lost under concurrency)`);
+  const parsed = lines.map((l) => JSON.parse(l));
+  assert(parsed.length === WRITERS * PER_WRITER, 'every appended record should be a complete, parseable line');
+});
+
+test('runCommand flags maxBuffer overflow distinctly instead of as a plain failure (ERR-003)', () => {
+  const node = JSON.stringify(process.execPath);
+  const command = `${node} -e "process.stdout.write('x'.repeat(17*1024*1024))"`;
+  const result = evidence._runCommand(command, 60);
+  assert(result.bufferOverflow === true, 'should detect the ENOBUFS buffer overflow');
+  assert(result.verified === false, 'an overflow verdict is not a pass');
+  assert(result.exitCode === -1, `overflow exitCode should be -1, got ${result.exitCode}`);
+  assert(/exceeded .* buffer/.test(result.stderrTail), `stderrTail should explain the overflow: ${result.stderrTail}`);
 });
 
 report('Evidence engine tests');
