@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.12.1] - 2026-06-16
+
+### Changed
+- De-duplicated the audit lanes in `god-debt-assessor`. Its Security dimension
+  now defers to `god-harden-auditor`: when `.godpowers/harden/FINDINGS.md`
+  exists, score Security from harden's verdict and cite its finding IDs instead
+  of re-running the OWASP walkthrough, recording a security finding only for
+  something harden did not cover. Its Code Quality dimension is explicitly the
+  whole-repo point-in-time read that complements, not duplicates,
+  `god-quality-reviewer`'s per-slice diff review.
+
 ## [3.12.0] - 2026-06-16
 
 ### Changed

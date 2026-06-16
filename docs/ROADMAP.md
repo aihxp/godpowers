@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-15
-> Current shipped: v3.12.0
+> Current shipped: v3.12.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,9 +12,9 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.12.0)
+### Current surface (v3.12.1)
 
-3.12.0 preserves the 3.0.0 runtime surface contraction. It makes the code audit
+3.12.1 preserves the 3.0.0 runtime surface contraction. It makes the code audit
 codeauditor-grade and adds an audit-remediation loop: `god-debt-assessor`
 (`/god-tech-debt`) now scores the source across nine weighted dimensions with
 per-finding severity/confidence/effort, and the `audit-remediate` recipe drives
