@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-16
-> Current shipped: v3.13.0
+> Current shipped: v3.13.1
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,9 +12,13 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.13.0)
+### Current surface (v3.13.1)
 
-3.13.0 preserves the 3.0.0 runtime surface contraction. It makes the default
+3.13.1 is a maintenance release: it fixes a ledger record-loss race, hardens the
+outcome verifier and the pre-tool-use hook, shares the `*-sync` filesystem
+helpers, makes the argument parser table-driven, gates branch coverage, and
+keeps the architecture map guarded. 3.13.0 preserves the 3.0.0 runtime surface
+contraction. It makes the default
 greenfield arc (`/god-mode`) miss less: the one-shot `full-arc` workflow now
 runs a whole-codebase code audit after the build (catching what the per-slice
 reviews missed in AI-generated code) and a documentation pass after harden

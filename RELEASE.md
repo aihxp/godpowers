@@ -1,41 +1,40 @@
-# Godpowers 3.13.0 Release
+# Godpowers 3.13.1 Release
 
 > Status: Prepared
 > Date: 2026-06-16
 
-[DECISION] Godpowers 3.13.0 is a minor release that hardens the default greenfield arc. The one-shot `full-arc` workflow run by `/god-mode` now audits the whole codebase after the build and writes verified documentation after harden, so a long-running idea-to-production run ships audited and documented without a separate manual pass.
-[DECISION] No new skill, agent, workflow, or recipe surface is added: both new steps reuse existing agents (`god-debt-assessor`, `god-docs-writer`). Surface counts are unchanged from 3.12.1.
-[DECISION] This release keeps `core` as the omitted installer profile, keeps `--profile=full` as the complete compatibility surface, and keeps the full 3.1.0-3.12.1 surface (fusion + codeauditor-grade audit + remediation loop).
+[DECISION] Godpowers 3.13.1 is a maintenance release that drives a full self-audit (`codeaudit.md`, codeauditor-grade, nine weighted dimensions) to zero. It fixes one High finding plus the Medium and Low findings across runtime correctness, security hardening, the test gate, documentation, and de-duplication.
+[DECISION] No new skill, agent, workflow, or recipe surface is added or removed. Surface counts are unchanged from 3.13.0: 120 slash commands, 40 specialist agents, 13 workflows, 44 recipes.
+[DECISION] This release keeps `core` as the omitted installer profile, keeps `--profile=full` as the complete compatibility surface, and keeps the full 3.1.0-3.13.0 surface (fusion + codeauditor-grade audit + remediation loop + audited/documented greenfield arc).
 
 ## What's in this release
 
-- [DECISION] `full-arc` gains a `code-audit` job (`god-debt-assessor`, `mode: post-build-audit`) that runs after `build` and before `deploy`/`harden`. It gives the whole AI-generated codebase a scored, prioritized audit that catches issues the per-slice `god-spec-reviewer` + `god-quality-reviewer` reviews cannot see across files.
-- [DECISION] `full-arc` gains a `docs` job (`god-docs-writer`, `mode: product-docs-verify`) that runs after `harden` and before `launch`. It writes the project documentation and verifies every claim against the code (drift detected) before the product ships.
-- [DECISION] Dependencies were rewired: `deploy` and `harden` now `need` `code-audit`; `launch` now `needs` `docs`. The greenfield arc is build, code-audit, deploy, observe, harden, docs, launch, final-sync. The `full-arc` plan goes from 11 to 13 steps.
-- [DECISION] `GOD-ORCHESTRATOR-RUNBOOK` documents the audit and docs positions in the greenfield arc.
-- [DECISION] 120 slash commands, 40 specialist agents, 13 executable workflows, 44 intent recipes, and the full fusion + audit surface remain available.
+- [DECISION] Runtime correctness: `lib/evidence.js` `appendJsonlAtomic` now appends with `fs.appendFileSync` (O_APPEND) instead of a read-modify-write, so concurrent `verify`/`outcome check` processes no longer lose ledger records and the append is no longer O(n) (ERR-001). A `maxBuffer` overflow is surfaced distinctly instead of as a plain failure (ERR-003).
+- [DECISION] Security hardening: the pre-tool-use hook is reframed as a best-effort advisory typo guard and matches more destructive-command variants (SEC-001); `outcome check` announces a disk-sourced verifier before running it (SEC-002); the `LEDGER-LOG.md` command echo masks obvious secret shapes and `SECURITY.md` documents the ledger and Codex-sandbox trust boundaries (SEC-003, SEC-004); `SECURITY.md` replaces the non-existent `npm install --verify` with `npm audit signatures` (DOC-002).
+- [DECISION] Test gate: `coverage:lib` now enforces `--branches 75` (TEST-001); a new `scripts/test-runtime-audit.js` raises `lib/runtime-audit.js` line coverage from 68.8% to 77.8% (TEST-002); `scripts/test-router.js` no longer shares cumulative state across tests and cleans up its temp dirs (TEST-003); new `scripts/test-hooks.js`, `scripts/test-cli-log.js`, and `scripts/test-text-util.js` cover the new code.
+- [DECISION] De-duplication: the five `*-sync` modules share `lib/sync-fs.js`; the ANSI logger moves to `lib/cli-log.js` and `slugify` to `lib/text-util.js`; `installer-args.parseArgs` is now table-driven (ARC-001, QUAL-001, QUAL-002).
+- [DECISION] Documentation: `ARCHITECTURE-MAP.md` counts are regenerated and now machine-guarded by `scripts/test-doc-surface-counts.js`; `state.STATE_FILE` is the canonical state-file constant and `artifact-map.js`'s scope is documented accurately (DOC-001, DOC-003, ARC-002).
 
 ## Changes
 
-- [DECISION] `package.json`, `package-lock.json`, and `packages/mcp/package.json` now publish the 3.13.0 version.
-- [DECISION] `workflows/full-arc.yaml` adds the `code-audit` and `docs` jobs and rewires `deploy`/`harden`/`launch` dependencies. No lib change.
-- [DECISION] CHANGELOG, RELEASE notes, README, roadmap, reference, architecture, and the MCP docs now reflect 3.13.0. SECURITY supported-version table adds the `3.13.x` row and moves `3.12.x` to security fixes only.
+- [DECISION] `package.json`, `package-lock.json`, and `packages/mcp/package.json` now publish the 3.13.1 version.
+- [DECISION] New runtime modules `lib/sync-fs.js`, `lib/cli-log.js`, and `lib/text-util.js` (lib module count 87 -> 90). No public command/agent/workflow/recipe surface change.
+- [DECISION] CHANGELOG, RELEASE notes, README, roadmap, reference, architecture, and the architecture map now reflect 3.13.1. The SECURITY supported-version table already carries the `3.13.x` row.
 
 ## Validation
 
-- [DECISION] `npm run lint` passed with 29 static checks (agent contract + size + refs intact).
-- [DECISION] `node tests/integration/full-arc.test.js`, `node scripts/test-workflow-runner.js`, and `node scripts/test-agent-refs.js` passed: `full-arc` plans to 13 steps with a valid DAG and both `god-debt-assessor` and `god-docs-writer` are real agents.
-- [DECISION] `npm run release:check` passed `coverage:lib` above the 90 percent line floor for `lib/**/*.js`.
-- [DECISION] `npm run release:check` passed `npm audit --omit=dev` with 0 vulnerabilities.
-- [DECISION] `npm run release:check` passed public surface docs for version 3.13.0 with 120 skills, 40 agents, 13 workflows, and 44 recipes.
+- [DECISION] `npm test` passed all command groups.
+- [DECISION] `npm run release:check` passed `coverage:lib` above the 90 percent line floor and the new 75 percent branch floor for `lib/**/*.js`.
+- [DECISION] `npm run release:check` passed `npm audit --omit=dev` with 0 vulnerabilities and `git diff --check`.
+- [DECISION] `npm run release:check` passed public surface docs for version 3.13.1 with 120 skills, 40 agents, 13 workflows, and 44 recipes.
 - [DECISION] `npm run release:check` passed root and `@godpowers/mcp` package contents.
 
 ## Upgrade
 
-- [DECISION] Use `npm install -g godpowers@3.13.0` or `npx godpowers@3.13.0`.
-- [DECISION] No migration is required. Existing projects are unaffected; the change only adds steps to the greenfield one-shot arc, which now takes longer in exchange for an audited and documented product.
+- [DECISION] Use `npm install -g godpowers@3.13.1` or `npx godpowers@3.13.1`.
+- [DECISION] No migration is required. Existing projects are unaffected; the changes are internal correctness, security, test-gate, and maintainability fixes with no surface change.
 
 ## Notes
 
-- [DECISION] The publish targets are npm `godpowers@3.13.0`, npm `@godpowers/mcp@3.13.0`, and GitHub release `https://github.com/aihxp/godpowers/releases/tag/v3.13.0`.
+- [DECISION] The publish targets are npm `godpowers@3.13.1`, npm `@godpowers/mcp@3.13.1`, and GitHub release `https://github.com/aihxp/godpowers/releases/tag/v3.13.1`.
 - [DECISION] The tag-triggered GitHub publish workflow remains the preferred npm path because it publishes with provenance. This release has not been tagged or published to npm yet.

@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.13.1] - 2026-06-16
+
+Maintenance release that drives a full self-audit (`codeaudit.md`) to zero: one
+High finding, plus the Medium and Low findings, fixed across runtime correctness,
+security hardening, the test gate, documentation, and de-duplication. No public
+command, agent, workflow, or recipe surface changes (counts stay 120 / 40 / 13 / 44).
+
+### Fixed
+- **Ledger record loss under concurrency (ERR-001):** `lib/evidence.js`
+  `appendJsonlAtomic` did a read-modify-write of the whole ledger, so two
+  concurrent `verify`/`outcome check` processes lost each other's records and
+  every append was O(n). It now uses `fs.appendFileSync` (O_APPEND), mirroring
+  `lib/events.js`; a concurrency regression test asserts 8 writers x 25 records
+  all survive.
+- **Buffer-overflow verdicts (ERR-003):** a `maxBuffer` (ENOBUFS) overflow was
+  recorded as a plain command failure; it is now surfaced distinctly. The 16 MB
+  cap is the named constant `MAX_OUTPUT_BYTES`.
+- **Doc accuracy:** `SECURITY.md` no longer recommends the non-existent
+  `npm install --verify` (use `npm audit signatures`); the stale
+  `ARCHITECTURE-MAP.md` counts are regenerated and now machine-guarded.
+
+### Security
+- **Advisory hook (SEC-001):** `hooks/pre-tool-use.sh` is reframed as a
+  best-effort typo guard (not a security boundary) and now normalizes whitespace
+  and matches common destructive-command variants (`rm -fr`, `-r -f`, `./`
+  prefix, `git push -f`/`--force-with-lease`). Covered by `scripts/test-hooks.js`.
+- **Disk-sourced verifier (SEC-002):** `outcome check` now announces the verifier
+  command and its `goal.json` source path before executing, so running it in an
+  untrusted cloned repo cannot silently run a planted command.
+- **Ledger secrets (SEC-003):** the human-readable `LEDGER-LOG.md` command echo
+  masks obvious secret shapes; `SECURITY.md` documents that `.godpowers/ledger/`
+  may capture command output.
+- **Codex sandbox (SEC-004):** `SECURITY.md` documents the Codex
+  `sandbox_mode = "workspace-write"` install default.
+
+### Changed
+- **Test gate (TEST-001/002/003):** `coverage:lib` now enforces `--branches 75`;
+  new `scripts/test-runtime-audit.js` raises `runtime-audit.js` line coverage
+  68.8% -> 77.8%; `scripts/test-router.js` no longer shares cumulative state and
+  cleans up its temp dirs.
+- **De-duplication (ARC-001/002, QUAL-001/002):** the five `*-sync` modules share
+  `lib/sync-fs.js`; the ANSI logger moves to `lib/cli-log.js` and `slugify` to
+  `lib/text-util.js`; `installer-args.parseArgs` is now table-driven (was a
+  358-line function); `state.STATE_FILE` is the canonical state-file constant and
+  `artifact-map.js`'s scope is documented accurately.
+
 ## [3.13.0] - 2026-06-16
 
 ### Changed
