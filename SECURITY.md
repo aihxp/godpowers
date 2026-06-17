@@ -73,7 +73,8 @@ When using Godpowers in a sensitive context:
 
 | Version | Supported |
 |---------|-----------|
-| 3.13.x  | Yes |
+| 3.14.x  | Yes |
+| 3.13.x  | Security fixes only |
 | 3.12.x  | Security fixes only |
 | 3.11.x  | Security fixes only |
 | 3.10.x  | Security fixes only |

@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.14.0] - 2026-06-17
+
+UX-audit remediation release. Drives the Godpowers UX audit (`uxaudit.md`, 11
+weighted experience lenses) to zero: all 20 findings across usability, content,
+information architecture, interaction, process, journeys, and trust. The changes
+are backward compatible and add no new commands; they tighten the install and
+dashboard surfaces, broaden the free-text router, and rewrite the front-door
+docs. No public command/agent/workflow/recipe surface change (counts stay
+120 / 40 / 13 / 44); lib module count unchanged at 91.
+
+### Added
+- **`docs/README.md` documentation index (IA-004):** a "Start here" section
+  linking every user-facing doc and a separate "Internal and maintainer" section
+  for the rest, so a reader landing in `docs/` can tell which is which.
+- **`--help` "Start here" group (CNT-004):** `npx godpowers --help` now leads
+  with a 6-item common-command group above two labelled advanced groups
+  (ledger/evidence, workflow/tooling), mirroring the install-success copy.
+
+### Changed
+- **Install/surface argument validation (USE-001, USE-002, USE-003):** a typo'd
+  bare subcommand now errors instead of silently starting a global install; an
+  unknown `--profile` is a clean one-line error before any filesystem write, not
+  a mid-install stack trace; `surface --runtime=<bad>` is rejected instead of
+  planning an apply to a nonexistent runtime.
+- **Dashboard and report display honesty (USE-004, CNT-005, CNT-006, IXD-001):**
+  `status --full` shows `Phase/Step: not initialized` (not `Complete`) on an
+  uninitialized project; the readiness headline reads `no blockers` instead of
+  the overloaded `ready`; the empty `report` names the commands that populate
+  the ledger; `next` no longer prints the recommended command a third time.
+- **Free-text router accuracy (IA-001, IA-002):** broadened `intent-keywords`
+  for the highest-traffic recipes so common verbs match a topical recipe (fix a
+  bug, ship it, deploy, release, check progress); `classifyWorkSize` returns
+  null when no small-task signal is present instead of confidently mis-sizing an
+  unrelated intent as `/god-quick`.
+- **Skipped-step progress honesty (JRN-002):** `progressSummary` exposes a
+  `skipped` count and the dashboard progress line annotates it
+  (`... 2 of 13 complete, 2 skipped`) so a run that skipped tiers no longer
+  shows a silently inflated percent.
+- **Close-gate honesty (PROC-001):** `can-close` output, the `canClose`
+  docstring, and the orchestrator runbook now state that `can-close` is the
+  advisory since-in-flight freshness check and `npx godpowers gate` is the
+  mechanically enforced boundary, closing the described-gate vs gate-that-runs
+  gap.
+- **README front door (CNT-001, CNT-002, CNT-003):** the top fold is now
+  tagline -> what/who -> Quick start (install + `/god-mode`) -> inline glossary
+  -> why it exists; version-history prose moved to a one-line CHANGELOG/RELEASE
+  pointer; dense proof prose became a scannable list.
+- **Command descriptions (IA-003):** the worst offenders lead with the
+  user-intent verb (`/god-smite` -> "Clear the dependency cache"; `/god-org-context`
+  -> "Set up or read organization-level context"); the `/god-reconcile` (before,
+  read-only) vs `/god-sync` (after, write-back) overlap is disambiguated.
+- **Resume clarity (JRN-001):** the README states that plain `/god-mode` resumes
+  from disk (no `--yolo` needed) and distinguishes `/god-resume-work`; the
+  generated CHECKPOINT new-session block names the canonical arc-resume command.
+- **Trust claims (TRU-001, TRU-002):** SECURITY.md softens the 7/14-day SLA to
+  best-effort targets; the runtime headline no longer implies 15-way parity and
+  points to the honest Runtime Expectations table.
+
 ## [3.13.2] - 2026-06-17
 
 Maintenance release that drives a third self-audit (`codeaudit.md`) to zero: one

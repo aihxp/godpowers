@@ -3,7 +3,7 @@
 > Status: ACTIVE
 > Model: Pure-skill for durable work. CLI provides install plus read-only status helpers.
 > Last updated: 2026-06-16
-> Current shipped: v3.13.2
+> Current shipped: v3.14.0
 
 This roadmap tracks releases, what's shipped, and what is frozen during the
 3.x public adoption window. Everything user-facing remains slash-command based.
@@ -12,9 +12,9 @@ This roadmap tracks releases, what's shipped, and what is frozen during the
 
 ## Shipped releases
 
-### Current surface (v3.13.2)
+### Current surface (v3.14.0)
 
-3.13.2 is a maintenance release: it shares one check-builder across the `*-sync`
+3.14.0 is a maintenance release: it shares one check-builder across the `*-sync`
 modules, adds a per-file coverage floor, types the corrupt-state error, removes
 dead helpers, and guards the MCP module loader and YAML parser. 3.13.1 fixed a
 ledger record-loss race, hardened the outcome verifier and the pre-tool-use hook,
