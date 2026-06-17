@@ -1,6 +1,6 @@
 # Godpowers 3.14.0 Release
 
-> Status: Pending
+> Status: Published
 > Date: 2026-06-17
 
 [DECISION] Godpowers 3.14.0 is a UX-audit remediation release that drives the Godpowers UX audit (`uxaudit.md`, 11 weighted experience lenses) to zero: all 20 findings across usability, content, information architecture, interaction, process, journeys, and trust.
@@ -38,4 +38,4 @@
 ## Notes
 
 - [DECISION] The publish targets are npm `godpowers@3.14.0`, npm `@godpowers/mcp@3.14.0`, and GitHub release `https://github.com/aihxp/godpowers/releases/tag/v3.14.0`.
-- [DECISION] Not tagged or published yet. Tagging `v3.14.0` triggers the GitHub publish workflow (`.github/workflows/publish.yml`), which publishes `godpowers@3.14.0` and `@godpowers/mcp@3.14.0` to npm with provenance.
+- [DECISION] Tagged `v3.14.0` and published to npm with provenance via the tag-triggered GitHub publish workflow (`.github/workflows/publish.yml`): `godpowers@3.14.0` and `@godpowers/mcp@3.14.0` are live as the `latest` dist-tag.
