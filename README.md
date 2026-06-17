@@ -12,18 +12,18 @@ idea to hardened production. It runs as **slash commands inside your AI coding
 tool** (Claude Code, Codex, Cursor, etc.) that orchestrate **specialist agents**
 in fresh contexts to do the work.
 
-Want the short proof first? Start with [Quick Proof](docs/quick-proof.md) to
+Want the short proof first? Start with [Quick Proof](https://github.com/aihxp/godpowers/blob/main/docs/quick-proof.md) to
 run `npx godpowers quick-proof --project=. --brief`, see outcome metrics, pick
 a starter command set, and understand runtime expectations before reading the
-full reference. The [First 10 Minute Proof Case Study](docs/case-studies/first-10-minute-proof.md)
+full reference. The [First 10 Minute Proof Case Study](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/first-10-minute-proof.md)
 shows the same evidence as a before-and-after adoption story. External
-CLI-verifiable canaries now cover [sindresorhus/is](docs/case-studies/sindresorhus-is-adoption-canary.md),
-[expressjs/cors](docs/case-studies/expressjs-cors-adoption-canary.md), and
-[tinyhttp/tinyhttp](docs/case-studies/tinyhttp-adoption-canary.md), with host
+CLI-verifiable canaries now cover [sindresorhus/is](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/sindresorhus-is-adoption-canary.md),
+[expressjs/cors](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/expressjs-cors-adoption-canary.md), and
+[tinyhttp/tinyhttp](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/tinyhttp-adoption-canary.md), with host
 slash-command gaps called out rather than hidden.
-Host-run proof studies now cover [slugify-cli](docs/case-studies/run-a.md),
-[Countdown](docs/case-studies/run-b.md), and
-[react-github-readme-button](docs/case-studies/run-c.md), including one
+Host-run proof studies now cover [slugify-cli](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/run-a.md),
+[Countdown](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/run-b.md), and
+[react-github-readme-button](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/run-c.md), including one
 blocked harden run recorded as evidence instead of hidden as success.
 
 Godpowers makes AI coding accountable: every serious run should leave disk
@@ -183,7 +183,7 @@ instead of pretending a background agent ran.
 | Other install targets | Skills and agent contracts install, while host-native spawning depends on the tool. |
 | Degraded hosts | Godpowers must report local-only or simulated agent behavior instead of hiding the limitation. |
 
-See [Host capabilities](docs/host-capabilities.md) for the detailed guarantee
+See [Host capabilities](https://github.com/aihxp/godpowers/blob/main/docs/host-capabilities.md) for the detailed guarantee
 model.
 
 ## Usage
@@ -344,7 +344,7 @@ The companion exposes `status`, `next`, `gate_check`, `lint_artifact`, and
 npx -y -p godpowers@3.13.1 -p @godpowers/mcp@3.13.1 godpowers-mcp setup --host=codex --project=. --write
 ```
 
-See [MCP Companion](docs/mcp.md) for package boundaries and setup details.
+See [MCP Companion](https://github.com/aihxp/godpowers/blob/main/docs/mcp.md) for package boundaries and setup details.
 
 ### Slash Commands
 
@@ -618,16 +618,16 @@ Pi. T3 Code inherits from the underlying agent (Codex / Claude / OpenCode).
 
 ## Full reference
 
-- [Getting Started](docs/getting-started.md)
-- [Quick Proof](docs/quick-proof.md)
-- [First 10 Minute Proof Case Study](docs/case-studies/first-10-minute-proof.md)
-- [Concepts](docs/concepts.md)
-- [Command reference (all 120 skills + 40 agents)](docs/reference.md)
-- [Feature awareness](docs/feature-awareness.md)
-- [Adoption Canary](docs/adoption-canary.md)
-- [Repository documentation sync](docs/repo-doc-sync.md)
-- [Repository surface sync](docs/repo-surface-sync.md)
-- [Roadmap](docs/ROADMAP.md)
+- [Getting Started](https://github.com/aihxp/godpowers/blob/main/docs/getting-started.md)
+- [Quick Proof](https://github.com/aihxp/godpowers/blob/main/docs/quick-proof.md)
+- [First 10 Minute Proof Case Study](https://github.com/aihxp/godpowers/blob/main/docs/case-studies/first-10-minute-proof.md)
+- [Concepts](https://github.com/aihxp/godpowers/blob/main/docs/concepts.md)
+- [Command reference (all 120 skills + 40 agents)](https://github.com/aihxp/godpowers/blob/main/docs/reference.md)
+- [Feature awareness](https://github.com/aihxp/godpowers/blob/main/docs/feature-awareness.md)
+- [Adoption Canary](https://github.com/aihxp/godpowers/blob/main/docs/adoption-canary.md)
+- [Repository documentation sync](https://github.com/aihxp/godpowers/blob/main/docs/repo-doc-sync.md)
+- [Repository surface sync](https://github.com/aihxp/godpowers/blob/main/docs/repo-surface-sync.md)
+- [Roadmap](https://github.com/aihxp/godpowers/blob/main/docs/ROADMAP.md)
 - [Release Notes](RELEASE.md)
 - [Changelog](CHANGELOG.md)
 - [Inspiration](INSPIRATION.md)

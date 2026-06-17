@@ -184,4 +184,19 @@ test('current repository automation surfaces are fresh', () => {
   assert.equal(releaseSurfaceSync.detect(projectRoot).status, 'fresh');
 });
 
+// TEST-002: the run()/appendLog() write path of the three siblings was untested
+// (only detect() was). Assert each writes a log and honors the no-banned-dash
+// invariant, mirroring the repo-surface-sync run() test.
+for (const mod of [routeQualitySync, recipeCoverageSync, releaseSurfaceSync]) {
+  test(`${mod.LOG_PATH} run writes a log with no banned dash (TEST-002)`, () => {
+    const tmp = fixture();
+    const result = mod.run(tmp);
+    assert.equal(result.applied.length, 0, 'run applies no fixes');
+    assert.equal(result.logPath, mod.LOG_PATH, 'run reports its log path');
+    const log = fs.readFileSync(path.join(tmp, mod.LOG_PATH), 'utf8');
+    assert(log.length > 0, 'log was written');
+    assert(!/[–—]/.test(log), 'log contains a banned em/en dash');
+  });
+}
+
 report();
