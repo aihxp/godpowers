@@ -51,6 +51,12 @@ function resolveRuntimeRoot(opts = {}) {
 }
 
 function requireRuntime(moduleName, opts = {}) {
+  // Defense-in-depth: all callers pass hardcoded names, but reject anything that
+  // is not a plain lib module basename so a future caller cannot traverse out of
+  // lib/ or require an arbitrary path.
+  if (!/^[a-z0-9-]+$/.test(String(moduleName))) {
+    throw new Error(`invalid runtime module name: ${moduleName}`);
+  }
   const root = resolveRuntimeRoot(opts);
   return require(path.join(root, 'lib', `${moduleName}.js`));
 }

@@ -41,8 +41,22 @@ function assertSetupPath() {
   assert(rewritten.indexOf(setup.BEGIN) === rewritten.lastIndexOf(setup.BEGIN), 'managed block should be replaced, not duplicated');
 }
 
+function assertRequireRuntimeGuard() {
+  const runtime = require('../lib/runtime');
+  // SEC-001: reject module names that are not a plain lib basename.
+  for (const bad of ['../evil', 'a/b', '..', 'with.dot', '']) {
+    let threw = false;
+    try { runtime.requireRuntime(bad, { runtimeRoot: ROOT }); } catch (_) { threw = true; }
+    assert(threw, `requireRuntime should reject unsafe module name: ${JSON.stringify(bad)}`);
+  }
+  // A valid name still resolves the real module.
+  assert(typeof runtime.requireRuntime('dashboard', { runtimeRoot: ROOT }).compute === 'function',
+    'requireRuntime should load a valid runtime module');
+}
+
 async function main() {
   assertSetupPath();
+  assertRequireRuntimeGuard();
 
   const transport = new StdioClientTransport({
     command: process.execPath,
