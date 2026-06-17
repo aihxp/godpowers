@@ -732,6 +732,17 @@ test('unknown command returns false', () => {
   assert(result.value === false, 'unknown command should not dispatch');
 });
 
+test('surface rejects an unknown runtime instead of planning for it (USE-003)', () => {
+  process.exitCode = 0;
+  const result = capture(() => cliDispatch.runSurfaceCommand({
+    runtimes: ['bogus'], profile: 'builder', dryRun: true, json: false
+  }));
+  assert(result.output.includes('Unknown runtime: bogus'), `output: ${result.output}`);
+  assert(!result.output.includes('Path: null'), 'should not render a plan for a nonexistent runtime');
+  assert(process.exitCode === 1, `exitCode: ${process.exitCode}`);
+  process.exitCode = 0;
+});
+
 test('corrupt state.json yields a clean one-line error, not a stack trace (ERR-002)', () => {
   process.exitCode = 0;
   const project = mkProject('godpowers-cli-corrupt-state-');

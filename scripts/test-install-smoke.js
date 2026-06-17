@@ -16,7 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { execFileSync } = require('child_process');
+const { execFileSync, spawnSync } = require('child_process');
 const installerFiles = require('../lib/installer-files');
 const { test, report } = require('./test-harness');
 
@@ -389,6 +389,31 @@ test('uninstaller removes Codex skill directories', () => {
     'god-orchestrator.md should be removed');
   assert(!fs.existsSync(path.join(agentsDir, 'god-orchestrator.toml')),
     'god-orchestrator.toml should be removed');
+  fs.rmSync(home, { recursive: true, force: true });
+});
+
+test('installer rejects an unknown subcommand instead of installing (USE-001)', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-smoke-unknown-'));
+  fs.mkdirSync(path.join(home, '.claude'), { recursive: true });
+  const r = spawnSync('node', [INSTALLER, 'staus'], {
+    env: { ...process.env, HOME: home }, encoding: 'utf8'
+  });
+  assert(r.status === 1, `expected exit 1 for a typo'd command, got ${r.status}`);
+  assert(/Unknown command: staus/.test(r.stdout + r.stderr), 'should report the unknown command');
+  assert(!fs.existsSync(path.join(home, '.claude', 'skills')), 'a typo must not write skills');
+  fs.rmSync(home, { recursive: true, force: true });
+});
+
+test('installer rejects an unknown profile without a stack trace (USE-002)', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'godpowers-smoke-profile-'));
+  const r = spawnSync('node', [INSTALLER, '--claude', '--local', '--profile=bogus'], {
+    cwd: home, env: { ...process.env, HOME: home }, encoding: 'utf8'
+  });
+  const out = r.stdout + r.stderr;
+  assert(r.status === 1, `expected exit 1 for a bad profile, got ${r.status}`);
+  assert(/Unknown install profile: bogus/.test(out), 'should report the unknown profile');
+  assert(!/\n\s+at \w/.test(out), 'must not print a Node stack trace');
+  assert(!fs.existsSync(path.join(home, '.claude')), 'a bad profile must not create a partial .claude dir');
   fs.rmSync(home, { recursive: true, force: true });
 });
 

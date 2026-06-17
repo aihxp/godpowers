@@ -10,14 +10,14 @@
 
 const path = require('path');
 
-const { parseArgs } = require('../lib/installer-args');
+const { parseArgs, COMMANDS } = require('../lib/installer-args');
 const { RUNTIMES, runtimeKeys } = require('../lib/installer-runtimes');
 const {
   installForRuntime,
   uninstallForRuntime,
   countInstalledSurface
 } = require('../lib/installer-core');
-const { describeProfiles } = require('../lib/install-profiles');
+const { describeProfiles, normalizeProfiles } = require('../lib/install-profiles');
 const commandFamilies = require('../lib/command-families');
 const identity = require('../lib/package-identity');
 const cliDispatch = require('../lib/cli-dispatch');
@@ -207,6 +207,25 @@ function main() {
   }
 
   if (cliDispatch.runCommand(opts)) return;
+
+  // USE-001: a bare leading token that is not a known command is a typo'd
+  // subcommand, not an install target (runtimes are passed as --flags). Reject
+  // it instead of silently starting a global install.
+  const firstToken = process.argv[2];
+  if (!opts.command && firstToken && !firstToken.startsWith('-') && !COMMANDS.has(firstToken)) {
+    error(`Unknown command: ${firstToken}`);
+    log('Run "npx godpowers --help" for usage.');
+    process.exit(1);
+  }
+
+  // USE-002: validate the install profile before any filesystem writes, so a bad
+  // value is a clean one-line error rather than a stack trace mid-install.
+  try {
+    normalizeProfiles(opts.profile);
+  } catch (_) {
+    error(`Unknown install profile: ${opts.profile}. Valid: core, builder, maintainer, suite, full`);
+    process.exit(1);
+  }
 
   console.log(BANNER);
   const srcDir = path.resolve(__dirname, '..');
