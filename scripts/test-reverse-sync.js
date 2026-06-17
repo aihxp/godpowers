@@ -246,4 +246,25 @@ test('run is idempotent (no duplicate fences after re-run)', () => {
   if (beginCount !== 1) throw new Error(`expected 1 fence-begin, got ${beginCount}`);
 });
 
+test('run surfaces a requirements-step failure instead of swallowing it (ERR-001)', () => {
+  const tmp = mkProject();
+  const requirements = require('../lib/requirements');
+  const originalDerive = requirements.derive;
+  requirements.derive = () => { throw new Error('boom-derive'); };
+  let result;
+  let threw = false;
+  try {
+    result = reverseSync.run(tmp, {});
+  } catch (_) {
+    threw = true;
+  } finally {
+    requirements.derive = originalDerive;
+  }
+  if (threw) throw new Error('run() must not throw when the requirements step fails');
+  if (result.requirements !== null) throw new Error('requirements summary should be null on failure');
+  if (result.requirementsError !== 'boom-derive') {
+    throw new Error(`expected the error surfaced, got ${result.requirementsError}`);
+  }
+});
+
 report();
