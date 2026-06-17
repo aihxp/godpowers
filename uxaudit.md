@@ -167,8 +167,9 @@ The README, `--help`, and the free-text router all assume insider vocabulary or 
 - Verify the fix: no paragraph in the top half exceeds three sentences.
 - Related: PATTERN-B.
 
-### [CNT-004] `npx godpowers --help` is a flat command + flag dump with no prioritization
+### [CNT-004] `npx godpowers --help` is a flat command + flag dump with no prioritization (RESOLVED - slice 5)
 - Severity: Medium | Confidence: Confirmed | Effort: S | Dimension: Content and UX Writing
+- RESOLVED (slice 5): `showHelp` now opens with a 6-item "Start here (most common)" group (install, status, next, quick-proof, demo, surface) above two labelled advanced groups ("Advanced - ledger and evidence", "Advanced - workflow and tooling"), mirroring the install-success prioritization. Regression test in `scripts/test-install-smoke.js` runs `--help` and asserts the Start-here section precedes the advanced sections and lists <= 6 items.
 - Location: `bin/install.js:33-136` (`showHelp`)
 - Evidence: ~30 commands and ~30 flags are listed at equal weight; the 18 ledger/evidence commands (`verify`, `can-close`, `route`, `report`, `reflect`, `memory`, `lesson`, `outcome`, `import-ledger`) appear alongside the 3-4 a newcomer needs. The install-success output (`install.js:187-197`) does prioritize well (suggests only `/god, /god-plan, /god-status, /god-mode`); `--help` does not mirror it.
 - Impact: a newcomer running `--help` cannot tell the commands they need from the ones they do not.

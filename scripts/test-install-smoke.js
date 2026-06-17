@@ -417,4 +417,21 @@ test('installer rejects an unknown profile without a stack trace (USE-002)', () 
   fs.rmSync(home, { recursive: true, force: true });
 });
 
+test('--help groups a short "Start here" set above the advanced commands (CNT-004)', () => {
+  const r = spawnSync('node', [INSTALLER, '--help'], {
+    env: { ...process.env, HOME: os.tmpdir() }, encoding: 'utf8'
+  });
+  assert(r.status === 0, `--help should exit 0, got ${r.status}`);
+  const out = r.stdout + r.stderr;
+  const startIdx = out.indexOf('Start here (most common):');
+  const advIdx = out.indexOf('Advanced - ledger and evidence:');
+  assert(startIdx !== -1, 'help should have a "Start here" section');
+  assert(advIdx !== -1, 'help should have an "Advanced - ledger and evidence" section');
+  assert(startIdx < advIdx, '"Start here" must come before the advanced commands');
+  // The common set must stay short (<= 6 command lines) so a newcomer is not
+  // flooded; count indented command lines between the two headers.
+  const between = out.slice(startIdx, advIdx).split('\n').filter((l) => /^ {2}\S/.test(l));
+  assert(between.length <= 6, `Start here should list <= 6 items, found ${between.length}`);
+});
+
 report();

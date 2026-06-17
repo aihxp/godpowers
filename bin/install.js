@@ -33,11 +33,15 @@ const BANNER = `
 function showHelp() {
   console.log(BANNER);
   log('Usage: npx godpowers [command] [options]\n');
-  log('Commands:');
+  log('Start here (most common):');
+  log('  (install)            npx godpowers --claude --global   Install for your AI tool');
   log('  status               Show the Godpowers Dashboard for a project');
   log('  next                 Show the dashboard and recommended next command');
-  log('  state advance        Update one tracked Godpowers state step');
-  log('  gate                 Check a tier artifact gate');
+  log('  quick-proof          Run a proof from the shipped fixture (no install)');
+  log('  demo                 Show the shipped sandbox proof');
+  log('  surface              Preview or apply an installed command profile');
+  log('');
+  log('Advanced - ledger and evidence:');
   log('  verify               Run a command as executed verification evidence');
   log('  can-close            Check whether a substep has the evidence to close');
   log('  route                Classify a prompt into an entry play (quarterback)');
@@ -47,13 +51,14 @@ function showHelp() {
   log('  lesson               Add or list reusable lessons in the ledger');
   log('  outcome              Start, check, stop, or inspect a bounded retry loop');
   log('  import-ledger        Import an existing .mythify/ ledger into .godpowers/ledger/');
+  log('');
+  log('Advanced - workflow and tooling:');
+  log('  state advance        Update one tracked Godpowers state step');
+  log('  gate                 Check a tier artifact gate');
   log('  mcp-info             Show read-only MCP companion setup instructions');
-  log('  quick-proof          Show a runnable proof from the shipped fixture');
   log('  automation-status    Show host automation provider support');
   log('  automation-setup     Show an opt-in automation setup plan');
   log('  dogfood              Run built-in messy-repo dogfood scenarios');
-  log('  demo                 Show the shipped sandbox proof');
-  log('  surface              Preview or apply an installed command profile');
   log('  extension-scaffold   Create a publishable extension pack skeleton');
   log('');
   log('Command families:');
